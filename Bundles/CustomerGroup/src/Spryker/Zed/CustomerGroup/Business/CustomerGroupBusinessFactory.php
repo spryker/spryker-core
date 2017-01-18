@@ -18,7 +18,7 @@ class CustomerGroupBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\CustomerGroup\Business\Model\CustomerGroup
+     * @return \Spryker\Zed\CustomerGroup\Business\Model\CustomerGroupInterface
      */
     public function createCustomerGroup()
     {

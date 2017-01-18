@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication;
 
+use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
@@ -28,11 +29,16 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerGroupTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getDateFormatterService()
         );
     }
 
-    public function createCustomerTable($customerGroupTransfer)
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\CustomerTable
+     */
+    public function createCustomerTable(CustomerGroupTransfer $customerGroupTransfer)
     {
         return new CustomerTable(
             $this->getQueryContainer(),
@@ -48,7 +54,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerGroupForm(array $data = [], array $options = [])
     {
-        $idCustomerGroup = !empty($data['id_customer_group']) ? $data['id_customer_group'] : null;
+        $idCustomerGroup = !empty($data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP]) ? $data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP] : null;
 
         $customerFormType = new CustomerGroupForm($this->getQueryContainer(), $idCustomerGroup);
 
@@ -61,6 +67,14 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerGroupFormDataProvider()
     {
         return new CustomerGroupFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\DateFormatterInterface
+     */
+    protected function getDateFormatterService()
+    {
+        return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_DATE_FORMATTER);
     }
 
 }

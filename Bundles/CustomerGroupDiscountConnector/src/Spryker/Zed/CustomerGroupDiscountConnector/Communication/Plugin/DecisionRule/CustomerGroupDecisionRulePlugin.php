@@ -20,12 +20,6 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
 {
 
     /**
-     * Specification:
-     *
-     * - Make decision on given Quote or Item transfer.
-     * - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     * - Returns false when not matching.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -45,8 +39,6 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
-     * Name of field as used in query string
-     *
      * @api
      *
      * @return string
@@ -57,8 +49,6 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
-     * Data types used by this field. (string, integer, list)
-     *
      * @api
      *
      * @return array
