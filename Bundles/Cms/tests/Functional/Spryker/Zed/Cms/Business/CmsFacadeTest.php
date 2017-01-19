@@ -66,11 +66,6 @@ class CmsFacadeTest extends Test
     protected $glossaryQueryContainer;
 
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;

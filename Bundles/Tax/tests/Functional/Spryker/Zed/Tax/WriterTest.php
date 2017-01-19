@@ -33,14 +33,9 @@ class WriterTest extends Test
     const NON_EXISTENT_ID = 999999999;
 
     /**
-     * @var \Spryker\Zed\Tax\Business\TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
     private $taxFacade;
-
-    /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @return void

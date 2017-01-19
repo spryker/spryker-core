@@ -35,10 +35,9 @@ class CustomerFacadeTest extends Test
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
 
-    /** @var \Generated\Zed\Ide\AutoCompletion */
-    protected $locator;
-
-    /** @var \Spryker\Zed\Customer\Business\CustomerFacade */
+    /**
+     * @var \Spryker\Zed\Customer\Business\CustomerFacade
+     */
     protected $customerFacade;
 
     /**
