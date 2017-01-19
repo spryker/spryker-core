@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Development\Communication\Controller;
 
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
-use Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

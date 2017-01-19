@@ -1,13 +1,14 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Business\Stability;
 
 use ArrayObject;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class StabilityCalculator implements StabilityCalculatorInterface
 {
@@ -23,6 +24,8 @@ class StabilityCalculator implements StabilityCalculatorInterface
     public function calculateStability()
     {
         $bundlesDependencies = json_decode(file_get_contents(APPLICATION_ROOT_DIR . '/data/dependencyTree.json'), true);
+
+        $bundlesDependencies = $this->filter($bundlesDependencies);
 
         foreach ($bundlesDependencies as $bundlesDependency) {
             $currentBundleName = $bundlesDependency['bundle'];
@@ -48,7 +51,21 @@ class StabilityCalculator implements StabilityCalculatorInterface
     }
 
     /**
-     * @param $bundle
+     * @param array $bundlesDependencies
+     *
+     * @return array
+     */
+    protected function filter(array $bundlesDependencies)
+    {
+        $callback = function (array $bundleDependency) {
+            return (!$bundleDependency[DependencyTree::META_IN_TEST] && ($bundleDependency[DependencyTree::META_FOREIGN_LAYER] !== 'external'));
+        };
+
+        return array_filter($bundlesDependencies, $callback);
+    }
+
+    /**
+     * @param string $bundle
      *
      * @return void
      */
@@ -108,22 +125,4 @@ class StabilityCalculator implements StabilityCalculatorInterface
         }
     }
 
-    /**
-     * @param $bundle
-     * @param array $out
-     *
-     * @return mixed
-     */
-    protected function sumIndirectOutgoingDependencies($bundle, array $out)
-    {
-        $currentBundleInfo = $this->bundles[$bundle];
-        $outgoingBundles = $currentBundleInfo['out'];
-        foreach ($outgoingBundles as $outgoingBundle) {
-            if (!in_array($outgoingBundle, $out)) {
-                $out = array_merge($out, $this->sumIndirectOutgoingDependencies($outgoingBundle, $out));
-            }
-        }
-
-        return $out;
-    }
 }

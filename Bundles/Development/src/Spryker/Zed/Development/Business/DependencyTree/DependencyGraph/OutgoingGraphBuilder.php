@@ -68,7 +68,7 @@ class OutgoingGraphBuilder
             if ($this->bundleName === $bundleName) {
                 $attributes['fillcolor'] = '#ffffff';
                 $attributes['style'] = 'filled';
-//                echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($attributes) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+                $attributes['label'] = $attributes['label'] . '<br /><font color="violet" point-size="10">' . (count($allDependencies) - 1) . ' (indirect)</font>';
             }
 
             $this->graph->addNode($bundleName, $attributes);

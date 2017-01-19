@@ -16,12 +16,12 @@ use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvide
 use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
-use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -75,11 +75,11 @@ class Functional extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\Model\ConsoleMessenger
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
     protected function getMessenger()
     {
-        $messenger = new ConsoleMessenger(
+        $messenger = new ConsoleLogger(
             new ConsoleOutput(OutputInterface::VERBOSITY_QUIET)
         );
 

@@ -79,6 +79,15 @@ abstract class AbstractDependencyFinder
     protected function addDependency(SplFileInfo $fileInfo, $to, array $dependencyInformation = [])
     {
         $dependencyInformation[DependencyTree::META_FINDER] = get_class($this);
+        $dependencyInformation[DependencyTree::META_IN_TEST] = false;
+
+        if (strpos($fileInfo->getPath(), '/tests/') !== false) {
+            $dependencyInformation[DependencyTree::META_IN_TEST] = true;
+        }
+
+        if ($fileInfo->getExtension() !== 'php') {
+            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        }
 
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }

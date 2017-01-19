@@ -142,6 +142,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function calculateStability()

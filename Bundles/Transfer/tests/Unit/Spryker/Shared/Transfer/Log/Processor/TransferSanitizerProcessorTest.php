@@ -8,15 +8,15 @@
 namespace Unit\Spryker\Shared\Transfer\Log\Processor;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Transfer\Log\Processor\TransferSanitizerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
+use Spryker\Shared\Transfer\Log\Processor\TransferSanitizerProcessor;
 use Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Application
+ * @group Transfer
  * @group Log
  * @group Processor
  * @group TransferSanitizerProcessorTest

@@ -5,24 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console\Business\Model;
+namespace Spryker\Zed\Kernel\Communication\Console;
 
-use Silex\Application;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @method \Spryker\Zed\Console\Communication\ConsoleBootstrap getApplication()
- */
 class Console extends SymfonyCommand
 {
 
@@ -203,9 +199,6 @@ class Console extends SymfonyCommand
     {
         $this->input = $input;
         $this->output = $output;
-
-        $propelService = new PropelServiceProvider();
-        $propelService->boot(new Application());
     }
 
     /**
@@ -256,12 +249,12 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \Psr\Log\LoggerInterface|\Symfony\Component\Console\Logger\ConsoleLogger
      */
     protected function getMessenger()
     {
         if ($this->messenger === null) {
-            $this->messenger = new ConsoleMessenger($this->output);
+            $this->messenger = new ConsoleLogger($this->output);
         }
 
         return $this->messenger;
