@@ -371,7 +371,7 @@ abstract class AbstractTable
     {
         $defaultSorting = [
             [
-                self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+                self::SORT_BY_COLUMN => $this->getDefaultSortIndex($config),
                 self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
             ],
         ];
@@ -389,6 +389,27 @@ abstract class AbstractTable
         }
 
         return $sorting;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return int
+     */
+    protected function getDefaultSortIndex(TableConfiguration $config)
+    {
+        $index = null;
+        $field = $config->getDefaultSortField();
+        if ($field) {
+            $availableFields = array_keys($config->getHeader());
+            $index = array_keys($availableFields, $field, true);
+            $index = array_shift($index);
+        }
+        if ($index === null) {
+            $index = $config->getDefaultSortColumnIndex();
+        }
+
+        return $index;
     }
 
     /**

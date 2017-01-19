@@ -46,6 +46,13 @@ class TableConfiguration
     protected $sortableFields = [];
 
     /**
+     * @var string|null
+     */
+    protected $defaultSortField = null;
+
+    /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @var int
      */
     protected $defaultSortColumnIndex = 0;
@@ -221,6 +228,26 @@ class TableConfiguration
     }
 
     /**
+     * @param string $field
+     *
+     * @return void
+     */
+    public function setDefaultSortField($field)
+    {
+        $this->defaultSortField = $field;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortField()
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @param int $columnIndex
      *
      * @return void
@@ -231,7 +258,9 @@ class TableConfiguration
     }
 
     /**
-     * @return string
+     * @deprecated Use $defaultSortField instead.
+     *
+     * @return int
      */
     public function getDefaultSortColumnIndex()
     {
