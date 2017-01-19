@@ -94,6 +94,10 @@ class OutgoingGraphBuilder
         $dependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
         $dependencies = $this->getBundleNames($dependencies);
 
+        if ($bundleName === $this->bundleName) {
+            $dependencies = $this->filterBundles($dependencies);
+        }
+
         $allDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $allDependencies)) {
@@ -125,7 +129,7 @@ class OutgoingGraphBuilder
             }
         }
 
-        return $this->filterBundles($bundleNames);
+        return $bundleNames;
     }
 
     /**
