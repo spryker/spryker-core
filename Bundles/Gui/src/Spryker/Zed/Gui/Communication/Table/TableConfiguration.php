@@ -58,6 +58,8 @@ class TableConfiguration
     protected $defaultSortColumnIndex = 0;
 
     /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @var string
      */
     protected $defaultSortDirection = self::SORT_ASC;
@@ -108,8 +110,6 @@ class TableConfiguration
     }
 
     /**
-     * @todo Zed Translation in Template
-     *
      * @param array $header Provide php names for table columns
      *   if you are going to user Propel Query as data population
      *
@@ -269,6 +269,8 @@ class TableConfiguration
     }
 
     /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @param string $direction
      *
      * @return void
@@ -279,6 +281,8 @@ class TableConfiguration
     }
 
     /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @return string
      */
     public function getDefaultSortDirection()
