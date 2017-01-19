@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Auth\Token;
+namespace Spryker\Service\UtilText\Model\Token;
 
-class TokenService implements TokenServiceInterface
+class Token implements TokenInterface
 {
 
     /**

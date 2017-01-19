@@ -98,4 +98,20 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
         return $this->getFactory()->createSeparatorToCamelCase()->filter($string, $separator, $upperCaseFirst);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generateToken($rawToken)
+    {
+        return $this->getFactory()->createToken()->generate($rawToken);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function checkToken($rawToken, $hash)
+    {
+        return $this->getFactory()->createToken()->check($rawToken, $hash);
+    }
+
 }

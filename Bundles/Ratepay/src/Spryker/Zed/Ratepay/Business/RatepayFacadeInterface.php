@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayBusinessFactory getFactory()
@@ -249,11 +249,11 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     * @param \Psr\Log\LoggerInterface|null $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null);
+    public function install(LoggerInterface $messenger = null);
 
     /**
      * Specification:

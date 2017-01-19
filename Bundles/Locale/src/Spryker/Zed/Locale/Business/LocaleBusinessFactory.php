@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
@@ -39,11 +39,11 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller
      */
-    public function createInstaller(MessengerInterface $messenger)
+    public function createInstaller(LoggerInterface $messenger)
     {
         $installer = new LocaleInstaller(
             $this->getQueryContainer(),

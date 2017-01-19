@@ -5,15 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Shared\Url;
+namespace Unit\Spryker\Service\UtilText\Model\Url;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
- * @group Functional
+ * @group Unit
  * @group Spryker
- * @group Shared
+ * @group Service
+ * @group UtilText
+ * @group Model
  * @group Url
  * @group UrlTest
  */

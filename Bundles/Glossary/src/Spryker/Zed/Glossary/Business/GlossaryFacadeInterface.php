@@ -10,7 +10,7 @@ namespace Spryker\Zed\Glossary\Business;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 
 interface GlossaryFacadeInterface
 {
@@ -263,11 +263,11 @@ interface GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     * @param \Psr\Log\LoggerInterface|null $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null);
+    public function install(LoggerInterface $messenger = null);
 
     /**
      * @api

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Setup\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Setup\Business\Internal\Install;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
@@ -202,11 +202,11 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Product\Business\Internal\Install
      */
-    public function createTestDataInstaller(MessengerInterface $messenger)
+    public function createTestDataInstaller(LoggerInterface $messenger)
     {
         $installer = new Install();
         $installer->setMessenger($messenger);

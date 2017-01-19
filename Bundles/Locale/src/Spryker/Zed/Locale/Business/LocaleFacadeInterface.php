@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 
 interface LocaleFacadeInterface
 {
@@ -135,11 +135,11 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger);
+    public function install(LoggerInterface $messenger);
 
     /**
      * Specification:

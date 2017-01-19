@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Setup\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -87,11 +87,11 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     * @param \Psr\Log\LoggerInterface|null $messenger
      *
      * @return void
      */
-    public function installTestData(MessengerInterface $messenger)
+    public function installTestData(LoggerInterface $messenger)
     {
         $this->getFactory()->createTestDataInstaller($messenger)->install();
     }

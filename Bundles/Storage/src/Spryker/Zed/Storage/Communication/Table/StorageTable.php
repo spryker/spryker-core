@@ -9,7 +9,7 @@ namespace Spryker\Zed\Storage\Communication\Table;
 
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface;
@@ -32,7 +32,7 @@ class IndexMapInstaller implements SearchInstallerInterface
     protected $indexMapGenerator;
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 
@@ -40,13 +40,13 @@ class IndexMapInstaller implements SearchInstallerInterface
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface $indexMapCleaner
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface $indexMapGenerator
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
         IndexMapCleanerInterface $indexMapCleaner,
         IndexMapGeneratorInterface $indexMapGenerator,
-        MessengerInterface $messenger
+        LoggerInterface $messenger
     ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->indexMapCleaner = $indexMapCleaner;

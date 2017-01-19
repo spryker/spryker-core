@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 
-abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
+abstract class AbstractInstaller extends AbstractLogger
 {
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 
@@ -24,11 +24,11 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     abstract public function install();
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return $this
      */
-    public function setMessenger(MessengerInterface $messenger)
+    public function setMessenger(LoggerInterface $messenger)
     {
         $this->messenger = $messenger;
 

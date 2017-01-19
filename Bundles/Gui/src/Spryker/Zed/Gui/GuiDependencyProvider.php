@@ -19,6 +19,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunct
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -35,10 +36,34 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::GUI_TWIG_FUNCTIONS] = function () {
+        $container = $this->addTwigFunctions($container);
+        $container = $this->addTwigFilter($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTwigFunctions(Container $container)
+    {
+        $container[static::GUI_TWIG_FUNCTIONS] = function () {
             return $this->getTwigFunctions();
         };
-        $container[self::GUI_TWIG_FILTERS] = function () {
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTwigFilter(Container $container)
+    {
+        $container[static::GUI_TWIG_FILTERS] = function () {
             return $this->getTwigFilters();
         };
 
@@ -53,6 +78,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new AssetsPathFunction(),
             new TabsFunction(),
+            new UrlFunction(),
             // navigation buttons
             new BackActionButtonFunction(),
             new CreateActionButtonFunction(),

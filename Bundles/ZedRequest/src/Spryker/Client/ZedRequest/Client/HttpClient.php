@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ZedRequest\Client;
 
-use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
+use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 
 class HttpClient extends AbstractHttpClient implements HttpClientInterface
@@ -25,23 +25,29 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     protected $isAuthenticationEnabled;
 
     /**
-     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
+     * @var \Spryker\Service\UtilText\UtilTextServiceInterface
+     */
+    protected $utilTextService;
+
+    /**
      * @param string $baseUrl
      * @param string $rawToken
      * @param bool $isAuthenticationEnabled
+     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(
-        AuthClientInterface $authClient,
         $baseUrl,
         $rawToken,
         $isAuthenticationEnabled,
+        UtilTextServiceInterface $utilTextService,
         UtilNetworkServiceInterface $utilNetworkService
     ) {
-        parent::__construct($authClient, $baseUrl, $utilNetworkService);
+        parent::__construct($baseUrl, $utilNetworkService);
 
         $this->rawToken = $rawToken;
         $this->isAuthenticationEnabled = $isAuthenticationEnabled;
+        $this->utilTextService = $utilTextService;
     }
 
     /**
@@ -53,7 +59,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
 
         if ($this->isAuthenticationEnabled) {
             $headers = [
-                'Auth-Token' => $this->authClient->generateToken($this->rawToken),
+                'Auth-Token' => $this->utilTextService->generateToken($this->rawToken),
             ];
         }
 

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
@@ -20,11 +20,11 @@ class CountryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Country\Business\Internal\Install
      */
-    public function createInstaller(MessengerInterface $messenger)
+    public function createInstaller(LoggerInterface $messenger)
     {
         $installer = new Install(
             $this->createCountryManager(),

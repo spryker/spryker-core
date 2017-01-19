@@ -9,13 +9,12 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use LogicException;
+use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\UtilTextService;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Twig_Environment;
@@ -613,9 +612,9 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
+                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
                 // @todo fix this in CD-412
-                if ($sqlDriver === 'pgsql') {
+                if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }
 
@@ -814,7 +813,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Shared\Url\Url $url
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions

@@ -98,6 +98,16 @@ interface DevelopmentFacadeInterface
     public function buildDependencyTree($application, $bundle, $layer);
 
     /**
+     * Specification:
+     * - Calculates the stability of each bundle.
+
+     * @api
+     *
+     * @return array
+     */
+    public function calculateStability();
+
+    /**
      * @api
      *
      * @param string|bool $bundleToView

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

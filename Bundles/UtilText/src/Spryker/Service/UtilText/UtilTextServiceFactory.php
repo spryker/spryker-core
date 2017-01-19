@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Filter\SeparatorToCamelCase;
 use Spryker\Service\UtilText\Model\Hash;
 use Spryker\Service\UtilText\Model\Slug;
 use Spryker\Service\UtilText\Model\StringGenerator;
+use Spryker\Service\UtilText\Model\Token\Token;
 
 class UtilTextServiceFactory extends AbstractServiceFactory
 {
@@ -55,6 +56,22 @@ class UtilTextServiceFactory extends AbstractServiceFactory
     public function createSeparatorToCamelCase()
     {
         return new SeparatorToCamelCase();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\Model\Token\TokenInterface
+     */
+    public function createToken()
+    {
+        return new Token();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\Model\Token\TokenInterface
+     */
+    public function createUrl()
+    {
+        return new Token();
     }
 
 }

@@ -17,7 +17,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $this->addSuccessMessage('cart.remove.items.success');
     }
 
 }

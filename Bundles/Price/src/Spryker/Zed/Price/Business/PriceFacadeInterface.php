@@ -10,7 +10,7 @@ namespace Spryker\Zed\Price\Business;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 
 interface PriceFacadeInterface
 {
@@ -108,11 +108,11 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger);
+    public function install(LoggerInterface $messenger);
 
     /**
      * - Searches for a persisted price in database that has the given SKU for the given price type.

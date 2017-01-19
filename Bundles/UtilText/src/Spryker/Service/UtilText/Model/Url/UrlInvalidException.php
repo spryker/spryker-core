@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Messenger\Business\Model;
+namespace Spryker\Service\UtilText\Model\Url;
 
-use Psr\Log\LoggerInterface;
+use Exception;
 
-interface MessengerInterface extends LoggerInterface
+class UrlInvalidException extends Exception
 {
 }

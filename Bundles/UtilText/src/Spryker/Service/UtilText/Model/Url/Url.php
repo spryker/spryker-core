@@ -5,10 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Url;
-
-use Spryker\Service\UtilSanitize\UtilSanitizeService;
-use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
+namespace Spryker\Service\UtilText\Model\Url;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.
@@ -70,7 +67,7 @@ class Url
      *
      * @param string $url Full URL used to create a Url object
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlInvalidException
+     * @throws \Spryker\Service\UtilText\Model\Url\UrlInvalidException
      *
      * @return $this
      */
@@ -170,9 +167,22 @@ class Url
      */
     public function buildEscaped()
     {
-        $utilSanitizeService = new UtilSanitizeService();
+        return $this->escape($this->build());
+    }
 
-        return $utilSanitizeService->escapeHtml($this->build());
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function escape($url)
+    {
+        $charset = mb_internal_encoding();
+        if ($charset === null) {
+            $charset = 'UTF-8';
+        }
+
+        return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
     }
 
     /**

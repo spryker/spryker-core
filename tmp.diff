@@ -1,0 +1,2327 @@
+#	modified:   Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/GroupTable.php
+#	modified:   Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/RoleTable.php
+#	modified:   Bundles/Application/src/Spryker/Zed/Application/Communication/Controller/IndexController.php
+#	modified:   Bundles/Auth/src/Spryker/Client/Auth/AuthClient.php
+#	modified:   Bundles/Auth/src/Spryker/Client/Auth/AuthClientInterface.php
+#	modified:   Bundles/Auth/src/Spryker/Client/Auth/AuthFactory.php
+#	modified:   Bundles/Auth/src/Spryker/Zed/Auth/Communication/Plugin/ServiceProvider/RedirectAfterLoginProvider.php
+#	deleted:    Bundles/Auth/tests/ClientUnit.suite.yml
+#	deleted:    Bundles/Auth/tests/ClientUnit/_bootstrap.php
+#	modified:   Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityAbstractTable.php
+#	modified:   Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityTable.php
+#	modified:   Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Table/Payments.php
+#	modified:   Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/CreateController.php
+#	modified:   Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/EditController.php
+#	modified:   Bundles/Category/src/Spryker/Zed/Category/Communication/Table/RootNodeTable.php
+#	modified:   Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsBlockTable.php
+#	modified:   Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsGlossaryTable.php
+#	modified:   Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsPageTable.php
+#	modified:   Bundles/Country/src/Spryker/Zed/Country/Business/CountryBusinessFactory.php
+#	modified:   Bundles/Country/tests/Functional/Spryker/Zed/Country/CountryFacadeTest.php
+#	modified:   Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Table/CustomerTable.php
+#	modified:   Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/AbstractDependencyFinder.php
+#	modified:   Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentFacadeInterface.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/IndexController.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/VoucherController.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountVoucherCodesTable.php
+#	modified:   Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountsTable.php
+#	modified:   Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryBusinessFactory.php
+#	modified:   Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacade.php
+#	modified:   Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacadeInterface.php
+#	modified:   Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Table/TranslationTable.php
+#	modified:   Bundles/Gui/src/Spryker/Shared/Gui/Form/AbstractForm.php
+#	new file:   Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlFunction.php
+#	modified:   Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
+#	modified:   Bundles/Gui/src/Spryker/Zed/Gui/GuiDependencyProvider.php
+#	modified:   Bundles/Installer/src/Spryker/Zed/Installer/Business/Model/AbstractInstaller.php
+#	modified:   Bundles/Installer/src/Spryker/Zed/Installer/Communication/Plugin/AbstractInstallerPlugin.php
+#	modified:   Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleBusinessFactory.php
+#	modified:   Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacade.php
+#	modified:   Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacadeInterface.php
+#	modified:   Bundles/Payolution/src/Spryker/Zed/Payolution/Communication/Table/Payments.php
+#	modified:   Bundles/Price/src/Spryker/Zed/Price/Business/PriceBusinessFactory.php
+#	modified:   Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacade.php
+#	modified:   Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacadeInterface.php
+#	modified:   Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/VariantController.php
+#	modified:   Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/AttributeTable.php
+#	modified:   Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php
+#	modified:   Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/CreateController.php
+#	modified:   Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/EditController.php
+#	modified:   Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionListTable.php
+#	modified:   Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionTable.php
+#	modified:   Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayBusinessFactory.php
+#	modified:   Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacade.php
+#	modified:   Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacadeInterface.php
+#	modified:   Bundles/Sales/src/Spryker/Zed/Sales/Communication/Controller/EditController.php
+#	modified:   Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php
+#	modified:   Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php
+#	modified:   Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexMapInstaller.php
+#	modified:   Bundles/Search/src/Spryker/Zed/Search/Business/SearchBusinessFactory.php
+#	modified:   Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php
+#	modified:   Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacadeInterface.php
+#	modified:   Bundles/Search/tests/Unit/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstallerTest.php
+#	modified:   Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupBusinessFactory.php
+#	modified:   Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacade.php
+#	modified:   Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacadeInterface.php
+#	modified:   Bundles/Shipment/src/Spryker/Zed/Shipment/Communication/Table/MethodTable.php
+#	modified:   Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Controller/GraphController.php
+#	modified:   Bundles/Storage/src/Spryker/Zed/Storage/Communication/Table/StorageTable.php
+#	modified:   Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/RateController.php
+#	modified:   Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/SetController.php
+#	modified:   Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/RateTable.php
+#	modified:   Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/SetTable.php
+#	modified:   Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferBusinessFactoryTest.php
+#	modified:   Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferFacadeTest.php
+#	modified:   Bundles/Url/tests/Unit/Spyrker/Shared/Url/UrlTest.php
+#	modified:   Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php
+#	renamed:    Bundles/Auth/src/Spryker/Client/Auth/Token/TokenService.php -> Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php
+#	renamed:    Bundles/Auth/src/Spryker/Client/Auth/Token/TokenServiceInterface.php -> Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/TokenInterface.php
+#	renamed:    Bundles/Url/src/Spryker/Shared/Url/Url.php -> Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php
+#	renamed:    Bundles/Messenger/src/Spryker/Zed/Messenger/Business/Model/MessengerInterface.php -> Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/UrlInvalidException.php
+#	modified:   Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextService.php
+#	modified:   Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceFactory.php
+#	modified:   Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceInterface.php
+#	renamed:    Bundles/Auth/tests/ClientUnit/Spryker/Client/Auth/Token/TokenServiceTest.php -> Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Token/TokenTest.php
+#	renamed:    Bundles/Url/tests/Functional/Spryker/Shared/Url/UrlTest.php -> Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Url/UrlTest.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestConfig.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestDependencyProvider.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestFactory.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php
+#	modified:   Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/ZedRequestConstants.php
+#	modified:   Bundles/ZedRequest/tests/Unit/Spryker/Shared/ZedRequest/Client/AbstractHttpClientTest.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+diff --git a/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/GroupTable.php b/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/GroupTable.php
+index c6d3082..9455de6 100644
+--- a/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/GroupTable.php
++++ b/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/GroupTable.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
+ use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
+ use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/RoleTable.php b/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/RoleTable.php
+index 263ea3f..be858aa 100644
+--- a/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/RoleTable.php
++++ b/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Table/RoleTable.php
+@@ -9,8 +9,8 @@ namespace Spryker\Zed\Acl\Communication\Table;
+
+ use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Acl\AclConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Application/src/Spryker/Zed/Application/Communication/Controller/IndexController.php b/Bundles/Application/src/Spryker/Zed/Application/Communication/Controller/IndexController.php
+index 5bd41ea..6d786a6 100644
+--- a/Bundles/Application/src/Spryker/Zed/Application/Communication/Controller/IndexController.php
++++ b/Bundles/Application/src/Spryker/Zed/Application/Communication/Controller/IndexController.php
+@@ -17,7 +17,6 @@ class IndexController extends AbstractController
+      */
+     public function indexAction()
+     {
+-        $this->addSuccessMessage('cart.remove.items.success');
+     }
+
+ }
+diff --git a/Bundles/Auth/src/Spryker/Client/Auth/AuthClient.php b/Bundles/Auth/src/Spryker/Client/Auth/AuthClient.php
+index 0010d79..d5b129c 100644
+--- a/Bundles/Auth/src/Spryker/Client/Auth/AuthClient.php
++++ b/Bundles/Auth/src/Spryker/Client/Auth/AuthClient.php
+@@ -14,38 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
+  */
+ class AuthClient extends AbstractClient implements AuthClientInterface
+ {
+-
+-    /**
+-     * @api
+-     *
+-     * @param string $rawToken
+-     *
+-     * @return string
+-     */
+-    public function generateToken($rawToken)
+-    {
+-        return $this->getTokenService()->generate($rawToken);
+-    }
+-
+-    /**
+-     * @api
+-     *
+-     * @param string $rawToken
+-     * @param string $hash
+-     *
+-     * @return bool
+-     */
+-    public function checkToken($rawToken, $hash)
+-    {
+-        return $this->getTokenService()->check($rawToken, $hash);
+-    }
+-
+-    /**
+-     * @return \Spryker\Client\Auth\Token\TokenService
+-     */
+-    private function getTokenService()
+-    {
+-        return $this->getFactory()->createTokenService();
+-    }
+-
+ }
+diff --git a/Bundles/Auth/src/Spryker/Client/Auth/AuthClientInterface.php b/Bundles/Auth/src/Spryker/Client/Auth/AuthClientInterface.php
+index 178fc6d..c9e380b 100644
+--- a/Bundles/Auth/src/Spryker/Client/Auth/AuthClientInterface.php
++++ b/Bundles/Auth/src/Spryker/Client/Auth/AuthClientInterface.php
+@@ -9,24 +9,4 @@ namespace Spryker\Client\Auth;
+
+ interface AuthClientInterface
+ {
+-
+-    /**
+-     * @api
+-     *
+-     * @param string $rawToken
+-     *
+-     * @return string
+-     */
+-    public function generateToken($rawToken);
+-
+-    /**
+-     * @api
+-     *
+-     * @param string $rawToken
+-     * @param string $token
+-     *
+-     * @return bool
+-     */
+-    public function checkToken($rawToken, $token);
+-
+ }
+diff --git a/Bundles/Auth/src/Spryker/Client/Auth/AuthFactory.php b/Bundles/Auth/src/Spryker/Client/Auth/AuthFactory.php
+index 2085297..b470141 100644
+--- a/Bundles/Auth/src/Spryker/Client/Auth/AuthFactory.php
++++ b/Bundles/Auth/src/Spryker/Client/Auth/AuthFactory.php
+@@ -7,18 +7,8 @@
+
+ namespace Spryker\Client\Auth;
+
+-use Spryker\Client\Auth\Token\TokenService;
+ use Spryker\Client\Kernel\AbstractFactory;
+
+ class AuthFactory extends AbstractFactory
+ {
+-
+-    /**
+-     * @return \Spryker\Client\Auth\Token\TokenService
+-     */
+-    public function createTokenService()
+-    {
+-        return new TokenService();
+-    }
+-
+ }
+diff --git a/Bundles/Auth/src/Spryker/Zed/Auth/Communication/Plugin/ServiceProvider/RedirectAfterLoginProvider.php b/Bundles/Auth/src/Spryker/Zed/Auth/Communication/Plugin/ServiceProvider/RedirectAfterLoginProvider.php
+index 61f8ade..5498b2a 100644
+--- a/Bundles/Auth/src/Spryker/Zed/Auth/Communication/Plugin/ServiceProvider/RedirectAfterLoginProvider.php
++++ b/Bundles/Auth/src/Spryker/Zed/Auth/Communication/Plugin/ServiceProvider/RedirectAfterLoginProvider.php
+@@ -9,8 +9,8 @@ namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
+
+ use Silex\Application;
+ use Silex\ServiceProviderInterface;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Auth\AuthConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Auth\AuthConfig;
+ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+ use Symfony\Component\HttpFoundation\RedirectResponse;
+diff --git a/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityAbstractTable.php b/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityAbstractTable.php
+index f3daacb..71b0cb9 100644
+--- a/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityAbstractTable.php
++++ b/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityAbstractTable.php
+@@ -10,7 +10,7 @@ use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+ use Orm\Zed\Product\Persistence\SpyProductAbstract;
+ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityTable.php b/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityTable.php
+index a0c36ba..06cffc0 100644
+--- a/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityTable.php
++++ b/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Table/AvailabilityTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Availability\Communication\Table;
+ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Table/Payments.php b/Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Table/Payments.php
+index d919921..47987c4 100644
+--- a/Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Table/Payments.php
++++ b/Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Table/Payments.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Braintree\Communication\Table;
+
+ use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTableMap;
+ use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/CreateController.php b/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/CreateController.php
+index 457a0dd..5a1e110 100644
+--- a/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/CreateController.php
++++ b/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/CreateController.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Category\Communication\Controller;
+
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Category\CategoryConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\Form\FormInterface;
+diff --git a/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/EditController.php b/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/EditController.php
+index b2004b9..9821ae3 100644
+--- a/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/EditController.php
++++ b/Bundles/Category/src/Spryker/Zed/Category/Communication/Controller/EditController.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Category\Communication\Controller;
+
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Category\CategoryConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\Form\FormInterface;
+diff --git a/Bundles/Category/src/Spryker/Zed/Category/Communication/Table/RootNodeTable.php b/Bundles/Category/src/Spryker/Zed/Category/Communication/Table/RootNodeTable.php
+index d79f2af..ab36c2f 100644
+--- a/Bundles/Category/src/Spryker/Zed/Category/Communication/Table/RootNodeTable.php
++++ b/Bundles/Category/src/Spryker/Zed/Category/Communication/Table/RootNodeTable.php
+@@ -7,8 +7,8 @@
+ namespace Spryker\Zed\Category\Communication\Table;
+
+ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Category\CategoryConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsBlockTable.php b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsBlockTable.php
+index c318001..8e1370e 100644
+--- a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsBlockTable.php
++++ b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsBlockTable.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cms\Communication\Table;
+ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+ use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+ use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsGlossaryTable.php b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsGlossaryTable.php
+index da13001..552be09 100644
+--- a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsGlossaryTable.php
++++ b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsGlossaryTable.php
+@@ -12,7 +12,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+ use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsPageTable.php b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsPageTable.php
+index 53a3b21..a82cb28 100644
+--- a/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsPageTable.php
++++ b/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Table/CmsPageTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cms\Communication\Table;
+
+ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+ use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Country/src/Spryker/Zed/Country/Business/CountryBusinessFactory.php b/Bundles/Country/src/Spryker/Zed/Country/Business/CountryBusinessFactory.php
+index 819c948..45aa263 100644
+--- a/Bundles/Country/src/Spryker/Zed/Country/Business/CountryBusinessFactory.php
++++ b/Bundles/Country/src/Spryker/Zed/Country/Business/CountryBusinessFactory.php
+@@ -7,10 +7,10 @@
+
+ namespace Spryker\Zed\Country\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
+ use Spryker\Zed\Country\Business\Internal\Install;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Country\CountryConfig getConfig()
+@@ -20,11 +20,11 @@ class CountryBusinessFactory extends AbstractBusinessFactory
+ {
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Country\Business\Internal\Install
+      */
+-    public function createInstaller(MessengerInterface $messenger)
++    public function createInstaller(LoggerInterface $messenger)
+     {
+         $installer = new Install(
+             $this->createCountryManager(),
+diff --git a/Bundles/Country/tests/Functional/Spryker/Zed/Country/CountryFacadeTest.php b/Bundles/Country/tests/Functional/Spryker/Zed/Country/CountryFacadeTest.php
+index 2fdbcc3..e191199 100644
+--- a/Bundles/Country/tests/Functional/Spryker/Zed/Country/CountryFacadeTest.php
++++ b/Bundles/Country/tests/Functional/Spryker/Zed/Country/CountryFacadeTest.php
+@@ -9,9 +9,9 @@ namespace Functional\Spryker\Zed\Country;
+
+ use Codeception\TestCase\Test;
+ use Orm\Zed\Country\Persistence\SpyCountry;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Country\Business\CountryFacade;
+ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @group Functional
+@@ -47,11 +47,11 @@ class CountryFacadeTest extends Test
+     }
+
+     /**
+-     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @return \Psr\Log\LoggerInterface
+      */
+     protected function getMockLogger()
+     {
+-        return $this->getMockBuilder(MessengerInterface::class)->getMock();
++        return $this->getMockBuilder(LoggerInterface::class)->getMock();
+     }
+
+     /**
+diff --git a/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Table/CustomerTable.php b/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Table/CustomerTable.php
+index 0be1802..c230fca 100644
+--- a/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Table/CustomerTable.php
++++ b/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Table/CustomerTable.php
+@@ -12,7 +12,7 @@ use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
+ use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
+ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+ use Propel\Runtime\Collection\ObjectCollection;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/AbstractDependencyFinder.php b/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/AbstractDependencyFinder.php
+index ca59116..f233e1d 100644
+--- a/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/AbstractDependencyFinder.php
++++ b/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/AbstractDependencyFinder.php
+@@ -11,6 +11,7 @@ use Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree;
+ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
+ use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
+ use Symfony\Component\Finder\SplFileInfo;
++use Symfony\Component\VarDumper\VarDumper;
+
+ abstract class AbstractDependencyFinder
+ {
+@@ -86,7 +87,7 @@ abstract class AbstractDependencyFinder
+         }
+
+         if ($fileInfo->getExtension() !== 'php') {
+-            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
++            echo '<pre>' . PHP_EOL . VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+         }
+
+         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
+diff --git a/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentFacadeInterface.php b/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentFacadeInterface.php
+index b7e3d37..2fcc13c 100644
+--- a/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentFacadeInterface.php
++++ b/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentFacadeInterface.php
+@@ -98,6 +98,16 @@ interface DevelopmentFacadeInterface
+     public function buildDependencyTree($application, $bundle, $layer);
+
+     /**
++     * Specification:
++     * - Calculates the stability of each bundle.
++
++     * @api
++     *
++     * @return array
++     */
++    public function calculateStability();
++
++    /**
+      * @api
+      *
+      * @param string|bool $bundleToView
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/IndexController.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/IndexController.php
+index aba8ef4..3d9d6d7 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/IndexController.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/IndexController.php
+@@ -8,8 +8,8 @@ namespace Spryker\Zed\Discount\Communication\Controller;
+
+ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Discount\DiscountConstants;
+-use Spryker\Shared\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\TableParameters;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\Form\FormInterface;
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/VoucherController.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/VoucherController.php
+index c45cf20..2b05a68 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/VoucherController.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Controller/VoucherController.php
+@@ -6,7 +6,7 @@
+
+ namespace Spryker\Zed\Discount\Communication\Controller;
+
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\RedirectResponse;
+ use Symfony\Component\HttpFoundation\Request;
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php
+index 2477dc8..5d8471b 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php
+@@ -6,7 +6,7 @@
+
+ namespace Spryker\Zed\Discount\Communication\Form;
+
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Discount\Business\DiscountFacade;
+ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
+ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php
+index 9133fba..31c1d10 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php
+@@ -6,7 +6,7 @@
+
+ namespace Spryker\Zed\Discount\Communication\Form;
+
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Discount\Business\DiscountFacade;
+ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
+ use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountVoucherCodesTable.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountVoucherCodesTable.php
+index 6ff6164..37e267c 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountVoucherCodesTable.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountVoucherCodesTable.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
+ use Generated\Shared\Transfer\DataTablesTransfer;
+ use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountsTable.php b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountsTable.php
+index c6208f9..5cba212 100644
+--- a/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountsTable.php
++++ b/Bundles/Discount/src/Spryker/Zed/Discount/Communication/Table/DiscountsTable.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
+ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
+ use Orm\Zed\Discount\Persistence\SpyDiscount;
+ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+@@ -237,7 +237,7 @@ class DiscountsTable extends AbstractTable
+     }
+
+     /**
+-     * @param \Spryker\Shared\Url\Url $viewDiscountUrl
++     * @param \Spryker\Service\UtilText\Model\Url\Url $viewDiscountUrl
+      * @param string $visibility
+      *
+      * @return string
+diff --git a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryBusinessFactory.php b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryBusinessFactory.php
+index 5e43c7a..5f0a558 100644
+--- a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryBusinessFactory.php
++++ b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryBusinessFactory.php
+@@ -7,12 +7,12 @@
+
+ namespace Spryker\Zed\Glossary\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller;
+ use Spryker\Zed\Glossary\Business\Key\KeyManager;
+ use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
+ use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+@@ -72,7 +72,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
+     /**
+      * @return \Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller
+      */
+-    public function createInstaller(MessengerInterface $messenger)
++    public function createInstaller(LoggerInterface $messenger)
+     {
+         $installer = new GlossaryInstaller(
+             $this->createTranslationManager(),
+diff --git a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacade.php b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacade.php
+index e8d0687..1b3cfee 100644
+--- a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacade.php
++++ b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacade.php
+@@ -10,8 +10,8 @@ namespace Spryker\Zed\Glossary\Business;
+ use Generated\Shared\Transfer\KeyTranslationTransfer;
+ use Generated\Shared\Transfer\LocaleTransfer;
+ use Generated\Shared\Transfer\TranslationTransfer;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
+@@ -338,11 +338,11 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
+     /**
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
++     * @param \Psr\Log\LoggerInterface|null $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger = null)
++    public function install(LoggerInterface $messenger = null)
+     {
+         $this->getFactory()->createInstaller($messenger)->install();
+     }
+diff --git a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacadeInterface.php b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacadeInterface.php
+index 3422290..5ac3ff5 100644
+--- a/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacadeInterface.php
++++ b/Bundles/Glossary/src/Spryker/Zed/Glossary/Business/GlossaryFacadeInterface.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Glossary\Business;
+ use Generated\Shared\Transfer\KeyTranslationTransfer;
+ use Generated\Shared\Transfer\LocaleTransfer;
+ use Generated\Shared\Transfer\TranslationTransfer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+
+ interface GlossaryFacadeInterface
+ {
+@@ -263,11 +263,11 @@ interface GlossaryFacadeInterface
+     /**
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
++     * @param \Psr\Log\LoggerInterface|null $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger = null);
++    public function install(LoggerInterface $messenger = null);
+
+     /**
+      * @api
+diff --git a/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Table/TranslationTable.php b/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Table/TranslationTable.php
+index 9b8ffcf..ffef947 100644
+--- a/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Table/TranslationTable.php
++++ b/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Table/TranslationTable.php
+@@ -13,7 +13,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
+ use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+ use Propel\Runtime\Map\TableMap;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Glossary\Communication\Controller\EditController;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+diff --git a/Bundles/Gui/src/Spryker/Shared/Gui/Form/AbstractForm.php b/Bundles/Gui/src/Spryker/Shared/Gui/Form/AbstractForm.php
+index c5611a4..1b23109 100644
+--- a/Bundles/Gui/src/Spryker/Shared/Gui/Form/AbstractForm.php
++++ b/Bundles/Gui/src/Spryker/Shared/Gui/Form/AbstractForm.php
+@@ -52,7 +52,7 @@ abstract class AbstractForm implements FormTypeInterface
+      */
+     public function setDefaultOptions(OptionsResolverInterface $resolver)
+     {
+-        if ($this->getDataClass() instanceof TransferInterface && !($this->getDataClass() instanceof NullFormTransfer)) {
++        if ($this->getDataClass() instanceof TransferInterface) {
+             $resolver->setDefault('data_class', get_class($this->getDataClass()));
+         }
+     }
+diff --git a/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlFunction.php b/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlFunction.php
+index 72ed7e3..f823b84 100644
+--- a/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlFunction.php
++++ b/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlFunction.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
+
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Shared\Twig\TwigFunction;
+-use Spryker\Shared\Url\Url;
+
+ class UrlFunction extends TwigFunction
+ {
+diff --git a/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php b/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
+index c84e800..c63843a 100644
+--- a/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
++++ b/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
+@@ -9,13 +9,12 @@ namespace Spryker\Zed\Gui\Communication\Table;
+
+ use Generated\Shared\Transfer\DataTablesColumnTransfer;
+ use LogicException;
++use PDO;
+ use Propel\Runtime\ActiveQuery\ModelCriteria;
+ use Propel\Runtime\Map\TableMap;
+ use Propel\Runtime\Propel;
+ use Spryker\Service\UtilSanitize\UtilSanitizeService;
+ use Spryker\Service\UtilText\UtilTextService;
+-use Spryker\Shared\Config\Config;
+-use Spryker\Shared\Propel\PropelConstants;
+ use Spryker\Zed\Gui\Communication\Form\DeleteForm;
+ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
+ use Twig_Environment;
+@@ -591,9 +590,9 @@ abstract class AbstractTable
+                 }
+
+                 $filter = '';
+-                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
++                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
+                 // @todo fix this in CD-412
+-                if ($sqlDriver === 'pgsql') {
++                if ($driverName === 'pgsql') {
+                     $filter = '::TEXT';
+                 }
+
+@@ -792,7 +791,7 @@ abstract class AbstractTable
+     }
+
+     /**
+-     * @param string|\Spryker\Shared\Url\Url $url
++     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+      * @param string $title
+      * @param array $defaultOptions
+      * @param array $customOptions
+diff --git a/Bundles/Gui/src/Spryker/Zed/Gui/GuiDependencyProvider.php b/Bundles/Gui/src/Spryker/Zed/Gui/GuiDependencyProvider.php
+index 1e35e06..00e4ea9 100644
+--- a/Bundles/Gui/src/Spryker/Zed/Gui/GuiDependencyProvider.php
++++ b/Bundles/Gui/src/Spryker/Zed/Gui/GuiDependencyProvider.php
+@@ -19,6 +19,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunct
+ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
+ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
+ use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
++use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+ use Spryker\Zed\Kernel\Container;
+
+@@ -35,10 +36,34 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
+      */
+     public function provideCommunicationLayerDependencies(Container $container)
+     {
+-        $container[self::GUI_TWIG_FUNCTIONS] = function () {
++        $container = $this->addTwigFunctions($container);
++        $container = $this->addTwigFilter($container);
++
++        return $container;
++    }
++
++    /**
++     * @param \Spryker\Zed\Kernel\Container $container
++     *
++     * @return \Spryker\Zed\Kernel\Container
++     */
++    protected function addTwigFunctions(Container $container)
++    {
++        $container[static::GUI_TWIG_FUNCTIONS] = function () {
+             return $this->getTwigFunctions();
+         };
+-        $container[self::GUI_TWIG_FILTERS] = function () {
++
++        return $container;
++    }
++
++    /**
++     * @param \Spryker\Zed\Kernel\Container $container
++     *
++     * @return \Spryker\Zed\Kernel\Container
++     */
++    protected function addTwigFilter(Container $container)
++    {
++        $container[static::GUI_TWIG_FILTERS] = function () {
+             return $this->getTwigFilters();
+         };
+
+@@ -53,6 +78,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
+         return [
+             new AssetsPathFunction(),
+             new TabsFunction(),
++            new UrlFunction(),
+             // navigation buttons
+             new BackActionButtonFunction(),
+             new CreateActionButtonFunction(),
+diff --git a/Bundles/Installer/src/Spryker/Zed/Installer/Business/Model/AbstractInstaller.php b/Bundles/Installer/src/Spryker/Zed/Installer/Business/Model/AbstractInstaller.php
+index fba7b71..7475761 100644
+--- a/Bundles/Installer/src/Spryker/Zed/Installer/Business/Model/AbstractInstaller.php
++++ b/Bundles/Installer/src/Spryker/Zed/Installer/Business/Model/AbstractInstaller.php
+@@ -8,13 +8,13 @@
+ namespace Spryker\Zed\Installer\Business\Model;
+
+ use Psr\Log\AbstractLogger;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+
+-abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
++abstract class AbstractInstaller extends AbstractLogger
+ {
+
+     /**
+-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @var \Psr\Log\LoggerInterface
+      */
+     protected $messenger;
+
+@@ -24,11 +24,11 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
+     abstract public function install();
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return $this
+      */
+-    public function setMessenger(MessengerInterface $messenger)
++    public function setMessenger(LoggerInterface $messenger)
+     {
+         $this->messenger = $messenger;
+
+diff --git a/Bundles/Installer/src/Spryker/Zed/Installer/Communication/Plugin/AbstractInstallerPlugin.php b/Bundles/Installer/src/Spryker/Zed/Installer/Communication/Plugin/AbstractInstallerPlugin.php
+index 9f4b0d5..1486a4e 100644
+--- a/Bundles/Installer/src/Spryker/Zed/Installer/Communication/Plugin/AbstractInstallerPlugin.php
++++ b/Bundles/Installer/src/Spryker/Zed/Installer/Communication/Plugin/AbstractInstallerPlugin.php
+@@ -7,9 +7,9 @@
+
+ namespace Spryker\Zed\Installer\Communication\Plugin;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Installer\Business\Model\InstallerPluginInterface;
+ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
+@@ -19,16 +19,16 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Install
+ {
+
+     /**
+-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @var \Psr\Log\LoggerInterface
+      */
+     protected $messenger;
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return $this
+      */
+-    public function setMessenger(MessengerInterface $messenger)
++    public function setMessenger(LoggerInterface $messenger)
+     {
+         $this->messenger = $messenger;
+
+@@ -45,7 +45,7 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Install
+      */
+     public function run()
+     {
+-        if ($this->messenger instanceof MessengerInterface) {
++        if ($this->messenger instanceof LoggerInterface) {
+             $this->messenger->debug('Running installer plugin: ' . get_class($this));
+         }
+
+diff --git a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleBusinessFactory.php b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleBusinessFactory.php
+index 777353b..e16910e 100644
+--- a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleBusinessFactory.php
++++ b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleBusinessFactory.php
+@@ -7,10 +7,10 @@
+
+ namespace Spryker\Zed\Locale\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+ use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
+ use Spryker\Zed\Locale\Business\Manager\LocaleManager;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
+@@ -39,11 +39,11 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller
+      */
+-    public function createInstaller(MessengerInterface $messenger)
++    public function createInstaller(LoggerInterface $messenger)
+     {
+         $installer = new LocaleInstaller(
+             $this->getQueryContainer(),
+diff --git a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacade.php b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacade.php
+index aaf8b46..8c4685e 100644
+--- a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacade.php
++++ b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacade.php
+@@ -7,9 +7,9 @@
+
+ namespace Spryker\Zed\Locale\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Shared\Kernel\Store;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
+@@ -177,11 +177,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger)
++    public function install(LoggerInterface $messenger)
+     {
+         $this->getFactory()->createInstaller($messenger)->install();
+     }
+diff --git a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacadeInterface.php b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacadeInterface.php
+index 1dcf3eb..c315fb9 100644
+--- a/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacadeInterface.php
++++ b/Bundles/Locale/src/Spryker/Zed/Locale/Business/LocaleFacadeInterface.php
+@@ -7,7 +7,7 @@
+
+ namespace Spryker\Zed\Locale\Business;
+
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+
+ interface LocaleFacadeInterface
+ {
+@@ -135,11 +135,11 @@ interface LocaleFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger);
++    public function install(LoggerInterface $messenger);
+
+     /**
+      * Specification:
+diff --git a/Bundles/Payolution/src/Spryker/Zed/Payolution/Communication/Table/Payments.php b/Bundles/Payolution/src/Spryker/Zed/Payolution/Communication/Table/Payments.php
+index f3c1d8f..e62212f 100644
+--- a/Bundles/Payolution/src/Spryker/Zed/Payolution/Communication/Table/Payments.php
++++ b/Bundles/Payolution/src/Spryker/Zed/Payolution/Communication/Table/Payments.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Payolution\Communication\Table;
+
+ use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceBusinessFactory.php b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceBusinessFactory.php
+index 5471496..001c57b 100644
+--- a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceBusinessFactory.php
++++ b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceBusinessFactory.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Price\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Spryker\Zed\Price\Business\Internal\Install;
+ use Spryker\Zed\Price\Business\Model\BulkWriter;
+ use Spryker\Zed\Price\Business\Model\Reader;
+@@ -77,11 +77,11 @@ class PriceBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller
+      */
+-    public function createInstaller(MessengerInterface $messenger)
++    public function createInstaller(LoggerInterface $messenger)
+     {
+         $installer = new Install(
+             $this->createWriterModel(),
+diff --git a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacade.php b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacade.php
+index 8aa047d..0c77db4 100644
+--- a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacade.php
++++ b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacade.php
+@@ -10,8 +10,8 @@ namespace Spryker\Zed\Price\Business;
+ use Generated\Shared\Transfer\PriceProductTransfer;
+ use Generated\Shared\Transfer\ProductAbstractTransfer;
+ use Generated\Shared\Transfer\ProductConcreteTransfer;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Price\Business\PriceBusinessFactory getFactory()
+@@ -132,11 +132,11 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger)
++    public function install(LoggerInterface $messenger)
+     {
+         $this->getFactory()->createInstaller($messenger)->install();
+     }
+diff --git a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacadeInterface.php b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacadeInterface.php
+index 123aed1..c9b0127 100644
+--- a/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacadeInterface.php
++++ b/Bundles/Price/src/Spryker/Zed/Price/Business/PriceFacadeInterface.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\Price\Business;
+ use Generated\Shared\Transfer\PriceProductTransfer;
+ use Generated\Shared\Transfer\ProductAbstractTransfer;
+ use Generated\Shared\Transfer\ProductConcreteTransfer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+
+ interface PriceFacadeInterface
+ {
+@@ -108,11 +108,11 @@ interface PriceFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger);
++    public function install(LoggerInterface $messenger);
+
+     /**
+      * - Searches for a persisted price in database that has the given SKU for the given price type.
+diff --git a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/VariantController.php b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/VariantController.php
+index d28862a..9e9fa38 100644
+--- a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/VariantController.php
++++ b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/VariantController.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
+ use ArrayObject;
+ use Generated\Shared\Transfer\ProductAbstractTransfer;
+ use Spryker\Service\UtilEncoding\Model\Json;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\JsonResponse;
+ use Symfony\Component\HttpFoundation\Request;
+diff --git a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/AttributeTable.php b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/AttributeTable.php
+index 564adda..b948f39 100644
+--- a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/AttributeTable.php
++++ b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/AttributeTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Table;
+
+ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
+ use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+diff --git a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php
+index 92b342d..7a8a4f3 100644
+--- a/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php
++++ b/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php
+@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
+ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+ use Orm\Zed\Product\Persistence\SpyProductAbstract;
+ use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
+ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+diff --git a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/CreateController.php b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/CreateController.php
+index 9f7e31e..f53e8f9 100644
+--- a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/CreateController.php
++++ b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/CreateController.php
+@@ -6,7 +6,7 @@
+
+ namespace Spryker\Zed\ProductOption\Communication\Controller;
+
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Symfony\Component\HttpFoundation\Request;
+
+ /**
+diff --git a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/EditController.php b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/EditController.php
+index 0c21a33..a030bec 100644
+--- a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/EditController.php
++++ b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Controller/EditController.php
+@@ -6,7 +6,7 @@
+
+ namespace Spryker\Zed\ProductOption\Communication\Controller;
+
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
+ use Symfony\Component\HttpFoundation\Request;
+
+diff --git a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionListTable.php b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionListTable.php
+index 771c6b14..5c3b6b7 100644
+--- a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionListTable.php
++++ b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionListTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
+ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
+ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
+@@ -266,7 +266,7 @@ class ProductOptionListTable extends AbstractTable
+     }
+
+     /**
+-     * @param \Spryker\Shared\Url\Url $viewDiscountUrl
++     * @param \Spryker\Service\UtilText\Model\Url\Url $viewDiscountUrl
+      * @param string $isActive
+      *
+      * @return string
+diff --git a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionTable.php b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionTable.php
+index 437cbf1..2b8ec0d 100644
+--- a/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionTable.php
++++ b/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Table/ProductOptionTable.php
+@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
+ use Generated\Shared\Transfer\LocaleTransfer;
+ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
+diff --git a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayBusinessFactory.php b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayBusinessFactory.php
+index 062db16..e57ac00 100644
+--- a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayBusinessFactory.php
++++ b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayBusinessFactory.php
+@@ -10,8 +10,8 @@ namespace Spryker\Zed\Ratepay\Business;
+ use Generated\Shared\Transfer\CheckoutResponseTransfer;
+ use Generated\Shared\Transfer\QuoteTransfer;
+ use Generated\Shared\Transfer\RatepayRequestTransfer;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle;
+ use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
+ use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
+@@ -408,11 +408,11 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Ratepay\Business\Internal\Install
+      */
+-    public function createInstaller(MessengerInterface $messenger)
++    public function createInstaller(LoggerInterface $messenger)
+     {
+         $installer = new Install(
+             $this->getGlossaryFacade(),
+diff --git a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacade.php b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacade.php
+index ace9f8a..9e0b9c8 100644
+--- a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacade.php
++++ b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacade.php
+@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
+ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+ use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+ use Generated\Shared\Transfer\RatepayResponseTransfer;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+
+ /**
+  * @method \Spryker\Zed\Ratepay\Business\RatepayBusinessFactory getFactory()
+@@ -327,11 +327,11 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
++     * @param \Psr\Log\LoggerInterface|null $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger = null)
++    public function install(LoggerInterface $messenger = null)
+     {
+         $this->getFactory()->createInstaller($messenger)->install();
+     }
+diff --git a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacadeInterface.php b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacadeInterface.php
+index 65f04a0..30f8ebc 100644
+--- a/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacadeInterface.php
++++ b/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/RatepayFacadeInterface.php
+@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
+ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+ use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+ use Generated\Shared\Transfer\RatepayResponseTransfer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+
+ /**
+  * @method \Spryker\Zed\Ratepay\Business\RatepayBusinessFactory getFactory()
+@@ -249,11 +249,11 @@ interface RatepayFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
++     * @param \Psr\Log\LoggerInterface|null $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger = null);
++    public function install(LoggerInterface $messenger = null);
+
+     /**
+      * Specification:
+diff --git a/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Controller/EditController.php b/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Controller/EditController.php
+index 9e2c3a5..0884172 100644
+--- a/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Controller/EditController.php
++++ b/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Controller/EditController.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales\Communication\Controller;
+
+ use Generated\Shared\Transfer\AddressTransfer;
+ use Generated\Shared\Transfer\OrderTransfer;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Spryker\Zed\Sales\SalesConfig;
+ use Symfony\Component\HttpFoundation\Request;
+diff --git a/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php b/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php
+index c488081..58c77f7 100644
+--- a/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php
++++ b/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php
+@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+ use Propel\Runtime\ActiveQuery\Criteria;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+ use Spryker\Service\UtilSanitize\UtilSanitizeService;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
+diff --git a/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php b/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php
+index 1e394c5..8441dfe 100644
+--- a/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php
++++ b/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php
+@@ -11,7 +11,7 @@ use Elastica\Client;
+ use Elastica\Index;
+ use Elastica\Type\Mapping;
+ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
+ use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
+
+@@ -29,16 +29,16 @@ class IndexInstaller implements SearchInstallerInterface
+     protected $elasticaClient;
+
+     /**
+-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @var \Psr\Log\LoggerInterface
+      */
+     protected $messenger;
+
+     /**
+      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
+      * @param \Elastica\Client $elasticaClient
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      */
+-    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, MessengerInterface $messenger)
++    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, LoggerInterface $messenger)
+     {
+         $this->indexDefinitionLoader = $indexDefinitionLoader;
+         $this->elasticaClient = $elasticaClient;
+diff --git a/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexMapInstaller.php b/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexMapInstaller.php
+index f43dd00..43abdad 100644
+--- a/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexMapInstaller.php
++++ b/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexMapInstaller.php
+@@ -7,7 +7,7 @@
+
+ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
+
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface;
+@@ -32,7 +32,7 @@ class IndexMapInstaller implements SearchInstallerInterface
+     protected $indexMapGenerator;
+
+     /**
+-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @var \Psr\Log\LoggerInterface
+      */
+     protected $messenger;
+
+@@ -40,13 +40,13 @@ class IndexMapInstaller implements SearchInstallerInterface
+      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
+      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface $indexMapCleaner
+      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface $indexMapGenerator
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      */
+     public function __construct(
+         IndexDefinitionLoaderInterface $indexDefinitionLoader,
+         IndexMapCleanerInterface $indexMapCleaner,
+         IndexMapGeneratorInterface $indexMapGenerator,
+-        MessengerInterface $messenger
++        LoggerInterface $messenger
+     ) {
+         $this->indexDefinitionLoader = $indexDefinitionLoader;
+         $this->indexMapCleaner = $indexMapCleaner;
+diff --git a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchBusinessFactory.php b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchBusinessFactory.php
+index 059e496..37100a7 100644
+--- a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchBusinessFactory.php
++++ b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchBusinessFactory.php
+@@ -7,11 +7,11 @@
+
+ namespace Spryker\Zed\Search\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Client\Search\Provider\IndexClientProvider;
+ use Spryker\Client\Search\Provider\SearchClientProvider;
+ use Spryker\Shared\Kernel\Store;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
+@@ -31,11 +31,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
+ {
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+      */
+-    public function createSearchInstaller(MessengerInterface $messenger)
++    public function createSearchInstaller(LoggerInterface $messenger)
+     {
+         return new SearchInstaller($this->getSearchInstallerStack($messenger));
+     }
+@@ -62,11 +62,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+      */
+-    protected function getSearchInstallerStack(MessengerInterface $messenger)
++    protected function getSearchInstallerStack(LoggerInterface $messenger)
+     {
+         return [
+             $this->createElasticsearchIndexInstaller($messenger),
+@@ -75,11 +75,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+      */
+-    protected function createElasticsearchIndexInstaller(MessengerInterface $messenger)
++    protected function createElasticsearchIndexInstaller(LoggerInterface $messenger)
+     {
+         return new IndexInstaller(
+             $this->createJsonIndexDefinitionLoader(),
+@@ -89,11 +89,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+      */
+-    protected function createIndexMapInstaller(MessengerInterface $messenger)
++    protected function createIndexMapInstaller(LoggerInterface $messenger)
+     {
+         return new IndexMapInstaller(
+             $this->createJsonIndexDefinitionLoader(),
+diff --git a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php
+index 941e432..80a0646 100644
+--- a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php
++++ b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php
+@@ -8,8 +8,8 @@
+ namespace Spryker\Zed\Search\Business;
+
+ use Generated\Shared\Transfer\LocaleTransfer;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
+
+ /**
+@@ -30,11 +30,11 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger)
++    public function install(LoggerInterface $messenger)
+     {
+         $this
+             ->getFactory()
+diff --git a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacadeInterface.php b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacadeInterface.php
+index 1e4e052..d7fdd0e 100644
+--- a/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacadeInterface.php
++++ b/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacadeInterface.php
+@@ -8,7 +8,7 @@
+ namespace Spryker\Zed\Search\Business;
+
+ use Generated\Shared\Transfer\LocaleTransfer;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
+
+ interface SearchFacadeInterface
+@@ -26,11 +26,11 @@ interface SearchFacadeInterface
+      *
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function install(MessengerInterface $messenger);
++    public function install(LoggerInterface $messenger);
+
+     /**
+      * Specification:
+diff --git a/Bundles/Search/tests/Unit/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstallerTest.php b/Bundles/Search/tests/Unit/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstallerTest.php
+index 8e3e381..703e917 100644
+--- a/Bundles/Search/tests/Unit/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstallerTest.php
++++ b/Bundles/Search/tests/Unit/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstallerTest.php
+@@ -11,7 +11,7 @@ use Elastica\Client;
+ use Elastica\Index;
+ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+ use PHPUnit_Framework_TestCase;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
+ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
+
+@@ -121,11 +121,11 @@ class IndexInstallerTest extends PHPUnit_Framework_TestCase
+     }
+
+     /**
+-     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Psr\Log\LoggerInterface
+      */
+     protected function createMessengerMock()
+     {
+-        $messengerMock = $this->getMockBuilder(MessengerInterface::class)
++        $messengerMock = $this->getMockBuilder(LoggerInterface::class)
+             ->disableOriginalConstructor()
+             ->getMock();
+
+diff --git a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupBusinessFactory.php b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupBusinessFactory.php
+index 54991d1..aa4ee08 100644
+--- a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupBusinessFactory.php
++++ b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupBusinessFactory.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Setup\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Spryker\Zed\Setup\Business\Internal\Install;
+ use Spryker\Zed\Setup\Business\Model\Cronjobs;
+ use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
+@@ -202,11 +202,11 @@ class SetupBusinessFactory extends AbstractBusinessFactory
+     }
+
+     /**
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return \Spryker\Zed\Product\Business\Internal\Install
+      */
+-    public function createTestDataInstaller(MessengerInterface $messenger)
++    public function createTestDataInstaller(LoggerInterface $messenger)
+     {
+         $installer = new Install();
+         $installer->setMessenger($messenger);
+diff --git a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacade.php b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacade.php
+index 638d788..db47334 100644
+--- a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacade.php
++++ b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacade.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Zed\Setup\Business;
+
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Kernel\Business\AbstractFacade;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+ use Symfony\Component\HttpFoundation\Request;
+
+ /**
+@@ -87,11 +87,11 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
+     /**
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
++     * @param \Psr\Log\LoggerInterface|null $messenger
+      *
+      * @return void
+      */
+-    public function installTestData(MessengerInterface $messenger)
++    public function installTestData(LoggerInterface $messenger)
+     {
+         $this->getFactory()->createTestDataInstaller($messenger)->install();
+     }
+diff --git a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacadeInterface.php b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacadeInterface.php
+index 7a1942a..7d2dac6 100644
+--- a/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacadeInterface.php
++++ b/Bundles/Setup/src/Spryker/Zed/Setup/Business/SetupFacadeInterface.php
+@@ -7,7 +7,7 @@
+
+ namespace Spryker\Zed\Setup\Business;
+
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Symfony\Component\HttpFoundation\Request;
+
+ interface SetupFacadeInterface
+@@ -64,10 +64,10 @@ interface SetupFacadeInterface
+     /**
+      * @api
+      *
+-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
++     * @param \Psr\Log\LoggerInterface $messenger
+      *
+      * @return void
+      */
+-    public function installTestData(MessengerInterface $messenger);
++    public function installTestData(LoggerInterface $messenger);
+
+ }
+diff --git a/Bundles/Shipment/src/Spryker/Zed/Shipment/Communication/Table/MethodTable.php b/Bundles/Shipment/src/Spryker/Zed/Shipment/Communication/Table/MethodTable.php
+index 4091514..27e8756 100644
+--- a/Bundles/Shipment/src/Spryker/Zed/Shipment/Communication/Table/MethodTable.php
++++ b/Bundles/Shipment/src/Spryker/Zed/Shipment/Communication/Table/MethodTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Shipment\Communication\Table;
+
+ use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
+ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
+diff --git a/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Controller/GraphController.php b/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Controller/GraphController.php
+index 7dc4bc2..3afc1ea 100644
+--- a/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Controller/GraphController.php
++++ b/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Controller/GraphController.php
+@@ -7,7 +7,7 @@
+ namespace Spryker\Zed\StateMachine\Communication\Controller;
+
+ use Generated\Shared\Transfer\StateMachineProcessTransfer;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+diff --git a/Bundles/Storage/src/Spryker/Zed/Storage/Communication/Table/StorageTable.php b/Bundles/Storage/src/Spryker/Zed/Storage/Communication/Table/StorageTable.php
+index fa476b0..09033a5 100644
+--- a/Bundles/Storage/src/Spryker/Zed/Storage/Communication/Table/StorageTable.php
++++ b/Bundles/Storage/src/Spryker/Zed/Storage/Communication/Table/StorageTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\Storage\Communication\Table;
+
+ use Spryker\Client\Storage\StorageClientInterface;
+ use Spryker\Service\UtilSanitize\UtilSanitizeService;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/RateController.php b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/RateController.php
+index ff6f708..80f6ec8 100644
+--- a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/RateController.php
++++ b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/RateController.php
+@@ -8,7 +8,7 @@
+ namespace Spryker\Zed\Tax\Communication\Controller;
+
+ use Propel\Runtime\ActiveQuery\Criteria;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\Request;
+
+diff --git a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/SetController.php b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/SetController.php
+index 107c247..9c1390a 100644
+--- a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/SetController.php
++++ b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Controller/SetController.php
+@@ -8,7 +8,7 @@
+ namespace Spryker\Zed\Tax\Communication\Controller;
+
+ use Propel\Runtime\Exception\PropelException;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\Request;
+
+diff --git a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/RateTable.php b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/RateTable.php
+index 0e8a591..279b3f2 100644
+--- a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/RateTable.php
++++ b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/RateTable.php
+@@ -12,7 +12,7 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+ use Orm\Zed\Tax\Persistence\SpyTaxRate;
+ use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/SetTable.php b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/SetTable.php
+index c4c7389..71f9217 100644
+--- a/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/SetTable.php
++++ b/Bundles/Tax/src/Spryker/Zed/Tax/Communication/Table/SetTable.php
+@@ -10,7 +10,7 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+ use Orm\Zed\Tax\Persistence\SpyTaxSet;
+ use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+
+diff --git a/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferBusinessFactoryTest.php b/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferBusinessFactoryTest.php
+index 0d5d3d3..b5f619a 100644
+--- a/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferBusinessFactoryTest.php
++++ b/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferBusinessFactoryTest.php
+@@ -8,7 +8,7 @@
+ namespace Functional\Spryker\Zed\Transfer\Business\Model;
+
+ use PHPUnit_Framework_TestCase;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
+ use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+ use Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface;
+@@ -35,11 +35,11 @@ class TransferBusinessFactoryTest extends PHPUnit_Framework_TestCase
+     }
+
+     /**
+-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
++     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+      */
+     private function getMessenger()
+     {
+-        return $this->getMockBuilder(MessengerInterface::class)->getMock();
++        return $this->getMockBuilder(LoggerInterface::class)->getMock();
+     }
+
+     /**
+diff --git a/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferFacadeTest.php b/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferFacadeTest.php
+index 1eacb13..f4bd476 100644
+--- a/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferFacadeTest.php
++++ b/Bundles/Transfer/tests/Functional/Spryker/Zed/Transfer/Business/Model/TransferFacadeTest.php
+@@ -8,7 +8,7 @@
+ namespace Functional\Spryker\Zed\Transfer\Business\Model;
+
+ use PHPUnit_Framework_TestCase;
+-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
++use Psr\Log\LoggerInterface;
+ use Spryker\Zed\Transfer\Business\TransferFacade;
+ use Spryker\Zed\Transfer\TransferConfig;
+ use Symfony\Component\Finder\Finder;
+@@ -38,7 +38,7 @@ class TransferFacadeTest extends PHPUnit_Framework_TestCase
+      */
+     private function getMessenger()
+     {
+-        return $this->getMockBuilder(MessengerInterface::class)->getMock();
++        return $this->getMockBuilder(LoggerInterface::class)->getMock();
+     }
+
+     /**
+diff --git a/Bundles/Url/tests/Unit/Spyrker/Shared/Url/UrlTest.php b/Bundles/Url/tests/Unit/Spyrker/Shared/Url/UrlTest.php
+index 473d467..94bfc1d 100644
+--- a/Bundles/Url/tests/Unit/Spyrker/Shared/Url/UrlTest.php
++++ b/Bundles/Url/tests/Unit/Spyrker/Shared/Url/UrlTest.php
+@@ -8,7 +8,7 @@
+ namespace Functional\Spryker\Shared\Url\Url;
+
+ use Codeception\TestCase\Test;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+
+ /**
+  * @group Spryker
+diff --git a/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php b/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php
+index ac738c6..ebe7714 100644
+--- a/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php
++++ b/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php
+@@ -9,7 +9,7 @@ namespace Spryker\Zed\User\Communication\Table;
+
+ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+-use Spryker\Shared\Url\Url;
++use Spryker\Service\UtilText\Model\Url\Url;
+ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php
+index db97589..1f06c9a 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php
+@@ -7,7 +7,7 @@
+
+ namespace Spryker\Service\UtilText\Model\Token;
+
+-class TokenService implements TokenInterface
++class Token implements TokenInterface
+ {
+
+     /**
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php
+index df37fe8..ef30c33 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php
+@@ -5,10 +5,7 @@
+  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+  */
+
+-namespace Spryker\Shared\Url;
+-
+-use Spryker\Service\UtilSanitize\UtilSanitizeService;
+-use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
++namespace Spryker\Service\UtilText\Model\Url;
+
+ /**
+  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.
+@@ -70,7 +67,7 @@ class Url
+      *
+      * @param string $url Full URL used to create a Url object
+      *
+-     * @throws \Spryker\Zed\Url\Business\Exception\UrlInvalidException
++     * @throws \Spryker\Service\UtilText\Model\Url\UrlInvalidException
+      *
+      * @return $this
+      */
+@@ -170,9 +167,22 @@ class Url
+      */
+     public function buildEscaped()
+     {
+-        $utilSanitizeService = new UtilSanitizeService();
++        return $this->escape($this->build());
++    }
++
++    /**
++     * @param string $url
++     *
++     * @return string
++     */
++    protected function escape($url)
++    {
++        $charset = mb_internal_encoding();
++        if ($charset === null) {
++            $charset = 'UTF-8';
++        }
+
+-        return $utilSanitizeService->escapeHtml($this->build());
++        return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
+     }
+
+     /**
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/UrlInvalidException.php b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/UrlInvalidException.php
+index 84773fe..3035a5c 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/UrlInvalidException.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/UrlInvalidException.php
+@@ -5,7 +5,7 @@
+  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+  */
+
+-namespace Spryker\Zed\Url\Business\Exception;
++namespace Spryker\Service\UtilText\Model\Url;
+
+ use Exception;
+
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextService.php b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextService.php
+index 2dbda25..fdbb2c8 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextService.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextService.php
+@@ -98,4 +98,20 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
+         return $this->getFactory()->createSeparatorToCamelCase()->filter($string, $separator, $upperCaseFirst);
+     }
+
++    /**
++     * {@inheritdoc}
++     */
++    public function generateToken($rawToken)
++    {
++        return $this->getFactory()->createToken()->generate($rawToken);
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    public function checkToken($rawToken, $hash)
++    {
++        return $this->getFactory()->createToken()->check($rawToken, $hash);
++    }
++
+ }
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceFactory.php b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceFactory.php
+index 5255672..2f9c001 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceFactory.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceFactory.php
+@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Filter\SeparatorToCamelCase;
+ use Spryker\Service\UtilText\Model\Hash;
+ use Spryker\Service\UtilText\Model\Slug;
+ use Spryker\Service\UtilText\Model\StringGenerator;
++use Spryker\Service\UtilText\Model\Token\Token;
+
+ class UtilTextServiceFactory extends AbstractServiceFactory
+ {
+@@ -57,4 +58,20 @@ class UtilTextServiceFactory extends AbstractServiceFactory
+         return new SeparatorToCamelCase();
+     }
+
++    /**
++     * @return \Spryker\Service\UtilText\Model\Token\TokenInterface
++     */
++    public function createToken()
++    {
++        return new Token();
++    }
++
++    /**
++     * @return \Spryker\Service\UtilText\Model\Token\TokenInterface
++     */
++    public function createUrl()
++    {
++        return new Token();
++    }
++
+ }
+diff --git a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceInterface.php b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceInterface.php
+index 68a23b1..85352ca 100644
+--- a/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceInterface.php
++++ b/Bundles/UtilText/src/Spryker/Service/UtilText/UtilTextServiceInterface.php
+@@ -41,4 +41,54 @@ interface UtilTextServiceInterface
+      */
+     public function hashValue($algorithm, $value);
+
++    /**
++     * Specification:
++     * - Converts a camel cased string into a string where every word is linked with the other by specified separator.
++     *
++     * @api
++     *
++     * @param string $string
++     * @param string $separator
++     *
++     * @return string
++     */
++    public function camelCaseToSeparator($string, $separator = '-');
++
++    /**
++     * Specification:
++     * - Converts a string with a given separator into a camel cased string.
++     *
++     * @api
++     *
++     * @param string $string
++     * @param string $separator
++     * @param bool $upperCaseFirst
++     *
++     * @return string
++     */
++    public function separatorToCamelCase($string, $separator = '-', $upperCaseFirst = false);
++
++    /**
++     * Specification:
++     * - Generates a token from given string.
++     *
++     * @api
++     *
++     * @param string $rawToken
++     *
++     * @return string
++     */
++    public function generateToken($rawToken);
++
++    /**
++     * Specification:
++     * - Checks if a given token is valid.
++     *
++     * @param string $rawToken
++     * @param string $hash
++     *
++     * @return bool
++     */
++    public function checkToken($rawToken, $hash);
++
+ }
+diff --git a/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Token/TokenTest.php b/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Token/TokenTest.php
+index e9e2e63..d145a93 100644
+--- a/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Token/TokenTest.php
++++ b/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Token/TokenTest.php
+@@ -5,18 +5,21 @@
+  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+  */
+
+-namespace ClientUnit\Spryker\Client\Auth\Token;
++namespace Unit\Spryker\Service\UtilText\Model\Token;
+
+ use PHPUnit_Framework_TestCase;
+-use Spryker\Client\Auth\Token\TokenService;
++use Spryker\Service\UtilText\Model\Token\Token;
+
+ /**
++ * @group Unit
+  * @group Spryker
+- * @group Client
+  * @group Service
+- * @group AuthClient
++ * @group UtilText
++ * @group Model
++ * @group Token
++ * @group TokenTest
+  */
+-class TokenServiceTest extends PHPUnit_Framework_TestCase
++class TokenTest extends PHPUnit_Framework_TestCase
+ {
+
+     /**
+@@ -24,7 +27,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
+      */
+     public function testGenerateTokenMustReturnString()
+     {
+-        $tokenService = new TokenService();
++        $tokenService = new Token();
+         $token = $tokenService->generate('token');
+
+         $this->assertInternalType('string', $token);
+@@ -35,7 +38,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
+      */
+     public function testCheckTokenMustReturnTrueIfTokenIsValid()
+     {
+-        $tokenService = new TokenService();
++        $tokenService = new Token();
+         $rawToken = 'token';
+         $token = $tokenService->generate($rawToken);
+
+@@ -48,7 +51,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
+      */
+     public function testCheckTokenMustReturnFalseIfTokenIsInValid()
+     {
+-        $tokenService = new TokenService();
++        $tokenService = new Token();
+         $rawToken = 'token';
+         $token = $tokenService->generate($rawToken);
+
+diff --git a/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Url/UrlTest.php b/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Url/UrlTest.php
+index 94bfc1d..c59ca3e 100644
+--- a/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Url/UrlTest.php
++++ b/Bundles/UtilText/tests/Unit/Spryker/Service/UtilText/Model/Url/UrlTest.php
+@@ -5,14 +5,17 @@
+  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+  */
+
+-namespace Functional\Spryker\Shared\Url\Url;
++namespace Unit\Spryker\Service\UtilText\Model\Url;
+
+ use Codeception\TestCase\Test;
+ use Spryker\Service\UtilText\Model\Url\Url;
+
+ /**
++ * @group Unit
+  * @group Spryker
+- * @group Zed
++ * @group Service
++ * @group UtilText
++ * @group Model
+  * @group Url
+  * @group UrlTest
+  */
+diff --git a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php
+index f53f7be..27d2854 100644
+--- a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php
++++ b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php
+@@ -7,8 +7,8 @@
+
+ namespace Spryker\Client\ZedRequest\Client;
+
+-use Spryker\Client\Auth\AuthClientInterface;
+ use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
++use Spryker\Service\UtilText\UtilTextServiceInterface;
+ use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
+
+ class HttpClient extends AbstractHttpClient implements HttpClientInterface
+@@ -25,23 +25,29 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
+     protected $isAuthenticationEnabled;
+
+     /**
+-     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
++     * @var \Spryker\Service\UtilText\UtilTextServiceInterface
++     */
++    protected $utilTextService;
++
++    /**
+      * @param string $baseUrl
+      * @param string $rawToken
+      * @param bool $isAuthenticationEnabled
++     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
+      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
+      */
+     public function __construct(
+-        AuthClientInterface $authClient,
+         $baseUrl,
+         $rawToken,
+         $isAuthenticationEnabled,
++        UtilTextServiceInterface $utilTextService,
+         UtilNetworkServiceInterface $utilNetworkService
+     ) {
+-        parent::__construct($authClient, $baseUrl, $utilNetworkService);
++        parent::__construct($baseUrl, $utilNetworkService);
+
+         $this->rawToken = $rawToken;
+         $this->isAuthenticationEnabled = $isAuthenticationEnabled;
++        $this->utilTextService = $utilTextService;
+     }
+
+     /**
+@@ -53,7 +59,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
+
+         if ($this->isAuthenticationEnabled) {
+             $headers = [
+-                'Auth-Token' => $this->authClient->generateToken($this->rawToken),
++                'Auth-Token' => $this->utilTextService->generateToken($this->rawToken),
+             ];
+         }
+
+diff --git a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestConfig.php b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestConfig.php
+index bdd23b9..23f28e6 100644
+--- a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestConfig.php
++++ b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestConfig.php
+@@ -7,32 +7,18 @@
+
+ namespace Spryker\Client\ZedRequest;
+
+-use Spryker\Shared\Auth\AuthConstants;
+-use Spryker\Shared\Config\Config;
++use Spryker\Client\Kernel\AbstractBundleConfig;
+ use Spryker\Shared\ZedRequest\ZedRequestConstants;
+
+-class ZedRequestConfig
++class ZedRequestConfig extends AbstractBundleConfig
+ {
+
+     /**
+-     * @var \Spryker\Shared\Config\Config
+-     */
+-    protected $config;
+-
+-    /**
+-     * @param \Spryker\Shared\Config\Config $config
+-     */
+-    public function __construct(Config $config)
+-    {
+-        $this->config = $config;
+-    }
+-
+-    /**
+      * @return string
+      */
+     public function getRawToken()
+     {
+-        $authConfig = $this->config->get(ZedRequestConstants::AUTH_DEFAULT_CREDENTIALS);
++        $authConfig = $this->getConfig()->get(ZedRequestConstants::AUTH_DEFAULT_CREDENTIALS);
+         $rawToken = $authConfig['yves_system']['token'];
+
+         return $rawToken;
+@@ -43,12 +29,12 @@ class ZedRequestConfig
+      */
+     public function getZedRequestBaseUrl()
+     {
+-        $sslEnabled = $this->config->get(ZedRequestConstants::ZED_API_SSL_ENABLED);
++        $sslEnabled = $this->getConfig()->get(ZedRequestConstants::ZED_API_SSL_ENABLED);
+
+         if ($sslEnabled === true) {
+-            return 'https://' . $this->config->get(ZedRequestConstants::HOST_SSL_ZED_API);
++            return 'https://' . $this->getConfig()->get(ZedRequestConstants::HOST_SSL_ZED_API);
+         } else {
+-            return 'http://' . $this->config->get(ZedRequestConstants::HOST_ZED_API);
++            return 'http://' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
+         }
+     }
+
+@@ -57,7 +43,7 @@ class ZedRequestConfig
+      */
+     public function isAuthenticationEnabled()
+     {
+-        return $this->config->get(AuthConstants::AUTH_ZED_ENABLED, true);
++        return $this->getConfig()->get(ZedRequestConstants::AUTH_ZED_ENABLED, true);
+     }
+
+ }
+diff --git a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestDependencyProvider.php b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestDependencyProvider.php
+index b9701b1..29236b4 100644
+--- a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestDependencyProvider.php
++++ b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestDependencyProvider.php
+@@ -13,8 +13,8 @@ use Spryker\Client\Kernel\Container;
+ class ZedRequestDependencyProvider extends AbstractDependencyProvider
+ {
+
+-    const CLIENT_AUTH = 'auth client';
+     const SERVICE_NETWORK = 'util network service';
++    const SERVICE_TEXT = 'util text service';
+
+     /**
+      * @param \Spryker\Client\Kernel\Container $container
+@@ -23,8 +23,8 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
+      */
+     public function provideServiceLayerDependencies(Container $container)
+     {
+-        $container = $this->addAuthClient($container);
+         $container = $this->addUtilNetworkService($container);
++        $container = $this->addUtilTextService($container);
+
+         return $container;
+     }
+@@ -34,10 +34,10 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
+      *
+      * @return \Spryker\Client\Kernel\Container
+      */
+-    protected function addAuthClient(Container $container)
++    protected function addUtilNetworkService(Container $container)
+     {
+-        $container[static::CLIENT_AUTH] = function (Container $container) {
+-            return $container->getLocator()->auth()->client();
++        $container[static::SERVICE_NETWORK] = function (Container $container) {
++            return $container->getLocator()->utilNetwork()->service();
+         };
+
+         return $container;
+@@ -48,10 +48,10 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
+      *
+      * @return \Spryker\Client\Kernel\Container
+      */
+-    protected function addUtilNetworkService(Container $container)
++    protected function addUtilTextService(Container $container)
+     {
+-        $container[static::SERVICE_NETWORK] = function (Container $container) {
+-            return $container->getLocator()->utilNetwork()->service();
++        $container[static::SERVICE_TEXT] = function (Container $container) {
++            return $container->getLocator()->utilText()->service();
+         };
+
+         return $container;
+diff --git a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestFactory.php b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestFactory.php
+index 856618e..e944b1f 100644
+--- a/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestFactory.php
++++ b/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/ZedRequestFactory.php
+@@ -10,8 +10,10 @@ namespace Spryker\Client\ZedRequest;
+ use Spryker\Client\Kernel\AbstractFactory;
+ use Spryker\Client\ZedRequest\Client\HttpClient;
+ use Spryker\Client\ZedRequest\Client\ZedClient;
+-use Spryker\Shared\Config\Config;
+
++/**
++ * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
++ */
+ class ZedRequestFactory extends AbstractFactory
+ {
+
+@@ -31,10 +33,10 @@ class ZedRequestFactory extends AbstractFactory
+     protected function createHttpClient()
+     {
+         $httpClient = new HttpClient(
+-            $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
+             $this->getConfig()->getZedRequestBaseUrl(),
+             $this->getConfig()->getRawToken(),
+             $this->getConfig()->isAuthenticationEnabled(),
++            $this->getUtilTextService(),
+             $this->getUtilNetworkService()
+         );
+
+@@ -42,19 +44,19 @@ class ZedRequestFactory extends AbstractFactory
+     }
+
+     /**
+-     * @return \Spryker\Client\ZedRequest\ZedRequestConfig
++     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+      */
+-    protected function getConfig()
++    protected function getUtilNetworkService()
+     {
+-        return new ZedRequestConfig(Config::getInstance());
++        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_NETWORK);
+     }
+
+     /**
+-     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
++     * @return \Spryker\Service\UtilText\UtilTextServiceInterface
+      */
+-    protected function getUtilNetworkService()
++    protected function getUtilTextService()
+     {
+-        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_NETWORK);
++        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_TEXT);
+     }
+
+ }
+diff --git a/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php b/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php
+index 406e238..aebf5e2 100644
+--- a/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php
++++ b/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php
+@@ -15,7 +15,6 @@ use GuzzleHttp\Psr7\Request as Psr7Request;
+ use LogicException;
+ use Psr\Http\Message\RequestInterface as MessageRequestInterface;
+ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
+-use Spryker\Client\Auth\AuthClientInterface;
+ use Spryker\Client\ZedRequest\Client\Request;
+ use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
+ use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
+@@ -88,26 +87,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
+     protected static $timeoutInSeconds = 60;
+
+     /**
+-     * @var \Spryker\Client\Auth\AuthClientInterface
+-     */
+-    protected $authClient;
+-
+-    /**
+      * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+      */
+     protected $utilNetworkService;
+
+     /**
+-     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
+      * @param string $baseUrl
+      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
+      */
+     public function __construct(
+-        AuthClientInterface $authClient,
+         $baseUrl,
+         UtilNetworkServiceInterface $utilNetworkService
+     ) {
+-        $this->authClient = $authClient;
+         $this->baseUrl = $baseUrl;
+         $this->utilNetworkService = $utilNetworkService;
+     }
+diff --git a/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/ZedRequestConstants.php b/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/ZedRequestConstants.php
+index 9b601b9..d9b1e07 100644
+--- a/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/ZedRequestConstants.php
++++ b/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/ZedRequestConstants.php
+@@ -8,12 +8,12 @@
+ namespace Spryker\Shared\ZedRequest;
+
+ use Spryker\Shared\Application\ApplicationConstants;
+-use Spryker\Shared\Auth\AuthConstants;
+
+ interface ZedRequestConstants
+ {
+
+-    const AUTH_DEFAULT_CREDENTIALS = AuthConstants::AUTH_DEFAULT_CREDENTIALS;
++    const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
++    const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
+
+     const HOST_SSL_ZED_API = ApplicationConstants::HOST_SSL_ZED_API;
+     const HOST_ZED_API = ApplicationConstants::HOST_ZED_API;
+diff --git a/Bundles/ZedRequest/tests/Unit/Spryker/Shared/ZedRequest/Client/AbstractHttpClientTest.php b/Bundles/ZedRequest/tests/Unit/Spryker/Shared/ZedRequest/Client/AbstractHttpClientTest.php
+index 70939fa..d6a9e16 100644
+--- a/Bundles/ZedRequest/tests/Unit/Spryker/Shared/ZedRequest/Client/AbstractHttpClientTest.php
++++ b/Bundles/ZedRequest/tests/Unit/Spryker/Shared/ZedRequest/Client/AbstractHttpClientTest.php
+@@ -9,7 +9,6 @@ namespace Unit\Spryker\Shared\ZedRequest\Client;
+
+ use GuzzleHttp\Psr7\Response;
+ use PHPUnit_Framework_TestCase;
+-use Spryker\Client\Auth\AuthClient;
+ use Spryker\Service\UtilNetwork\UtilNetworkService;
+ use Spryker\Shared\Config\Config;
+ use Spryker\Shared\ZedRequest\Client\ResponseInterface;
+@@ -56,13 +55,11 @@ class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
+     protected function getAbstractRequestMock()
+     {
+         $baseUrl = 'http://' . Config::get(ZedRequestConstants::HOST_ZED_API);
+-
+-        $client = new AuthClient();
+         $url = $baseUrl . '/';
+
+         $utilNetworkService = new UtilNetworkService();
+
+-        return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$client, $url, $utilNetworkService])->getMock();
++        return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$url, $utilNetworkService])->getMock();
+     }
+
+ }

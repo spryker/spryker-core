@@ -15,7 +15,6 @@ use GuzzleHttp\Psr7\Request as Psr7Request;
 use LogicException;
 use Psr\Http\Message\RequestInterface as MessageRequestInterface;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
-use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
@@ -88,26 +87,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 60;
 
     /**
-     * @var \Spryker\Client\Auth\AuthClientInterface
-     */
-    protected $authClient;
-
-    /**
      * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
     protected $utilNetworkService;
 
     /**
-     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(
-        AuthClientInterface $authClient,
         $baseUrl,
         UtilNetworkServiceInterface $utilNetworkService
     ) {
-        $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
         $this->utilNetworkService = $utilNetworkService;
     }

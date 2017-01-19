@@ -10,8 +10,8 @@ namespace Spryker\Zed\Glossary\Business;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
@@ -338,11 +338,11 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     * @param \Psr\Log\LoggerInterface|null $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null)
+    public function install(LoggerInterface $messenger = null)
     {
         $this->getFactory()->createInstaller($messenger)->install();
     }

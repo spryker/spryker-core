@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ClientUnit\Spryker\Client\Auth\Token;
+namespace Unit\Spryker\Service\UtilText\Model\Token;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Client\Auth\Token\TokenService;
+use Spryker\Service\UtilText\Model\Token\Token;
 
 /**
+ * @group Unit
  * @group Spryker
- * @group Client
  * @group Service
- * @group AuthClient
+ * @group UtilText
+ * @group Model
+ * @group Token
+ * @group TokenTest
  */
-class TokenServiceTest extends PHPUnit_Framework_TestCase
+class TokenTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -24,7 +27,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testGenerateTokenMustReturnString()
     {
-        $tokenService = new TokenService();
+        $tokenService = new Token();
         $token = $tokenService->generate('token');
 
         $this->assertInternalType('string', $token);
@@ -35,7 +38,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testCheckTokenMustReturnTrueIfTokenIsValid()
     {
-        $tokenService = new TokenService();
+        $tokenService = new Token();
         $rawToken = 'token';
         $token = $tokenService->generate($rawToken);
 
@@ -48,7 +51,7 @@ class TokenServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testCheckTokenMustReturnFalseIfTokenIsInValid()
     {
-        $tokenService = new TokenService();
+        $tokenService = new Token();
         $rawToken = 'token';
         $token = $tokenService->generate($rawToken);
 

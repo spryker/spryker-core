@@ -10,8 +10,10 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Shared\Config\Config;
 
+/**
+ * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestFactory extends AbstractFactory
 {
 
@@ -31,22 +33,14 @@ class ZedRequestFactory extends AbstractFactory
     protected function createHttpClient()
     {
         $httpClient = new HttpClient(
-            $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
             $this->getConfig()->getRawToken(),
             $this->getConfig()->isAuthenticationEnabled(),
+            $this->getUtilTextService(),
             $this->getUtilNetworkService()
         );
 
         return $httpClient;
-    }
-
-    /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestConfig
-     */
-    protected function getConfig()
-    {
-        return new ZedRequestConfig(Config::getInstance());
     }
 
     /**
@@ -55,6 +49,14 @@ class ZedRequestFactory extends AbstractFactory
     protected function getUtilNetworkService()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_NETWORK);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\UtilTextServiceInterface
+     */
+    protected function getUtilTextService()
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_TEXT);
     }
 
 }

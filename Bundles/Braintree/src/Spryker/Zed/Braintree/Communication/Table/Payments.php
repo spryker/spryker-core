@@ -9,7 +9,7 @@ namespace Spryker\Zed\Braintree\Communication\Table;
 
 use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTableMap;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeQuery;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

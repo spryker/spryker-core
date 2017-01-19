@@ -7,7 +7,7 @@
 namespace Spryker\Zed\StateMachine\Communication\Controller;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

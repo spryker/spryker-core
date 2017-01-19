@@ -11,6 +11,7 @@ use Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\VarDumper\VarDumper;
 
 abstract class AbstractDependencyFinder
 {
@@ -86,7 +87,7 @@ abstract class AbstractDependencyFinder
         }
 
         if ($fileInfo->getExtension() !== 'php') {
-            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+            echo '<pre>' . PHP_EOL . VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
         }
 
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Service\UtilEncoding\Model\Json;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -11,7 +11,7 @@ use Elastica\Client;
 use Elastica\Index;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 
@@ -121,11 +121,11 @@ class IndexInstallerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Psr\Log\LoggerInterface
      */
     protected function createMessengerMock()
     {
-        $messengerMock = $this->getMockBuilder(MessengerInterface::class)
+        $messengerMock = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

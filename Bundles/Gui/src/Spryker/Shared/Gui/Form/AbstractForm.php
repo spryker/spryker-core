@@ -52,7 +52,7 @@ abstract class AbstractForm implements FormTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        if ($this->getDataClass() instanceof TransferInterface && !($this->getDataClass() instanceof NullFormTransfer)) {
+        if ($this->getDataClass() instanceof TransferInterface) {
             $resolver->setDefault('data_class', get_class($this->getDataClass()));
         }
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface SetupFacadeInterface
@@ -64,10 +64,10 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function installTestData(MessengerInterface $messenger);
+    public function installTestData(LoggerInterface $messenger);
 
 }

@@ -8,12 +8,12 @@
 namespace Spryker\Shared\ZedRequest;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Auth\AuthConstants;
 
 interface ZedRequestConstants
 {
 
-    const AUTH_DEFAULT_CREDENTIALS = AuthConstants::AUTH_DEFAULT_CREDENTIALS;
+    const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
+    const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 
     const HOST_SSL_ZED_API = ApplicationConstants::HOST_SSL_ZED_API;
     const HOST_ZED_API = ApplicationConstants::HOST_ZED_API;
