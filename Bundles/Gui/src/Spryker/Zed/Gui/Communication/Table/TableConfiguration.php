@@ -46,7 +46,7 @@ class TableConfiguration
     protected $sortableFields = [];
 
     /**
-     * @var string|null
+     * @var array|null
      */
     protected $defaultSortField = null;
 
@@ -229,16 +229,17 @@ class TableConfiguration
 
     /**
      * @param string $field
+     * @param string $direction
      *
      * @return void
      */
-    public function setDefaultSortField($field)
+    public function setDefaultSortField($field, $direction = self::SORT_ASC)
     {
-        $this->defaultSortField = $field;
+        $this->defaultSortField = [$field => $direction];
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getDefaultSortField()
     {

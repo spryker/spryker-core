@@ -31,4 +31,14 @@ class FooTable extends AbstractTable
     {
     }
 
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
 }

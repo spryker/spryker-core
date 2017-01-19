@@ -167,8 +167,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 find a better solution (remove it)
-     *
      * @deprecated this method should not be needed.
      *
      * @param string $name
@@ -369,12 +367,7 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        $defaultSorting = [
-            [
-                self::SORT_BY_COLUMN => $this->getDefaultSortIndex($config),
-                self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
-            ],
-        ];
+        $defaultSorting = [$this->getDefaultSorting($config)];
 
         $orderParameter = $this->request->query->get('order');
 
@@ -394,22 +387,38 @@ abstract class AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return int
+     * @return array
      */
-    protected function getDefaultSortIndex(TableConfiguration $config)
+    protected function getDefaultSorting(TableConfiguration $config)
     {
-        $index = null;
-        $field = $config->getDefaultSortField();
-        if ($field) {
-            $availableFields = array_keys($config->getHeader());
-            $index = array_keys($availableFields, $field, true);
-            $index = array_shift($index);
-        }
-        if ($index === null) {
-            $index = $config->getDefaultSortColumnIndex();
+        $sort = [
+            self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+            self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
+        ];
+
+        $defaultSortField = $config->getDefaultSortField();
+        if (!$defaultSortField) {
+            return $sort;
         }
 
-        return $index;
+        $field = key($defaultSortField);
+        $direction = array_shift($defaultSortField);
+        $index = null;
+
+        $availableFields = array_keys($config->getHeader());
+        $index = array_keys($availableFields, $field, true);
+        $index = array_shift($index);
+
+        if ($index === null) {
+            return $sort;
+        }
+
+        $sort = [
+            self::SORT_BY_COLUMN => $index,
+            self::SORT_BY_DIRECTION => $direction,
+        ];
+
+        return $sort;
     }
 
     /**
@@ -578,7 +587,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 to be rafactored, does to many things and is hard to understand
      * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query

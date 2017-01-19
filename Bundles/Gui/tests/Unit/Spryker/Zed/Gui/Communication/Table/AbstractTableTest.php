@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Gui\Communication\Table;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Symfony\Component\HttpFoundation\Request;
 use Unit\Spryker\Zed\Gui\Communication\Fixture\FooTable;
-use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
 /**
  * @group Unit
@@ -40,25 +40,88 @@ class AbstractTableTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->table = new FooTable();
+
+        $request = new Request();
+        $this->table->setRequest($request);
     }
 
     /**
      * @return void
      */
-    public function testX()
+    public function testGetOrdersDefault()
     {
         $config = new TableConfiguration();
+        $config->setHeader([
+            static::COL_ONE => 'One',
+            static::COL_TWO => 'Two',
+        ]);
         $config->setSortable([
-           static::COL_ONE,
-           static::COL_TWO
+            static::COL_ONE,
+            static::COL_TWO,
         ]);
 
-        $config->setDefaultSortField($config);
+        $result = $this->table->getOrders($config);
+        $expected = [
+            [
+                'column' => 0,
+                'dir' => 'asc',
+            ],
+        ];
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrdersWithCustomSortField()
+    {
+        $config = new TableConfiguration();
+        $config->setHeader([
+            static::COL_ONE => 'One',
+            static::COL_TWO => 'Two',
+        ]);
+        $config->setSortable([
+           static::COL_ONE,
+           static::COL_TWO,
+        ]);
+
+        $config->setDefaultSortField(static::COL_TWO);
 
         $result = $this->table->getOrders($config);
+        $expected = [
+            [
+              'column' => 1,
+              'dir' => 'asc',
+            ],
+        ];
+        $this->assertSame($expected, $result);
+    }
 
-        dd($result);
-        $this->assertTrue(true);
+    /**
+     * @return void
+     */
+    public function testGetOrdersWithCustomSortFieldAndCustomDirection()
+    {
+        $config = new TableConfiguration();
+        $config->setHeader([
+            static::COL_ONE => 'One',
+            static::COL_TWO => 'Two',
+        ]);
+        $config->setSortable([
+            static::COL_ONE,
+            static::COL_TWO,
+        ]);
+
+        $config->setDefaultSortField(static::COL_TWO, TableConfiguration::SORT_DESC);
+
+        $result = $this->table->getOrders($config);
+        $expected = [
+            [
+                'column' => 1,
+                'dir' => 'desc',
+            ],
+        ];
+        $this->assertSame($expected, $result);
     }
 
 }
