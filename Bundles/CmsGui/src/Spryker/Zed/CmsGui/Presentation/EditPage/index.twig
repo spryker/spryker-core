@@ -1,0 +1,18 @@
+{% extends '@Cms/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit a Cms page' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/cms/page-list', 'Back to CMS' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            Edit page form
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

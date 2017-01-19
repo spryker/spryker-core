@@ -1,0 +1,6 @@
+
+{% for locale in availableLocales %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
+
+    {% endembed %}
+{% endfor %}
