@@ -21,7 +21,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'oms facade';
     const FACADE_STOCK = 'stock facade';
     const FACADE_TOUCH = 'touch facade';
-    const FACADE_LOCALE = 'locale facade';
     const FACADE_PRODDUCT = 'product facade';
 
     const QUERY_CONTAINER_PRODUCT = 'product query container';

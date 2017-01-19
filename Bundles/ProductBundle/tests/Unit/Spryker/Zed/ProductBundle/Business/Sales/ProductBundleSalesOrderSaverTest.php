@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use PHPUnit_Framework_TestCase;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -80,6 +81,10 @@ class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
     {
         $queryContainerMock = $this->createSalesQueryContainerMock();
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
+
+        $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
+
+        $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
         return $this->getMockBuilder(ProductBundleSalesOrderSaver::class)
             ->setConstructorArgs([$queryContainerMock, $productBundleQueryContainerMock])

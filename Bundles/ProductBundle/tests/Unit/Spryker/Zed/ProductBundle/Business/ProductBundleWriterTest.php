@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit_Framework_TestCase;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
@@ -112,6 +113,10 @@ class ProductBundleWriterTest extends PHPUnit_Framework_TestCase
     {
         $productFacadeMock = $this->createProductFacadeMock();
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
+
+        $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
+
+        $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
         if ($productBundleStockWriterMock === null) {
             $productBundleStockWriterMock = $this->createProductBundleStockWriter();

@@ -15,6 +15,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
@@ -93,6 +94,10 @@ class ProductBundleStockWriterTest extends PHPUnit_Framework_TestCase
         if ($productBundleAvailabilityMock === null) {
             $productBundleAvailabilityMock = $this->createProductBundleAvailabilityHandlerMock();
         }
+
+        $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
+
+        $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
         return $this->getMockBuilder(ProductBundleStockWriter::class)
             ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock])

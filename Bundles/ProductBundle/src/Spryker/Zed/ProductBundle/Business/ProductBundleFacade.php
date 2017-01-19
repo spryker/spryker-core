@@ -99,7 +99,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
          $this->getFactory()
-            ->createProductBundleCartPreCheck()
+            ->createProductBundleCheckoutPreCheck()
             ->checkCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
 

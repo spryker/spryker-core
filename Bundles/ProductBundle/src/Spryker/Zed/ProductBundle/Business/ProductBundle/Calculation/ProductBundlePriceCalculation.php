@@ -45,23 +45,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
                 continue;
             }
 
-            foreach ($orderTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderItemEntity->getIdSalesOrderItem()) {
-                    continue;
-                }
-
-                if (!isset($bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()])) {
-                    $bundleItemTransfer = $this->mapBundledItemTransferFromSalesOrderItemEntity($salesOrderItemEntity);
-                    $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()] = $bundleItemTransfer;
-                }
-
-                $bundleItemTransfer = $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()];
-
-                $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
-
-                $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
-
-            }
+            $bundledProducts = $this->calculateForBundleItems($orderTransfer, $salesOrderItemEntity, $bundledProducts);
         }
 
         $orderTransfer->setBundleItems(new ArrayObject($bundledProducts));
@@ -98,29 +82,9 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      */
     protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
-        $bundleItemTransfer->setUnitGrossPrice(
-            $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()
-        );
-
-        $bundleItemTransfer->setSumGrossPrice(
-            $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice()
-        );
-
-        $bundleItemTransfer->setUnitItemTotal(
-            $bundleItemTransfer->getUnitItemTotal() + $itemTransfer->getUnitItemTotal()
-        );
-
-        $bundleItemTransfer->setSumItemTotal(
-            $bundleItemTransfer->getSumItemTotal() + $itemTransfer->getSumItemTotal()
-        );
-
-        $bundleItemTransfer->setFinalUnitDiscountAmount(
-            $bundleItemTransfer->getFinalUnitDiscountAmount() + $itemTransfer->getFinalUnitDiscountAmount()
-        );
-
-        $bundleItemTransfer->setFinalSumDiscountAmount(
-            $bundleItemTransfer->getFinalSumDiscountAmount() + $itemTransfer->getFinalSumDiscountAmount()
-        );
+        $this->addGrossPrice($bundleItemTransfer, $itemTransfer);
+        $this->addItemTotal($bundleItemTransfer, $itemTransfer);
+        $this->addDiscounts($bundleItemTransfer, $itemTransfer);
     }
 
     /**
@@ -137,7 +101,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setSumItemTotal(0);
             $bundleItemTransfer->setFinalUnitDiscountAmount(0);
             $bundleItemTransfer->setFinalSumDiscountAmount(0);
-
         }
     }
 
@@ -166,6 +129,91 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         $bundleItemTransfer->fromArray($orderItemEntity->getSalesOrderItemBundle()->toArray(), true);
 
         return $bundleItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addDiscounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setFinalUnitDiscountAmount(
+            $bundleItemTransfer->getFinalUnitDiscountAmount() + $itemTransfer->getFinalUnitDiscountAmount()
+        );
+
+        $bundleItemTransfer->setFinalSumDiscountAmount(
+            $bundleItemTransfer->getFinalSumDiscountAmount() + $itemTransfer->getFinalSumDiscountAmount()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addItemTotal(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setUnitItemTotal(
+            $bundleItemTransfer->getUnitItemTotal() + $itemTransfer->getUnitItemTotal()
+        );
+
+        $bundleItemTransfer->setSumItemTotal(
+            $bundleItemTransfer->getSumItemTotal() + $itemTransfer->getSumItemTotal()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addGrossPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setUnitGrossPrice(
+            $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()
+        );
+
+        $bundleItemTransfer->setSumGrossPrice(
+            $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
+     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     *
+     * @return array
+     */
+    protected function calculateForBundleItems(
+        OrderTransfer $orderTransfer,
+        SpySalesOrderItem $salesOrderItemEntity,
+        array $bundledProducts
+    ) {
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderItemEntity->getIdSalesOrderItem()) {
+                continue;
+            }
+
+            if (!isset($bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()])) {
+                $bundleItemTransfer = $this->mapBundledItemTransferFromSalesOrderItemEntity($salesOrderItemEntity);
+                $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()] = $bundleItemTransfer;
+            }
+
+            $bundleItemTransfer = $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()];
+
+            $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
+
+            $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
+
+        }
+
+        return $bundledProducts;
     }
 
 }

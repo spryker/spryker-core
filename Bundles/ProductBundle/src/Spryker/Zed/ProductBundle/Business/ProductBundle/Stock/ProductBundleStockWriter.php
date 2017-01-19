@@ -120,25 +120,37 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $bundledItemQuantity[$bundledProductEntity->getIdProduct()] = $bundleItemEntity->getQuantity();
 
-            $productStocks = $this->findProductStocks($bundledProductEntity->getIdProduct());
-
-            foreach ($productStocks as $productStockEntity) {
-                if (!isset($bundledItemStock[$productStockEntity->getFkStock()])) {
-                    $bundledItemStock[$productStockEntity->getFkStock()] = [];
-                }
-
-                if (!isset($bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()])) {
-                    $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [];
-                }
-
-                $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [
-                    static::QUANTITY => $productStockEntity->getQuantity(),
-                    static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
-                ];
-            }
+            $bundledItemStock = $this->getStockGroupedByBundledItem($bundledProductEntity->getIdProduct(), $bundledItemStock);
         }
 
         return $this->groupBundleStockByWarehouse($bundledItemStock, $bundledItemQuantity);
+    }
+
+    /**
+     * @param int $idBundledProduct
+     * @param array $bundledItemStock
+     *
+     * @return array
+     */
+    protected function getStockGroupedByBundledItem($idBundledProduct, array $bundledItemStock)
+    {
+        $productStocks = $this->findProductStocks($idBundledProduct);
+
+        foreach ($productStocks as $productStockEntity) {
+            if (!isset($bundledItemStock[$productStockEntity->getFkStock()])) {
+                $bundledItemStock[$productStockEntity->getFkStock()] = [];
+            }
+
+            if (!isset($bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()])) {
+                $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [];
+            }
+
+            $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [
+                static::QUANTITY => $productStockEntity->getQuantity(),
+                static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
+            ];
+        }
+        return $bundledItemStock;
     }
 
     /**
@@ -149,7 +161,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      */
     protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundledItemQuantity)
     {
-        $bundleTotalStockPerWarehause = [];
+        $bundleTotalStockPerWarehouse = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
             $bundleStock = 0;
             $isAllNeverOutOfStock = true;
@@ -160,7 +172,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
                 $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
 
-                if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
+                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
                 }
 
@@ -169,12 +181,27 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 }
             }
 
-            $bundleTotalStockPerWarehause[$idStock] = [
+            $bundleTotalStockPerWarehouse[$idStock] = [
                 static::QUANTITY => $bundleStock,
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
-        return $bundleTotalStockPerWarehause;
+        return $bundleTotalStockPerWarehouse;
+    }
+
+    /**
+     * @param int $bundleStock
+     * @param int $itemStock
+     * @param bool $isNeverOutOfStock
+     *
+     * @return bool
+     */
+    protected function isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)
+    {
+        if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
+            return true;
+        }
+        return false;
     }
 
     /**
