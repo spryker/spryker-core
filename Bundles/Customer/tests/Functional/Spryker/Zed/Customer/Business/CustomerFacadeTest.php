@@ -36,7 +36,7 @@ class CustomerFacadeTest extends Test
     const TESTER_ZIP_CODE = '42';
 
     /**
-     * @var \Spryker\Zed\Customer\Business\CustomerFacade
+     * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
     protected $customerFacade;
 
