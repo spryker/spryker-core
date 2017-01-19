@@ -124,4 +124,32 @@ class AbstractTableTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetOrdersWithDeprecatedIndexAndDirection()
+    {
+        $config = new TableConfiguration();
+        $config->setHeader([
+            static::COL_ONE => 'One',
+            static::COL_TWO => 'Two',
+        ]);
+        $config->setSortable([
+            static::COL_ONE,
+            static::COL_TWO,
+        ]);
+
+        $config->setDefaultSortColumnIndex(1);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+
+        $result = $this->table->getOrders($config);
+        $expected = [
+            [
+                'column' => 1,
+                'dir' => 'desc',
+            ],
+        ];
+        $this->assertSame($expected, $result);
+    }
+
 }
