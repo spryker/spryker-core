@@ -170,14 +170,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected function getFormFactory()
-    {
-        return (new Pimple())->getApplication()[self::FORM_FACTORY];
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     public function getCalculatorPlugins()
