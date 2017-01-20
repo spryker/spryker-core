@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
@@ -90,7 +92,7 @@ class CustomerGroupForm extends AbstractType
     {
         $builder->add(self::FIELD_NAME, 'text', [
             'label' => 'Name',
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => $this->getNameFieldConstraints(),
         ]);
 
         return $this;
@@ -119,12 +121,15 @@ class CustomerGroupForm extends AbstractType
     protected function addCustomersField(FormBuilderInterface $builder)
     {
         $customerCollection = $this->customerGroupQueryContainer->queryCustomer()
-            ->select(['id_customer', 'first_name', 'last_name', 'email'])
+            ->select([
+                 SpyCustomerTableMap::COL_ID_CUSTOMER,
+                 SpyCustomerTableMap::COL_FIRST_NAME,
+                 SpyCustomerTableMap::COL_LAST_NAME,
+                 SpyCustomerTableMap::COL_EMAIL,
+            ])
             ->find();
-        $choices = [];
-        foreach ($customerCollection as $customer) {
-            $choices[$customer['id_customer']] = sprintf('%s %s (%s)', $customer['first_name'], $customer['last_name'], $customer['email']);
-        }
+
+        $choices = $this->buildCustomerChoiceList($customerCollection);
 
         $builder->add(self::FIELD_CUSTOMERS, new Select2ComboBoxType(), [
             'label' => 'Assigned Users',
@@ -140,7 +145,7 @@ class CustomerGroupForm extends AbstractType
     /**
      * @return array
      */
-    protected function getTextFieldConstraints()
+    protected function getNameFieldConstraints()
     {
         $constraints = [
             new Required(),
@@ -164,6 +169,25 @@ class CustomerGroupForm extends AbstractType
         ]);
 
         return $constraints;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ArrayCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerCollection
+     *
+     * @return array
+     */
+    protected function buildCustomerChoiceList(ArrayCollection $customerCollection)
+    {
+        $customerChoiceList = [];
+        foreach ($customerCollection as $customerEntity) {
+            $customerChoiceList[$customerEntity[SpyCustomerTableMap::COL_ID_CUSTOMER]] = sprintf(
+                '%s %s (%s)',
+                $customerEntity[SpyCustomerTableMap::COL_FIRST_NAME],
+                $customerEntity[SpyCustomerTableMap::COL_LAST_NAME],
+                $customerEntity[SpyCustomerTableMap::COL_EMAIL]
+            );
+        }
+        return $customerChoiceList;
     }
 
 }
