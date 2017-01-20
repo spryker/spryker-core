@@ -1,6 +1,21 @@
 
+<h4>{{ 'Fill in general page information' | trans }}</h4>
+
+{{ form_row(pageForm.isSearchable) }}
+
 {% for locale in availableLocales %}
     {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
-
+         {% block content %}
+            {% for cmsPageAttributesForm in pageForm.pageAttributes %}
+                {% if cmsPageAttributesForm.vars.data.localeName == locale.localeName %}
+                    {{ form_row(cmsPageAttributesForm.name) }}
+                    {{ form_row(cmsPageAttributesForm.fkTemplate) }}
+                    {{ form_row(cmsPageAttributesForm.url) }}
+                    {{ form_row(cmsPageAttributesForm.localeName) }}
+                {% endif %}
+            {% endfor %}
+         {% endblock %}
     {% endembed %}
 {% endfor %}
+
+{% do pageForm.pageAttributes.setRendered %}

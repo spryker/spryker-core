@@ -12,7 +12,14 @@
 {% block content %}
         {% embed '@Gui/Partials/widget.twig' %}
             {% block widget_content %}
-                {{ tabs(pageTabs, {'availableLocales' : availableLocales} ) }}
+
+                {{ form_start(pageForm) }}
+
+                {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
+                {% include '@CmsGui/_template/_form-submit.twig' %}
+
+                {{ form_end(pageForm) }}
+
             {% endblock %}
         {% endembed %}
 {% endblock %}
