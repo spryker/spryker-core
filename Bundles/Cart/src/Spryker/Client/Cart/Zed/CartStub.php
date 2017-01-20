@@ -14,7 +14,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -24,7 +24,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

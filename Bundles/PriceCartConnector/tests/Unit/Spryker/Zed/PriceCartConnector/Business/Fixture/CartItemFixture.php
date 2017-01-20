@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
 use Spryker\Shared\Cart\Transfer\ItemInterface;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer implements ItemInterface
 {

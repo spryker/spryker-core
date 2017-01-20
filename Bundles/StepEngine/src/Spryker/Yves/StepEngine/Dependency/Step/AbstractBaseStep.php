@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Step;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractBaseStep implements StepInterface
 {
@@ -49,7 +49,7 @@ abstract class AbstractBaseStep implements StepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array
      */

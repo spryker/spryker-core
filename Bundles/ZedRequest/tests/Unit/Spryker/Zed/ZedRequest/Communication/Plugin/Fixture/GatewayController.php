@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 use stdClass;
 
@@ -23,9 +23,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $foo
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function goodAction(TransferInterface $foo)
     {
@@ -33,10 +33,10 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $foo
-     * @param \Spryker\Shared\Transfer\TransferInterface $bar
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $bar
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function twoTransferParametersAction(TransferInterface $foo, TransferInterface $bar)
     {
@@ -47,11 +47,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $foo
      * @param mixed $bar
      * @param mixed $baz
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function tooManyParametersAction(TransferInterface $foo, $bar, $baz)
     {

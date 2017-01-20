@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Checkout\DataContainer;
 
 use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 
 class DataContainer implements DataContainerInterface
@@ -45,7 +45,7 @@ class DataContainer implements DataContainerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */

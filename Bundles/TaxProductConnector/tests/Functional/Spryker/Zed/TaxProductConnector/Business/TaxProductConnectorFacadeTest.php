@@ -10,7 +10,7 @@ namespace Functional\Spryker\Zed\TaxProductConnector\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;

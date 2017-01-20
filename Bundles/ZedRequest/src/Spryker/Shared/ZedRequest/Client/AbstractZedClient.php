@@ -8,7 +8,7 @@
 namespace Spryker\Shared\ZedRequest\Client;
 
 use BadMethodCallException;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 abstract class AbstractZedClient implements AbstractZedClientInterface
 {
@@ -24,7 +24,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     private static $lastResponse = null;
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface[]|\Closure[]
+     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
      */
     private $metaTransfers = [
     ];
@@ -51,7 +51,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface[]
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
     private function prepareAndGetMetaTransfers()
     {
@@ -66,10 +66,10 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
 
     /**
      * @param string $url
-     * @param \Spryker\Shared\Transfer\TransferInterface $object
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds (optional) default: null
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {

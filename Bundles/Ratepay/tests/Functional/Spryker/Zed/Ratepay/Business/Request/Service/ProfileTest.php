@@ -161,7 +161,7 @@ class ProfileTest extends AbstractFacadeTest
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */
@@ -170,7 +170,7 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function getRatepayPaymentMethodTransfer()
     {

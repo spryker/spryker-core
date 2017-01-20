@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Form;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -53,7 +53,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array|\Symfony\Component\Form\FormInterface[]
      */
@@ -67,7 +67,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -84,7 +84,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @throws \Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest
      *
@@ -104,7 +104,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
@@ -118,9 +118,9 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getFormData(AbstractTransfer $dataTransfer)
     {
@@ -132,7 +132,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array
      */
@@ -148,7 +148,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\Form\FormTypeInterface $formType
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */

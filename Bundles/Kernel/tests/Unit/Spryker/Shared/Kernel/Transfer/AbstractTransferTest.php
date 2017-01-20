@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Transfer;
+namespace Unit\Spryker\Shared\Kernel\Transfer;
 
 use ArrayObject;
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Transfer\TransferInterface;
-use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Unit\Spryker\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Shared
+ * @group Kernel
  * @group Transfer
  * @group AbstractTransferTest
  */

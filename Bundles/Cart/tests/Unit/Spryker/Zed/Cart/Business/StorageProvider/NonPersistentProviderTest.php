@@ -288,7 +288,7 @@ class NonPersistentProviderTest extends PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {

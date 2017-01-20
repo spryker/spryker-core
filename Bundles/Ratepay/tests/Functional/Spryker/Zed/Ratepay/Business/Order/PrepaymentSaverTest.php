@@ -45,7 +45,7 @@ class PrepaymentSaverTest extends AbstractSaverTest
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */

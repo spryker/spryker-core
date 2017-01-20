@@ -17,7 +17,7 @@ interface PaymentMethodExtractorInterface
      *
      * @throws \Spryker\Zed\Ratepay\Business\Exception\NoPaymentMethodException
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer|null
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
     public function extractPaymentMethod(QuoteTransfer $quoteTransfer);
 

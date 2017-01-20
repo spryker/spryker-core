@@ -12,7 +12,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
@@ -200,7 +200,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return void
      */
@@ -227,7 +227,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $oldTransferServer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $oldTransferServer
      *
      * @return void
      */
@@ -241,7 +241,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param string $action
-     * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      *
      * @return callable
      */
@@ -266,7 +266,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\TransferInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private function getTransferMock()
     {

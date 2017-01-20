@@ -10,8 +10,8 @@ namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 use LogicException;
 use ReflectionObject;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Message;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Messenger\MessengerConfig;
@@ -121,7 +121,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param \Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController $controller
-     * @param \Spryker\Shared\Transfer\TransferInterface $result
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $result
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Response
      */
@@ -215,7 +215,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             return true;
         }
 
-        if ($className === 'Spryker\Shared\Transfer\TransferInterface') {
+        if ($className === 'Spryker\Shared\Kernel\Transfer\TransferInterface') {
             return true;
         }
 

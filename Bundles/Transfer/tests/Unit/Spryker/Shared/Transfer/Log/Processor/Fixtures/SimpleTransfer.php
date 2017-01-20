@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class SimpleTransfer extends AbstractTransfer implements TransferInterface
 {

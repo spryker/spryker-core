@@ -8,8 +8,8 @@
 namespace Spryker\Shared\Transfer\Log\Processor;
 
 use ArrayObject;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
-use Spryker\Shared\Transfer\TransferInterface;
 
 class TransferSanitizerProcessor
 {
@@ -54,7 +54,7 @@ class TransferSanitizerProcessor
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return array
      */
@@ -80,7 +80,7 @@ class TransferSanitizerProcessor
     /**
      * @param array $context
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
     protected function findTransfer(array $context)
     {

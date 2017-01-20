@@ -7,19 +7,19 @@
 
 namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ZedRequest\Business\Client\Request as ClientRequest;
 
 class Request extends ClientRequest
 {
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface
+     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private $transfer;
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer()
     {
@@ -31,7 +31,7 @@ class Request extends ClientRequest
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return $this
      */
@@ -43,7 +43,7 @@ class Request extends ClientRequest
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */

@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep as AbstractBaseStep;
 
@@ -15,7 +15,7 @@ class BaseStep extends AbstractBaseStep
 {
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -25,7 +25,7 @@ class BaseStep extends AbstractBaseStep
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -36,7 +36,7 @@ class BaseStep extends AbstractBaseStep
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class BaseStep extends AbstractBaseStep
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */

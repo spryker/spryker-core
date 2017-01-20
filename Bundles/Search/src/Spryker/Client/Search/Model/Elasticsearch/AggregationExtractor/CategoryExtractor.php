@@ -32,7 +32,7 @@ class CategoryExtractor implements AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {

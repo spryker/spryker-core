@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class NotGatewayController
 {
@@ -25,7 +25,7 @@ class NotGatewayController
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $foo
      * @param int $bar
      *
      * @return int

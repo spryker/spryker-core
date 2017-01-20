@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ResponseInterface
 {
@@ -117,12 +117,12 @@ interface ResponseInterface
     public function setSuccess($success);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer();
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */

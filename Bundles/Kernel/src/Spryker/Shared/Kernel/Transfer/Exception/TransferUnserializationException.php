@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Transfer\Exception;
+namespace Spryker\Shared\Kernel\Transfer\Exception;
 
 use Exception;
 
-class RequiredTransferPropertyException extends Exception
+class TransferUnserializationException extends Exception
 {
 }

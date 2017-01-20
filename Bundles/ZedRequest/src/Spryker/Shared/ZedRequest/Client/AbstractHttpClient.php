@@ -19,7 +19,7 @@ use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
@@ -120,7 +120,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
      *
@@ -179,7 +179,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException

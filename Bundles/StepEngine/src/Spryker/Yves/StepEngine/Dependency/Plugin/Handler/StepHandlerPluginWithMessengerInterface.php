@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Handler;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,9 +18,9 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
 

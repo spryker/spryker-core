@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Transfer;
+namespace Spryker\Shared\Kernel\Transfer;
 
 use ArrayObject;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 abstract class AbstractTransfer implements TransferInterface, Serializable
@@ -217,7 +217,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     /**
      * @param string $property
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -235,7 +235,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     /**
      * @param string $property
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -304,7 +304,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false)
     {
@@ -337,7 +337,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     /**
      * @param string $type
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private function createInstance($type)
     {
@@ -441,7 +441,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     /**
      * @param string $serialized
      *
-     * @throws \Spryker\Shared\Transfer\Exception\TransferUnserializationException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException
      *
      * @return void
      */
