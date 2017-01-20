@@ -19,15 +19,20 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected $bundles = [];
 
     /**
+     * @var array
+     */
+    protected $bundlesDependencies;
+
+    /**
      * @return array
      */
     public function calculateStability()
     {
         $bundlesDependencies = json_decode(file_get_contents(APPLICATION_ROOT_DIR . '/data/dependencyTree.json'), true);
 
-        $bundlesDependencies = $this->filter($bundlesDependencies);
+        $this->bundlesDependencies = $this->filter($bundlesDependencies);
 
-        foreach ($bundlesDependencies as $bundlesDependency) {
+        foreach ($this->bundlesDependencies as $bundlesDependency) {
             $currentBundleName = $bundlesDependency['bundle'];
             $outgoingBundleName = $bundlesDependency['foreign bundle'];
 
@@ -73,6 +78,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         $this->bundles[$bundle] = [
             'in' => [],
+            'indirectIn' => [],
             'out' => [],
             'indirectOut' => [],
             'stability' => 0,
@@ -97,31 +103,54 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected function calculateIndirectBundlesStability()
     {
         foreach ($this->bundles as $bundle => $info) {
-            $allDependencies = new ArrayObject();
-            $this->buildDependencyTree($bundle, $allDependencies);
-            $this->bundles[$bundle]['indirectOut'] = $allDependencies->getArrayCopy();
+            $indirectOutgoingDependencies = new ArrayObject();
+            $this->buildIndirectOutgoingDependencies($bundle, $indirectOutgoingDependencies);
+            $this->bundles[$bundle]['indirectOut'] = $indirectOutgoingDependencies->getArrayCopy();
 
-            $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['in']) + count($this->bundles[$bundle]['indirectOut']));
+            $indirectIncomingDependencies = new ArrayObject();
+            $this->buildIndirectIncomingDependencies($bundle, $indirectIncomingDependencies);
+            $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies->getArrayCopy();
+
+            $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
             $this->bundles[$bundle]['indirectStability'] = $indirectStability;
         }
     }
 
     /**
      * @param string $bundleName
-     * @param \ArrayObject $allDependencies
+     * @param \ArrayObject $indirectOutgoingDependencies
      *
      * @return void
      */
-    protected function buildDependencyTree($bundleName, ArrayObject $allDependencies)
+    protected function buildIndirectOutgoingDependencies($bundleName, ArrayObject $indirectOutgoingDependencies)
     {
         $dependencies = $this->bundles[$bundleName]['out'];
 
-        $allDependencies[$bundleName] = $dependencies;
+        $indirectOutgoingDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
-            if (array_key_exists($dependentBundle, $allDependencies)) {
+            if (array_key_exists($dependentBundle, $indirectOutgoingDependencies)) {
                 continue;
             }
-            $this->buildDependencyTree($dependentBundle, $allDependencies);
+            $this->buildIndirectOutgoingDependencies($dependentBundle, $indirectOutgoingDependencies);
+        }
+    }
+
+    /**
+     * @param string $bundleName
+     * @param \ArrayObject $indirectIncomingDependencies
+     *
+     * @return void
+     */
+    protected function buildIndirectIncomingDependencies($bundleName, ArrayObject $indirectIncomingDependencies)
+    {
+        $dependencies = $this->bundles[$bundleName]['in'];
+
+        $indirectIncomingDependencies[$bundleName] = $dependencies;
+        foreach ($dependencies as $dependentBundle) {
+            if (array_key_exists($dependentBundle, $indirectIncomingDependencies)) {
+                continue;
+            }
+            $this->buildIndirectIncomingDependencies($dependentBundle, $indirectIncomingDependencies);
         }
     }
 

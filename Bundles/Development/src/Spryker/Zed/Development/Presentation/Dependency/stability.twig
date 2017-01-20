@@ -14,6 +14,7 @@
                         <th>Incoming</th>
                         <th>Outgoing</th>
                         <th>Stability</th>
+                        <th>Indirect Incoming</th>
                         <th>Indirect Outgoing</th>
                         <th>Indirect Stability</th>
                     </tr>
@@ -26,6 +27,7 @@
                             <td>{{ info.in | length }}</td>
                             <td>{{ info.out | length }}</td>
                             <td>{{ info.stability }}</td>
+                            <td>{{ info.indirectIn | length }}</td>
                             <td>{{ info.indirectOut | length }}</td>
                             <td>{{ info.indirectStability }}</td>
                         </tr>
