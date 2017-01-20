@@ -58,7 +58,6 @@ class NavigationServiceProvider extends AbstractPlugin implements ServiceProvide
      */
     public function boot(Application $app)
     {
-
     }
 
 }

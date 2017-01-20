@@ -21,6 +21,8 @@ class RefundCest
 {
 
     /**
+     * @skip
+     *
      * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
      *
      * @return void
@@ -45,6 +47,8 @@ class RefundCest
     }
 
     /**
+     * @skip
+     *
      * @group single
      *
      * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
@@ -73,6 +77,8 @@ class RefundCest
     }
 
     /**
+     * @skip
+     *
      * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
      *
      * @return void

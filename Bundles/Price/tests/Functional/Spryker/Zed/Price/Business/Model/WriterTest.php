@@ -45,11 +45,6 @@ class WriterTest extends Test
     private $priceFacade;
 
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @return void
      */
     public function setUp()
