@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -40,14 +42,14 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
-     * @param array $stores
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
+     * @param array $stores
      */
     public function __construct(
         array $sourceDirectories,
         IndexDefinitionMergerInterface $definitionMerger,
-        array $stores,
-        SearchToUtilEncodingInterface $utilEncodingService
+        SearchToUtilEncodingInterface $utilEncodingService,
+        array $stores
     ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
@@ -156,6 +158,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
             $indexName = $storePrefix . $indexName;
         }
 
+        $indexName = $this->addSearchIndexNameSuffix($indexName);
+
         return $indexName;
     }
 
@@ -194,6 +198,26 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return string
+     */
+    protected function addSearchIndexNameSuffix($indexName)
+    {
+        $indexName .= $this->getIndexNameSuffix();
+
+        return $indexName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIndexNameSuffix()
+    {
+        return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
     }
 
     /**

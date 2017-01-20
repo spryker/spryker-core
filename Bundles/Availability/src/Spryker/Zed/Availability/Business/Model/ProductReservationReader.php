@@ -69,7 +69,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
             $value = explode(':', $item);
 
             if (count($value) > 1) {
-                $reservation += $value[1];
+                $reservation += (int)$value[1];
             }
         }
 

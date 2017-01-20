@@ -175,13 +175,16 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
         $logEntity->setHostname($this->utilNetworkService->getHostName());
 
+        $path = 'N/A';
         if (PHP_SAPI === self::SAPI_CLI) {
             $path = self::SAPI_CLI;
             if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
                 $path = implode(' ', $_SERVER[self::ARGV]);
             }
         } else {
-            $path = $_SERVER[self::DOCUMENT_URI];
+            if (isset($_SERVER[self::DOCUMENT_URI])) {
+                $path = $_SERVER[self::DOCUMENT_URI];
+            }
         }
         $logEntity->setPath($path);
 
