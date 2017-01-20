@@ -357,6 +357,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $bundleToView,
             $this->getGraph(),
             $this->createDependencyBundleParser(),
+            $this->createDependencyManager(),
             $excludedBundles
         );
 

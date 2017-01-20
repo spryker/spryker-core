@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\Checkout\CheckoutConfig;
 
 class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionInterface
 {
@@ -45,7 +46,7 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
         if ($totalsBefore !== $totalsAfter) {
             $error = $this->createCheckoutErrorTransfer();
             $error
-                ->setErrorCode(CheckoutConstants::ERROR_CODE_CART_AMOUNT_DIFFERENT)
+                ->setErrorCode(CheckoutConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
                 ->setMessage('Checkout grand total changed.');
 
             $checkoutResponseTransfer->addError($error);

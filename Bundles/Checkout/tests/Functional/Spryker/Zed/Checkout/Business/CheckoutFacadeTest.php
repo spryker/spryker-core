@@ -30,6 +30,7 @@ use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
@@ -137,7 +138,7 @@ class CheckoutFacadeTest extends Test
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConstants::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -202,7 +203,7 @@ class CheckoutFacadeTest extends Test
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConstants::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
     /**

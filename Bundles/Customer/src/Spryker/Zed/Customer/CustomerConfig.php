@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CustomerConfig extends AbstractBundleConfig
 {
 
+    const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+
     /**
      * @return string
      */

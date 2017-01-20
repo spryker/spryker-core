@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
 use ArrayObject;
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Spryker\Zed\Development\Business\Dependency\BundleParserInterface;
+use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 class OutgoingGraphBuilder
@@ -31,6 +32,11 @@ class OutgoingGraphBuilder
     protected $bundleParser;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Dependency\Manager
+     */
+    protected $dependencyManager;
+
+    /**
      * @var array
      */
     protected $bundlesToFilter;
@@ -39,13 +45,15 @@ class OutgoingGraphBuilder
      * @param string $bundleName
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
      * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
+     * @param \Spryker\Zed\Development\Business\Dependency\Manager $dependencyManager
      * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, array $bundlesToFilter = [])
+    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, Manager $dependencyManager, array $bundlesToFilter = [])
     {
         $this->bundleName = $bundleName;
         $this->graph = $graph;
         $this->bundleParser = $bundleParser;
+        $this->dependencyManager = $dependencyManager;
         $this->bundlesToFilter = $bundlesToFilter;
     }
 
@@ -60,7 +68,6 @@ class OutgoingGraphBuilder
         $this->buildGraph($this->bundleName, $allDependencies);
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {
-
             $attributes = [
                 'label' => $bundleName . ' ' . count($dependentBundles),
             ];
@@ -80,7 +87,17 @@ class OutgoingGraphBuilder
             }
         }
 
+//        $this->addIncomings();
+
         return $this->graph->render('svg');
+    }
+
+    protected function addIncomings()
+    {
+        $incomingDependencies = array_keys($this->dependencyManager->parseIncomingDependencies($this->bundleName));
+
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($incomingDependencies) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+//        foreach () {}
     }
 
     /**
