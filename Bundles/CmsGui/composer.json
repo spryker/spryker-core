@@ -23,7 +23,7 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Cms bundle",
+  "description": "CmsGui bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
