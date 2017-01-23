@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Dependency\Facade;
+namespace Spryker\Zed\CollectorStorageConnector\Dependency\Facade;
 
-interface StorageToCollectorInterface
+interface CollectorStorageConnectorToStorageInterface
 {
 
     /**
-     * @param array $keys
-     *
-     * @return bool
+     * @return array
      */
-    public function deleteStorageTimestamps(array $keys = []);
+    public function getTimestamps();
 
 }

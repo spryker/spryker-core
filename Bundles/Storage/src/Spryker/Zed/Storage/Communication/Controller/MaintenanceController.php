@@ -61,17 +61,6 @@ class MaintenanceController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function dropTimestampsAction()
-    {
-        $timestamps = $this->getFacade()->getTimestamps();
-        $this->getFactory()->getCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
-
-        return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteAllAction()
     {
         $numberOfDeletedEntries = $this->getFacade()->deleteAll();

@@ -113,12 +113,16 @@
       "Spryker\\Zed\\Cms\\": "Bundles/Cms/src",
       "Functional\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
       "Unit\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
+
       "Spryker\\Client\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Client\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Shared\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Shared\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Zed\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Zed\\Collector\\": "Bundles/Collector/tests",
+
+      "Spryker\\Zed\\CollectorStorageConnector\\": "Bundles/CollectorStorageConnector/src",
+
       "Spryker\\Shared\\Config\\": "Bundles/Config/src",
       "Unit\\Spryker\\Shared\\Config\\": "Bundles/Config/tests",
       "Spryker\\Zed\\Console\\": "Bundles/Console/src",

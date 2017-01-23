@@ -1,0 +1,34 @@
+{
+  "name": "spryker/collector-storage-connector",
+  "require": {
+    "spryker/collector": "^2.0.0 || ^3.0.0 || ^4.0.0",
+    "spryker/storage": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "description": "CollectorStorageConnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  }
+}

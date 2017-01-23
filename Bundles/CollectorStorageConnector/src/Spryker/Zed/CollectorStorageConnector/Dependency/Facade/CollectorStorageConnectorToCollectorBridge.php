@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Dependency\Facade;
+namespace Spryker\Zed\CollectorStorageConnector\Dependency\Facade;
 
-class StorageToCollectorBridge implements StorageToCollectorInterface
+class CollectorStorageConnectorToCollectorBridge implements CollectorStorageConnectorToCollectorInterface
 {
 
     /**
@@ -24,13 +24,13 @@ class StorageToCollectorBridge implements StorageToCollectorInterface
     }
 
     /**
-     * @param array $keys
+     * @param array $timestamps
      *
-     * @return bool
+     * @return void
      */
-    public function deleteStorageTimestamps(array $keys = [])
+    public function deleteStorageTimestamps(array $timestamps)
     {
-        return $this->collectorFacade->deleteStorageTimestamps($keys);
+        $this->collectorFacade->deleteStorageTimestamps($timestamps);
     }
 
 }
