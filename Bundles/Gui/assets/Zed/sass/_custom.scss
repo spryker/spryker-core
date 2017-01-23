@@ -199,6 +199,12 @@ table.dataTable thead th.sorting_desc:after {
   .ibox-content {
     border-color: #ebccd1;
   }
+  /* Expand panels that contain errors in case they are collapsed */
+  &.collapsed {
+    > .ibox-content {
+      display: block;
+    }
+  }
 }
 /* .. Nested panels */
 
