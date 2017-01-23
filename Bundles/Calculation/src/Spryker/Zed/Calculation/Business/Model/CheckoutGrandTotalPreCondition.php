@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,8 +10,7 @@ namespace Spryker\Zed\Calculation\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Zed\Checkout\CheckoutConfig;
+use Spryker\Zed\Calculation\CalculationConfig;
 
 class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionInterface
 {
@@ -46,7 +45,7 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
         if ($totalsBefore !== $totalsAfter) {
             $error = $this->createCheckoutErrorTransfer();
             $error
-                ->setErrorCode(CheckoutConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
+                ->setErrorCode(CalculationConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
                 ->setMessage('Checkout grand total changed.');
 
             $checkoutResponseTransfer->addError($error);

@@ -156,12 +156,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string|bool $bundleToView
      * @param array $excludedBundles
+     * @param bool $showIncomingDependencies
      *
      * @return string
      */
-    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [])
+    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false)
     {
-        return $this->getFactory()->createOutgoingDependencyGraphBuilder($bundleToView, $excludedBundles)->build();
+        return $this->getFactory()->createOutgoingDependencyGraphBuilder($bundleToView, $excludedBundles)->build($showIncomingDependencies);
     }
 
     /**

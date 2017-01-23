@@ -111,10 +111,12 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|bool $bundleToView
+     * @param array $excludedBundles
+     * @param bool $showIncomingDependencies
      *
      * @return string
      */
-    public function drawOutgoingDependencyTreeGraph($bundleToView);
+    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false);
 
     /**
      * @api

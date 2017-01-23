@@ -71,15 +71,19 @@ class DependencyController extends AbstractController
             ->handleRequest($request);
 
         $excludedBundles = [];
+        $showIncoming = false;
 
         if ($form->isValid()) {
             $formData = $form->getData();
             if (isset($formData[BundlesFormType::EXCLUDED_BUNDLES])) {
                 $excludedBundles = $formData[BundlesFormType::EXCLUDED_BUNDLES];
             }
+            if (isset($formData[BundlesFormType::SHOW_INCOMING])) {
+                $showIncoming = $formData[BundlesFormType::SHOW_INCOMING];
+            }
         }
 
-        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName, $excludedBundles);
+        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName, $excludedBundles, $showIncoming);
 
         return $this->viewResponse([
             'form' => $form->createView(),
