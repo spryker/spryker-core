@@ -27,14 +27,6 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToCollectorInterface
-     */
-    public function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
-    }
-
-    /**
      * @return string
      */
     public function getElasticaDocumentType()

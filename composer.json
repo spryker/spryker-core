@@ -123,6 +123,8 @@
 
       "Spryker\\Zed\\CollectorStorageConnector\\": "Bundles/CollectorStorageConnector/src",
 
+      "Spryker\\Zed\\CollectorSearchConnector\\": "Bundles/CollectorSearchConnector/src",
+
       "Spryker\\Shared\\Config\\": "Bundles/Config/src",
       "Unit\\Spryker\\Shared\\Config\\": "Bundles/Config/tests",
       "Spryker\\Zed\\Console\\": "Bundles/Console/src",

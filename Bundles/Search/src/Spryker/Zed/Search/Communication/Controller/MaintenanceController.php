@@ -32,16 +32,6 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function dropTimestampsAction()
-    {
-        $this->getFactory()->getCollectorFacade()->deleteSearchTimestamps();
-
-        return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
-    }
-
-    /**
      * @return array
      */
     public function listAction()

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Dependency\Facade;
+namespace Spryker\Zed\CollectorSearchConnector\Dependency\Facade;
 
-class SearchToCollectorBridge implements SearchToCollectorInterface
+class CollectorSearchConnectorToCollectorBridge implements CollectorSearchConnectorToCollectorInterface
 {
 
     /**
@@ -24,13 +24,13 @@ class SearchToCollectorBridge implements SearchToCollectorInterface
     }
 
     /**
-     * @param array $keys
+     * @param array $timestamps
      *
-     * @return bool
+     * @return void
      */
-    public function deleteSearchTimestamps(array $keys = [])
+    public function deleteSearchTimestamps(array $timestamps = [])
     {
-        return $this->collectorFacade->deleteSearchTimestamps($keys);
+        $this->collectorFacade->deleteSearchTimestamps($timestamps);
     }
 
 }
