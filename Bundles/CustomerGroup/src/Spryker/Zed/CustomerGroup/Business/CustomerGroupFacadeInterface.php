@@ -89,4 +89,17 @@ interface CustomerGroupFacadeInterface
      */
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer);
 
+    /**
+     *
+     * Specification:
+     *  - Finds Customer group by given customer id
+     *
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
+     */
+    public function findCustomerGroupByIdCustomer($idCustomer);
+
 }

@@ -15,11 +15,6 @@ class AclConfig extends AbstractBundleConfig
 {
 
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var array
      */
     protected $rules = [];

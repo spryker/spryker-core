@@ -61,6 +61,29 @@ class CustomerGroupFacadeTest extends Test
     /**
      * @return void
      */
+    public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven()
+    {
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->setName('Test' . time());
+        $customerGroupEntity->save();
+
+        $customerEntity = $this->createCustomer();
+
+        $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
+        $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+        $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
+        $customerGroupToCustomerEntity->save();
+
+        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupTransfer = $customerGroupFacade->findCustomerGroupByIdCustomer($customerEntity->getIdCustomer());
+
+        $this->assertNotEmpty($customerGroupTransfer);
+        $this->assertEquals($customerGroupEntity->getName(), $customerGroupTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
     public function testAddValid()
     {
         $customerGroupFacade = new CustomerGroupFacade();

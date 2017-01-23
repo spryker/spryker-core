@@ -41,11 +41,6 @@ abstract class AbstractTable
     protected $request;
 
     /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var array
      */
     protected $data;

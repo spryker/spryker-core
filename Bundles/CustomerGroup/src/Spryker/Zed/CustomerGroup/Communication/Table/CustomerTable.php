@@ -26,7 +26,9 @@ class CustomerTable extends AbstractTable
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
-    const GENDER_MAPPER = [
+    const COL_EMAIL = 'email';
+
+    const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];
@@ -59,23 +61,23 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            self::COL_FK_CUSTOMER => '#',
-            self::COL_FIRST_NAME => 'First Name',
-            self::COL_LAST_NAME => 'Last Name',
-            self::COL_GENDER => 'Gender',
-            self::ACTIONS => self::ACTIONS,
+            static::COL_FK_CUSTOMER => '#',
+            static::COL_FIRST_NAME => 'First Name',
+            static::COL_LAST_NAME => 'Last Name',
+            static::COL_GENDER => 'Gender',
+            static::ACTIONS => self::ACTIONS,
         ]);
 
         $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
-            self::COL_FK_CUSTOMER,
-            self::COL_FIRST_NAME,
-            self::COL_LAST_NAME,
-            self::COL_GENDER,
+            static::COL_FK_CUSTOMER,
+            static::COL_FIRST_NAME,
+            static::COL_LAST_NAME,
+            static::COL_GENDER,
         ]);
 
-        $config->setUrl('table?id-customer-group=' . $this->customerGroupTransfer->getIdCustomerGroup());
+        $config->setUrl(sprintf('table?id-customer-group=%d', $this->customerGroupTransfer->getIdCustomerGroup()));
 
         $config->setSearchable([
             SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER,
@@ -91,7 +93,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -103,22 +105,25 @@ class CustomerTable extends AbstractTable
             return [];
         }
 
-        return $this->formatCustomerGroupCollection($customerCollection);
+        return $this->mapCustomerGroupCollection($customerCollection);
     }
 
     /**
-     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomer
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomerEntity
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomerGroupToCustomer $customerGroupToCustomer)
+    protected function buildLinks(SpyCustomerGroupToCustomer $customerGroupToCustomerEntity)
     {
         $buttons = [];
-        $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customerGroupToCustomer->getFkCustomer(), 'View');
+        $buttons[] = $this->generateViewButton(
+            sprintf('/customer/view?id-customer=%d', $customerGroupToCustomerEntity->getFkCustomer()),
+            'View'
+        );
 
         $url = Url::generate('/customer-group/delete/customer', [
-            'id-customer-group' => $customerGroupToCustomer->getFkCustomerGroup(),
-            'id-customer' => $customerGroupToCustomer->getFkCustomer(),
+            'id-customer-group' => $customerGroupToCustomerEntity->getFkCustomerGroup(),
+            'id-customer' => $customerGroupToCustomerEntity->getFkCustomer(),
         ]);
         $buttons[] = $this->generateRemoveButton($url, 'Remove');
 
@@ -126,32 +131,32 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customersCollection
      *
      * @return array
      */
-    protected function formatCustomerGroupCollection(ObjectCollection $customersCollection)
+    protected function mapCustomerGroupCollection(ObjectCollection $customersCollection)
     {
         $customersList = [];
 
-        foreach ($customersCollection as $customer) {
-            $customersList[] = $this->hydrateCustomerListRow($customer);
+        foreach ($customersCollection as $customerGroupToCustomerEntity) {
+            $customersList[] = $this->mapCustomerListRow($customerGroupToCustomerEntity);
         }
 
         return $customersList;
     }
 
     /**
-     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomer
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomerEntity
      *
      * @return array
      */
-    protected function hydrateCustomerListRow(SpyCustomerGroupToCustomer $customerGroupToCustomer)
+    protected function mapCustomerListRow(SpyCustomerGroupToCustomer $customerGroupToCustomerEntity)
     {
-        $customerRow = $customerGroupToCustomer->toArray();
+        $customerRow = $customerGroupToCustomerEntity->toArray();
 
-        $customerRow[self::ACTIONS] = $this->buildLinks($customerGroupToCustomer);
-        $customerRow['gender'] = self::GENDER_MAPPER[$customerRow['gender']];
+        $customerRow[static::ACTIONS] = $this->buildLinks($customerGroupToCustomerEntity);
+        $customerRow[static::COL_GENDER] = $this->getGender($customerRow);
 
         return $customerRow;
     }
@@ -164,12 +169,26 @@ class CustomerTable extends AbstractTable
         $query = $this->customerGroupQueryContainer
             ->queryCustomerGroupToCustomerByFkCustomerGroup($this->customerGroupTransfer->getIdCustomerGroup())
             ->leftJoinCustomer()
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, 'first_name')
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, 'last_name')
-            ->withColumn(SpyCustomerTableMap::COL_EMAIL, 'email')
-            ->withColumn(SpyCustomerTableMap::COL_GENDER, 'gender');
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_EMAIL, static::COL_EMAIL)
+            ->withColumn(SpyCustomerTableMap::COL_GENDER, static::COL_GENDER);
 
         return $query;
+    }
+
+    /**
+     * @param array $customerRow
+     *
+     * @return string
+     */
+    protected function getGender(array $customerRow)
+    {
+        if (!isset($customerRow[static::COL_GENDER])) {
+            return 'n/a';
+        }
+
+        return self::GENDER_MAP[$customerRow[static::COL_GENDER]];
     }
 
 }

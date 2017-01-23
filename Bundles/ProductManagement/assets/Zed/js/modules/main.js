@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
@@ -146,7 +146,7 @@ $(document).ready(function() {
         tags: false,
         preLoaded: false,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
+            url: '/product-management/attribute/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
@@ -168,7 +168,7 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
+            url: '/product-management/attribute/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
@@ -237,7 +237,7 @@ $(document).ready(function() {
             minLength: 0,
             source: function(request, response) {
                 $.ajax({
-                    url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
+                    url: '/product-management/attribute/suggest/',
                     dataType: "json",
                     data: {
                         q: request.term,
