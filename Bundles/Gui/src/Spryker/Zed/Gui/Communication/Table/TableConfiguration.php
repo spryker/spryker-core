@@ -247,7 +247,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use $defaultSortField instead.
+     * @deprecated Use setDefaultSortField() instead.
      *
      * @param int $columnIndex
      *
@@ -259,7 +259,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use $defaultSortField instead.
+     * @deprecated Use getDefaultSortField() instead.
      *
      * @return int
      */
@@ -269,7 +269,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use $defaultSortField instead.
+     * @deprecated Use setDefaultSortField() instead.
      *
      * @param string $direction
      *
@@ -281,7 +281,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use $defaultSortField instead.
+     * @deprecated Use getDefaultSortField() instead.
      *
      * @return string
      */
