@@ -1,34 +1,23 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\User\Dependency\Facade;
+namespace Spryker\Zed\User\Dependency\Plugin;
 
-class UserToAclBridge implements UserToAclInterface
+use Generated\Shared\Transfer\GroupsTransfer;
+
+class GroupPlugin implements GroupPluginInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Acl\Business\AclFacade
-     */
-    protected $aclFacade;
-
-    /**
-     * @param \Spryker\Zed\Acl\Business\AclFacadeInterface $aclFacade
-     */
-    public function __construct($aclFacade)
-    {
-        $this->aclFacade = $aclFacade;
-    }
 
     /**
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups()
     {
-        return $this->aclFacade->getAllGroups();
+        return new GroupsTransfer();
     }
 
     /**
@@ -38,18 +27,17 @@ class UserToAclBridge implements UserToAclInterface
      */
     public function getUserGroups($idUser)
     {
-        return $this->aclFacade->getUserGroups($idUser);
+        return new GroupsTransfer();
     }
 
     /**
      * @param int $idUser
      * @param int $idGroup
      *
-     * @return int
+     * @return void
      */
     public function addUserToGroup($idUser, $idGroup)
     {
-        return $this->aclFacade->addUserToGroup($idUser, $idGroup);
     }
 
     /**
@@ -60,7 +48,6 @@ class UserToAclBridge implements UserToAclInterface
      */
     public function removeUserFromGroup($idUser, $idGroup)
     {
-        $this->aclFacade->removeUserFromGroup($idUser, $idGroup);
     }
 
 }

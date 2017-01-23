@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -247,9 +247,9 @@ class EditController extends AbstractController
             return false;
         }
 
-        $aclFacade = $this->getFactory()->getAclFacade();
+        $groupPlugin = $this->getFactory()->getGroupPlugin();
         foreach ($formData[UserForm::FIELD_GROUP] as $idGroup) {
-            $aclFacade->addUserToGroup($userTransfer->getIdUser(), $idGroup);
+            $groupPlugin->addUserToGroup($userTransfer->getIdUser(), $idGroup);
         }
 
         return true;
@@ -262,11 +262,11 @@ class EditController extends AbstractController
      */
     protected function deleteAclGroups($idUser)
     {
-        $aclFacade = $this->getFactory()->getAclFacade();
-        $userAclGroups = $aclFacade->getUserGroups($idUser);
+        $groupPlugin = $this->getFactory()->getGroupPlugin();
+        $userGroups = $groupPlugin->getUserGroups($idUser);
 
-        foreach ($userAclGroups->getGroups() as $aclGroupTransfer) {
-            $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());
+        foreach ($userGroups->getGroups() as $groupTransfer) {
+            $groupPlugin->removeUserFromGroup($idUser, $groupTransfer->getIdAclGroup());
         }
     }
 

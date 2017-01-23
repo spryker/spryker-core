@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -103,8 +103,12 @@ class UserForm extends AbstractType
             ->addEmailField($builder)
             ->addPasswordField($builder)
             ->addFirstNameField($builder)
-            ->addLastNameField($builder)
-            ->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+            ->addLastNameField($builder);
+
+        $groupChoices = $options[self::OPTION_GROUP_CHOICES];
+        if ($groupChoices) {
+            $this->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+        }
     }
 
     /**
@@ -197,7 +201,6 @@ class UserForm extends AbstractType
                     new Choice([
                         'choices' => array_keys($choices),
                         'multiple' => true,
-                        'min' => 1,
                     ]),
                 ],
                 'label' => 'Assigned groups',

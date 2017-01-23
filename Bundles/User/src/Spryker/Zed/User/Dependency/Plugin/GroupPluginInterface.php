@@ -1,16 +1,25 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\User\Dependency\Facade;
+namespace Spryker\Zed\User\Dependency\Plugin;
 
-interface UserToAclInterface
+interface GroupPluginInterface
 {
 
     /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\GroupsTransfer
+     */
+    public function getAllGroups();
+
+    /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -18,11 +27,8 @@ interface UserToAclInterface
     public function getUserGroups($idUser);
 
     /**
-     * @return \Generated\Shared\Transfer\GroupsTransfer
-     */
-    public function getAllGroups();
-
-    /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -31,6 +37,8 @@ interface UserToAclInterface
     public function addUserToGroup($idUser, $idGroup);
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
