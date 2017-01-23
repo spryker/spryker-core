@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -35,6 +35,7 @@ interface SessionConstants
     const YVES_SESSION_REDIS_PORT = 'YVES_SESSION_REDIS_PORT';
     const YVES_SESSION_REDIS_DATABASE = 'YVES_SESSION_REDIS_DATABASE';
 
+    const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
     const ZED_SESSION_SAVE_HANDLER = 'ZED_SESSION_SAVE_HANDLER';
     const ZED_SESSION_COOKIE_NAME = 'ZED_SESSION_COOKIE_NAME';
     const ZED_SESSION_COOKIE_SECURE = 'ZED_COOKIE_SECURE';

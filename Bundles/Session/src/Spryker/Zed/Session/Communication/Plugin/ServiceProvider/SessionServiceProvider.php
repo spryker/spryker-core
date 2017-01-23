@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,7 +10,6 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -155,7 +154,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function secureCookie()
     {
-        if (Config::get(ApplicationConstants::ZED_SSL_ENABLED, false)
+        if (Config::get(SessionConstants::ZED_SSL_ENABLED, false)
             && Config::get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true)
         ) {
             return true;
