@@ -579,6 +579,11 @@
       "Unit\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
       "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
 
+      "Spryker\\Shared\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
+      "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
+
       "Spryker\\Shared\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Yves\\ProductBundle\\": "Bundles/ProductBundle/src",

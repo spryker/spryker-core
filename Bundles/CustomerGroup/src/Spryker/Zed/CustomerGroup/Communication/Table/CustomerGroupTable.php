@@ -53,19 +53,19 @@ class CustomerGroupTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            self::COL_ID_CUSTOMER_GROUP => '#',
-            self::COL_NAME => 'Name',
-            self::COL_DESCRIPTION => 'Description',
-            self::COL_CREATED_AT => 'Created',
-            self::ACTIONS => self::ACTIONS,
+            static::COL_ID_CUSTOMER_GROUP => '#',
+            static::COL_NAME => 'Name',
+            static::COL_DESCRIPTION => 'Description',
+            static::COL_CREATED_AT => 'Created',
+            static::ACTIONS => self::ACTIONS,
         ]);
 
         $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
-            self::COL_ID_CUSTOMER_GROUP,
-            self::COL_NAME,
-            self::COL_CREATED_AT,
+            static::COL_ID_CUSTOMER_GROUP,
+            static::COL_NAME,
+            static::COL_CREATED_AT,
         ]);
 
         $config->setUrl('table');
@@ -83,11 +83,11 @@ class CustomerGroupTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->prepareQuery();
+        $query = $this->customerGroupQueryContainer->queryCustomerGroup();
 
         $customerGroupCollection = $this->runQuery($query, $config, true);
 
@@ -95,7 +95,7 @@ class CustomerGroupTable extends AbstractTable
             return [];
         }
 
-        return $this->formatCustomerGroupCollection($customerGroupCollection);
+        return $this->mapCustomerGroupCollection($customerGroupCollection);
     }
 
     /**
@@ -117,16 +117,15 @@ class CustomerGroupTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup[] $customersCollection
      *
      * @return array
      */
-    protected function formatCustomerGroupCollection(ObjectCollection $customersCollection)
+    protected function mapCustomerGroupCollection(ObjectCollection $customersCollection)
     {
         $customersList = [];
-
         foreach ($customersCollection as $customer) {
-            $customersList[] = $this->hydrateCustomerListRow($customer);
+            $customersList[] = $this->mapCustomerListRow($customer);
         }
 
         return $customersList;
@@ -137,24 +136,14 @@ class CustomerGroupTable extends AbstractTable
      *
      * @return array
      */
-    protected function hydrateCustomerListRow(SpyCustomerGroup $customerGroup)
+    protected function mapCustomerListRow(SpyCustomerGroup $customerGroup)
     {
         $customerRow = $customerGroup->toArray();
 
-        $customerRow[self::COL_CREATED_AT] = $this->dateFormatter->dateTime($customerGroup->getCreatedAt());
-        $customerRow[self::ACTIONS] = $this->buildLinks($customerGroup);
+        $customerRow[static::COL_CREATED_AT] = $this->dateFormatter->dateTime($customerGroup->getCreatedAt());
+        $customerRow[static::ACTIONS] = $this->buildLinks($customerGroup);
 
         return $customerRow;
-    }
-
-    /**
-     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
-     */
-    protected function prepareQuery()
-    {
-        $query = $this->customerGroupQueryContainer->queryCustomerGroup();
-
-        return $query;
     }
 
 }

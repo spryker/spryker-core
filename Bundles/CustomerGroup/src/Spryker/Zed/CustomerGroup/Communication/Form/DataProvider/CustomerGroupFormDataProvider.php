@@ -49,7 +49,8 @@ class CustomerGroupFormDataProvider
             ->customerGroupQueryContainer
             ->queryCustomerGroupToCustomerByFkCustomerGroup($idCustomerGroup)
             ->select(SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER)
-            ->find()->toArray();
+            ->find()
+            ->toArray();
 
         $data['customers'] = $customersArray;
 

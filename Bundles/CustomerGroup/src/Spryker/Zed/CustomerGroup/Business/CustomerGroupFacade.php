@@ -96,4 +96,20 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
             ->removeCustomersFromGroup($customerGroupTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
+     */
+    public function findCustomerGroupByIdCustomer($idCustomer)
+    {
+        return $this->getFactory()
+            ->createCustomerGroup()
+            ->findCustomerGroupByIdCustomer($idCustomer);
+    }
+
 }

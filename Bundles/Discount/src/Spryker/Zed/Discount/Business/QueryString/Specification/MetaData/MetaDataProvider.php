@@ -73,11 +73,11 @@ class MetaDataProvider implements MetaDataProviderInterface
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {
-        foreach ($this->specificationPlugins as $specificationPlugin) {
-            if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
-                list($fieldName, $attribute) = explode('.', $fieldName);
-            }
+        if (strpos($fieldName, '.') !== false) {
+            list($fieldName, $attribute) = explode('.', $fieldName);
+        }
 
+        foreach ($this->specificationPlugins as $specificationPlugin) {
             if ($fieldName === $specificationPlugin->getFieldName()) {
                 return $specificationPlugin->acceptedDataTypes();
             }
