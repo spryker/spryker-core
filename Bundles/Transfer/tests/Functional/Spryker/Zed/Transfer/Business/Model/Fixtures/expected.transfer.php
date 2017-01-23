@@ -16,7 +16,9 @@ class CatFaceTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
+
     const ITEM = 'item';
+
     const ITEMS = 'items';
 
     /**

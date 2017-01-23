@@ -48,6 +48,7 @@ class TransferDefinitionMerger implements MergerInterface
     /**
      * @param array $existingDefinition
      * @param array $definitionToMerge
+     * @param string $transferName
      *
      * @return array
      */
@@ -81,6 +82,7 @@ class TransferDefinitionMerger implements MergerInterface
     /**
      * @param array $existingProperties
      * @param array $propertiesToMerge
+     * @param string $transferName
      *
      * @return array
      */

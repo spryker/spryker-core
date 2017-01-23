@@ -21,18 +21,22 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @deprecated scalarField is deprecated.
      */
     const SCALAR_FIELD = 'scalarField';
+
     /**
      * @deprecated arrayField is deprecated.
      */
     const ARRAY_FIELD = 'arrayField';
+
     /**
      * @deprecated transferField is deprecated.
      */
     const TRANSFER_FIELD = 'transferField';
+
     /**
      * @deprecated transferCollectionField is deprecated.
      */
     const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
+
     /**
      * @deprecated Deprecated on project level.
      */

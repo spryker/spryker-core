@@ -47,7 +47,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private $constructorDefinition = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     private $deprecationDescription;
 

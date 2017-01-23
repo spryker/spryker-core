@@ -16,7 +16,9 @@ class FooBarTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
+
     const BLA = 'bla';
+
     const SELF_REFERENCE = 'selfReference';
 
     /**
