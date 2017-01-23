@@ -58,9 +58,11 @@ class OutgoingGraphBuilder
     }
 
     /**
+     * @param bool $showIncomingDependencies
+     *
      * @return string
      */
-    public function build()
+    public function build($showIncomingDependencies = false)
     {
         $this->graph->init('Outgoing dependencies', ['bgcolor' => '#f3f3f4']);
 
@@ -69,13 +71,14 @@ class OutgoingGraphBuilder
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {
             $attributes = [
-                'label' => $bundleName . ' ' . count($dependentBundles),
+                'label' => $bundleName . '<br /><font point-size="10">' . count($dependentBundles) . '</font>',
+                'url' => '/development/dependency/outgoing-graph?bundle=' . $bundleName
             ];
 
             if ($this->bundleName === $bundleName) {
                 $attributes['fillcolor'] = '#ffffff';
                 $attributes['style'] = 'filled';
-                $attributes['label'] = $attributes['label'] . '<br /><font color="violet" point-size="10">' . (count($allDependencies) - 1) . ' (indirect)</font>';
+                $attributes['label'] = $attributes['label'] . '<br /><font color="violet" point-size="13">' . (count($allDependencies) - 1) . ' (indirect)</font>';
             }
 
             $this->graph->addNode($bundleName, $attributes);
@@ -87,17 +90,25 @@ class OutgoingGraphBuilder
             }
         }
 
-//        $this->addIncomings();
+        if ($showIncomingDependencies) {
+            $this->addIncomingDependencies();
+        }
+
 
         return $this->graph->render('svg');
     }
 
-    protected function addIncomings()
+    /**
+     * @return void
+     */
+    protected function addIncomingDependencies()
     {
         $incomingDependencies = array_keys($this->dependencyManager->parseIncomingDependencies($this->bundleName));
 
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($incomingDependencies) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-//        foreach () {}
+        foreach ($incomingDependencies as $incomingBundle) {
+            $this->graph->addNode($incomingBundle);
+            $this->graph->addEdge($incomingBundle, $this->bundleName);
+        }
     }
 
     /**
