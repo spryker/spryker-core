@@ -168,16 +168,16 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
-     * @param string $toUrl
+     * @param string $sourceUrl
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
-    public function queryUrlRedirectBySourceUrl($toUrl)
+    public function queryUrlRedirectBySourceUrl($sourceUrl)
     {
         return $this->getFactory()
             ->createUrlRedirectQuery()
             ->useSpyUrlQuery()
-                ->filterByUrl($toUrl)
+                ->filterByUrl($sourceUrl)
             ->endUse();
     }
 

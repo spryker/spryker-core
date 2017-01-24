@@ -8,18 +8,17 @@
 namespace Spryker\Zed\Url\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Url\Business\Deletion\UrlDeleter;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectAppendObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectInjectionObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectUpdateObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivator;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectCreator;
-use Spryker\Zed\Url\Business\Redirect\UrlRedirectDeleter;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectReader;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectUpdater;
 use Spryker\Zed\Url\Business\Url\UrlActivator;
 use Spryker\Zed\Url\Business\Url\UrlCreator;
-use Spryker\Zed\Url\Business\Url\UrlDeleter;
 use Spryker\Zed\Url\Business\Url\UrlReader;
 use Spryker\Zed\Url\Business\Url\UrlUpdater;
 use Spryker\Zed\Url\UrlDependencyProvider;
@@ -60,11 +59,11 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlDeleterInterface
+     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterInterface
      */
     public function createUrlDeleter()
     {
-        $urlDeleter = new UrlDeleter($this->getQueryContainer(), $this->createUrlActivator());
+        $urlDeleter = new UrlDeleter($this->getQueryContainer(), $this->createUrlActivator(), $this->createUrlRedirectActivator());
 
         return $urlDeleter;
     }
@@ -99,14 +98,6 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     public function createUrlRedirectUpdater()
     {
         return new UrlRedirectUpdater($this->getQueryContainer(), $this->createUrlUpdater(), $this->createUrlRedirectActivator());
-    }
-
-    /**
-     * @return \Spryker\Zed\Url\Business\Redirect\UrlRedirectDeleterInterface
-     */
-    public function createUrlRedirectDeleter()
-    {
-        return new UrlRedirectDeleter($this->getQueryContainer(), $this->createUrlRedirectActivator());
     }
 
     /**
@@ -187,7 +178,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
      */
     protected function createUrlRedirectInjectionObserver()
     {
-        return new UrlRedirectInjectionObserver($this->getQueryContainer());
+        return new UrlRedirectInjectionObserver($this->getQueryContainer(), $this->createUrlRedirectActivator());
     }
 
     /**
@@ -195,7 +186,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
      */
     protected function createUrlRedirectAppendObserver()
     {
-        return new UrlRedirectAppendObserver($this->getQueryContainer());
+        return new UrlRedirectAppendObserver($this->getQueryContainer(), $this->createUrlRedirectActivator());
     }
 
     /**
@@ -214,7 +205,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
      */
     protected function createUrlRedirectUpdateObserver()
     {
-        return new UrlRedirectUpdateObserver($this->getQueryContainer());
+        return new UrlRedirectUpdateObserver($this->getQueryContainer(), $this->createUrlRedirectActivator());
     }
 
     /**

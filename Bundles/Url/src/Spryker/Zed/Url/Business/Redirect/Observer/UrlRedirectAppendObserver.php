@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
+use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
@@ -21,11 +22,18 @@ class UrlRedirectAppendObserver extends AbstractUrlCreatorObserver
     protected $urlQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @var \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer)
+    protected $urlRedirectActivator;
+
+    /**
+     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
+     */
+    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlRedirectActivatorInterface $urlRedirectActivator)
     {
         $this->urlQueryContainer = $urlQueryContainer;
+        $this->urlRedirectActivator = $urlRedirectActivator;
     }
 
     /**
@@ -57,7 +65,7 @@ class UrlRedirectAppendObserver extends AbstractUrlCreatorObserver
             $chainRedirectEntity->setToUrl($redirectEntity->getToUrl());
             $chainRedirectEntity->save();
 
-            // TODO: saving other entities should also touch them when saveAndTouch was called. + test
+            $this->activateUrlRedirect($chainRedirectEntity->getIdUrlRedirect());
         }
     }
 
@@ -73,6 +81,19 @@ class UrlRedirectAppendObserver extends AbstractUrlCreatorObserver
             ->findByToUrl($targetUrl);
 
         return $chainRedirectEntities;
+    }
+
+    /**
+     * @param int $idUrlRedirect
+     *
+     * @return void
+     */
+    protected function activateUrlRedirect($idUrlRedirect)
+    {
+        $urlRedirectTransfer = new UrlRedirectTransfer();
+        $urlRedirectTransfer->setIdUrlRedirect($idUrlRedirect);
+
+        $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
     }
 
 }

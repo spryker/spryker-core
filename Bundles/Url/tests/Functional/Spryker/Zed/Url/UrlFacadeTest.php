@@ -239,6 +239,59 @@ class UrlFacadeTest extends Test
     /**
      * @return void
      */
+    public function testDeleteUrlShouldRemoveRelatedUrlRedirectEntitiesFromDatabase()
+    {
+        $localeTransfer = $this->localeFacade->createLocale('ab_CD');
+
+        $urlEntity = new SpyUrl();
+        $urlEntity
+            ->setUrl('/final/target/url')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->save();
+
+        $urlRedirectEntity1 = new SpyUrlRedirect();
+        $urlRedirectEntity1
+            ->setToUrl($urlEntity->getUrl())
+            ->setStatus(Response::HTTP_MOVED_PERMANENTLY)
+            ->save();
+
+        $urlEntity1 = new SpyUrl();
+        $urlEntity1
+            ->setUrl('/redirect/source/url/1')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->setFkResourceRedirect($urlRedirectEntity1->getIdUrlRedirect())
+            ->save();
+
+        $urlRedirectEntity2 = new SpyUrlRedirect();
+        $urlRedirectEntity2
+            ->setToUrl($urlEntity->getUrl())
+            ->setStatus(Response::HTTP_MOVED_PERMANENTLY)
+            ->save();
+
+        $urlEntity2 = new SpyUrl();
+        $urlEntity2
+            ->setUrl('/redirect/source/url/2')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->setFkResourceRedirect($urlRedirectEntity2->getIdUrlRedirect())
+            ->save();
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setIdUrl($urlEntity->getIdUrl());
+
+        $this->urlFacade->deleteUrl($urlTransfer);
+
+        $urlRedirectTransfer1 = new UrlRedirectTransfer();
+        $urlRedirectTransfer1->setIdUrlRedirect($urlRedirectEntity1->getIdUrlRedirect());
+        $this->assertFalse($this->urlFacade->hasUrlRedirect($urlRedirectTransfer1), 'URL redirect entity 1/2 should not exist after deleting its target url entity.');
+
+        $urlRedirectTransfer2 = new UrlRedirectTransfer();
+        $urlRedirectTransfer2->setIdUrlRedirect($urlRedirectEntity2->getIdUrlRedirect());
+        $this->assertFalse($this->urlFacade->hasUrlRedirect($urlRedirectTransfer2), 'URL redirect entity 2/2 should not exist after deleting its target url entity.');
+    }
+
+    /**
+     * @return void
+     */
     public function testActivateUrlShouldCreateActiveTouchEntry()
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
@@ -421,16 +474,30 @@ class UrlFacadeTest extends Test
         $urlRedirectTransfer = new UrlRedirectTransfer();
         $urlRedirectTransfer->setIdUrlRedirect($urlRedirectEntity->getIdUrlRedirect());
 
-        $urlQuery = SpyUrlRedirectQuery::create()->filterByIdUrlRedirect($urlRedirectTransfer->getIdUrlRedirect());
-        $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_REDIRECT, $urlRedirectTransfer->getIdUrlRedirect(), SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $urlRedirectQuery = SpyUrlRedirectQuery::create()->filterByIdUrlRedirect($urlRedirectTransfer->getIdUrlRedirect());
+        $urlQuery = SpyUrlQuery::create()->filterByIdUrl($urlEntity->getIdUrl());
+        $urlRedirectTouchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(
+            UrlConfig::RESOURCE_TYPE_REDIRECT,
+            $urlRedirectTransfer->getIdUrlRedirect(),
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+        );
+        $urlTouchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(
+            UrlConfig::RESOURCE_TYPE_URL,
+            $urlEntity->getIdUrl(),
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+        );
 
+        $this->assertEquals(1, $urlRedirectQuery->count(), 'Url redirect entity should exist before deleting it.');
         $this->assertEquals(1, $urlQuery->count(), 'Url entity should exist before deleting it.');
-        $this->assertEquals(0, $touchQuery->count(), 'Entity should not have deleted touch entry before deletion.');
+        $this->assertEquals(0, $urlRedirectTouchQuery->count(), 'URL redirect entity should not have deleted touch entry before deletion.');
+        $this->assertEquals(0, $urlTouchQuery->count(), 'URL entity should not have deleted touch entry before deletion.');
 
         $this->urlFacade->deleteUrlRedirect($urlRedirectTransfer);
 
+        $this->assertEquals(0, $urlRedirectQuery->count(), 'Url entity should not exist after deleting it.');
         $this->assertEquals(0, $urlQuery->count(), 'Url entity should not exist after deleting it.');
-        $this->assertEquals(1, $touchQuery->count(), 'Entity should have deleted touch entry before deletion.');
+        $this->assertEquals(1, $urlRedirectTouchQuery->count(), 'URL redirect entity should have deleted touch entry after deletion.');
+        $this->assertEquals(1, $urlTouchQuery->count(), 'URL entity should have deleted touch entry after deletion.');
     }
 
     /**

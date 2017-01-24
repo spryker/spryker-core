@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
+use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
@@ -22,11 +23,18 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
     protected $urlQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @var \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer)
+    protected $urlRedirectActivator;
+
+    /**
+     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
+     */
+    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlRedirectActivatorInterface $urlRedirectActivator)
     {
         $this->urlQueryContainer = $urlQueryContainer;
+        $this->urlRedirectActivator = $urlRedirectActivator;
     }
 
     /**
@@ -36,7 +44,11 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
      */
     public function update(SpyUrl $urlEntity)
     {
+        $this->urlQueryContainer->getConnection()->beginTransaction();
+
         $this->handleRedirectInjection($urlEntity);
+
+        $this->urlQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -72,7 +84,7 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
             ->setToUrl($finalTargetUrlRedirectEntity->getToUrl())
             ->save();
 
-        // TODO: saving other entities should also touch them + test
+        $this->activateUrlRedirect($newUrlRedirectEntity->getIdUrlRedirect());
     }
 
     /**
@@ -85,6 +97,19 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
         return $this->urlQueryContainer
             ->queryUrlRedirectBySourceUrl($sourceUrl)
             ->findOne();
+    }
+
+    /**
+     * @param int $idUrlRedirect
+     *
+     * @return void
+     */
+    protected function activateUrlRedirect($idUrlRedirect)
+    {
+        $urlRedirectTransfer = new UrlRedirectTransfer();
+        $urlRedirectTransfer->setIdUrlRedirect($idUrlRedirect);
+
+        $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
     }
 
 }

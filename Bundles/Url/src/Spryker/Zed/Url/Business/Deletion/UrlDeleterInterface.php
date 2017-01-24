@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Url\Business\Url;
+namespace Spryker\Zed\Url\Business\Deletion;
 
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlDeleterInterface
@@ -18,5 +19,12 @@ interface UrlDeleterInterface
      * @return void
      */
     public function deleteUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
 }

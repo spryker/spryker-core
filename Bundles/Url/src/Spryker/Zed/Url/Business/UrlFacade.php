@@ -240,7 +240,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         }
 
         $this->getFactory()
-            ->createUrlRedirectDeleter()
+            ->createUrlDeleter()
             ->deleteUrlRedirect($urlRedirectTransfer);
     }
 
