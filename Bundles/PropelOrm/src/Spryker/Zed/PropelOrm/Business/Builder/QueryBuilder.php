@@ -380,6 +380,51 @@ SCRIPT;
         return \$this->addUsingAlias($qualifiedName, \$$variableName, \$comparison);
     }
 ";
+
+        $this->addFilterByColCaseInsensitive($script, $col);
+    }
+
+    /**
+     * @param string &$script
+     * @param \Propel\Generator\Model\Column $col
+     *
+     * @return void
+     */
+    public function addFilterByColCaseInsensitive(&$script, Column $col)
+    {
+        if (!$col->isTextType()) {
+            return;
+        }
+
+        $colPhpName = $col->getPhpName();
+        $colName = $col->getName();
+        $variableName = $col->getCamelCaseName();
+        $qualifiedName = $this->getColumnConstant($col);
+
+        $script .= "
+        
+        
+    /**
+     * Filter the query on the lower case $colName text column
+     *";
+
+        $script .= "
+     * Example usage:
+     * <code>
+     * \$query->filterBy{$colPhpName}CaseInsensitive('fooValue');   // WHERE LOWER($colName) = LOWER('fooValue')
+     * </code>
+     *
+     * @param string \$$variableName The value to use as filter.
+     *
+     * @return \$this|" . $this->getQueryClassName() . " The current query, for fluid interface
+     *
+     * @throws \\Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException
+     */
+    public function filterBy{$colPhpName}CaseInsensitive(\$$variableName)
+    {
+        return \$this->where('LOWER(' . $qualifiedName . ') = LOWER(?)', \$$variableName, PDO::PARAM_STR);
+    }
+";
     }
 
     /**

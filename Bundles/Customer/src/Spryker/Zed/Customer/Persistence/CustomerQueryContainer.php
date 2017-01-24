@@ -23,7 +23,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     public function queryCustomerByEmail($email)
     {
         $query = $this->queryCustomers();
-        $query->filterByEmail($email);
+        $query->filterByEmailCaseInsensitive($email);
 
         return $query;
     }
@@ -37,7 +37,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     {
         $query = $this->queryCustomers();
         $query
-            ->filterByEmail($email)
+            ->filterByEmailCaseInsensitive($email)
             ->filterByIdCustomer($exceptIdCustomer, Criteria::NOT_EQUAL);
 
         return $query;
