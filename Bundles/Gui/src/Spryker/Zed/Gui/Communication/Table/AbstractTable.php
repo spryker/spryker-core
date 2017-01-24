@@ -402,7 +402,7 @@ abstract class AbstractTable
         }
 
         $field = key($defaultSortField);
-        $direction = array_shift($defaultSortField);
+        $direction = $defaultSortField[$field];
         $index = null;
 
         $availableFields = array_keys($config->getHeader());
