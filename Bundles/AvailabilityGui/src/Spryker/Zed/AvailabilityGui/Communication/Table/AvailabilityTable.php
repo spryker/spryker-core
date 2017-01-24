@@ -151,7 +151,7 @@ class AvailabilityTable extends AbstractTable
      */
     protected function createEditButton(array $productAbstract, $isBundle)
     {
-        $viewTaxSetUrl = Url::generate(
+        $availabilityEditUrl = Url::generate(
             '/availability-gui/index/edit',
             [
                 self::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
@@ -162,7 +162,7 @@ class AvailabilityTable extends AbstractTable
 
         $buttons = '';
         if (!$isBundle) {
-            $buttons = $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');
+            $buttons = $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
         } else {
             $viewBundleUrl = Url::generate(
                 '/availability-gui/index/bundled-product-availability-table',

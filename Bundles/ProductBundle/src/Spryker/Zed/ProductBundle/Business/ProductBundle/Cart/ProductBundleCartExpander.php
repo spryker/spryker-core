@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use OutOfBoundsException;
@@ -145,7 +146,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
-            $bundleItemTransfer->setGroupKey($bundleItemIdentifier);
+
+            $this->setGroupKey($itemTransfer, $bundleItemTransfer);
 
             $quoteTransfer->addBundleItem($bundleItemTransfer);
 
@@ -160,6 +162,41 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         }
 
         return $addToCartItems;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function sortOptions(array $options)
+    {
+        usort(
+            $options,
+            function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
+                return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
+            }
+        );
+
+        return $options;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
+     *
+     * @return string
+     */
+    protected function combineOptionParts(array $sortedProductOptions)
+    {
+        $groupKeyPart = [];
+        foreach ($sortedProductOptions as $productOptionTransfer) {
+            if (!$productOptionTransfer->getSku()) {
+                continue;
+            }
+            $groupKeyPart[] = $productOptionTransfer->getSku();
+        }
+
+        return implode('_', $groupKeyPart);
     }
 
     /**
@@ -333,6 +370,24 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         return $this->productBundleQueryContainer
             ->queryBundleProduct($idProductConrete)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     *
+     * @return void
+     */
+    protected function setGroupKey(ItemTransfer $itemTransfer, ItemTransfer $bundleItemTransfer)
+    {
+        $options = (array)$itemTransfer->getProductOptions();
+        if (count($options) === 0) {
+            $bundleItemTransfer->setGroupKey($bundleItemTransfer->getSku());
+        } else {
+            $options = $this->sortOptions($options);
+            $groupKey = $itemTransfer->getSku() . '_' . $this->combineOptionParts($options);
+            $bundleItemTransfer->setGroupKey($groupKey);
+        }
     }
 
 }

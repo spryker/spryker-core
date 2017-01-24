@@ -24,7 +24,10 @@ class BundledProductAvailabilityTable extends AbstractTable
     const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
+    const URL_PARAM_ID_PRODUCT = 'id-product';
+
     const COL_BUNDLED_ITEMS = 'bundledItems';
+    const TABLE_COL_ACTION = 'Actions';
 
     /**
      * @var int
@@ -76,13 +79,15 @@ class BundledProductAvailabilityTable extends AbstractTable
         ])->build();
 
         $config->setUrl($url);
+
         $config->setHeader([
             AvailabilityQueryContainer::CONCRETE_SKU => 'SKU',
             AvailabilityQueryContainer::CONCRETE_NAME => 'Name',
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            SpyProductBundleTableMap::COL_QUANTITY => 'Bundled Products',
+            SpyProductBundleTableMap::COL_QUANTITY => 'Quanity in Bundle',
+            static::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
@@ -97,6 +102,8 @@ class BundledProductAvailabilityTable extends AbstractTable
             SpyProductTableMap::COL_SKU,
             SpyProductLocalizedAttributesTableMap::COL_NAME,
         ]);
+
+        $config->setRawColumns([static::TABLE_COL_ACTION]);
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -145,10 +152,30 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY],
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
+                self::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return string
+     */
+    protected function createEditButton(array $productItem)
+    {
+        $availabilityEditUrl = Url::generate(
+            '/availability-gui/index/edit',
+            [
+                self::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
+                self::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
+                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductBundle,
+            ]
+        );
+
+        return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
     }
 
 }

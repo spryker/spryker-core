@@ -15,7 +15,6 @@ use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTa
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\AvailabilityGui\Business\AvailabilityGuiFacade getFacade()
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
@@ -46,10 +45,7 @@ class IndexController extends AbstractController
 
         $productAbstractAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityFacade()
-            ->getProductAbstractAvailability(
-                $idProductAbstract,
-                $localeTransfer->getIdLocale()
-            );
+            ->getProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale());
 
         $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable();
 
