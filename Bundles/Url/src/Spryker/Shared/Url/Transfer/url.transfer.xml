@@ -13,14 +13,15 @@
         <property name="idUrl" type="int" />
         <property name="url" type="string" />
         <property name="fkLocale" type="int" />
-        <property name="itemType" type="string" />
-        <property name="itemId" type="string" />
-        <property name="fkProductAbstract" type="int" />
-        <property name="fkCategoryNode" type="int" />
-        <property name="fkPage" type="int" />
-        <property name="fkRedirect" type="int" />
-        <property name="resourceType" type="string" />
-        <property name="resourceId" type="int" />
+        <property name="itemType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead." />
+        <property name="itemId" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead." />
+        <property name="fkProductAbstract" type="int" deprecated="Use fkResourceProductAbstract instead defined by Product bundle." />
+        <property name="fkCategorynode" type="int" deprecated="Use fkResourceCategoryNode instead defined by Category bundle." />
+        <property name="fkPage" type="int" deprecated="Use fkResourcePage instead defined by Cms bundle." />
+        <property name="fkRedirect" type="int" deprecated="Use fkResourceRedirect instead." />
+        <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead." />
+        <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead." />
+        <property name="fkResourceRedirect" type="int" />
     </transfer>
 
     <transfer name="UrlRedirect">

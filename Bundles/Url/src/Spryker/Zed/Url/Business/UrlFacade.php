@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
@@ -25,19 +26,21 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * TODO: replace all usages (has 3 usages in Category, ProductManagement and CMS bundle + some test usages)
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
-     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer, $resourceType = null, $idResource = null)
+    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
         if (func_num_args() === 4) {
             return $this->legacyCreateUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
         }
 
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlCreator()
+            ->createUrl($urlTransfer);
     }
 
     /**
@@ -67,7 +70,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function findUrl(UrlTransfer $urlTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlReader()
+            ->findUrl($urlTransfer);
     }
 
     /**
@@ -75,22 +80,22 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * TODO: (has 3 usages in Product, CMS and Category bundles)
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $url String format is only for BC reasons.
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
      *
      * @return bool
      */
-    public function hasUrl($url)
+    public function hasUrl($urlTransfer)
     {
-        if (is_string($url)) {
-            return $this->legacyHasUrl($url);
+        if (is_string($urlTransfer)) {
+            return $this->legacyHasUrl($urlTransfer);
         }
 
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrl($urlTransfer);
     }
 
     /**
-     * @api
-     *
      * @deprecated
      *
      * @param string $url
@@ -113,7 +118,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function updateUrl(UrlTransfer $urlTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlUpdater()
+            ->updateUrl($urlTransfer);
     }
 
     /**
@@ -127,11 +134,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function deleteUrl(UrlTransfer $urlTransfer)
     {
-        $urlManager = $this->getFactory()->createUrlManager();
-
-        $urlManager->deleteUrl($urlTransfer);
-
-        // TODO implement new logic instead old
+        $this->getFactory()
+            ->createUrlDeleter()
+            ->deleteUrl($urlTransfer);
     }
 
     /**
@@ -139,11 +144,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
     public function activateUrl(UrlTransfer $urlTransfer)
     {
-        // TODO: implement new logic
+        $this->getFactory()
+            ->createUrlActivator()
+            ->activateUrl($urlTransfer);
     }
 
     /**
@@ -151,11 +158,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer)
     {
-        // TODO: implement new logic
+        $this->getFactory()
+            ->createUrlActivator()
+            ->deactivateUrl($urlTransfer);
     }
 
     /**
@@ -167,7 +176,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlRedirectCreator()
+            ->createUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -179,7 +190,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlRedirectReader()
+            ->findUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -187,11 +200,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return bool
      */
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlRedirectReader()
+            ->hasUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -203,7 +218,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        return $this->getFactory()
+            ->createUrlRedirectUpdater()
+            ->updateUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -219,14 +236,15 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     {
         if ($urlRedirectTransfer instanceof RedirectTransfer) {
             $this->legacyDeleteUrlRedirect($urlRedirectTransfer);
+            return;
         }
 
-        // TODO implement new logic
+        $this->getFactory()
+            ->createUrlRedirectDeleter()
+            ->deleteUrlRedirect($urlRedirectTransfer);
     }
 
     /**
-     * @api
-     *
      * @deprecated
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
@@ -243,11 +261,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return void
      */
     public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        $this->getFactory()
+            ->createUrlRedirectActivator()
+            ->activateUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -255,11 +275,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return void
      */
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
-        // TODO: implement new logic
+        $this->getFactory()
+            ->createUrlRedirectActivator()
+            ->deactivateUrlRedirect($urlRedirectTransfer);
     }
 
     /**
@@ -459,7 +481,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirect($toUrl, $status = 303)
+    public function createRedirect($toUrl, $status = Response::HTTP_SEE_OTHER)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
         $redirect = $redirectManager->createRedirect($toUrl, $status);
@@ -479,7 +501,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirectAndTouch($toUrl, $status = 303)
+    public function createRedirectAndTouch($toUrl, $status = Response::HTTP_SEE_OTHER)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
         $redirectTransfer = $redirectManager->createRedirectAndTouch($toUrl, $status);

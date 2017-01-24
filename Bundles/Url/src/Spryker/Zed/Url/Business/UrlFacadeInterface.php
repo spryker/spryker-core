@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Symfony\Component\HttpFoundation\Response;
 
 interface UrlFacadeInterface
 {
@@ -19,13 +20,13 @@ interface UrlFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
-     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer, $resourceType = null, $idResource = null);
+    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
 
     /**
      * @api
@@ -39,11 +40,11 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $url String format is only for BC reasons.
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
      *
      * @return bool
      */
-    public function hasUrl($url);
+    public function hasUrl($urlTransfer);
 
     /**
      * @api
@@ -68,7 +69,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
     public function activateUrl(UrlTransfer $urlTransfer);
 
@@ -77,7 +78,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer);
 
@@ -104,7 +105,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return bool
      */
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
@@ -131,7 +132,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return void
      */
     public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
@@ -140,7 +141,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return void
      */
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
@@ -282,7 +283,7 @@ interface UrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirect($toUrl, $status = 303);
+    public function createRedirect($toUrl, $status = Response::HTTP_SEE_OTHER);
 
     /**
      * @api
@@ -294,7 +295,7 @@ interface UrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirectAndTouch($toUrl, $status = 303);
+    public function createRedirectAndTouch($toUrl, $status = Response::HTTP_SEE_OTHER);
 
     /**
      * @api

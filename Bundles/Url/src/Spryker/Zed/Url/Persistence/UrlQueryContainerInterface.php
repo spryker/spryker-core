@@ -88,4 +88,13 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      */
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
 
+    /**
+     * @api
+     *
+     * @param string $toUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     */
+    public function queryUrlRedirectBySourceUrl($toUrl);
+
 }
