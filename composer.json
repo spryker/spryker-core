@@ -582,7 +582,7 @@
       "Spryker\\Shared\\CmsGui\\": "Bundles/CmsGui/src",
       "Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/src",
       "Unit\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests",
-      "Functional\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests"
+      "Functional\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests",
 
       "Spryker\\Shared\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
       "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
