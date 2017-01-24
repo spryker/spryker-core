@@ -406,9 +406,7 @@ abstract class AbstractTable
         $index = null;
 
         $availableFields = array_keys($config->getHeader());
-        $index = array_keys($availableFields, $field, true);
-        $index = array_shift($index);
-
+        $index = array_search($field, $availableFields, true);
         if ($index === null) {
             return $sort;
         }
