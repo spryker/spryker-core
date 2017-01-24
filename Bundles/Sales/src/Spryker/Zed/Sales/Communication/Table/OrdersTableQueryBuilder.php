@@ -28,7 +28,8 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      */
-    public function __construct(SpySalesOrderQuery $salesOrderQuery) {
+    public function __construct(SpySalesOrderQuery $salesOrderQuery)
+    {
         $this->salesOrderQuery = $salesOrderQuery;
     }
 
