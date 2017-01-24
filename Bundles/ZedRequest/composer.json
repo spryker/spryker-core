@@ -19,7 +19,7 @@
     "spryker/messenger": "^1.0.0 || ^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.1.8",
-    "spryker/transfer": "^2.0.0",
+    "spryker/util-text": "^1.0.0",
     "spryker/util-network": "^1.0.0"
   },
   "require-dev": {
