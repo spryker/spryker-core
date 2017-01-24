@@ -10,6 +10,10 @@
         <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
     </transfer>
 
+    <transfer name="ProductOption">
+        <property name="sku" type="string" />
+    </transfer>
+
     <transfer name="ProductForBundle">
         <property name="idProductBundle" type="int" />
         <property name="idProductConcrete" type="int" />
@@ -20,6 +24,7 @@
     <transfer name="Item">
         <property name="bundleItemIdentifier" type="string" />
         <property name="relatedBundleItemIdentifier" type="string" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>
 
     <transfer name="Quote">

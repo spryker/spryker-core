@@ -25,7 +25,7 @@
 
 <div id="bundled-products">
     {% for bundledProductForm in form.assigned_bundled_products %}
-        {{ include ('@ProductManagement/_partials/assign-bundled-product-template.twig', { 'productOptionForm': bundledProductForm }) }}
+        {{ include ('@ProductManagement/_partials/assign-bundled-product-template.twig', { 'bundledProductForm': bundledProductForm }) }}
     {% endfor %}
 </div>
 
