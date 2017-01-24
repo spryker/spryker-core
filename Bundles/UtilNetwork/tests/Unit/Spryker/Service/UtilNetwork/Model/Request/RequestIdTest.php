@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Application\Log\Request;
+namespace Unit\Spryker\Service\UtilNetwork\Request;
 
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use Spryker\Shared\Application\Log\Request\RequestId;
+use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
 /**
  * @group Unit

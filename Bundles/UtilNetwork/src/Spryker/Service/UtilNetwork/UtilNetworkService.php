@@ -31,4 +31,10 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
             ->getHostname();
     }
 
+    public function getRequestId()
+    {
+
+    }
+
+
 }

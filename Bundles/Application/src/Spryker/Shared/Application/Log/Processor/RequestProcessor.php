@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Log\Processor;
 
-use Spryker\Shared\Application\Log\Request\RequestId;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,9 +63,9 @@ class RequestProcessor
      */
     public function getData(array $record)
     {
-        $requestIdHelper = new RequestId();
+        $utilNetworkService = new UtilNetworkService();
         $fields = [
-            static::REQUEST_ID => $requestIdHelper->getRequestId(),
+            static::REQUEST_ID => $utilNetworkService->getRequestId(),
             static::REQUEST_TYPE => $this->getSapi(),
             static::REQUEST_PARAMS => $this->getRequestParams(),
         ];

@@ -13,8 +13,8 @@ use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
+use Unit\Spryker\Shared\ZedRequest\Client\Fixture\Transfer;
 
 /**
  * @group Unit
@@ -27,6 +27,8 @@ use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
 class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
 {
 
+    const TRANSFER_VALUE = 'catface';
+
     /**
      * @return void
      */
@@ -35,18 +37,14 @@ class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
         $abstractRequest = $this->getAbstractRequestMock();
 
         $body = json_encode([
-            ResponseInterface::TRANSFER => ['bool' => true],
-            ResponseInterface::TRANSFER_CLASSNAME => AbstractTransfer::class,
+            ResponseInterface::TRANSFER => ['key' => static::TRANSFER_VALUE],
+            ResponseInterface::TRANSFER_CLASSNAME => Transfer::class,
         ]);
         $abstractRequest->expects($this->once())->method('sendRequest')->willReturn(new Response(200, [], $body));
 
         $response = $abstractRequest->request('?foo=bar');
-
-        /*
-         * @var \Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer $transfer
-         */
         $transfer = $response->getTransfer();
-        $this->assertTrue($transfer->getBool());
+        $this->assertSame(static::TRANSFER_VALUE, $transfer->getKey());
     }
 
     /**

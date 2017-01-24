@@ -128,7 +128,7 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createUtilNetworkServiceMock()
     {
-        $utilNetworkServiceMock = $this->getMockBuilder(UtilNetworkServiceInterface::class)->setMethods(['getHostName'])->getMock();
+        $utilNetworkServiceMock = $this->getMockBuilder(UtilNetworkServiceInterface::class)->setMethods(['getHostName', 'getRequestId'])->getMock();
         $utilNetworkServiceMock->method('getHostName')->willReturn('hostname-mock');
 
         return $utilNetworkServiceMock;

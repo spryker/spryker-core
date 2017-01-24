@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Request;
+namespace Spryker\Service\UtilNetwork\Model\Request;
 
-use Spryker\Service\UtilText\UtilTextService;
-
-class RequestId
+class RequestId implements RequestIdInterface
 {
 
     const REQUEST_ID_HEADER_KEY = 'HTTP_X_REQUEST_ID';
@@ -40,10 +38,26 @@ class RequestId
             return $_SERVER[static::REQUEST_ID_HEADER_KEY];
         }
 
-        $utilTextService = new UtilTextService();
-        $requestId = $utilTextService->generateRandomString(8);
+        $requestId = $this->generateRandomString(8);
 
         return $requestId;
+    }
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    protected function generateRandomString($length = 32)
+    {
+        $tokenLength = $length / 2;
+        $token = bin2hex(random_bytes($tokenLength));
+
+        if (strlen($token) !== $length) {
+            $token = str_pad($token, $length, '0');
+        }
+
+        return $token;
     }
 
 }
