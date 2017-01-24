@@ -42,32 +42,33 @@ class CustomerGroup implements CustomerGroupInterface
         $customerGroupEntity = $this->getCustomerGroup($customerGroupTransfer);
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
-        $customers = $customerGroupEntity->getSpyCustomerGroupToCustomers();
-        if ($customers) {
-            $customerGroupTransfer->setCustomers($this->entityCollectionToTransferCollection($customers));
+        $customerGroupToCustomerCollection = $customerGroupEntity->getSpyCustomerGroupToCustomers();
+        if ($customerGroupToCustomerCollection) {
+            $customerGroupTransfer->setCustomers(
+                $this->entityCollectionToTransferCollection($customerGroupToCustomerCollection)
+            );
         }
 
         return $customerGroupTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerGroupToCustomerCollection
      *
      * @return \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer[]
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
+    protected function entityCollectionToTransferCollection(ObjectCollection $customerGroupToCustomerCollection)
     {
-        $customerArray = new ArrayObject();
+        $customerGroups = new ArrayObject();
 
-        /** @var \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $entity */
-        foreach ($entities->getData() as $entity) {
+        foreach ($customerGroupToCustomerCollection as $customerGroupToCustomerEntity) {
             $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-            $customerGroupToCustomerTransfer->fromArray($entity->toArray(), true);
+            $customerGroupToCustomerTransfer->fromArray($customerGroupToCustomerEntity->toArray(), true);
 
-            $customerArray[] = $customerGroupToCustomerTransfer;
+            $customerGroups[] = $customerGroupToCustomerTransfer;
         }
 
-        return $customerArray;
+        return $customerGroups;
     }
 
     /**
@@ -183,12 +184,34 @@ class CustomerGroup implements CustomerGroupInterface
             $customerEntity = $this->queryContainer
                 ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupTransfer->getIdCustomerGroup())
                 ->filterByFkCustomer($customer->getFkCustomer())->findOne();
+
             if (!$customerEntity) {
                 continue;
             }
 
             $customerEntity->delete();
         }
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
+     */
+    public function findCustomerGroupByIdCustomer($idCustomer)
+    {
+        $customerGroupEntity = $this->queryContainer
+            ->queryCustomerGroupByFkCustomer($idCustomer)
+            ->findOne();
+
+        if (!$customerGroupEntity) {
+            return null;
+        }
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+        return $customerGroupTransfer;
     }
 
 }

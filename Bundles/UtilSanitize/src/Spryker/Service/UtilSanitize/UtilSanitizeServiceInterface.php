@@ -17,7 +17,7 @@ interface UtilSanitizeServiceInterface
      *
      * @param string $text
      * @param bool $double
-     * @param null $charset
+     * @param string|null $charset
      *
      * @return string
      */

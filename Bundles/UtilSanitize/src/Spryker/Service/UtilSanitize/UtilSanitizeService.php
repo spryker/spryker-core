@@ -24,7 +24,7 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
      *
      * @param string $text
      * @param bool $double
-     * @param null $charset
+     * @param string|null $charset
      *
      * @return string
      */

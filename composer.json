@@ -583,6 +583,11 @@
       "Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/src",
       "Unit\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests",
       "Functional\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests"
+
+      "Spryker\\Shared\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
+      "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

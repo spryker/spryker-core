@@ -17,6 +17,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,6 +30,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
     const QUERY_CONTAINER_LOCALE = 'locale query container';
+    const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
 
     /**
@@ -66,6 +68,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDateTimeFormatter($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addMoneyPlugin($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -91,7 +94,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[self::FACADE_OMS] = function (Container $container) {
+        $container[static::FACADE_OMS] = function (Container $container) {
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
@@ -105,7 +108,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCountryFacade(Container $container)
     {
-        $container[self::FACADE_COUNTRY] = function (Container $container) {
+        $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new SalesToCountryBridge($container->getLocator()->country()->facade());
         };
 
@@ -119,7 +122,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSequenceNumberFacade(Container $container)
     {
-        $container[self::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+        $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
         };
 
@@ -133,7 +136,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesAggregatorFacade(Container $container)
     {
-        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
@@ -147,7 +150,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container)
     {
-        $container[self::FACADE_USER] = function (Container $container) {
+        $container[static::FACADE_USER] = function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
         };
 
@@ -161,7 +164,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateTimeFormatter(Container $container)
     {
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
+        $container[static::SERVICE_DATE_FORMATTER] = function () {
             return (new Pimple())->getApplication()['dateFormatter'];
         };
 
@@ -175,7 +178,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 
@@ -189,8 +192,22 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new SalesToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
         };
 
         return $container;

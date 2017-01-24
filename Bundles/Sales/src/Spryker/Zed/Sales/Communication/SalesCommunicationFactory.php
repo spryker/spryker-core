@@ -18,6 +18,7 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
+use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -96,15 +97,21 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createOrdersTable()
     {
-        $orderQuery = $this->getQueryContainer()->querySalesOrder();
-        $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
         return new OrdersTable(
-            $orderQuery,
-            $orderItemQuery,
+            $this->createOrdersTableQueryBuilder(),
             $this->getSalesAggregator(),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY)
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
+     */
+    protected function createOrdersTableQueryBuilder()
+    {
+        return new OrdersTableQueryBuilder($this->getQueryContainer()->querySalesOrder());
     }
 
     /**
