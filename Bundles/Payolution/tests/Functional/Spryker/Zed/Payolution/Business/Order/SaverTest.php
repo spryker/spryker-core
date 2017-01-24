@@ -27,7 +27,6 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Order\Saver;
 use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
@@ -220,14 +219,12 @@ class SaverTest extends Test
     {
         $stateEntity = $this->createOrderItemStateEntity();
         $processEntity = $this->createOrderProcessEntity();
-        $bundleEntity = $this->createOrderItemBundleEntity();
 
         $orderItemEntity = new SpySalesOrderItem();
         $orderItemEntity
             ->setFkSalesOrder($idSalesOrder)
             ->setFkOmsOrderItemState($stateEntity->getIdOmsOrderItemState())
             ->setFkOmsOrderProcess($processEntity->getIdOmsOrderProcess())
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
             ->setName('test product')
             ->setSku('1324354657687980')
             ->setGrossPrice(1000)
@@ -259,21 +256,6 @@ class SaverTest extends Test
         $processEntity->save();
 
         return $processEntity;
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
-     */
-    private function createOrderItemBundleEntity()
-    {
-        $bundleEntity = new SpySalesOrderItemBundle();
-        $bundleEntity
-            ->setName('test bundle')
-            ->setSku('13243546')
-            ->setGrossPrice(1000);
-        $bundleEntity->save();
-
-        return $bundleEntity;
     }
 
     /**

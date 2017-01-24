@@ -84,8 +84,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             return $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()];
         }
 
-        $bundleOptions = $this->getBundleOptions($bundleItemTransfer, $items);
-        ;
+        $bundleOptions = $this->getBundleOptions($bundleItemTransfer, $items);;
         if (count($bundleOptions) == 0) {
             return $bundleItemTransfer->getSku();
         }
@@ -96,6 +95,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()] = $bundleItemTransfer->getSku() . '_' . $this->combineOptionParts($bundleOptions);
 
         return $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()];
+
     }
 
     /**
@@ -242,7 +242,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         foreach ($items as $cartItemTransfer) {
             if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
                 && count($cartItemTransfer->getProductOptions()) > 0) {
-                return (array)$cartItemTransfer->getProductOptions();
+                return (array) $cartItemTransfer->getProductOptions();
             }
         }
 

@@ -29,6 +29,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     const COL_BUNDLED_ITEMS = 'bundledItems';
     const TABLE_COL_ACTION = 'Actions';
 
+
     /**
      * @var int
      */

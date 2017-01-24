@@ -9,14 +9,4 @@
         </foreign-key>
     </table>
 
-    <table name="spy_sales_order_item_bundle" phpName="SpySalesOrderItemBundle">
-        <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="gross_price" type="INTEGER" required="true"/>
-
-        <behavior name="timestampable"/>
-        <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/>
-    </table>
-
 </database>

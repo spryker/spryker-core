@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
+use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;

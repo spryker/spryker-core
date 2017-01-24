@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
+use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -74,7 +74,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
      */
     protected function mapSalesOrderItemBundleEntity(ItemTransfer $itemTransfer)
     {
@@ -122,7 +122,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
      */
     protected function createSalesOrderItemBundleEntity()
     {

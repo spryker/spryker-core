@@ -1,16 +1,15 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Persistence\Propel;
+namespace Spryker\Zed\ProductBundle\Persistence\Propel;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemBundle as BaseSpySalesOrderItemBundle;
+use Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundleQuery as BaseSpySalesOrderItemBundleQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_sales_order_item_bundle' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_sales_order_item_bundle' table.
  *
  *
  *
@@ -18,6 +17,7 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemBundle as BaseSpySalesOrderI
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpySalesOrderItemBundle extends BaseSpySalesOrderItemBundle
+abstract class AbstractSpySalesOrderItemBundleQuery extends BaseSpySalesOrderItemBundleQuery
 {
+
 }
