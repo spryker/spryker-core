@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "dependencies": {
     "dot": "^1.0.3",
-    "jquery-query-builder": "github:spryker/jquery-query-builder.git",
-    "jquery-extendext": "github:mistic100/jQuery.extendext#0.1.1",
-    "sql-parser": "github:spryker/spryker-sql-parser.git"
+    "jquery-query-builder": "git+https://git@github.com/spryker/jquery-query-builder.git",
+    "jquery-extendext": "git+https://git@github.com/mistic100/jQuery.extendext#0.1.1",
+    "sql-parser": "git+https://git@github.com/spryker/spryker-sql-parser.git"
   }
 }
