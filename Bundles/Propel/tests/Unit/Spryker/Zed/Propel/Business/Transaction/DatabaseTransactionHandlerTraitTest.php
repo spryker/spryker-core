@@ -29,6 +29,9 @@ class DatabaseTransactionHandlerTraitTest extends PHPUnit_Framework_TestCase
      */
     protected $connection;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         $this->connection = $this->getMockBuilder(ConnectionInterface::class)->getMock();
