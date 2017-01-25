@@ -12,12 +12,8 @@ use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.
- *
- * @deprecated Use UrlService instead.
- *
- * TODO: implement this in service layer
  */
-class Url
+class Url implements UrlInterface
 {
 
     const SCHEME = 'scheme';
@@ -72,6 +68,8 @@ class Url
     /**
      * Factory method to create a new URL from a complete URL string
      *
+     * @deprecated Use `\Spryker\Service\Url\UrlService::parse()` instead.
+     *
      * @param string $url Full URL used to create a Url object
      *
      * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
@@ -103,6 +101,8 @@ class Url
 
     /**
      * Factory method to create an internal URL from a path string
+     *
+     * @deprecated Use `\Spryker\Service\Url\UrlService::generate()` instead.
      *
      * @param string $url
      * @param array $query
