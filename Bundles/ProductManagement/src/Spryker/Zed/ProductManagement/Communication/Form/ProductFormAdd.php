@@ -82,11 +82,6 @@ class ProductFormAdd extends AbstractType
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
      */
     protected $utilTextService;
@@ -96,7 +91,6 @@ class ProductFormAdd extends AbstractType
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface $urlFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      */
     public function __construct(
@@ -104,7 +98,6 @@ class ProductFormAdd extends AbstractType
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
-        ProductManagementToUrlInterface $urlFacade,
         ProductManagementToUtilTextInterface $utilTextService
     ) {
 
@@ -112,7 +105,6 @@ class ProductFormAdd extends AbstractType
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->moneyFacade = $moneyFacade;
-        $this->urlFacade = $urlFacade;
         $this->utilTextService = $utilTextService;
     }
 

@@ -17,6 +17,8 @@ interface UrlFacadeInterface
 {
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
@@ -29,6 +31,8 @@ interface UrlFacadeInterface
     public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -38,6 +42,8 @@ interface UrlFacadeInterface
     public function findUrl(UrlTransfer $urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
@@ -47,6 +53,8 @@ interface UrlFacadeInterface
     public function hasUrl($urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -56,6 +64,8 @@ interface UrlFacadeInterface
     public function updateUrl(UrlTransfer $urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -65,6 +75,8 @@ interface UrlFacadeInterface
     public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -74,6 +86,8 @@ interface UrlFacadeInterface
     public function activateUrl(UrlTransfer $urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -83,6 +97,8 @@ interface UrlFacadeInterface
     public function deactivateUrl(UrlTransfer $urlTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -92,6 +108,8 @@ interface UrlFacadeInterface
     public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -101,6 +119,8 @@ interface UrlFacadeInterface
     public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -110,6 +130,8 @@ interface UrlFacadeInterface
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -119,6 +141,8 @@ interface UrlFacadeInterface
     public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
@@ -128,6 +152,8 @@ interface UrlFacadeInterface
     public function deleteUrlRedirect($urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -137,6 +163,8 @@ interface UrlFacadeInterface
     public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -146,9 +174,22 @@ interface UrlFacadeInterface
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * TODO: specification
+     *
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @deprecated
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
+     */
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
+
+    /**
+     * @api
+     *
+     * @deprecated Use createUrl() instead.
      *
      * @param string $url
      * @param string $resourceType
@@ -164,7 +205,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrl/updateUrl instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -175,7 +216,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use hasUrl() instead.
      *
      * @param int $idUrl
      *
@@ -186,7 +227,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use findUrl() instead.
      *
      * @param string $urlString
      *
@@ -199,7 +240,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated use findUrl() instead.
      *
      * @param int $idUrl
      *
@@ -215,7 +256,7 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed with next major release
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -227,7 +268,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -239,7 +280,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      *
@@ -250,7 +291,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use activateUrl() instead.
      *
      * @param int $idUrl
      *
@@ -261,7 +302,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use deactivateUrl() instead.
      *
      * @param int $idUrl
      *
@@ -272,7 +313,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect() instead.
      *
      * @param string $toUrl
      * @param int $status
@@ -288,7 +329,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect() instead.
      *
      * @param string $toUrl
      * @param int $status
@@ -300,7 +341,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -316,7 +357,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -329,7 +370,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -340,7 +381,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use activateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -351,7 +392,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrl()/updateUrl() instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -362,7 +403,7 @@ interface UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *

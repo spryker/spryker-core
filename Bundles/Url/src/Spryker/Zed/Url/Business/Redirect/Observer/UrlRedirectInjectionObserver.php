@@ -74,7 +74,7 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
 
         if ($finalTargetUrlRedirectEntity->getToUrl() === $urlEntity->getUrl()) {
             throw new RedirectLoopException(sprintf(
-                'Redirecting "%s" to "%s" resolved in a url redirect loop.',
+                'Redirecting "%s" to "%s" resolved in a URL redirect loop.',
                 $urlEntity->getUrl(),
                 $newUrlRedirectEntity->getToUrl()
             ));

@@ -21,9 +21,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * TODO: replace all usages (has 3 usages in Category, ProductManagement and CMS bundle + some test usages)
+     * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
@@ -62,6 +62,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -76,9 +78,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * TODO: (has 3 usages in Product, CMS and Category bundles)
+     * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
      *
@@ -110,6 +112,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -124,9 +128,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * TODO: (has 2 usages in Category and Product bundles)
+     * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -140,6 +144,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -154,6 +160,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
@@ -168,6 +176,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -182,6 +192,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -196,6 +208,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -210,6 +224,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -224,9 +240,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * TODO: (has 1 usage in CMS bundle)
+     * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
      *
@@ -257,6 +273,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -271,6 +289,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
@@ -285,11 +305,25 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
+     */
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectValidator()
+            ->validateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
      * @api
      *
      * @deprecated Use createUrl() instead.
-     *
-     * TODO: (has 1 usage in CMS bundle)
      *
      * @param string $url
      * @param string $resourceType
@@ -310,8 +344,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use createUrl/updateUrl instead.
      *
-     * TODO: (has 0 usages + some test usages)
-     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -328,8 +360,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use hasUrl() instead.
      *
-     * TODO: (has 0 usages + some test usages)
-     *
      * @param int $idUrl
      *
      * @return bool
@@ -345,8 +375,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Use findUrl() instead.
-     *
-     * TODO: (has 1 usage in Category bundle)
      *
      * @param string $urlString
      *
@@ -365,8 +393,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated use findUrl() instead.
      *
-     * TODO: (has 0 usages + some test usages)
-     *
      * @param int $idUrl
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -384,9 +410,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed with next major release
-     *
-     * TODO: (has 1 usage in Category bundle)
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -403,9 +427,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release
-     *
-     * TODO: (has 1 usage in Category bundle)
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -422,9 +444,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release
-     *
-     * TODO: (has 1 usage in Category bundle)
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      *
@@ -442,8 +462,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use activateUrl() instead.
      *
-     * TODO: (has 4 usages in Category, CMS, Product and ProductManagement bundles)
-     *
      * @param int $idUrl
      *
      * @return void
@@ -458,8 +476,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use deactivateUrl() instead.
      *
-     * TODO: (has 3 usages in Category, CMS and Product bundles)
-     *
      * @param int $idUrl
      *
      * @return void
@@ -473,8 +489,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Use createUrlRedirect() instead.
-     *
-     * TODO: (has 0 usages + some test usages)
      *
      * @param string $toUrl
      * @param int $status
@@ -494,8 +508,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use createUrlRedirect() instead.
      *
-     * TODO: (has 1 usage in CMS bundle)
-     *
      * @param string $toUrl
      * @param int $status
      *
@@ -513,8 +525,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Use createUrlRedirect() instead.
-     *
-     * TODO: (has 0 usages + some test usages)
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -534,8 +544,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
-     * TODO: (has 1 usage in CMS bundle)
-     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
@@ -554,8 +562,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
-     * TODO: (has 0 usages + some test usages)
-     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -571,8 +577,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Use activateUrlRedirect() instead.
-     *
-     * TODO: (has 0 usages)
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -590,8 +594,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Use createUrl()/updateUrl() instead.
      *
-     * TODO: (has 3 usages in Category, CMS and Product bundles)
-     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -607,8 +609,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
-     *
-     * TODO: (has 1 usage in CMS bundle)
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -626,8 +626,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated This method will be removed with next major release because of invalid dependency direction.
      * Use ProductFacade::getProductUrl() instead.
-     *
-     * TODO: (has 0 usages)
      *
      * @param int $idProductAbstract
      * @param int $idLocale

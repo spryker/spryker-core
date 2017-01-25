@@ -1040,4 +1040,36 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+        $query->filterByFkLocale($idLocale);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+
+        return $query;
+    }
+
 }

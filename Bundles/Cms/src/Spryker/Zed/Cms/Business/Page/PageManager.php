@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Shared\Cms\CmsConstants;
@@ -255,12 +256,13 @@ class PageManager implements PageManagerInterface
         $this->checkPageExists($pageTransfer->getIdCmsPage());
         $idLocale = $pageTransfer->getUrl()->getFkLocale();
 
-        return $this->urlFacade->createUrl(
-            $pageTransfer->getUrl()->getUrl(),
-            $this->getLocaleTransfer($idLocale),
-            CmsConstants::RESOURCE_TYPE_PAGE,
-            $pageTransfer->getIdCmsPage()
-        );
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer
+            ->setUrl($pageTransfer->getUrl()->getUrl())
+            ->setFkLocale($idLocale)
+            ->setFkResourcePage($pageTransfer->getIdCmsPage());
+
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -272,7 +274,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->saveUrlAndTouch($pageTransfer->getUrl());
+        return $this->urlFacade->updateUrl($pageTransfer->getUrl());
     }
 
     /**
@@ -286,7 +288,13 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->createUrl($url, $localeTransfer, CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer
+            ->setUrl($url)
+            ->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale())
+            ->setFkResourcePage($pageTransfer->getIdCmsPage());
+
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -301,7 +309,7 @@ class PageManager implements PageManagerInterface
         }
 
         $urlTransfer = $this->createPageUrl($pageTransfer);
-        $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
+        $this->urlFacade->activateUrl($urlTransfer);
 
         return $urlTransfer;
     }

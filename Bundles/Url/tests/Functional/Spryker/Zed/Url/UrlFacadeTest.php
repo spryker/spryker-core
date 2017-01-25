@@ -558,4 +558,36 @@ class UrlFacadeTest extends Test
         $this->assertEquals(1, $touchQuery->count(), 'New entity should have deleted touch entry after activation.');
     }
 
+    /**
+     * @return void
+     */
+    public function testValidateUrlRedirectShouldNoticeRedirectLoop()
+    {
+        $localeTransfer = $this->localeFacade->createLocale('ab_CD');
+        $urlRedirectEntity = new SpyUrlRedirect();
+        $urlRedirectEntity
+            ->setToUrl('/some/url/to/redirect/to')
+            ->setStatus(Response::HTTP_MOVED_PERMANENTLY)
+            ->save();
+
+        $urlEntity = new SpyUrl();
+        $urlEntity
+            ->setUrl('/some/url/like/string')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->setFkResourceRedirect($urlRedirectEntity->getIdUrlRedirect())
+            ->save();
+
+        $sourceUrlTransfer = new UrlTransfer();
+        $sourceUrlTransfer->setUrl('/some/url/to/redirect/to');
+
+        $urlRedirectTransfer = new UrlRedirectTransfer();
+        $urlRedirectTransfer
+            ->setSource($sourceUrlTransfer)
+            ->setToUrl('/some/url/like/string');
+
+        $urlRedirectValidationResponseTransfer = $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
+
+        $this->assertFalse($urlRedirectValidationResponseTransfer->getIsValid(), 'URL redirect validation response should notice redirect loops.');
+    }
+
 }

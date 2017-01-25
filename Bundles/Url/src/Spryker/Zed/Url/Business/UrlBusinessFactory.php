@@ -17,6 +17,7 @@ use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivator;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectCreator;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectReader;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectUpdater;
+use Spryker\Zed\Url\Business\Redirect\UrlRedirectValidator;
 use Spryker\Zed\Url\Business\Url\UrlActivator;
 use Spryker\Zed\Url\Business\Url\UrlCreator;
 use Spryker\Zed\Url\Business\Url\UrlReader;
@@ -114,6 +115,14 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     public function createUrlRedirectActivator()
     {
         return new UrlRedirectActivator($this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Redirect\UrlRedirectValidatorInterface
+     */
+    public function createUrlRedirectValidator()
+    {
+        return new UrlRedirectValidator($this->getQueryContainer());
     }
 
     /**

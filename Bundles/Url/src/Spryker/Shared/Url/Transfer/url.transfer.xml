@@ -31,4 +31,9 @@
         <property name="status" type="int" />
     </transfer>
 
+    <transfer name="UrlRedirectValidationResponse">
+        <property name="isValid" type="bool" />
+        <property name="error" type="string" />
+    </transfer>
+
 </transfers>

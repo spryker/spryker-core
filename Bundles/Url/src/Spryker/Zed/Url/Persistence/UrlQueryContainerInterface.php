@@ -72,6 +72,8 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()` instead.
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *
@@ -81,6 +83,8 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeId()` instead.
      *
      * @param int $idCategoryNode
      *

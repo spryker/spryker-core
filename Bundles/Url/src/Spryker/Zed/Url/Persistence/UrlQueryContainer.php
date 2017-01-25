@@ -136,6 +136,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()` instead.
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *
@@ -152,6 +154,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
 
     /**
      * @api
+     *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeId()` instead.
      *
      * @param int $idCategoryNode
      *

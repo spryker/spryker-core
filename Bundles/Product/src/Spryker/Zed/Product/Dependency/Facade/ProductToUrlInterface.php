@@ -17,34 +17,41 @@ interface ProductToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
+    public function createUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updateUrl(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function deleteUrlAndTouch(UrlTransfer $urlTransfer);
+    public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlActive($idUrl);
+    public function activateUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param string $url
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($url);
+    public function hasUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlDeleted($idUrl);
+    public function deactivateUrl(UrlTransfer $urlTransfer);
 
 }
