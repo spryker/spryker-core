@@ -207,8 +207,11 @@
       "Unit\\Spryker\\Shared\\Graph\\": "Bundles/Graph/tests",
       "Spryker\\Zed\\Graph\\": "Bundles/Graph/src",
       "Unit\\Spryker\\Zed\\Graph\\": "Bundles/Graph/tests",
+
       "Spryker\\Shared\\Gui\\": "Bundles/Gui/src",
       "Spryker\\Zed\\Gui\\": "Bundles/Gui/src",
+      "Unit\\Spryker\\Zed\\Gui\\": "Bundles/Gui/tests",
+
       "Spryker\\Shared\\Heartbeat\\": "Bundles/Heartbeat/src",
       "Unit\\Spryker\\Shared\\Heartbeat\\": "Bundles/Heartbeat/tests",
       "Spryker\\Zed\\Heartbeat\\": "Bundles/Heartbeat/src",

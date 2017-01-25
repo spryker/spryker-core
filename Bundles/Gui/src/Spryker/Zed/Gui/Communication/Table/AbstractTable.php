@@ -162,8 +162,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 find a better solution (remove it)
-     *
      * @deprecated this method should not be needed.
      *
      * @param string $name
@@ -364,12 +362,7 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        $defaultSorting = [
-            [
-                self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
-                self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
-            ],
-        ];
+        $defaultSorting = [$this->getDefaultSorting($config)];
 
         $orderParameter = $this->request->query->get('order');
 
@@ -384,6 +377,41 @@ abstract class AbstractTable
         }
 
         return $sorting;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return array
+     */
+    protected function getDefaultSorting(TableConfiguration $config)
+    {
+        $sort = [
+            self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+            self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
+        ];
+
+        $defaultSortField = $config->getDefaultSortField();
+        if (!$defaultSortField) {
+            return $sort;
+        }
+
+        $field = key($defaultSortField);
+        $direction = $defaultSortField[$field];
+        $index = null;
+
+        $availableFields = array_keys($config->getHeader());
+        $index = array_search($field, $availableFields, true);
+        if ($index === null) {
+            return $sort;
+        }
+
+        $sort = [
+            self::SORT_BY_COLUMN => $index,
+            self::SORT_BY_DIRECTION => $direction,
+        ];
+
+        return $sort;
     }
 
     /**
@@ -552,7 +580,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 to be rafactored, does to many things and is hard to understand
      * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
