@@ -8,28 +8,35 @@
 namespace Spryker\Zed\Propel\Business\Transaction;
 
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Propel;
 use \Closure;
 
 trait DatabaseTransactionHandlerTrait
 {
 
     /**
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      * @param \Closure $callback
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @throws \Exception
      * @throws \Throwable
      *
-     * @return void
+     * @return mixed
      */
-    protected function handleDatabaseTransaction(ConnectionInterface $connection, Closure $callback)
+    protected function handleDatabaseTransaction(Closure $callback, ConnectionInterface $connection = null)
     {
+        if (!$connection) {
+            $connection = Propel::getConnection();
+        }
+
         $connection->beginTransaction();
 
         try {
-            $callback();
+            $result = $callback();
 
             $connection->commit();
+
+            return $result;
         } catch (\Exception $exception) {
             $connection->rollBack();
             throw $exception;

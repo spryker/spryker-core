@@ -35,7 +35,7 @@ class DatabaseTransactionHandlerTraitStub
      */
     public function execute(Closure $callback)
     {
-        $this->handleDatabaseTransaction($this->connection, $callback);
+        $this->handleDatabaseTransaction($callback, $this->connection);
     }
 
 }
