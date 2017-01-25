@@ -522,6 +522,9 @@
       "Spryker\\Zed\\Url\\": "Bundles/Url/src",
       "Unit\\Spryker\\Zed\\Url\\": "Bundles/Url/tests",
       "Functional\\Spryker\\Zed\\Url\\": "Bundles/Url/tests",
+      "Spryker\\Service\\Url\\": "Bundles/Url/src",
+      "Functional\\Spryker\\Service\\Url\\": "Bundles/Url/tests",
+
       "Spryker\\Shared\\User\\": "Bundles/User/src",
       "Unit\\Spryker\\Shared\\User\\": "Bundles/User/tests",
       "Functional\\Spryker\\Shared\\User\\": "Bundles/User/tests",
