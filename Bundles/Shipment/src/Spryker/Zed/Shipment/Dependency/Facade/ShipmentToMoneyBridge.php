@@ -27,12 +27,13 @@ class ShipmentToMoneyBridge implements ShipmentToMoneyInterface
 
     /**
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount)
+    public function fromInteger($amount, $isoCode = null)
     {
-        return $this->moneyFacade->fromInteger($amount);
+        return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
 
     /**
