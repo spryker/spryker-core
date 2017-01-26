@@ -41,12 +41,10 @@ class BundleParser implements BundleParserInterface
     protected $bundleDependencyCollectionTransfer;
 
     /**
-     * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(SymfonyFinder $finder, DevelopmentConfig $config)
+    public function __construct(DevelopmentConfig $config)
     {
-        $this->finder = $finder;
         $this->config = $config;
     }
 
@@ -360,7 +358,9 @@ class BundleParser implements BundleParserInterface
      */
     protected function find($folder)
     {
-        return $this->finder->in($folder)->name('*.schema.xml')->depth('< 2');
+        $finder = new SymfonyFinder();
+
+        return $finder->in($folder)->name('*.schema.xml')->depth('< 2');
     }
 
     /**
