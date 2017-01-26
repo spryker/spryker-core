@@ -7,15 +7,13 @@
 
 namespace Spryker\Shared\Customer;
 
-use Spryker\Shared\Application\ApplicationConstants;
-
 interface CustomerConstants
 {
 
     const CUSTOMER_ANONYMOUS_PATTERN = 'CUSTOMER_ANONYMOUS_PATTERN';
     const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
-    const HOST_YVES = ApplicationConstants::HOST_YVES;
+    const HOST_YVES = 'HOST_YVES';
 
     const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
 
