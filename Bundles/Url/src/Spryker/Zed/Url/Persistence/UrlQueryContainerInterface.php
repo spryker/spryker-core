@@ -101,4 +101,11 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      */
     public function queryUrlRedirectBySourceUrl($sourceUrl);
 
+    /**
+     * @param int $idUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     */
+    public function queryUrlRedirectByIdUrl($idUrl);
+
 }

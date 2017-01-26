@@ -84,7 +84,8 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
     protected function persistUrlTransfer(UrlTransfer $urlTransfer)
     {
         $urlEntity = $this->getUrlById($urlTransfer->getIdUrl());
-        $originalUrlEntity = clone $urlEntity;
+        $originalUrlTransfer = new UrlTransfer();
+        $originalUrlTransfer->fromArray($urlEntity->toArray(), true);
 
         $urlEntity->fromArray($urlTransfer->modifiedToArray());
 
@@ -96,7 +97,7 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
 
         $this->urlActivator->activateUrl($urlTransfer);
 
-        $this->notifyObservers($urlEntity, $originalUrlEntity);
+        $this->notifyObservers($urlTransfer, $originalUrlTransfer);
 
         return $urlTransfer;
     }

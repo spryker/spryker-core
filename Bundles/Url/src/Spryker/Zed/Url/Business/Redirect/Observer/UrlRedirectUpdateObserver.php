@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
@@ -37,32 +37,32 @@ class UrlRedirectUpdateObserver extends AbstractUrlUpdaterObserver
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return void
      */
-    public function update(SpyUrl $urlEntity, SpyUrl $originalUrlEntity)
+    public function update(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
-        if ($originalUrlEntity->getUrl() === $urlEntity->getUrl()) {
+        if ($originalUrlTransfer->getUrl() === $urlTransfer->getUrl()) {
             return;
         }
 
-        $this->maintainOutdatedRedirectTargetUrls($urlEntity, $originalUrlEntity);
+        $this->maintainOutdatedRedirectTargetUrls($urlTransfer, $originalUrlTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return void
      */
-    protected function maintainOutdatedRedirectTargetUrls(SpyUrl $urlEntity, SpyUrl $originalUrlEntity)
+    protected function maintainOutdatedRedirectTargetUrls(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
-        $chainRedirectEntities = $this->findUrlRedirectEntitiesByTargetUrl($originalUrlEntity->getUrl());
+        $chainRedirectEntities = $this->findUrlRedirectEntitiesByTargetUrl($originalUrlTransfer->getUrl());
 
         foreach ($chainRedirectEntities as $chainRedirectEntity) {
-            $chainRedirectEntity->setToUrl($urlEntity->getUrl());
+            $chainRedirectEntity->setToUrl($urlTransfer->getUrl());
             $chainRedirectEntity->save();
 
             $this->activateUrlRedirect($chainRedirectEntity->getIdUrlRedirect());

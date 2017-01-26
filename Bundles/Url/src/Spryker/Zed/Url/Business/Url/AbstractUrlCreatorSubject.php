@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Url\Business\Url;
 
-use Orm\Zed\Url\Persistence\SpyUrl;
+use Generated\Shared\Transfer\UrlTransfer;
 
 abstract class AbstractUrlCreatorSubject
 {
@@ -42,14 +42,14 @@ abstract class AbstractUrlCreatorSubject
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function notifyObservers(SpyUrl $urlEntity)
+    public function notifyObservers(UrlTransfer $urlTransfer)
     {
         foreach ($this->observers as $observer) {
-            $observer->update($urlEntity);
+            $observer->update($urlTransfer);
         }
     }
 

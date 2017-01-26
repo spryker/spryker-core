@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Url\Business\Url;
 
-use Orm\Zed\Url\Persistence\SpyUrl;
+use Generated\Shared\Transfer\UrlTransfer;
 
 abstract class AbstractUrlCreatorObserver
 {
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    abstract public function update(SpyUrl $urlEntity);
+    abstract public function update(UrlTransfer $urlTransfer);
 
 }

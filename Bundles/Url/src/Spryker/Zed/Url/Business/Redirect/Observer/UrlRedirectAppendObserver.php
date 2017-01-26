@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
@@ -37,32 +37,34 @@ class UrlRedirectAppendObserver extends AbstractUrlCreatorObserver
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function update(SpyUrl $urlEntity)
+    public function update(UrlTransfer $urlTransfer)
     {
-        $this->handleRedirectAppend($urlEntity);
+        $this->handleRedirectAppend($urlTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    protected function handleRedirectAppend(SpyUrl $urlEntity)
+    protected function handleRedirectAppend(UrlTransfer $urlTransfer)
     {
-        $redirectEntity = $urlEntity->getSpyUrlRedirect();
+        $urlRedirectEntity = $this->urlQueryContainer
+            ->queryUrlRedirectByIdUrl($urlTransfer->getIdUrl())
+            ->findOne();
 
-        if (!$redirectEntity) {
+        if (!$urlRedirectEntity) {
             return;
         }
 
-        $chainRedirectEntities = $this->findUrlRedirectEntitiesByTargetUrl($urlEntity->getUrl());
+        $chainRedirectEntities = $this->findUrlRedirectEntitiesByTargetUrl($urlTransfer->getUrl());
 
         foreach ($chainRedirectEntities as $chainRedirectEntity) {
-            $chainRedirectEntity->setToUrl($redirectEntity->getToUrl());
+            $chainRedirectEntity->setToUrl($urlRedirectEntity->getToUrl());
             $chainRedirectEntity->save();
 
             $this->activateUrlRedirect($chainRedirectEntity->getIdUrlRedirect());
@@ -94,6 +96,18 @@ class UrlRedirectAppendObserver extends AbstractUrlCreatorObserver
         $urlRedirectTransfer->setIdUrlRedirect($idUrlRedirect);
 
         $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @param string $sourceUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
+     */
+    protected function findUrlRedirectEntityBySourceUrl($sourceUrl)
+    {
+        return $this->urlQueryContainer
+            ->queryUrlRedirectBySourceUrl($sourceUrl)
+            ->findOne();
     }
 
 }

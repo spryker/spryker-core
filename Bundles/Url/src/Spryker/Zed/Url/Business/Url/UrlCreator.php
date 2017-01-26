@@ -73,7 +73,9 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
      */
     protected function assertUrlTransferForCreate(UrlTransfer $urlTransfer)
     {
-        $urlTransfer->requireFkLocale();
+        $urlTransfer
+            ->requireUrl()
+            ->requireFkLocale();
 
         $this->assertUrlDoesNotExist($urlTransfer);
     }
@@ -104,7 +106,7 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
     {
         $urlEntity = $this->createEntityFromTransfer($urlTransfer);
 
-        $this->notifyObservers($urlEntity);
+        $this->notifyObservers($urlTransfer);
 
         $urlEntity->save();
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver;
@@ -38,29 +38,31 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function update(SpyUrl $urlEntity)
+    public function update(UrlTransfer $urlTransfer)
     {
         $this->urlQueryContainer->getConnection()->beginTransaction();
 
-        $this->handleRedirectInjection($urlEntity);
+        $this->handleRedirectInjection($urlTransfer);
 
         $this->urlQueryContainer->getConnection()->commit();
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\RedirectLoopException
      *
      * @return void
      */
-    protected function handleRedirectInjection(SpyUrl $urlEntity)
+    protected function handleRedirectInjection(UrlTransfer $urlTransfer)
     {
-        $newUrlRedirectEntity = $urlEntity->getSpyUrlRedirect();
+        $newUrlRedirectEntity = $this->urlQueryContainer
+            ->queryUrlRedirectByIdUrl($urlTransfer->getIdUrl())
+            ->findOne();
 
         if (!$newUrlRedirectEntity) {
             return;
@@ -72,10 +74,10 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
             return;
         }
 
-        if ($finalTargetUrlRedirectEntity->getToUrl() === $urlEntity->getUrl()) {
+        if ($finalTargetUrlRedirectEntity->getToUrl() === $urlTransfer->getUrl()) {
             throw new RedirectLoopException(sprintf(
                 'Redirecting "%s" to "%s" resolved in a URL redirect loop.',
-                $urlEntity->getUrl(),
+                $urlTransfer->getUrl(),
                 $newUrlRedirectEntity->getToUrl()
             ));
         }

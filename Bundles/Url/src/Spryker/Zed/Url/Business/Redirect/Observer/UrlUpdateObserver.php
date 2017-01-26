@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectCreatorInterface;
 use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,63 +30,63 @@ class UrlUpdateObserver extends AbstractUrlUpdaterObserver
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return void
      */
-    public function update(SpyUrl $urlEntity, SpyUrl $originalUrlEntity)
+    public function update(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
-        if ($originalUrlEntity->getUrl() === $urlEntity->getUrl()) {
+        if ($originalUrlTransfer->getUrl() === $urlTransfer->getUrl()) {
             return;
         }
 
-        $this->redirectOriginalUrlToUpdatedUrl($urlEntity, $originalUrlEntity);
+        $this->redirectOriginalUrlToUpdatedUrl($urlTransfer, $originalUrlTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return void
      */
-    protected function redirectOriginalUrlToUpdatedUrl(SpyUrl $urlEntity, SpyUrl $originalUrlEntity)
+    protected function redirectOriginalUrlToUpdatedUrl(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
-        $urlRedirectTransfer = $this->createUrlRedirectTransfer($urlEntity, $originalUrlEntity);
+        $urlRedirectTransfer = $this->createUrlRedirectTransfer($urlTransfer, $originalUrlTransfer);
 
         $this->urlRedirectCreator->createUrlRedirect($urlRedirectTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    protected function createUrlRedirectTransfer(SpyUrl $urlEntity, SpyUrl $originalUrlEntity)
+    protected function createUrlRedirectTransfer(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
-        $sourceUrlTransfer = $this->createUrlTransfer($originalUrlEntity);
+        $sourceUrlTransfer = $this->createUrlTransfer($originalUrlTransfer);
 
         $urlRedirectTransfer = new UrlRedirectTransfer();
         $urlRedirectTransfer
             ->setSource($sourceUrlTransfer)
-            ->setToUrl($urlEntity->getUrl())
+            ->setToUrl($urlTransfer->getUrl())
             ->setStatus(Response::HTTP_MOVED_PERMANENTLY);
 
         return $urlRedirectTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $originalUrlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function createUrlTransfer(SpyUrl $originalUrlEntity)
+    protected function createUrlTransfer(UrlTransfer $originalUrlTransfer)
     {
         $sourceUrlTransfer = new UrlTransfer();
         $sourceUrlTransfer
-            ->setUrl($originalUrlEntity->getUrl())
-            ->setFkLocale($originalUrlEntity->getFkLocale());
+            ->setUrl($originalUrlTransfer->getUrl())
+            ->setFkLocale($originalUrlTransfer->getFkLocale());
 
         return $sourceUrlTransfer;
     }
