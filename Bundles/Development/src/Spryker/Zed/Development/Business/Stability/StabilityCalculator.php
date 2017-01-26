@@ -95,7 +95,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         foreach ($this->bundles as &$bundle) {
             $stability = count($bundle['out']) / (count($bundle['in']) + count($bundle['out']));
-            $bundle['stability'] = $stability;
+            $bundle['stability'] = number_format($stability, 3);
         }
     }
 
@@ -114,7 +114,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies->getArrayCopy();
 
             $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
-            $this->bundles[$bundle]['indirectStability'] = $indirectStability;
+            $this->bundles[$bundle]['indirectStability'] = number_format($indirectStability, 3);
         }
     }
 
@@ -124,9 +124,8 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected function calculateSprykerStability()
     {
         foreach ($this->bundles as $bundle => $info) {
-            // (II * IO) * (1- abs(0,5 - Stab))
             $sprykerStability = (count($info['indirectIn']) * count($info['indirectOut'])) * (1 - abs(0.5 - $info['indirectStability']));
-            $this->bundles[$bundle]['sprykerStability'] = $sprykerStability;
+            $this->bundles[$bundle]['sprykerStability'] = number_format($sprykerStability, 3);
         }
     }
 

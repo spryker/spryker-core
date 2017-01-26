@@ -10,14 +10,14 @@
                 </p>
                 <table class="table table-striped spy-grid">
                     <tr>
-                        <th>Bundle</th>
-                        <th>Incoming</th>
-                        <th>Outgoing</th>
-                        <th>Stability</th>
-                        <th>Indirect Incoming</th>
-                        <th>Indirect Outgoing</th>
-                        <th>Indirect Stability</th>
-                        <th>Spryker Stability</th>
+                        <th style="width: 60%;">Bundle</th>
+                        <th style="text-align:right">Incoming</th>
+                        <th style="text-align:right">Outgoing</th>
+                        <th style="text-align:right">Stability</th>
+                        <th style="text-align:right">Indirect Incoming</th>
+                        <th style="text-align:right">Indirect Outgoing</th>
+                        <th style="text-align:right">Indirect Stability</th>
+                        <th style="text-align:right">Spryker Stability</th>
                     </tr>
                     {% for bundle, info in bundles %}
 
@@ -25,13 +25,13 @@
                             <td>
                                 <a {% if info.stability > 0.4 and info.stability < 0.6 and info.in | length > 2 and info.out | length > 2 %}style="color: red"{% endif %} href="/development/dependency/outgoing-graph?bundle={{ bundle }}" target="_blank">{{ bundle }}</a>
                             </td>
-                            <td>{{ info.in | length }}</td>
-                            <td>{{ info.out | length }}</td>
-                            <td>{{ info.stability }}</td>
-                            <td>{{ info.indirectIn | length }}</td>
-                            <td>{{ info.indirectOut | length }}</td>
-                            <td>{{ info.indirectStability }}</td>
-                            <td>{{ info.sprykerStability }}</td>
+                            <td align="right">{{ info.in | length }}</td>
+                            <td align="right">{{ info.out | length }}</td>
+                            <td align="right">{{ info.stability }}</td>
+                            <td align="right">{{ info.indirectIn | length }}</td>
+                            <td align="right">{{ info.indirectOut | length }}</td>
+                            <td align="right">{{ info.indirectStability }}</td>
+                            <td align="right">{{ info.sprykerStability }}</td>
                         </tr>
                     {% endfor %}
                 </table>
