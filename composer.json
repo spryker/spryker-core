@@ -409,6 +409,8 @@
       "Unit\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
 
+      "Spryker\\Client\\Quote\\": "Bundles/Quote/src",
+
       "Spryker\\Shared\\Refund\\": "Bundles/Refund/src",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
       "Acceptance\\Refund\\": "Bundles/Refund/tests",

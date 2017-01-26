@@ -24,7 +24,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
@@ -32,7 +31,6 @@ use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
@@ -41,6 +39,7 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
@@ -377,11 +376,9 @@ class CheckoutFacadeTest extends Test
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
-            return [];
-        };
-
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
-            return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
+            return [
+                new OmsPostSaveHookPlugin()
+            ];
         };
 
         $container[CustomerDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();

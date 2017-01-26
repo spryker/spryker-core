@@ -22,6 +22,11 @@ class StorageFacadeTest extends Test
 {
 
     /**
+     * @var StorageFacade
+     */
+    protected $storageFacade;
+
+    /**
      * @return void
      */
     public function setUp()

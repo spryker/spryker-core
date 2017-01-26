@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Cart;
 
-use Spryker\Client\Cart\Session\QuoteSession;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -15,19 +14,11 @@ class CartFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
-    public function createSession()
+    public function getQuoteClient()
     {
-        return new QuoteSession($this->getSessionClient());
-    }
-
-    /**
-     * @return \Spryker\Client\Session\SessionClientInterface
-     */
-    protected function getSessionClient()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_SESSION);
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

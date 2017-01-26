@@ -14,7 +14,6 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
@@ -122,7 +121,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE)
             );
 
             if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
@@ -132,7 +131,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE)
                 );
             }
 

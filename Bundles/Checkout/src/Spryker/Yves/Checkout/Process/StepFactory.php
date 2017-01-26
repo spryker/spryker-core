@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -39,15 +39,15 @@ class StepFactory extends AbstractFactory
      */
     protected function createDataContainer()
     {
-        return new DataContainer($this->getCartClient());
+        return new DataContainer($this->getQuoteClient());
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClientInterface
+     * @return \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
-    protected function getCartClient()
+    protected function getQuoteClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_QUOTE);
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Checkout;
 
+use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
@@ -20,7 +21,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_APPLICATION = 'application plugin';
 
-    const CLIENT_CART = 'cart client';
+    const CLIENT_QUOTE = 'cart client';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -60,8 +61,8 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideClients(Container $container)
     {
-        $container[self::CLIENT_CART] = function () use ($container) {
-            return $container->getLocator()->cart()->client();
+        $container[self::CLIENT_QUOTE] = function () use ($container) {
+            return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

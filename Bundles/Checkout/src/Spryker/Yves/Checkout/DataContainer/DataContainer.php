@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Checkout\DataContainer;
 
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 
 class DataContainer implements DataContainerInterface
 {
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Quote\QuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
@@ -25,11 +25,11 @@ class DataContainer implements DataContainerInterface
     protected $quoteTransfer;
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface $quoteClient
      */
-    public function __construct(CartClientInterface $cartClient)
+    public function __construct(CheckoutToQuoteInterface $quoteClient)
     {
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -38,7 +38,7 @@ class DataContainer implements DataContainerInterface
     public function get()
     {
         if (!$this->quoteTransfer) {
-            $this->quoteTransfer = $this->cartClient->getQuote();
+            $this->quoteTransfer = $this->quoteClient->getQuote();
         }
 
         return $this->quoteTransfer;
@@ -51,7 +51,7 @@ class DataContainer implements DataContainerInterface
      */
     public function set(AbstractTransfer $dataTransfer)
     {
-        $this->cartClient->storeQuote($dataTransfer);
+        $this->quoteClient->setQuote($dataTransfer);
     }
 
 }

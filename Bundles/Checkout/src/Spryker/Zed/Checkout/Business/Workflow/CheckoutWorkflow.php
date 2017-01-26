@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
@@ -32,26 +31,18 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $postSaveHookStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface
-     */
-    protected $omsFacade;
-
-    /**
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
-     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface $omsFacade
      */
     public function __construct(
         array $preConditionStack,
         array $saveOrderStack,
-        array $postSaveHookStack,
-        CheckoutToOmsInterface $omsFacade
+        array $postSaveHookStack
     ) {
         $this->preConditionStack = $preConditionStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->saveOrderStack = $saveOrderStack;
-        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -69,7 +60,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         if (!$this->hasErrors($checkoutResponse)) {
             $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
             if (!$this->hasErrors($checkoutResponse)) {
-                $this->triggerStateMachine($checkoutResponse);
                 $this->executePostHooks($quoteTransfer, $checkoutResponse);
 
                 $isSuccess = !$this->hasErrors($checkoutResponse);
@@ -125,22 +115,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         Propel::getConnection()->commit();
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    protected function triggerStateMachine(CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $salesOrderItemIds = [];
-
-        foreach ($checkoutResponseTransfer->getSaveOrder()->getOrderItems() as $item) {
-            $salesOrderItemIds[] = $item->getIdSalesOrderItem();
-        }
-
-        $this->omsFacade->triggerEventForNewOrderItems($salesOrderItemIds);
     }
 
     /**

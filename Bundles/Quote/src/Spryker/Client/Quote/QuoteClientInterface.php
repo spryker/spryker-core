@@ -1,44 +1,45 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cart\Session;
+namespace Spryker\Client\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteSessionInterface
+interface QuoteClientInterface
 {
-
     /**
+     * Specification:
+     * - Returns the stored quote.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
 
     /**
+     * Specification:
+     * - Stores the quote.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return $this
+     * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer);
 
     /**
-     * @return int
-     */
-    public function getItemCount();
-
-    /**
-     * @param int $itemCount
+     * Specification:
+     * - Resets all data which is stored in the quote.
      *
-     * @return $this
-     */
-    public function setItemCount($itemCount);
-
-    /**
+     * @api
+     *
      * @return void
      */
     public function clearQuote();
-
 }

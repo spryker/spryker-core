@@ -29,7 +29,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getQuote()
     {
-        return $this->getSession()->getQuote();
+        return $this->getQuoteClient()->getQuote();
     }
 
     /**
@@ -41,19 +41,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function clearQuote()
     {
-        $this->getSession()->clearQuote();
-    }
-
-    /**
-     * Returns number of items in quote
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getItemCount()
-    {
-        return $this->getSession()->getItemCount();
+        $this->getQuoteClient()->clearQuote();
     }
 
     /**
@@ -81,7 +69,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getSession()->setQuote($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
     /**
@@ -180,7 +168,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $delta = abs($itemTransfer->getQuantity() - $quantity);
 
         if ($delta === 0) {
-            return $this->getSession()->getQuote();
+            return $this->getQuoteClient()->getQuote();
         }
 
         if ($itemTransfer->getQuantity() > $quantity) {
@@ -235,7 +223,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function createCartChangeTransfer()
     {
-        $quoteTransfer = $this->getSession()->getQuote();
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
         $items = $quoteTransfer->getItems();
 
         if (count($items) === 0) {
@@ -272,11 +260,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
-    protected function getSession()
+    protected function getQuoteClient()
     {
-        return $this->getFactory()->createSession();
+        return $this->getFactory()->getQuoteClient();
     }
 
 }
