@@ -42,7 +42,7 @@ class Environment extends Module
 
         $applicationRoot = Configuration::projectDir() . $path;
 
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'test');
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', 'DE');
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
