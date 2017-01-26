@@ -17,7 +17,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
