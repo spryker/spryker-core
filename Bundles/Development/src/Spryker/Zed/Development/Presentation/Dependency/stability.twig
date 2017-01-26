@@ -17,6 +17,7 @@
                         <th>Indirect Incoming</th>
                         <th>Indirect Outgoing</th>
                         <th>Indirect Stability</th>
+                        <th>Spryker Stability</th>
                     </tr>
                     {% for bundle, info in bundles %}
 
@@ -30,6 +31,7 @@
                             <td>{{ info.indirectIn | length }}</td>
                             <td>{{ info.indirectOut | length }}</td>
                             <td>{{ info.indirectStability }}</td>
+                            <td>{{ info.sprykerStability }}</td>
                         </tr>
                     {% endfor %}
                 </table>

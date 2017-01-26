@@ -5,23 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Glossary\Code\KeyBuilder;
+namespace Spryker\Shared\KeyBuilder;
 
-use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
-
-trait GlossaryKeyBuilder
+abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
 {
 
     use KeyBuilderTrait;
 
     /**
-     * @param string $glossaryKey
+     * @param array $identifier
      *
      * @return string
      */
-    protected function buildKey($glossaryKey)
+    protected function buildKey($identifier)
     {
-        return 'translation.' . $glossaryKey;
+        return $this->getResourceType() . '.' . $identifier;
     }
 
     /**
@@ -29,7 +27,12 @@ trait GlossaryKeyBuilder
      */
     public function getBundleName()
     {
-        return 'glossary';
+        return 'resource';
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getResourceType();
 
 }

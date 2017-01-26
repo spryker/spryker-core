@@ -8,11 +8,29 @@
 namespace Spryker\Client\Glossary\KeyBuilder;
 
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\Glossary\Code\KeyBuilder\GlossaryKeyBuilder as GlossaryKeyBuilderTrait;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class GlossaryKeyBuilder implements KeyBuilderInterface
 {
 
-    use GlossaryKeyBuilderTrait;
+    use KeyBuilderTrait;
+
+    /**
+     * @param string $glossaryKey
+     *
+     * @return string
+     */
+    protected function buildKey($glossaryKey)
+    {
+        return 'translation.' . $glossaryKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBundleName()
+    {
+        return 'glossary';
+    }
 
 }

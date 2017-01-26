@@ -7,6 +7,7 @@
   },
   "require": {
     "spryker/collector": "^3.0.0 || ^4.0.0",
+    "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^2.0.0",

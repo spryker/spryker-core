@@ -8,7 +8,7 @@
 namespace Spryker\Client\Cms\KeyBuilder;
 
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
 {
