@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Unit\Spryker\Shared\KeyBuilder;
+
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\Store;
+use Unit\Spryker\Shared\KeyBuilder\Fixtures\KeyBuilder;
+use ReflectionClass;
+
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group KeyBuilder
+ * @group KeyBuilderTraitTest
+ */
+class KeyBuilderTraitTest extends PHPUnit_Framework_TestCase
+{
+
+    /**
+     * @var
+     */
+    protected $currentStoreName;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        $this->currentStoreName = Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @dataProvider generateKey
+     *
+     * @param mixed $data
+     * @param string $expectedGeneratedKey
+     *
+     * @return void
+     */
+    public function testGenerateKeyBuildExpectedStrings($data, $expectedGeneratedKey)
+    {
+        $keyBuilder = new KeyBuilder();
+        $generatedKey = $keyBuilder->generateKey($data, 'de_DE');
+
+        $this->assertSame($expectedGeneratedKey, $generatedKey);
+    }
+
+    /**
+     * @return array
+     */
+    public function generateKey()
+    {
+        $storeName = strtolower(Store::getInstance()->getStoreName());
+
+        return [
+            ['string', $storeName . '.de_de.key-builder.identifier.string'],
+            [100, $storeName . '.de_de.key-builder.identifier.100'],
+            [0.1, $storeName . '.de_de.key-builder.identifier.0.1'],
+            ['foo' . "\n" . 'bar', $storeName . '.de_de.key-builder.identifier.foo-bar'],
+            ['foo' . "\r" . 'bar', $storeName . '.de_de.key-builder.identifier.foo-bar'],
+            ['foo "23" bar', $storeName . '.de_de.key-builder.identifier.foo--23--bar'],
+            ['foo \'23\' bar', $storeName . '.de_de.key-builder.identifier.foo--23--bar'],
+        ];
+    }
+
+}

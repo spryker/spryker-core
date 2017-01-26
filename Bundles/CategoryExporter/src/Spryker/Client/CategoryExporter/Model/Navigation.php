@@ -8,7 +8,7 @@
 namespace Spryker\Client\CategoryExporter\Model;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class Navigation
 {
@@ -19,13 +19,13 @@ class Navigation
     private $keyValueReader;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     private $urlBuilder;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $urlBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $urlBuilder
      */
     public function __construct(StorageClientInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
     {

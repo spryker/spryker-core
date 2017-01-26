@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ProductOption\KeyBuilder;
 
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class ProductOptionKeyBuilder implements KeyBuilderInterface
 {

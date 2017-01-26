@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Collector\Code\KeyBuilder;
+namespace Spryker\Shared\KeyBuilder;
 
 use Spryker\Shared\Kernel\Store;
 
@@ -16,22 +16,6 @@ trait KeyBuilderTrait
      * @var string
      */
     protected $keySeparator = '.';
-
-    /**
-     * @param mixed $data
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function getKeyParts($data, $localeName)
-    {
-        return [
-            Store::getInstance()->getStoreName(),
-            $localeName,
-            $this->getBundleName(),
-            $this->buildKey($data),
-        ];
-    }
 
     /**
      * @param mixed $data
@@ -50,6 +34,22 @@ trait KeyBuilderTrait
      * @return string
      */
     abstract public function getBundleName();
+
+    /**
+     * @param mixed $data
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getKeyParts($data, $localeName)
+    {
+        return [
+            Store::getInstance()->getStoreName(),
+            $localeName,
+            $this->getBundleName(),
+            $this->buildKey($data),
+        ];
+    }
 
     /**
      * @param mixed $data

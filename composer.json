@@ -244,6 +244,9 @@
       "Unit\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
 
+      "Spryker\\Shared\\KeyBuilder\\": "Bundles/KeyBuilder/src",
+      "Unit\\Spryker\\Shared\\KeyBuilder\\": "vendor/spryker/spryker/Bundles/KeyBuilder/tests",
+
       "Spryker\\Client\\Locale\\": "Bundles/Locale/src",
       "Unit\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
       "Functional\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",

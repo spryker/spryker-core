@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Collector\Code\KeyBuilder;
+namespace Spryker\Shared\KeyBuilder;
 
 interface KeyBuilderInterface
 {

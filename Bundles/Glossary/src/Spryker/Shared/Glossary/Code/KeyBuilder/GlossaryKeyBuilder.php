@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Glossary\Code\KeyBuilder;
 
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
 {

@@ -15,6 +15,7 @@
     "spryker/elastica": "^2.0.0 || ^3.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.4.0",
+    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/propel": "^2.3.1",
     "spryker/redis": "^2.0.0",

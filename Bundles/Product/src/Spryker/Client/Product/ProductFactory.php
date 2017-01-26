@@ -62,7 +62,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createAttributeMapKeyBuilder()
     {
@@ -70,7 +70,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createProductConcreteKeyBuilder()
     {
@@ -94,7 +94,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {

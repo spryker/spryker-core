@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
@@ -27,14 +27,14 @@ class ExportMarker implements MarkerInterface
     protected $reader;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(WriterInterface $writer, ReaderInterface $reader, KeyBuilderInterface $keyBuilder)
     {

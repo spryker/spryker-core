@@ -9,7 +9,7 @@ namespace Spryker\Client\Availability\Storage;
 
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
@@ -20,7 +20,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     private $storageClient;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     private $keyBuilder;
 
@@ -31,7 +31,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
 
     /**
      * @param \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface $storage
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
     public function __construct(AvailabilityToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
