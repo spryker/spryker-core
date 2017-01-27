@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,7 +10,6 @@ namespace Spryker\Zed\Payone;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -92,7 +91,7 @@ class PayoneConfig extends AbstractBundleConfig
      */
     protected function getYvesBaseUrl()
     {
-        return $this->get(ApplicationConstants::HOST_YVES);
+        return $this->get(PayoneConstants::HOST_YVES);
     }
 
 }

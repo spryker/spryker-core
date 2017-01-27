@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup;
 
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -39,7 +39,7 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function getJenkinsUrl()
     {
-        return $this->get(ApplicationConstants::JENKINS_BASE_URL);
+        return $this->get(SetupConstants::JENKINS_BASE_URL);
     }
 
     /**
@@ -47,7 +47,7 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function getJenkinsDirectory()
     {
-        return $this->get(ApplicationConstants::JENKINS_DIRECTORY);
+        return $this->get(SetupConstants::JENKINS_DIRECTORY);
     }
 
     /**

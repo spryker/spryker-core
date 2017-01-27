@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Newsletter;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -29,7 +28,7 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ApplicationConstants::HOST_YVES);
+        return $this->get(NewsletterConstants::HOST_YVES);
     }
 
     /**

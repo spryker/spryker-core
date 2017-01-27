@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,6 +10,7 @@ namespace Spryker\Zed\Setup\Communication\Controller;
 use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
@@ -49,7 +50,7 @@ class JenkinsController extends AbstractController
      */
     private function callJenkins($url, $body = '')
     {
-        $post_url = Config::get(ApplicationConstants::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
+        $post_url = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $post_url);
         curl_setopt($ch, CURLOPT_POST, 1);

@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Cms;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 
 interface CmsConstants
@@ -20,6 +19,6 @@ interface CmsConstants
     const RESOURCE_TYPE_CATEGORY_NODE = 'category';
     const RESOURCE_TYPE_STATIC = 'static';
 
-    const YVES_THEME = ApplicationConstants::YVES_THEME;
+    const YVES_THEME = 'YVES_THEME';
 
 }

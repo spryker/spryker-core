@@ -7,7 +7,6 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
     "spryker/checkout": "^2.1.0",
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0 || ^3.0.0",

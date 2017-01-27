@@ -9,4 +9,8 @@ namespace Spryker\Shared\Setup;
 
 interface SetupConstants
 {
+
+    const JENKINS_BASE_URL = 'JENKINS_BASE_URL';
+    const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
+
 }

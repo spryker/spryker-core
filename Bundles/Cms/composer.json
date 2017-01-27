@@ -6,7 +6,6 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
     "spryker/category": "^2.2.0",
     "spryker/glossary": "^2.2.0",
     "spryker/gui": "^2.0.0",
