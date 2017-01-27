@@ -93,11 +93,12 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
             $this->assertUrlDoesNotExist($urlTransfer);
         }
 
-        $urlEntity->save();
+        $this->notifyBeforeSaveObservers($urlTransfer, $originalUrlTransfer);
 
+        $urlEntity->save();
         $this->urlActivator->activateUrl($urlTransfer);
 
-        $this->notifyObservers($urlTransfer, $originalUrlTransfer);
+        $this->notifyAfterSaveObservers($urlTransfer, $originalUrlTransfer);
 
         return $urlTransfer;
     }

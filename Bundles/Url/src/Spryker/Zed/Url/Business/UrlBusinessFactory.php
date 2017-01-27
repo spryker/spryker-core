@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Url\Business\Deletion\UrlDeleter;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectAppendObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectInjectionObserver;
+use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectOverwriteObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectUpdateObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlUpdateObserver;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivator;
@@ -38,8 +39,12 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         $urlCreator = new UrlCreator($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
 
-        foreach ($this->createUrlCreatorObservers() as $urlWriterObserver) {
-            $urlCreator->attachObserver($urlWriterObserver);
+        foreach ($this->createUrlCreatorBeforeSaveObservers() as $urlWriterObserver) {
+            $urlCreator->attachBeforeSaveObserver($urlWriterObserver);
+        }
+
+        foreach ($this->createUrlCreatorAfterSaveObservers() as $urlWriterObserver) {
+            $urlCreator->attachAfterSaveObserver($urlWriterObserver);
         }
 
         return $urlCreator;
@@ -52,8 +57,12 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         $urlUpdater = new UrlUpdater($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
 
-        foreach ($this->createUrlUpdaterObservers() as $urlUpdaterObserver) {
-            $urlUpdater->attachObserver($urlUpdaterObserver);
+        foreach ($this->createUrlUpdaterBeforeSaveObservers() as $urlUpdaterObserver) {
+            $urlUpdater->attachBeforeSaveObserver($urlUpdaterObserver);
+        }
+
+        foreach ($this->createUrlUpdaterAfterSaveObservers() as $urlUpdaterObserver) {
+            $urlUpdater->attachAfterSaveObserver($urlUpdaterObserver);
         }
 
         return $urlUpdater;
@@ -172,18 +181,28 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver[]
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface[]
      */
-    protected function createUrlCreatorObservers()
+    protected function createUrlCreatorBeforeSaveObservers()
     {
         return [
-            $this->createUrlRedirectInjectionObserver(),
-            $this->createUrlRedirectAppendObserver(),
+            $this->createUrlRedirectOverwriteObserver(),
         ];
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface[]
+     */
+    protected function createUrlCreatorAfterSaveObservers()
+    {
+        return [
+            $this->createUrlRedirectAppendObserver(),
+            $this->createUrlRedirectInjectionObserver(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface
      */
     protected function createUrlRedirectInjectionObserver()
     {
@@ -191,7 +210,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface
      */
     protected function createUrlRedirectAppendObserver()
     {
@@ -199,9 +218,27 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver[]
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface|\Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface
      */
-    protected function createUrlUpdaterObservers()
+    protected function createUrlRedirectOverwriteObserver()
+    {
+        return new UrlRedirectOverwriteObserver($this->getQueryContainer(), $this->createUrlDeleter());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface[]
+     */
+    protected function createUrlUpdaterBeforeSaveObservers()
+    {
+        return [
+            $this->createUrlRedirectOverwriteObserver(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[]
+     */
+    protected function createUrlUpdaterAfterSaveObservers()
     {
         return [
             $this->createUrlRedirectUpdateObserver(),
@@ -210,7 +247,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface
      */
     protected function createUrlRedirectUpdateObserver()
     {
@@ -218,7 +255,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface
      */
     protected function createUrlUpdateObserver()
     {

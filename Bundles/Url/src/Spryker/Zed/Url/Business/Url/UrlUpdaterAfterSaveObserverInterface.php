@@ -9,14 +9,15 @@ namespace Spryker\Zed\Url\Business\Url;
 
 use Generated\Shared\Transfer\UrlTransfer;
 
-abstract class AbstractUrlCreatorObserver
+interface UrlUpdaterAfterSaveObserverInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
      *
      * @return void
      */
-    abstract public function update(UrlTransfer $urlTransfer);
+    public function handleUrlUpdate(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer);
 
 }

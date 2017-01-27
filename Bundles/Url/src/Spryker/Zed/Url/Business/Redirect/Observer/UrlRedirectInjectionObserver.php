@@ -9,12 +9,11 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
-use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver;
+use Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
-class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
+class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterface
 {
 
     /**
@@ -42,7 +41,7 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
      *
      * @return void
      */
-    public function update(UrlTransfer $urlTransfer)
+    public function handleUrlCreation(UrlTransfer $urlTransfer)
     {
         $this->urlQueryContainer->getConnection()->beginTransaction();
 
@@ -53,8 +52,6 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\RedirectLoopException
      *
      * @return void
      */
@@ -72,14 +69,6 @@ class UrlRedirectInjectionObserver extends AbstractUrlCreatorObserver
 
         if (!$finalTargetUrlRedirectEntity) {
             return;
-        }
-
-        if ($finalTargetUrlRedirectEntity->getToUrl() === $urlTransfer->getUrl()) {
-            throw new RedirectLoopException(sprintf(
-                'Redirecting "%s" to "%s" resolved in a URL redirect loop.',
-                $urlTransfer->getUrl(),
-                $newUrlRedirectEntity->getToUrl()
-            ));
         }
 
         $newUrlRedirectEntity

@@ -10,10 +10,10 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectCreatorInterface;
-use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver;
+use Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class UrlUpdateObserver extends AbstractUrlUpdaterObserver
+class UrlUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
 {
 
     /**
@@ -35,7 +35,7 @@ class UrlUpdateObserver extends AbstractUrlUpdaterObserver
      *
      * @return void
      */
-    public function update(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
+    public function handleUrlUpdate(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
         if ($originalUrlTransfer->getUrl() === $urlTransfer->getUrl()) {
             return;

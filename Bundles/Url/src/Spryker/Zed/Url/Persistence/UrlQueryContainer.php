@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -186,6 +187,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
@@ -197,6 +200,18 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
             ->useSpyUrlQuery()
                 ->filterByIdUrl($idUrl)
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIgnoringRedirects()
+    {
+        return $this->getFactory()
+            ->createUrlQuery()
+            ->filterByFkResourceRedirect(null, Criteria::ISNULL);
     }
 
 }

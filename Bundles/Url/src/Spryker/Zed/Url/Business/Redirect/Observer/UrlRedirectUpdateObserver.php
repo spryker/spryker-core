@@ -10,10 +10,10 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
-use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver;
+use Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
-class UrlRedirectUpdateObserver extends AbstractUrlUpdaterObserver
+class UrlRedirectUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
 {
 
     /**
@@ -42,13 +42,17 @@ class UrlRedirectUpdateObserver extends AbstractUrlUpdaterObserver
      *
      * @return void
      */
-    public function update(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
+    public function handleUrlUpdate(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
     {
         if ($originalUrlTransfer->getUrl() === $urlTransfer->getUrl()) {
             return;
         }
 
+        $this->urlQueryContainer->getConnection()->beginTransaction();
+
         $this->maintainOutdatedRedirectTargetUrls($urlTransfer, $originalUrlTransfer);
+
+        $this->urlQueryContainer->getConnection()->commit();
     }
 
     /**

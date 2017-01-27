@@ -13,31 +13,44 @@ abstract class AbstractUrlCreatorSubject
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver[]
+     * @var \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface[]
      */
-    protected $observers = [];
+    protected $beforeSaveObservers = [];
 
     /**
-     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver $urlWriterObserver
+     * @var \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface[]
+     */
+    protected $afterSaveObservers = [];
+
+    /**
+     * @param \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface $urlWriterObserver
      *
      * @return void
      */
-    public function attachObserver(AbstractUrlCreatorObserver $urlWriterObserver)
+    public function attachBeforeSaveObserver(UrlCreatorBeforeSaveObserverInterface $urlWriterObserver)
     {
-        $this->observers[] = $urlWriterObserver;
+        $this->beforeSaveObservers[] = $urlWriterObserver;
     }
 
     /**
-     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorObserver $urlWriterObserver
+     * @param \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface $urlWriterObserver
      *
      * @return void
      */
-    public function detachObserver(AbstractUrlCreatorObserver $urlWriterObserver)
+    public function attachAfterSaveObserver(UrlCreatorAfterSaveObserverInterface $urlWriterObserver)
     {
-        $key = array_search($urlWriterObserver, $this->observers, true);
+        $this->afterSaveObservers[] = $urlWriterObserver;
+    }
 
-        if ($key !== false) {
-            unset($this->observers[$key]);
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function notifyBeforeSaveObservers(UrlTransfer $urlTransfer)
+    {
+        foreach ($this->beforeSaveObservers as $observer) {
+            $observer->handleUrlCreation($urlTransfer);
         }
     }
 
@@ -46,10 +59,10 @@ abstract class AbstractUrlCreatorSubject
      *
      * @return void
      */
-    public function notifyObservers(UrlTransfer $urlTransfer)
+    public function notifyAfterSaveObservers(UrlTransfer $urlTransfer)
     {
-        foreach ($this->observers as $observer) {
-            $observer->update($urlTransfer);
+        foreach ($this->afterSaveObservers as $observer) {
+            $observer->handleUrlCreation($urlTransfer);
         }
     }
 

@@ -13,32 +13,23 @@ abstract class AbstractUrlUpdaterSubject
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver[]
+     * @var \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface[]
      */
-    protected $observers = [];
+    protected $beforeSaveObservers = [];
 
     /**
-     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver $urlWriterObserver
+     * @var \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[]
+     */
+    protected $afterSaveObservers = [];
+
+    /**
+     * @param \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface $urlWriterObserver
      *
      * @return void
      */
-    public function attachObserver(AbstractUrlUpdaterObserver $urlWriterObserver)
+    public function attachBeforeSaveObserver(UrlUpdaterBeforeSaveObserverInterface $urlWriterObserver)
     {
-        $this->observers[] = $urlWriterObserver;
-    }
-
-    /**
-     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterObserver $urlWriterObserver
-     *
-     * @return void
-     */
-    public function detachObserver(AbstractUrlUpdaterObserver $urlWriterObserver)
-    {
-        $key = array_search($urlWriterObserver, $this->observers, true);
-
-        if ($key !== false) {
-            unset($this->observers[$key]);
-        }
+        $this->beforeSaveObservers[] = $urlWriterObserver;
     }
 
     /**
@@ -47,10 +38,33 @@ abstract class AbstractUrlUpdaterSubject
      *
      * @return void
      */
-    public function notifyObservers(UrlTransfer $urlTransfer, UrlTransfer $originalTransfer)
+    public function notifyBeforeSaveObservers(UrlTransfer $urlTransfer, UrlTransfer $originalTransfer)
     {
-        foreach ($this->observers as $observer) {
-            $observer->update($urlTransfer, $originalTransfer);
+        foreach ($this->beforeSaveObservers as $observer) {
+            $observer->handleUrlUpdate($urlTransfer, $originalTransfer);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface $urlWriterObserver
+     *
+     * @return void
+     */
+    public function attachAfterSaveObserver(UrlUpdaterAfterSaveObserverInterface $urlWriterObserver)
+    {
+        $this->afterSaveObservers[] = $urlWriterObserver;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalTransfer
+     *
+     * @return void
+     */
+    public function notifyAfterSaveObservers(UrlTransfer $urlTransfer, UrlTransfer $originalTransfer)
+    {
+        foreach ($this->afterSaveObservers as $observer) {
+            $observer->handleUrlUpdate($urlTransfer, $originalTransfer);
         }
     }
 

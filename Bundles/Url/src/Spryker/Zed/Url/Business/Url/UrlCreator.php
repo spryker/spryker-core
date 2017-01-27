@@ -55,9 +55,12 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
             ->getConnection()
             ->beginTransaction();
 
-        $urlTransfer = $this->persistUrlEntity($urlTransfer);
+        $this->notifyBeforeSaveObservers($urlTransfer);
 
+        $urlTransfer = $this->persistUrlEntity($urlTransfer);
         $this->urlActivator->activateUrl($urlTransfer);
+
+        $this->notifyAfterSaveObservers($urlTransfer);
 
         $this->urlQueryContainer
             ->getConnection()
@@ -105,11 +108,7 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
     protected function persistUrlEntity(UrlTransfer $urlTransfer)
     {
         $urlEntity = $this->createEntityFromTransfer($urlTransfer);
-
-        $this->notifyObservers($urlTransfer);
-
         $urlEntity->save();
-
         $urlTransfer->fromArray($urlEntity->toArray(), true);
 
         return $urlTransfer;

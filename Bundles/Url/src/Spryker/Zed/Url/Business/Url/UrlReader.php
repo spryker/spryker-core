@@ -53,24 +53,25 @@ class UrlReader implements UrlReaderInterface
      */
     public function hasUrl(UrlTransfer $urlTransfer)
     {
-        $urlCount = $this->queryUrlEntity($urlTransfer)->count();
+        $ignoreUrlRedirects = ($urlTransfer->getFkResourceRedirect() === null);
+
+        $urlCount = $this->queryUrlEntity($urlTransfer, $ignoreUrlRedirects)->count();
 
         return $urlCount > 0;
     }
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @throws \InvalidArgumentException
+     * @param bool $ignoreUrlRedirects
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    protected function queryUrlEntity(UrlTransfer $urlTransfer)
+    protected function queryUrlEntity(UrlTransfer $urlTransfer, $ignoreUrlRedirects = false)
     {
         if ($urlTransfer->getUrl()) {
-            $urlQuery = $this->queryUrlEntityByUrl($urlTransfer->getUrl());
+            $urlQuery = $this->queryUrlEntityByUrl($urlTransfer->getUrl(), $ignoreUrlRedirects);
         } elseif ($urlTransfer->getIdUrl()) {
-            $urlQuery = $this->queryUrlEntityById($urlTransfer->getIdUrl());
+            $urlQuery = $this->queryUrlEntityById($urlTransfer->getIdUrl(), $ignoreUrlRedirects);
         } else {
             throw new InvalidArgumentException(sprintf(
                 'The provided UrlTransfer does not have any data to find URL entity: %s. Set "%s" or "%s" for the UrlTransfer.',
@@ -85,22 +86,54 @@ class UrlReader implements UrlReaderInterface
 
     /**
      * @param int $idUrl
+     * @param bool $ignoreUrlRedirects
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    protected function queryUrlEntityById($idUrl)
+    protected function queryUrlEntityById($idUrl, $ignoreUrlRedirects)
     {
-        return $this->urlQueryContainer->queryUrlById($idUrl);
+        return $this->getBaseQuery($ignoreUrlRedirects)->filterByIdUrl($idUrl);
     }
 
     /**
      * @param string $url
+     * @param bool $ignoreUrlRedirects
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    protected function queryUrlEntityByUrl($url)
+    protected function queryUrlEntityByUrl($url, $ignoreUrlRedirects)
     {
-        return $this->urlQueryContainer->queryUrl($url);
+        return $this->getBaseQuery($ignoreUrlRedirects)->filterByUrl($url);
+    }
+
+    /**
+     * @param bool $ignoreUrlRedirects
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function getBaseQuery($ignoreUrlRedirects)
+    {
+        if ($ignoreUrlRedirects) {
+            return $this->queryUrlByIgnoringRedirects();
+        }
+
+        return $this->queryUrl();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function queryUrlByIgnoringRedirects()
+    {
+        return $this->urlQueryContainer->queryUrlByIgnoringRedirects();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function queryUrl()
+    {
+        return $this->urlQueryContainer->queryUrls();
     }
 
 }
