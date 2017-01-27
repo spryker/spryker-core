@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Glossary\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller;
 use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
@@ -72,15 +71,13 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller
      */
-    public function createInstaller(LoggerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new GlossaryInstaller(
             $this->createTranslationManager(),
             $this->createKeyManager(),
             $this->getConfig()->getGlossaryFilePaths()
         );
-
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -177,13 +176,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger)
+    public function install()
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
     /**

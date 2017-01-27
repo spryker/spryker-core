@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -327,13 +327,11 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface|null $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger = null)
+    public function install()
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
     /**

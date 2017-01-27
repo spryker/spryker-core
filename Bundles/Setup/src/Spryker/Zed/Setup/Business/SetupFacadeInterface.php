@@ -61,13 +61,4 @@ interface SetupFacadeInterface
      */
     public function getConsoleCommands();
 
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
-     * @return void
-     */
-    public function installTestData(LoggerInterface $messenger);
-
 }

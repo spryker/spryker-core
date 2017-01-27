@@ -108,11 +108,9 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger);
+    public function install();
 
     /**
      * - Searches for a persisted price in database that has the given SKU for the given price type.

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Installer\Business\Model;
+namespace Spryker\Zed\Installer\Dependency\Plugin;
 
 interface InstallerPluginInterface
 {
@@ -13,6 +13,6 @@ interface InstallerPluginInterface
     /**
      * @return void
      */
-    public function run();
+    public function install();
 
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Price\Business;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -132,13 +131,11 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger)
+    public function install()
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
     /**

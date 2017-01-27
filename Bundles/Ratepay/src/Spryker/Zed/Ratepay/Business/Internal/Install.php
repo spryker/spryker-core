@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Ratepay\Business\Internal;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToGlossaryInterface;
 use Spryker\Zed\Ratepay\RatepayConfig;
 use Symfony\Component\Yaml\Yaml;
 
-class Install extends AbstractInstaller
+class Install implements InstallInterface
 {
 
     /**

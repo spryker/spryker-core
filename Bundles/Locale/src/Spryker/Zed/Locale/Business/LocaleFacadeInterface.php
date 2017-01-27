@@ -135,11 +135,9 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger);
+    public function install();
 
     /**
      * Specification:

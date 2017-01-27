@@ -86,10 +86,6 @@ abstract class AbstractDependencyFinder
             $dependencyInformation[DependencyTree::META_IN_TEST] = true;
         }
 
-        if ($fileInfo->getExtension() !== 'php') {
-            echo '<pre>' . PHP_EOL . VarDumper::dump($fileInfo) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-        }
-
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }
 

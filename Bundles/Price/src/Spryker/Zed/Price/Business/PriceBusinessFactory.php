@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Price\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Price\Business\Model\BulkWriter;
@@ -77,17 +76,14 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller
+     * @return \Spryker\Zed\Price\Business\Internal\InstallInterface
      */
-    public function createInstaller(LoggerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new Install(
             $this->createWriterModel(),
             $this->getConfig()
         );
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

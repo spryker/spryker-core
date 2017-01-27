@@ -7,18 +7,19 @@
 
 namespace Spryker\Zed\Newsletter\Communication\Plugin;
 
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
  */
-class Installer extends AbstractInstallerPlugin
+class NewsletterInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
 
     /**
      * @return void
      */
-    protected function install()
+    public function install()
     {
         $this->getFacade()->install();
     }

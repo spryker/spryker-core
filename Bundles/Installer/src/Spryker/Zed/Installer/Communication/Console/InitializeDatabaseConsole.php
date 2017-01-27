@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -39,15 +39,11 @@ class InitializeDatabaseConsole extends Console
     {
         $installerPlugins = $this->getInstallerPlugins();
 
-        $messenger = $this->getMessenger();
-
         try {
             foreach ($installerPlugins as $plugin) {
                 $name = $this->getPluginNameFromClass(get_class($plugin));
 
                 $output->writeln('Installing DB data for ' . $name);
-
-                $plugin->setMessenger($messenger);
                 $plugin->run();
             }
         } catch (\Exception $e) {
@@ -60,7 +56,7 @@ class InitializeDatabaseConsole extends Console
     }
 
     /**
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     protected function getInstallerPlugins()
     {

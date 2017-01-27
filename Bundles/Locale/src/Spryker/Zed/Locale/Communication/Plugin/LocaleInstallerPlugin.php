@@ -7,21 +7,22 @@
 
 namespace Spryker\Zed\Locale\Communication\Plugin;
 
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\Locale\Business\LocaleFacade getFacade()
  */
-class Installer extends AbstractInstallerPlugin
+class LocaleInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
 
     /**
      * @return void
      */
-    protected function install()
+    public function install()
     {
-        $this->getFacade()->install($this->messenger);
+        $this->getFacade()->install();
     }
 
 }

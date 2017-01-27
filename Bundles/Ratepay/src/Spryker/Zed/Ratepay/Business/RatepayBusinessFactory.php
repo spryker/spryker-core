@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,7 +10,6 @@ namespace Spryker\Zed\Ratepay\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
@@ -408,17 +407,14 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return \Spryker\Zed\Ratepay\Business\Internal\Install
      */
-    public function createInstaller(LoggerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new Install(
             $this->getGlossaryFacade(),
             $this->getConfig()
         );
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

@@ -7,18 +7,19 @@
 
 namespace Spryker\Zed\Acl\Communication\Plugin;
 
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
  */
-class Installer extends AbstractInstallerPlugin
+class AclInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
 
     /**
      * @return void
      */
-    protected function install()
+    public function install()
     {
         $this->getFacade()->install();
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Installer;
 
+use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -34,7 +35,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @return InstallerPluginInterface[]
      */
     public function getInstallerPlugins()
     {

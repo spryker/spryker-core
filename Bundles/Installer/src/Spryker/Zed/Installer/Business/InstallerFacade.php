@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -18,7 +18,7 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     /**
      * @api
      *
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     public function getInstallerPlugins()
     {

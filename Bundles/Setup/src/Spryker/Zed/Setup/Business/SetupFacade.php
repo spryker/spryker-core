@@ -84,16 +84,4 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
         return $this->getFactory()->getConsoleCommands();
     }
 
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $messenger
-     *
-     * @return void
-     */
-    public function installTestData(LoggerInterface $messenger)
-    {
-        $this->getFactory()->createTestDataInstaller($messenger)->install();
-    }
-
 }

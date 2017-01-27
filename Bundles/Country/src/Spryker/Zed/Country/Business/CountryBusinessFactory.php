@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -20,11 +19,9 @@ class CountryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return \Spryker\Zed\Country\Business\Internal\Install
      */
-    public function createInstaller(LoggerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new Install(
             $this->createCountryManager(),
@@ -40,8 +37,6 @@ class CountryBusinessFactory extends AbstractBusinessFactory
             ),
             $this->getConfig()
         );
-
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

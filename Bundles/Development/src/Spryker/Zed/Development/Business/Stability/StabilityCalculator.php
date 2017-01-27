@@ -8,6 +8,12 @@
 namespace Spryker\Zed\Development\Business\Stability;
 
 use ArrayObject;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ClassNameFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterCompositeInterface;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\InTestDependencyFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class StabilityCalculator implements StabilityCalculatorInterface
@@ -22,6 +28,21 @@ class StabilityCalculator implements StabilityCalculatorInterface
      * @var array
      */
     protected $bundlesDependencies;
+
+    /**
+     * @var TreeFilterInterface
+     */
+    protected $filter;
+
+    public function __construct()
+    {
+        $filter = new TreeFilter();
+        $filter->addFilter(new ClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
+            ->addFilter(new InTestDependencyFilter());
+
+        $this->filter = $filter;
+    }
+
 
     /**
      * @return array
@@ -64,10 +85,12 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected function filter(array $bundlesDependencies)
     {
         $callback = function (array $bundleDependency) {
-            return (!$bundleDependency[DependencyTree::META_IN_TEST] && ($bundleDependency[DependencyTree::META_FOREIGN_LAYER] !== 'external'));
+            return ($bundleDependency[DependencyTree::META_FOREIGN_LAYER] !== 'external');
         };
+        $bundlesDependencies = array_filter($bundlesDependencies, $callback);
+        $bundlesDependencies = $this->filter->filter($bundlesDependencies);
 
-        return array_filter($bundlesDependencies, $callback);
+        return $bundlesDependencies;
     }
 
     /**

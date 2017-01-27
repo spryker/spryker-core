@@ -263,11 +263,9 @@ interface GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface|null $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger = null);
+    public function install();
 
     /**
      * @api
