@@ -245,7 +245,7 @@
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
 
       "Spryker\\Shared\\KeyBuilder\\": "Bundles/KeyBuilder/src",
-      "Unit\\Spryker\\Shared\\KeyBuilder\\": "vendor/spryker/spryker/Bundles/KeyBuilder/tests",
+      "Unit\\Spryker\\Shared\\KeyBuilder\\": "Bundles/KeyBuilder/tests",
 
       "Spryker\\Client\\Locale\\": "Bundles/Locale/src",
       "Unit\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
@@ -411,6 +411,8 @@
       "Spryker\\Zed\\Propel\\": "Bundles/Propel/src",
       "Unit\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
+
+      "Spryker\\Zed\\PropelOrm\\": "Bundles/PropelOrm/src",
 
       "Spryker\\Client\\Quote\\": "Bundles/Quote/src",
 
