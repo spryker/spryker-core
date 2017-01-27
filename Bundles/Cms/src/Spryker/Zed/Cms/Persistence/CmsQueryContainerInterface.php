@@ -185,4 +185,31 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryCmsPageLocalizedAttributes();
 
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $fkLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage, $fkLocale);
+
+    /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage);
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryKey($key);
+
 }

@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form;
+namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +20,7 @@ class CmsPageMetaAttributesFormType extends AbstractType
     const FIELD_META_KEYWORDS = 'metaKeywords';
     const FIELD_META_DESCRIPTION = 'metaDescription';
     const FIELD_LOCALE_NAME = 'localeName';
+    const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -30,6 +31,7 @@ class CmsPageMetaAttributesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addMetaTitleField($builder)
+            ->addIdCmsLocalizedAttributes($builder)
             ->addMetaKeywordsField($builder)
             ->addMetaDescriptionField($builder)
             ->addFieldLocalName($builder);
@@ -98,6 +100,18 @@ class CmsPageMetaAttributesFormType extends AbstractType
     protected function addFieldLocalName(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALE_NAME, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdCmsLocalizedAttributes(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES, HiddenType::class);
 
         return $this;
     }

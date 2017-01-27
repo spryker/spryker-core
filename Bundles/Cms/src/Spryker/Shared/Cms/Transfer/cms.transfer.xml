@@ -23,7 +23,6 @@
     <transfer name="CmsPageLocalizedAttributes">
         <property name="idCmsPageLocalizedAttributes" type="int" />
         <property name="fkCmsPage" type="int" />
-        <property name="fkLocale" type="int" />
         <property name="name" type="string" />
         <property name="metaTitle" type="string" />
         <property name="metaKeywords" type="string" />

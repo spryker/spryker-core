@@ -5,10 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form;
+namespace Spryker\Zed\CmsGui\Communication\Form\Glossary;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,16 +26,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CmsGlossaryFormType extends AbstractType
+class CmsGlossaryAttributesFormType extends AbstractType
 {
 
-    const FIELD_ID_CMS_PAGE = 'idCmsPage';
+    const FIELD_FK_PAGE = 'fkPage';
+
     const FIELD_PLACEHOLDER = 'placeholder';
-    const FIELD_GLOSSARY_KEY = 'glossary_key';
-    const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+
+    const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
     const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_SEARCH_OPTION = 'search_option';
-    const FIELD_TRANSLATION = 'translation';
+    const FIELD_SEARCH_OPTION = 'searchOption';
+    const FIELD_TRANSLATIONS = 'translations';
+    const FIELD_TRANSLATION_KEY = 'translationKey';
 
     const TYPE_GLOSSARY_NEW = 'New glossary';
     const TYPE_GLOSSARY_FIND = 'Find glossary';
@@ -36,7 +45,6 @@ class CmsGlossaryFormType extends AbstractType
     const TYPE_FULLTEXT_SEARCH = 'Full text';
 
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
-    const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
@@ -56,7 +64,7 @@ class CmsGlossaryFormType extends AbstractType
      */
     public function getName()
     {
-        return 'cms_glossary';
+        return 'cms_glossary_attribute';
     }
 
     /**
@@ -67,10 +75,11 @@ class CmsGlossaryFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => CmsGlossaryAttributesTransfer::class,
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
 
-                if (!isset($defaultData[static::FIELD_ID_KEY_MAPPING])) {
+                if (!isset($defaultData[static::FIELD_FK_GLOSSARY_MAPPING])) {
                     return [Constraint::DEFAULT_GROUP, static::GROUP_PLACEHOLDER_CHECK];
                 }
 
@@ -89,13 +98,24 @@ class CmsGlossaryFormType extends AbstractType
     {
         $this
             ->addFkPageField($builder)
+            ->addGlossaryKeyField($builder)
             ->addIdCmsGlossaryKeyMappingField($builder)
             ->addTemplateNameField($builder)
             ->addPlaceholderField($builder)
-            ->addSearchOptionField($builder)
-            ->addGlossaryKeyField($builder)
-            ->addLocaleField($builder)
-            ->addTranslationField($builder);
+            ->addTranslationsField($builder)
+            ->addSearchOptionField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class);
+
+        return $this;
     }
 
     /**
@@ -105,7 +125,7 @@ class CmsGlossaryFormType extends AbstractType
      */
     protected function addFkPageField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CMS_PAGE, 'hidden');
+        $builder->add(static::FIELD_FK_PAGE, HiddenType::class);
 
         return $this;
     }
@@ -117,9 +137,8 @@ class CmsGlossaryFormType extends AbstractType
      */
     protected function addPlaceholderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PLACEHOLDER, 'text', [
+        $builder->add(static::FIELD_PLACEHOLDER, TextType::class, [
             'label' => 'Placeholder',
-            'constraints' => $this->getPlaceholderConstants(),
             'disabled' => 'disabled',
         ]);
 
@@ -131,21 +150,9 @@ class CmsGlossaryFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_GLOSSARY_KEY, 'text');
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addIdCmsGlossaryKeyMappingField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_KEY_MAPPING, 'hidden');
+        $builder->add(static::FIELD_FK_GLOSSARY_MAPPING, HiddenType::class);
 
         return $this;
     }
@@ -157,7 +164,7 @@ class CmsGlossaryFormType extends AbstractType
      */
     protected function addTemplateNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_TEMPLATE_NAME, 'hidden');
+        $builder->add(static::FIELD_TEMPLATE_NAME, HiddenType::class);
 
         return $this;
     }
@@ -169,7 +176,7 @@ class CmsGlossaryFormType extends AbstractType
      */
     protected function addSearchOptionField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SEARCH_OPTION, 'choice', [
+        $builder->add(static::FIELD_SEARCH_OPTION, ChoiceType::class, [
             'label' => 'Search Type',
             'choices' => [
                 static::TYPE_AUTO_GLOSSARY,
@@ -187,32 +194,32 @@ class CmsGlossaryFormType extends AbstractType
      *
      * @return $this
      */
-    public function addLocaleField(FormBuilderInterface $builder)
+    protected function addTranslationsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_LOCALE, 'hidden');
+        $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
+            'type' => new CmsGlossaryTranslationFormType(),
+            'allow_add' => true,
+        ]);
+
+        $builder->get(self::FIELD_TRANSLATIONS)
+            ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
+     * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function addTranslationField(FormBuilderInterface $builder)
+    protected function createArrayObjectModelTransformer()
     {
-        $builder->add(static::FIELD_TRANSLATION, 'textarea', [
-            'label' => 'Content',
-            'constraints' => [
-                new Required(),
-                new NotBlank(),
-            ],
-            'attr' => [
-                'class' => 'html-editor',
-            ],
-        ]);
-
-        return $this;
+        return new CallbackTransformer(
+            function ($value) {
+                return (array)$value;
+            },
+            function($value) {
+                return new ArrayObject($value);
+            }
+        );
     }
 
     /**
@@ -230,7 +237,7 @@ class CmsGlossaryFormType extends AbstractType
             'methods' => [
                 function ($placeholder, ExecutionContextInterface $context) {
                     $formData = $context->getRoot()->getViewData();
-                    if ($this->cmsFacade->hasPagePlaceholderMapping($formData[static::FIELD_ID_CMS_PAGE], $placeholder)) {
+                    if ($this->cmsFacade->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
                         $context->addViolation('Placeholder has already mapped');
                     }
                 },
@@ -240,5 +247,4 @@ class CmsGlossaryFormType extends AbstractType
 
         return $placeholderConstraints;
     }
-
 }

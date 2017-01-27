@@ -4,11 +4,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form;
+namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,10 +17,8 @@ class CmsPageAttributesFormType extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
-    const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_LOCALE_NAME = 'localeName';
-
-    const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -32,7 +29,7 @@ class CmsPageAttributesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addNameField($builder)
-            ->addFkTemplateField($builder, $options[static::OPTION_TEMPLATE_CHOICES])
+            ->addIdCmsLocalizedAttributes($builder)
             ->addUrlField($builder)
             ->addCmsLocaleNameField($builder)
             ->addFieldLocalName($builder);
@@ -45,8 +42,6 @@ class CmsPageAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_TEMPLATE_CHOICES);
-
         $resolver->setDefaults([
             'data_class' => CmsPageAttributesTransfer::class,
         ]);
@@ -66,21 +61,7 @@ class CmsPageAttributesFormType extends AbstractType
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     * @return $this
-     */
-    protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
-    {
-        $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
-            'label' => 'Template * ',
-            'choices' => $choices,
 
-        ]);
-
-        return $this;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -116,6 +97,18 @@ class CmsPageAttributesFormType extends AbstractType
     protected function addFieldLocalName(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALE_NAME, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdCmsLocalizedAttributes(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES, HiddenType::class);
 
         return $this;
     }

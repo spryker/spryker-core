@@ -6,11 +6,10 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Spryker\Zed\CmsGui\Communication\Form\CmsPageAttributesFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 
 class CmsPageFormTypeDataProvider
@@ -27,16 +26,23 @@ class CmsPageFormTypeDataProvider
     protected $cmsQueryContainer;
 
     /**
+     * @var \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected $cmsPageTransfer;
+
+    /**
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
-     *
      * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      */
     public function __construct(
         array $availableLocales,
-        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsPageTransfer $cmsPageTransfer = null
     ) {
         $this->availableLocales = $availableLocales;
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsPageTransfer = $cmsPageTransfer;
     }
 
     /**
@@ -46,28 +52,20 @@ class CmsPageFormTypeDataProvider
     {
         return [
             'data_class' => CmsPageTransfer::class,
-            CmsPageAttributesFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList()
+            CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList()
         ];
     }
 
     /**
-     * @return CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function getData()
     {
-        $cmsPageTransfer = new CmsPageTransfer();
-
-        foreach ($this->availableLocales as $localeTransfer) {
-            $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
-            $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
-            $cmsPageTransfer->addPageAttribute($cmsPageAttributeTransfer);
-
-            $cmsPageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
-            $cmsPageMetaAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
-            $cmsPageTransfer->addMetaAttribute($cmsPageMetaAttributeTransfer);
+        if (!$this->cmsPageTransfer) {
+            $this->cmsPageTransfer = $this->createInitialCmsPageTransfer();
         }
 
-        return $cmsPageTransfer;
+        return $this->cmsPageTransfer;
     }
 
     /**
@@ -85,5 +83,44 @@ class CmsPageFormTypeDataProvider
         }
 
         return $templatesList;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function createInitialCmsPageTransfer()
+    {
+        $cmsPageTransfer = new CmsPageTransfer();
+        foreach ($this->availableLocales as $localeTransfer) {
+
+            $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+            $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
+            $cmsPageAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $cmsPageTransfer->addPageAttribute($cmsPageAttributeTransfer);
+
+            $cmsPageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
+            $cmsPageMetaAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
+            $cmsPageMetaAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $cmsPageTransfer->addMetaAttribute($cmsPageMetaAttributeTransfer);
+        }
+
+        return $cmsPageTransfer;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return string
+     */
+    protected function extractLanguageCode($localeName)
+    {
+        $localeNameParts = explode('_', $localeName);
+
+        if (!isset($localeNameParts[0])){
+            return '';
+        }
+
+        return $localeNameParts[0];
+
     }
 }

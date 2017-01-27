@@ -1,0 +1,30 @@
+{% extends '@Cms/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit placeholders' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ editActionButton(url('/cms-gui/edit-page/index', {'id-cms-page': idCmsPage}), 'Edit page' | trans) }}
+
+    {{ backActionButton('/cms/page-list', 'Back to CMS' | trans) }}
+{% endblock %}
+
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(glossaryForm) }}
+
+            {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm} ) }}
+            {% do glossaryForm.glossaryAttributes.setRendered %}
+
+            {% include '@CmsGui/_template/_form-submit.twig' %}
+            {{ form_end(glossaryForm) }}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+

@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 
 class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
@@ -35,5 +37,75 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
         return $this->cmsFacade->hasPagePlaceholderMapping($idPage, $placeholder);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return int
+     */
+    public function createPage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->cmsFacade->createPage($cmsPageTransfer);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     *
+     */
+    public function getPageGlossaryAttributes($idCmsPage)
+    {
+        return $this->cmsFacade->getPageGlossaryAttributes($idCmsPage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     */
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
+        return $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function getCmsPageById($idCmsPage)
+    {
+        return $this->cmsFacade->getCmsPageById($idCmsPage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function updatePage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->cmsFacade->updatePage($cmsPageTransfer);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function activatePage($idCmsPage)
+    {
+        $this->cmsFacade->activatePage($idCmsPage);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deactivatePage($idCmsPage)
+    {
+        $this->cmsFacade->deactivatePage($idCmsPage);
+    }
 
 }

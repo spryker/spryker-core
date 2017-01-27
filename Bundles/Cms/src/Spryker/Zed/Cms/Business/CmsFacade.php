@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -403,4 +405,100 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->delete($idCmsBlock);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsGlossarySaver()
+            ->saveCmsGlossary($cmsGlossaryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return int
+     */
+    public function createPage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageSaver()
+            ->createPage($cmsPageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function getCmsPageById($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createCmsPageReader()
+            ->getCmsPageById($idCmsPage);
+    }
+
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function getPageGlossaryAttributes($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createCmsGlossaryReader()
+            ->getPageGlossaryAttributes($idCmsPage);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function updatePage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageSaver()
+            ->updatePage($cmsPageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function activatePage($idCmsPage)
+    {
+         $this->getFactory()
+            ->createCmsPageActivator()
+            ->activate($idCmsPage);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deactivatePage($idCmsPage)
+    {
+        $this->getFactory()
+            ->createCmsPageActivator()
+            ->deactivate($idCmsPage);
+    }
 }

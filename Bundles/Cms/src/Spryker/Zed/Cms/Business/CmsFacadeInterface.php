@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -286,5 +288,66 @@ interface CmsFacadeInterface
      * @return void
      */
     public function deleteBlockById($idCmsBlock);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function getPageGlossaryAttributes($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return int
+     */
+    public function createPage(CmsPageTransfer $cmsPageTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function getCmsPageById($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function updatePage(CmsPageTransfer $cmsPageTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function activatePage($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deactivatePage($idCmsPage);
 
 }

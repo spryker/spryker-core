@@ -9,9 +9,14 @@ namespace Spryker\Zed\Cms\Business;
 
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Block\BlockRemover;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
+use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
+use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
+use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -110,6 +115,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
      * @return \Spryker\Zed\Cms\Business\Page\PageRemoverInterface
      */
     public function createPageRemover()
@@ -129,6 +142,46 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getTouchFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageSaverInterface
+     */
+    public function createCmsPageSaver()
+    {
+        return new CmsPageSaver($this->getUrlFacade(), $this->getTouchFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageReaderInterface
+     */
+    public function createCmsPageReader()
+    {
+        return new CmsPageReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReaderInterface
+     */
+    public function createCmsGlossaryReader()
+    {
+        return new CmsGlossaryReader($this->getQueryContainer(), $this->getLocaleFacade(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
+     */
+    public function createCmsGlossarySaver()
+    {
+        return new CmsGlossarySaver($this->getQueryContainer(), $this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageActivatorInterface
+     */
+    public function createCmsPageActivator()
+    {
+        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade(), $this->getUrlFacade());
     }
 
 }

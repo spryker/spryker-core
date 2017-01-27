@@ -569,4 +569,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->getFactory()->createCmsPageLocalizedAttributesQuery();
     }
 
+    /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage)
+    {
+        return $this->getFactory()
+            ->createCmsPageLocalizedAttributesQuery()
+            ->filterByFkCmsPage($idPage);
+    }
+
 }

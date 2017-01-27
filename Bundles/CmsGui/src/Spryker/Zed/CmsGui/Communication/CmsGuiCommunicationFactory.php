@@ -6,17 +6,22 @@
 
 namespace Spryker\Zed\CmsGui\Communication;
 
-use Spryker\Zed\CmsGui\Communication\Form\CmsPageAttributesFormType;
-use Spryker\Zed\CmsGui\Communication\Form\CmsPageFormType;
-use Spryker\Zed\CmsGui\Communication\Form\CmsPageMetaAttributesFormType;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
-use Spryker\Zed\CmsGui\Communication\Form\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 
 /**
  * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
@@ -33,8 +38,17 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
+     * @param CmsGlossaryTransfer $cmsGlossaryTransfer
      *
+     * @return \Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs
+     */
+    public function createPlaceholderTabs(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
+        return new GlossaryTabs($cmsGlossaryTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider)
@@ -49,17 +63,34 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormDataProvider $cmsGlossaryFormDataProvider
      *
-     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageFormTypeDatProvider(array $availableLocales)
+    public function createCmsGlossaryForm(CmsGlossaryFormDataProvider $cmsGlossaryFormDataProvider)
     {
-        return new CmsPageFormTypeDataProvider($availableLocales, $this->getCmsQueryContainer());
+        $cmsGlossaryFormType = $this->createCmsGlossaryFormType();
+
+        return $this->getFormFactory()->create(
+            $cmsGlossaryFormType,
+            $cmsGlossaryFormDataProvider->getData(),
+            $cmsGlossaryFormDataProvider->getOptions()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Communication\Form\CmsPageFormType
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider
+     */
+    public function createCmsPageFormTypeDatProvider(array $availableLocales, CmsPageTransfer $cmsPageTransfer = null)
+    {
+        return new CmsPageFormTypeDataProvider($availableLocales, $this->getCmsQueryContainer(),$cmsPageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType
      */
     public function createCmsPageFormType()
     {
@@ -67,7 +98,38 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Communication\Form\CmsPageAttributesFormType
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormDataProvider
+     */
+    public function createCmsGlossaryFormDataProvider(array $availableLocales, CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
+        return new CmsGlossaryFormDataProvider(
+            $availableLocales,
+            $this->getCmsQueryContainer(),
+            $cmsGlossaryTransfer
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType
+     */
+    public function createCmsGlossaryFormType()
+    {
+        return new CmsGlossaryFormType($this->createCmsGlossaryAttributesFormType());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType
+     */
+    public function createCmsGlossaryAttributesFormType()
+    {
+        return new CmsGlossaryAttributesFormType($this->getCmsFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType
      */
     public function createCmsPageAttributesFormType()
     {
@@ -75,19 +137,11 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Communication\Form\CmsPageMetaAttributesFormType
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType
      */
     public function createCmsPageMetaAttributesFormType()
     {
         return new CmsPageMetaAttributesFormType();
-    }
-
-    /**
-     * @return CmsGlossaryFormType
-     */
-    public function createCmsGlossaryFormType()
-    {
-        return new CmsGlossaryFormType($this->getCmsFacade());
     }
 
     /**

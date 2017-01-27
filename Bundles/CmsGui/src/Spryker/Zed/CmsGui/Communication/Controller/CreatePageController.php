@@ -6,6 +6,7 @@
 
 namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,24 +16,41 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
         $pageTabs = $this->getFactory()->createPageTabs();
 
-        $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
+        $availableLocales = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
 
-        $cmsPageFormTypeDataProvider = $this->getFactory()->createCmsPageFormTypeDatProvider($availableLocales);
+        $cmsPageFormTypeDataProvider = $this->getFactory()
+            ->createCmsPageFormTypeDatProvider($availableLocales);
 
-        $pageForm = $this->getFactory()->createCmsPageForm($cmsPageFormTypeDataProvider);
+        $pageForm = $this->getFactory()
+            ->createCmsPageForm($cmsPageFormTypeDataProvider);
+
         $pageForm->handleRequest($request);
 
         if ($pageForm->isValid()) {
-            $cmsPageTransfer = $pageForm->getData();
+            $idCmsPage = $this->getFactory()
+                ->getCmsFacade()
+                ->createPage($pageForm->getData());
+
+            $redirectUrl = Url::generate(
+                '/cms-gui/create-glossary/index',
+                [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+            )->build();
+
+            $this->addSuccessMessage('Page successfully created.');
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         return [

@@ -32,4 +32,35 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
         return $this->cmsQueryContainer->queryTemplates();
     }
 
+    /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     */
+    public function queryBlockByIdPage($idPage)
+    {
+        return $this->cmsQueryContainer->queryBlockByIdPage($idPage);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndUrlByIdPage($idPage)
+    {
+        return $this->cmsQueryContainer->queryPageWithTemplatesAndUrlByIdPage($idPage);
+    }
+
+    /**
+     * @param int $idPage
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale)
+    {
+        return $this->cmsQueryContainer->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale);
+    }
+
 }

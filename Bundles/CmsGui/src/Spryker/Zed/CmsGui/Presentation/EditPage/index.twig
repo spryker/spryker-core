@@ -1,18 +1,34 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit a Cms page' | trans %}
+{% set widget_title = 'Edit Cms page' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/cms/page-list', 'Back to CMS' | trans) }}
+
+    {% if cmsPage.isActive %}
+        {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': cmsPage.fkPage}), 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': cmsPage.fkPage}), 'Activate' | trans) }}
+    {% endif %}
+
+    {{ editActionButton(url('/cms-gui/create-glossary/index', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+
+    {{ backActionButton('/cms-gui/page-list', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-            Edit page form
+
+            {{ form_start(pageForm) }}
+
+            {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
+            {% include '@CmsGui/_template/_form-submit.twig' %}
+
+            {{ form_end(pageForm) }}
+
         {% endblock %}
     {% endembed %}
 {% endblock %}

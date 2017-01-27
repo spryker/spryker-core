@@ -7,11 +7,15 @@
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Zend\Http\Request;
 
 class ViewPageController extends AbstractController
 {
 
-    public function indexAction()
+    /**
+     * @param \Zend\Http\Request $request
+     */
+    public function indexAction(Request $request)
     {
 
     }

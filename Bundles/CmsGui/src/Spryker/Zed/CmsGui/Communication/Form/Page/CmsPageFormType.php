@@ -4,13 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form;
+namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
 use ArrayObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,6 +20,10 @@ class CmsPageFormType extends AbstractType
     const FIELD_SEARCHABLE = 'isSearchable';
     const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
     const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
+    const FIELD_FK_TEMPLATE = 'fkTemplate';
+    const FIELD_FK_PAGE = 'fkPage';
+
+    const OPTION_TEMPLATE_CHOICES = 'template_choices';
 
     /**
      * @var array
@@ -57,7 +62,7 @@ class CmsPageFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(CmsPageAttributesFormType::OPTION_TEMPLATE_CHOICES);
+        $resolver->setRequired(static::OPTION_TEMPLATE_CHOICES);
     }
 
     /**
@@ -69,8 +74,22 @@ class CmsPageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchableField($builder)
+            ->addFkPage($builder)
+            ->addFkTemplateField($builder, $options[static::OPTION_TEMPLATE_CHOICES])
             ->addPageAttributesFormCollection($builder, $options)
             ->addPageMetaAttribuesFormCollection($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFkPage(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_FK_PAGE, HiddenType::class);
+
+        return $this;
     }
 
     /**
@@ -90,6 +109,22 @@ class CmsPageFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     * @return $this
+     */
+    protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
+            'label' => 'Template * ',
+            'choices' => $choices,
+
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
@@ -100,9 +135,6 @@ class CmsPageFormType extends AbstractType
             'type' => $this->cmsPageAttributesFormType,
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_options' => [
-                CmsPageAttributesFormType::OPTION_TEMPLATE_CHOICES => $options[CmsPageAttributesFormType::OPTION_TEMPLATE_CHOICES]
-            ]
         ]);
 
         $builder->get(self::FIELD_PAGE_ATTRIBUTES)
@@ -121,7 +153,7 @@ class CmsPageFormType extends AbstractType
         $builder->add(static::FIELD_PAGE_META_ATTRIBUTES, CollectionType::class, [
             'type' => $this->cmsPageMetaAttributesFormType,
             'allow_add' => true,
-            'allow_delete' => true
+            'allow_delete' => true,
         ]);
 
         $builder->get(self::FIELD_PAGE_META_ATTRIBUTES)
