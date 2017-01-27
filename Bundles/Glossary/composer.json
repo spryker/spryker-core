@@ -7,7 +7,6 @@
   },
   "require": {
     "spryker/gui": "^2.0.0",
-    "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^2.0.0",

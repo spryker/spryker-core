@@ -12,6 +12,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
     "spryker/util-sanitize": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/touch": "^2.0.0"
   },
   "require-dev": {

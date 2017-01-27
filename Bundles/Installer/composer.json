@@ -7,7 +7,6 @@
   },
   "require": {
     "spryker/kernel": "^2.0.0",
-    "spryker/log": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
   "description": "Installer bundle",
