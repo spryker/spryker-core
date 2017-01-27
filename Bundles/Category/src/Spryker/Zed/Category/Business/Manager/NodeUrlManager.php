@@ -43,7 +43,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
-    private $categoryQueryContainer;
+    protected $categoryQueryContainer;
 
     /**
      * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader

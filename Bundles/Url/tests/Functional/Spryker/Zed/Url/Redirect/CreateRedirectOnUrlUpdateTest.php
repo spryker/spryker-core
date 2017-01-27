@@ -81,8 +81,8 @@ class CreateRedirectOnUrlUpdateTest extends Test
 
     /**
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
-     *
      * @param string $url
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     protected function createUrlEntity(SpyLocale $localeEntity, $url)

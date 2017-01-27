@@ -64,6 +64,8 @@ class UrlReader implements UrlReaderInterface
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      * @param bool $ignoreUrlRedirects
      *
+     * @throws \InvalidArgumentException
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     protected function queryUrlEntity(UrlTransfer $urlTransfer, $ignoreUrlRedirects = false)
