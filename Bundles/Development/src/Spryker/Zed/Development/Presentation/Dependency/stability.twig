@@ -4,6 +4,7 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Stability of all core bundles' } %}
         {% block widget_content %}
+            {% set sum = 0 %}
             <div class="spy-layout sparse">
                 <p>
                     Stability is calculated by "incoming dependencies / ( incoming dependencies + outgoing dependencies )" the result will be between 0 (stable) and 1 (unstable)
@@ -20,7 +21,7 @@
                         <th style="text-align:right">Spryker Stability</th>
                     </tr>
                     {% for bundle, info in bundles %}
-
+                        {% set sum = sum + info.indirectOut | length %}
                         <tr>
                             <td>
                                 <a {% if info.stability > 0.4 and info.stability < 0.6 and info.in | length > 2 and info.out | length > 2 %}style="color: red"{% endif %} href="/development/dependency/outgoing-graph?bundle={{ bundle }}" target="_blank">{{ bundle }}</a>
@@ -35,6 +36,7 @@
                         </tr>
                     {% endfor %}
                 </table>
+                <p>SUM {{ sum }}</p>
             </div>
         {% endblock %}
     {% endembed %}
