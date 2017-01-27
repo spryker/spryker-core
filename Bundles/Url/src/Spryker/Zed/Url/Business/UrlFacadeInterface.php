@@ -17,12 +17,17 @@ interface UrlFacadeInterface
 {
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Persists a new URL entity in database.
+     * - Touches active "url" entry.
+     * - Existing redirect from the URL of the new entity will be deleted.
+     * - Existing related URL redirects will be updated to avoid redirect chains.
+     * - Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
@@ -31,7 +36,9 @@ interface UrlFacadeInterface
     public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Finds existing URL entity in database by the provided `id_url` or `url`.
+     * - Returns UrlTransfer with the appropriate data from database if the entity is found, NULL otherwise.
      *
      * @api
      *
@@ -42,7 +49,9 @@ interface UrlFacadeInterface
     public function findUrl(UrlTransfer $urlTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Checks if URL entity exists in database by the provided `id_url` or `url`.
+     * - URL redirects are ignored unless the URL to be checked is a redirect as well (`fkResourceRedirect` is set).
      *
      * @api
      *
@@ -53,7 +62,12 @@ interface UrlFacadeInterface
     public function hasUrl($urlTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Persists changes of existing URL entity in database.
+     * - Touches active "url" entry.
+     * - Existing redirect from the URL of the updated entity will be deleted.
+     * - Existing related URL redirects will be updated to avoid redirect chains.
+     * - Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.
      *
      * @api
      *
@@ -64,7 +78,10 @@ interface UrlFacadeInterface
     public function updateUrl(UrlTransfer $urlTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Removes URL entity from database.
+     * - Touch deletes "url" entry.
+     * - Removes URL redirects that points to the deleted URL.
      *
      * @api
      *
@@ -75,7 +92,8 @@ interface UrlFacadeInterface
     public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * TODO: specification
+     * Secification:
+     * - Touches active "url" entry.
      *
      * @api
      *
@@ -86,7 +104,8 @@ interface UrlFacadeInterface
     public function activateUrl(UrlTransfer $urlTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Touches inactive "url" entry.
      *
      * @api
      *
@@ -97,7 +116,11 @@ interface UrlFacadeInterface
     public function deactivateUrl(UrlTransfer $urlTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Persists new URL redirect entity to database.
+     * - Touches active "redirect" entry.
+     * - Existing related URL redirects will be updated to avoid redirect chains.
+     * - Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.
      *
      * @api
      *
@@ -108,7 +131,9 @@ interface UrlFacadeInterface
     public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Finds existing URL redirect entity in database by the provided `id_url_redirect`.
+     * - Returns UrlRedirectTransfer with the appropriate data from database if the entity is found, NULL otherwise.
      *
      * @api
      *
@@ -119,7 +144,8 @@ interface UrlFacadeInterface
     public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Checks if URL redirect entity exists in database by the provided `id_url_redirect`.
      *
      * @api
      *
@@ -130,7 +156,12 @@ interface UrlFacadeInterface
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Persists changes of existing URL redirect entity in database.
+     * - Touches active "redirect" entry.
+     * - If "source" data is also provided, related URL entity will be also updated.
+     * - Existing related URL redirects will be updated to avoid redirect chains.
+     * - Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.
      *
      * @api
      *
@@ -141,7 +172,10 @@ interface UrlFacadeInterface
     public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Removes URL redirect entity from database.
+     * - Touch deletes "redirect" entry.
+     * - Removes URL redirects that points to the deleted URL.
      *
      * @api
      *
@@ -152,7 +186,8 @@ interface UrlFacadeInterface
     public function deleteUrlRedirect($urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Touches active "redirect" entry.
      *
      * @api
      *
@@ -163,7 +198,8 @@ interface UrlFacadeInterface
     public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Touches inactive "url" entry.
      *
      * @api
      *
@@ -174,7 +210,9 @@ interface UrlFacadeInterface
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
-     * TODO: specification
+     * Specification:
+     * - Checks if the provided URL redirect is valid or not.
+     * - Url redirect is invalid if it results in a redirect loop.
      *
      * {@inheritdoc}
      *
