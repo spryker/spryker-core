@@ -21,7 +21,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Zed
  * @group Url
  * @group Redirect
- * @group ChainedRedirectTest
+ * @group RedirectChainTest
  */
 class RedirectChainTest extends Test
 {
@@ -86,7 +86,7 @@ class RedirectChainTest extends Test
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      * @param string $url
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     protected function createUrlEntity(SpyLocale $localeEntity, $url)
     {

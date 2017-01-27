@@ -210,7 +210,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface|\Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface
      */
     protected function createUrlRedirectAppendObserver()
     {
@@ -242,6 +242,8 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createUrlRedirectUpdateObserver(),
+            $this->createUrlRedirectInjectionObserver(),
+            $this->createUrlRedirectAppendObserver(),
             $this->createUrlUpdateObserver(),
         ];
     }

@@ -47,10 +47,10 @@ class RedirectChainInjectionTest extends Test
     /**
      * @return void
      */
-    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrl()
+    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectCreate()
     {
         $localeTransfer = $this->prepareTestData();
-        $bazUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-baz', '/test-bar', $localeTransfer);
+        $bazUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-baz', '/test-bar', $localeTransfer->getIdLocale());
 
         $bazUrlRedirectTransfer = $this->urlFacade->createUrlRedirect($bazUrlRedirectTransfer);
 
@@ -64,6 +64,28 @@ class RedirectChainInjectionTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectUpdate()
+    {
+        $localeTransfer = $this->prepareTestData();
+
+        $this->createUrlRedirectEntity('/test/url-1', '/test/url-2', $localeTransfer->getIdLocale());
+        $urlEntity = $this->createUrlRedirectEntity('/test/url-3', '/test/url-4', $localeTransfer->getIdLocale());
+
+        $urlRedirectTransfer = $this->createUrlRedirectTransfer('/test/url-4', '/test/url-1', $localeTransfer->getIdLocale());
+        $urlRedirectTransfer
+            ->setIdUrlRedirect($urlEntity->getSpyUrlRedirect()->getIdUrlRedirect())
+            ->getSource()->setIdUrl($urlEntity->getIdUrl());
+
+        $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
+
+        $this->assertTrue($this->hasUrlRedirect('/test/url-1', '/test/url-2'), 'Original redirect should have been persisted and unmodified.');
+        $this->assertTrue($this->hasUrlRedirect('/test/url-4', '/test/url-2'), 'Manually updated redirect should point to the final redirect target.');
+        $this->assertTrue($this->hasUrlRedirect('/test/url-3', '/test/url-2'), 'Manually updated redirect should have created new redirect from its original url.');
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function prepareTestData()
@@ -73,7 +95,7 @@ class RedirectChainInjectionTest extends Test
         $localeTransfer->fromArray($localeEntity->toArray(), true);
 
         $urlEntity = $this->createUrlEntity($localeEntity, '/test-foo');
-        $this->createUrlRedirectEntity('/test-bar', $urlEntity->getUrl(), $localeEntity);
+        $this->createUrlRedirectEntity('/test-bar', $urlEntity->getUrl(), $localeEntity->getIdLocale());
 
         return $localeTransfer;
     }
@@ -124,11 +146,11 @@ class RedirectChainInjectionTest extends Test
     /**
      * @param string $source
      * @param string $target
-     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
+     * @param int $idLocale
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlRedirectEntity($source, $target, SpyLocale $localeEntity)
+    protected function createUrlRedirectEntity($source, $target, $idLocale)
     {
         $redirectEntity = new SpyUrlRedirect();
         $redirectEntity
@@ -139,7 +161,7 @@ class RedirectChainInjectionTest extends Test
         $urlEntity
             ->setUrl($source)
             ->setFkResourceRedirect($redirectEntity->getIdUrlRedirect())
-            ->setFkLocale($localeEntity->getIdLocale())
+            ->setFkLocale($idLocale)
             ->save();
 
         return $urlEntity;
@@ -148,16 +170,16 @@ class RedirectChainInjectionTest extends Test
     /**
      * @param string $sourceUrl
      * @param string $targetUrl
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    protected function createUrlRedirectTransfer($sourceUrl, $targetUrl, LocaleTransfer $localeTransfer)
+    protected function createUrlRedirectTransfer($sourceUrl, $targetUrl, $idLocale)
     {
         $sourceUrlTransfer = new UrlTransfer();
         $sourceUrlTransfer
             ->setUrl($sourceUrl)
-            ->setFkLocale($localeTransfer->getIdLocale());
+            ->setFkLocale($idLocale);
 
         $urlRedirectTransfer = new UrlRedirectTransfer();
         $urlRedirectTransfer
@@ -166,6 +188,24 @@ class RedirectChainInjectionTest extends Test
             ->setStatus(123);
 
         return $urlRedirectTransfer;
+    }
+
+    /**
+     * @param string $sourceUrl
+     * @param string $targetUrl
+     *
+     * @return bool
+     */
+    protected function hasUrlRedirect($sourceUrl, $targetUrl)
+    {
+        $count = SpyUrlQuery::create()
+            ->useSpyUrlRedirectQuery()
+                ->filterByToUrl($targetUrl)
+            ->endUse()
+            ->filterByUrl($sourceUrl)
+            ->count();
+
+        return $count > 0;
     }
 
 }

@@ -11,9 +11,10 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface;
+use Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
-class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterface
+class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterface, UrlUpdaterAfterSaveObserverInterface
 {
 
     /**
@@ -43,6 +44,25 @@ class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterfa
      */
     public function handleUrlCreation(UrlTransfer $urlTransfer)
     {
+        $this->urlQueryContainer->getConnection()->beginTransaction();
+
+        $this->handleRedirectInjection($urlTransfer);
+
+        $this->urlQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
+     *
+     * @return void
+     */
+    public function handleUrlUpdate(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer)
+    {
+        if ($urlTransfer->getUrl() === $originalUrlTransfer->getUrl()) {
+            return;
+        }
+
         $this->urlQueryContainer->getConnection()->beginTransaction();
 
         $this->handleRedirectInjection($urlTransfer);
