@@ -10,6 +10,14 @@
                 <action>index</action>
                 <icon>fa-archive</icon>
             </dependencies>
+            <stability>
+                <label>Stability</label>
+                <title>Bundles stability</title>
+                <bundle>development</bundle>
+                <controller>dependency</controller>
+                <action>stability</action>
+                <icon>fa-globe</icon>
+            </stability>
         </pages>
     </maintenance>
 </config>
