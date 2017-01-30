@@ -91,7 +91,7 @@ class UrlFacadeTest extends Test
         $this->assertNotNull($newUrlTransfer->getIdUrl(), 'Returned transfer object should have url ID.');
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_URL, $newUrlTransfer->getIdUrl(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have active touch entry after creation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have active touch entry after creation.');
     }
 
     /**
@@ -120,10 +120,10 @@ class UrlFacadeTest extends Test
             ->queryUrl('/SoManyPageUrls-2')
             ->findOne();
         $this->assertInstanceOf(SpyUrl::class, $urlEntity, 'Url entity with new data should be in database after update.');
-        $this->assertEquals($urlTransfer->getFkLocale(), $urlEntity->getFkLocale(), 'Url entity should have updated locale ID.');
+        $this->assertSame($urlTransfer->getFkLocale(), $urlEntity->getFkLocale(), 'Url entity should have updated locale ID.');
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_URL, $urlEntity->getIdUrl(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertEquals(1, $touchQuery->count(), 'Url entity should have active touch entry after update.');
+        $this->assertSame(1, $touchQuery->count(), 'Url entity should have active touch entry after update.');
     }
 
     /**
@@ -144,7 +144,7 @@ class UrlFacadeTest extends Test
         $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
         $this->assertNotNull($urlTransfer, 'Finding existing URL entity by path should return transfer object.');
-        $this->assertEquals($urlEntity->getIdUrl(), $urlTransfer->getIdUrl(), 'Reading URL entity by path should return transfer with proper data.');
+        $this->assertSame($urlEntity->getIdUrl(), $urlTransfer->getIdUrl(), 'Reading URL entity by path should return transfer with proper data.');
     }
 
     /**
@@ -165,7 +165,7 @@ class UrlFacadeTest extends Test
         $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
         $this->assertNotNull($urlTransfer, 'Finding existing URL entity by ID should return transfer object.');
-        $this->assertEquals($urlEntity->getUrl(), $urlTransfer->getUrl(), 'Reading URL entity by ID should return transfer with proper data.');
+        $this->assertSame($urlEntity->getUrl(), $urlTransfer->getUrl(), 'Reading URL entity by ID should return transfer with proper data.');
     }
 
     /**
@@ -227,13 +227,13 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl(), SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
 
-        $this->assertEquals(1, $urlQuery->count(), 'Url entity should exist before deleting it.');
-        $this->assertEquals(0, $touchQuery->count(), 'Entity should not have deleted touch entry before deletion.');
+        $this->assertSame(1, $urlQuery->count(), 'Url entity should exist before deleting it.');
+        $this->assertSame(0, $touchQuery->count(), 'Entity should not have deleted touch entry before deletion.');
 
         $this->urlFacade->deleteUrl($urlTransfer);
 
-        $this->assertEquals(0, $urlQuery->count(), 'Url entity should not exist after deleting it.');
-        $this->assertEquals(1, $touchQuery->count(), 'Entity should have deleted touch entry before deletion.');
+        $this->assertSame(0, $urlQuery->count(), 'Url entity should not exist after deleting it.');
+        $this->assertSame(1, $touchQuery->count(), 'Entity should have deleted touch entry before deletion.');
     }
 
     /**
@@ -306,9 +306,9 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
 
-        $this->assertEquals(0, $touchQuery->count(), 'New entity should not have active touch entry before activation.');
+        $this->assertSame(0, $touchQuery->count(), 'New entity should not have active touch entry before activation.');
         $this->urlFacade->activateUrl($urlTransfer);
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have active touch entry after activation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have active touch entry after activation.');
     }
 
     /**
@@ -328,9 +328,9 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl(), SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
 
-        $this->assertEquals(0, $touchQuery->count(), 'New entity should not have deleted touch entry before activation.');
+        $this->assertSame(0, $touchQuery->count(), 'New entity should not have deleted touch entry before activation.');
         $this->urlFacade->deactivateUrl($urlTransfer);
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have deleted touch entry after activation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have deleted touch entry after activation.');
     }
 
     /**
@@ -354,7 +354,7 @@ class UrlFacadeTest extends Test
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_REDIRECT, $urlRedirectTransfer->getIdUrlRedirect(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
 
         $this->assertNotNull($urlRedirectTransfer->getIdUrlRedirect(), 'Newly created URL redirect entity should have ID returned.');
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have active touch entry after creation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have active touch entry after creation.');
     }
 
     /**
@@ -389,12 +389,12 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_REDIRECT, $urlRedirectTransfer->getIdUrlRedirect(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
 
-        $this->assertEquals(0, $touchQuery->count(), 'Url redirect entity should not have active touch entry before update.');
+        $this->assertSame(0, $touchQuery->count(), 'Url redirect entity should not have active touch entry before update.');
 
         $updatedUrlRedirectTransfer = $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
 
         $this->assertSame($urlRedirectTransfer->getToUrl(), $updatedUrlRedirectTransfer->getToUrl(), 'Updated URL redirect entity should have proper data returned.');
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have active touch entry after update.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have active touch entry after update.');
     }
 
     /**
@@ -422,7 +422,7 @@ class UrlFacadeTest extends Test
         $urlRedirectTransfer = $this->urlFacade->findUrlRedirect($urlRedirectTransfer);
 
         $this->assertNotNull($urlRedirectTransfer, 'Finding existing URL redirect entity by ID should return transfer object.');
-        $this->assertEquals($urlRedirectEntity->getToUrl(), $urlRedirectTransfer->getToUrl(), 'Reading URL redirect entity by ID should return transfer with proper data.');
+        $this->assertSame($urlRedirectEntity->getToUrl(), $urlRedirectTransfer->getToUrl(), 'Reading URL redirect entity by ID should return transfer with proper data.');
     }
 
     /**
@@ -487,17 +487,17 @@ class UrlFacadeTest extends Test
             SpyTouchTableMap::COL_ITEM_EVENT_DELETED
         );
 
-        $this->assertEquals(1, $urlRedirectQuery->count(), 'Url redirect entity should exist before deleting it.');
-        $this->assertEquals(1, $urlQuery->count(), 'Url entity should exist before deleting it.');
-        $this->assertEquals(0, $urlRedirectTouchQuery->count(), 'URL redirect entity should not have deleted touch entry before deletion.');
-        $this->assertEquals(0, $urlTouchQuery->count(), 'URL entity should not have deleted touch entry before deletion.');
+        $this->assertSame(1, $urlRedirectQuery->count(), 'Url redirect entity should exist before deleting it.');
+        $this->assertSame(1, $urlQuery->count(), 'Url entity should exist before deleting it.');
+        $this->assertSame(0, $urlRedirectTouchQuery->count(), 'URL redirect entity should not have deleted touch entry before deletion.');
+        $this->assertSame(0, $urlTouchQuery->count(), 'URL entity should not have deleted touch entry before deletion.');
 
         $this->urlFacade->deleteUrlRedirect($urlRedirectTransfer);
 
-        $this->assertEquals(0, $urlRedirectQuery->count(), 'Url entity should not exist after deleting it.');
-        $this->assertEquals(0, $urlQuery->count(), 'Url entity should not exist after deleting it.');
-        $this->assertEquals(1, $urlRedirectTouchQuery->count(), 'URL redirect entity should have deleted touch entry after deletion.');
-        $this->assertEquals(1, $urlTouchQuery->count(), 'URL entity should have deleted touch entry after deletion.');
+        $this->assertSame(0, $urlRedirectQuery->count(), 'Url entity should not exist after deleting it.');
+        $this->assertSame(0, $urlQuery->count(), 'Url entity should not exist after deleting it.');
+        $this->assertSame(1, $urlRedirectTouchQuery->count(), 'URL redirect entity should have deleted touch entry after deletion.');
+        $this->assertSame(1, $urlTouchQuery->count(), 'URL entity should have deleted touch entry after deletion.');
     }
 
     /**
@@ -524,9 +524,9 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_REDIRECT, $urlRedirectTransfer->getIdUrlRedirect(), SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
 
-        $this->assertEquals(0, $touchQuery->count(), 'New entity should not have active touch entry before activation.');
+        $this->assertSame(0, $touchQuery->count(), 'New entity should not have active touch entry before activation.');
         $this->urlFacade->activateUrlRedirect($urlRedirectTransfer);
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have active touch entry after activation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have active touch entry after activation.');
     }
 
     /**
@@ -553,9 +553,9 @@ class UrlFacadeTest extends Test
 
         $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry(UrlConfig::RESOURCE_TYPE_REDIRECT, $urlRedirectTransfer->getIdUrlRedirect(), SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
 
-        $this->assertEquals(0, $touchQuery->count(), 'New entity should not have deleted touch entry before activation.');
+        $this->assertSame(0, $touchQuery->count(), 'New entity should not have deleted touch entry before activation.');
         $this->urlFacade->deactivateUrlRedirect($urlRedirectTransfer);
-        $this->assertEquals(1, $touchQuery->count(), 'New entity should have deleted touch entry after activation.');
+        $this->assertSame(1, $touchQuery->count(), 'New entity should have deleted touch entry after activation.');
     }
 
     /**
