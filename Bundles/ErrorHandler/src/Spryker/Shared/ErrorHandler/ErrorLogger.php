@@ -10,6 +10,7 @@ namespace Spryker\Shared\ErrorHandler;
 use Exception;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelic\NewRelicApiTrait;
+use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
 {
