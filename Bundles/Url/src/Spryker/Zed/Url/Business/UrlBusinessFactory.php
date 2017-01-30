@@ -19,6 +19,8 @@ use Spryker\Zed\Url\Business\Redirect\UrlRedirectCreator;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectReader;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectUpdater;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectValidator;
+use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorSubject;
+use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterSubject;
 use Spryker\Zed\Url\Business\Url\UrlActivator;
 use Spryker\Zed\Url\Business\Url\UrlCreator;
 use Spryker\Zed\Url\Business\Url\UrlReader;
@@ -39,13 +41,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         $urlCreator = new UrlCreator($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
 
-        foreach ($this->createUrlCreatorBeforeSaveObservers() as $urlWriterObserver) {
-            $urlCreator->attachBeforeSaveObserver($urlWriterObserver);
-        }
-
-        foreach ($this->createUrlCreatorAfterSaveObservers() as $urlWriterObserver) {
-            $urlCreator->attachAfterSaveObserver($urlWriterObserver);
-        }
+        $this->attachUrlCreatorObservers($urlCreator);
 
         return $urlCreator;
     }
@@ -57,13 +53,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         $urlUpdater = new UrlUpdater($this->getQueryContainer(), $this->createUrlReader(), $this->createUrlActivator());
 
-        foreach ($this->createUrlUpdaterBeforeSaveObservers() as $urlUpdaterObserver) {
-            $urlUpdater->attachBeforeSaveObserver($urlUpdaterObserver);
-        }
-
-        foreach ($this->createUrlUpdaterAfterSaveObservers() as $urlUpdaterObserver) {
-            $urlUpdater->attachAfterSaveObserver($urlUpdaterObserver);
-        }
+        $this->attachUrlUpdaterObservers($urlUpdater);
 
         return $urlUpdater;
     }
@@ -178,6 +168,38 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(UrlDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlCreatorSubject $urlCreator
+     *
+     * @return void
+     */
+    protected function attachUrlCreatorObservers(AbstractUrlCreatorSubject $urlCreator)
+    {
+        foreach ($this->createUrlCreatorBeforeSaveObservers() as $urlWriterObserver) {
+            $urlCreator->attachBeforeSaveObserver($urlWriterObserver);
+        }
+
+        foreach ($this->createUrlCreatorAfterSaveObservers() as $urlWriterObserver) {
+            $urlCreator->attachAfterSaveObserver($urlWriterObserver);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterSubject $urlUpdater
+     *
+     * @return void
+     */
+    protected function attachUrlUpdaterObservers(AbstractUrlUpdaterSubject $urlUpdater)
+    {
+        foreach ($this->createUrlUpdaterBeforeSaveObservers() as $urlUpdaterObserver) {
+            $urlUpdater->attachBeforeSaveObserver($urlUpdaterObserver);
+        }
+
+        foreach ($this->createUrlUpdaterAfterSaveObservers() as $urlUpdaterObserver) {
+            $urlUpdater->attachAfterSaveObserver($urlUpdaterObserver);
+        }
     }
 
     /**

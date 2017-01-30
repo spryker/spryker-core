@@ -26,14 +26,24 @@ abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\RedirectLoopException
-     *
      * @return bool
      */
     public function preSave(ConnectionInterface $con = null)
     {
         $result = parent::preSave($con);
 
+        $this->assertRedirectLoops();
+
+        return $result;
+    }
+
+    /**
+     * @throws \Spryker\Zed\Url\Business\Exception\RedirectLoopException
+     *
+     * @return void
+     */
+    protected function assertRedirectLoops()
+    {
         foreach ($this->getSpyUrls() as $urlEntity) {
             if ($urlEntity->getUrl() === $this->getToUrl()) {
                 throw new RedirectLoopException(sprintf(
@@ -43,8 +53,6 @@ abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
                 ));
             }
         }
-
-        return $result;
     }
 
 }
