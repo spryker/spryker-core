@@ -56,10 +56,18 @@ interface ErrorHandlerConstants
      * Specification:
      * - Path to the project on local machine e.g. `/Users/foo/www/spryker/project`
      * - This is used to replace the path from server (/data/shop/development/current) with the user path.
-     * - Enables file opening in PhpStorm.
+     * - Enables file opening in IDE.
      *
      * @api
      */
     const USER_BASE_PATH = 'USER_BASE_PATH';
+
+    /**
+     * Specification:
+     * - When using the USER_BASE_PATH to open files in IDE, some IDEs require AJAX calls for it to work.
+     *
+     * @api
+     */
+    const AS_AJAX = 'AS_AJAX';
 
 }
