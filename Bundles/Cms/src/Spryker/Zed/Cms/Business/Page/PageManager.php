@@ -128,6 +128,11 @@ class PageManager implements PageManagerInterface
 
         $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
 
+        if ($pageTransfer->getUrl() !== null) {
+            $urlTransfer = $this->createPageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
+        }
+
         $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
     }
 
@@ -162,7 +167,8 @@ class PageManager implements PageManagerInterface
         $pageEntity->fromArray($pageTransfer->modifiedToArray());
 
         if ($pageTransfer->getUrl() !== null) {
-            $this->updatePageUrl($pageTransfer);
+            $urlTransfer = $this->updatePageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
         }
 
         $pageEntity->save();
@@ -309,6 +315,7 @@ class PageManager implements PageManagerInterface
         }
 
         $urlTransfer = $this->createPageUrl($pageTransfer);
+        $pageTransfer->setUrl($urlTransfer);
         $this->urlFacade->activateUrl($urlTransfer);
 
         return $urlTransfer;
