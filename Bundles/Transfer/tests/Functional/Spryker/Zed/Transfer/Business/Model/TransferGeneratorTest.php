@@ -35,30 +35,13 @@ class TransferGeneratorTest extends Test
     /**
      * @return void
      */
-    public function tearDown()
-    {
-        $targetDirectory = $this->getTargetDirectory();
-        $testFiles = [
-            'Project/FooBarInterface.php',
-            'Vendor/FooBarInterface.php',
-        ];
-
-        foreach ($testFiles as $testFile) {
-            if (file_exists($targetDirectory . $testFile)) {
-                unlink($targetDirectory . $testFile);
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
     public function testExecuteShouldGenerateExpectedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/',
+            __DIR__ . '/Fixtures/Shared/Test/Transfer/',
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -66,7 +49,7 @@ class TransferGeneratorTest extends Test
         $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
         $transferGenerator->execute();
 
-        $this->assertTrue(file_exists($this->getTargetDirectory() . 'CatFaceTransfer.php'));
+        $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
             file_get_contents(__DIR__ . '/Fixtures/expected.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
@@ -79,10 +62,11 @@ class TransferGeneratorTest extends Test
     public function testExecuteShouldGenerateExpectedMergedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/Project/',
-            __DIR__ . '/Fixtures/Vendor/',
+            __DIR__ . '/Fixtures/Project/Test/Transfer/',
+            __DIR__ . '/Fixtures/Vendor/Test2/Transfer/',
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -90,10 +74,59 @@ class TransferGeneratorTest extends Test
         $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
         $transferGenerator->execute();
 
-        $this->assertTrue(file_exists($this->getTargetDirectory() . 'FooBarTransfer.php'));
+        $this->assertFileExists($this->getTargetDirectory() . 'FooBarTransfer.php');
         $this->assertSame(
             file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteShouldGenerateExpectedDeprecatedTransfer()
+    {
+        $sourceDirectories = [
+            __DIR__ . '/Fixtures/Shared/Deprecated/Transfer/',
+        ];
+        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php');
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/Fixtures/expected.deprecated.transfer.php'),
+            file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php')
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer()
+    {
+        $sourceDirectories = [
+            __DIR__ . '/Fixtures/Vendor/Deprecated/Transfer/',
+            __DIR__ . '/Fixtures/Project/Deprecated/Transfer/',
+        ];
+        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php');
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/Fixtures/expected.merged.deprecated.transfer.php'),
+            file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')
         );
     }
 
@@ -102,9 +135,7 @@ class TransferGeneratorTest extends Test
      */
     protected function getTargetDirectory()
     {
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
-
-        return $targetDirectory;
+        return codecept_output_dir();
     }
 
     /**
