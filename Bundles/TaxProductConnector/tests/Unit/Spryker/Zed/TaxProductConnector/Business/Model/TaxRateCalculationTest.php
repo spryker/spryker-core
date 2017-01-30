@@ -1,24 +1,26 @@
 <?php
+
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\Model;
+namespace Unit\Spryker\Zed\TaxProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
+use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group Tax
+ * @group TaxProductConnector
  * @group Business
  * @group Model
  * @group TaxRateCalculationTest
@@ -65,7 +67,7 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
@@ -73,7 +75,7 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
             ->setMethods(['findTaxRatesByAllIdProductAbstractsAndCountryIso2Code'])
             ->setConstructorArgs([
                 $this->createQueryContainerMock(),
-                $this->createTaxDefault(),
+                $this->createTaxFacadeMock(),
             ])
             ->getMock();
     }
@@ -81,15 +83,14 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
      */
-    public function createTaxDefault()
+    protected function createTaxFacadeMock()
     {
-        $taxDefaultMock = $this->getMockBuilder(TaxDefault::class)
-            ->disableOriginalConstructor()
+        $taxDefaultMock = $this->getMockBuilder(TaxProductConnectorToTaxInterface::class)
             ->getMock();
 
         $taxDefaultMock
             ->expects($this->any())
-            ->method('getDefaultCountryIso2Code')
+            ->method('getDefaultTaxCountryIso2Code')
             ->willReturn('DE');
 
         $taxDefaultMock
@@ -101,11 +102,11 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
-        return $this->getMockBuilder(TaxQueryContainer::class)
+        return $this->getMockBuilder(TaxProductConnectorQueryContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -206,8 +207,8 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
     {
         return [
             [
-                TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
-                TaxQueryContainer::COL_MAX_TAX_RATE => 11,
+                TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
+                TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE => 11,
             ],
         ];
     }
@@ -219,12 +220,12 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
     {
         return [
             [
-                TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
-                TaxQueryContainer::COL_MAX_TAX_RATE => 20,
+                TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
+                TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE => 20,
             ],
             [
-                TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 2,
-                TaxQueryContainer::COL_MAX_TAX_RATE => 14,
+                TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT => 2,
+                TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE => 14,
             ],
         ];
     }

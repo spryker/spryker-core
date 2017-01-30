@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Tax\Business;
+namespace Functional\Spryker\Zed\TaxProductConnector\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -16,7 +16,7 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
-use Spryker\Zed\Tax\Business\TaxFacade;
+use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
  * @group Functional
@@ -42,7 +42,7 @@ class TaxFacadeRateCalculationTest extends Test
         $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
         $quoteTransfer->addItem($itemTransfer);
 
-        $taxFacadeTest = $this->createTaxFacade();
+        $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
 
         $this->assertEquals('0.0', $itemTransfer->getTaxRate());
@@ -53,15 +53,15 @@ class TaxFacadeRateCalculationTest extends Test
      */
     public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
     {
-        $abstractProcuctEntity = $this->createAbstractProductWithTaxSet(20, 'DE');
+        $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, 'DE');
 
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setIdProductAbstract($abstractProcuctEntity->getIdProductAbstract());
+        $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
         $quoteTransfer->addItem($itemTransfer);
 
-        $taxFacadeTest = $this->createTaxFacade();
+        $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
 
         $this->assertEquals('20.00', $itemTransfer->getTaxRate());
@@ -123,11 +123,11 @@ class TaxFacadeRateCalculationTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\TaxFacade
+     * @return \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade
      */
-    protected function createTaxFacade()
+    protected function createTaxProductConnectorFacade()
     {
-        return new TaxFacade();
+        return new TaxProductConnectorFacade();
     }
 
 }

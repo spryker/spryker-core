@@ -1,36 +1,40 @@
 <?php
+
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Tax\Business\Model;
+namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
+     * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
     protected $taxQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Tax\Business\Model\TaxDefaultInterface
+     * @var \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface
      */
-    protected $taxDefault;
+    protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $taxQueryContainer
-     * @param \Spryker\Zed\Tax\Business\Model\TaxDefaultInterface $taxDefault
+     * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
+     * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
      */
-    public function __construct(TaxQueryContainerInterface $taxQueryContainer, TaxDefaultInterface $taxDefault)
+    public function __construct(TaxProductConnectorQueryContainerInterface $taxQueryContainer, TaxProductConnectorToTaxInterface $taxFacade)
     {
         $this->taxQueryContainer = $taxQueryContainer;
-        $this->taxDefault = $taxDefault;
+        $this->taxFacade = $taxFacade;
     }
 
     /**
@@ -56,7 +60,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getShippingCountryIso2Code(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getShippingAddress() === null) {
-            return $this->taxDefault->getDefaultCountryIso2Code();
+            return $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
@@ -99,12 +103,12 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getEffectiveTaxRate(array $taxRates, $idProductAbstract)
     {
         foreach ($taxRates as $taxRate) {
-            if ((int)$taxRate[TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT] === (int)$idProductAbstract) {
-                return (float)$taxRate[TaxQueryContainer::COL_MAX_TAX_RATE];
+            if ((int)$taxRate[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT] === (int)$idProductAbstract) {
+                return (float)$taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
             }
         }
 
-        return $this->taxDefault->getDefaultTaxRate();
+        return $this->taxFacade->getDefaultTaxRate();
     }
 
     /**

@@ -7,15 +7,8 @@
 
 namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
-interface TaxProductConnectorToProductInterface
+interface TaxProductConnectorToTaxInterface
 {
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductAbstract);
 
     /**
      * @return string
