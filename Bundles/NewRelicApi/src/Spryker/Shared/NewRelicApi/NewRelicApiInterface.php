@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\NewRelic;
+namespace Spryker\Shared\NewRelicApi;
 
 /**
  * The PHP API for New Relic
  *
  * @link https://newrelic.com/docs/php/the-php-api
  */
-interface NewRelicApiInterface extends ApiInterface
+interface NewRelicApiInterface
 {
 
     /**
@@ -174,14 +174,5 @@ interface NewRelicApiInterface extends ApiInterface
      * @return $this
      */
     public function recordCustomEvent($name, array $attributes = []);
-
-    /**
-     * Send information about application deployments to New Relic.
-     *
-     * @param array $params
-     *
-     * @return $this
-     */
-    public function recordDeployment(array $params = []);
 
 }

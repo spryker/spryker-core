@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Model;
 
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelic\NewRelicApiTrait;
+use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -173,7 +173,7 @@ abstract class SessionFactory
     /**
      * @deprecated Please use `createNewRelicApi()` instead
      *
-     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function getNewRelicApi()
     {

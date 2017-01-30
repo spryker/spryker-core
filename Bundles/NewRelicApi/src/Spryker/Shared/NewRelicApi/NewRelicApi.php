@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\NewRelic;
+namespace Spryker\Shared\NewRelicApi;
 
-use GuzzleHttp\Client;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 /**
  * The PHP API for New Relic
@@ -19,9 +16,6 @@ use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
  */
 class NewRelicApi implements NewRelicApiInterface
 {
-
-    const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
-    const STATUS_CODE_OK = 200;
 
     /**
      * @var bool
@@ -299,65 +293,9 @@ class NewRelicApi implements NewRelicApiInterface
             return $this;
         }
 
-        if (!isset($attributes['store'])) {
-            $attributes['store'] = Store::getInstance()->getStoreName();
-        }
         newrelic_record_custom_event($name, $attributes);
 
         return $this;
-    }
-
-    /**
-     * @param array $params
-     *
-     * @throws \Spryker\Shared\NewRelic\Exception\RecordDeploymentException
-     *
-     * @return $this
-     */
-    public function recordDeployment(array $params = [])
-    {
-        if (!$this->active) {
-            return $this;
-        }
-
-        $response = $this->createRecordDeploymentRequest($params);
-
-        if ($response->getStatusCode() !== static::STATUS_CODE_OK) {
-            throw new RecordDeploymentException(sprintf(
-                'Record deployment to New Relic request failed with code %d. %s',
-                $response->getStatusCode(),
-                $response->getBody()
-            ));
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param array $params
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    protected function createRecordDeploymentRequest(array $params)
-    {
-        $options = [
-            'headers' => [
-                'x-api-key' => Config::get(NewRelicConstants::NEWRELIC_API_KEY),
-            ],
-        ];
-
-        $data = [];
-        $data['deployment'] = [];
-        foreach ($params as $key => $value) {
-            $data['deployment'][$key] = $value;
-        }
-        $options['form_params'] = $data;
-
-        $httpClient = new Client();
-
-        $request = $httpClient->post(self::NEWRELIC_DEPLOYMENT_API_URL, $options);
-
-        return $request;
     }
 
 }

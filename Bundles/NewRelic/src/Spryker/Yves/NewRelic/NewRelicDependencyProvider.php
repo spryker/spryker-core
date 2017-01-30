@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\NewRelic;
 
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 

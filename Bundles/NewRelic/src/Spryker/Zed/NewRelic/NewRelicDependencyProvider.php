@@ -8,7 +8,7 @@
 namespace Spryker\Zed\NewRelic;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

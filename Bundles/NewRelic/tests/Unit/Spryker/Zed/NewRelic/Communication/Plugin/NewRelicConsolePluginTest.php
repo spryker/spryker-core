@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\NewRelic\Communication\Plugin;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\NewRelic\Communication\Plugin\NewRelicConsolePlugin;
 use Symfony\Component\Console\Command\Command;
@@ -128,7 +128,7 @@ class NewRelicConsolePluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApi
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApi
      */
     protected function getNewRelicApiMock()
     {

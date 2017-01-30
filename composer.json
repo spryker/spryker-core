@@ -293,6 +293,8 @@
       "Spryker\\Zed\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Yves\\NewRelic\\": "Bundles/NewRelic/src",
 
+      "Spryker\\Shared\\NewRelicApi\\": "Bundles/NewRelicApi/src/Spryker/Shared/NewRelicApi",
+
       "Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/src",
       "Functional\\Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/tests",
       "Spryker\\Shared\\Newsletter\\": "Bundles/Newsletter/src",

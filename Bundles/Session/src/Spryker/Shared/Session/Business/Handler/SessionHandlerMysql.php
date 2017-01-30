@@ -11,7 +11,7 @@ use PDO;
 use SessionHandlerInterface;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerMysql implements SessionHandlerInterface
 {
@@ -56,12 +56,12 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $port = 3306;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password

@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Couchbase;
 use SessionHandlerInterface;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerCouchbase implements SessionHandlerInterface
 {
@@ -61,12 +61,12 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
     protected $lifetime;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password

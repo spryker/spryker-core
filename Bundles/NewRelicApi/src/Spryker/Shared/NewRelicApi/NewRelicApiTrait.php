@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\NewRelic;
+namespace Spryker\Shared\NewRelicApi;
 
 trait NewRelicApiTrait
 {
 
     /**
-     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     public function createNewRelicApi()
     {

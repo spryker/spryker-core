@@ -9,7 +9,7 @@ namespace Spryker\Zed\NewRelic\Communication\Plugin;
 
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     const PRIORITY = -255;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
@@ -45,7 +45,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $ignorableTransactions;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions

@@ -42,7 +42,7 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     public function getNewRelicApi()
     {
