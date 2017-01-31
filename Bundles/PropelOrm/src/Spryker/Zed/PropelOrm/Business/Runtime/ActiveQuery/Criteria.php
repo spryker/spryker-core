@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Runtime\ActiveQuery;
+namespace Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery;
 
 use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 

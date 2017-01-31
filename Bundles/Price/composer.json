@@ -8,9 +8,8 @@
   "require": {
     "spryker/config": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/log": "^2.0.0",
     "spryker/product": "^4.0.0",
-    "spryker/propel": "^2.0.0",
+    "spryker/propel-orm": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },

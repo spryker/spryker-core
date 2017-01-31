@@ -6,8 +6,7 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/log": "^2.0.0"
+    "spryker/kernel": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -105,7 +105,10 @@ class OutgoingGraphBuilder
         $incomingDependencies = array_keys($this->dependencyManager->parseIncomingDependencies($this->bundleName));
 
         foreach ($incomingDependencies as $incomingBundle) {
-            $this->graph->addNode($incomingBundle);
+            $attributes = [
+                'url' => '/development/dependency/outgoing-graph?bundle=' . $incomingBundle,
+            ];
+            $this->graph->addNode($incomingBundle, $attributes);
             $this->graph->addEdge($incomingBundle, $this->bundleName);
         }
     }

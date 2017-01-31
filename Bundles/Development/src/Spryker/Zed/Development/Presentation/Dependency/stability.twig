@@ -24,7 +24,7 @@
                         {% set sum = sum + info.indirectOut | length %}
                         <tr>
                             <td>
-                                <a {% if info.stability > 0.4 and info.stability < 0.6 and info.in | length > 2 and info.out | length > 2 %}style="color: red"{% endif %} href="/development/dependency/outgoing-graph?bundle={{ bundle }}" target="_blank">{{ bundle }}</a>
+                                <a href="/development/dependency/outgoing-graph?bundle={{ bundle }}" target="_blank">{{ bundle }}</a>
                             </td>
                             <td align="right">{{ info.in | length }}</td>
                             <td align="right">{{ info.out | length }}</td>
@@ -32,7 +32,7 @@
                             <td align="right">{{ info.indirectIn | length }}</td>
                             <td align="right">{{ info.indirectOut | length }}</td>
                             <td align="right">{{ info.indirectStability }}</td>
-                            <td align="right">{{ info.sprykerStability }}</td>
+                            <td{% if info.sprykerStability > 100 %} style="color: red"{% endif %} align="right">{{ info.sprykerStability }}</td>
                         </tr>
                     {% endfor %}
                 </table>

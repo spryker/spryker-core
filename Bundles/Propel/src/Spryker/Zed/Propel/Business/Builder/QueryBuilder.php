@@ -149,7 +149,7 @@ SCRIPT;
         $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
 
         $this->declareClass('Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException');
-        $this->declareClass('Spryker\\Zed\\Propel\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
+        $this->declareClass('Spryker\\Zed\\PropelOrm\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
 
         $colPhpName = $col->getPhpName();
         $colName = $col->getName();

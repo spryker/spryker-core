@@ -10,7 +10,6 @@
     "spryker/kernel": "^2.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^2.0.0",
-    "spryker/log": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^2.0.0",

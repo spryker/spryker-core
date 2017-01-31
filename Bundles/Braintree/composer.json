@@ -36,8 +36,7 @@
     "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/step-engine": "^1.0.1",
     "spryker/symfony": "^2.1.6",
-    "spryker/util-text": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
