@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
+use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
@@ -54,6 +55,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function updateStock(ProductConcreteTransfer $productConcreteTransfer)
@@ -71,9 +74,16 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         $bundleTotalStockPerWarehouse = $this->calculateBundleStockPerWarehouse($bundleItems);
 
-        $this->productBundleQueryContainer->getConnection()->beginTransaction();
-        $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
-        $this->productBundleQueryContainer->getConnection()->commit();
+        try {
+            $this->productBundleQueryContainer->getConnection()->beginTransaction();
+
+            $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
+            $this->productBundleQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
 
         $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
 

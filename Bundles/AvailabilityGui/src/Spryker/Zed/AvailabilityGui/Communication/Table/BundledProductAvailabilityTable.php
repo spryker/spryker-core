@@ -29,7 +29,6 @@ class BundledProductAvailabilityTable extends AbstractTable
     const COL_BUNDLED_ITEMS = 'bundledItems';
     const TABLE_COL_ACTION = 'Actions';
 
-
     /**
      * @var int
      */
@@ -153,7 +152,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY],
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
-                self::TABLE_COL_ACTION => $this->createEditButton($productItem),
+                static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
 
@@ -170,9 +169,9 @@ class BundledProductAvailabilityTable extends AbstractTable
         $availabilityEditUrl = Url::generate(
             '/availability-gui/index/edit',
             [
-                self::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
-                self::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductBundle,
+                static::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
+                static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
+                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductBundle,
             ]
         );
 

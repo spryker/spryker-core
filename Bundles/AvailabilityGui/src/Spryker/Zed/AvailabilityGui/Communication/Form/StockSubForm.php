@@ -45,7 +45,7 @@ class StockSubForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
+        $builder->add(static::FIELD_QUANTITY, 'text', [
             'label' => 'Stock',
             'constraints' => [
                 new Required(),
@@ -63,7 +63,7 @@ class StockSubForm extends AbstractType
      */
     protected function addStockTypeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_STOCK_TYPE, 'text', [
+        $builder->add(static::FIELD_STOCK_TYPE, 'text', [
             'label' => 'Stock Type',
             'disabled' => true,
         ]);

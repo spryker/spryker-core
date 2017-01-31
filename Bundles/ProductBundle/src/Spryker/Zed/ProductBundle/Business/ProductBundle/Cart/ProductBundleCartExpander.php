@@ -141,7 +141,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $productOptions = $itemTransfer->getProductOptions();
         for ($i = 0; $i < $quantity; $i++) {
 
-            $bundleItemTransfer = clone $itemTransfer;
+            $bundleItemTransfer = new ItemTransfer();
+            $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
             $bundleItemTransfer->setQuantity(1);
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
@@ -374,7 +375,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
      *
      * @return void
      */

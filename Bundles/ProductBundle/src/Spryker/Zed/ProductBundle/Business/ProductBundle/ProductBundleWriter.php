@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
@@ -50,6 +51,8 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
@@ -67,11 +70,18 @@ class ProductBundleWriter implements ProductBundleWriterInterface
 
         $productConcreteTransfer->requireIdProductConcrete();
 
-        $this->productBundleQueryContainer->getConnection()->beginTransaction();
-        $this->createBundledProducts($productConcreteTransfer, $bundledProducts);
-        $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
-        $this->productBundleQueryContainer->getConnection()->commit();
+        try {
+            $this->productBundleQueryContainer->getConnection()->beginTransaction();
 
+            $this->createBundledProducts($productConcreteTransfer, $bundledProducts);
+            $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
+
+            $this->productBundleQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
         $productBundleTransfer->setBundlesToRemove([]);
 
         $this->productBundleStockWriter->updateStock($productConcreteTransfer);

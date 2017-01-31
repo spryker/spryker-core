@@ -19,5 +19,4 @@ use Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundleQuery as BaseS
  */
 abstract class AbstractSpySalesOrderItemBundleQuery extends BaseSpySalesOrderItemBundleQuery
 {
-
 }

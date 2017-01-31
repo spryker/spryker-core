@@ -104,9 +104,9 @@ interface AvailabilityFacadeInterface
     /**
      *
      * Specification:
-     *  - Updates availability for gyven sky, by quantity
+     *  - Updates availability for given sku, by quantity
      *  - Touches availability collector if data changed
-     *  - Returns id of availability abstrast id
+     *  - Returns id of availability abstract
      *
      * @api
      *

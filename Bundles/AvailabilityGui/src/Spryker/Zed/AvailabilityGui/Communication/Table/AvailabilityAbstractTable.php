@@ -54,8 +54,8 @@ class AvailabilityAbstractTable extends AbstractTable
             SpyAvailabilityAbstractTableMap::COL_QUANTITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            self::IS_BUNDLE_PRODUCT => 'Is bundle product',
-            self::TABLE_COL_ACTION => 'Actions',
+            static::IS_BUNDLE_PRODUCT => 'Is bundle product',
+            static::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
@@ -71,9 +71,9 @@ class AvailabilityAbstractTable extends AbstractTable
         ]);
 
         $config->setDefaultSortColumnIndex(0);
-        $config->addRawColumn(self::TABLE_COL_ACTION);
+        $config->addRawColumn(static::TABLE_COL_ACTION);
         $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
-        $config->addRawColumn(self::IS_BUNDLE_PRODUCT);
+        $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
         $config->addRawColumn(SpyProductAbstractTableMap::COL_SKU);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
@@ -101,8 +101,8 @@ class AvailabilityAbstractTable extends AbstractTable
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstract->getStockQuantity(),
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstract->getReservationQuantity()),
-                self::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
-                self::TABLE_COL_ACTION => $this->createViewButton($productAbstract),
+                static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
+                static::TABLE_COL_ACTION => $this->createViewButton($productAbstract),
             ];
         }
 
@@ -134,9 +134,9 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function getAvailabilityLabel($quantity)
     {
         if ($quantity > 0) {
-            return '<span class="label label-info">' . self::AVAILABLE . '</span>';
+            return '<span class="label label-info">' . static::AVAILABLE . '</span>';
         }
-        return '<span class="label">' . self::NOT_AVAILABLE . '</span>';
+        return '<span class="label">' . static::NOT_AVAILABLE . '</span>';
     }
 
     /**
@@ -149,7 +149,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $viewTaxSetUrl = Url::generate(
             '/availability-gui/index/view',
             [
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');

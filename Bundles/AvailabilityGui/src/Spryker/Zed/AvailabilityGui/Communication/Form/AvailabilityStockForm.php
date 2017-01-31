@@ -54,7 +54,7 @@ class AvailabilityStockForm extends AbstractType
      */
     protected function addStockField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_STOCKS, 'collection', [
+        $builder->add(static::FIELD_STOCKS, 'collection', [
             'type' => new StockSubForm(),
             'options' => [
                 'data_class' => StockProductTransfer::class,

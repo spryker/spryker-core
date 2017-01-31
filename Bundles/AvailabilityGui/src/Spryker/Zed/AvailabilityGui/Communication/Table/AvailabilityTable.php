@@ -77,8 +77,8 @@ class AvailabilityTable extends AbstractTable
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            self::IS_BUNDLE_PRODUCT => 'Is bundle product',
-            self::TABLE_COL_ACTION => 'Actions',
+            static::IS_BUNDLE_PRODUCT => 'Is bundle product',
+            static::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
@@ -94,8 +94,8 @@ class AvailabilityTable extends AbstractTable
         ]);
 
         $config->setDefaultSortColumnIndex(0);
-        $config->addRawColumn(self::TABLE_COL_ACTION);
-        $config->addRawColumn(self::IS_BUNDLE_PRODUCT);
+        $config->addRawColumn(static::TABLE_COL_ACTION);
+        $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -122,8 +122,8 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0,
-                self::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
-                self::TABLE_COL_ACTION => $this->createEditButton($productItem, $isBundleProduct),
+                static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
+                static::TABLE_COL_ACTION => $this->createEditButton($productItem, $isBundleProduct),
             ];
         }
 
@@ -154,9 +154,9 @@ class AvailabilityTable extends AbstractTable
         $availabilityEditUrl = Url::generate(
             '/availability-gui/index/edit',
             [
-                self::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
-                self::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                static::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
+                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
             ]
         );
 

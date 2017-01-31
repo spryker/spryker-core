@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 
+use Exception;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -43,14 +44,23 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
+     * @throws \Exception
+     *
      * @return void
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->productBundleQueryContainer->getConnection()->beginTransaction();
-        $bundleItemsSaved = $this->saveSalesBundleProducts($quoteTransfer);
-        $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
-        $this->productBundleQueryContainer->getConnection()->commit();
+        try {
+            $this->productBundleQueryContainer->getConnection()->beginTransaction();
+
+            $bundleItemsSaved = $this->saveSalesBundleProducts($quoteTransfer);
+            $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
+
+            $this->productBundleQueryContainer->getConnection()->commit();
+        } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
     }
 
     /**
