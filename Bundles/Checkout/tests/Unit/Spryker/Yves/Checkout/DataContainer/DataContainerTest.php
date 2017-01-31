@@ -62,7 +62,7 @@ class DataContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CheckoutToQuoteInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
     private function getQuoteClientMock()
     {

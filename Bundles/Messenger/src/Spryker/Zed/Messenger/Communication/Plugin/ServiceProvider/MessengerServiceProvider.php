@@ -36,7 +36,6 @@ class MessengerServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     public function boot(Application $app)
     {
-
     }
 
 }

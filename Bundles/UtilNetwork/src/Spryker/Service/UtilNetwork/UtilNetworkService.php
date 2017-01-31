@@ -33,8 +33,6 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
 
     public function getRequestId()
     {
-
     }
-
 
 }

@@ -14,9 +14,8 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 /**
  * @group Unit
  * @group Spryker
- * @group Shared
- * @group Application
- * @group Log
+ * @group Service
+ * @group UtilNetwork
  * @group Request
  * @group RequestIdTest
  */

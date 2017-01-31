@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ZedRequest;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ZedRequestClientInterface
@@ -27,21 +26,21 @@ interface ZedRequestClientInterface
     /**
      * @api
      *
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages();
 
     /**
      * @api
      *
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
 
     /**
      * @api
      *
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
 

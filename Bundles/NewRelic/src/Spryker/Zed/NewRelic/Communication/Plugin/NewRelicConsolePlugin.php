@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {

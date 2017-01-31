@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +12,6 @@ use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxIn
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {

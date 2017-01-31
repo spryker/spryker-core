@@ -9,11 +9,8 @@ namespace Spryker\Zed\Development\Business\Stability;
 
 use ArrayObject;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ClassNameFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterCompositeInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\InTestDependencyFilter;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class StabilityCalculator implements StabilityCalculatorInterface
@@ -30,7 +27,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected $bundlesDependencies;
 
     /**
-     * @var TreeFilterInterface
+     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
     protected $filter;
 
@@ -42,7 +39,6 @@ class StabilityCalculator implements StabilityCalculatorInterface
 
         $this->filter = $filter;
     }
-
 
     /**
      * @return array

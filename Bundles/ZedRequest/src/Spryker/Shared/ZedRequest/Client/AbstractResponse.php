@@ -69,7 +69,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorMessages()
     {
@@ -108,7 +108,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param MessageTransfer $errorMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $errorMessage
      *
      * @return $this
      */
@@ -120,7 +120,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoMessages()
     {
@@ -145,7 +145,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return $this
      */
@@ -171,7 +171,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessMessages()
     {
@@ -210,7 +210,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param MessageTransfer $successMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $successMessage
      *
      * @return $this
      */

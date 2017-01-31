@@ -11,6 +11,8 @@ interface InstallerPluginInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function install();

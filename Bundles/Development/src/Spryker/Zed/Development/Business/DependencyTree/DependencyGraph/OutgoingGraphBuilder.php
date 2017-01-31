@@ -72,7 +72,7 @@ class OutgoingGraphBuilder
         foreach ($allDependencies as $bundleName => $dependentBundles) {
             $attributes = [
                 'label' => $bundleName . '<br /><font point-size="10">' . count($dependentBundles) . '</font>',
-                'url' => '/development/dependency/outgoing-graph?bundle=' . $bundleName
+                'url' => '/development/dependency/outgoing-graph?bundle=' . $bundleName,
             ];
 
             if ($this->bundleName === $bundleName) {
@@ -93,7 +93,6 @@ class OutgoingGraphBuilder
         if ($showIncomingDependencies) {
             $this->addIncomingDependencies();
         }
-
 
         return $this->graph->render('svg');
     }

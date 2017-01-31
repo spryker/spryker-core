@@ -22,7 +22,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  * @group Functional
  * @group Spryker
  * @group Zed
- * @group Tax
+ * @group TaxProductConnector
  * @group Business
  * @group TaxFacadeRateCalculationTest
  */

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Glossary\Business;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Psr\Log\LoggerInterface;
 
 interface GlossaryFacadeInterface
 {

@@ -14,10 +14,10 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

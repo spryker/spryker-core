@@ -22,7 +22,7 @@ class StorageFacadeTest extends Test
 {
 
     /**
-     * @var StorageFacade
+     * @var \Spryker\Zed\Storage\Business\StorageFacade
      */
     protected $storageFacade;
 

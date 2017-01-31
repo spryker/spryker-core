@@ -51,4 +51,5 @@ interface PayolutionConstants
     const SUCCESSFUL_PRE_AUTHORIZATION_PROCESSING_CODE = 'VA.PA.90.00';
 
     const HOST_YVES = 'HOST_YVES';
+
 }

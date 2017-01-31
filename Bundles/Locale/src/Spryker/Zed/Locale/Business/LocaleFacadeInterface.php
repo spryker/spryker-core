@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Psr\Log\LoggerInterface;
-
 interface LocaleFacadeInterface
 {
 

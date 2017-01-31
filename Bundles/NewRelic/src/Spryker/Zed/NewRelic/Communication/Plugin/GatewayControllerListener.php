@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
  */
 class GatewayControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {

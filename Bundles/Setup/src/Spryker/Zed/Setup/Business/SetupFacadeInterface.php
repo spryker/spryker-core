@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Setup\Business;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface SetupFacadeInterface

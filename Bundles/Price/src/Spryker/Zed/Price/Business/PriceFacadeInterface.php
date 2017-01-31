@@ -10,7 +10,6 @@ namespace Spryker\Zed\Price\Business;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Psr\Log\LoggerInterface;
 
 interface PriceFacadeInterface
 {

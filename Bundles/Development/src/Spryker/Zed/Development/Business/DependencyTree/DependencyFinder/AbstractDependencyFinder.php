@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\VarDumper\VarDumper;
 
 abstract class AbstractDependencyFinder
 {

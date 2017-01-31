@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
  */
-class GatewayController extends \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController
+class GatewayController extends AbstractGatewayController
 {
 
     /**
