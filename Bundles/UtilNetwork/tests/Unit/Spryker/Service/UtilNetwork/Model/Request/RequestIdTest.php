@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilNetwork\Request;
+namespace Unit\Spryker\Service\UtilNetwork\Model\Request;
 
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
@@ -16,6 +16,7 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
  * @group Spryker
  * @group Service
  * @group UtilNetwork
+ * @group Model
  * @group Request
  * @group RequestIdTest
  */

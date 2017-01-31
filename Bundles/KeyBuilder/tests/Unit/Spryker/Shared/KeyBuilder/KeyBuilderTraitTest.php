@@ -22,19 +22,6 @@ class KeyBuilderTraitTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var
-     */
-    protected $currentStoreName;
-
-    /**
-     * @return void
-     */
-    public function setUp()
-    {
-        $this->currentStoreName = Store::getInstance()->getStoreName();
-    }
-
-    /**
      * @dataProvider generateKey
      *
      * @param mixed $data

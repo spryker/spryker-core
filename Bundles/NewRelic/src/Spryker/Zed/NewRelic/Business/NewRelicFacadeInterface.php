@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\NewRelic\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-
 /**
  * @method \Spryker\Zed\NewRelic\Business\NewRelicBusinessFactory getFactory()
  */
-class NewRelicFacade extends AbstractFacade implements NewRelicFacadeInterface
+interface NewRelicFacadeInterface
 {
 
     /**
@@ -22,9 +20,6 @@ class NewRelicFacade extends AbstractFacade implements NewRelicFacadeInterface
      *
      * @return \Spryker\Zed\NewRelic\Business\Model\RecordDeploymentInterface
      */
-    public function recordDeployment(array $arguments = [])
-    {
-        return $this->getFactory()->createRecordDeployment()->recordDeployment($arguments);
-    }
+    public function recordDeployment(array $arguments = []);
 
 }
