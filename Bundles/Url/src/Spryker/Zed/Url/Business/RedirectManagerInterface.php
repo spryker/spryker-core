@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 
+/**
+ * @deprecated Use business interfaces from Spryker\Zed\Url\Business\Redirect namespace.
+ */
 interface RedirectManagerInterface
 {
 

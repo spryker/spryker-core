@@ -9,6 +9,7 @@ namespace Functional\Spryker\Zed\Product;
 
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
@@ -177,7 +178,9 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
 
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByPath($localizedUrlTransfer->getUrl());
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
+            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
             $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
@@ -203,7 +206,9 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
 
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByPath($localizedUrlTransfer->getUrl());
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
+            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
             $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 

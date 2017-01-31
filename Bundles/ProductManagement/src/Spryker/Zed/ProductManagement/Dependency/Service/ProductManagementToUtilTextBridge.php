@@ -11,7 +11,7 @@ class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextIn
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
+     * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
     protected $utilTextService;
 
