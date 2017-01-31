@@ -30,7 +30,7 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
         $handler = new PrettyPageHandler();
         if ($userPath) {
             $handler->setEditor(function ($file, $line) use ($userPath) {
-                $serverPath = '/data/shop/development/current';
+                $serverPath = Config::get(ErrorHandlerConstants::SERVER_BASE_PATH, '/data/shop/development/current');
                 $file = str_replace($serverPath, $userPath, $file);
                 $url = sprintf('phpstorm://open?file=%s&line=%s', $file, $line);
 

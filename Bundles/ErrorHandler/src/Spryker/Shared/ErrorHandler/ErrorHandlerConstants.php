@@ -64,6 +64,15 @@ interface ErrorHandlerConstants
 
     /**
      * Specification:
+     * - Path to the project on virtual machine, defaults to `/data/shop/development/current`
+     * - This will be replaced with the user path.
+     *
+     * @api
+     */
+    const SERVER_BASE_PATH = 'SERVER_BASE_PATH';
+
+    /**
+     * Specification:
      * - When using the USER_BASE_PATH to open files in IDE, some IDEs require AJAX calls for it to work.
      *
      * @api
