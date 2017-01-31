@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 
+/**
+ * @deprecated Use business interfaces from Spryker\Zed\Url\Business\Url namespace.
+ */
 interface UrlManagerInterface
 {
 

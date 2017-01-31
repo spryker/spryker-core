@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<transfers>
+    <transfer name="FooBar">
+        <property name="bla" type="int" />
+        <property name="selfReference" type="FooBar[]" />
+    </transfer>
+</transfers>

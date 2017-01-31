@@ -72,6 +72,7 @@ class ClassGenerator implements GeneratorInterface
             'properties' => $classDefinition->getProperties(),
             'methods' => $classDefinition->getMethods(),
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
+            'deprecationDescription' => $classDefinition->getDeprecationDescription(),
         ];
     }
 

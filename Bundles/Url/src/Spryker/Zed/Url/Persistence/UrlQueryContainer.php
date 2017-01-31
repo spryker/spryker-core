@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -136,6 +137,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()` instead.
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *
@@ -153,6 +156,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
+     * @deprecated Use `CategoryQueryContainer::queryResourceUrlByCategoryNodeId()` instead.
+     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -163,6 +168,50 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query->filterByFkResourceCategorynode($idCategoryNode);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sourceUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     */
+    public function queryUrlRedirectBySourceUrl($sourceUrl)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectQuery()
+            ->useSpyUrlQuery()
+                ->filterByUrl($sourceUrl)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     */
+    public function queryUrlRedirectByIdUrl($idUrl)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectQuery()
+            ->useSpyUrlQuery()
+                ->filterByIdUrl($idUrl)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIgnoringRedirects()
+    {
+        return $this->getFactory()
+            ->createUrlQuery()
+            ->filterByFkResourceRedirect(null, Criteria::ISNULL);
     }
 
 }

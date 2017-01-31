@@ -329,6 +329,7 @@ class ClassDefinitionTest extends PHPUnit_Framework_TestCase
             'name' => $method,
             'property' => $property,
             'bundles' => $bundles,
+            'deprecationDescription' => null,
         ];
 
         if ($var !== null) {

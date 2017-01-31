@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
@@ -53,7 +54,7 @@ class RedirectController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request)
     {
@@ -67,12 +68,19 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $redirectTransfer = $this->getFactory()->getUrlFacade()
-                ->createRedirectAndTouch($data[CmsRedirectForm::FIELD_TO_URL], $data[CmsRedirectForm::FIELD_STATUS]);
+            $sourceUrlTransfer = new UrlTransfer();
+            $sourceUrlTransfer
+                ->setUrl($data[CmsRedirectForm::FIELD_FROM_URL])
+                ->setFkLocale($this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale());
 
-            $this->getFactory()->getUrlFacade()
-                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FIELD_FROM_URL], $this->getFactory()->getLocaleFacade()
-                    ->getCurrentLocale(), $redirectTransfer->getIdUrlRedirect());
+            $urlRedirectTransfer = new UrlRedirectTransfer();
+            $urlRedirectTransfer
+                ->fromArray($data, true)
+                ->setSource($sourceUrlTransfer);
+
+            $this->getFactory()
+                ->getUrlFacade()
+                ->createUrlRedirect($urlRedirectTransfer);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }
@@ -85,7 +93,7 @@ class RedirectController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -100,19 +108,21 @@ class RedirectController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $url = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
 
-            if ($url) {
-                $urlTransfer = $this->createUrlTransfer($url, $data);
-                $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $sourceUrlTransfer = new UrlTransfer();
+            $sourceUrlTransfer
+                ->setIdUrl($idUrl)
+                ->setUrl($data[CmsRedirectForm::FIELD_FROM_URL])
+                ->setFkLocale($this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale());
 
-                $redirect = $this->getQueryContainer()
-                    ->queryRedirectById($url->getFkResourceRedirect())
-                    ->findOne();
-                $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
+            $urlRedirectTransfer = new UrlRedirectTransfer();
+            $urlRedirectTransfer
+                ->fromArray($data, true)
+                ->setSource($sourceUrlTransfer);
 
-                $this->getFactory()->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
-            }
+            $this->getFactory()
+                ->getUrlFacade()
+                ->updateUrlRedirect($urlRedirectTransfer);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }
@@ -176,10 +186,10 @@ class RedirectController extends AbstractController
             return $this->redirectResponse('/cms/redirect');
         }
 
-        $redirectTransfer = new RedirectTransfer();
-        $redirectTransfer->setIdUrlRedirect($idUrlRedirect);
+        $urlRedirectTransfer = new UrlRedirectTransfer();
+        $urlRedirectTransfer->setIdUrlRedirect($idUrlRedirect);
 
-        $this->getFactory()->getUrlFacade()->deleteUrlRedirect($redirectTransfer);
+        $this->getFactory()->getUrlFacade()->deleteUrlRedirect($urlRedirectTransfer);
 
         return $this->redirectResponse('/cms/redirect');
     }

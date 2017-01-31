@@ -53,7 +53,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade(),
             $this->getUtilTextService()
         );
 
@@ -73,7 +72,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade(),
             $this->getUtilTextService()
         );
 
@@ -93,7 +91,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade(),
             $this->getUtilTextService()
         );
 
@@ -207,14 +204,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
-     */
-    public function getUrlFacade()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_URL);
     }
 
     /**

@@ -5,13 +5,13 @@
     data-processing="true"
     data-server-side="true"
     data-state-save="true"
-    {%- if config.pageLength is defined -%}
+    {% if config.pageLength is defined -%}
         data-page-length="{{ config.pageLength }}"
-    {%-  endif -%}
+    {% endif -%}
 
-    {%- include 'table-data-order.twig' -%}
-    {%- include 'table-data-columns.twig' -%}
-    >
+    {% include 'table-data-order.twig' -%}
+    {% include 'table-data-columns.twig' -%}
+>
     {% include '@Gui/Table/thead.twig' %}
     {% include '@Gui/Table/tfoot.twig' %}
 </table>
