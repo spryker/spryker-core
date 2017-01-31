@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\Twig;
 
+use Zend\Filter\Word\CamelCaseToDash;
+
 class RouteResolver
 {
 
@@ -20,7 +22,21 @@ class RouteResolver
         list($serviceName, $actionName) = explode(':', $controllerServiceName);
         $serviceNameParts = explode('.', $serviceName);
 
+        $serviceNameParts[4] = $this->getCamelCaseToDash($serviceNameParts[4]);
+
         return $serviceNameParts[2] . '/' . $serviceNameParts[3] . '/' . $serviceNameParts[4];
+    }
+
+    /**
+     * @param string $incomingString
+     *
+     * @return string
+     */
+    protected function getCamelCaseToDash(string $incomingString)
+    {
+        $filter = new CamelCaseToDash();
+
+        return strtolower($filter->filter($incomingString));
     }
 
 }
