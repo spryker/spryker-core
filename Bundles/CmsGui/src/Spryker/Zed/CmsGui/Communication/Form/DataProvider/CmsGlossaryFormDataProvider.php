@@ -6,8 +6,10 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 
 class CmsGlossaryFormDataProvider
 {
@@ -49,7 +51,8 @@ class CmsGlossaryFormDataProvider
     public function getOptions()
     {
         return [
-            'data_class' => CmsGlossaryTransfer::class
+            'data_class' => CmsGlossaryTransfer::class,
+            CmsGlossaryFormType::OPTION_DATA_CLASS_ATTRIBUTES => CmsGlossaryAttributesTransfer::class,
         ];
     }
 

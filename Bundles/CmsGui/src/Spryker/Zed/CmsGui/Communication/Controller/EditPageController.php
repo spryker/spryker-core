@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsGui\Business\CmsGuiFacade getFacade()
  */
 class EditPageController extends AbstractController
 {

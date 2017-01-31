@@ -212,4 +212,20 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryKey($key);
 
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale);
+
 }

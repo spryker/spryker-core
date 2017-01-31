@@ -6,12 +6,10 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsPageMetaAttributesFormType extends AbstractType
 {
@@ -35,18 +33,6 @@ class CmsPageMetaAttributesFormType extends AbstractType
             ->addMetaKeywordsField($builder)
             ->addMetaDescriptionField($builder)
             ->addFieldLocalName($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => CmsPageMetaAttributesTransfer::class,
-        ]);
     }
 
     /**

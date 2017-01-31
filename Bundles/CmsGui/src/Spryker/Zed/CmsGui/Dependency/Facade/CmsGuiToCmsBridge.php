@@ -62,6 +62,8 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
     {

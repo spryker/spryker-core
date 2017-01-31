@@ -22,12 +22,23 @@ use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterf
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
+use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 
 /**
  * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Table\CmsPageTable
+     */
+    public function createCmsPageTable()
+    {
+        $cmsQueryContainer = $this->getCmsQueryContainer();
+
+        return new CmsPageTable($cmsQueryContainer);
+    }
 
     /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface

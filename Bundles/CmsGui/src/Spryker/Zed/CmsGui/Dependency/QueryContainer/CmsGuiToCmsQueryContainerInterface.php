@@ -34,4 +34,25 @@ interface CmsGuiToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale);
+
+    /**
+     * @param string $value
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationWithKeyByValue($value);
+
+    /**
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale);
 }

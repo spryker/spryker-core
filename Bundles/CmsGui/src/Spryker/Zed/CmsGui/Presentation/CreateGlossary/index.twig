@@ -11,13 +11,12 @@
     {{ backActionButton('/cms/page-list', 'Back to CMS' | trans) }}
 {% endblock %}
 
-
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
             {{ form_start(glossaryForm) }}
 
-            {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm} ) }}
+            {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
             {% do glossaryForm.glossaryAttributes.setRendered %}
 
             {% include '@CmsGui/_template/_form-submit.twig' %}
@@ -26,5 +25,16 @@
         {% endblock %}
     {% endembed %}
 {% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+{% endblock %}
+
 
 

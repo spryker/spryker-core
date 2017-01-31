@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Glossary;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -25,14 +23,13 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 
 class CmsGlossaryAttributesFormType extends AbstractType
 {
 
-    const FIELD_FK_PAGE = 'fkPage';
-
     const FIELD_PLACEHOLDER = 'placeholder';
-
+    const FIELD_FK_PAGE = 'fkPage';
     const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
     const FIELD_TEMPLATE_NAME = 'templateName';
     const FIELD_SEARCH_OPTION = 'searchOption';
@@ -45,6 +42,8 @@ class CmsGlossaryAttributesFormType extends AbstractType
     const TYPE_FULLTEXT_SEARCH = 'Full text';
 
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+
+    use ArrayObjectTransformerTrait;
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
@@ -75,7 +74,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CmsGlossaryAttributesTransfer::class,
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
 
@@ -208,21 +206,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer()
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function($value) {
-                return new ArrayObject($value);
-            }
-        );
-    }
-
-    /**
      * @return array
      */
     protected function getPlaceholderConstants()
@@ -238,7 +221,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
                 function ($placeholder, ExecutionContextInterface $context) {
                     $formData = $context->getRoot()->getViewData();
                     if ($this->cmsFacade->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
-                        $context->addViolation('Placeholder has already mapped');
+                        $context->addViolation('Placeholder has already mapped.');
                     }
                 },
             ],

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 
 class CmsPageFormTypeDataProvider
 {
@@ -52,6 +53,9 @@ class CmsPageFormTypeDataProvider
     {
         return [
             'data_class' => CmsPageTransfer::class,
+            CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES => $this->availableLocales,
+            CmsPageFormType::OPTION_DATA_CLASS_ATTRIBUTES => CmsPageAttributesTransfer::class,
+            CmsPageFormType::OPTION_DATA_CLASS_META_ATTRIBUTES => CmsPageMetaAttributesTransfer::class,
             CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList()
         ];
     }

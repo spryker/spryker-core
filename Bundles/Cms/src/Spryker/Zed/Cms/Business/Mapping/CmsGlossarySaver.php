@@ -55,13 +55,14 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
 
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttributesTransfer) {
 
-            $idCmsGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryAttributesTransfer);
-            $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
-
             $translationKey = $this->resolveTranslationKey($glossaryAttributesTransfer);
             $glossaryAttributesTransfer->setTranslationKey($translationKey);
 
             $this->translatePlaceholder($glossaryAttributesTransfer, $translationKey);
+
+            $idCmsGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryAttributesTransfer);
+            $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
+
         }
 
         $this->cmsQueryContainer->getConnection()->commit();
@@ -226,6 +227,8 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
      * @param string $translationKey
+     *
+     * @return void
      */
     protected function translatePlaceholder(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer, $translationKey)
     {
@@ -234,13 +237,11 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
         }
 
-        if ($glossaryAttributesTransfer->getFkGlossaryKey() === null) {
-            $glossaryKey = $this->cmsQueryContainer
-                ->queryKey($translationKey)
-                ->findOne();
+        $glossaryKey = $this->cmsQueryContainer
+            ->queryKey($translationKey)
+            ->findOne();
 
-            $glossaryAttributesTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
-        }
+        $glossaryAttributesTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
     }
 

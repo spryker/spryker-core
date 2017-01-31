@@ -63,6 +63,8 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         $cmsPageTransfer->requirePageAttributes();
 
+        $this->cmsQueryContainer->getConnection()->beginTransaction();
+
         $cmsPageEntity = new SpyCmsPage();
         $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
         $cmsPageEntity->save();
@@ -74,6 +76,8 @@ class CmsPageSaver implements CmsPageSaverInterface
         }
 
         $this->saveCmsPageLocalizedMetaAttributes($cmsPageTransfer, $localizedAttributeEntities);
+
+        $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsPageEntity->getIdCmsPage();
 
@@ -90,6 +94,8 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
 
+        $this->cmsQueryContainer->getConnection()->beginTransaction();
+
         $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
         $cmsPageEntity->save();
 
@@ -98,8 +104,10 @@ class CmsPageSaver implements CmsPageSaverInterface
         $this->updateCmsPageLocalizedMetaAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList);
 
         if ($cmsPageEntity->getIsActive()) {
-            $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage(), true);
+            $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
         }
+
+        $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsPageTransfer;
     }

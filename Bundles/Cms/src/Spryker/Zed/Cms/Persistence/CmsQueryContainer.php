@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -118,6 +119,22 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::TEMPLATE_PATH);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale)
+    {
+        return $this->queryPages()
+            ->useSpyCmsPageLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, 'template_name')
+            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
+            ->innerJoinCmsTemplate();
     }
 
     /**
@@ -436,6 +453,22 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->endUse()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key)
+    {
+        $query = $this->getGlossaryQueryContainer()
+            ->queryByKey($key)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL);
 
         return $query;
     }

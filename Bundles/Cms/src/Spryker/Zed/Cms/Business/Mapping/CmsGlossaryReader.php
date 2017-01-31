@@ -13,6 +13,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
@@ -21,6 +22,8 @@ use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
+    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/';
+    const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
@@ -58,22 +61,10 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     *
      */
     public function getPageGlossaryAttributes($idCmsPage)
     {
-        $cmsPageEntity = $this->cmsQueryContainer
-            ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
-            ->findOne();
-
-        if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'CMS page with id "%d" not found!',
-                    $idCmsPage
-                )
-            );
-        }
+        $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
         $pagePlaceholders = $this->findPagePlaceholders($cmsPageEntity);
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pagePlaceholders, $idCmsPage);
@@ -96,33 +87,43 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity)
     {
-        $pageUrlArray = $cmsPageEntity->toArray();
-        $tempFile = $this->cmsConfig->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
+        $cmsPageArray = $cmsPageEntity->toArray();
+        $templateFile = $this->cmsConfig->getTemplateRealPath($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
 
-        $placeholders = $this->findTemplatePlaceholders($tempFile);
+        $placeholders = $this->getTemplatePlaceholders($templateFile);
 
         return $placeholders;
     }
 
     /**
-     * @param string $tempFile
+     * @param string $templateFile
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
      *
      * @return array
      */
-    protected function findTemplatePlaceholders($tempFile)
+    protected function getTemplatePlaceholders($templateFile)
     {
-        $placeholderMap = [];
-
-        if (file_exists($tempFile)) {
-            $fileContent = file_get_contents($tempFile);
-
-            preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/', $fileContent, $cmsPlaceholderLine);
-            preg_match_all('/"([^"]+)"/', implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
-
-            return $placeholderMap[1];
+        if (!file_exists($templateFile)) {
+            return [];
         }
 
-        return $placeholderMap;
+        $templateContent = file_get_contents($templateFile);
+
+        preg_match_all(static::CMS_PLACEHOLDER_PATTERN, $templateContent, $cmsPlaceholderLine);
+        if (count($cmsPlaceholderLine) == 0) {
+            throw new MissingPlaceholdersException(
+                sprintf(
+                    'No placeholders found in "%s" template.',
+                    $templateFile
+                )
+            );
+        }
+
+        preg_match_all(static::CMS_PLACEHOLDER_VALUE_PATTERN, implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
+
+        return $placeholderMap[1];
+
     }
 
     /**
@@ -215,6 +216,30 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             }
             $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
         }
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     */
+    protected function getCmsPageEntity($idCmsPage)
+    {
+        $cmsPageEntity = $this->cmsQueryContainer
+            ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
+            ->findOne();
+
+        if ($cmsPageEntity === null) {
+            throw new MissingPageException(
+                sprintf(
+                    'CMS page with id "%d" not found!',
+                    $idCmsPage
+                )
+            );
+        }
+        return $cmsPageEntity;
     }
 }
 

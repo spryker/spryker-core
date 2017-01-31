@@ -60,11 +60,9 @@ class CmsPageActivator implements CmsPageActivatorInterface
         $cmsPageEntity->save();
 
         $this->activatePageUrls($cmsPageEntity);
-
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage(), true);
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
         $this->cmsQueryContainer->getConnection()->commit();
-
     }
 
     /**
@@ -81,16 +79,16 @@ class CmsPageActivator implements CmsPageActivatorInterface
         $cmsPageEntity->setIsActive(false);
         $cmsPageEntity->save();
 
-        $this->touchFacade->touchInactive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
         $this->cmsQueryContainer->getConnection()->commit();
-
     }
 
     /**
      * @param int $idCmsPage
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function getCmsPageEntity($idCmsPage)

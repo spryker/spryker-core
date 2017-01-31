@@ -6,9 +6,8 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use ArrayObject;
+use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,6 +23,10 @@ class CmsPageFormType extends AbstractType
     const FIELD_FK_PAGE = 'fkPage';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
+    const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
+
+    use ArrayObjectTransformerTrait;
 
     /**
      * @var array
@@ -34,18 +37,18 @@ class CmsPageFormType extends AbstractType
     ];
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Form\CmsPageAttributesFormType
+     * @var \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType
      */
     protected $cmsPageAttributesFormType;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Form\CmsPageMetaAttributesFormType
+     * @var \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType
      */
     protected $cmsPageMetaAttributesFormType;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\CmsPageAttributesFormType $cmsPageAttributesFormType
-     * @param \Spryker\Zed\CmsGui\Communication\Form\CmsPageMetaAttributesFormType $cmsPageMetaAttributesFormType
+     * @param \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType $cmsPageAttributesFormType
+     * @param \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType $cmsPageMetaAttributesFormType
      */
     public function __construct(
         CmsPageAttributesFormType $cmsPageAttributesFormType,
@@ -63,6 +66,9 @@ class CmsPageFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_TEMPLATE_CHOICES);
+        $resolver->setRequired(static::OPTION_DATA_CLASS_ATTRIBUTES);
+        $resolver->setRequired(static::OPTION_DATA_CLASS_META_ATTRIBUTES);
+        $resolver->setRequired(CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES);
     }
 
     /**
@@ -77,7 +83,7 @@ class CmsPageFormType extends AbstractType
             ->addFkPage($builder)
             ->addFkTemplateField($builder, $options[static::OPTION_TEMPLATE_CHOICES])
             ->addPageAttributesFormCollection($builder, $options)
-            ->addPageMetaAttribuesFormCollection($builder);
+            ->addPageMetaAttribuesFormCollection($builder, $options);
     }
 
     /**
@@ -135,6 +141,10 @@ class CmsPageFormType extends AbstractType
             'type' => $this->cmsPageAttributesFormType,
             'allow_add' => true,
             'allow_delete' => true,
+            'entry_options'  => [
+                'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
+                CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES => $options[CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES],
+            ],
         ]);
 
         $builder->get(self::FIELD_PAGE_ATTRIBUTES)
@@ -145,36 +155,25 @@ class CmsPageFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addPageMetaAttribuesFormCollection(FormBuilderInterface $builder)
+    protected function addPageMetaAttribuesFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PAGE_META_ATTRIBUTES, CollectionType::class, [
             'type' => $this->cmsPageMetaAttributesFormType,
             'allow_add' => true,
             'allow_delete' => true,
+            'entry_options'  => [
+                'data_class' => $options[static::OPTION_DATA_CLASS_META_ATTRIBUTES],
+            ],
         ]);
 
         $builder->get(self::FIELD_PAGE_META_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer()
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function($value) {
-                return new ArrayObject($value);
-            }
-        );
     }
 
     /**

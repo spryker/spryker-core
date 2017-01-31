@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsGlossaryTranslationFormType extends AbstractType
 {
+
     const FIELD_FK_LOCALE = 'fkLocale';
     const FIELD_TRANSLATION = 'translation';
     const FIELD_LOCALE_NAME = 'localeName';

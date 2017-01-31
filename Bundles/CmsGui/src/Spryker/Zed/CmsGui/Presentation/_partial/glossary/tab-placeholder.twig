@@ -6,29 +6,45 @@
     {% endif %}
 {% endfor %}
 
-{{ form_row(attributeForm.searchOption) }}
-{{ form_row(attributeForm.translationKey) }}
-{{ form_row(attributeForm.fkCmsGlossaryMapping) }}
-{{ form_row(attributeForm.fkPage) }}
+<div class="placeholder-translation-container">
+    {{ form_row(attributeForm.searchOption) }}
 
-{% for locale in availableLocales %}
-    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
-        {% block content %}
+    <div class="form-group">
+        {{ form_label(attributeForm.translationKey) }}
+        {{ form_widget(attributeForm.translationKey, { 'attr': {'autocomplete' : 'off'} }) }}
 
-            {% for translationForm in attributeForm.translations %}
-                {% if translationForm.vars.data.localeName == locale.localeName   %}
-                    <div class="row">
-                        <div class="col-sm-12" class="translation">
-                            {{ form_label(translationForm.translation) }}
-                            {{ form_errors(translationForm.translation) }}
-                            {{ form_widget(translationForm.translation, {'attr': {'rows': 5}}) }}
+        <div class="loading loading-{{ tab.name }}">
+            <img src="/assets/img/cms-loader.gif">
+            Loading...
+        </div>
+
+        <div class="keyListCanvas"></div>
+        {{ form_errors(attributeForm.translationKey) }}
+    </div>
+
+
+    {{ form_row(attributeForm.fkCmsGlossaryMapping) }}
+    {{ form_row(attributeForm.fkPage) }}
+
+    {% for locale in availableLocales %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
+            {% block content %}
+
+                {% for translationForm in attributeForm.translations %}
+                    {% if translationForm.vars.data.localeName == locale.localeName   %}
+                        <div class="row">
+                            <div class="col-sm-12" class="translation">
+                                {{ form_label(translationForm.translation) }}
+                                {{ form_widget(translationForm.translation, {'attr': {'rows': 5}}) }}
+                                {{ form_errors(translationForm.translation) }}
+                            </div>
+                            {{ form_row(translationForm.fkLocale) }}
+                            {{ form_row(translationForm.localeName) }}
                         </div>
-                        {{ form_row(translationForm.fkLocale) }}
-                        {{ form_row(translationForm.localeName) }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
 
-        {% endblock %}
-    {% endembed %}
-{% endfor %}
+</div>

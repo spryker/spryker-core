@@ -63,4 +63,34 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale);
     }
 
+    /**
+     * @param string $value
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationWithKeyByValue($value)
+    {
+        return $this->cmsQueryContainer->queryTranslationWithKeyByValue($value);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key)
+    {
+        return $this->cmsQueryContainer->queryKeyWithTranslationByKey($key);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale)
+    {
+       return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
+    }
+
 }

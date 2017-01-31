@@ -6,8 +6,9 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,8 @@ class CmsPageAttributesFormType extends AbstractType
     const FIELD_LOCALE_NAME = 'localeName';
     const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'idCmsPageLocalizedAttributes';
 
+    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -30,7 +33,7 @@ class CmsPageAttributesFormType extends AbstractType
     {
         $this->addNameField($builder)
             ->addIdCmsLocalizedAttributes($builder)
-            ->addUrlField($builder)
+            ->addUrlField($builder, $options)
             ->addCmsLocaleNameField($builder)
             ->addFieldLocalName($builder);
     }
@@ -42,9 +45,7 @@ class CmsPageAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => CmsPageAttributesTransfer::class,
-        ]);
+        $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
     }
 
     /**
@@ -61,8 +62,6 @@ class CmsPageAttributesFormType extends AbstractType
         return $this;
     }
 
-
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -77,16 +76,53 @@ class CmsPageAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addUrlField(FormBuilderInterface $builder)
+    protected function addUrlField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_URL, TextType::class, [
             'label' => 'URL *'
         ]);
 
+        $builder->get(static::FIELD_URL)
+            ->addModelTransformer($this->createUrlFieldDataTransformer($options[static::OPTION_AVAILABLE_LOCALES]));
+
         return $this;
+    }
+
+    /**
+     * @param array|LocaleTransfer[] $availableLocales
+     *
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createUrlFieldDataTransformer(array $availableLocales)
+    {
+        return new CallbackTransformer(
+            function ($value) use ($availableLocales) {
+                $languageMatchPatternPart = $this->createLanguageMatchPatternPart($availableLocales);
+                return preg_replace('#^/(' . $languageMatchPatternPart . ')/#i', '', $value);
+            },
+            function($value) {
+                return $value;
+            }
+        );
+    }
+
+    /**
+     * @param array|LocaleTransfer[] $availableLocales
+     *
+     * @return array
+     */
+    protected function createLanguageMatchPatternPart(array $availableLocales)
+    {
+        $languageCodeList = [];
+        foreach ($availableLocales as $localeTransfer) {
+            $languageCodeList[] = substr($localeTransfer->getLocaleName(), 0, 2);
+        }
+
+        return implode('|', $languageCodeList);
     }
 
     /**
