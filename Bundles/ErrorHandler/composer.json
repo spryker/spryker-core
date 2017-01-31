@@ -15,7 +15,7 @@
     "spryker/library": "^2.0.0",
     "spryker/log": "^2.1.0",
     "spryker/new-relic": "^2.1.0",
-    "symfony/var-dumper": "~3.0.0",
+    "symfony/var-dumper": "^3.0.0",
     "filp/whoops": "^2.1"
   },
   "require-dev": {

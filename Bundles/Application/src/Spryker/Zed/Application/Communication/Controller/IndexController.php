@@ -15,7 +15,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        throw new \Exception('Something went wrong');
     }
 
 }
