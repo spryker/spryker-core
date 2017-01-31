@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ResponseInterface
@@ -27,7 +28,7 @@ interface ResponseInterface
     public function fromArray(array $values);
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorMessages();
 
@@ -46,14 +47,14 @@ interface ResponseInterface
     public function addErrorMessages(array $errorMessages);
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $errorMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $errorMessage
      *
      * @return $this
      */
-    public function addErrorMessage(Message $errorMessage);
+    public function addErrorMessage(MessageTransfer $errorMessage);
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoMessages();
 
@@ -65,11 +66,11 @@ interface ResponseInterface
     public function hasInfoMessage($messageString);
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return $this
      */
-    public function addInfoMessage(Message $message);
+    public function addInfoMessage(MessageTransfer $message);
 
     /**
      * @param array $messages
@@ -79,7 +80,7 @@ interface ResponseInterface
     public function addInfoMessages(array $messages);
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessMessages();
 
@@ -98,11 +99,11 @@ interface ResponseInterface
     public function addSuccessMessages(array $successMessages);
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $successMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $successMessage
      *
      * @return $this
      */
-    public function addSuccessMessage(Message $successMessage);
+    public function addSuccessMessage(MessageTransfer $successMessage);
 
     /**
      * @return bool

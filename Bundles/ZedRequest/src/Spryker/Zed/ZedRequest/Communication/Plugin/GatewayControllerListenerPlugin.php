@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use LogicException;
 use ReflectionObject;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
-use Spryker\Shared\ZedRequest\Client\Message;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
-use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -87,7 +87,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param \Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController $controller
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param string $action
      *
      * @throws \LogicException
@@ -120,7 +120,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param \Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController $controller
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $result
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Response
@@ -142,7 +142,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param \Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController $controller
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param \Spryker\Zed\ZedRequest\Business\Client\Response $response
      *
      * @return void
@@ -187,15 +187,15 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param array $messages
-     * @param \Spryker\Shared\ZedRequest\Client\Message[] $storedMessages
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $storedMessages
      *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     protected function createResponseMessages(array $messages, array $storedMessages = [])
     {
         foreach ($messages as $message) {
-            $responseMessage = new Message();
-            $responseMessage->setMessage($message);
+            $responseMessage = new MessageTransfer();
+            $responseMessage->setValue($message);
             $storedMessages[] = $responseMessage;
         }
 

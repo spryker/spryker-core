@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ZedRequest\Communication\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Fixture;
 
-use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 class FixtureGatewayController extends AbstractGatewayController
 {

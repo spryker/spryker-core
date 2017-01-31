@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use stdClass;
 
 class GatewayController extends AbstractGatewayController

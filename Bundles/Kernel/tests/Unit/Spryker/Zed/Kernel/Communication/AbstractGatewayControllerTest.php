@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ZedRequest\Communication;
+namespace Unit\Spryker\Zed\Kernel\Communication;
 
 use PHPUnit_Framework_TestCase;
 use Silex\Application;
-use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
-use Unit\Spryker\Zed\ZedRequest\Communication\Fixture\FixtureGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Unit\Spryker\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group ZedRequest
+ * @group Kernel
  * @group Communication
  * @group AbstractGatewayControllerTest
  */

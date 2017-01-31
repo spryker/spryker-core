@@ -7,11 +7,11 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\ZedRequest\Client\Response;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
-use Spryker\Shared\ZedRequest\Client\Message;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
@@ -25,6 +25,10 @@ use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
 
+    const MESSAGE_SUCCESS = 'success';
+    const MESSAGE_INFO = 'info';
+    const MESSAGE_ERROR = 'error';
+
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
@@ -35,12 +39,27 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $response = new Response();
 
         $response->setSuccess(false);
-        $response->addErrorMessages([new Message(['message' => 'error'])]);
-        $response->addInfoMessages([new Message(['message' => 'info'])]);
-        $response->addSuccessMessages([new Message(['message' => 'success'])]);
+
+        $response->addSuccessMessages([$this->getMessageTransfer(static::MESSAGE_SUCCESS)]);
+        $response->addInfoMessages([$this->getMessageTransfer(static::MESSAGE_INFO)]);
+        $response->addErrorMessages([$this->getMessageTransfer(static::MESSAGE_ERROR)]);
         $response->setTransfer($transfer);
 
         return $response;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function getMessageTransfer($value)
+    {
+        $errorMessage = new MessageTransfer();
+        $errorMessage->setValue($value)
+            ->setParameters([]);
+
+        return $errorMessage;
     }
 
     /**
@@ -75,9 +94,9 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $response = $this->createFullResponse($transfer);
 
         $this->assertEquals(false, $response->isSuccess());
-        $this->assertEquals([new Message(['message' => 'error'])], $response->getErrorMessages());
-        $this->assertEquals([new Message(['message' => 'info'])], $response->getInfoMessages());
-        $this->assertEquals([new Message(['message' => 'success'])], $response->getSuccessMessages());
+        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_ERROR)], $response->getErrorMessages());
+        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_INFO)], $response->getInfoMessages());
+        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_SUCCESS)], $response->getSuccessMessages());
         $this->assertEquals($transfer, $response->getTransfer());
         $this->assertNotSame($transfer, $response->getTransfer());
         $this->assertNotSame($response->getTransfer(), $response->getTransfer());
@@ -94,7 +113,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $response = $this->createFullResponse($transfer);
 
         $array = $response->toArray();
-        $this->assertTrue(is_array($array), 'toArray does not return array');
+        $this->assertInternalType('array', $array, 'toArray does not return array');
 
         $newResponse = new Response($array);
 
@@ -109,13 +128,14 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $response->addErrorMessage(new Message(['message' => 'error']));
-        $response->addInfoMessage(new Message(['message' => 'test']));
+        $response->addErrorMessage($this->getMessageTransfer(self::MESSAGE_ERROR));
+        $response->addInfoMessage($this->getMessageTransfer(self::MESSAGE_INFO));
 
-        $this->assertEquals(true, $response->hasErrorMessage('error'));
-        $this->assertEquals(false, $response->hasErrorMessage('test'));
-        $this->assertEquals(false, $response->hasInfoMessage('error'));
-        $this->assertEquals(true, $response->hasInfoMessage('test'));
+        $this->assertTrue($response->hasErrorMessage(self::MESSAGE_ERROR), 'Error message could not be found in response.');
+        $this->assertFalse($response->hasErrorMessage(self::MESSAGE_INFO), 'Info message was not expected as error in response.');
+
+        $this->assertTrue($response->hasInfoMessage(self::MESSAGE_INFO), 'Info message could not be found in response.');
+        $this->assertFalse($response->hasInfoMessage(self::MESSAGE_ERROR), 'Error message was not expected as info in response.');
     }
 
 }

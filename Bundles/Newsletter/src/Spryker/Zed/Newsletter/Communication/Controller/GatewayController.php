@@ -9,7 +9,7 @@ namespace Spryker\Zed\Newsletter\Communication\Controller;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()

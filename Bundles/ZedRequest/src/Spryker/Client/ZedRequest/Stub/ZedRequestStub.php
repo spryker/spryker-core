@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest\Stub;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class ZedRequestStub
@@ -26,7 +27,7 @@ class ZedRequestStub
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return MessageTransfer[]
      */
     public function getInfoMessages()
     {
@@ -34,7 +35,7 @@ class ZedRequestStub
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return MessageTransfer[]
      */
     public function getSuccessMessages()
     {
@@ -42,7 +43,7 @@ class ZedRequestStub
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return MessageTransfer[]
      */
     public function getErrorMessages()
     {
