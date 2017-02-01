@@ -43,14 +43,19 @@ class CreateGlossaryController extends AbstractController
 
         $glossaryForm = $this->getFactory()
             ->createCmsGlossaryForm($cmsGlossaryFormDataProvider);
+
         $glossaryForm->handleRequest($request);
 
-        if ($glossaryForm->isValid()) {
-            $cmsGlossaryTransfer = $this->getFactory()
-                ->getCmsFacade()
-                ->saveCmsGlossary($glossaryForm->getData());
+        if ($glossaryForm->isSubmitted()) {
+            if ($glossaryForm->isValid()) {
+                $cmsGlossaryTransfer = $this->getFactory()
+                    ->getCmsFacade()
+                    ->saveCmsGlossary($glossaryForm->getData());
 
-            $this->addSuccessMessage('Placeholder translations successfully updated.');
+                $this->addSuccessMessage('Placeholder translations successfully updated.');
+            } else {
+                $this->addErrorMessage('Invalid data provided.');
+            }
         }
 
         return [

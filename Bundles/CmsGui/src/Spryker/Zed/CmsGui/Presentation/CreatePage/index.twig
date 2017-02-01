@@ -6,20 +6,15 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/cms-gui/page-list', 'Back to CMS' | trans) }}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
-        {% embed '@Gui/Partials/widget.twig' %}
-            {% block widget_content %}
 
-                {{ form_start(pageForm) }}
+{{ form_start(pageForm) }}
 
-                {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
-                {% include '@CmsGui/_template/_form-submit.twig' %}
+{{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
 
-                {{ form_end(pageForm) }}
+{{ form_end(pageForm) }}
 
-            {% endblock %}
-        {% endembed %}
 {% endblock %}

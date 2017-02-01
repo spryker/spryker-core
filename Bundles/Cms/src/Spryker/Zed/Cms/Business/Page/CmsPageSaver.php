@@ -40,18 +40,26 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $cmsQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     */
+    protected $cmsPageUrlBuilder;
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
      */
     public function __construct(
         CmsToUrlInterface $urlFacade,
         CmsToTouchInterface $touchFacade,
-        CmsQueryContainerInterface $cmsQueryContainer
+        CmsQueryContainerInterface $cmsQueryContainer,
+        CmsPageUrlBuilderInterface $cmsPageUrlBuilder
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
     }
 
     /**
@@ -121,10 +129,7 @@ class CmsPageSaver implements CmsPageSaverInterface
      */
     public function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage)
     {
-        $url = $this->buildPageUrl(
-            $cmsPageAttributesTransfer->getUrl(),
-            $cmsPageAttributesTransfer->getLocaleName()
-        );
+        $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setIdLocale($cmsPageAttributesTransfer->getFkLocale());
@@ -137,39 +142,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         );
     }
 
-    /**
-     * @param string $url
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function buildPageUrl($url, $localeName)
-    {
-        $languageCode = $this->extractLanguageCode($localeName);
-
-        if (preg_match('#^/' . $languageCode . '/#i', $url) > 0) {
-            return $url;
-        }
-
-        $url = preg_replace('#^/#', '', $url);
-
-        $urlWithLanguageCode =  '/' . $languageCode . '/' . $url;
-
-        return $urlWithLanguageCode;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function extractLanguageCode($localeName)
-    {
-        $localeNameParts = explode('_', $localeName);
-        $languageCode = $localeNameParts[0];
-
-        return $languageCode;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
@@ -192,10 +164,7 @@ class CmsPageSaver implements CmsPageSaverInterface
      */
     protected function updatePageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, SpyUrl $urlEntity)
     {
-        $url = $this->buildPageUrl(
-            $cmsPageAttributesTransfer->getUrl(),
-            $cmsPageAttributesTransfer->getLocaleName()
-        );
+        $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
         if ($urlEntity->getUrl() !== $url) {
             $urlTransfer = new UrlTransfer();

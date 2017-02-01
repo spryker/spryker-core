@@ -43,7 +43,8 @@ class CmsPageMetaAttributesFormType extends AbstractType
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_META_TITLE, TextType::class, [
-            'label' => 'Meta title'
+            'label' => 'Meta title',
+            'required' => false,
         ]);
 
         return $this;
@@ -57,7 +58,8 @@ class CmsPageMetaAttributesFormType extends AbstractType
     protected function addMetaKeywordsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_META_KEYWORDS, TextType::class, [
-            'label' => 'Meta keywords'
+            'label' => 'Meta keywords',
+            'required' => false,
         ]);
 
         return $this;
@@ -72,7 +74,8 @@ class CmsPageMetaAttributesFormType extends AbstractType
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_META_DESCRIPTION, TextType::class, [
-            'label' => 'Meta description'
+            'label' => 'Meta description',
+            'required' => false,
         ]);
 
         return $this;

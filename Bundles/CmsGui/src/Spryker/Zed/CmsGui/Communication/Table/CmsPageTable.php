@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
@@ -23,7 +22,12 @@ class CmsPageTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const URL_CMS_PAGE_ACTIVATE = '/cms-gui/edit-page/activate';
-    const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-age/deactivate';
+    const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';
+
+    const COL_URL = 'Url';
+    const COL_TEMPLATE = 'template_name';
+    const COL_NAME = 'name';
+    const COL_CMS_URLS = 'cmsUrls';
 
     /**
      * @var CmsGuiToCmsQueryContainerInterface
@@ -31,11 +35,20 @@ class CmsPageTable extends AbstractTable
     protected $cmsQueryContainer;
 
     /**
-     * @param CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface
      */
-    public function __construct(CmsGuiToCmsQueryContainerInterface $cmsQueryContainer)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
+     */
+    public function __construct(
+        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsGuiToLocaleInterface $localeFacade
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -47,14 +60,16 @@ class CmsPageTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => '#',
-            SpyCmsPageLocalizedAttributesTableMap::COL_NAME => 'Name',
-            'Url' => 'Url',
-            'Template' => 'Template',
+            static::COL_NAME => 'Name',
+            static::COL_URL => 'Url',
+            static::COL_TEMPLATE => 'Template',
             SpyCmsPageTableMap::COL_IS_ACTIVE => 'Active',
-            self::ACTIONS => self::ACTIONS,
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
+        $config->addRawColumn(SpyCmsPageTableMap::COL_IS_ACTIVE);
+        $config->addRawColumn(static::COL_URL);
 
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -77,18 +92,20 @@ class CmsPageTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale(66);
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($localeTransfer->getIdLocale());
+
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-                'name' => $this->getPageName($item),
-                'Url' => $this->buildUrlList($item),
-                'Template' => $item['template_name'],
-                SpyCmsPageTableMap::COL_IS_ACTIVE => $item[SpyCmsPageTableMap::COL_IS_ACTIVE],
-                self::ACTIONS => implode(' ', $this->buildLinks($item)),
+                static::COL_NAME => $item[static::COL_NAME],
+                static::COL_URL => $this->buildUrlList($item),
+                static::COL_TEMPLATE => $item[static::COL_TEMPLATE],
+                SpyCmsPageTableMap::COL_IS_ACTIVE => $this->getStatusLabel($item),
+                static::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
 
@@ -102,17 +119,8 @@ class CmsPageTable extends AbstractTable
      */
     protected function buildUrlList(array $item)
     {
-        return $item['name'];
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function getPageName(array $item)
-    {
-        return $item['name'];
+        $cmsUrls = explode(',', $item[static::COL_CMS_URLS]);
+        return implode('<br />', $cmsUrls);
     }
 
     /**
@@ -140,7 +148,12 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewInShopButton(array $item)
     {
-        return 'n/a';
+        return $this->generateViewButton(
+            Url::generate('/cms-gui/view-page/index', [
+                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'View in Shop'
+        );
     }
 
     /**
@@ -150,11 +163,11 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewButton(array $item)
     {
-        return $this->generateEditButton(
+        return $this->generateViewButton(
             Url::generate('/cms-gui/view-page/index', [
                 ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
-            'view'
+            'View'
         );
     }
 
@@ -166,7 +179,7 @@ class CmsPageTable extends AbstractTable
     protected function createEditGlossaryButton(array $item)
     {
         return $this->generateEditButton(
-            Url::generate('/cms-gui/creat-glossary/index', [
+            Url::generate('/cms-gui/create-glossary/index', [
                 CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Placeholders'
@@ -181,7 +194,7 @@ class CmsPageTable extends AbstractTable
     protected function createEditPageButton(array $item)
     {
         return $this->generateEditButton(
-            Url::generate('/cms-gui/create-page/index', [
+            Url::generate('/cms-gui/edit-page/index', [
                 EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Page'
@@ -196,19 +209,36 @@ class CmsPageTable extends AbstractTable
     protected function createCmsStateChangeButton(array $item)
     {
         if ($item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
-            $label = 'Deactivate';
-            $url = static::URL_CMS_PAGE_DEACTIVATE;
+            return $this->generateRemoveButton(
+                Url::generate(static::URL_CMS_PAGE_DEACTIVATE, [
+                    EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                    EditPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
+                ]),
+                'Deactivate'
+            );
         } else {
-            $label = 'Activate';
-            $url = static::URL_CMS_PAGE_ACTIVATE;
+            return $this->generateViewButton(
+                Url::generate(static::URL_CMS_PAGE_ACTIVATE, [
+                    EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                    EditPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
+                ]),
+                'Activate'
+            );
+        }
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function getStatusLabel($item)
+    {
+        if (!$item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
+            return '<span class="label label-danger">Inactive</span>';
         }
 
-        return $this->generateViewButton(
-            Url::generate($url, [
-                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            $label
-        );
+        return '<span class="label label-info">Active</span>';
     }
 
 }

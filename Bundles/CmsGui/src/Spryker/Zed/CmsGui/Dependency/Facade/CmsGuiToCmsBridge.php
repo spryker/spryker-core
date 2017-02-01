@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 
@@ -110,4 +111,23 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
         $this->cmsFacade->deactivatePage($idCmsPage);
     }
 
+    /**
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function getPageUrlPrefix($localeName)
+    {
+         return $this->cmsFacade->getPageUrlPrefix($localeName);
+    }
+
+    /**
+     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    {
+        return $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
+    }
 }

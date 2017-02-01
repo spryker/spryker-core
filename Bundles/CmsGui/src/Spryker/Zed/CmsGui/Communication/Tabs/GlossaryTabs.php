@@ -33,13 +33,16 @@ class GlossaryTabs extends AbstractTabs
      */
     protected function build(TabsViewTransfer $tabsViewTransfer)
     {
-        return $this->createPlaceHolderTabs($tabsViewTransfer);
+         $this->createPlaceHolderTabs($tabsViewTransfer)
+            ->setFooter($tabsViewTransfer);
+
+         return $tabsViewTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
-     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     * @return $this
      */
     protected function createPlaceHolderTabs(TabsViewTransfer $tabsViewTransfer)
     {
@@ -51,6 +54,19 @@ class GlossaryTabs extends AbstractTabs
             $tabsViewTransfer->addTab($tabItemTransfer);
         }
 
-        return $tabsViewTransfer;
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function setFooter(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabsViewTransfer->setFooterTemplate('@CmsGui/_template/_form-submit.twig')
+            ->setIsNavigable(true);
+
+        return $this;
     }
 }

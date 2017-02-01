@@ -17,6 +17,7 @@ class EditPageController extends AbstractController
 {
 
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,7 +26,7 @@ class EditPageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCmsPage = $this->castId($request->get(static::URL_PARAM_ID_CMS_PAGE));
+        $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
         $availableLocales = $this->getFactory()
             ->getLocaleFacade()
@@ -43,17 +44,21 @@ class EditPageController extends AbstractController
 
         $pageForm->handleRequest($request);
 
-        if ($pageForm->isValid()) {
-            $this->getFactory()
-                ->getCmsFacade()
-                ->updatePage($pageForm->getData());
+        if ($pageForm->isSubmitted()) {
+            if ($pageForm->isValid()) {
+                $this->getFactory()
+                    ->getCmsFacade()
+                    ->updatePage($pageForm->getData());
 
-            $this->addSuccessMessage('Page successfully updated.');
+                $this->addSuccessMessage('Page successfully updated.');
 
-            $redirectUrl = $this->createEditPageUrl($idCmsPage);
+                $redirectUrl = $this->createEditPageUrl($idCmsPage);
 
-            return $this->redirectResponse($redirectUrl);
+                return $this->redirectResponse($redirectUrl);
 
+            } else {
+                $this->addErrorMessage('Invalid data provided.');
+            }
         }
 
         $pageTabs = $this->getFactory()->createPageTabs();
@@ -72,9 +77,8 @@ class EditPageController extends AbstractController
      */
     public function activateAction(Request $request)
     {
-        $idCmsPage = $this->castId($request->get(static::URL_PARAM_ID_CMS_PAGE));
-
-        $redirectUrl = $this->createEditPageUrl($idCmsPage);
+        $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
         $this->getFactory()
             ->getCmsFacade()
@@ -92,9 +96,8 @@ class EditPageController extends AbstractController
      */
     public function deactivateAction(Request $request)
     {
-        $idCmsPage = $this->castId($request->get(static::URL_PARAM_ID_CMS_PAGE));
-
-        $redirectUrl = $this->createEditPageUrl($idCmsPage);
+        $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
         $this->getFactory()
             ->getCmsFacade()

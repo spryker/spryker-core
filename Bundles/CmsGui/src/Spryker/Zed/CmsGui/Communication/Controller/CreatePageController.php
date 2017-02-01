@@ -37,19 +37,23 @@ class CreatePageController extends AbstractController
 
         $pageForm->handleRequest($request);
 
-        if ($pageForm->isValid()) {
-            $idCmsPage = $this->getFactory()
-                ->getCmsFacade()
-                ->createPage($pageForm->getData());
+        if ($pageForm->isSubmitted()) {
+            if ($pageForm->isValid()) {
+                $idCmsPage = $this->getFactory()
+                    ->getCmsFacade()
+                    ->createPage($pageForm->getData());
 
-            $redirectUrl = Url::generate(
-                '/cms-gui/create-glossary/index',
-                [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
-            )->build();
+                $redirectUrl = Url::generate(
+                    '/cms-gui/create-glossary/index',
+                    [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+                )->build();
 
-            $this->addSuccessMessage('Page successfully created.');
+                $this->addSuccessMessage('Page successfully created.');
 
-            return $this->redirectResponse($redirectUrl);
+                return $this->redirectResponse($redirectUrl);
+            } else {
+                $this->addErrorMessage('Invalid data provided.');
+            }
         }
 
         return [

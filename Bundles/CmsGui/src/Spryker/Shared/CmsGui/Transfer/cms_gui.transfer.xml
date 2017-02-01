@@ -7,6 +7,7 @@
         <property name="isActive" type="string" />
         <property name="isSearchable" type="bool" />
         <property name="fkTemplate" type="int" />
+        <property name="templateName" type="string" />
         <property name="fkPage" type="int" />
         <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute" />
         <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute" />
@@ -19,6 +20,7 @@
         <property name="fkLocale" type="int" />
         <property name="name" type="string" />
         <property name="url" type="string" />
+        <property name="urlPrefix" type="string" />
     </transfer>
 
     <transfer name="CmsPageMetaAttributes">

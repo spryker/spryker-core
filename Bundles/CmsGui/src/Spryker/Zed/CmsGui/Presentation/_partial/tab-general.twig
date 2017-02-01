@@ -7,24 +7,24 @@
 {{ form_row(pageForm.fkPage) }}
 
 {% for locale in availableLocales %}
-    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true), 'hasError': false} %}
          {% block content %}
             {% for cmsPageAttributesForm in pageForm.pageAttributes %}
                 {% if cmsPageAttributesForm.vars.data.localeName == locale.localeName %}
                     {{ form_row(cmsPageAttributesForm.name) }}
 
-                    <div class="form-group">
+                    <div class="form-group {% if cmsPageAttributesForm.url.vars.errors|length > 0 %}has-error{% endif %}" >
                         {{ form_label(cmsPageAttributesForm.url) }}
                             <div class="input-group m-b">
                                 <span class="input-group-addon">
-                                    {% set languageCode = (locale.localeName|slice(0,2))|lower %}
-                                    /{{ languageCode }}/
+                                    {{ cmsPageAttributesForm.vars.data.urlPrefix }}
                                 </span>
                                 {{ form_widget(cmsPageAttributesForm.url) }}
                             </div>
                         {{ form_errors(cmsPageAttributesForm.url) }}
                     </div>
 
+                    {{ form_row(cmsPageAttributesForm.url) }}
                     {{ form_row(cmsPageAttributesForm.localeName) }}
                     {{ form_row(cmsPageAttributesForm.idCmsPageLocalizedAttributes) }}
                 {% endif %}

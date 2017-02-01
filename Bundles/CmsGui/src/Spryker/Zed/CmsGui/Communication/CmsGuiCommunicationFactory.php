@@ -8,6 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
@@ -18,6 +19,7 @@ use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
@@ -37,7 +39,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         $cmsQueryContainer = $this->getCmsQueryContainer();
 
-        return new CmsPageTable($cmsQueryContainer);
+        return new CmsPageTable($cmsQueryContainer, $this->getLocaleFacade());
     }
 
     /**
@@ -97,7 +99,12 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormTypeDatProvider(array $availableLocales, CmsPageTransfer $cmsPageTransfer = null)
     {
-        return new CmsPageFormTypeDataProvider($availableLocales, $this->getCmsQueryContainer(),$cmsPageTransfer);
+        return new CmsPageFormTypeDataProvider(
+            $availableLocales,
+            $this->getCmsQueryContainer(),
+            $this->getCmsFacade(),
+            $cmsPageTransfer
+        );
     }
 
     /**
@@ -144,7 +151,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageAttributesFormType()
     {
-        return new CmsPageAttributesFormType();
+        return new CmsPageAttributesFormType($this->createUniqueUrlConstraint());
     }
 
     /**
@@ -153,6 +160,17 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsPageMetaAttributesFormType()
     {
         return new CmsPageMetaAttributesFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl
+     */
+    protected function createUniqueUrlConstraint()
+    {
+        return new UniqueUrl([
+            UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
+            UniqueUrl::OPTION_CMS_FACADE => $this->getCmsFacade(),
+        ]);
     }
 
     /**
@@ -177,5 +195,13 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsQueryContainer()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::QUERY_CONTAINER_CMS);
+    }
+
+    /**
+     * @return CmsGuiToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_URL);
     }
 }
