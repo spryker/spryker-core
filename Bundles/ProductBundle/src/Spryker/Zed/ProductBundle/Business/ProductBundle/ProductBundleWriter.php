@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Throwable;
 
 class ProductBundleWriter implements ProductBundleWriterInterface
 {
@@ -52,8 +53,10 @@ class ProductBundleWriter implements ProductBundleWriterInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     *
      */
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -79,6 +82,9 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->productBundleQueryContainer->getConnection()->commit();
 
         } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
         }

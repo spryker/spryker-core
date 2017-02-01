@@ -85,7 +85,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         $bundleOptions = $this->getBundleOptions($bundleItemTransfer, $items);
-        ;
         if (count($bundleOptions) == 0) {
             return $bundleItemTransfer->getSku();
         }

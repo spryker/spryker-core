@@ -15,6 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
@@ -56,6 +57,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -81,6 +83,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $this->productBundleQueryContainer->getConnection()->commit();
 
         } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
         }

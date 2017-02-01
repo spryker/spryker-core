@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Throwable;
 
 class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
@@ -45,6 +46,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @throws \Exception
+     * @throws \Throwable
      *
      * @return void
      */
@@ -58,6 +60,9 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
 
             $this->productBundleQueryContainer->getConnection()->commit();
         } catch (Exception $exception) {
+            $this->productBundleQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
