@@ -12,7 +12,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 {
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
@@ -30,7 +30,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 
         $url = preg_replace('#^/#', '', $url);
 
-        $urlWithLanguageCode = $prefix  . $url;
+        $urlWithLanguageCode = $prefix . $url;
 
         return $urlWithLanguageCode;
     }
@@ -42,7 +42,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      */
     public function getPageUrlPrefix($localeName)
     {
-        return  '/' . $this->extractLanguageCode($localeName) . '/';
+        return '/' . $this->extractLanguageCode($localeName) . '/';
     }
 
     /**
@@ -57,4 +57,5 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 
         return $languageCode;
     }
+
 }

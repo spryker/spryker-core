@@ -198,7 +198,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
             'allow_add' => true,
         ]);
 
-        $builder->get(self::FIELD_TRANSLATIONS)
+        $builder->get(static::FIELD_TRANSLATIONS)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;

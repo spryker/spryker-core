@@ -34,7 +34,12 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageTable()
     {
-        return new CmsPageTable($this->getCmsQueryContainer(), $this->getLocaleFacade());
+        return new CmsPageTable(
+            $this->getCmsQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getConfig(),
+            $this->getCmsFacade()
+        );
     }
 
     /**

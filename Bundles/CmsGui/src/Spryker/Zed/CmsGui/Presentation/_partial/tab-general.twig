@@ -15,11 +15,13 @@
 {{ form_label(pageForm.validTo) }}
 <div class="row">
     <div class="col-xs-12">
-        {{ form_widget(discountForm.validTo) }}
+        {{ form_widget(pageForm.validTo) }}
     </div>
 </div>
 
 {{ form_row(pageForm.fkPage) }}
+
+<br />
 
 {% for locale in availableLocales %}
     {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true), 'hasError': false} %}

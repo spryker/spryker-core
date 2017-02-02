@@ -80,7 +80,7 @@ class CmsGlossaryFormType extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_GLOSSARY_ATTRIBUTES)
+        $builder->get(static::FIELD_GLOSSARY_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;

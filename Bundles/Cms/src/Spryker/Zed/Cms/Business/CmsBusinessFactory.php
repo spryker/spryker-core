@@ -14,10 +14,10 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
+use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
-use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -197,4 +197,5 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsPageUrlBuilder();
     }
+
 }

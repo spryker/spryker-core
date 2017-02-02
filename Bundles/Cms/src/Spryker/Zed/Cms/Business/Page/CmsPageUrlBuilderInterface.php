@@ -11,7 +11,7 @@ interface CmsPageUrlBuilderInterface
 {
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
@@ -23,4 +23,5 @@ interface CmsPageUrlBuilderInterface
      * @return string
      */
     public function getPageUrlPrefix($localeName);
+
 }

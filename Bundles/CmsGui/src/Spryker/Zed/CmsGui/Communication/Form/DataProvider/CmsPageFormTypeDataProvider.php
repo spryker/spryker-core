@@ -105,6 +105,7 @@ class CmsPageFormTypeDataProvider
     protected function createInitialCmsPageTransfer()
     {
         $cmsPageTransfer = new CmsPageTransfer();
+
         foreach ($this->availableLocales as $localeTransfer) {
 
             $cmsPageAttributeTransfer = $this->createInitialCmsPageAttributesTransfer($localeTransfer);
@@ -127,7 +128,9 @@ class CmsPageFormTypeDataProvider
         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
         $cmsPageAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
-        $cmsPageAttributeTransfer->setUrlPrefix($this->cmsFacade->getPageUrlPrefix($localeTransfer->getLocaleName()));
+        $cmsPageAttributeTransfer->setUrlPrefix(
+            $this->cmsFacade->getPageUrlPrefix($localeTransfer->getLocaleName())
+        );
 
         return $cmsPageAttributeTransfer;
     }

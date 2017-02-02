@@ -421,6 +421,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return int
@@ -445,7 +447,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->createCmsPageReader()
             ->getCmsPageById($idCmsPage);
     }
-
 
     /**
      * @api
@@ -520,7 +521,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
@@ -530,4 +531,5 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->createCmsUrlBuilder()
             ->buildPageUrl($cmsPageAttributesTransfer);
     }
+
 }

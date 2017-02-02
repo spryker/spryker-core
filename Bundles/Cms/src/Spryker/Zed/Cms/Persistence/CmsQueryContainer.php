@@ -123,6 +123,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -613,6 +615,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery

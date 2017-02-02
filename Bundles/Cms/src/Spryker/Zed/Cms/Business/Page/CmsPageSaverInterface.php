@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsPageSaverInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
@@ -33,4 +34,5 @@ interface CmsPageSaverInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage);
+
 }

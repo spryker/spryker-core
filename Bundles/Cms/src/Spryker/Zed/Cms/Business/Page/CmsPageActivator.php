@@ -13,6 +13,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageActivator implements CmsPageActivatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -34,9 +35,9 @@ class CmsPageActivator implements CmsPageActivatorInterface
     }
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     * @return void
      */
     public function activate($idCmsPage)
     {
@@ -55,7 +56,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     * @return void
      */
     public function deactivate($idCmsPage)
     {
@@ -94,4 +95,5 @@ class CmsPageActivator implements CmsPageActivatorInterface
         }
         return $cmsPageEntity;
     }
+
 }

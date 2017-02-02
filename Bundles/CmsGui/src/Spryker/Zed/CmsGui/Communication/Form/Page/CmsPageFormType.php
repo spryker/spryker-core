@@ -6,8 +6,10 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
+use DateTime;
 use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -29,7 +31,6 @@ class CmsPageFormType extends AbstractType
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
     const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
-
 
     use ArrayObjectTransformerTrait;
 
@@ -155,7 +156,7 @@ class CmsPageFormType extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_PAGE_ATTRIBUTES)
+        $builder->get(static::FIELD_PAGE_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
@@ -178,12 +179,11 @@ class CmsPageFormType extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_PAGE_META_ATTRIBUTES)
+        $builder->get(static::FIELD_PAGE_META_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
     }
-
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -192,13 +192,16 @@ class CmsPageFormType extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALID_FROM, 'date', [
+        $builder->add(static::FIELD_VALID_FROM, 'date', [
             'widget' => 'single_text',
-            'required' => true,
+            'required' => false,
             'attr' => [
                 'class' => 'datepicker',
             ],
         ]);
+
+        $builder->get(static::FIELD_VALID_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
     }
@@ -210,15 +213,35 @@ class CmsPageFormType extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALID_TO, 'date', [
+        $builder->add(static::FIELD_VALID_TO, 'date', [
             'widget' => 'single_text',
-            'required' => true,
+            'required' => false,
             'attr' => [
                 'class' => 'datepicker',
             ],
         ]);
 
+        $builder->get(static::FIELD_VALID_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return new DateTime($value);
+                }
+            },
+            function ($value) {
+                return $value;
+            }
+        );
     }
 
     /**

@@ -9,9 +9,11 @@ namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Shared\Url\Url;
+use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
 use Spryker\Zed\CmsGui\Communication\Controller\EditPageController;
 use Spryker\Zed\CmsGui\Communication\Controller\ListPageController;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -40,15 +42,31 @@ class CmsPageTable extends AbstractTable
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\CmsGui\Communication\Table\CmsGuiConfig
+     */
+    protected $cmsGuiConfig;
+
+    /**
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
+     */
+    protected $cmsFacade;
+
+    /**
      * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\CmsGui\CmsGuiConfig $cmsGuiConfig
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
      */
     public function __construct(
         CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
-        CmsGuiToLocaleInterface $localeFacade
+        CmsGuiToLocaleInterface $localeFacade,
+        CmsGuiConfig $cmsGuiConfig,
+        CmsGuiToCmsInterface $cmsFacade
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->cmsGuiConfig = $cmsGuiConfig;
+        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -76,7 +94,7 @@ class CmsPageTable extends AbstractTable
             SpyCmsPageTableMap::COL_IS_ACTIVE,
         ]);
 
-        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpyCmsPageTableMap::COL_ID_CMS_PAGE, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE
@@ -93,19 +111,21 @@ class CmsPageTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $urlPrefix = $this->cmsFacade->getPageUrlPrefix($localeTransfer->getLocaleName());
         $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($localeTransfer->getIdLocale());
 
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
         foreach ($queryResults as $item) {
+            $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 static::COL_NAME => $item[static::COL_NAME],
                 static::COL_URL => $this->buildUrlList($item),
                 static::COL_TEMPLATE => $item[static::COL_TEMPLATE],
                 SpyCmsPageTableMap::COL_IS_ACTIVE => $this->getStatusLabel($item),
-                static::ACTIONS => implode(' ', $this->buildLinks($item)),
+                static::ACTIONS => $actions,
             ];
         }
 
@@ -119,21 +139,22 @@ class CmsPageTable extends AbstractTable
      */
     protected function buildUrlList(array $item)
     {
-        $cmsUrls = explode(',', $item[static::COL_CMS_URLS]);
+        $cmsUrls = $this->extractUrls($item);
         return implode('<br />', $cmsUrls);
     }
 
     /**
      * @param array $item
+     * @param string $urlPrefix
      *
      * @return array
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(array $item, $urlPrefix)
     {
         $buttons = [];
 
         $buttons[] = $this->createViewButton($item);
-        $buttons[] = $this->createViewInShopButton($item);
+        $buttons[] = $this->createViewInShopButton($item, $urlPrefix);
         $buttons[] = $this->createEditGlossaryButton($item);
         $buttons[] = $this->createEditPageButton($item);
         $buttons[] = $this->createCmsStateChangeButton($item);
@@ -143,17 +164,51 @@ class CmsPageTable extends AbstractTable
 
     /**
      * @param array $item
+     * @param string $urlPrefix
      *
      * @return string
      */
-    protected function createViewInShopButton(array $item)
+    protected function createViewInShopButton(array $item, $urlPrefix)
     {
+        $yvesHost = $this->cmsGuiConfig->findYvesHost();
+        if ($yvesHost === null) {
+            return '';
+        }
+
+        $currentLocaleUrl = $this->findCurrentLocaleUrl($item, $urlPrefix);
+        if ($currentLocaleUrl === null) {
+            return '';
+        }
+
+        $cmsPageUrlInYves = $yvesHost . $currentLocaleUrl;
+
         return $this->generateViewButton(
-            Url::generate('/cms-gui/view-page/index', [
-                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'View in Shop'
+            $cmsPageUrlInYves,
+            'View in Shop',
+            ['target' => '_blank']
         );
+    }
+
+    /**
+     * @param array $item
+     * @param string $urlPrefix
+     *
+     * @return string|null
+     */
+    protected function findCurrentLocaleUrl(array $item, $urlPrefix)
+    {
+        $cmsUrls = $this->extractUrls($item);
+        foreach ($cmsUrls as $url) {
+            if (preg_match('#^' . $urlPrefix . '#i', $url) > 0) {
+                return $url;
+            }
+        }
+
+        if (count($cmsUrls) > 0) {
+            return $cmsUrls[0];
+        }
+
+        return null;
     }
 
     /**
@@ -239,6 +294,16 @@ class CmsPageTable extends AbstractTable
         }
 
         return '<span class="label label-info">Active</span>';
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function extractUrls(array $item)
+    {
+        return explode(',', $item[static::COL_CMS_URLS]);
     }
 
 }

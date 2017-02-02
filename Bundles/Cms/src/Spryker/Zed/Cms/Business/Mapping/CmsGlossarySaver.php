@@ -88,7 +88,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer
      *
      * @return int
-     *
      */
     protected function createPageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer)
     {
@@ -208,7 +207,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
      *
      * @return string
      */
@@ -225,7 +224,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
      * @param string $translationKey
      *
      * @return void
@@ -242,12 +241,11 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             ->findOne();
 
         $glossaryAttributesTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
-
     }
 
     /**
      * @param string $translationKey
-     * @param CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer
+     * @param \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
@@ -262,4 +260,5 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
 
         return $keyTranslationTransfer;
     }
+
 }

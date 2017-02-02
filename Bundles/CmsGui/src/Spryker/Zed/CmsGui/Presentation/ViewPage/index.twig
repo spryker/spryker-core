@@ -30,6 +30,14 @@
                 <strong>{{ 'Template:' | trans }}</strong> {{ cmsPage.templateName }}
             </p>
 
+            <p>
+                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}
+            </p>
+
+            <p>
+                <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}
+            </p>
+
         {% endblock %}
     {% endembed %}
 

@@ -7,13 +7,14 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 
 interface CmsGlossaryReaderInterface
 {
+
     /**
      * @param int $idCmsPage
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     *
      */
     public function getPageGlossaryAttributes($idCmsPage);
+
 }

@@ -291,6 +291,8 @@ interface CmsFacadeInterface
     public function deleteBlockById($idCmsBlock);
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
@@ -363,7 +365,7 @@ interface CmsFacadeInterface
     /**
      * @api
      *
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -52,6 +53,14 @@ class CreateGlossaryController extends AbstractController
                     ->saveCmsGlossary($glossaryForm->getData());
 
                 $this->addSuccessMessage('Placeholder translations successfully updated.');
+
+                $redirectUrl = Url::generate(
+                    '/cms-gui/create-glossary/index',
+                    [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+                )->build();
+
+                $this->redirectResponse($redirectUrl);
+
             } else {
                 $this->addErrorMessage('Invalid data provided.');
             }
