@@ -6,29 +6,31 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Glossary;
 
+use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsGlossaryFormType extends AbstractType
 {
+
     const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType
+     * @var \Symfony\Component\Form\FormTypeInterface
      */
     protected $cmsGlossaryAttributeFormType;
 
     use ArrayObjectTransformerTrait;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType $cmsGlossaryAttributeFormType
+     * @param \Symfony\Component\Form\FormTypeInterface $cmsGlossaryAttributeFormType
      */
-    public function __construct(CmsGlossaryAttributesFormType $cmsGlossaryAttributeFormType)
+    public function __construct(FormTypeInterface $cmsGlossaryAttributeFormType)
     {
         $this->cmsGlossaryAttributeFormType = $cmsGlossaryAttributeFormType;
     }
@@ -73,7 +75,7 @@ class CmsGlossaryFormType extends AbstractType
         $builder->add(static::FIELD_GLOSSARY_ATTRIBUTES, CollectionType::class, [
             'type' => $this->cmsGlossaryAttributeFormType,
             'allow_add' => true,
-            'entry_options'  => [
+            'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
             ],
         ]);
@@ -83,4 +85,5 @@ class CmsGlossaryFormType extends AbstractType
 
         return $this;
     }
+
 }

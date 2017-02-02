@@ -16,7 +16,6 @@ class CreateGlossaryController extends AbstractController
 {
 
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const SEARCH_LIMIT = 50;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,7 +35,7 @@ class CreateGlossaryController extends AbstractController
             ->getLocaleCollection();
 
         $cmsGlossaryFormDataProvider = $this->getFactory()
-            ->createCmsGlossaryFormDataProvider($availableLocales, $cmsGlossaryTransfer);
+            ->createCmsGlossaryFormTypeDataProvider($cmsGlossaryTransfer);
 
         $placeholderTabs = $this->getFactory()
             ->createPlaceholderTabs($cmsGlossaryTransfer);
@@ -79,42 +78,15 @@ class CreateGlossaryController extends AbstractController
 
         $result = [];
         if ($key !== null) {
-            $glossaryKeys = $this->getFactory()
-                ->getCmsQueryContainer()
-                ->queryKeyWithTranslationByKey($key)
-                ->limit(static::SEARCH_LIMIT)
-                ->find();
+            $result = $this->getFactory()
+                ->createAutocompleteDataProvider()
+                ->getAutocompleteDataForTranslationKey($key);
 
-            foreach ($glossaryKeys as $glossaryKeyEntity) {
+        } elseif ($value != null) {
+            $result = $this->getFactory()
+                ->createAutocompleteDataProvider()
+                ->getAutocompleteDataForTranslationKey($value);
 
-                $translations = [];
-                foreach ($glossaryKeyEntity->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
-                    $translations[$glossaryTranslationEntity->getFkLocale()] = $glossaryTranslationEntity->toArray();
-                }
-
-                $result[] = [
-                    'key' => $glossaryKeyEntity->getLabel(),
-                    'translations' => $translations,
-                ];
-            }
-
-        } else {
-            $glossaryTranslations = $this->getFactory()
-                ->getCmsQueryContainer()
-                ->queryTranslationWithKeyByValue($value)
-                ->limit(static::SEARCH_LIMIT)
-                ->find();
-
-            foreach ($glossaryTranslations as $glossaryTranslationEntity) {
-                if (!isset($result[$glossaryTranslationEntity->getLabel()])) {
-                    $result[$glossaryTranslationEntity->getLabel()] = [
-                        'key' => $glossaryTranslationEntity->getLabel(),
-                        'translations' => [],
-                    ];
-                }
-
-                $result[$glossaryTranslationEntity->getLabel()]['translations'][] = $glossaryTranslationEntity->toArray();
-            }
         }
 
         return $this->jsonResponse($result);

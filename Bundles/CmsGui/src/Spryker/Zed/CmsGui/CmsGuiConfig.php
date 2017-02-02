@@ -10,5 +10,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsGuiConfig extends AbstractBundleConfig
 {
-
 }

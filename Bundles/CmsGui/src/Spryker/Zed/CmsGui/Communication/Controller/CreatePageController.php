@@ -30,7 +30,7 @@ class CreatePageController extends AbstractController
             ->getLocaleCollection();
 
         $cmsPageFormTypeDataProvider = $this->getFactory()
-            ->createCmsPageFormTypeDatProvider($availableLocales);
+            ->createCmsPageFormTypeDataProvider($availableLocales);
 
         $pageForm = $this->getFactory()
             ->createCmsPageForm($cmsPageFormTypeDataProvider);
@@ -62,4 +62,5 @@ class CreatePageController extends AbstractController
             'availableLocales' => $availableLocales,
         ];
     }
+
 }

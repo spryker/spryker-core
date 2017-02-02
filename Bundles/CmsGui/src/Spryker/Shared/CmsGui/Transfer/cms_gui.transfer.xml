@@ -9,6 +9,8 @@
         <property name="fkTemplate" type="int" />
         <property name="templateName" type="string" />
         <property name="fkPage" type="int" />
+        <property name="validFrom" type="string" />
+        <property name="validTo" type="string" />
         <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute" />
         <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute" />
     </transfer>

@@ -10,11 +10,10 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
-use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 
 class CmsPageFormTypeDataProvider
 {
@@ -43,7 +42,7 @@ class CmsPageFormTypeDataProvider
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
-     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
      */
     public function __construct(
         array $availableLocales,
@@ -67,7 +66,7 @@ class CmsPageFormTypeDataProvider
             CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES => $this->availableLocales,
             CmsPageFormType::OPTION_DATA_CLASS_ATTRIBUTES => CmsPageAttributesTransfer::class,
             CmsPageFormType::OPTION_DATA_CLASS_META_ATTRIBUTES => CmsPageMetaAttributesTransfer::class,
-            CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList()
+            CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList(),
         ];
     }
 
@@ -119,7 +118,7 @@ class CmsPageFormTypeDataProvider
     }
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
@@ -134,7 +133,7 @@ class CmsPageFormTypeDataProvider
     }
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
@@ -146,4 +145,5 @@ class CmsPageFormTypeDataProvider
 
         return $cmsPageMetaAttributeTransfer;
     }
+
 }

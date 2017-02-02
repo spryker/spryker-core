@@ -21,9 +21,10 @@ trait ArrayObjectTransformerTrait
             function ($value) {
                 return (array)$value;
             },
-            function($value) {
+            function ($value) {
                 return new ArrayObject($value);
             }
         );
     }
+
 }

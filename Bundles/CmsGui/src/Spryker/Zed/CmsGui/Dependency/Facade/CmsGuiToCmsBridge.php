@@ -9,13 +9,12 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 
 class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 {
 
     /**
-     * @var CmsFacadeInterface
+     * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
     protected $cmsFacade;
 
@@ -51,10 +50,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     *
      */
     public function getPageGlossaryAttributes($idCmsPage)
     {
@@ -122,7 +118,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     }
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
@@ -130,4 +126,5 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     {
         return $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
     }
+
 }

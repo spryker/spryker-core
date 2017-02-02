@@ -37,7 +37,7 @@ class EditPageController extends AbstractController
             ->getCmsPageById($idCmsPage);
 
         $cmsPageFormTypeDataProvider = $this->getFactory()
-            ->createCmsPageFormTypeDatProvider($availableLocales, $cmsPageTransfer);
+            ->createCmsPageFormTypeDataProvider($availableLocales, $cmsPageTransfer);
 
         $pageForm = $this->getFactory()
             ->createCmsPageForm($cmsPageFormTypeDataProvider);
@@ -115,9 +115,10 @@ class EditPageController extends AbstractController
      */
     protected function createEditPageUrl($idCmsPage)
     {
-       return Url::generate(
+        return Url::generate(
             '/cms-gui/edit-page/index',
             [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
         )->build();
     }
+
 }

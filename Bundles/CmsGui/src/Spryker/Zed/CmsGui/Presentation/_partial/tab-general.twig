@@ -4,6 +4,21 @@
 {{ form_row(pageForm.isSearchable) }}
 
 {{ form_row(pageForm.fkTemplate) }}
+
+{{ form_label(pageForm.validFrom) }}
+<div class="row">
+    <div class="col-xs-12">
+        {{ form_widget(pageForm.validFrom) }}
+    </div>
+</div>
+
+{{ form_label(pageForm.validTo) }}
+<div class="row">
+    <div class="col-xs-12">
+        {{ form_widget(discountForm.validTo) }}
+    </div>
+</div>
+
 {{ form_row(pageForm.fkPage) }}
 
 {% for locale in availableLocales %}

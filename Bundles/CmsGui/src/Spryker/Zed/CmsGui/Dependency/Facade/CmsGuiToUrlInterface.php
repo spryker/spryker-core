@@ -5,6 +5,8 @@
  */
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\UrlTransfer;
+
 interface CmsGuiToUrlInterface
 {
 
@@ -14,4 +16,12 @@ interface CmsGuiToUrlInterface
      * @return bool
      */
     public function hasUrl($url);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrl(UrlTransfer $urlTransfer);
+
 }

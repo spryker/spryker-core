@@ -18,8 +18,8 @@ class ViewPageController extends AbstractController
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -39,6 +39,5 @@ class ViewPageController extends AbstractController
             'cmsGlossary' => $cmsGlossaryTransfer,
         ];
     }
-
 
 }

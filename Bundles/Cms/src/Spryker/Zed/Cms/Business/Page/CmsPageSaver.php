@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
@@ -131,15 +130,9 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setIdLocale($cmsPageAttributesTransfer->getFkLocale());
+        $urlTransfer = $this->createUrlTransfer($cmsPageAttributesTransfer, $idCmsPage, $url);
 
-        return $this->urlFacade->createUrl(
-            $url,
-            $localeTransfer,
-            CmsConstants::RESOURCE_TYPE_PAGE,
-            $idCmsPage
-        );
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
 
@@ -167,12 +160,13 @@ class CmsPageSaver implements CmsPageSaverInterface
         $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
         if ($urlEntity->getUrl() !== $url) {
-            $urlTransfer = new UrlTransfer();
+            $urlTransfer = $this->createUrlTransfer(
+                $cmsPageAttributesTransfer,
+                $cmsPageAttributesTransfer->getIdCmsPage(),
+                $url
+            );
             $urlTransfer->setIdUrl($urlEntity->getIdUrl());
-            $urlTransfer->fromArray($cmsPageAttributesTransfer->toArray(), true);
-            $urlTransfer->setUrl($url);
-
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->urlFacade->updateUrl($urlTransfer);
         }
     }
 
@@ -341,5 +335,21 @@ class CmsPageSaver implements CmsPageSaverInterface
 
             $cmsPageLocalizedAttributesEntity->save();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param $idCmsPage
+     * @param $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function createUrlTransfer(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage, $url)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl($url);
+        $urlTransfer->setFkLocale($cmsPageAttributesTransfer->getFkLocale());
+        $urlTransfer->setFkResourcePage($idCmsPage);
+        return $urlTransfer;
     }
 }

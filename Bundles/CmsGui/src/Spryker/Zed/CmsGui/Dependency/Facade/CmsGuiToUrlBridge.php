@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
-use Spryker\Zed\Url\Business\UrlFacadeInterface;
+use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
 {
 
     /**
-     * @var UrlFacadeInterface
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
     protected $urlFacade;
 
@@ -31,7 +31,17 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
      */
     public function hasUrl($url)
     {
-       return $this->urlFacade->hasUrl($url);
+        return $this->urlFacade->hasUrl($url);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->findUrl($urlTransfer);
     }
 
 }

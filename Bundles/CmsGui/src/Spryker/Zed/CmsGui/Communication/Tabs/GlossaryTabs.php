@@ -15,17 +15,18 @@ class GlossaryTabs extends AbstractTabs
 {
 
     /**
-     * @var CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @var \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      */
     protected $cmsGlossaryTransfer;
 
     /**
-     * @param CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      */
     public function __construct(CmsGlossaryTransfer $cmsGlossaryTransfer)
     {
         $this->cmsGlossaryTransfer = $cmsGlossaryTransfer;
     }
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -69,4 +70,5 @@ class GlossaryTabs extends AbstractTabs
 
         return $this;
     }
+
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsGuiToCmsInterface
 {
+
     /**
      * @param int $idPage
      * @param string $placeholder
@@ -78,9 +79,10 @@ interface CmsGuiToCmsInterface
     public function getPageUrlPrefix($localeName);
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+
 }

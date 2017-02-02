@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_LOCALE = 'locale facade';
     const FACADE_CMS = 'locale cms';
     const FACADE_URL = 'url facade';
@@ -40,10 +41,11 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsGuiToCmsQueryContainerBrige($container->getLocator()->cms()->queryContainer());
         };
 
-        $container[static::FACADE_URL] = function(Container $container) {
+        $container[static::FACADE_URL] = function (Container $container) {
             return new CmsGuiToUrlBridge($container->getLocator()->url()->facade());
         };
 
         return $container;
     }
+
 }

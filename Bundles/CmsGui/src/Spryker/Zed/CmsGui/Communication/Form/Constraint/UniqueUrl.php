@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Constraint;
 
-use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
-use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
@@ -17,17 +15,17 @@ class UniqueUrl extends SymfonyConstraint
     const OPTION_CMS_FACADE = 'cmsFacade';
 
     /**
-     * @var CmsGuiToUrlInterface
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var CmsGuiToCmsInterface
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
      */
     protected $cmsFacade;
 
     /**
-     * @return CmsGuiToUrlInterface
+     * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface
      */
     public function getUrlFacade()
     {

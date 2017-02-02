@@ -39,4 +39,5 @@ class ListPageController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
+
 }

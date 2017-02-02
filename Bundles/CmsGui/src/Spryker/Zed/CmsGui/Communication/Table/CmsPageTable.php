@@ -9,13 +9,13 @@ namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
 use Spryker\Zed\CmsGui\Communication\Controller\EditPageController;
 use Spryker\Zed\CmsGui\Communication\Controller\ListPageController;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
@@ -30,7 +30,7 @@ class CmsPageTable extends AbstractTable
     const COL_CMS_URLS = 'cmsUrls';
 
     /**
-     * @var CmsGuiToCmsQueryContainerInterface
+     * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
@@ -40,7 +40,7 @@ class CmsPageTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
      */
     public function __construct(

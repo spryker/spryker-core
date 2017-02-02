@@ -73,4 +73,5 @@ class PageTabs extends AbstractTabs
 
         return $this;
     }
+
 }

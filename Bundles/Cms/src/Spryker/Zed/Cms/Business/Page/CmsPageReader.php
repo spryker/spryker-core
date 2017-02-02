@@ -34,8 +34,7 @@ class CmsPageReader implements CmsPageReaderInterface
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsPageUrlBuilderInterface $cmsPageUrlBuilder
-    )
-    {
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
     }

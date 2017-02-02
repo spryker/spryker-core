@@ -187,7 +187,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageActivator()
     {
-        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade(), $this->getUrlFacade());
+        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade());
     }
 
     /**

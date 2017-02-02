@@ -24,13 +24,13 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
         $prefix = $this->getPageUrlPrefix($cmsPageAttributesTransfer->getLocaleName());
 
         $url = $cmsPageAttributesTransfer->getUrl();
-        if (preg_match('#^/' . $prefix . '/#i', $url) > 0) {
+        if (preg_match('#^' . $prefix . '#i', $url) > 0) {
             return $url;
         }
 
         $url = preg_replace('#^/#', '', $url);
 
-        $urlWithLanguageCode =  '/' . $prefix . '/' . $url;
+        $urlWithLanguageCode = $prefix  . $url;
 
         return $urlWithLanguageCode;
     }
@@ -42,7 +42,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      */
     public function getPageUrlPrefix($localeName)
     {
-        return $this->extractLanguageCode($localeName);
+        return  '/' . $this->extractLanguageCode($localeName) . '/';
     }
 
     /**

@@ -8,21 +8,10 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 
-class CmsGlossaryFormDataProvider
+class CmsGlossaryFormTypeDataProvider
 {
-
-    /**
-     * @var array|\Generated\Shared\Transfer\LocaleTransfer[]
-     */
-    protected $availableLocales;
-
-    /**
-     * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
-     */
-    protected $cmsQueryContainer;
 
     /**
      * @var \Generated\Shared\Transfer\CmsGlossaryTransfer
@@ -30,18 +19,10 @@ class CmsGlossaryFormDataProvider
     protected $cmsGlossaryTransfer;
 
     /**
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
-     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      */
-    public function __construct(
-        array $availableLocales,
-        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
-        CmsGlossaryTransfer $cmsGlossaryTransfer
-
-    ) {
-        $this->availableLocales = $availableLocales;
-        $this->cmsQueryContainer = $cmsQueryContainer;
+    public function __construct(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
         $this->cmsGlossaryTransfer = $cmsGlossaryTransfer;
     }
 
@@ -57,13 +38,11 @@ class CmsGlossaryFormDataProvider
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function getData()
     {
         return $this->cmsGlossaryTransfer;
     }
-
 
 }

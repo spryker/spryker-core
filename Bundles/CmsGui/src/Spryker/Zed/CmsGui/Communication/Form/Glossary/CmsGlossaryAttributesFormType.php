@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Glossary;
 
-use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
+use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 
 class CmsGlossaryAttributesFormType extends AbstractType
 {
@@ -230,4 +229,5 @@ class CmsGlossaryAttributesFormType extends AbstractType
 
         return $placeholderConstraints;
     }
+
 }
