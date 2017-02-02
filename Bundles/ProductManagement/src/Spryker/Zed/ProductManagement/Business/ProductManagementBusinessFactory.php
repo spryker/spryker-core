@@ -87,14 +87,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
-     */
-    protected function getUrlFacade()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_URL);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
      */
     protected function getPriceFacade()

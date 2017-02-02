@@ -47,7 +47,7 @@ class Functional extends Module
     {
         parent::_after($test);
 
-        Propel::getWriteConnection('zed')->rollBack();
+        Propel::getWriteConnection('zed')->forceRollBack();
 
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
@@ -64,7 +64,7 @@ class Functional extends Module
     {
         parent::_failed($test, $fail);
 
-        Propel::getWriteConnection('zed')->rollBack();
+        Propel::getWriteConnection('zed')->forceRollBack();
 
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();

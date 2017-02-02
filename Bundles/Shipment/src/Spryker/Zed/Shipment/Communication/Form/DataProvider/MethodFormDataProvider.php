@@ -89,9 +89,9 @@ class MethodFormDataProvider
     {
         $options = [
             MethodForm::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
-            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS]),
-            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
+            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::AVAILABILITY_PLUGINS),
+            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::PRICE_PLUGINS),
+            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS),
             MethodForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
 
@@ -131,6 +131,18 @@ class MethodFormDataProvider
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $pluginsType
+     *
+     * @return array
+     */
+    private function getPluginOptions($pluginsType)
+    {
+        $plugins = array_keys($this->plugins[$pluginsType]);
+
+        return array_combine($plugins, $plugins);
     }
 
 }

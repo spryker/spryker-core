@@ -46,11 +46,20 @@ class TableConfiguration
     protected $sortableFields = [];
 
     /**
+     * @var array|null
+     */
+    protected $defaultSortField = null;
+
+    /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @var int
      */
     protected $defaultSortColumnIndex = 0;
 
     /**
+     * @deprecated Use $defaultSortField instead.
+     *
      * @var string
      */
     protected $defaultSortDirection = self::SORT_ASC;
@@ -101,8 +110,6 @@ class TableConfiguration
     }
 
     /**
-     * @todo Zed Translation in Template
-     *
      * @param array $header Provide php names for table columns
      *   if you are going to user Propel Query as data population
      *
@@ -221,6 +228,27 @@ class TableConfiguration
     }
 
     /**
+     * @param string $field
+     * @param string $direction
+     *
+     * @return void
+     */
+    public function setDefaultSortField($field, $direction = self::SORT_ASC)
+    {
+        $this->defaultSortField = [$field => $direction];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultSortField()
+    {
+        return $this->defaultSortField;
+    }
+
+    /**
+     * @deprecated Use setDefaultSortField() instead.
+     *
      * @param int $columnIndex
      *
      * @return void
@@ -231,7 +259,9 @@ class TableConfiguration
     }
 
     /**
-     * @return string
+     * @deprecated Use getDefaultSortField() instead.
+     *
+     * @return int
      */
     public function getDefaultSortColumnIndex()
     {
@@ -239,6 +269,8 @@ class TableConfiguration
     }
 
     /**
+     * @deprecated Use setDefaultSortField() instead.
+     *
      * @param string $direction
      *
      * @return void
@@ -249,6 +281,8 @@ class TableConfiguration
     }
 
     /**
+     * @deprecated Use getDefaultSortField() instead.
+     *
      * @return string
      */
     public function getDefaultSortDirection()
