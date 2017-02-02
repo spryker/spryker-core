@@ -2,11 +2,11 @@
   "name": "spryker/mail",
   "require": {
     "spryker/glossary": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/twig": "^2.0.0"
+    "spryker/kernel": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/twig": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -196,7 +196,6 @@ class BundleParser implements BundleParserInterface
             foreach ($fileDependencies as $fileDependency) {
                 $fileDependencyParts = explode('\\', $fileDependency);
                 $bundleNamespace = $fileDependencyParts[0];
-
                 if (in_array($bundleNamespace, $this->relevantBundleNamespaces)) {
                     $reducedDependencies[] = $fileDependency;
                 }

@@ -11,7 +11,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^2.0.0",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "SequenceNumber bundle",

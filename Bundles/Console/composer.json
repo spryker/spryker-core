@@ -16,6 +16,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/log": "^2.0.0",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -53,6 +53,8 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this->printLineSeparator();
 
         $bundles = $this->getFacade()->getAllBundles();
+//        $bundles = ['Discount'];
+
         $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
 
         $count = 0;
@@ -63,21 +65,37 @@ class DependencyTreeDependencyViolationConsole extends Console
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
 
             foreach ($composerDependencies as $composerDependency) {
-                if ($composerDependency['code'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
-                    continue;
+
+                if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
+                    if ($composerDependency['composerRequire']) {
+                        $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
+                    }
                 }
-                if (!$composerDependency['code'] && $composerDependency['composerRequireDev']) {
+
+                if ($this->isDevelopmentOnlyDependency($composerDependency)) {
                     continue;
                 }
 
-                if (!$composerDependency['code'] && !$composerDependency['composerRequireDev']) {
-                    $composerDependency['code'] = '-';
-                }
-                if (!$composerDependency['composerRequire']) {
-                    $composerDependency['composerRequire'] = '-';
+                if ($this->isMissingInRequire($composerDependency)) {
+                    $violations[] = 'src: ' . $composerDependency['src'] . ' / require: -';
                 }
 
-                $violations[] = 'code: ' . $composerDependency['code'] . ' / composer: ' . $composerDependency['composerRequire'];
+                if ($this->isMissingInSrc($composerDependency)) {
+                    $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
+                }
+
+                if ($this->isMissingInRequireDev($composerDependency)) {
+                    $violations[] = 'tests: ' . $composerDependency['tests'] . ' / require-dev: -';
+                }
+
+                if ($this->isMissingInTests($composerDependency)) {
+                    $violations[] = 'tests: - / require-dev: ' . $composerDependency['composerRequireDev'];
+                }
+
+                if ($composerDependency['composerRequire'] && $composerDependency['composerRequireDev']) {
+                    $violations[] = 'defined in require and require-dev: ' . $composerDependency['composerRequireDev'];
+                }
+
             }
 
             if (!$violations) {
@@ -93,7 +111,58 @@ class DependencyTreeDependencyViolationConsole extends Console
         }
 
         $this->info(sprintf('%d bundle dependency issues found', $count));
+
         return $count > 0 ? static::CODE_ERROR : static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return bool
+     */
+    protected function isDevelopmentOnlyDependency(array $composerDependency)
+    {
+        return (!$composerDependency['src'] && !$composerDependency['tests']);
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return bool
+     */
+    protected function isMissingInRequire($composerDependency)
+    {
+        return ($composerDependency['src'] && !$composerDependency['composerRequire']);
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return bool
+     */
+    protected function isMissingInSrc($composerDependency)
+    {
+        return (!$composerDependency['src'] && $composerDependency['composerRequire']);
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return bool
+     */
+    protected function isMissingInRequireDev($composerDependency)
+    {
+        return ($composerDependency['tests'] && !$composerDependency['src'] && !$composerDependency['composerRequireDev']);
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return bool
+     */
+    protected function isMissingInTests($composerDependency)
+    {
+        return (!$composerDependency['tests'] && $composerDependency['composerRequireDev']);
     }
 
 }

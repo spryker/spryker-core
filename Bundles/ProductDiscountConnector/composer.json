@@ -13,7 +13,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/tax": "^3.0.0",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
+    "spryker/tax": "*",
     "spryker/testify": "*"
   },
   "description": "ProductDiscountConnector bundle",

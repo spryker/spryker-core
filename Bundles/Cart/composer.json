@@ -14,8 +14,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/price": "^2.0.0 || ^3.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",
+    "spryker/price": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "Cart bundle",

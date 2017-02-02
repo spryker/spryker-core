@@ -11,6 +11,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "ProductOptionCartConnector bundle",

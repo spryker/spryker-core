@@ -6,7 +6,6 @@
     }
   },
   "require": {
-    "spryker/country": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^4.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -14,7 +13,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^2.0.0",
+    "spryker/country": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "TaxProductConnector bundle",

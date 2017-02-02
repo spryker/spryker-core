@@ -43,11 +43,13 @@ class ComposerDependencyParser
     public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $bundleDependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependencyCollectionTransfer);
-        $bundleDependencyCollectionTransfer = $this->filterCodeDependencies($bundleDependencyCollectionTransfer);
 
         $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
 
         $bundleNames = $this->getBundleDependencyNames($bundleDependencyCollectionTransfer);
+        $bundleNamesInSrc = $this->getBundleDependencyNamesInSrc($bundleDependencyCollectionTransfer);
+        $bundleNamesInTests = $this->getBundleDependencyNamesInTests($bundleDependencyCollectionTransfer);
+
         $requireNames = $this->getRequireNames($composerDependencyCollectionTransfer);
         $requireDevNames = $this->getRequireNames($composerDependencyCollectionTransfer, true);
 
@@ -61,7 +63,8 @@ class ComposerDependencyParser
                 continue;
             }
             $dependencies[] = [
-                'code' => in_array($bundleName, $bundleNames) ? $bundleName : '',
+                'src' => in_array($bundleName, $bundleNamesInSrc) ? $bundleName : '',
+                'tests' => in_array($bundleName, $bundleNamesInTests) ? $bundleName : '',
                 'composerRequire' => in_array($bundleName, $requireNames) ? $bundleName : '',
                 'composerRequireDev' => in_array($bundleName, $requireDevNames) ? $bundleName : '',
             ];
@@ -80,6 +83,52 @@ class ComposerDependencyParser
         $bundleNames = [];
         foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
             $bundleNames[] = $dependencyBundleTransfer->getBundle();
+        }
+
+        return $bundleNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     *
+     * @return array
+     */
+    protected function getBundleDependencyNamesInSrc(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    {
+        $bundleNames = [];
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+            $usedInSrc = false;
+            foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
+                if (!$dependencyTransfer->getIsInTest()) {
+                    $usedInSrc = true;
+                }
+            }
+            if ($usedInSrc) {
+                $bundleNames[] = $dependencyBundleTransfer->getBundle();
+            }
+        }
+
+        return $bundleNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     *
+     * @return array
+     */
+    protected function getBundleDependencyNamesInTests(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    {
+        $bundleNames = [];
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+            $usedInTests = false;
+            foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
+                if ($dependencyTransfer->getIsInTest()) {
+                    $usedInTests = true;
+                }
+            }
+            if ($usedInTests) {
+                $bundleNames[] = $dependencyBundleTransfer->getBundle();
+            }
         }
 
         return $bundleNames;
@@ -224,54 +273,6 @@ class ComposerDependencyParser
         $folder = $composerJsonFile->getRelativePath();
 
         return ($folder !== $bundleName);
-    }
-
-    /**
-     * @TODO find better way to handle this:
-     *
-     * Propel bundle is separated into two bundles.
-     *
-     * "spryker/propel-orm" for the dependency to the external "propel/propel"
-     * "spryker/propel" for our own code like Builders etc.
-     *
-     * "spryker/propel-orm" is a dependency of "spryker/propel" but
-     * is displayed in the list of Composer dependencies. To prevent this wrong
-     * dependency "alert" PropelOrm gets filtered out when both bundles are present.
-     *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
-     */
-    private function filterCodeDependencies(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
-    {
-        if ($this->hasDependencyTo('Propel', $bundleDependencyCollectionTransfer) && $this->hasDependencyTo('PropelOrm', $bundleDependencyCollectionTransfer)) {
-            $dependencyBundles = $bundleDependencyCollectionTransfer->getDependencyBundles();
-            $bundleDependencyCollectionTransfer->setDependencyBundles(new ArrayObject());
-            foreach ($dependencyBundles as $dependencyBundle) {
-                if ($dependencyBundle->getBundle() !== 'PropelOrm') {
-                    $bundleDependencyCollectionTransfer->addDependencyBundle($dependencyBundle);
-                }
-            }
-        }
-
-        return $bundleDependencyCollectionTransfer;
-    }
-
-    /**
-     * @param string $bundle
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
-     *
-     * @return bool
-     */
-    private function hasDependencyTo($bundle, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
-    {
-        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
-            if ($dependencyBundleTransfer->getBundle() === $bundle) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

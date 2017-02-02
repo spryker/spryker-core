@@ -20,9 +20,13 @@
   "require-dev": {
     "spryker/assertion": "^2.0.0",
     "spryker/code-sniffer": "*",
-    "spryker/config": "^2.1.0",
-    "spryker/propel": "^2.1.0",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/locale": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "description": "CustomerGroup bundle",
   "license": "proprietary",

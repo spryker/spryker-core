@@ -7,10 +7,12 @@
     "spryker/twig": "^2.0.0"
   },
   "require-dev": {
-    "spryker/application": "^2.0.0",
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*",
-    "spryker/transfer": "^2.0.0"
+    "spryker/transfer": "*"
   },
   "description": "Currency bundle",
   "license": "proprietary",

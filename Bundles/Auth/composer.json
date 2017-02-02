@@ -6,7 +6,6 @@
     }
   },
   "require": {
-    "spryker/config": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
@@ -16,6 +15,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "description": "Auth bundle",

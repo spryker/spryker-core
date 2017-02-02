@@ -12,7 +12,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/tax": "^2.0.0 || ^3.0.0",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
+    "spryker/tax": "*",
     "spryker/testify": "*"
   },
   "description": "ProductCartConnector bundle",

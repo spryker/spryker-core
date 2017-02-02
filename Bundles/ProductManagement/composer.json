@@ -25,13 +25,12 @@
     "spryker/tax": "^3.0.0",
     "spryker/touch": "^2.2.0",
     "spryker/url": "^2.1.0",
-    "spryker/util-encoding": "^1.0.0"
-  },
-  "require-dev": {
+    "spryker/util-encoding": "^1.0.0",
     "spryker/util-text": "^1.0.0"
   },
-  "suggest": {
-    "spryker/util-text": "Optional dependency. Add this bundle if you want to use it's functionality."
+  "require-dev": {
+    "spryker/propel": "*",
+    "spryker/silex": "*"
   },
   "description": "ProductManagement bundle",
   "license": "proprietary",

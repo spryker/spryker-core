@@ -14,9 +14,10 @@
     "spryker/kernel": "^2.8.0"
   },
   "require-dev": {
-    "spryker/assertion": "^2.0.0",
+    "spryker/assertion": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "^2.1.0",
+    "spryker/config": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "description": "CustomerGroupDiscountConnector bundle",

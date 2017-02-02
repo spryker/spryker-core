@@ -22,6 +22,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "ProductSearch bundle",
