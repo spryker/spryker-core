@@ -9,7 +9,7 @@ namespace Spryker\Zed\Product\Business\Product\Touch;
 
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Shared\Product\ProductConfig;
-use Spryker\Zed\Product\Business\Product\ProductManagerInterface;
+use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
@@ -27,20 +27,20 @@ abstract class AbstractProductTouch
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
      */
-    protected $productManager;
+    protected $productAbstractStatusChecker;
 
     /**
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\ProductManagerInterface $productManager
+     * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
      */
-    public function __construct(ProductToTouchInterface $touchFacade, ProductQueryContainerInterface $productQueryContainer, ProductManagerInterface $productManager)
+    public function __construct(ProductToTouchInterface $touchFacade, ProductQueryContainerInterface $productQueryContainer, ProductAbstractStatusCheckerInterface $productAbstractStatusChecker)
     {
         $this->touchFacade = $touchFacade;
         $this->productQueryContainer = $productQueryContainer;
-        $this->productManager = $productManager;
+        $this->productAbstractStatusChecker = $productAbstractStatusChecker;
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractProductTouch
      */
     protected function touchAbstractByStatus($idProductAbstract)
     {
-        if ($this->productManager->isProductActive($idProductAbstract)) {
+        if ($this->productAbstractStatusChecker->isActive($idProductAbstract)) {
             $this->touchProductAbstractActive($idProductAbstract);
         } else {
             $this->touchProductAbstractInactive($idProductAbstract);
