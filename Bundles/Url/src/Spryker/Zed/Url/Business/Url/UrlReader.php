@@ -62,6 +62,18 @@ class UrlReader implements UrlReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    {
+        $urlCount = $this->queryUrlEntity($urlTransfer, false)->count();
+
+        return $urlCount > 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      * @param bool $ignoreUrlRedirects
      *
      * @throws \InvalidArgumentException
