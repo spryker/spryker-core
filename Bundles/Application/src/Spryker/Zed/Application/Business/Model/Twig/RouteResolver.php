@@ -32,7 +32,7 @@ class RouteResolver
      *
      * @return string
      */
-    protected function getCamelCaseToDash(string $incomingString)
+    protected function getCamelCaseToDash($incomingString)
     {
         $filter = new CamelCaseToDash();
 
