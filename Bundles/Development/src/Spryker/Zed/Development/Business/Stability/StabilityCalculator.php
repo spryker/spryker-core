@@ -81,7 +81,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
     protected function filter(array $bundlesDependencies)
     {
         $callback = function (array $bundleDependency) {
-            return ($bundleDependency[DependencyTree::META_FOREIGN_LAYER] !== 'external');
+            return ($bundleDependency[DependencyTree::META_FOREIGN_BUNDLE] !== 'external');
         };
         $bundlesDependencies = array_filter($bundlesDependencies, $callback);
         $bundlesDependencies = $this->filter->filter($bundlesDependencies);
@@ -158,11 +158,11 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         $dependencies = $this->bundles[$bundleName]['out'];
 
-        $indirectOutgoingDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $indirectOutgoingDependencies)) {
                 continue;
             }
+            $indirectOutgoingDependencies[$dependentBundle] = $dependentBundle;
             $this->buildIndirectOutgoingDependencies($dependentBundle, $indirectOutgoingDependencies);
         }
     }
@@ -177,11 +177,11 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         $dependencies = $this->bundles[$bundleName]['in'];
 
-        $indirectIncomingDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $indirectIncomingDependencies)) {
                 continue;
             }
+            $indirectIncomingDependencies[$dependentBundle] = $dependentBundle;
             $this->buildIndirectIncomingDependencies($dependentBundle, $indirectIncomingDependencies);
         }
     }

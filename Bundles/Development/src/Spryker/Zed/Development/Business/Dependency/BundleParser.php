@@ -370,16 +370,15 @@ class BundleParser implements BundleParserInterface
     protected function ignorePluginInterfaces(array $dependencies)
     {
         foreach ($dependencies as $fileName => $fileDependencies) {
-            if (strpos($fileName, '/Communication/Plugin/') === false) {
+            if (strpos($fileName, '/Communication/Plugin/') !== false) {
+                unset($dependencies[$fileName]);
                 continue;
             }
 
             foreach ($fileDependencies as $key => $fileDependency) {
-                if (!preg_match('#\\\\Dependency\\\\.*Plugin.*Interface$#', $fileDependency)) {
-                    continue;
+                if (preg_match('#\\\\Dependency\\\\.*Plugin.*Interface$#', $fileDependency)) {
+                    unset($dependencies[$fileName][$key]);
                 }
-
-                unset($dependencies[$fileName][$key]);
             }
         }
 

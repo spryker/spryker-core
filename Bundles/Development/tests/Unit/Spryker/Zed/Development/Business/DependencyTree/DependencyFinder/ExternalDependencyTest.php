@@ -11,6 +11,7 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -46,8 +47,9 @@ class ExternalDependencyTest extends PHPUnit_Framework_TestCase
      */
     public function testAddDependency()
     {
+        $developmentConfig = new DevelopmentConfig();
         $testFile = $this->getTestFile();
-        $dependencyFinder = new ExternalDependency();
+        $dependencyFinder = new ExternalDependency($developmentConfig->getExternalToInternalNamespaceMap());
         $dependencyTree = new DependencyTree(new FileInfoExtractor(), []);
         $dependencyFinder->setDependencyTree($dependencyTree);
         $dependencyFinder->addDependencies($testFile);

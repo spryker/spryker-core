@@ -32,7 +32,7 @@
                             <td align="right">{{ info.indirectIn | length }}</td>
                             <td align="right">{{ info.indirectOut | length }}</td>
                             <td align="right">{{ info.indirectStability }}</td>
-                            <td{% if info.sprykerStability > 100 %} style="color: red"{% endif %} align="right">{{ info.sprykerStability }}</td>
+                            <td{% if info.sprykerStability > 150 %} style="color: red"{% endif %} align="right">{{ info.sprykerStability }}</td>
                         </tr>
                     {% endfor %}
                 </table>

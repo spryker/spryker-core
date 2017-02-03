@@ -297,7 +297,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExternalDependencyChecker()
     {
-        return new ExternalDependency();
+        return new ExternalDependency($this->getConfig()->getExternalToInternalNamespaceMap());
     }
 
     /**

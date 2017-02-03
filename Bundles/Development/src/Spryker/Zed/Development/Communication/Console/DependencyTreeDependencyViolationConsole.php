@@ -53,7 +53,6 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this->printLineSeparator();
 
         $bundles = $this->getFacade()->getAllBundles();
-//        $bundles = ['Discount'];
 
         $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
 

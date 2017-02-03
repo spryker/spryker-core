@@ -66,9 +66,6 @@ class Manager
      */
     protected function findDependencyTo($bundleName, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-//        if ($bundleDependencyCollectionTransfer->getBundle() === 'Braintree') {
-//            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($bundleDependencyCollectionTransfer->getDependencyBundles()) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-//        }
         foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundle) {
             if ($dependencyBundle->getBundle() === $bundleName) {
                 foreach ($dependencyBundle->getDependencies() as $dependencyTransfer) {

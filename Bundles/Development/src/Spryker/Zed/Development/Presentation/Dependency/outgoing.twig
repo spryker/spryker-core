@@ -69,27 +69,6 @@
 
             {% endfor %}
 
-            <tr>
-                <th colspan="3">{{ 'Found in test' | trans }}</th>
-                <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
-            </tr>
-
-            {% for composerDependency in composerDependencies %}
-                {% if composerDependency.tests or composerDependency.src %}
-                    {% if (composerDependency.tests or composerDependency.composerRequireDev) and not composerDependency.src %}
-                        <tr>
-                            <td colspan="3">{{ composerDependency.tests }}</td>
-                            <td{% if composerDependency.tests and not composerDependency.composerRequireDev %} style="color: red"{% endif %}> {{ composerDependency.tests }}</td>
-                        </tr>
-                    {% elseif (not composerDependency.tests and composerDependency.composerRequireDev) %}
-                        <tr>
-                            <td colspan="3">{{ composerDependency.tests }}</td>
-                            <td style="color: red">{{ composerDependency.composerRequireDev }}</td>
-                        </tr>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-
             {% if hasDevOnlyRequirements %}
                 <tr>
                     <td colspan="4"><h3>{{ "Composer dev only dependencies" | trans }}</h3></td>
