@@ -85,6 +85,7 @@ interface ProductFacadeInterface
      * - Saves product abstract attributes
      * - Saves product abstract localized attributes
      * - Saves product abstract meta
+     * - Updates URL of an active product when it's changed.
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched

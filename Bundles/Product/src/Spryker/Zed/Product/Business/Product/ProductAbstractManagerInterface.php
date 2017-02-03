@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractManagerInterface
@@ -60,13 +59,5 @@ interface ProductAbstractManagerInterface
      * @return string
      */
     public function getAbstractSkuFromProductConcrete($sku);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer);
 
 }

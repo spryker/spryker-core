@@ -32,11 +32,4 @@ interface ProductManagerInterface
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function isProductActive($idProductAbstract);
-
 }
