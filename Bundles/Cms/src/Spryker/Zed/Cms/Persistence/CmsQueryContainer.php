@@ -160,8 +160,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::URL)
-            ->withColumn(self::IS_ACTIVE);
+            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::URL)
+            ->withColumn(self::IS_ACTIVE)
+            ->groupByIdCmsPage();
     }
 
     /**

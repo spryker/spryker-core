@@ -11,6 +11,7 @@ require('../../sass/main.scss');
 require('../../img/cms-loader.gif');
 
 $(document).ready( function () {
+
     $('#cms_page_validFrom').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
