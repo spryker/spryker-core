@@ -77,6 +77,16 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $redirectTransfer
      *
      * @return void

@@ -26,4 +26,11 @@ interface UrlReaderInterface
      */
     public function hasUrl(UrlTransfer $urlTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+
 }

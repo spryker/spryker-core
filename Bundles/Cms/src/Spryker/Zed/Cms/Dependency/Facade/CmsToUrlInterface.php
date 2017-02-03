@@ -49,6 +49,13 @@ interface CmsToUrlInterface
     public function hasUrl(UrlTransfer $urlTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $redirectTransfer
      *
      * @return void
