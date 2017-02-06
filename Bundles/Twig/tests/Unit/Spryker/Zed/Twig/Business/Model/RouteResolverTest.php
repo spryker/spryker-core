@@ -5,19 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Business\Model\Twig;
+namespace Unit\Spryker\Zed\Twig\Business\Model;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
+use Spryker\Zed\Twig\Business\Model\RouteResolver;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group Application
+ * @group Twig
  * @group Business
  * @group Model
- * @group Twig
  * @group RouteResolverTest
  */
 class RouteResolverTest extends PHPUnit_Framework_TestCase
