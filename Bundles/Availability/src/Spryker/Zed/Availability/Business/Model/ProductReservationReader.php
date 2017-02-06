@@ -90,7 +90,27 @@ class ProductReservationReader implements ProductReservationReaderInterface
             $this->calculateReservation($productAbstractEntity->getReservationQuantity())
         );
 
+        $this->setAbstractNeverOutOfStock($productAbstractEntity, $productAbstractAvailabilityTransfer);
+
         return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+     *
+     * @return void
+     */
+    protected function setAbstractNeverOutOfStock(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+    ) {
+
+        if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
+            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
+        } else {
+            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
+        }
     }
 
 }

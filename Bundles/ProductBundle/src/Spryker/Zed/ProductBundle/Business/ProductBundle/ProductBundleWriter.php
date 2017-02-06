@@ -56,7 +56,6 @@ class ProductBundleWriter implements ProductBundleWriterInterface
      * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     *
      */
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
     {

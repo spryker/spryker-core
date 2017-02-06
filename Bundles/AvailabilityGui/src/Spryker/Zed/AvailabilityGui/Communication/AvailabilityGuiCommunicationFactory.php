@@ -55,16 +55,21 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idLocale
      * @param int|null $idAbstractProductBundle
+     * @param int|null $idBundleProductAbstract
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
-    public function createBundledProductAvailabilityTable($idLocale, $idAbstractProductBundle = null)
-    {
+    public function createBundledProductAvailabilityTable(
+        $idLocale,
+        $idAbstractProductBundle = null,
+        $idBundleProductAbstract = null
+    ) {
         return new BundledProductAvailabilityTable(
             $this->getAvailabilityQueryContainer(),
             $this->getProductBundleQueryContainer(),
             $idLocale,
-            $idAbstractProductBundle
+            $idAbstractProductBundle,
+            $idBundleProductAbstract
         );
     }
 

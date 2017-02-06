@@ -33,6 +33,14 @@
                 <div class="col-lg-2">
                     <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
                 </div>
+                <div class="col-lg-2">
+                    <p>
+                        <b>{{ 'Is never out of stock' | trans }}:</b>
+                    </p>
+                    <p>
+                        {{  productAbstractAvailability.isNeverOutOfStock  ? 'No' | trans : 'Yes' | trans }}
+                    </p>
+                </div>
             </div>
 
         {% endblock %}
@@ -59,7 +67,8 @@
                             <th>{{ 'Availability' | trans }}</th>
                             <th>{{ 'Current Stock' | trans }}</th>
                             <th>{{ 'Reserved Products' | trans }}</th>
-                            <th>{{ 'Quanity in Bundle' | trans }}</th>
+                            <th>{{ 'Quantity in Bundle' | trans }}</th>
+                            <th>{{ 'Is never out of stock' | trans }}</th>
                             <th>{{ 'Actions' | trans }}</th>
                         </tr>
                         </thead>

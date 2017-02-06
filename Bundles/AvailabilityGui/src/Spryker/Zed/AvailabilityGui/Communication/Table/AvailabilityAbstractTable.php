@@ -24,6 +24,7 @@ class AvailabilityAbstractTable extends AbstractTable
     const AVAILABLE = 'Available';
     const NOT_AVAILABLE = 'Not available';
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -55,6 +56,7 @@ class AvailabilityAbstractTable extends AbstractTable
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
             static::IS_BUNDLE_PRODUCT => 'Is bundle product',
+            AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => 'Is never out of stock',
             static::TABLE_COL_ACTION => 'Actions',
         ]);
 
@@ -91,22 +93,37 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
-        foreach ($queryResult as $productAbstract) {
+        foreach ($queryResult as $productAbstractEntity) {
 
-            $haveBundledProducts = $this->haveBundledProducts($productAbstract);
+            $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
             $result[] = [
-                SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstract->getSku(), $productAbstract->getIdProductAbstract()),
-                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstract->getProductName(),
-                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
-                AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstract->getStockQuantity(),
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstract->getReservationQuantity()),
+                SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
+                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
+                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity->getAvailabilityQuantity()),
+                AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstractEntity->getStockQuantity(),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity->getReservationQuantity()),
                 static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
-                static::TABLE_COL_ACTION => $this->createViewButton($productAbstract),
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($this->isAllConcreteIsNeverOutOfStock($productAbstractEntity)) ? 'Yes' : 'No',
+                static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return bool
+     */
+    protected function isAllConcreteIsNeverOutOfStock(SpyProductAbstract $productAbstractEntity)
+    {
+        if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

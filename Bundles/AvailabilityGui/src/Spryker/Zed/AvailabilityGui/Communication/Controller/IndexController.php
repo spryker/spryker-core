@@ -126,7 +126,8 @@ class IndexController extends AbstractController
         }
 
         $idBundleProduct = $this->castId($idBundleProduct);
-        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idBundleProduct);
+        $idBundleProductAbstract = $this->castId($request->query->getInt(BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT));
+        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idBundleProduct, $idBundleProductAbstract);
 
         return $this->jsonResponse(
             $bundledProductAvailabilityTable->fetchData()
@@ -167,17 +168,19 @@ class IndexController extends AbstractController
 
     /**
      * @param int|null $idProductBundle
+     * @param int|null $idBundleProductAbstract
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
-    protected function getBundledProductAvailabilityTable($idProductBundle = null)
+    protected function getBundledProductAvailabilityTable($idProductBundle = null, $idBundleProductAbstract = null)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
         return $this->getFactory()
             ->createBundledProductAvailabilityTable(
                 $localeTransfer->getIdLocale(),
-                $idProductBundle
+                $idProductBundle,
+                $idBundleProductAbstract
             );
     }
 

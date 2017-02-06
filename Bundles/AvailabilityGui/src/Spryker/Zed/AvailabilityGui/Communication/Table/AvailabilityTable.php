@@ -23,6 +23,8 @@ class AvailabilityTable extends AbstractTable
     const URL_PARAM_ID_PRODUCT = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
+    const URL_BACK_BUTTON = 'url-back-button';
+
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
 
     /**
@@ -78,6 +80,7 @@ class AvailabilityTable extends AbstractTable
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
             static::IS_BUNDLE_PRODUCT => 'Is bundle product',
+            AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => 'Is never out of stock',
             static::TABLE_COL_ACTION => 'Actions',
         ]);
 
@@ -114,7 +117,7 @@ class AvailabilityTable extends AbstractTable
 
         foreach ($queryResult as $productItem) {
 
-            $isBundleProduct = $this->isBundleProduct($productItem['idProduct']);
+            $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
@@ -123,6 +126,7 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0,
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem, $isBundleProduct),
             ];
         }
@@ -168,6 +172,7 @@ class AvailabilityTable extends AbstractTable
                 '/availability-gui/index/bundled-product-availability-table',
                 [
                     BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                    BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
                 ]
             );
 

@@ -25,6 +25,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
     const URL_PARAM_ID_PRODUCT = 'id-product';
+    const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
 
     const COL_BUNDLED_ITEMS = 'bundledItems';
     const TABLE_COL_ACTION = 'Actions';
@@ -50,21 +51,29 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $idLocale;
 
     /**
+     * @var int
+     */
+    protected $idBundleProductAbstract;
+
+    /**
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param int $idLocale
      * @param int|null $idProductBundle
+     * @param int|null $idBundleProductAbstract
      */
     public function __construct(
         AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
         $idLocale,
-        $idProductBundle = null
+        $idProductBundle = null,
+        $idBundleProductAbstract = null
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->idProductBundle = $idProductBundle;
         $this->idLocale = $idLocale;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->idBundleProductAbstract = $idBundleProductAbstract;
     }
 
     /**
@@ -76,6 +85,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     {
         $url = Url::generate('bundled-product-availability-table', [
             BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
+            BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
         ])->build();
 
         $config->setUrl($url);
@@ -86,7 +96,8 @@ class BundledProductAvailabilityTable extends AbstractTable
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            SpyProductBundleTableMap::COL_QUANTITY => 'Quanity in Bundle',
+            SpyProductBundleTableMap::COL_QUANTITY => 'Quantity in Bundle',
+            AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => 'Is never out of stock',
             static::TABLE_COL_ACTION => 'Actions',
         ]);
 
@@ -152,6 +163,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY],
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
@@ -171,7 +183,7 @@ class BundledProductAvailabilityTable extends AbstractTable
             [
                 static::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
-                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductBundle,
+                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
             ]
         );
 
