@@ -15,7 +15,6 @@
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/twig": "^2.2.0",
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
@@ -23,6 +22,10 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
+    "spryker/twig": "If you want to use Twig with Gui you need to install spryker/twig."
   },
   "description": "Glossary bundle",
   "license": "proprietary",

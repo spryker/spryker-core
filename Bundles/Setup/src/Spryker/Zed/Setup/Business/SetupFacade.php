@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupBusinessFactory getFactory()
@@ -56,19 +55,6 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     public function removeGeneratedDirectory()
     {
         $this->getFactory()->createModelGeneratedDirectoryRemover()->execute();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    public function getRepeatData(Request $request)
-    {
-        return $this->getFactory()->getTransferObjectRepeater()
-            ->getRepeatData($request->query->get('mvc', null));
     }
 
     /**

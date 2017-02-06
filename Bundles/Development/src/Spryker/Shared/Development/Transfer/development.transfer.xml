@@ -34,6 +34,7 @@
         <property name="bundle" type="string"/>
         <property name="type" type="string"/>
         <property name="isInTest" type="bool"/>
+        <property name="isOptional" type="bool"/>
     </transfer>
 
     <transfer name="ComposerDependencyCollection">
@@ -43,6 +44,7 @@
     <transfer name="ComposerDependency">
         <property name="name" type="string"/>
         <property name="isDev" type="bool"/>
+        <property name="isOptional" type="bool"/>
     </transfer>
 
 </transfers>

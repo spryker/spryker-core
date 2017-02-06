@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Setup\Communication\Controller;
+namespace Spryker\Zed\ZedRequest\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
  */
 class TransferController extends AbstractController
 {
@@ -26,7 +26,7 @@ class TransferController extends AbstractController
      */
     public function repeatAction(Request $request)
     {
-        $repeatData = $this->getFacade()->getRepeatData($request);
+        $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
 
         if (!is_array($repeatData)) {
             return new Response('No request to repeat.');

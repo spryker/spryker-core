@@ -14,7 +14,7 @@ use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
-use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
+use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -190,7 +190,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
     private function createRepeaterMock()
     {

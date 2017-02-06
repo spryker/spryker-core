@@ -82,7 +82,7 @@ class BundleFormDataProvider
             $hasDependencyInSource = false;
 
             foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
-                if (!$dependencyTransfer->getIsInTest()) {
+                if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
                     $hasDependencyInSource = true;
                 }
             }

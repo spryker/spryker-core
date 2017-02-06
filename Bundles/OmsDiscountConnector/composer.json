@@ -15,6 +15,10 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/oms": "If you want to use Oms command plugins you need to install spryker/oms.",
+    "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin you need to install spryker/sales."
+  },
   "description": "OmsDiscountConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

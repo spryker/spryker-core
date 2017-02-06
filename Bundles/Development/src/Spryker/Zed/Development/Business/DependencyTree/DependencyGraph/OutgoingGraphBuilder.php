@@ -86,7 +86,9 @@ class OutgoingGraphBuilder
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {
             foreach ($dependentBundles as $dependentBundle) {
-                $this->graph->addEdge($bundleName, $dependentBundle);
+                if ($bundleName !== $dependentBundle) {
+                    $this->graph->addEdge($bundleName, $dependentBundle);
+                }
             }
         }
 
@@ -149,7 +151,7 @@ class OutgoingGraphBuilder
             $hasDependencyInSource = false;
 
             foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
-                if (!$dependencyTransfer->getIsInTest()) {
+                if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
                     $hasDependencyInSource = true;
                 }
             }

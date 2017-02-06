@@ -49,7 +49,6 @@ class Functional extends Module
         $application->register(new SilexTwigServiceProvider());
         $application->register(new ValidatorServiceProvider());
         $application->register(new FormServiceProvider());
-        $application->register(new TwigServiceProvider());
         $application->register(new DateTimeFormatterServiceProvider());
         $application->register(new FormFactoryServiceProvider());
 

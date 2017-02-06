@@ -34,6 +34,10 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
+  },
   "description": "Ratepay bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

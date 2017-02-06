@@ -11,9 +11,11 @@
   },
   "require-dev": {
     "spryker/calculation": "*",
-    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
   },
   "description": "PriceCartConnector bundle",
   "license": "proprietary",

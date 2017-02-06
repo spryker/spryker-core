@@ -16,6 +16,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
+  },
   "description": "ProductOptionCartConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

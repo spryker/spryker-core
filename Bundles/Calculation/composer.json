@@ -14,6 +14,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+  },
   "description": "Calculation bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

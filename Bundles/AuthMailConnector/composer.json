@@ -13,6 +13,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/auth": "If you want to use Auth plugins you need to install spryker/auth."
+  },
   "description": "AuthMailConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

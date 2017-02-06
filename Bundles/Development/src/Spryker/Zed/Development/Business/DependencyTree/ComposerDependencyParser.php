@@ -43,17 +43,17 @@ class ComposerDependencyParser
     public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $bundleDependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependencyCollectionTransfer);
-
         $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
 
         $bundleNames = $this->getBundleDependencyNames($bundleDependencyCollectionTransfer);
         $bundleNamesInSrc = $this->getBundleDependencyNamesInSrc($bundleDependencyCollectionTransfer);
         $bundleNamesInTests = $this->getBundleDependencyNamesInTests($bundleDependencyCollectionTransfer);
 
+        $suggestedNames = $this->getSuggested($composerDependencyCollectionTransfer);
         $requireNames = $this->getRequireNames($composerDependencyCollectionTransfer);
         $requireDevNames = $this->getRequireNames($composerDependencyCollectionTransfer, true);
 
-        $allBundleNames = array_unique(array_merge($bundleNames, $requireNames, $requireDevNames));
+        $allBundleNames = array_unique(array_merge($bundleNames, $requireNames, $requireDevNames, $suggestedNames));
         sort($allBundleNames);
 
         $dependencies = [];
@@ -63,14 +63,38 @@ class ComposerDependencyParser
                 continue;
             }
             $dependencies[] = [
+                'isOptional' => $this->getIsOptional($bundleName, $bundleDependencyCollectionTransfer),
                 'src' => in_array($bundleName, $bundleNamesInSrc) ? $bundleName : '',
                 'tests' => in_array($bundleName, $bundleNamesInTests) ? $bundleName : '',
                 'composerRequire' => in_array($bundleName, $requireNames) ? $bundleName : '',
                 'composerRequireDev' => in_array($bundleName, $requireDevNames) ? $bundleName : '',
+                'suggested' => in_array($bundleName, $suggestedNames) ? $bundleName : '',
             ];
         }
 
         return $dependencies;
+    }
+
+    /**
+     * @param string $bundleName
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function getIsOptional($bundleName, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    {
+        $isOptional = true;
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+            if ($dependencyBundleTransfer->getBundle() === $bundleName) {
+                foreach ($dependencyBundleTransfer->getDependencies() as $dependencyTransfer) {
+                    if (!$dependencyTransfer->getIsOptional() && !$dependencyTransfer->getIsInTest()) {
+                        $isOptional = false;
+                    }
+                }
+            }
+        }
+
+        return $isOptional;
     }
 
     /**
@@ -132,6 +156,26 @@ class ComposerDependencyParser
         }
 
         return $bundleNames;
+    }
+
+    /**
+     * If a dependency is optional it needs to be in suggest.
+     * Return all bundle names which are marked as optional.
+     *
+     * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
+     *
+     * @return array
+     */
+    protected function getSuggested(ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
+    {
+        $composerBundleNames = [];
+        foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
+            if ($composerDependency->getName() && $composerDependency->getIsOptional()) {
+                $composerBundleNames[] = $composerDependency->getName();
+            }
+        }
+
+        return $composerBundleNames;
     }
 
     /**
@@ -228,11 +272,15 @@ class ComposerDependencyParser
 
             $content = file_get_contents($composerJsonFile);
             $content = json_decode($content, true);
-            $require = isset($content['require']) ? $content['require'] : [];
-            $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
 
+            $require = isset($content['require']) ? $content['require'] : [];
             $this->addComposerDependencies($require, $composerDependencies);
+
+            $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
             $this->addComposerDependencies($requireDev, $composerDependencies, true);
+
+            $suggested = isset($content['suggest']) ? $content['suggest'] : [];
+            $this->addSuggestedDependencies($suggested, $composerDependencies);
         }
 
         return $composerDependencies;
@@ -263,6 +311,29 @@ class ComposerDependencyParser
     }
 
     /**
+     * @param array $require
+     * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
+     *
+     * @return void
+     */
+    protected function addSuggestedDependencies(array $require, ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
+    {
+        foreach ($require as $package => $version) {
+            if (strpos($package, 'spryker/') !== 0) {
+                continue;
+            }
+            $bundle = $this->getBundleName($package);
+
+            $composerDependencyTransfer = new ComposerDependencyTransfer();
+            $composerDependencyTransfer
+                ->setName($bundle)
+                ->setIsOptional(true);
+
+            $composerDependencyCollectionTransfer->addComposerDependency($composerDependencyTransfer);
+        }
+    }
+
+    /**
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      * @param string $bundleName
      *
@@ -285,6 +356,7 @@ class ComposerDependencyParser
         $name = substr($package, 8);
         $filter = new SeparatorToCamelCase('-');
         $name = ucfirst($filter->filter($name));
+
         return $name;
     }
 

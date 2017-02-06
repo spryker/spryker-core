@@ -33,6 +33,9 @@
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+  },
   "description": "Customer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

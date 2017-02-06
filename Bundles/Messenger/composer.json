@@ -7,12 +7,14 @@
   },
   "require": {
     "spryker/kernel": "^2.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
   "description": "Messenger bundle",
   "license": "proprietary",

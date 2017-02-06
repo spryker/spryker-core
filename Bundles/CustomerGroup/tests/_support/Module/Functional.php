@@ -19,7 +19,6 @@ use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
-use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,7 +47,6 @@ class Functional extends Module
         $application->register(new SilexTwigServiceProvider());
         $application->register(new ValidatorServiceProvider());
         $application->register(new FormServiceProvider());
-        $application->register(new TwigServiceProvider());
         $application->register(new DateTimeFormatterServiceProvider());
 
         $propelServiceProvider = new PropelServiceProvider();

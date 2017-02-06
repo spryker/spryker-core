@@ -21,6 +21,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer."
+  },
   "description": "Newsletter bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

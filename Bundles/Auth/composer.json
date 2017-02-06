@@ -8,7 +8,6 @@
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/session": "^2.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/user": "^2.0.0",
     "spryker/util-text": "^1.0.0"
@@ -18,6 +17,9 @@
     "spryker/config": "*",
     "spryker/propel-orm": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
   "description": "Auth bundle",
   "license": "proprietary",

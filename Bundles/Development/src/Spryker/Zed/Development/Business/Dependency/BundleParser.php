@@ -92,7 +92,6 @@ class BundleParser implements BundleParserInterface
     protected function addAllDependencies(array $allFileDependencies)
     {
         $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
-        $allFileDependencies = $this->ignorePluginInterfaces($allFileDependencies);
 
         $this->buildBundleDependencies($allFileDependencies);
     }
@@ -130,11 +129,32 @@ class BundleParser implements BundleParserInterface
                 $dependencyTransfer
                     ->setBundle($foreignBundle)
                     ->setType('external')
-                    ->setIsInTest(!strpos($file, '/src/'));
+                    ->setIsOptional($this->isPluginFile($file))
+                    ->setIsInTest($this->isTestFile($file));
 
                 $this->addDependency($dependencyTransfer);
             }
         }
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    protected function isTestFile($file)
+    {
+        return !strpos($file, '/src/');
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    protected function isPluginFile($file)
+    {
+        return (strpos($file, '/Plugin/') !== false);
     }
 
     /**
@@ -221,7 +241,8 @@ class BundleParser implements BundleParserInterface
                     $dependencyTransfer = new DependencyTransfer();
                     $dependencyTransfer->setBundle($foreignBundle);
                     $dependencyTransfer->setType('spryker');
-                    $dependencyTransfer->setIsInTest(!strpos($file, '/src/'));
+                    $dependencyTransfer->setIsOptional($this->isPluginFile($file));
+                    $dependencyTransfer->setIsInTest($this->isTestFile($file));
 
                     $this->addDependency($dependencyTransfer);
                 }
@@ -360,29 +381,6 @@ class BundleParser implements BundleParserInterface
         $finder = new SymfonyFinder();
 
         return $finder->in($folder)->name('*.schema.xml')->depth('< 2');
-    }
-
-    /**
-     * @param array $dependencies
-     *
-     * @return array
-     */
-    protected function ignorePluginInterfaces(array $dependencies)
-    {
-        foreach ($dependencies as $fileName => $fileDependencies) {
-            if (strpos($fileName, '/Communication/Plugin/') !== false) {
-                unset($dependencies[$fileName]);
-                continue;
-            }
-
-            foreach ($fileDependencies as $key => $fileDependency) {
-                if (preg_match('#\\\\Dependency\\\\.*Plugin.*Interface$#', $fileDependency)) {
-                    unset($dependencies[$fileName][$key]);
-                }
-            }
-        }
-
-        return $dependencies;
     }
 
     /**

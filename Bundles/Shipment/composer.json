@@ -19,6 +19,10 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+  },
   "description": "Shipment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

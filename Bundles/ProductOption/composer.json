@@ -24,6 +24,11 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
+    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
+  },
   "description": "ProductOption bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

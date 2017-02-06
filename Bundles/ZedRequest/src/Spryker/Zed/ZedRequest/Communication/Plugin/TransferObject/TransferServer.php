@@ -10,6 +10,7 @@ namespace Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject;
 use LogicException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,12 +44,12 @@ class TransferServer
     protected $response;
 
     /**
-     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater
+     * @var \Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
     private $repeater;
 
     /**
-     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater $repeater
+     * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater $repeater
      */
     private function __construct(Repeater $repeater)
     {
@@ -56,7 +57,7 @@ class TransferServer
     }
 
     /**
-     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater|null $repeater
+     * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater|null $repeater
      *
      * @return $this
      */

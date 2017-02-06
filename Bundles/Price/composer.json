@@ -10,13 +10,17 @@
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^4.0.0",
     "spryker/propel-orm": "^2.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex"
   },
   "description": "Price bundle",
   "license": "proprietary",

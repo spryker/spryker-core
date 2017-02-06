@@ -18,6 +18,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
+  },
   "description": "DiscountSalesAggregatorConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

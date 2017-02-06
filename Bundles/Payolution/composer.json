@@ -30,8 +30,12 @@
     "spryker/customer": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/sales": "If you want to use Oms command plugins (they use spryker/sales) you need to install spryker/sales."
   },
   "description": "Payolution bundle",
   "license": "proprietary",

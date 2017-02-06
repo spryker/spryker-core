@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Setup\Business;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface SetupFacadeInterface
 {
 
@@ -41,15 +39,6 @@ interface SetupFacadeInterface
      * @return void
      */
     public function removeGeneratedDirectory();
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    public function getRepeatData(Request $request);
 
     /**
      * @api

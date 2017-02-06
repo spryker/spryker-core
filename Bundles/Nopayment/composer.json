@@ -15,6 +15,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/oms": "If you want to use Oms command plugins you need to install spryker/oms."
+  },
   "description": "Nopayment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

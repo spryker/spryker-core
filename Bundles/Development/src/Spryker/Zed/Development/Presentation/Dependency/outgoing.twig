@@ -39,39 +39,53 @@
 
             <tr>
                 <th colspan="2">{{ 'Bundle' | trans }}</th>
-                <th>{{ 'Declared in composer.json' | trans }}</th>
-                <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
+                <th>{{ 'require' | trans }}</th>
+                <th>{{ 'require-dev' | trans }}</th>
             </tr>
 
             {% set hasDevOnlyRequirements = false %}
 
             {% for composerDependency in composerDependencies %}
 
-                {% if not composerDependency.src and not composerDependency.tests and not composerDependency.composerRequire %}
-                    {% set hasDevOnlyRequirements = true %}
-                {% else %}
+                    {% if not composerDependency.src and not composerDependency.tests and not composerDependency.composerRequire %}
+                        {% set hasDevOnlyRequirements = true %}
+                    {% else %}
 
-                    {% set bundleName = composerDependency.src ? composerDependency.src : composerDependency.tests %}
+                        {% if not composerDependency.isOptional or (composerDependency.isOptional and (composerDependency.composerRequire or composerDependency.composerRequireDev)) or (composerDependency.tests and not composerDependency.composerRequireDev) %}
+                            {% set bundleName = composerDependency.src ? composerDependency.src : composerDependency.tests %}
 
+                            <tr>
+                                <td colspan="2"{% if (composerDependency.src and not composerDependency.composerRequire and not composerDependency.suggested) or (not composerDependency.composerRequire and not composerDependency.composerRequireDev) %} style="color: red"{% endif %}>
+                                    {{ bundleName }}
+                                </td>
+                                <td{% if (not composerDependency.src and composerDependency.composerRequire) or (composerDependency.isOptional) %} style="color: red"{% endif %}>
+                                    {{ composerDependency.composerRequire }}
+                                </td>
+                                <td{% if (composerDependency.tests and not composerDependency.composerRequireDev) or (composerDependency.src and composerDependency.tests and composerDependency.composerRequire) %} style="color: red"{% endif %}>
+                                    {{ composerDependency.composerRequireDev }}
+                                </td>
+                            </tr>
+
+                        {% endif %}
+
+                    {% endif %}
+
+            {% endfor %}
+
+            <tr>
+                <td colspan="4"><h3>{{ "Suggested dependencies" | trans }}</h3></td>
+            </tr>
+            {% for composerDependency in composerDependencies %}
+                {% if composerDependency.src and composerDependency.isOptional %}
                     <tr>
-                        <td colspan="2"{% if (composerDependency.src and not composerDependency.composerRequire) or (not composerDependency.composerRequire and not composerDependency.composerRequireDev) %} style="color: red"{% endif %}>
-                            {{ bundleName }}
-                        </td>
-                        <td{% if not composerDependency.src and composerDependency.composerRequire %} style="color: red"{% endif %}>
-                            {{ composerDependency.composerRequire }}
-                        </td>
-                        <td{% if (composerDependency.tests and not composerDependency.composerRequireDev) or (composerDependency.src and composerDependency.tests and composerDependency.composerRequire) %} style="color: red"{% endif %}>
-                            {{ composerDependency.composerRequireDev }}
-                        </td>
+                        <td colspan="4"{% if composerDependency.src and not composerDependency.suggested %} style="color: red"{% endif %}>{{ composerDependency.src }}</td>
                     </tr>
-
                 {% endif %}
-
             {% endfor %}
 
             {% if hasDevOnlyRequirements %}
                 <tr>
-                    <td colspan="4"><h3>{{ "Composer dev only dependencies" | trans }}</h3></td>
+                    <td colspan="4"><h3>{{ "Dev only dependencies" | trans }}</h3></td>
                 </tr>
 
                 {% for composerDependency in composerDependencies %}
@@ -83,6 +97,7 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+
         </table>
     </div>
 

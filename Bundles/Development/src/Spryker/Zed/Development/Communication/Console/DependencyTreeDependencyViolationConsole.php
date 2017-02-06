@@ -53,16 +53,14 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this->printLineSeparator();
 
         $bundles = $this->getFacade()->getAllBundles();
-
+//$bundles = ['Currency'];
         $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
 
         $count = 0;
         foreach ($bundles as $bundle) {
             $violations = [];
             $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundle);
-
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
-
             foreach ($composerDependencies as $composerDependency) {
 
                 if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
@@ -79,6 +77,10 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = 'src: ' . $composerDependency['src'] . ' / require: -';
                 }
 
+                if ($composerDependency['isOptional'] && $composerDependency['composerRequire']) {
+                    $violations[] = $composerDependency['src'] . ' is optional but in require';
+                }
+
                 if ($this->isMissingInSrc($composerDependency)) {
                     $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
                 }
@@ -93,6 +95,10 @@ class DependencyTreeDependencyViolationConsole extends Console
 
                 if ($composerDependency['composerRequire'] && $composerDependency['composerRequireDev']) {
                     $violations[] = 'defined in require and require-dev: ' . $composerDependency['composerRequireDev'];
+                }
+
+                if ($composerDependency['src'] && $composerDependency['isOptional'] && !$composerDependency['suggested']) {
+                    $violations[] = $composerDependency['src'] . ' is a optional but missing in composer suggest';
                 }
 
             }
@@ -131,7 +137,7 @@ class DependencyTreeDependencyViolationConsole extends Console
      */
     protected function isMissingInRequire($composerDependency)
     {
-        return ($composerDependency['src'] && !$composerDependency['composerRequire']);
+        return ($composerDependency['src'] && !$composerDependency['composerRequire'] && !$composerDependency['isOptional']);
     }
 
     /**
@@ -151,7 +157,7 @@ class DependencyTreeDependencyViolationConsole extends Console
      */
     protected function isMissingInRequireDev($composerDependency)
     {
-        return ($composerDependency['tests'] && !$composerDependency['src'] && !$composerDependency['composerRequireDev']);
+        return ($composerDependency['tests'] && !$composerDependency['composerRequire'] && !$composerDependency['composerRequireDev']);
     }
 
     /**

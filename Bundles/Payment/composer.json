@@ -14,6 +14,9 @@
     "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+  },
   "description": "Payment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

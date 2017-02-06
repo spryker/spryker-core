@@ -19,6 +19,9 @@
     "spryker/propel": "^2.0.0",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+  },
   "description": "SalesAggregator bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

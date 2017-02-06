@@ -7,21 +7,15 @@
 
 namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use Spryker\Shared\Cart\Transfer\ItemInterface;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
-class CartItemFixture extends AbstractTransfer implements ItemInterface
+class CartItemFixture extends AbstractTransfer
 {
 
     /**
      * @var string
      */
     private $id;
-
-    public function __construct(LocatorLocatorInterface $locator = null)
-    {
-    }
 
     /**
      * @return string
