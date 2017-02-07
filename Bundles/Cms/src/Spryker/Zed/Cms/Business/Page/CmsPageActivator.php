@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use Exception;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Exception;
 use Throwable;
 
 class CmsPageActivator implements CmsPageActivatorInterface

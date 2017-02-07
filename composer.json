@@ -112,6 +112,7 @@
       "Functional\\Spryker\\Shared\\Cms\\": "Bundles/Cms/tests",
       "Spryker\\Zed\\Cms\\": "Bundles/Cms/src",
       "Functional\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
+      "Unit\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
       "Spryker\\Client\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Client\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Shared\\Collector\\": "Bundles/Collector/src",

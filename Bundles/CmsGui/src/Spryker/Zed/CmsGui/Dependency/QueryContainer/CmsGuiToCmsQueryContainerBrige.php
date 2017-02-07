@@ -60,4 +60,15 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
         return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
     }
 
+    /**
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage)
+    {
+        return $this->cmsQueryContainer->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage);
+    }
+
 }

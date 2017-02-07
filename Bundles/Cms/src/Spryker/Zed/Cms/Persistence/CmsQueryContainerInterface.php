@@ -240,4 +240,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryTranslationWithKeyByValue($value);
 
+    /**
+     * @api
+     *
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
+
 }

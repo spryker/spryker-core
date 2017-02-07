@@ -34,4 +34,12 @@ interface CmsGuiToCmsQueryContainerInterface
      */
     public function queryPagesWithTemplatesForSelectedLocale($idLocale);
 
+    /**
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
+
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -17,7 +18,6 @@ use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
@@ -130,12 +130,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function createKeyMappingByPlaceholder(array $placeholders, $idCmsPage)
     {
-        $glossaryKeyMappingCollection = $this->cmsQueryContainer
-            ->queryGlossaryKeyMappings()
-            ->leftJoinGlossaryKey()
-            ->filterByPlaceholder($placeholders, Criteria::IN)
-            ->filterByFkPage($idCmsPage)
-            ->find();
+        $glossaryKeyMappingCollection = $this->getGlossaryMappingCollection($placeholders, $idCmsPage);
 
         $placeholderMap = [];
         foreach ($glossaryKeyMappingCollection as $glossaryKeyMappingEntity) {
@@ -198,21 +193,22 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             $cmsPlaceholderTranslationTransfer->setFkLocale($idLocale);
             $cmsPlaceholderTranslationTransfer->setLocaleName($localeName);
 
-            if (isset($glossaryKeyEntityMap[$pagePlaceholder])) {
-
-                $glossaryKeyMappingEntity = $glossaryKeyEntityMap[$pagePlaceholder];
-                $glossaryAttributeTransfer->setFkCmsGlossaryMapping($glossaryKeyMappingEntity->getIdCmsGlossaryKeyMapping());
-
-                $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
-                if ($glossaryKeyEntity !== null) {
-                    $translationValue = $this->findTranslation($glossaryKeyEntity, $idLocale);
-                    $cmsPlaceholderTranslationTransfer->setTranslation($translationValue);
-                }
-
-                $glossaryAttributeTransfer->setFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey());
-                $glossaryAttributeTransfer->setTranslationKey($glossaryKeyEntity->getKey());
+            if (!isset($glossaryKeyEntityMap[$pagePlaceholder])) {
+                $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
+                continue;
             }
+
+            $glossaryKeyMappingEntity = $glossaryKeyEntityMap[$pagePlaceholder];
+            $glossaryAttributeTransfer->setFkCmsGlossaryMapping($glossaryKeyMappingEntity->getIdCmsGlossaryKeyMapping());
+
+            $this->setTranslationValue($glossaryKeyMappingEntity, $cmsPlaceholderTranslationTransfer);
+
+            $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
+            $glossaryAttributeTransfer->setFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey());
+            $glossaryAttributeTransfer->setTranslationKey($glossaryKeyEntity->getKey());
+
             $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
+
         }
     }
 
@@ -238,6 +234,38 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             );
         }
         return $cmsPageEntity;
+    }
+
+    /**
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getGlossaryMappingCollection(array $placeholders, $idCmsPage)
+    {
+        $glossaryKeyMappingCollection = $this->cmsQueryContainer
+            ->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage)
+            ->find();
+
+        return $glossaryKeyMappingCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping $glossaryKeyMappingEntity
+     * @param \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
+     *
+     * @return void
+     */
+    protected function setTranslationValue(
+        SpyCmsGlossaryKeyMapping $glossaryKeyMappingEntity,
+        CmsPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
+    ) {
+        $cmsPlaceholderTranslationTransfer->requireFkLocale();
+
+        $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
+        $translationValue = $this->findTranslation($glossaryKeyEntity, $cmsPlaceholderTranslationTransfer->getFkLocale());
+        $cmsPlaceholderTranslationTransfer->setTranslation($translationValue);
     }
 
 }

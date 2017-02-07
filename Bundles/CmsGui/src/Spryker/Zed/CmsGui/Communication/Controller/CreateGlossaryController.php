@@ -42,9 +42,8 @@ class CreateGlossaryController extends AbstractController
             ->createPlaceholderTabs($cmsGlossaryTransfer);
 
         $glossaryForm = $this->getFactory()
-            ->createCmsGlossaryForm($cmsGlossaryFormDataProvider);
-
-        $glossaryForm->handleRequest($request);
+            ->createCmsGlossaryForm($cmsGlossaryFormDataProvider)
+            ->handleRequest($request);
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {

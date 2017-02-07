@@ -629,4 +629,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByFkCmsPage($idPage);
     }
 
+    /**
+     * @api
+     *
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage)
+    {
+        return $this->queryGlossaryKeyMappings()
+            ->leftJoinGlossaryKey()
+            ->filterByPlaceholder($placeholders, Criteria::IN)
+            ->filterByFkPage($idCmsPage);
+    }
+
 }

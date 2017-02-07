@@ -35,6 +35,7 @@ class CmsPageReader implements CmsPageReaderInterface
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsPageUrlBuilderInterface $cmsPageUrlBuilder
     ) {
+
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
     }
@@ -42,20 +43,29 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @param int $idCmsPage
      *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function getCmsPageById($idCmsPage)
     {
-        $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
+        $cmsPageEntity = $this->findCmsPageEntity($idCmsPage);
+
+        if ($cmsPageEntity === null) {
+            throw new MissingPageException(
+                sprintf(
+                    'Cms page with id "%d" not found.',
+                    $idCmsPage
+                )
+            );
+        }
+
         $cmsPageTransfer = $this->mapCmsPageTransfer($cmsPageEntity);
         $urlLocaleMap = $this->createUrlLocaleMap($cmsPageEntity);
 
         foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
 
-            $url = null;
-            if (isset($urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()])) {
-                $url = $urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()];
-            }
+            $url = $this->getLocalizedUrl($urlLocaleMap, $cmsPageLocalizedAttributesEntity);
 
             $cmsPageAttributesTransfer = $this->mapCmsLocalizedAttributesTransfer(
                 $cmsPageLocalizedAttributesEntity,
@@ -126,24 +136,14 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
-    protected function getCmsPageEntity($idCmsPage)
+    protected function findCmsPageEntity($idCmsPage)
     {
         $cmsPageEntity = $this->cmsQueryContainer
             ->queryPageById($idCmsPage)
             ->findOne();
 
-        if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'Cms page with id "%d" not found.',
-                    $idCmsPage
-                )
-            );
-        }
         return $cmsPageEntity;
     }
 
@@ -160,6 +160,23 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
 
         return $cmsPageTransfer;
+    }
+
+    /**
+     * @param array $urlLocaleMap
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+     *
+     * @return null|string
+     */
+    protected function getLocalizedUrl(
+        array $urlLocaleMap,
+        SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+    ) {
+        $url = null;
+        if (isset($urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()])) {
+            $url = $urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()];
+        }
+        return $url;
     }
 
 }

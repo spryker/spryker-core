@@ -40,9 +40,8 @@ class EditPageController extends AbstractController
             ->createCmsPageFormTypeDataProvider($availableLocales, $cmsPageTransfer);
 
         $pageForm = $this->getFactory()
-            ->createCmsPageForm($cmsPageFormTypeDataProvider);
-
-        $pageForm->handleRequest($request);
+            ->createCmsPageForm($cmsPageFormTypeDataProvider)
+            ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
             if ($pageForm->isValid()) {

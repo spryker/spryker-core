@@ -42,7 +42,7 @@ class CmsPageTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Table\CmsGuiConfig
+     * @var \Spryker\Zed\CmsGui\CmsGuiConfig
      */
     protected $cmsGuiConfig;
 
@@ -76,29 +76,11 @@ class CmsPageTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE => '#',
-            static::COL_NAME => 'Name',
-            static::COL_URL => 'Url',
-            static::COL_TEMPLATE => 'Template',
-            SpyCmsPageTableMap::COL_IS_ACTIVE => 'Active',
-            static::ACTIONS => static::ACTIONS,
-        ]);
-
-        $config->addRawColumn(static::ACTIONS);
-        $config->addRawColumn(SpyCmsPageTableMap::COL_IS_ACTIVE);
-        $config->addRawColumn(static::COL_URL);
-
-        $config->setSortable([
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyCmsPageTableMap::COL_IS_ACTIVE,
-        ]);
-
-        $config->setDefaultSortField(SpyCmsPageTableMap::COL_ID_CMS_PAGE, TableConfiguration::SORT_DESC);
-
-        $config->setSearchable([
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE
-        ]);
+        $this->setHeaders($config);
+        $this->setRawColumns($config);
+        $this->setSortableFields($config);
+        $this->setSearchableFields($config);
+        $this->setDefaultSortField($config);
 
         return $config;
     }
@@ -118,15 +100,7 @@ class CmsPageTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $item) {
-            $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
-            $results[] = [
-                SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-                static::COL_NAME => $item[static::COL_NAME],
-                static::COL_URL => $this->buildUrlList($item),
-                static::COL_TEMPLATE => $item[static::COL_TEMPLATE],
-                SpyCmsPageTableMap::COL_IS_ACTIVE => $this->getStatusLabel($item),
-                static::ACTIONS => $actions,
-            ];
+            $results[] = $this->mapResults($item, $urlPrefix);
         }
 
         return $results;
@@ -304,6 +278,91 @@ class CmsPageTable extends AbstractTable
     protected function extractUrls(array $item)
     {
         return explode(',', $item[static::COL_CMS_URLS]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setHeaders(TableConfiguration $config)
+    {
+        $config->setHeader([
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE => '#',
+            static::COL_NAME => 'Name',
+            static::COL_URL => 'Url',
+            static::COL_TEMPLATE => 'Template',
+            SpyCmsPageTableMap::COL_IS_ACTIVE => 'Active',
+            static::ACTIONS => static::ACTIONS,
+        ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setRawColumns(TableConfiguration $config)
+    {
+        $config->setRawColumns([
+            static::ACTIONS,
+            SpyCmsPageTableMap::COL_IS_ACTIVE,
+            static::COL_URL,
+        ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setSortableFields(TableConfiguration $config)
+    {
+        $config->setSortable([
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            SpyCmsPageTableMap::COL_IS_ACTIVE,
+        ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setSearchableFields(TableConfiguration $config)
+    {
+        $config->setSearchable([
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE
+        ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setDefaultSortField(TableConfiguration $config)
+    {
+        $config->setDefaultSortField(SpyCmsPageTableMap::COL_ID_CMS_PAGE, TableConfiguration::SORT_DESC);
+    }
+
+    /**
+     * @param array $item
+     * @param string $urlPrefix
+     *
+     * @return array
+     */
+    protected function mapResults(array $item, $urlPrefix)
+    {
+        $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
+        return [
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            static::COL_NAME => $item[static::COL_NAME],
+            static::COL_URL => $this->buildUrlList($item),
+            static::COL_TEMPLATE => $item[static::COL_TEMPLATE],
+            SpyCmsPageTableMap::COL_IS_ACTIVE => $this->getStatusLabel($item),
+            static::ACTIONS => $actions,
+        ];
     }
 
 }

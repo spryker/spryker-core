@@ -129,14 +129,13 @@ class CmsPageSaver implements CmsPageSaverInterface
             }
 
             $this->cmsQueryContainer->getConnection()->commit();
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
-
 
         return $cmsPageTransfer;
     }

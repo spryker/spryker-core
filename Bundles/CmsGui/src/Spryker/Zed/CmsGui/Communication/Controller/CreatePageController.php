@@ -33,9 +33,8 @@ class CreatePageController extends AbstractController
             ->createCmsPageFormTypeDataProvider($availableLocales);
 
         $pageForm = $this->getFactory()
-            ->createCmsPageForm($cmsPageFormTypeDataProvider);
-
-        $pageForm->handleRequest($request);
+            ->createCmsPageForm($cmsPageFormTypeDataProvider)
+            ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
             if ($pageForm->isValid()) {
