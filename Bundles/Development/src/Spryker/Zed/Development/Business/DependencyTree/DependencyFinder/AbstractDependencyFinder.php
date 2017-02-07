@@ -85,6 +85,13 @@ abstract class AbstractDependencyFinder
             $dependencyInformation[DependencyTree::META_IN_TEST] = true;
         }
 
+        if (!isset($dependencyInformation[DependencyTree::META_IS_OPTIONAL])) {
+            $dependencyInformation[DependencyTree::META_IS_OPTIONAL] = false;
+            if (strpos($fileInfo->getPath(), '/Plugin/') !== false) {
+                $dependencyInformation[DependencyTree::META_IS_OPTIONAL] = true;
+            }
+        }
+
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }
 

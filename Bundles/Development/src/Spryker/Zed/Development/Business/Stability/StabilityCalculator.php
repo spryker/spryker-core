@@ -50,6 +50,9 @@ class StabilityCalculator implements StabilityCalculatorInterface
         $this->bundlesDependencies = $this->filter($bundlesDependencies);
 
         foreach ($this->bundlesDependencies as $bundlesDependency) {
+            if ($bundlesDependency[DependencyTree::META_IS_OPTIONAL] || $bundlesDependency[DependencyTree::META_IN_TEST]) {
+                continue;
+            }
             $currentBundleName = $bundlesDependency['bundle'];
             $outgoingBundleName = $bundlesDependency['foreign bundle'];
 
@@ -64,11 +67,11 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $this->bundles[$outgoingBundleName]['in'][$currentBundleName] = $currentBundleName;
         }
 
+        ksort($this->bundles);
+
         $this->calculateBundlesStability();
         $this->calculateIndirectBundlesStability();
         $this->calculateSprykerStability();
-
-        ksort($this->bundles);
 
         return $this->bundles;
     }
@@ -129,10 +132,17 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $this->bundles[$bundle]['indirectOut'] = $indirectOutgoingDependencies->getArrayCopy();
 
             $indirectIncomingDependencies = new ArrayObject();
+            $incomingBundles = $this->bundles[$bundle]['in'];
             $this->buildIndirectIncomingDependencies($bundle, $indirectIncomingDependencies);
-            $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies->getArrayCopy();
 
+            $indirectIncomingDependencies = $indirectIncomingDependencies->getArrayCopy();
+            $callback = function ($bundle) use ($incomingBundles) {
+                return !in_array($bundle, $incomingBundles);
+            };
+            $indirectIncomingDependencies = array_filter($indirectIncomingDependencies, $callback);
+            $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies;
             $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
+
             $this->bundles[$bundle]['indirectStability'] = number_format($indirectStability, 3);
         }
     }

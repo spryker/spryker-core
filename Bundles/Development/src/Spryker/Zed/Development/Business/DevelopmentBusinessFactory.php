@@ -37,6 +37,7 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDep
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
@@ -256,6 +257,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createLocatorFacadeChecker(),
             $this->createLocatorQueryContainerChecker(),
             $this->createLocatorClientChecker(),
+            $this->createLocatorServiceChecker(),
             $this->createExternalDependencyChecker(),
         ];
     }
@@ -290,6 +292,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createLocatorClientChecker()
     {
         return new LocatorClient();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     */
+    protected function createLocatorServiceChecker()
+    {
+        return new LocatorService();
     }
 
     /**

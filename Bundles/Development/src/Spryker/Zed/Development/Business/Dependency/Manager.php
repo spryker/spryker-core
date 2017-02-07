@@ -69,7 +69,7 @@ class Manager
         foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundle) {
             if ($dependencyBundle->getBundle() === $bundleName) {
                 foreach ($dependencyBundle->getDependencies() as $dependencyTransfer) {
-                    if (!$dependencyTransfer->getIsInTest()) {
+                    if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
                         return $dependencyBundle;
                     }
                 }
