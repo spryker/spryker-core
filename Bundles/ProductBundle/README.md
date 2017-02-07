@@ -39,19 +39,22 @@ add `ProductBundleAvailabilityCheckoutPreConditionPlugin`.
 7. In `\Pyz\Zed\Oms\OmsDependencyProvider::getReservationHandlerPlugins`,
 add `ProductBundleAvailabilityHandlerPlugin`.
 
-8. In `\Pyz\Zed\Product\ProductDependencyProvider::getProductConcreteAfterUpdatePlugins`,
+8. In  `\Pyz\Zed\Product\ProductDependencyProvider::getProductConcreteAfterUpdatePlugins`,
+add `ProductBundleProductConcreteAfterCreatePlugin`.
+
+9. In `\Pyz\Zed\Product\ProductDependencyProvider::getProductConcreteAfterUpdatePlugins`,
 add `ProductBundleProductConcreteAfterUpdatePlugin`.
 
-9. In `\Pyz\Zed\Product\ProductDependencyProvider::getProductConcreteReadPlugins`,
+10. In `\Pyz\Zed\Product\ProductDependencyProvider::getProductConcreteReadPlugins`,
 add `ProductBundleProductConcreteReadPlugin`.
 
-10. In `\Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderSaverPlugin::saveOrder`,
+11. In `\Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderSaverPlugin::saveOrder`,
 add `ProductBundleOrderSaverPlugin`.
 
-11. In `\Spryker\Zed\ProductBundle\Communication\Plugin\SalesAggregator\ProductBundlePriceAggregatorPlugin::aggregate`,
+12. In `\Spryker\Zed\ProductBundle\Communication\Plugin\SalesAggregator\ProductBundlePriceAggregatorPlugin::aggregate`,
 add `ProductBundlePriceAggregatorPlugin`.
 
-12. In `\Pyz\Zed\Stock\StockDependencyProvider::getStockUpdateHandlerPlugins`,
+13. In `\Pyz\Zed\Stock\StockDependencyProvider::getStockUpdateHandlerPlugins`,
 add `ProductBundleAvailabilityHandlerPlugin`.
 
 #### Plugin descriptions
