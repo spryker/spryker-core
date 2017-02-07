@@ -18,6 +18,8 @@ use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated use cms page creation from CmsGui bundle
+ *
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()

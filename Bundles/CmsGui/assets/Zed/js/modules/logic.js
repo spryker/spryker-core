@@ -27,11 +27,12 @@ function showAutoComplete(placeholderTranslationContainer, searchType)
     var searchTypeGlossaryKey = 2;
     var searchTypeFullText = 3;
     var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>';
-    $('.keyListCanvas').empty();
-    $('.keyListCanvas').append(listElement);
+    var keyListCanvas = $(placeholderTranslationContainer.find('.keyListCanvas'));
+    keyListCanvas.empty();
+    keyListCanvas.append(listElement);
 
-    keyList = $('#foundKeyList');
-    keyContainer = $('#foundKeyListContainer');
+    keyList = $(keyListCanvas.find('#foundKeyList'));
+    keyContainer = $(keyListCanvas.find('#foundKeyListContainer'));
 
     var keyInput = placeholderTranslationContainer.find("input[id$='translationKey']");
     var loadingSpinner = $(placeholderTranslationContainer.find('.loading'));

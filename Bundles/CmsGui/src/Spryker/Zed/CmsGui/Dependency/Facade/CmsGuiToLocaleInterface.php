@@ -11,29 +11,6 @@ interface CmsGuiToLocaleInterface
 {
 
     /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale($localeName);
-
-    /**
-     * @param string $localeName
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName);
-
-    /**
-     * @param string $localeCode
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode);
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();

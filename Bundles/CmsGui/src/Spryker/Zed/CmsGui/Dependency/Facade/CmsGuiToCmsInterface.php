@@ -6,10 +6,12 @@
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsGuiToCmsInterface
 {
+
     /**
      * @param int $idPage
      * @param string $placeholder
@@ -68,4 +70,19 @@ interface CmsGuiToCmsInterface
      * @return void
      */
     public function deactivatePage($idCmsPage);
+
+    /**
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function getPageUrlPrefix($localeName);
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+
 }

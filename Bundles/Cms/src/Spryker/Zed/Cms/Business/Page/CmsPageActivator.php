@@ -6,15 +6,14 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageActivator implements CmsPageActivatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -26,29 +25,19 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      */
-    public function __construct(
-        CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToTouchInterface $touchFacade,
-        CmsToUrlInterface $urlFacade
-    ) {
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
-        $this->urlFacade = $urlFacade;
     }
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     * @return void
      */
     public function activate($idCmsPage)
     {
@@ -59,7 +48,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
         $cmsPageEntity->setIsActive(true);
         $cmsPageEntity->save();
 
-        $this->activatePageUrls($cmsPageEntity);
         $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
         $this->cmsQueryContainer->getConnection()->commit();
@@ -68,7 +56,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     * @return void
      */
     public function deactivate($idCmsPage)
     {
@@ -108,15 +96,4 @@ class CmsPageActivator implements CmsPageActivatorInterface
         return $cmsPageEntity;
     }
 
-    /**
-     * @param SpyCmsPage $cmsPageEntity
-     *
-     * @return void
-     */
-    protected function activatePageUrls(SpyCmsPage $cmsPageEntity)
-    {
-        foreach ($cmsPageEntity->getSpyUrls() as $urlEntity) {
-            $this->urlFacade->touchUrlActive($urlEntity->getIdUrl());
-        }
-    }
 }

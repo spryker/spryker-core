@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-
 class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterface
 {
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
@@ -30,37 +28,6 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
     public function queryTemplates()
     {
         return $this->cmsQueryContainer->queryTemplates();
-    }
-
-    /**
-     * @param int $idPage
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByIdPage($idPage)
-    {
-        return $this->cmsQueryContainer->queryBlockByIdPage($idPage);
-    }
-
-    /**
-     * @param int $idPage
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
-     */
-    public function queryPageWithTemplatesAndUrlByIdPage($idPage)
-    {
-        return $this->cmsQueryContainer->queryPageWithTemplatesAndUrlByIdPage($idPage);
-    }
-
-    /**
-     * @param int $idPage
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
-     */
-    public function queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale)
-    {
-        return $this->cmsQueryContainer->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $idLocale);
     }
 
     /**
@@ -90,7 +57,7 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
      */
     public function queryPagesWithTemplatesForSelectedLocale($idLocale)
     {
-       return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
+        return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
     }
 
 }

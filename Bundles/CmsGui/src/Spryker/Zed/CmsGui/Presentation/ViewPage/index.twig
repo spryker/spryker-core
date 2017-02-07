@@ -6,13 +6,108 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/cms/page-list', 'Back to CMS' | trans) }}
+
+    {% set redirectUrl = url('/cms-gui/view-page', {'id-cms-page' : cmsPage.fkPage}) %}
+    {{ include ('@CmsGui/_template/activate-button.twig', { 'cmsPage': cmsPage }) }}
+
+    {{ editActionButton(url('/cms-gui/edit-page', { 'id-cms-page': cmsPage.fkPage }), 'Edit page' | trans) }}
+    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
-            {{ pages | raw }}
+            <p>
+                <strong>{{ 'Is searchable:' | trans }}</strong> {{ cmsPage.isSearchable ? 'yes' : 'no' }}
+            </p>
+
+            <p>
+                <strong>{{ 'Is active:' | trans }}</strong> {{ cmsPage.isActive ? 'yes' : 'no' }}
+            </p>
+
+            <p>
+                <strong>{{ 'Template:' | trans }}</strong> {{ cmsPage.templateName }}
+            </p>
+
+            <p>
+                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}
+            </p>
+
+            <p>
+                <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}
+            </p>
+
         {% endblock %}
     {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Urls' } %}
+        {% block widget_content %}
+
+            <table class="table">
+                <tr>
+                    <th>{{ "Name" | trans }}</th>
+                    <th>{{ "Url" | trans }}</th>
+                    <th>{{ "Locale" | trans }}</th>
+                </tr>
+                {% for pageAttribute in cmsPage.pageAttributes %}
+                    <tr>
+                        <td>{{ pageAttribute.name }}</td>
+                        <td>{{ pageAttribute.url }}</td>
+                        <td>{{ pageAttribute.localeName }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Meta attributes' } %}
+        {% block widget_content %}
+
+            <table class="table">
+                <tr>
+                    <th>{{ "Title" | trans }}</th>
+                    <th>{{ "Keywords" | trans }}</th>
+                    <th>{{ "Description" | trans }}</th>
+                    <th>{{ "Locale" | trans }}</th>
+                </tr>
+                {% for pageMetaAttribute in cmsPage.metaAttributes %}
+                    <tr>
+                        <td>{{ pageMetaAttribute.metaTitle }}</td>
+                        <td>{{ pageMetaAttribute.metaKeywords }}</td>
+                        <td>{{ pageMetaAttribute.metaDescription }}</td>
+                        <td>{{ pageMetaAttribute.localeName }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+        {% block widget_content %}
+
+            {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+
+                <h3>{{ glossaryAttribute.placeholder }}</h3>
+
+                <p>
+                    <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}
+                </p>
+
+                {% for translation in glossaryAttribute.translations %}
+                   {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
+                       {% block content %}
+                           {{ translation.translation | raw }}
+                       {% endblock %}
+                   {% endembed %}
+                {% endfor %}
+
+            {% endfor %}
+
+        {% endblock %}
+    {% endembed %}
+
+
 {% endblock %}

@@ -9,9 +9,11 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
+use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 
 class CmsPageFormTypeDataProvider
 {
@@ -32,18 +34,26 @@ class CmsPageFormTypeDataProvider
     protected $cmsPageTransfer;
 
     /**
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
+     */
+    protected $cmsFacade;
+
+    /**
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
-     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
      */
     public function __construct(
         array $availableLocales,
         CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsGuiToCmsInterface $cmsFacade,
         CmsPageTransfer $cmsPageTransfer = null
     ) {
         $this->availableLocales = $availableLocales;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageTransfer = $cmsPageTransfer;
+        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -56,7 +66,7 @@ class CmsPageFormTypeDataProvider
             CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES => $this->availableLocales,
             CmsPageFormType::OPTION_DATA_CLASS_ATTRIBUTES => CmsPageAttributesTransfer::class,
             CmsPageFormType::OPTION_DATA_CLASS_META_ATTRIBUTES => CmsPageMetaAttributesTransfer::class,
-            CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList()
+            CmsPageFormType::OPTION_TEMPLATE_CHOICES => $this->getTemplateList(),
         ];
     }
 
@@ -95,16 +105,13 @@ class CmsPageFormTypeDataProvider
     protected function createInitialCmsPageTransfer()
     {
         $cmsPageTransfer = new CmsPageTransfer();
+
         foreach ($this->availableLocales as $localeTransfer) {
 
-            $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
-            $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
-            $cmsPageAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $cmsPageAttributeTransfer = $this->createInitialCmsPageAttributesTransfer($localeTransfer);
             $cmsPageTransfer->addPageAttribute($cmsPageAttributeTransfer);
 
-            $cmsPageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
-            $cmsPageMetaAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
-            $cmsPageMetaAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $cmsPageMetaAttributeTransfer = $this->createInitialCmsPageMetaAttributesTransfer($localeTransfer);
             $cmsPageTransfer->addMetaAttribute($cmsPageMetaAttributeTransfer);
         }
 
@@ -112,19 +119,34 @@ class CmsPageFormTypeDataProvider
     }
 
     /**
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function extractLanguageCode($localeName)
+    protected function createInitialCmsPageAttributesTransfer(LocaleTransfer $localeTransfer)
     {
-        $localeNameParts = explode('_', $localeName);
+        $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+        $cmsPageAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
+        $cmsPageAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+        $cmsPageAttributeTransfer->setUrlPrefix(
+            $this->cmsFacade->getPageUrlPrefix($localeTransfer->getLocaleName())
+        );
 
-        if (!isset($localeNameParts[0])){
-            return '';
-        }
-
-        return $localeNameParts[0];
-
+        return $cmsPageAttributeTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
+     */
+    protected function createInitialCmsPageMetaAttributesTransfer(LocaleTransfer $localeTransfer)
+    {
+        $cmsPageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
+        $cmsPageMetaAttributeTransfer->setLocaleName($localeTransfer->getLocaleName());
+        $cmsPageMetaAttributeTransfer->setFkLocale($localeTransfer->getIdLocale());
+
+        return $cmsPageMetaAttributeTransfer;
+    }
+
 }

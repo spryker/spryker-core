@@ -8,14 +8,17 @@ namespace Spryker\Zed\CmsGui;
 
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleBridge;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBrige;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_LOCALE = 'locale facade';
     const FACADE_CMS = 'locale cms';
+    const FACADE_URL = 'url facade';
 
     const QUERY_CONTAINER_CMS = 'cms query container';
 
@@ -26,19 +29,23 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CmsGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_CMS] = function (Container $container) {
+        $container[static::FACADE_CMS] = function (Container $container) {
             return new CmsGuiToCmsBridge($container->getLocator()->cms()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_CMS] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_CMS] = function (Container $container) {
             return new CmsGuiToCmsQueryContainerBrige($container->getLocator()->cms()->queryContainer());
         };
 
+        $container[static::FACADE_URL] = function (Container $container) {
+            return new CmsGuiToUrlBridge($container->getLocator()->url()->facade());
+        };
 
         return $container;
     }
+
 }

@@ -24,36 +24,6 @@ class CmsGuiToLocaleBridge implements CmsGuiToLocaleInterface
     }
 
     /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale($localeName)
-    {
-        return $this->localeFacade->hasLocale($localeName);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName)
-    {
-        return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @param string $localeCode
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode)
-    {
-        return $this->localeFacade->getLocaleByCode($localeCode);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()

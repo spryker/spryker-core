@@ -32,4 +32,5 @@ interface CmsGlossarySaverInterface
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder);
+
 }

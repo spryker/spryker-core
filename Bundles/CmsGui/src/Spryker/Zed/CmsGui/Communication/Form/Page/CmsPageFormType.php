@@ -6,21 +6,27 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
+use DateTime;
 use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsPageFormType extends AbstractType
 {
+
     const FIELD_SEARCHABLE = 'isSearchable';
     const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
     const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_FK_PAGE = 'fkPage';
+    const FIELD_VALID_FROM = 'validFrom';
+    const FIELD_VALID_TO = 'validTo';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
@@ -33,26 +39,26 @@ class CmsPageFormType extends AbstractType
      */
     protected $searcableChoices = [
         0 => 'No',
-        1 => 'Yes'
+        1 => 'Yes',
     ];
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType
+     * @var \Symfony\Component\Form\FormTypeInterface
      */
     protected $cmsPageAttributesFormType;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType
+     * @var \Symfony\Component\Form\FormTypeInterface
      */
     protected $cmsPageMetaAttributesFormType;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType $cmsPageAttributesFormType
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType $cmsPageMetaAttributesFormType
+     * @param \Symfony\Component\Form\FormTypeInterface $cmsPageAttributesFormType
+     * @param \Symfony\Component\Form\FormTypeInterface $cmsPageMetaAttributesFormType
      */
     public function __construct(
-        CmsPageAttributesFormType $cmsPageAttributesFormType,
-        CmsPageMetaAttributesFormType $cmsPageMetaAttributesFormType
+        FormTypeInterface $cmsPageAttributesFormType,
+        FormTypeInterface $cmsPageMetaAttributesFormType
     ) {
         $this->cmsPageAttributesFormType = $cmsPageAttributesFormType;
         $this->cmsPageMetaAttributesFormType = $cmsPageMetaAttributesFormType;
@@ -83,7 +89,9 @@ class CmsPageFormType extends AbstractType
             ->addFkPage($builder)
             ->addFkTemplateField($builder, $options[static::OPTION_TEMPLATE_CHOICES])
             ->addPageAttributesFormCollection($builder, $options)
-            ->addPageMetaAttribuesFormCollection($builder, $options);
+            ->addPageMetaAttribuesFormCollection($builder, $options)
+            ->addValidFromField($builder)
+            ->addValidToField($builder);
     }
 
     /**
@@ -107,7 +115,7 @@ class CmsPageFormType extends AbstractType
     {
         $builder->add(static::FIELD_SEARCHABLE, ChoiceType::class, [
             'label' => 'Searchable *',
-            'choices' => $this->searcableChoices
+            'choices' => $this->searcableChoices,
         ]);
 
         return $this;
@@ -116,6 +124,7 @@ class CmsPageFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
+     *
      * @return $this
      */
     protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
@@ -141,13 +150,13 @@ class CmsPageFormType extends AbstractType
             'type' => $this->cmsPageAttributesFormType,
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_options'  => [
+            'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
                 CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES => $options[CmsPageAttributesFormType::OPTION_AVAILABLE_LOCALES],
             ],
         ]);
 
-        $builder->get(self::FIELD_PAGE_ATTRIBUTES)
+        $builder->get(static::FIELD_PAGE_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
@@ -165,15 +174,74 @@ class CmsPageFormType extends AbstractType
             'type' => $this->cmsPageMetaAttributesFormType,
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_options'  => [
+            'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_META_ATTRIBUTES],
             ],
         ]);
 
-        $builder->get(self::FIELD_PAGE_META_ATTRIBUTES)
+        $builder->get(static::FIELD_PAGE_META_ATTRIBUTES)
             ->addModelTransformer($this->createArrayObjectModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_VALID_FROM, 'date', [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker',
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_VALID_TO, 'date', [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker',
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return new DateTime($value);
+                }
+            },
+            function ($value) {
+                return $value;
+            }
+        );
     }
 
     /**
@@ -183,4 +251,5 @@ class CmsPageFormType extends AbstractType
     {
         return 'cms_page';
     }
+
 }

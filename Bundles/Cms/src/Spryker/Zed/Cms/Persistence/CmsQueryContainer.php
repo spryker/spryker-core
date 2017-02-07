@@ -41,6 +41,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const LABEL = 'label';
     const VALUE = 'value';
     const IS_ACTIVE = 'is_active';
+    const CMS_URLS = 'cmsUrls';
 
     /**
      * @api
@@ -122,6 +123,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -132,9 +135,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->useSpyCmsPageLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, 'template_name')
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
             ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
-            ->innerJoinCmsTemplate();
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::CMS_URLS)
+            ->innerJoinCmsTemplate()
+            ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
+            ->groupBy(static::TEMPLATE_NAME)
+            ->groupBy('name');
     }
 
     /**
@@ -148,8 +160,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::URL)
-            ->withColumn(self::IS_ACTIVE);
+            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::URL)
+            ->withColumn(self::IS_ACTIVE)
+            ->groupByIdCmsPage();
     }
 
     /**
@@ -399,11 +412,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->useSpyUrlQuery()
                 ->leftJoinSpyLocale()
             ->endUse()
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::URL)
             ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'idLocale')
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH);
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, static::TEMPLATE_PATH);
     }
 
     /**
@@ -603,6 +616,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery

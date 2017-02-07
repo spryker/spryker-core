@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -290,6 +291,11 @@ interface CmsFacadeInterface
     public function deleteBlockById($idCmsBlock);
 
     /**
+     * Specification:
+     * - Reads cms page placeholders with translations.
+     *
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
@@ -297,6 +303,9 @@ interface CmsFacadeInterface
     public function getPageGlossaryAttributes($idCmsPage);
 
     /**
+     * Specification:
+     * - Saves cms glossary placeholders
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
@@ -306,6 +315,10 @@ interface CmsFacadeInterface
     public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
 
     /**
+     * Specification:
+     * - Creates new Cms page
+     * - Touches cms collector
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
@@ -315,6 +328,9 @@ interface CmsFacadeInterface
     public function createPage(CmsPageTransfer $cmsPageTransfer);
 
     /**
+     * Specification:
+     * - Reads cms page by given id
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -324,6 +340,10 @@ interface CmsFacadeInterface
     public function getCmsPageById($idCmsPage);
 
     /**
+     * Specification:
+     * - Updates existing cms page with new data
+     * - Touches cms collector
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
@@ -333,6 +353,10 @@ interface CmsFacadeInterface
     public function updatePage(CmsPageTransfer $cmsPageTransfer);
 
     /**
+     * Specification:
+     * - Activates page, set active flat to 1 in database
+     * - Touches cms collector
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -342,6 +366,10 @@ interface CmsFacadeInterface
     public function activatePage($idCmsPage);
 
     /**
+     * Specification:
+     * - Deactivates page, set active flat to 0 in database
+     * - Touches cms collector
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -349,5 +377,29 @@ interface CmsFacadeInterface
      * @return void
      */
     public function deactivatePage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Creates prefix to be appended in front of url
+     *
+     * @api
+     *
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function getPageUrlPrefix($localeName);
+
+    /**
+     * Specification:
+     * - Creates page url for persistence, from give localized data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
 }

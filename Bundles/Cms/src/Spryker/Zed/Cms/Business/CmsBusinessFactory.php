@@ -14,9 +14,10 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
+use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
+use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
-use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -149,7 +150,12 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageSaver()
     {
-        return new CmsPageSaver($this->getUrlFacade(), $this->getTouchFacade(), $this->getQueryContainer());
+        return new CmsPageSaver(
+            $this->getUrlFacade(),
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createCmsUrlBuilder()
+        );
     }
 
     /**
@@ -157,7 +163,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageReader()
     {
-        return new CmsPageReader($this->getQueryContainer());
+        return new CmsPageReader($this->getQueryContainer(), $this->createCmsUrlBuilder());
     }
 
     /**
@@ -181,7 +187,15 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageActivator()
     {
-        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade(), $this->getUrlFacade());
+        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     */
+    public function createCmsUrlBuilder()
+    {
+        return new CmsPageUrlBuilder();
     }
 
 }

@@ -11,6 +11,7 @@ use Symfony\Component\Form\CallbackTransformer;
 
 trait ArrayObjectTransformerTrait
 {
+
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
@@ -20,9 +21,10 @@ trait ArrayObjectTransformerTrait
             function ($value) {
                 return (array)$value;
             },
-            function($value) {
+            function ($value) {
                 return new ArrayObject($value);
             }
         );
     }
+
 }

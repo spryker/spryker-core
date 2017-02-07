@@ -6,29 +6,32 @@
 {% block section_title widget_title %}
 
 {% block action %}
+    {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : cmsPage.fkPage}) %}
+    {{ include ('@CmsGui/_template/activate-button.twig', { 'cmsPage': cmsPage}) }}
 
-    {% if cmsPage.isActive %}
-        {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': cmsPage.fkPage}), 'Deactivate' | trans) }}
-    {% else %}
-        {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': cmsPage.fkPage}), 'Activate' | trans) }}
-    {% endif %}
+    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
 
-    {{ editActionButton(url('/cms-gui/create-glossary/index', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
-
-    {{ backActionButton('/cms-gui/page-list', 'Back to CMS' | trans) }}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' %}
-        {% block widget_content %}
 
-            {{ form_start(pageForm) }}
+    {{ form_start(pageForm) }}
 
-            {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
-            {% include '@CmsGui/_template/_form-submit.twig' %}
+    {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
 
-            {{ form_end(pageForm) }}
+    {{ form_end(pageForm) }}
 
-        {% endblock %}
-    {% endembed %}
 {% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+{% endblock %}
+

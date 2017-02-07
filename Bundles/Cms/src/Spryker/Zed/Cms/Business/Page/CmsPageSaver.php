@@ -7,10 +7,8 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
@@ -40,18 +38,26 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $cmsQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     */
+    protected $cmsPageUrlBuilder;
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
      */
     public function __construct(
         CmsToUrlInterface $urlFacade,
         CmsToTouchInterface $touchFacade,
-        CmsQueryContainerInterface $cmsQueryContainer
+        CmsQueryContainerInterface $cmsQueryContainer,
+        CmsPageUrlBuilderInterface $cmsPageUrlBuilder
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
     }
 
     /**
@@ -80,13 +86,10 @@ class CmsPageSaver implements CmsPageSaverInterface
         $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsPageEntity->getIdCmsPage();
-
     }
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
@@ -112,7 +115,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         return $cmsPageTransfer;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      * @param int $idCmsPage
@@ -121,59 +123,16 @@ class CmsPageSaver implements CmsPageSaverInterface
      */
     public function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage)
     {
-        $url = $this->buildPageUrl(
-            $cmsPageAttributesTransfer->getUrl(),
-            $cmsPageAttributesTransfer->getLocaleName()
-        );
+        $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setIdLocale($cmsPageAttributesTransfer->getFkLocale());
+        $urlTransfer = $this->createUrlTransfer($cmsPageAttributesTransfer, $idCmsPage, $url);
 
-        return $this->urlFacade->createUrl(
-            $url,
-            $localeTransfer,
-            CmsConstants::RESOURCE_TYPE_PAGE,
-            $idCmsPage
-        );
-    }
-
-    /**
-     * @param string $url
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function buildPageUrl($url, $localeName)
-    {
-        $languageCode = $this->extractLanguageCode($localeName);
-
-        if (preg_match('#^/' . $languageCode . '/#i', $url) > 0) {
-            return $url;
-        }
-
-        $url = preg_replace('#^/#', '', $url);
-
-        $urlWithLanguageCode =  '/' . $languageCode . '/' . $url;
-
-        return $urlWithLanguageCode;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function extractLanguageCode($localeName)
-    {
-        $localeNameParts = explode('_', $localeName);
-        $languageCode = $localeNameParts[0];
-
-        return $languageCode;
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
@@ -185,25 +144,23 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
-     * @param SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @return void
      */
     protected function updatePageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, SpyUrl $urlEntity)
     {
-        $url = $this->buildPageUrl(
-            $cmsPageAttributesTransfer->getUrl(),
-            $cmsPageAttributesTransfer->getLocaleName()
-        );
+        $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
         if ($urlEntity->getUrl() !== $url) {
-            $urlTransfer = new UrlTransfer();
+            $urlTransfer = $this->createUrlTransfer(
+                $cmsPageAttributesTransfer,
+                $cmsPageAttributesTransfer->getIdCmsPage(),
+                $url
+            );
             $urlTransfer->setIdUrl($urlEntity->getIdUrl());
-            $urlTransfer->fromArray($cmsPageAttributesTransfer->toArray(), true);
-            $urlTransfer->setUrl($url);
-
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->urlFacade->updateUrl($urlTransfer);
         }
     }
 
@@ -233,7 +190,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return array
      */
@@ -247,7 +204,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return array
      */
@@ -261,10 +218,10 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
-     * @return SpyCmsPageLocalizedAttributes
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
     protected function mapCmsPageLocalizedAttributes(
         SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
@@ -276,10 +233,10 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
-     * @param CmsPageMetaAttributesTransfer $cmsPageMetaAttributesTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer $cmsPageMetaAttributesTransfer
      *
-     * @return SpyCmsPageLocalizedAttributes
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
     protected function mapCmsPageLocalizedMetaAttributes(
         SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
@@ -291,8 +248,8 @@ class CmsPageSaver implements CmsPageSaverInterface
     }
 
     /**
-     * @param CmsPageAttributesTransfer $cmsPageAttributesTransfer
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
@@ -309,7 +266,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param array|CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
+     * @param array|\Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return void
@@ -335,7 +292,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param array|SpyCmsPageLocalizedAttributes[] $localizedAttributeEntities
+     * @param array|\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $localizedAttributeEntities
      *
      * @return void
      */
@@ -353,7 +310,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param array|SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
+     * @param array|\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
      *
      * @return void
      */
@@ -373,4 +330,21 @@ class CmsPageSaver implements CmsPageSaverInterface
             $cmsPageLocalizedAttributesEntity->save();
         }
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param int $idCmsPage
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function createUrlTransfer(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage, $url)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl($url);
+        $urlTransfer->setFkLocale($cmsPageAttributesTransfer->getFkLocale());
+        $urlTransfer->setFkResourcePage($idCmsPage);
+        return $urlTransfer;
+    }
+
 }

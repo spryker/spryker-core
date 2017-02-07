@@ -21,7 +21,8 @@ class PageTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer)
     {
         $this->addGeneralTab($tabsViewTransfer)
-            ->addSeoTab($tabsViewTransfer);
+            ->addSeoTab($tabsViewTransfer)
+            ->setFooter($tabsViewTransfer);
 
         return $tabsViewTransfer;
     }
@@ -37,6 +38,8 @@ class PageTabs extends AbstractTabs
         $tabItemTransfer->setName('general');
         $tabItemTransfer->setTemplate('@CmsGui/_partial/tab-general.twig');
         $tabItemTransfer->setTitle('General');
+        $tabItemTransfer->setHasError(true);
+
         $tabsViewTransfer->addTab($tabItemTransfer);
 
         return $this;
@@ -57,4 +60,18 @@ class PageTabs extends AbstractTabs
 
         return $this;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function setFooter(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabsViewTransfer->setFooterTemplate('@CmsGui/_template/_form-submit.twig')
+            ->setIsNavigable(true);
+
+        return $this;
+    }
+
 }

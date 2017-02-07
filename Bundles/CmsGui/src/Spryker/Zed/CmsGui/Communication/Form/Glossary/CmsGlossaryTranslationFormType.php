@@ -92,4 +92,5 @@ class CmsGlossaryTranslationFormType extends AbstractType
 
         return $this;
     }
+
 }

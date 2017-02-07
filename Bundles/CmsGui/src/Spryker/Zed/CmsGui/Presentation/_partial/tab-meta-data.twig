@@ -2,7 +2,7 @@
 <h4>{{ 'Fill in seo information' | trans }}</h4>
 
 {% for locale in availableLocales %}
-    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': true , 'hasError': false} %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true) , 'hasError': false} %}
         {% block content %}
             {% for cmsPagMetaAttributesForm in pageForm.metaAttributes %}
                 {% if cmsPagMetaAttributesForm.vars.data.localeName == locale.localeName %}

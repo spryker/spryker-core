@@ -9,3 +9,26 @@ require('ZedGui');
 require('./logic');
 require('../../sass/main.scss');
 require('../../img/cms-loader.gif');
+
+$(document).ready( function () {
+
+    $('#cms_page_validFrom').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 3,
+        defaultData: 0,
+        onClose: function(selectedDate) {
+            $('#cms_page_validFrom').datepicker('option', 'minDate', selectedDate);
+        }
+    });
+
+    $('#cms_page_validTo').datepicker({
+        defaultData: 0,
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function(selectedDate) {
+            $('#cms_page_validFrom').datepicker('option', 'maxDate', selectedDate);
+        }
+    });
+});
