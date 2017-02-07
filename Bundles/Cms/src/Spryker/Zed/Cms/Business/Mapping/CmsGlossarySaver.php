@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Business\Mapping;
 
+use Exception;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
@@ -16,6 +17,7 @@ use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
@@ -47,25 +49,36 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
+     * @throws \Exception
+     * @throws \Throwable
+     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
     {
-        $this->cmsQueryContainer->getConnection()->beginTransaction();
+        try {
+            $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-        foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttributesTransfer) {
+            foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttributesTransfer) {
 
-            $translationKey = $this->resolveTranslationKey($glossaryAttributesTransfer);
-            $glossaryAttributesTransfer->setTranslationKey($translationKey);
+                $translationKey = $this->resolveTranslationKey($glossaryAttributesTransfer);
+                $glossaryAttributesTransfer->setTranslationKey($translationKey);
 
-            $this->translatePlaceholder($glossaryAttributesTransfer, $translationKey);
+                $this->translatePlaceholder($glossaryAttributesTransfer, $translationKey);
 
-            $idCmsGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryAttributesTransfer);
-            $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
+                $idCmsGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryAttributesTransfer);
+                $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
 
+            }
+            $this->cmsQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
         }
-
-        $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsGlossaryTransfer;
     }

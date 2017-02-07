@@ -10,6 +10,8 @@ use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Exception;
+use Throwable;
 
 class CmsPageActivator implements CmsPageActivatorInterface
 {
@@ -37,24 +39,39 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param int $idCmsPage
      *
+     * @throws \Exception
+     * @throws \Throwable
+     *
      * @return void
      */
     public function activate($idCmsPage)
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
-        $this->cmsQueryContainer->getConnection()->beginTransaction();
+        try {
+            $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-        $cmsPageEntity->setIsActive(true);
-        $cmsPageEntity->save();
+            $cmsPageEntity->setIsActive(true);
+            $cmsPageEntity->save();
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
+            $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
-        $this->cmsQueryContainer->getConnection()->commit();
+            $this->cmsQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
     }
 
     /**
      * @param int $idCmsPage
+     *
+     * @throws \Exception
+     * @throws \Throwable
      *
      * @return void
      */
@@ -62,14 +79,23 @@ class CmsPageActivator implements CmsPageActivatorInterface
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
-        $this->cmsQueryContainer->getConnection()->beginTransaction();
+        try {
+            $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-        $cmsPageEntity->setIsActive(false);
-        $cmsPageEntity->save();
+            $cmsPageEntity->setIsActive(false);
+            $cmsPageEntity->save();
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
+            $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
-        $this->cmsQueryContainer->getConnection()->commit();
+            $this->cmsQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
     }
 
     /**

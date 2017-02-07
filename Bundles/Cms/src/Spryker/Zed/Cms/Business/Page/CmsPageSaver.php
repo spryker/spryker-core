@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use Exception;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -18,6 +19,7 @@ use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Throwable;
 
 class CmsPageSaver implements CmsPageSaverInterface
 {
@@ -63,27 +65,39 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
+     * @throws \Exception
+     * @throws \Throwable
+     *
      * @return int
      */
     public function createPage(CmsPageTransfer $cmsPageTransfer)
     {
-        $cmsPageTransfer->requirePageAttributes();
+        try {
+            $cmsPageTransfer->requirePageAttributes();
 
-        $this->cmsQueryContainer->getConnection()->beginTransaction();
+            $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-        $cmsPageEntity = new SpyCmsPage();
-        $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
-        $cmsPageEntity->save();
+            $cmsPageEntity = new SpyCmsPage();
+            $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
+            $cmsPageEntity->save();
 
-        $localizedAttributeEntities = [];
-        foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
-             $cmsPageLocalizedAttributesEntity = $this->createLocalizedAttributes($cmsPageAttributesTransfer, $cmsPageEntity);
-             $localizedAttributeEntities[$cmsPageAttributesTransfer->getFkLocale()] = $cmsPageLocalizedAttributesEntity;
+            $localizedAttributeEntities = [];
+            foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
+                $cmsPageLocalizedAttributesEntity = $this->createLocalizedAttributes($cmsPageAttributesTransfer, $cmsPageEntity);
+                $localizedAttributeEntities[$cmsPageAttributesTransfer->getFkLocale()] = $cmsPageLocalizedAttributesEntity;
+            }
+
+            $this->saveCmsPageLocalizedMetaAttributes($cmsPageTransfer, $localizedAttributeEntities);
+
+            $this->cmsQueryContainer->getConnection()->commit();
+
+        } catch (Exception $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
         }
-
-        $this->saveCmsPageLocalizedMetaAttributes($cmsPageTransfer, $localizedAttributeEntities);
-
-        $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsPageEntity->getIdCmsPage();
     }
@@ -91,26 +105,38 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
+     * @throws \Exception
+     * @throws \Throwable
+     *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function updatePage(CmsPageTransfer $cmsPageTransfer)
     {
-        $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
+        try {
+            $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
 
-        $this->cmsQueryContainer->getConnection()->beginTransaction();
+            $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-        $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
-        $cmsPageEntity->save();
+            $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
+            $cmsPageEntity->save();
 
-        $cmsPageLocalizedAttributesList = $this->createCmsPageLocalizedAttributesList($cmsPageEntity);
-        $this->updateCmsPageLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList, $cmsPageEntity);
-        $this->updateCmsPageLocalizedMetaAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList);
+            $cmsPageLocalizedAttributesList = $this->createCmsPageLocalizedAttributesList($cmsPageEntity);
+            $this->updateCmsPageLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList, $cmsPageEntity);
+            $this->updateCmsPageLocalizedMetaAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList);
 
-        if ($cmsPageEntity->getIsActive()) {
-            $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
+            if ($cmsPageEntity->getIsActive()) {
+                $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
+            }
+
+            $this->cmsQueryContainer->getConnection()->commit();
+        }catch (Exception $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        } catch (Throwable $exception) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $exception;
         }
 
-        $this->cmsQueryContainer->getConnection()->commit();
 
         return $cmsPageTransfer;
     }
@@ -344,6 +370,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         $urlTransfer->setUrl($url);
         $urlTransfer->setFkLocale($cmsPageAttributesTransfer->getFkLocale());
         $urlTransfer->setFkResourcePage($idCmsPage);
+
         return $urlTransfer;
     }
 
