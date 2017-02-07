@@ -30,9 +30,9 @@ class ProductToUrlBridge implements ProductToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
+    public function createUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -40,39 +40,49 @@ class ProductToUrlBridge implements ProductToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function deleteUrlAndTouch(UrlTransfer $urlTransfer)
+    public function updateUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->deleteUrl($urlTransfer);
+        return $this->urlFacade->updateUrl($urlTransfer);
     }
 
     /**
-     * @param string $url
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->deleteUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($url)
+    public function hasUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->hasUrl($url);
+        return $this->urlFacade->hasUrl($urlTransfer);
     }
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlActive($idUrl)
+    public function activateUrl(UrlTransfer $urlTransfer)
     {
-        $this->urlFacade->touchUrlActive($idUrl);
+        $this->urlFacade->activateUrl($urlTransfer);
     }
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlDeleted($idUrl)
+    public function deactivateUrl(UrlTransfer $urlTransfer)
     {
-        $this->urlFacade->touchUrlDeleted($idUrl);
+        $this->urlFacade->deactivateUrl($urlTransfer);
     }
 
 }

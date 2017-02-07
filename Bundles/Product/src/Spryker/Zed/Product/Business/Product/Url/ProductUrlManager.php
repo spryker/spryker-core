@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -77,15 +76,14 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
 
-        foreach ($productUrl->getUrls() as $url) {
+        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer
-                ->setUrl($url->getUrl())
-                ->setFkLocale($url->getLocale()->getIdLocale())
-                ->setResourceId($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract())
-                ->setResourceType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+                ->setUrl($localizedUrlTransfer->getUrl())
+                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
+                ->setFkResourceProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract());
 
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->urlFacade->createUrl($urlTransfer);
         }
 
         $this->productQueryContainer->getConnection()->commit();
@@ -104,19 +102,22 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
 
-        foreach ($productUrl->getUrls() as $url) {
+        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $url->getLocale()->getIdLocale()
+                $localizedUrlTransfer->getLocale()->getIdLocale()
             );
 
             $urlTransfer
-                ->setUrl($url->getUrl())
-                ->setFkLocale($url->getLocale()->getIdLocale())
-                ->setResourceId($productAbstractTransfer->getIdProductAbstract())
-                ->setResourceType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+                ->setUrl($localizedUrlTransfer->getUrl())
+                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
+                ->setFkResourceProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            if ($urlTransfer->getIdUrl()) {
+                $this->urlFacade->updateUrl($urlTransfer);
+            } else {
+                $this->urlFacade->createUrl($urlTransfer);
+            }
         }
 
         $this->productQueryContainer->getConnection()->commit();
@@ -167,7 +168,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
             );
 
             if ($urlTransfer->getIdUrl()) {
-                $this->urlFacade->deleteUrlAndTouch($urlTransfer);
+                $this->urlFacade->deleteUrl($urlTransfer);
             }
         }
 
@@ -189,9 +190,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 $localeTransfer->getIdLocale()
             );
 
-            $this->urlFacade->touchUrlActive(
-                $urlTransfer->requireIdUrl()->getIdUrl()
-            );
+            $this->urlFacade->activateUrl($urlTransfer);
         }
 
         $this->productQueryContainer->getConnection()->commit();
@@ -216,9 +215,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 continue;
             }
 
-            $this->urlFacade->touchUrlDeleted(
-                $urlTransfer->requireIdUrl()->getIdUrl()
-            );
+            $this->urlFacade->deactivateUrl($urlTransfer);
         }
 
         $this->productQueryContainer->getConnection()->commit();

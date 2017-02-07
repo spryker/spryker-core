@@ -19,7 +19,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductIm
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
@@ -30,7 +29,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_URL = 'FACADE_URL';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
@@ -65,10 +63,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
@@ -135,10 +129,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {

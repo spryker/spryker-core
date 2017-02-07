@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -227,9 +228,13 @@ class CmsPageForm extends AbstractType
             new Callback([
                 'methods' => [
                     function ($url, ExecutionContextInterface $context) {
-                        if ($this->urlFacade->hasUrl($url)) {
+                        $urlTransfer = new UrlTransfer();
+                        $urlTransfer->setUrl($url);
+
+                        if ($this->urlFacade->hasUrl($urlTransfer)) {
                             $context->addViolation('URL is already used');
                         }
+
                         if ($url[0] !== '/') {
                             $context->addViolation('URL must start with a slash');
                         }

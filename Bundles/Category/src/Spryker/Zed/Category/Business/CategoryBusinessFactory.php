@@ -229,7 +229,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new NodeUrlManager(
             $this->createCategoryTreeReader(),
             $this->createUrlPathGenerator(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getQueryContainer()
         );
     }
 

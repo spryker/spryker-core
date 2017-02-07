@@ -125,6 +125,7 @@ class MethodForm extends AbstractType
     {
         $builder->add(self::FIELD_DEFAULT_PRICE, 'money', [
             'label' => 'Default price',
+            'required' => false,
         ]);
 
         $moneyFacade = $this->getMoneyFacade($options);
@@ -138,6 +139,9 @@ class MethodForm extends AbstractType
                 return $moneyFacade->convertIntegerToDecimal($originalPrice);
             },
             function ($submittedPrice) use ($moneyFacade) {
+                if ($submittedPrice === null) {
+                    return $submittedPrice;
+                }
                 return $moneyFacade->convertDecimalToInteger($submittedPrice);
             }
         ));

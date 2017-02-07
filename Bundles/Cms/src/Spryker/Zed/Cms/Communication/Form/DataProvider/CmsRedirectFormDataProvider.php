@@ -37,20 +37,21 @@ class CmsRedirectFormDataProvider
             return [];
         }
 
-        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect $urlEntity */
-        $urlEntity = $this
+        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect $urlRedirectEntity */
+        $urlRedirectEntity = $this
             ->cmsQueryContainer
             ->queryUrlByIdWithRedirect($idUrl)
             ->findOne();
 
-        if ($urlEntity === null) {
+        if ($urlRedirectEntity === null) {
             return [];
         }
 
         return [
-            CmsRedirectForm::FIELD_FROM_URL => $urlEntity->getUrl(),
-            CmsRedirectForm::FIELD_TO_URL => $urlEntity->getToUrl(),
-            CmsRedirectForm::FIELD_STATUS => $urlEntity->getStatus(),
+            CmsRedirectForm::FIELD_ID_URL_REDIRECT => $urlRedirectEntity->getFkResourceRedirect(),
+            CmsRedirectForm::FIELD_FROM_URL => $urlRedirectEntity->getUrl(),
+            CmsRedirectForm::FIELD_TO_URL => $urlRedirectEntity->getToUrl(),
+            CmsRedirectForm::FIELD_STATUS => $urlRedirectEntity->getStatus(),
         ];
     }
 

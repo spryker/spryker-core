@@ -15,6 +15,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     const KEY_NAME = 'name';
     const KEY_PROPERTY = 'property';
     const KEY_BUNDLES = 'bundles';
+    const KEY_DEPRECATED = 'deprecated';
 
     /**
      * @param array $transferDefinitions
@@ -29,6 +30,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
+                self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
                 self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY], $transferDefinition[self::KEY_BUNDLE]),
             ];
 
@@ -62,7 +64,6 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     private function addBundleToAttributes(array $attributes, $bundle)
     {
         foreach ($attributes as &$attribute) {
-            $attribute[self::KEY_BUNDLE] = $bundle;
             $attribute[self::KEY_BUNDLES] = [$bundle];
         }
 

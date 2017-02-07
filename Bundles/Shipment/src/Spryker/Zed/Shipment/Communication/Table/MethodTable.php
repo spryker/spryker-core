@@ -93,13 +93,17 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param int $value
+     * @param int|null $value
      * @param bool $includeSymbol
      *
      * @return string
      */
     protected function formatPrice($value, $includeSymbol = true)
     {
+        if ($value === null) {
+            return '';
+        }
+
         $moneyTransfer = $this->moneyFacade->fromInteger($value);
 
         if ($includeSymbol) {

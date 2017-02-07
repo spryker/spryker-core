@@ -43,7 +43,7 @@ class TransferDefinitionMergerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Property 'propertyA' defined more than once with different attributes! To fix this, search for 'property name="propertyA"' in the code base and fix the wrong one.
+     * @expectedExceptionMessage Value mismatch for "Transfer.type" tranfer property. Value1: "int"; Value2: "string". To fix this, search for 'property name="type"' in the code base and fix the wrong one.
      *
      * @return void
      */

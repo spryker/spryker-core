@@ -124,7 +124,7 @@ class PageController extends AbstractController
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getFactory()->getUrlFacade()->updateUrl($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
