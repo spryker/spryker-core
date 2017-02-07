@@ -97,14 +97,16 @@ class AvailabilityAbstractTable extends AbstractTable
 
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
+            $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity);
+
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
-                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity->getAvailabilityQuantity()),
+                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity->getAvailabilityQuantity(), $isNeverOutOfStock),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstractEntity->getStockQuantity(),
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity->getReservationQuantity()),
                 static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($this->isAllConcreteIsNeverOutOfStock($productAbstractEntity)) ? 'Yes' : 'No',
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
             ];
         }
@@ -145,12 +147,13 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param int $quantity
+     * @param bool $isNeverOutOfStock
      *
      * @return string
      */
-    protected function getAvailabilityLabel($quantity)
+    protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
     {
-        if ($quantity > 0) {
+        if ($quantity > 0  || $isNeverOutOfStock) {
             return '<span class="label label-info">' . static::AVAILABLE . '</span>';
         }
         return '<span class="label">' . static::NOT_AVAILABLE . '</span>';

@@ -107,9 +107,9 @@ class ProductReservationReader implements ProductReservationReaderInterface
     ) {
 
         if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
-            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
-        } else {
             $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
+        } else {
+            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
         }
     }
 
