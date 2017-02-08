@@ -153,7 +153,7 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
     {
-        if ($quantity > 0  || $isNeverOutOfStock) {
+        if ($quantity > 0 || $isNeverOutOfStock) {
             return '<span class="label label-info">' . static::AVAILABLE . '</span>';
         }
         return '<span class="label">' . static::NOT_AVAILABLE . '</span>';
