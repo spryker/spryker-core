@@ -58,11 +58,22 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @param int $idCmsPage
      *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function getPageGlossaryAttributes($idCmsPage)
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
+
+        if ($cmsPageEntity === null) {
+            throw new MissingPageException(
+                sprintf(
+                    'CMS page with id "%d" not found!',
+                    $idCmsPage
+                )
+            );
+        }
 
         $pagePlaceholders = $this->findPagePlaceholders($cmsPageEntity);
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pagePlaceholders, $idCmsPage);
@@ -101,11 +112,11 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function getTemplatePlaceholders($templateFile)
     {
-        if (!file_exists($templateFile)) {
+        if (!$this->isFileExists($templateFile)) {
             return [];
         }
 
-        $templateContent = file_get_contents($templateFile);
+        $templateContent = $this->readTemplateContents($templateFile);
 
         preg_match_all(static::CMS_PLACEHOLDER_PATTERN, $templateContent, $cmsPlaceholderLine);
         if (count($cmsPlaceholderLine) == 0) {
@@ -215,8 +226,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function getCmsPageEntity($idCmsPage)
@@ -225,14 +234,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
             ->findOne();
 
-        if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'CMS page with id "%d" not found!',
-                    $idCmsPage
-                )
-            );
-        }
         return $cmsPageEntity;
     }
 
@@ -266,6 +267,26 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
         $translationValue = $this->findTranslation($glossaryKeyEntity, $cmsPlaceholderTranslationTransfer->getFkLocale());
         $cmsPlaceholderTranslationTransfer->setTranslation($translationValue);
+    }
+
+    /**
+     * @param string $templateFile
+     *
+     * @return string
+     */
+    protected function readTemplateContents($templateFile)
+    {
+        return file_get_contents($templateFile);
+    }
+
+    /**
+     * @param string $templateFile
+     *
+     * @return bool
+     */
+    protected function isFileExists($templateFile)
+    {
+        return file_exists($templateFile);
     }
 
 }

@@ -7,6 +7,12 @@
 
 namespace Unit\Spryker\Zed\Cms\Business\Mapping;
 
+use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Unit\Spryker\Zed\Cms\Business\CmsMocks;
 
 /**
@@ -20,4 +26,134 @@ use Unit\Spryker\Zed\Cms\Business\CmsMocks;
  */
 class CmsGlossarySaverTest extends CmsMocks
 {
+
+    /**
+     * @return void
+     */
+    public function testSaveCmsGlossaryShouldPersistGivenTransfer()
+    {
+        $cmsGlossarySaverMock = $this->createCmsGlossarySaverMock();
+
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer();
+
+        $glossaryEntityMock = $this->createGlossaryKeyEntityMock();
+        $glossaryEntityMock->setIdGlossaryKey(1);
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('findGlossaryKeyEntityByTranslationKey')
+            ->willReturn($glossaryEntityMock);
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('hasPagePlaceholderMapping')
+            ->willReturn(false);
+
+        $cmsGlossaryKeyMappingEntity = $this->createGlossaryMappingEntityMock();
+        $cmsGlossaryKeyMappingEntity->setIdCmsGlossaryKeyMapping(1);
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('createCmsGlossaryKeyMappingEntity')
+            ->willReturn($cmsGlossaryKeyMappingEntity);
+
+        $cmsGlossaryTransfer = $cmsGlossarySaverMock->saveCmsGlossary($cmsGlossaryTransfer);
+
+        $updatedCmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+
+        $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkCmsGlossaryMapping());
+        $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkGlossaryKey());
+        $this->assertCount(1, $updatedCmsGlossaryAttributeTransfer->getTranslations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveCmsGlossaryShouldPersistGivenTransferWhenUpdatingExisting()
+    {
+        $cmsGlossarySaverMock = $this->createCmsGlossarySaverMock();
+
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer();
+        $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+        $cmsGlossaryAttributeTransfer->setFkCmsGlossaryMapping(1);
+        $cmsGlossaryAttributeTransfer->setPlaceholder('new_placeholder');
+
+        $glossaryEntityMock = $this->createGlossaryKeyEntityMock();
+        $glossaryEntityMock->setIdGlossaryKey(1);
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('findGlossaryKeyEntityByTranslationKey')
+            ->willReturn($glossaryEntityMock);
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('hasPagePlaceholderMapping')
+            ->willReturn(false);
+
+        $cmsGlossaryKeyMappingEntity = $this->createGlossaryMappingEntityMock();
+        $cmsGlossaryKeyMappingEntity->setIdCmsGlossaryKeyMapping(1);
+        $cmsGlossaryKeyMappingEntity->setPlaceholder('old_placeholder');
+
+        $cmsGlossarySaverMock->expects($this->once())
+            ->method('findGlossaryKeyMappingEntityById')
+            ->willReturn($cmsGlossaryKeyMappingEntity);
+
+        $cmsGlossaryTransfer = $cmsGlossarySaverMock->saveCmsGlossary($cmsGlossaryTransfer);
+
+        $updatedCmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+
+        $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkCmsGlossaryMapping());
+        $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkGlossaryKey());
+        $this->assertCount(1, $updatedCmsGlossaryAttributeTransfer->getTranslations());
+        $this->assertEquals('new_placeholder', $updatedCmsGlossaryAttributeTransfer->getPlaceholder());
+    }
+
+    /**
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface|null $glossaryFacadeMock
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver
+     */
+    protected function createCmsGlossarySaverMock(
+        CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        CmsToGlossaryInterface $glossaryFacadeMock = null
+    ) {
+
+        if ($glossaryFacadeMock === null) {
+            $glossaryFacadeMock = $this->createGlossaryFacadeMock();
+        }
+
+        if ($cmsQueryContainerMock === null) {
+            $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
+        }
+
+        return $this->getMockBuilder(CmsGlossarySaver::class)
+            ->setConstructorArgs([$cmsQueryContainerMock, $glossaryFacadeMock])
+            ->setMethods([
+                'findGlossaryKeyEntityByTranslationKey',
+                'findGlossaryKeyMappingEntityById',
+                'hasPagePlaceholderMapping',
+                'createCmsGlossaryKeyMappingEntity',
+            ])
+            ->getMock();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    protected function createCmsGlossaryTransfer()
+    {
+        $cmsGlossaryTransfer = new CmsGlossaryTransfer();
+
+        $cmsGlossaryAttributeTransfer = new CmsGlossaryAttributesTransfer();
+        $cmsGlossaryAttributeTransfer->setPlaceholder('title');
+        $cmsGlossaryAttributeTransfer->setTemplateName('template');
+
+        $cmsPlaceholderTransfer = new CmsPlaceholderTranslationTransfer();
+        $cmsPlaceholderTransfer->setFkLocale(1);
+        $cmsPlaceholderTransfer->setLocaleName('en_US');
+        $cmsPlaceholderTransfer->setTranslation('translated value');
+        $cmsGlossaryAttributeTransfer->addTranslation($cmsPlaceholderTransfer);
+
+        $cmsGlossaryTransfer->addGlossaryAttribute($cmsGlossaryAttributeTransfer);
+
+        return $cmsGlossaryTransfer;
+    }
+
 }

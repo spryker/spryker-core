@@ -88,7 +88,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return int
      */
-    public function saveCmsGlossaryKeyMapping(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer)
+    protected function saveCmsGlossaryKeyMapping(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer)
     {
         if ($glossaryAttributesTransfer->getFkCmsGlossaryMapping() === null) {
             return $this->createPageKeyMapping($glossaryAttributesTransfer);
@@ -109,7 +109,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $cmsGlossaryAttributesTransfer->getPlaceholder()
         );
 
-        $cmsGlossaryKeyMappingEntity = new SpyCmsGlossaryKeyMapping();
+        $cmsGlossaryKeyMappingEntity = $this->createCmsGlossaryKeyMappingEntity();
         $cmsGlossaryKeyMappingEntity->fromArray($cmsGlossaryAttributesTransfer->toArray());
 
         $cmsGlossaryKeyMappingEntity->save();
@@ -155,8 +155,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      */
     protected function getGlossaryKeyMappingById($idMapping)
     {
-        $mappingEntity = $this->cmsQueryContainer->queryGlossaryKeyMappingById($idMapping)
-            ->findOne();
+        $mappingEntity = $this->findGlossaryKeyMappingEntityById($idMapping);
 
         if (!$mappingEntity) {
             throw new MissingGlossaryKeyMappingException(sprintf('Tried to retrieve a missing glossary key mapping with id %s', $idMapping));
@@ -186,7 +185,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder)
+    protected function hasPagePlaceholderMapping($idPage, $placeholder)
     {
         $mappingCount = $this->cmsQueryContainer
             ->queryGlossaryKeyMapping($idPage, $placeholder)
@@ -249,11 +248,12 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
         }
 
-        $glossaryKey = $this->cmsQueryContainer
-            ->queryKey($translationKey)
-            ->findOne();
+        $glossaryKeyEntity = $this->findGlossaryKeyEntityByTranslationKey($translationKey);
+        if ($glossaryKeyEntity === null) {
+            return;
+        }
 
-        $glossaryAttributesTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
+        $glossaryAttributesTransfer->setFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey());
     }
 
     /**
@@ -272,6 +272,38 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
         ]);
 
         return $keyTranslationTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
+     */
+    protected function createCmsGlossaryKeyMappingEntity()
+    {
+        return new SpyCmsGlossaryKeyMapping();
+    }
+
+    /**
+     * @param string $translationKey
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     */
+    protected function findGlossaryKeyEntityByTranslationKey($translationKey)
+    {
+        return $this->cmsQueryContainer
+            ->queryKey($translationKey)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idMapping
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
+     */
+    protected function findGlossaryKeyMappingEntityById($idMapping)
+    {
+        return $this->cmsQueryContainer
+            ->queryGlossaryKeyMappingById($idMapping)
+            ->findOne();
     }
 
 }

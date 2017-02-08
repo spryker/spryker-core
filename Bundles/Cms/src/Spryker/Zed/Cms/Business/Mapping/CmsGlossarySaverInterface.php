@@ -5,7 +5,6 @@
  */
 namespace Spryker\Zed\Cms\Business\Mapping;
 
-use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 
 interface CmsGlossarySaverInterface
@@ -17,20 +16,5 @@ interface CmsGlossarySaverInterface
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
-     *
-     * @return int
-     */
-    public function saveCmsGlossaryKeyMapping(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer);
-
-    /**
-     * @param int $idPage
-     * @param string $placeholder
-     *
-     * @return bool
-     */
-    public function hasPagePlaceholderMapping($idPage, $placeholder);
 
 }

@@ -77,7 +77,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-            $cmsPageEntity = new SpyCmsPage();
+            $cmsPageEntity = $this->createCmsPageEntity();
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();
 
@@ -107,13 +107,24 @@ class CmsPageSaver implements CmsPageSaverInterface
      *
      * @throws \Exception
      * @throws \Throwable
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function updatePage(CmsPageTransfer $cmsPageTransfer)
     {
+        $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
+
+        if ($cmsPageEntity === null) {
+            throw new MissingPageException(
+                sprintf(
+                    'CMS page with id "%d" was not found',
+                    $cmsPageTransfer->getFkPage()
+                )
+            );
+        }
+
         try {
-            $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
 
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -192,8 +203,6 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function getCmsPageEntity(CmsPageTransfer $cmsPageTransfer)
@@ -201,15 +210,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         $cmsPageEntity = $this->cmsQueryContainer
             ->queryPageById($cmsPageTransfer->getFkPage())
             ->findOne();
-
-        if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'CMS page with id "%d" was not found',
-                    $cmsPageTransfer->getFkPage()
-                )
-            );
-        }
 
         return $cmsPageEntity;
     }
@@ -280,9 +280,11 @@ class CmsPageSaver implements CmsPageSaverInterface
      */
     protected function createLocalizedAttributes(CmsPageAttributesTransfer $cmsPageAttributesTransfer, SpyCmsPage $cmsPageEntity)
     {
-        $cmsPageLocalizedAttributesEntity = new SpyCmsPageLocalizedAttributes();
+        $cmsPageLocalizedAttributesEntity = $this->createCmsPageLocalizedAttributesEntity();
         $cmsPageLocalizedAttributesEntity = $this->mapCmsPageLocalizedAttributes($cmsPageLocalizedAttributesEntity, $cmsPageAttributesTransfer);
         $cmsPageLocalizedAttributesEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
+
+        $cmsPageLocalizedAttributesEntity->save();
 
         $this->createPageUrl($cmsPageAttributesTransfer, $cmsPageEntity->getIdCmsPage());
 
@@ -371,6 +373,22 @@ class CmsPageSaver implements CmsPageSaverInterface
         $urlTransfer->setFkResourcePage($idCmsPage);
 
         return $urlTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     */
+    protected function createCmsPageEntity()
+    {
+        return new SpyCmsPage();
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
+     */
+    protected function createCmsPageLocalizedAttributesEntity()
+    {
+        return new SpyCmsPageLocalizedAttributes();
     }
 
 }

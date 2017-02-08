@@ -6,7 +6,7 @@
 'use strict';
 
 require('ZedGui');
-require('./logic');
+var CmsGlossaryAutocomplete = require('./cms-glossary-autocomplete');
 require('../../sass/main.scss');
 require('../../img/cms-loader.gif');
 
@@ -30,5 +30,12 @@ $(document).ready( function () {
         onClose: function(selectedDate) {
             $('#cms_page_validFrom').datepicker('option', 'maxDate', selectedDate);
         }
+    });
+
+    $("input[id$='translationKey']").each(function(index, element){
+        var options = {
+            autocompleteElement: $(element)
+        };
+        new CmsGlossaryAutocomplete(options)
     });
 });
