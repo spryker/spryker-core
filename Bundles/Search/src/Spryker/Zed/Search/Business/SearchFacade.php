@@ -154,6 +154,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
