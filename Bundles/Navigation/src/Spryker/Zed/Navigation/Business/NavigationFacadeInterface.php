@@ -8,68 +8,59 @@
 namespace Spryker\Zed\Navigation\Business;
 
 use Generated\Shared\Transfer\NavigationTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
  */
-class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
+interface NavigationFacadeInterface
 {
 
     /**
+     * Specification:
+     * - TODO: add specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    public function createNavigation(NavigationTransfer $navigationTransfer)
-    {
-        return $this->getFactory()
-            ->createNavigationCreator()
-            ->createNavigation($navigationTransfer);
-    }
+    public function createNavigation(NavigationTransfer $navigationTransfer);
 
     /**
+     * Specification:
+     * - TODO: add specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    public function updateNavigation(NavigationTransfer $navigationTransfer)
-    {
-        return $this->getFactory()
-            ->createNavigationUpdater()
-            ->updateNavigation($navigationTransfer);
-    }
+    public function updateNavigation(NavigationTransfer $navigationTransfer);
 
     /**
+     * Specification:
+     * - TODO: add specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
      */
-    public function findNavigation(NavigationTransfer $navigationTransfer)
-    {
-        return $this->getFactory()
-            ->createNavigationReader()
-            ->findNavigation($navigationTransfer);
-    }
+    public function findNavigation(NavigationTransfer $navigationTransfer);
 
     /**
+     * Specification:
+     * - TODO: add specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return void
      */
-    public function deleteNavigation(NavigationTransfer $navigationTransfer)
-    {
-        $this->getFactory()
-            ->createNavigationDeleter()
-            ->deleteNavigation($navigationTransfer);
-    }
+    public function deleteNavigation(NavigationTransfer $navigationTransfer);
 
 }
