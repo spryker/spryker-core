@@ -106,4 +106,11 @@ interface SearchFacadeInterface
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
 
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return void
+     */
+    public function generatePageIndexMap(MessengerInterface $messenger);
+
 }

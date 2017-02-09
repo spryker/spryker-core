@@ -153,4 +153,17 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
             ->mapData($pageMap, $data, $localeTransfer);
     }
 
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return void
+     */
+    public function generatePageIndexMap(MessengerInterface $messenger)
+    {
+        $this
+            ->getFactory()
+            ->createIndexMapInstaller($messenger)
+            ->install();
+    }
+
 }
