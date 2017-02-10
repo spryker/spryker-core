@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business;
 
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 
 /**
@@ -62,5 +63,53 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function deleteNavigation(NavigationTransfer $navigationTransfer);
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
+     */
+    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
 }

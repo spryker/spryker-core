@@ -35,7 +35,7 @@
             <reference foreign="id_navigation_node" local="fk_parent_navigation_node"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_navigation">
+        <foreign-key foreignTable="spy_navigation" onDelete="CASCADE">
             <reference foreign="id_navigation" local="fk_navigation"/>
         </foreign-key>
 
@@ -46,15 +46,15 @@
         <id-method-parameter value="spy_navigation_node_pk_seq"/>
     </table>
 
-    <table name="spy_navigation_node_url" idMethod="native">
-        <column name="id_navigation_node_url" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_navigation_node_localized_attributes" idMethod="native">
+        <column name="id_navigation_node_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_navigation_node" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_url" required="false" type="INTEGER" default="NULL"/>
         <column name="title" type="VARCHAR" size="255" required="true"/>
         <column name="external_url" type="VARCHAR" size="255" required="false" default="NULL"/>
 
-        <foreign-key foreignTable="spy_navigation_node">
+        <foreign-key foreignTable="spy_navigation_node" onDelete="CASCADE">
             <reference foreign="id_navigation_node" local="fk_navigation_node"/>
         </foreign-key>
 
@@ -68,7 +68,7 @@
 
         <behavior name="timestampable"/>
 
-        <id-method-parameter value="spy_navigation_node_url_pk_seq"/>
+        <id-method-parameter value="spy_navigation_node_localized_attributes_pk_seq"/>
     </table>
 
 </database>

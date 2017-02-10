@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Navigation\Persistence\Propel;
 
-use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeUrl as BaseSpyNavigationNodeUrl;
+use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes as BaseSpyNavigationNodeLocalizedAttributes;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_navigation_node_url' table.
+ * Skeleton subclass for representing a row from the 'spy_navigation_node_localized_attributes' table.
  *
  *
  *
@@ -19,6 +19,6 @@ use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeUrl as BaseSpyNavigatio
  * long as it does not already exist in the output directory.
  *
  */
-abstract class AbstractSpyNavigationNodeUrl extends BaseSpyNavigationNodeUrl
+abstract class AbstractSpyNavigationNodeLocalizedAttributes extends BaseSpyNavigationNodeLocalizedAttributes
 {
 }

@@ -29,4 +29,32 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
             ->filterByIdNavigation($idNavigation);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idNavigationNode
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNodeById($idNavigationNode)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeQuery()
+            ->filterByIdNavigationNode($idNavigationNode);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNavigationNodeLocalizedAttributes
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributesQuery
+     */
+    public function queryNavigationNodeLocalizedAttributesById($idNavigationNodeLocalizedAttributes)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeLocalizedAttributesQuery()
+            ->filterByIdNavigationNodeLocalizedAttributes($idNavigationNodeLocalizedAttributes);
+    }
+
 }

@@ -10,4 +10,22 @@
         <property name="isActive" type="bool" />
     </transfer>
 
+    <transfer name="NavigationNode">
+        <property name="idNavigationNode" type="int" />
+        <property name="fkNavigation" type="int" />
+        <property name="fkParentNavigationNode" type="int" />
+        <property name="weight" type="int" />
+        <property name="isActive" type="bool" />
+        <property name="navigationNodeLocalizedAttributes" type="NavigationNodeLocalizedAttributes[]" singular="navigationNodeLocalizedAttribute" />
+    </transfer>
+
+    <transfer name="NavigationNodeLocalizedAttributes">
+        <property name="idNavigationNodeLocalizedAttributes" type="int" />
+        <property name="fkNavigationNode" type="int" />
+        <property name="fkLocale" type="int" />
+        <property name="title" type="string" />
+        <property name="fkUrl" type="int" />
+        <property name="externalUrl" type="string" />
+    </transfer>
+
 </transfers>

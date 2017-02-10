@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Navigation\Business;
+namespace Functional\Spryker\Zed\Navigation\Business\Facade;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NavigationTransfer;
@@ -19,9 +19,10 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
  * @group Zed
  * @group Navigation
  * @group Business
- * @group NavigationFacadeTest
+ * @group Facade
+ * @group NavigationCRUDTest
  */
-class NavigationFacadeTest extends Test
+class NavigationCRUDTest extends Test
 {
 
     /**

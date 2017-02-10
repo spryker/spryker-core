@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business;
 
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -17,6 +18,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -31,6 +34,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -45,6 +50,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -59,6 +66,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -70,6 +79,70 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationDeleter()
             ->deleteNavigation($navigationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeCreator()
+            ->createNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeUpdater()
+            ->updateNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
+     */
+    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeReader()
+            ->findNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $this->getFactory()
+            ->createNavigationNodeDeleter()
+            ->deleteNavigationNode($navigationNodeTransfer);
     }
 
 }

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Navigation\Persistence;
 
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationPersistenceFactory getFactory()
  */
-interface NavigationQueryContainerInterface
+interface NavigationQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
@@ -21,5 +23,23 @@ interface NavigationQueryContainerInterface
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
     public function queryNavigationById($idNavigation);
+
+    /**
+     * @api
+     *
+     * @param int $idNavigationNode
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNodeById($idNavigationNode);
+
+    /**
+     * @api
+     *
+     * @param int $idNavigationNodeLocalizedAttributes
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributesQuery
+     */
+    public function queryNavigationNodeLocalizedAttributesById($idNavigationNodeLocalizedAttributes);
 
 }
