@@ -31,7 +31,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
 
-    const FACADE_SALES = 'FACADE_SALES';
     const FACADE_MAIL = 'FACADE_MAIL';
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
@@ -51,10 +50,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COMMAND_PLUGINS] = function (Container $container) {
             return $this->getCommandPlugins($container);
-        };
-
-        $container[self::FACADE_SALES] = function (Container $container) {
-            return new OmsToSalesBridge($container->getLocator()->sales()->facade());
         };
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {

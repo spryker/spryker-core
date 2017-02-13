@@ -9,7 +9,6 @@
     }
   },
   "require": {
-    "spryker/country": "^2.0.0",
     "spryker/graph": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.8.0",
