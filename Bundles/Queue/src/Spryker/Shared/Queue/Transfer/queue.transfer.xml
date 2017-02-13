@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="QueueMessage">
+        <property name="destination" type="string" />
+        <property name="body" type="string" />
+    </transfer>
+
+    <transfer name="QueueConnectionOption">
+        <property name="host" type="string" />
+        <property name="port" type="int" />
+    </transfer>
+
+    <transfer name="QueueConsumer">
+        <property name="source" type="string" />
+    </transfer>
+
+</transfers>

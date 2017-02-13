@@ -585,7 +585,14 @@
       "Spryker\\Shared\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
       "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
       "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
-      "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests"
+      "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
+
+      "Spryker\\Client\\Queue\\": "Bundles/Queue/src",
+      "Functional\\Spryker\\Client\\Queue\\": "Bundles/Queue/tests",
+      "Spryker\\Shared\\Queue\\": "Bundles/Queue/src",
+      "Functional\\Spryker\\Shared\\Queue\\": "Bundles/Queue/tests",
+      "Spryker\\Zed\\Queue\\": "Bundles/Queue/src",
+      "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",
