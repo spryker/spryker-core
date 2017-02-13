@@ -23,6 +23,9 @@ use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
 abstract class AbstractSpyUrl extends BaseSpyUrl
 {
 
+    const RESOURCE_DATA_NAME = 'name';
+    const RESOURCE_DATA_VALUE = 'value';
+
     /**
      * @return string
      */
@@ -30,7 +33,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     {
         $resourceData = $this->findResourceData();
 
-        $resourceType = str_replace('fk_resource_', '', $resourceData['name']);
+        $resourceType = str_replace('fk_resource_', '', $resourceData[static::RESOURCE_DATA_NAME]);
 
         return $resourceType;
     }
@@ -42,7 +45,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     {
         $resourceData = $this->findResourceData();
 
-        return $resourceData['value'];
+        return $resourceData[static::RESOURCE_DATA_VALUE];
     }
 
     /**
@@ -58,16 +61,16 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
             }
             if ($value !== null) {
                 return [
-                    'name' => $name,
-                    'value' => $value,
+                    static::RESOURCE_DATA_NAME => $name,
+                    static::RESOURCE_DATA_VALUE => $value,
                 ];
             }
         }
 
         throw new MissingResourceException(
             sprintf(
-                'Encountered a URL entity that is missing a resource. Url ID: %s',
-                $this->getIdUrl()
+                'Encountered a URL entity that is missing a resource: %s',
+                json_encode($this->toArray())
             )
         );
     }

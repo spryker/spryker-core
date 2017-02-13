@@ -18,6 +18,10 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
+
+    /**
+     * @deprecated Use `getConnection()` method from query container instead.
+     */
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**

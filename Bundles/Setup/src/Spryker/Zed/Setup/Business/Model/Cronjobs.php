@@ -58,7 +58,6 @@ class Cronjobs
         $jobsByName = $this->getCronjobs($roles);
 
         $consoleOutput = '';
-        $consoleOutput .= $this->updateOrDelete($jobsByName);
         $consoleOutput .= $this->createJobDefinitions($jobsByName);
 
         return $consoleOutput;
@@ -176,6 +175,8 @@ class Cronjobs
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return array
      */
     protected function getExistingJobs()
@@ -184,6 +185,8 @@ class Cronjobs
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * Loop over existing jobs: either update or delete job
      *
      * @param array $jobsByName
@@ -233,21 +236,9 @@ class Cronjobs
     protected function createJobDefinitions(array $jobsByName)
     {
         $output = '';
-        $existingJobs = $this->getExistingJobs();
-        $map = [];
-        foreach ($existingJobs as $existingJob) {
-            $name = basename(dirname($existingJob));
-            $map[] = $name;
-        }
 
         foreach ($jobsByName as $k => $v) {
             $url = 'createItem?name=' . $v['name'];
-
-            // skip if job is in existingjobs
-            if (in_array($k, $map)) {
-                $output .= "SKIPPED jenkins job: $url (already exists)" . PHP_EOL;
-                continue;
-            }
 
             $xml = $this->prepareJobXml($v);
             $code = $this->callJenkins($url, $xml);

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Shared\Cms\CmsConstants;
@@ -127,6 +128,11 @@ class PageManager implements PageManagerInterface
 
         $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
 
+        if ($pageTransfer->getUrl() !== null) {
+            $urlTransfer = $this->createPageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
+        }
+
         $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
     }
 
@@ -161,7 +167,8 @@ class PageManager implements PageManagerInterface
         $pageEntity->fromArray($pageTransfer->modifiedToArray());
 
         if ($pageTransfer->getUrl() !== null) {
-            $this->updatePageUrl($pageTransfer);
+            $urlTransfer = $this->updatePageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
         }
 
         $pageEntity->save();
@@ -255,12 +262,13 @@ class PageManager implements PageManagerInterface
         $this->checkPageExists($pageTransfer->getIdCmsPage());
         $idLocale = $pageTransfer->getUrl()->getFkLocale();
 
-        return $this->urlFacade->createUrl(
-            $pageTransfer->getUrl()->getUrl(),
-            $this->getLocaleTransfer($idLocale),
-            CmsConstants::RESOURCE_TYPE_PAGE,
-            $pageTransfer->getIdCmsPage()
-        );
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer
+            ->setUrl($pageTransfer->getUrl()->getUrl())
+            ->setFkLocale($idLocale)
+            ->setFkResourcePage($pageTransfer->getIdCmsPage());
+
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -272,7 +280,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->saveUrlAndTouch($pageTransfer->getUrl());
+        return $this->urlFacade->updateUrl($pageTransfer->getUrl());
     }
 
     /**
@@ -286,7 +294,13 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->createUrl($url, $localeTransfer, CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer
+            ->setUrl($url)
+            ->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale())
+            ->setFkResourcePage($pageTransfer->getIdCmsPage());
+
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -296,12 +310,19 @@ class PageManager implements PageManagerInterface
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer)
     {
+        $this->cmsQueryContainer->getConnection()->beginTransaction();
+
         if (!$this->hasPageId($pageTransfer->getIdCmsPage())) {
             $pageTransfer = $this->savePage($pageTransfer);
         }
 
-        $urlTransfer = $this->createPageUrl($pageTransfer);
-        $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
+        $urlTransfer = $pageTransfer->getUrl();
+        if (!$this->urlFacade->hasUrl($urlTransfer)) {
+            $urlTransfer = $this->createPageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
+        }
+
+        $this->cmsQueryContainer->getConnection()->commit();
 
         return $urlTransfer;
     }

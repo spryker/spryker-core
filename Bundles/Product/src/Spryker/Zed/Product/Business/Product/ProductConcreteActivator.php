@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
+use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -18,9 +19,9 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
      */
-    protected $productManager;
+    protected $productAbstractStatusChecker;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
@@ -48,7 +49,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductManagerInterface $productManager
+     * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface $productUrlManager
@@ -56,7 +57,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(
-        ProductManagerInterface $productManager,
+        ProductAbstractStatusCheckerInterface $productAbstractStatusChecker,
         ProductAbstractManagerInterface $productAbstractManager,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductUrlManagerInterface $productUrlManager,
@@ -66,7 +67,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         $this->productAbstractManager = $productAbstractManager;
         $this->productConcreteManager = $productConcreteManager;
         $this->productUrlManager = $productUrlManager;
-        $this->productManager = $productManager;
+        $this->productAbstractStatusChecker = $productAbstractStatusChecker;
         $this->productConcreteTouch = $productConcreteTouch;
         $this->productQueryContainer = $productQueryContainer;
     }
@@ -101,7 +102,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);
         $this->updateIsActive($productConcreteTransfer, false);
 
-        if ($this->productManager->isProductActive($productConcreteTransfer->getFkProductAbstract()) === false) {
+        if ($this->productAbstractStatusChecker->isActive($productConcreteTransfer->getFkProductAbstract()) === false) {
             $productAbstractTransfer = $this->getProductAbstractTransfer($productConcreteTransfer);
             $this->productUrlManager->deleteProductUrl($productAbstractTransfer);
         }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -88,8 +87,11 @@ class CategoryUrl implements CategoryUrlInterface
         $urlTransfer->setUrl($categoryNodeUrl);
 
         try {
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
-            $this->touchUrl($categoryTransfer, $urlTransfer);
+            if ($urlTransfer->getIdUrl()) {
+                $this->urlFacade->updateUrl($urlTransfer);
+            } else {
+                $this->urlFacade->createUrl($urlTransfer);
+            }
         } catch (UrlExistsException $exception) {
             throw new CategoryUrlExistsException($exception->getMessage(), $exception->getCode(), $exception);
         }
@@ -136,9 +138,9 @@ class CategoryUrl implements CategoryUrlInterface
     protected function getUrlTransferForNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $urlTransfer = new UrlTransfer();
-        $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
-        $urlTransfer->setResourceId($categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode());
-        $urlTransfer->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale());
+        $urlTransfer
+            ->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale())
+            ->setFkResourceCategorynode($categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode());
 
         $urlEntity = $this->findUrlForNode(
             $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode(),
@@ -177,9 +179,9 @@ class CategoryUrl implements CategoryUrlInterface
     protected function touchUrl(CategoryTransfer $categoryTransfer, UrlTransfer $urlTransfer)
     {
         if ($categoryTransfer->getIsActive()) {
-            $this->urlFacade->touchUrlActive($urlTransfer->requireIdUrl()->getIdUrl());
+            $this->urlFacade->activateUrl($urlTransfer);
         } else {
-            $this->urlFacade->touchUrlDeleted($urlTransfer->requireIdUrl()->getIdUrl());
+            $this->urlFacade->deactivateUrl($urlTransfer);
         }
     }
 

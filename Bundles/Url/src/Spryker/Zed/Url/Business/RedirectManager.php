@@ -15,6 +15,9 @@ use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
+/**
+ * @deprecated Use business classes from Spryker\Zed\Url\Business\Redirect namespace.
+ */
 class RedirectManager implements RedirectManagerInterface
 {
 
@@ -41,6 +44,8 @@ class RedirectManager implements RedirectManagerInterface
     protected $connection;
 
     /**
+     * @deprecated Use business classes from Spryker\Zed\Url\Business\Url namespace.
+     *
      * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
      * @param \Spryker\Zed\Url\Business\UrlManagerInterface $urlManager
      * @param \Spryker\Zed\Url\Dependency\UrlToTouchInterface $touchFacade
