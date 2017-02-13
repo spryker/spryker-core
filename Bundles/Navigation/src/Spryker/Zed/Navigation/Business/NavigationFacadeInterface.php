@@ -112,4 +112,16 @@ interface NavigationFacadeInterface
      */
     public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    public function findNavigationTree(NavigationTransfer $navigationTransfer);
+
 }

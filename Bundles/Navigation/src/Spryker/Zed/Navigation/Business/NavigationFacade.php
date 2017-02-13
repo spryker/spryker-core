@@ -145,4 +145,20 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
             ->deleteNavigationNode($navigationNodeTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    public function findNavigationTree(NavigationTransfer $navigationTransfer)
+    {
+        return $this->getFactory()
+            ->createNavigationTreeReader()
+            ->findNavigationTree($navigationTransfer);
+    }
+
 }

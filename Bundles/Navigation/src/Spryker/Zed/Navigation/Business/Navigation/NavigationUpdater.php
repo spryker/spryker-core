@@ -37,6 +37,7 @@ class NavigationUpdater implements NavigationUpdaterInterface
         $this->assertNavigationForUpdate($navigationTransfer);
 
         $navigationTransfer = $this->persistNavigation($navigationTransfer);
+        // TODO: touch
 
         return $navigationTransfer;
     }

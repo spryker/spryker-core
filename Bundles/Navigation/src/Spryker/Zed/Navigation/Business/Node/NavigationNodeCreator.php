@@ -41,8 +41,8 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
         $this->navigationQueryContainer->getConnection()->beginTransaction();
 
         $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
-        // TODO: consider splitting navigation node localized attributes to other class
         $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
+        // TODO: touch
 
         $this->navigationQueryContainer->getConnection()->commit();
 

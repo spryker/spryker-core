@@ -23,6 +23,7 @@ class NavigationCreator implements NavigationCreatorInterface
         $this->assertNavigationForCreate($navigationTransfer);
 
         $navigationTransfer = $this->persistNavigation($navigationTransfer);
+        // TODO: touch
 
         return $navigationTransfer;
     }

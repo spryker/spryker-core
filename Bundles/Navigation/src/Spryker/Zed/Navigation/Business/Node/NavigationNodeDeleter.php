@@ -40,6 +40,7 @@ class NavigationNodeDeleter implements NavigationNodeDeleterInterface
         $navigationNodeEntity = $this->getNavigationNodeEntity($navigationNodeTransfer);
 
         $this->deleteNavigationNodeEntity($navigationNodeEntity);
+        // TODO: touch
     }
 
     /**

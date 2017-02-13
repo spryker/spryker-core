@@ -31,7 +31,7 @@
         <column name="weight" type="INTEGER" required="false" default="0"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
-        <foreign-key foreignTable="spy_navigation_node">
+        <foreign-key foreignTable="spy_navigation_node" phpName="ParentNavigationNode" refPhpName="ChildrenNavigationNode">
             <reference foreign="id_navigation_node" local="fk_parent_navigation_node"/>
         </foreign-key>
 

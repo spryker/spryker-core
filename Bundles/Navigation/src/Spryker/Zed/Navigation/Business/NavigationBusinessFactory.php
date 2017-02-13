@@ -16,6 +16,7 @@ use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreator;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeDeleter;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeReader;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdater;
+use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReader;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
@@ -79,9 +80,20 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
         return new NavigationNodeReader($this->getQueryContainer());
     }
 
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Node\NavigationNodeDeleterInterface
+     */
     public function createNavigationNodeDeleter()
     {
         return new NavigationNodeDeleter($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface
+     */
+    public function createNavigationTreeReader()
+    {
+        return new NavigationTreeReader($this->getQueryContainer());
     }
 
 }

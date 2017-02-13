@@ -28,4 +28,14 @@
         <property name="externalUrl" type="string" />
     </transfer>
 
+    <transfer name="NavigationTree">
+        <property name="navigation" type="Navigation" />
+        <property name="nodes" type="NavigationTreeNode[]" singular="node" />
+    </transfer>
+
+    <transfer name="NavigationTreeNode">
+        <property name="navigationNode" type="NavigationNode" />
+        <property name="children" type="NavigationTreeNode[]" singular="child" />
+    </transfer>
+
 </transfers>

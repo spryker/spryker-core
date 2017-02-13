@@ -43,6 +43,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
 
         $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
         $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
+        // TODO: touch
 
         $this->navigationQueryContainer->getConnection()->commit();
 
