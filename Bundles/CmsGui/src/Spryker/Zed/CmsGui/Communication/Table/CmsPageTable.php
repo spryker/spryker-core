@@ -332,7 +332,9 @@ class CmsPageTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            static::COL_NAME,
+            static::COL_TEMPLATE,
         ]);
     }
 
