@@ -19,7 +19,7 @@ class Cronjobs
     const ROLE_EMPTY = 'empty';
     const DEFAULT_ROLE = self::ROLE_ADMIN;
     const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
-    const JENKINS_API_JOBS_URL = '/api/json/jobs?pretty=true&tree=jobs[name]';
+    const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
     /**
      * @var array
@@ -183,11 +183,7 @@ class Cronjobs
     {
         $jobsNames = [];
 
-        try {
-            $jobs = file_get_contents($this->getJenkinsUrl(self::JENKINS_API_JOBS_URL));
-        } catch (\Exception $exception) {
-            return $jobsNames;
-        }
+        $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
         $jobs = json_decode($jobs, true);
 
         if (!empty($jobs['jobs'])) {
@@ -293,6 +289,33 @@ class Cronjobs
         curl_close($ch);
 
         return (int)$httpCode;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @throws \ErrorException
+     *
+     * @return string
+     */
+    protected function getJenkinsApiResponse($url)
+    {
+        $getUrl = $this->getJenkinsUrl($url);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+
+        $curlResponse = curl_exec($ch);
+
+        if ($curlResponse === false) {
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $getUrl);
+        }
+        curl_close($ch);
+
+        return $curlResponse;
     }
 
     /**
