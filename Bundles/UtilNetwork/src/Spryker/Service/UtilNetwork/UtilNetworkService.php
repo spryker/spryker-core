@@ -16,7 +16,6 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
 {
 
     /**
-     *
      * Specification:
      *  - Get current running script hostname
      *
@@ -31,8 +30,15 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
             ->getHostname();
     }
 
+    /**
+     * Specification:
+     *  - Get string to follow requests between applications
+     *
+     * @return string
+     */
     public function getRequestId()
     {
+        return $this->getFactory()->createRequestId()->getRequestId();
     }
 
 }
