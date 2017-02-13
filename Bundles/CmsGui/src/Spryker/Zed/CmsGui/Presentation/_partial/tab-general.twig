@@ -5,18 +5,16 @@
 
 {{ form_row(pageForm.fkTemplate) }}
 
-{{ form_label(pageForm.validFrom) }}
-<div class="row">
-    <div class="col-xs-12">
-        {{ form_widget(pageForm.validFrom) }}
-    </div>
+<div class="form-group {% if pageForm.validFrom.vars.errors|length > 0 %}has-error{% endif %}" >
+    {{ form_label(pageForm.validFrom) }}
+    {{ form_widget(pageForm.validFrom) }}
+    {{ form_errors(pageForm.validFrom) }}
 </div>
 
-{{ form_label(pageForm.validTo) }}
-<div class="row">
-    <div class="col-xs-12">
-        {{ form_widget(pageForm.validTo) }}
-    </div>
+<div class="form-group {% if pageForm.validTo.vars.errors|length > 0 %}has-error{% endif %}" >
+    {{ form_label(pageForm.validTo) }}
+    {{ form_widget(pageForm.validTo) }}
+    {{ form_errors(pageForm.validTo) }}
 </div>
 
 {{ form_row(pageForm.fkPage) }}

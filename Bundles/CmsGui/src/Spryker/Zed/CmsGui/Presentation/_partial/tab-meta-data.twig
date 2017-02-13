@@ -1,5 +1,5 @@
 
-<h4>{{ 'Fill in seo information' | trans }}</h4>
+<h4>{{ 'Fill in SEO information' | trans }}</h4>
 
 {% for locale in availableLocales %}
     {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true) , 'hasError': false} %}

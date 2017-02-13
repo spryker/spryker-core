@@ -9,7 +9,7 @@
 <div class="placeholder-translation-container">
     {{ form_row(attributeForm.searchOption) }}
 
-    <div class="form-group">
+    <div class="form-group {% if attributeForm.translationKey.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_label(attributeForm.translationKey) }}
         {{ form_widget(attributeForm.translationKey, { 'attr': {'autocomplete' : 'off'} }) }}
 

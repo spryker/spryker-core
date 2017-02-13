@@ -27,19 +27,29 @@ class CmsPageAttributesFormType extends AbstractType
 
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
-    const URL_PATH_PATTERN = '#^[a-z/\-0-9\.]+$#i';
+    const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
      * @var \Symfony\Component\Validator\Constraint
      */
-    protected $urlConstraint;
+    protected $uniqueUrlConstraint;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint $urlConstraint
+     * @var \Symfony\Component\Validator\Constraint
      */
-    public function __construct(Constraint $urlConstraint)
-    {
-        $this->urlConstraint = $urlConstraint;
+    protected $uniqueNameConstraint;
+
+    /**
+     * @param \Symfony\Component\Validator\Constraint $uniqueUrlConstraint
+     * @param \Symfony\Component\Validator\Constraint $uniqueNameConstraint
+     */
+    public function __construct(
+        Constraint $uniqueUrlConstraint,
+        Constraint $uniqueNameConstraint
+    ) {
+
+        $this->uniqueUrlConstraint = $uniqueUrlConstraint;
+        $this->uniqueNameConstraint = $uniqueNameConstraint;
     }
 
     /**
@@ -53,8 +63,7 @@ class CmsPageAttributesFormType extends AbstractType
         $this->addNameField($builder)
             ->addIdCmsLocalizedAttributes($builder)
             ->addUrlField($builder)
-            ->addCmsLocaleNameField($builder)
-            ->addFieldLocalName($builder);
+            ->addCmsLocaleNameField($builder);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -103,8 +112,10 @@ class CmsPageAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name *',
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
+                $this->uniqueNameConstraint,
             ],
         ]);
 
@@ -132,27 +143,16 @@ class CmsPageAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_URL, TextType::class, [
             'label' => 'URL *',
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
                 new Regex([
                     'pattern' => static::URL_PATH_PATTERN,
-                    'message' => 'Invalid path provided. Allowed characters [a-z], [0-9], -, /, .',
+                    'message' => 'Invalid path provided. "Space" and "\" character is not allowed.',
                 ]),
-                $this->urlConstraint,
+                $this->uniqueUrlConstraint,
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addFieldLocalName(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LOCALE_NAME, HiddenType::class);
 
         return $this;
     }

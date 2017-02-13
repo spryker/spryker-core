@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CmsPageFormType extends AbstractType
 {
@@ -33,14 +35,6 @@ class CmsPageFormType extends AbstractType
     const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var array
-     */
-    protected $searcableChoices = [
-        0 => 'No',
-        1 => 'Yes',
-    ];
 
     /**
      * @var \Symfony\Component\Form\FormTypeInterface
@@ -113,10 +107,7 @@ class CmsPageFormType extends AbstractType
      */
     protected function addSearchableField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SEARCHABLE, ChoiceType::class, [
-            'label' => 'Searchable *',
-            'choices' => $this->searcableChoices,
-        ]);
+        $builder->add(static::FIELD_SEARCHABLE, HiddenType::class);
 
         return $this;
     }
@@ -198,6 +189,9 @@ class CmsPageFormType extends AbstractType
             'attr' => [
                 'class' => 'datepicker',
             ],
+            'constraints' => [
+                 $this->createValidFromRangeConstraint(),
+            ],
         ]);
 
         $builder->get(static::FIELD_VALID_FROM)
@@ -219,12 +213,68 @@ class CmsPageFormType extends AbstractType
             'attr' => [
                 'class' => 'datepicker',
             ],
+            'constraints' => [
+                $this->createValidToFieldRangeConstraint(),
+            ],
         ]);
 
         $builder->get(static::FIELD_VALID_TO)
             ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidFromRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($dateTimeFrom, ExecutionContextInterface $context) {
+                /** @var CmsPageTransfer $cmsPageTransfer */
+                $cmsPageTransfer = $context->getRoot()->getData();
+                if (!$dateTimeFrom) {
+                    if ($cmsPageTransfer->getValidTo()) {
+                        $context->addViolation('This field should be selected if "Valid to" is filled.');
+                    }
+
+                    return;
+                }
+
+                if ($dateTimeFrom > $cmsPageTransfer->getValidTo()) {
+                    $context->addViolation('Date "Valid from" cannot be larger than "Valid to".');
+                }
+
+                if ($dateTimeFrom == $cmsPageTransfer->getValidTo()) {
+                    $context->addViolation('Date "Valid from" is the same as "Valid to".');
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidToFieldRangeConstraint()
+    {
+        return new Callback([
+           'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
+
+               /** @var CmsPageTransfer $cmsPageTransfer */
+               $cmsPageTransfer = $context->getRoot()->getData();
+
+            if (!$dateTimeTo) {
+                if ($cmsPageTransfer->getValidFrom()) {
+                    $context->addViolation('This field should be selected if "Valid from" is filled.');
+                }
+                return;
+            }
+
+            if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
+                $context->addViolation('Date "Valid to" cannot be smaller than "Valid from".');
+            }
+           },
+        ]);
     }
 
     /**

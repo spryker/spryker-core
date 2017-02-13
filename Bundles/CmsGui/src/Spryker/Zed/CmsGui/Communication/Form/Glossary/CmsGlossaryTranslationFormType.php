@@ -12,8 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class CmsGlossaryTranslationFormType extends AbstractType
 {
@@ -81,13 +79,10 @@ class CmsGlossaryTranslationFormType extends AbstractType
     {
         $builder->add(static::FIELD_TRANSLATION, TextareaType::class, [
             'label' => 'Content',
-            'constraints' => [
-                new Required(),
-                new NotBlank(),
-            ],
             'attr' => [
                 'class' => 'html-editor',
             ],
+            'required' => false,
         ]);
 
         return $this;

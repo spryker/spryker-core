@@ -267,7 +267,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
         CmsPageMetaAttributesTransfer $cmsPageMetaAttributesTransfer
     ) {
-        $cmsPageLocalizedAttributesEntity->fromArray($cmsPageMetaAttributesTransfer->toArray());
+        $cmsPageLocalizedAttributesEntity->fromArray($cmsPageMetaAttributesTransfer->modifiedToArray());
 
         return $cmsPageLocalizedAttributesEntity;
     }

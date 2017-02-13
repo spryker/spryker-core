@@ -29,15 +29,21 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        if (!$value) {
+            return;
+        }
+
         if (!$constraint instanceof UniqueUrl) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueUrl');
         }
 
-        if (!$this->isUrlChanged($value, $constraint)) {
+        $url = $this->buildUrl($value, $constraint);
+
+        if (!$this->isUrlChanged($url, $constraint)) {
             return;
         }
 
-        if (!$this->isUniqueUrl($value, $constraint)) {
+        if (!$this->isUniqueUrl($url, $constraint)) {
             $this->buildViolation('Url is already taken.')
                 ->addViolation();
         }
@@ -55,34 +61,42 @@ class UniqueUrlValidator extends ConstraintValidator
     }
 
     /**
-     * @param string $submitedUrl
+     * @param string $url
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */
-    protected function isUrlChanged($submitedUrl, UniqueUrl $constraint)
+    protected function isUrlChanged($url, UniqueUrl $constraint)
     {
-        $cmsPageTransfer = $this->getCmsPageTransfer();
-
-        $submitedPageAttributesTransfer = $this->findProcessedCmsPageAttributesTransfer($submitedUrl, $cmsPageTransfer);
-        if ($submitedPageAttributesTransfer === null) {
-            return true;
-        }
-
-        $url = $constraint->getCmsFacade()
-            ->buildPageUrl($submitedPageAttributesTransfer);
-
-        $urlTransfer = $this->findUrlTransfer($constraint, $url);
+        $urlTransfer = $this->findUrl($constraint, $url);
 
         if ($urlTransfer === null) {
             return true;
         }
 
-        if ($urlTransfer->getFkResourcePage() === $cmsPageTransfer->getFkPage()) {
+        $cmsPageTransfer = $this->getCmsPageTransfer();
+        if ((int)$urlTransfer->getFkResourcePage() === (int)$cmsPageTransfer->getFkPage()) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param string $submitedUrl
+     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
+     *
+     * @return bool
+     */
+    protected function buildUrl($submitedUrl, UniqueUrl $constraint)
+    {
+        $cmsPageTransfer = $this->getCmsPageTransfer();
+        $submitedPageAttributesTransfer = $this->findProcessedCmsPageAttributesTransfer($submitedUrl, $cmsPageTransfer);
+        if ($submitedPageAttributesTransfer === null) {
+            return true;
+        }
+
+        return $constraint->getCmsFacade()->buildPageUrl($submitedPageAttributesTransfer);
     }
 
     /**
@@ -108,12 +122,13 @@ class UniqueUrlValidator extends ConstraintValidator
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    protected function findUrlTransfer(UniqueUrl $constraint, $url)
+    protected function findUrl(UniqueUrl $constraint, $url)
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($url);
 
-        $urlTransfer = $constraint->getUrlFacade()->findUrl($urlTransfer);
+        $urlTransfer = $constraint->getUrlFacade()
+            ->findUrl($urlTransfer);
 
         return $urlTransfer;
     }

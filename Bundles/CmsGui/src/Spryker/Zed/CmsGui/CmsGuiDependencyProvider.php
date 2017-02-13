@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CmsGui;
 
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBrige;
@@ -19,6 +20,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_CMS = 'locale cms';
     const FACADE_URL = 'url facade';
+    const FACADE_GLOSSARY = 'glossary facade';
 
     const QUERY_CONTAINER_CMS = 'cms query container';
 
@@ -35,6 +37,10 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::FACADE_CMS] = function (Container $container) {
             return new CmsGuiToCmsBridge($container->getLocator()->cms()->facade());
+        };
+
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+            return new CmsGuiToCmsGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[static::QUERY_CONTAINER_CMS] = function (Container $container) {

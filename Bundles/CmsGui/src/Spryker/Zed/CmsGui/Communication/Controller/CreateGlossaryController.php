@@ -21,7 +21,7 @@ class CreateGlossaryController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -47,7 +47,7 @@ class CreateGlossaryController extends AbstractController
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
-                $cmsGlossaryTransfer = $this->getFactory()
+                $this->getFactory()
                     ->getCmsFacade()
                     ->saveCmsGlossary($glossaryForm->getData());
 
@@ -58,7 +58,7 @@ class CreateGlossaryController extends AbstractController
                     [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
                 )->build();
 
-                $this->redirectResponse($redirectUrl);
+                return $this->redirectResponse($redirectUrl);
 
             } else {
                 $this->addErrorMessage('Invalid data provided.');
@@ -93,7 +93,7 @@ class CreateGlossaryController extends AbstractController
         } elseif ($value != null) {
             $result = $this->getFactory()
                 ->createAutocompleteDataProvider()
-                ->getAutocompleteDataForTranslationKey($value);
+                ->getAutocompleteDataForTranslationValue($value);
 
         }
 

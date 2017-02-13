@@ -112,7 +112,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function getTemplatePlaceholders($templateFile)
     {
-        if (!$this->isFileExists($templateFile)) {
+        if (!$this->fileExists($templateFile)) {
             return [];
         }
 
@@ -284,7 +284,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return bool
      */
-    protected function isFileExists($templateFile)
+    protected function fileExists($templateFile)
     {
         return file_exists($templateFile);
     }

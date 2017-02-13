@@ -71,4 +71,12 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
         return $this->cmsQueryContainer->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage);
     }
 
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes()
+    {
+        return $this->cmsQueryContainer->queryCmsPageLocalizedAttributes();
+    }
+
 }

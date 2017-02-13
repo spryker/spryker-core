@@ -8,6 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,6 +27,10 @@ class EditPageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $this->getFactory()
+            ->getCmsFacade()
+            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
         $availableLocales = $this->getFactory()

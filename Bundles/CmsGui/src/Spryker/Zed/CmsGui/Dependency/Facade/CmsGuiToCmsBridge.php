@@ -127,4 +127,14 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
         return $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
     }
 
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath)
+    {
+        return $this->cmsFacade->syncTemplate($cmsTemplateFolderPath);
+    }
+
 }

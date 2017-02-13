@@ -76,7 +76,8 @@ class AutocompleteDataProvider implements AutocompleteDataProviderInterface
                 ];
             }
 
-            $result[$glossaryTranslationEntity->getLabel()]['translations'][] = $glossaryTranslationEntity->toArray();
+            $result[$glossaryTranslationEntity->getLabel()]['translations'][$glossaryTranslationEntity->getFkLocale()] =
+                $glossaryTranslationEntity->toArray();
         }
 
         return $result;

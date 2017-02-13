@@ -42,4 +42,9 @@ interface CmsGuiToCmsQueryContainerInterface
      */
     public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
 
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes();
+
 }

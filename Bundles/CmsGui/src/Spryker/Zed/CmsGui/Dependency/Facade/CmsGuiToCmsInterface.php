@@ -85,4 +85,11 @@ interface CmsGuiToCmsInterface
      */
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath);
+
 }

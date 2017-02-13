@@ -19,6 +19,7 @@ class CmsGlossaryFormType extends AbstractType
     const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
+    const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     /**
      * @var \Symfony\Component\Form\FormTypeInterface
@@ -53,6 +54,7 @@ class CmsGlossaryFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS);
         $resolver->setRequired(static::OPTION_DATA_CLASS_ATTRIBUTES);
     }
 
@@ -77,6 +79,7 @@ class CmsGlossaryFormType extends AbstractType
             'allow_add' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
+                static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS => $options[static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS],
             ],
         ]);
 

@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
@@ -139,7 +141,10 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryAttributesFormType()
     {
-        return new CmsGlossaryAttributesFormType($this->getCmsFacade());
+        return new CmsGlossaryAttributesFormType(
+            $this->getCmsFacade(),
+            $this->createUniqueGlossaryForSearchTypeConstraint()
+        );
     }
 
     /**
@@ -147,7 +152,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageAttributesFormType()
     {
-        return new CmsPageAttributesFormType($this->createUniqueUrlConstraint());
+        return new CmsPageAttributesFormType($this->createUniqueUrlConstraint(), $this->createUniqueNameConstraint());
     }
 
     /**
@@ -166,6 +171,26 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return new UniqueUrl([
             UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
             UniqueUrl::OPTION_CMS_FACADE => $this->getCmsFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName
+     */
+    protected function createUniqueNameConstraint()
+    {
+        return new UniqueName([
+            UniqueName::OPTION_CMS_QUERY_CONTAINER => $this->getCmsQueryContainer(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType
+     */
+    protected function createUniqueGlossaryForSearchTypeConstraint()
+    {
+        return new UniqueGlossaryForSearchType([
+            UniqueGlossaryForSearchType::OPTION_GLOSSARY_FACADE => $this->getGlossaryFacade(),
         ]);
     }
 
@@ -207,6 +232,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUrlFacade()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

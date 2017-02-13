@@ -79,6 +79,8 @@ class CmsPageFormTypeDataProvider
             $this->cmsPageTransfer = $this->createInitialCmsPageTransfer();
         }
 
+        $this->cmsPageTransfer->setIsSearchable(true);
+
         return $this->cmsPageTransfer;
     }
 

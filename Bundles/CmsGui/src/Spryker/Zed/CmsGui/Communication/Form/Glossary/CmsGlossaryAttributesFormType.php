@@ -35,12 +35,9 @@ class CmsGlossaryAttributesFormType extends AbstractType
     const FIELD_TRANSLATIONS = 'translations';
     const FIELD_TRANSLATION_KEY = 'translationKey';
 
-    const TYPE_GLOSSARY_NEW = 'New glossary';
-    const TYPE_GLOSSARY_FIND = 'Find glossary';
-    const TYPE_AUTO_GLOSSARY = 'Auto';
-    const TYPE_FULLTEXT_SEARCH = 'Full text';
-
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+
+    const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     use ArrayObjectTransformerTrait;
 
@@ -50,11 +47,20 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @var \Symfony\Component\Validator\Constraint
      */
-    public function __construct(CmsGuiToCmsInterface $cmsFacade)
-    {
+    protected $uniqueGlossaryForSearchTypeConstraint;
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @param \Symfony\Component\Validator\Constraint $uniqueGlossaryForSearchTypeConstraint
+     */
+    public function __construct(
+        CmsGuiToCmsInterface $cmsFacade,
+        Constraint $uniqueGlossaryForSearchTypeConstraint
+    ) {
         $this->cmsFacade = $cmsFacade;
+        $this->uniqueGlossaryForSearchTypeConstraint = $uniqueGlossaryForSearchTypeConstraint;
     }
 
     /**
@@ -72,6 +78,8 @@ class CmsGlossaryAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS);
+
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
@@ -100,7 +108,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
             ->addTemplateNameField($builder)
             ->addPlaceholderField($builder)
             ->addTranslationsField($builder)
-            ->addSearchOptionField($builder);
+            ->addSearchOptionField($builder, $options);
     }
 
     /**
@@ -110,7 +118,11 @@ class CmsGlossaryAttributesFormType extends AbstractType
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class);
+        $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class, [
+            'constraints' => [
+               $this->uniqueGlossaryForSearchTypeConstraint,
+            ],
+        ]);
 
         return $this;
     }
@@ -168,19 +180,15 @@ class CmsGlossaryAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addSearchOptionField(FormBuilderInterface $builder)
+    protected function addSearchOptionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SEARCH_OPTION, ChoiceType::class, [
             'label' => 'Search Type',
-            'choices' => [
-                static::TYPE_AUTO_GLOSSARY,
-                static::TYPE_GLOSSARY_NEW,
-                static::TYPE_GLOSSARY_FIND,
-                static::TYPE_FULLTEXT_SEARCH,
-            ],
+            'choices' => $options[static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS],
         ]);
 
         return $this;

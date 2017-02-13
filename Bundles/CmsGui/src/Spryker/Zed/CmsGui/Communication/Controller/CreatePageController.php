@@ -8,6 +8,7 @@ namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +24,10 @@ class CreatePageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $this->getFactory()
+            ->getCmsFacade()
+            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+
         $pageTabs = $this->getFactory()->createPageTabs();
 
         $availableLocales = $this->getFactory()
