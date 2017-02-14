@@ -130,7 +130,6 @@ class Cronjobs
                     }
                 }
 
-                $name = $requestParts['module'] . ' ' . $requestParts['controller'] . ' ' . $requestParts['action'];
                 $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
                     . '/' . $requestParts['action'];
 
@@ -149,7 +148,7 @@ class Cronjobs
      */
     protected function indexJobsByName(array $jobs, array $roles)
     {
-        $job_by_name = [];
+        $jobsByName = [];
 
         foreach ($jobs as $v) {
             if (array_key_exists('role', $v) && in_array($v['role'], $this->allowedRoles)) {
@@ -165,15 +164,15 @@ class Cronjobs
 
             foreach ($v['stores'] as $store) {
                 $name = $store . '__' . $v['name'];
-                $job_by_name[$name] = $v;
-                $job_by_name[$name]['name'] = $name;
-                $job_by_name[$name]['store'] = $store;
-                $job_by_name[$name]['role'] = $jobRole;
-                unset($job_by_name[$name]['stores']);
+                $jobsByName[$name] = $v;
+                $jobsByName[$name]['name'] = $name;
+                $jobsByName[$name]['store'] = $store;
+                $jobsByName[$name]['role'] = $jobRole;
+                unset($jobsByName[$name]['stores']);
             }
         }
 
-        return $job_by_name;
+        return $jobsByName;
     }
 
     /**
@@ -222,7 +221,6 @@ class Cronjobs
                 $xml = $this->prepareJobXml($jobsByName[$name]);
                 $url = 'job/' . $name . '/config.xml';
                 $code = $this->callJenkins($url, $xml);
-                unset($jobsByName[$name]);
 
                 if ($code !== 200) {
                     $output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
@@ -244,7 +242,15 @@ class Cronjobs
     {
         $output = '';
 
+        $existingJobs = $this->getExistingJobs();
+
         foreach ($jobsByName as $k => $v) {
+            // skip if job is in existingjobs
+            if (in_array($k, $existingJobs)) {
+                $output .= "SKIPPED jenkins job: $k (already exists)" . PHP_EOL;
+                continue;
+            }
+
             $url = 'createItem?name=' . $v['name'];
 
             $xml = $this->prepareJobXml($v);
