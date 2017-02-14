@@ -33,7 +33,7 @@ class MessengerConfig extends AbstractBundleConfig
      */
     public static function getTray()
     {
-        if (PHP_SAPI === 'cli') {
+        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
             return MessengerConstants::IN_MEMORY_TRAY;
         }
         return self::$messageTray;

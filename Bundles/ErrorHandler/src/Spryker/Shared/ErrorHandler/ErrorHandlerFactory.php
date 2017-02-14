@@ -18,6 +18,7 @@ class ErrorHandlerFactory
 
     const APPLICATION_ZED = 'ZED';
     const SAPI_CLI = 'cli';
+    const SAPI_PHPDBG = 'phpdbg';
 
     /**
      * @var string
@@ -77,7 +78,7 @@ class ErrorHandlerFactory
      */
     protected function isCliCall()
     {
-        return (PHP_SAPI === static::SAPI_CLI);
+        return (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG);
     }
 
     /**
