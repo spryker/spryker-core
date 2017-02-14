@@ -19,6 +19,7 @@ class Cronjobs
     const ROLE_EMPTY = 'empty';
     const DEFAULT_ROLE = self::ROLE_ADMIN;
     const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
     /**
      * @var array
@@ -58,6 +59,7 @@ class Cronjobs
         $jobsByName = $this->getCronjobs($roles);
 
         $consoleOutput = '';
+        $consoleOutput .= $this->updateOrDelete($jobsByName);
         $consoleOutput .= $this->createJobDefinitions($jobsByName);
 
         return $consoleOutput;
@@ -175,18 +177,25 @@ class Cronjobs
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @return array
      */
     protected function getExistingJobs()
     {
-        return glob($this->getJobsDir() . '/*/config.xml');
+        $jobsNames = [];
+
+        $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
+        $jobs = json_decode($jobs, true);
+
+        if (!empty($jobs['jobs'])) {
+            foreach ($jobs['jobs'] as $job) {
+                $jobsNames[] = $job['name'];
+            }
+        }
+
+        return $jobsNames;
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * Loop over existing jobs: either update or delete job
      *
      * @param array $jobsByName
@@ -202,9 +211,7 @@ class Cronjobs
             return $output;
         }
 
-        foreach ($existingJobs as $existingJob) {
-            $name = basename(dirname($existingJob));
-
+        foreach ($existingJobs as $name) {
             if (!in_array($name, array_keys($jobsByName))) {
                 // Job does not exist anymore - we have to delete it.
                 $url = 'job/' . $name . '/doDelete';
@@ -282,6 +289,33 @@ class Cronjobs
         curl_close($ch);
 
         return (int)$httpCode;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @throws \ErrorException
+     *
+     * @return string
+     */
+    protected function getJenkinsApiResponse($url)
+    {
+        $getUrl = $this->getJenkinsUrl($url);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+
+        $curlResponse = curl_exec($ch);
+
+        if ($curlResponse === false) {
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $getUrl);
+        }
+        curl_close($ch);
+
+        return $curlResponse;
     }
 
     /**
