@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -55,6 +56,37 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
         return $this->getFactory()
             ->createNavigationNodeLocalizedAttributesQuery()
             ->filterByIdNavigationNodeLocalizedAttributes($idNavigationNodeLocalizedAttributes);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNavigation
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryRootNavigationNodesByIdNavigation($idNavigation)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeQuery()
+            ->filterByFkNavigation($idNavigation)
+            ->filterByFkParentNavigationNode(null, Criteria::ISNULL)
+            ->orderByWeight(Criteria::DESC);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $fkParentNavigationNode
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNodesByFkParentNavigationNode($fkParentNavigationNode)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeQuery()
+            ->filterByFkParentNavigationNode($fkParentNavigationNode)
+            ->orderByWeight(Criteria::DESC);
     }
 
 }

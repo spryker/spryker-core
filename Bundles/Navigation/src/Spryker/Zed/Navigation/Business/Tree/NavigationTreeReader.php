@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Navigation\Business\Tree;
 
+use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
+use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
@@ -46,18 +48,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
             return null;
         }
 
-        $navigationTreeTransfer = new NavigationTreeTransfer();
-
-        $navigationTransfer = $this->mapNavigationEntityToTransfer($navigationEntity);
-        $navigationTreeTransfer->setNavigation($navigationTransfer);
-
-        foreach ($navigationEntity->getSpyNavigationNodes() as $navigationNodeEntity) {
-            $navigationTreeNodeTransfer = $this->getNavigationTreeNode($navigationNodeEntity);
-
-            $navigationTreeTransfer->addNode($navigationTreeNodeTransfer);
-        }
-
-        return $navigationTreeTransfer;
+        return $this->mapNavigationEntityToNavigationTreeTransfer($navigationEntity);
     }
 
     /**
@@ -78,8 +69,29 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     protected function findNavigationEntity(NavigationTransfer $navigationTransfer)
     {
         return $this->navigationQueryContainer
-            ->queryNavigationById($navigationTransfer->getIdNavigation()) // todo: try to reduce queries to minimum
+            ->queryNavigationById($navigationTransfer->getIdNavigation())
             ->findOne();
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    protected function mapNavigationEntityToNavigationTreeTransfer(SpyNavigation $navigationEntity)
+    {
+        $navigationTreeTransfer = new NavigationTreeTransfer();
+
+        $navigationTransfer = $this->mapNavigationEntityToTransfer($navigationEntity);
+        $navigationTreeTransfer->setNavigation($navigationTransfer);
+
+        $rootNavigationNodes = $this->findRootNavigationNodes($navigationEntity);
+        foreach ($rootNavigationNodes as $navigationNodeEntity) {
+            $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity);
+            $navigationTreeTransfer->addNode($navigationTreeNodeTransfer);
+        }
+
+        return $navigationTreeTransfer;
     }
 
     /**
@@ -96,26 +108,79 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     }
 
     /**
-     * @param SpyNavigationNode $navigationNodeEntity
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
      *
-     * @return NavigationTreeNodeTransfer
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getNavigationTreeNode(SpyNavigationNode $navigationNodeEntity)
+    protected function findRootNavigationNodes(SpyNavigation $navigationEntity)
+    {
+        return $this->navigationQueryContainer
+            ->queryRootNavigationNodesByIdNavigation($navigationEntity->getIdNavigation())
+            ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeNodeTransfer
+     */
+    protected function getNavigationTreeNodeRecursively(SpyNavigationNode $navigationNodeEntity)
     {
         $navigationTreeNodeTransfer = new NavigationTreeNodeTransfer();
 
-        $navigationNodeTransfer = new NavigationNodeTransfer();
-        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
-
+        $navigationNodeTransfer = $this->mapNavigationNodeEntityToTransfer($navigationNodeEntity);
         $navigationTreeNodeTransfer->setNavigationNode($navigationNodeTransfer);
 
-        // TODO: have to query children in the right order
-        foreach ($navigationNodeEntity->getChildrenNavigationNodes() as $childrenNavigationNodeEntity) {
-            $childNavigationTreeNodeTransfer = $this->getNavigationTreeNode($childrenNavigationNodeEntity);
+        $childrenNavigationNodeEntities = $this->findChildrenNavigationNodes($navigationNodeTransfer);
+        foreach ($childrenNavigationNodeEntities as $childrenNavigationNodeEntity) {
+            $childNavigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($childrenNavigationNodeEntity);
             $navigationTreeNodeTransfer->addChild($childNavigationTreeNodeTransfer);
         }
 
         return $navigationTreeNodeTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    protected function mapNavigationNodeEntityToTransfer(SpyNavigationNode $navigationNodeEntity)
+    {
+        $navigationNodeTransfer = new NavigationNodeTransfer();
+        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
+
+        foreach ($navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess() as $navigationNodeLocalizedAttributesEntity) {
+            $navigationNodeLocalizedAttributesTransfer = $this->mapNavigationNodeLocalizedAttributesEntityToTransfer($navigationNodeLocalizedAttributesEntity);
+            $navigationNodeTransfer->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer);
+        }
+
+        return $navigationNodeTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
+     */
+    protected function mapNavigationNodeLocalizedAttributesEntityToTransfer(SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity)
+    {
+        $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
+        $navigationNodeLocalizedAttributesTransfer->fromArray($navigationNodeLocalizedAttributesEntity->toArray(), true);
+
+        return $navigationNodeLocalizedAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findChildrenNavigationNodes(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->navigationQueryContainer
+            ->queryNavigationNodesByFkParentNavigationNode($navigationNodeTransfer->getIdNavigationNode())
+            ->find();
     }
 
 }

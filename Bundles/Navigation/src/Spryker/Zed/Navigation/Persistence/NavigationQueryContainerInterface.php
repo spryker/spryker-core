@@ -42,4 +42,22 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryNavigationNodeLocalizedAttributesById($idNavigationNodeLocalizedAttributes);
 
+    /**
+     * @api
+     *
+     * @param int $idNavigation
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryRootNavigationNodesByIdNavigation($idNavigation);
+
+    /**
+     * @api
+     *
+     * @param int $fkParentNavigationNode
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNodesByFkParentNavigationNode($fkParentNavigationNode);
+
 }

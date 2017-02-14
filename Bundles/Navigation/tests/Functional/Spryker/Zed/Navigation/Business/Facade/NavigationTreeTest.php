@@ -74,61 +74,29 @@ class NavigationTreeTest extends Test
         $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
         $actualTreeTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer);
 
-        $expectedTreeTransfer = (new NavigationTreeTransfer())
-            ->setNavigation((new NavigationTransfer())
-                ->setKey('test-navigation-1')
-                ->setName('Test navigation 1')
-                ->setIsActive(true))
-            ->addNode((new NavigationTreeNodeTransfer())
-                ->setNavigationNode((new NavigationNodeTransfer())
-                    ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                        ->setTitle('Node 1')
-                        ->setExternalUrl('/node/1')
-                        ->setFkLocale($this->idLocale))
-                    ->setIsActive(true)
-                    ->setWeight(10))
-                ->addChild((new NavigationTreeNodeTransfer())
-                    ->setNavigationNode((new NavigationNodeTransfer())
-                        ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                            ->setTitle('Node 1.1')
-                            ->setExternalUrl('/node/1/1')
-                            ->setFkLocale($this->idLocale))
-                        ->setIsActive(true)
-                        ->setWeight(20)))
-                ->addChild((new NavigationTreeNodeTransfer())
-                    ->setNavigationNode((new NavigationNodeTransfer())
-                        ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                            ->setTitle('Node 1.2')
-                            ->setExternalUrl('/node/1/2')
-                            ->setFkLocale($this->idLocale))
-                        ->setIsActive(true)
-                        ->setWeight(10))))
-            ->addNode((new NavigationTreeNodeTransfer())
-                ->setNavigationNode((new NavigationNodeTransfer())
-                    ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                        ->setTitle('Node 2')
-                        ->setExternalUrl('/node/2')
-                        ->setFkLocale($this->idLocale))
-                    ->setIsActive(true)
-                    ->setWeight(0)))
-            ->addNode((new NavigationTreeNodeTransfer())
-                ->setNavigationNode((new NavigationNodeTransfer())
-                    ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                        ->setTitle('Node 3')
-                        ->setExternalUrl('/node/3')
-                        ->setFkLocale($this->idLocale))
-                    ->setIsActive(true)
-                    ->setWeight(0))
-                ->addChild((new NavigationTreeNodeTransfer())
-                    ->setNavigationNode((new NavigationNodeTransfer())
-                        ->addNavigationNodeLocalizedAttribute((new NavigationNodeLocalizedAttributesTransfer())
-                            ->setTitle('Node 3.1')
-                            ->setExternalUrl('/node/3/1')
-                            ->setFkLocale($this->idLocale))
-                        ->setIsActive(true)
-                        ->setWeight(0))));
+        $this->assertSame('Test navigation 1', $actualTreeTransfer->getNavigation()->getName(), 'Navigation name should match expected data.');
 
-        $this->assertEquals($expectedTreeTransfer->toArray(), $actualTreeTransfer->toArray(), 'Navigation tree read from database should match expected structure and order.');
+        $this->assertCount(3, $actualTreeTransfer->getNodes(), 'Navigation tree should contain expected number of nodes.');
+
+        $this->assertSame('Node 1', $actualTreeTransfer->getNodes()[0]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 1/3 should have expected title.');
+        $this->assertSame('Node 2', $actualTreeTransfer->getNodes()[1]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 2/3 should have expected title.');
+        $this->assertSame('Node 3', $actualTreeTransfer->getNodes()[2]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 3/3 should have expected title.');
+
+        $this->assertCount(2, $actualTreeTransfer->getNodes()[0]->getChildren(), 'Node 1/3 should contain expected number of nodes.');
+        $this->assertCount(0, $actualTreeTransfer->getNodes()[1]->getChildren(), 'Node 2/3 should contain expected number of nodes.');
+        $this->assertCount(1, $actualTreeTransfer->getNodes()[2]->getChildren(), 'Node 3/3 should contain expected number of nodes.');
+
+        $node1 = $actualTreeTransfer->getNodes()[0];
+        $this->assertSame('Node 1.1', $node1->getChildren()[0]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 1.1/2 should have expected title.');
+        $this->assertSame('Node 1.2', $node1->getChildren()[1]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 1.2/2 should have expected title.');
+
+        $node3 = $actualTreeTransfer->getNodes()[2];
+        $this->assertSame('Node 3.1', $node3->getChildren()[0]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 3.1/1 should have expected title.');
+
+        $this->assertCount(1, $node3->getChildren(), 'Node 3.1/1 should contain expected number of nodes.');
+
+        $node3_1 = $node3->getChildren()[0];
+        $this->assertSame('Node 3.1.1', $node3_1->getChildren()[0]->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle(), 'Node 3.1.1/1 should have expected title.');
     }
 
     /**
@@ -140,12 +108,15 @@ class NavigationTreeTest extends Test
         $this->navigationTransfer = new NavigationTransfer();
         $this->navigationTransfer->fromArray($navigationEntity->toArray(), true);
 
-        $navigationNodeEntity1 = $this->createNavigationNodeEntity($navigationEntity, 10, 'Node 1', '/node/1');
-        $this->createNavigationNodeEntity($navigationEntity, 20, 'Node 1.1', '/node/1/1', $navigationNodeEntity1);
-        $this->createNavigationNodeEntity($navigationEntity, 10, 'Node 1.2', '/node/1/2', $navigationNodeEntity1);
         $this->createNavigationNodeEntity($navigationEntity, 0, 'Node 2', '/node/2');
+
+        $navigationNodeEntity1 = $this->createNavigationNodeEntity($navigationEntity, 10, 'Node 1', '/node/1');
+        $this->createNavigationNodeEntity($navigationEntity, 10, 'Node 1.2', '/node/1/2', $navigationNodeEntity1);
+        $this->createNavigationNodeEntity($navigationEntity, 20, 'Node 1.1', '/node/1/1', $navigationNodeEntity1);
+
         $navigationNodeEntity3 = $this->createNavigationNodeEntity($navigationEntity, 0, 'Node 3', '/node/3');
-        $this->createNavigationNodeEntity($navigationEntity, 0, 'Node 3.1', '/node/3/1', $navigationNodeEntity3);
+        $navigationNodeEntity3_1 = $this->createNavigationNodeEntity($navigationEntity, 0, 'Node 3.1', '/node/3/1', $navigationNodeEntity3);
+        $this->createNavigationNodeEntity($navigationEntity, 0, 'Node 3.1.1', '/node/3/1/1', $navigationNodeEntity3_1);
     }
 
     /**
