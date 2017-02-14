@@ -20,10 +20,9 @@ $(document).ready( function () {
         changeMonth: true,
         numberOfMonths: 3,
         maxDate: validTo.val(),
-        minDate: validFrom.val(),
         defaultData: 0,
         onClose: function(selectedDate) {
-            validFrom.datepicker('option', 'minDate', selectedDate);
+            validTo.datepicker('option', 'minDate', selectedDate);
         }
     });
 
@@ -32,6 +31,7 @@ $(document).ready( function () {
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
+        minDate: validFrom.val(),
         onClose: function(selectedDate) {
             validFrom.datepicker('option', 'maxDate', selectedDate);
         }

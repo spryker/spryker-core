@@ -29,7 +29,7 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$value) {
+        if (!$value->getUrl()) {
             return;
         }
 
