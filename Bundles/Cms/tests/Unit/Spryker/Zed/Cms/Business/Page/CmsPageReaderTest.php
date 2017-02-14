@@ -10,7 +10,6 @@ use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -41,7 +40,7 @@ class CmsPageReaderTest extends CmsMocks
             ->method('findCmsPageEntity')
             ->willReturn($cmsPageEntity);
 
-        $cmsPageTransfer = $cmsPageReaderMock->getCmsPageById(1);
+        $cmsPageTransfer = $cmsPageReaderMock->findCmsPageById(1);
 
         $this->assertEquals($cmsPageEntity->getIdCmsPage(), $cmsPageTransfer->getFkPage());
         $this->assertCount(2, $cmsPageTransfer->getPageAttributes());
@@ -50,17 +49,17 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdWhenPageNotFoundShouldThrowException()
+    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull()
     {
-        $this->expectException(MissingPageException::class);
-
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 
         $cmsPageReaderMock->expects($this->once())
             ->method('findCmsPageEntity')
             ->willReturn(null);
 
-        $cmsPageReaderMock->getCmsPageById(1);
+        $cmsPageTransfer = $cmsPageReaderMock->findCmsPageById(1);
+
+        $this->assertNull($cmsPageTransfer);
     }
 
     /**
@@ -117,15 +116,15 @@ class CmsPageReaderTest extends CmsMocks
         $urlEntity->setUrl('/de/test');
         $cmsPageEntity->addSpyUrl($urlEntity);
 
-        $cmsLocalizedPageAttribuesEntity = new SpyCmsPageLocalizedAttributes();
+        $cmsLocalizedPageAttributesEntity = new SpyCmsPageLocalizedAttributes();
         $localeEntity = new SpyLocale();
-        $cmsLocalizedPageAttribuesEntity->setLocale($localeEntity);
-        $cmsPageEntity->addSpyCmsPageLocalizedAttributes($cmsLocalizedPageAttribuesEntity);
+        $cmsLocalizedPageAttributesEntity->setLocale($localeEntity);
+        $cmsPageEntity->addSpyCmsPageLocalizedAttributes($cmsLocalizedPageAttributesEntity);
 
-        $cmsLocalizedPageAttribuesEntity = new SpyCmsPageLocalizedAttributes();
+        $cmsLocalizedPageAttributesEntity = new SpyCmsPageLocalizedAttributes();
         $localeEntity = new SpyLocale();
-        $cmsLocalizedPageAttribuesEntity->setLocale($localeEntity);
-        $cmsPageEntity->addSpyCmsPageLocalizedAttributes($cmsLocalizedPageAttribuesEntity);
+        $cmsLocalizedPageAttributesEntity->setLocale($localeEntity);
+        $cmsPageEntity->addSpyCmsPageLocalizedAttributes($cmsLocalizedPageAttributesEntity);
 
         return $cmsPageEntity;
     }

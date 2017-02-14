@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
@@ -43,21 +42,14 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage)
+    public function findCmsPageById($idCmsPage)
     {
         $cmsPageEntity = $this->findCmsPageEntity($idCmsPage);
 
         if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'Cms page with id "%d" not found.',
-                    $idCmsPage
-                )
-            );
+            return null;
         }
 
         $cmsPageTransfer = $this->mapCmsPageTransfer($cmsPageEntity);
@@ -112,7 +104,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageAttributesTransfer->setLocaleName($localeEntity->getLocaleName());
         $cmsPageAttributesTransfer->setUrl($url);
         $cmsPageAttributesTransfer->setUrlPrefix(
-            $this->cmsPageUrlBuilder->getPageUrlPrefix($localeEntity->getLocaleName())
+            $this->cmsPageUrlBuilder->getPageUrlPrefix($cmsPageAttributesTransfer)
         );
 
         return $cmsPageAttributesTransfer;

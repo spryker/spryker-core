@@ -18,10 +18,10 @@ interface CmsPageUrlBuilderInterface
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
     /**
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName);
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
 }

@@ -298,9 +298,9 @@ interface CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function getPageGlossaryAttributes($idCmsPage);
+    public function findPageGlossaryAttributes($idCmsPage);
 
     /**
      * Specification:
@@ -335,9 +335,9 @@ interface CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage);
+    public function findCmsPageById($idCmsPage);
 
     /**
      * Specification:
@@ -384,11 +384,11 @@ interface CmsFacadeInterface
      *
      * @api
      *
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName);
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
     /**
      * Specification:

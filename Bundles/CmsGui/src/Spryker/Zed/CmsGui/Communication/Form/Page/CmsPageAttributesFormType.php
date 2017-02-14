@@ -83,12 +83,16 @@ class CmsPageAttributesFormType extends AbstractType
             return;
         }
 
-        $urlWithouPrefix = preg_replace(
-            '#^' . $cmsPageAttributesTransfer->getUrlPrefix() . '#i',
-            '',
-            $cmsPageAttributesTransfer->getUrl()
-        );
-        $cmsPageAttributesTransfer->setUrl($urlWithouPrefix);
+        $url = $cmsPageAttributesTransfer->getUrl();
+        if ($cmsPageAttributesTransfer->getUrlPrefix()) {
+            $url = preg_replace(
+                '#^' . $cmsPageAttributesTransfer->getUrlPrefix() . '#i',
+                '',
+                $cmsPageAttributesTransfer->getUrl()
+            );
+        }
+
+        $cmsPageAttributesTransfer->setUrl($url);
 
         $event->setData($cmsPageAttributesTransfer);
     }
@@ -101,6 +105,13 @@ class CmsPageAttributesFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
+
+        $resolver->setDefaults([
+            'constraints' => [
+                $this->uniqueUrlConstraint,
+                $this->uniqueNameConstraint,
+            ],
+        ]);
     }
 
     /**
@@ -114,8 +125,7 @@ class CmsPageAttributesFormType extends AbstractType
             'label' => 'Name *',
             'required' => false,
             'constraints' => [
-                new NotBlank(),
-                $this->uniqueNameConstraint,
+                new NotBlank()
             ],
         ]);
 
@@ -150,7 +160,6 @@ class CmsPageAttributesFormType extends AbstractType
                     'pattern' => static::URL_PATH_PATTERN,
                     'message' => 'Invalid path provided. "Space" and "\" character is not allowed.',
                 ]),
-                $this->uniqueUrlConstraint,
             ],
         ]);
 

@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Cms\Business\Mapping;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -107,12 +108,14 @@ class CmsGlossarySaverTest extends CmsMocks
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface|null $glossaryFacadeMock
+     * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface|null $cmsGlossaryKeyGeneratorMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver
      */
     protected function createCmsGlossarySaverMock(
         CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToGlossaryInterface $glossaryFacadeMock = null
+        CmsToGlossaryInterface $glossaryFacadeMock = null,
+        CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGeneratorMock = null
     ) {
 
         if ($glossaryFacadeMock === null) {
@@ -123,8 +126,12 @@ class CmsGlossarySaverTest extends CmsMocks
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
 
+        if ($cmsGlossaryKeyGeneratorMock === null) {
+            $cmsGlossaryKeyGeneratorMock = $this->createCmsGlossaryKeyGeneratorMock();
+        }
+
         return $this->getMockBuilder(CmsGlossarySaver::class)
-            ->setConstructorArgs([$cmsQueryContainerMock, $glossaryFacadeMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $glossaryFacadeMock, $cmsGlossaryKeyGeneratorMock])
             ->setMethods([
                 'findGlossaryKeyEntityByTranslationKey',
                 'findGlossaryKeyMappingEntityById',

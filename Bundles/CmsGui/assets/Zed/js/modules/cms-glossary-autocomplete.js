@@ -72,7 +72,7 @@ CmsGlossaryAutocomplete.prototype.handleAjaxResponse = function(response)
         self.keyContainer.show();
     });
 
-    self.keyList.css({ height :  response.length * 17 });
+    self.keyList.css({ height :  response.length * 20 });
     self.keyList.on('change',function() {
         self.setSelectedTranslationValueFromResponse(response, this)
     });

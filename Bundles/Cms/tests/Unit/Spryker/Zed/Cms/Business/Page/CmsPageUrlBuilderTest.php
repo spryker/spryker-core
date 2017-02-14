@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
+use Spryker\Zed\Cms\CmsConfig;
 use Unit\Spryker\Zed\Cms\Business\CmsMocks;
 
 /**
@@ -62,18 +63,29 @@ class CmsPageUrlBuilderTest extends CmsMocks
      */
     public function testGetPageUrlPrefixShouldBuildPrefixFromLanguageCode()
     {
+        $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+        $cmsPageAttributeTransfer->setLocaleName('en_US');
+
         $cmsUrlBuilder = $this->createCmsUrlBuilder();
-        $urlPrefix = $cmsUrlBuilder->getPageUrlPrefix('en_US');
+        $urlPrefix = $cmsUrlBuilder->getPageUrlPrefix($cmsPageAttributeTransfer);
 
         $this->assertEquals('/en/', $urlPrefix);
     }
 
     /**
+     * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock|null
+     *
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder
      */
-    protected function createCmsUrlBuilder()
+    protected function createCmsUrlBuilder(CmsConfig $cmsConfigMock = null)
     {
-        return new CmsPageUrlBuilder();
+        if ($cmsConfigMock === null) {
+            $cmsConfigMock = $this->createCmsConfigMock();
+            $cmsConfigMock->method('appendPrefixToCmsPageUrl')
+                ->willReturn(true);
+        }
+
+        return new CmsPageUrlBuilder($cmsConfigMock);
     }
 
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -21,6 +22,8 @@ class CreateGlossaryController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
@@ -29,7 +32,13 @@ class CreateGlossaryController extends AbstractController
 
         $cmsGlossaryTransfer = $this->getFactory()
             ->getCmsFacade()
-            ->getPageGlossaryAttributes($idCmsPage);
+            ->findPageGlossaryAttributes($idCmsPage);
+
+        if ($cmsGlossaryTransfer === null) {
+            throw new NotFoundHttpException(
+                sprintf('Cms page with id "%d" not found!', $idCmsPage)
+            );
+        }
 
         $availableLocales = $this->getFactory()
             ->getLocaleFacade()

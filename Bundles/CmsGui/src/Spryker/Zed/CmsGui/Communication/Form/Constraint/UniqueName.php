@@ -27,4 +27,12 @@ class UniqueName extends SymfonyConstraint
         return $this->cmsQueryContainer;
     }
 
+    /**
+     * @return string
+     */
+    public function getTargets()
+    {
+        return static::CLASS_CONSTRAINT;
+    }
+
 }

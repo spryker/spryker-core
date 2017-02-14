@@ -33,13 +33,13 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
         }
 
         if (!$constraint instanceof UniqueGlossaryForSearchType) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueGlossaryForSearchType');
+            throw new UnexpectedTypeException($constraint, UniqueGlossaryForSearchType::class);
         }
 
         $cmsGlossaryTransfer = $this->getCmsGlossaryTransfer();
         $cmsAttributesGlossaryTransfer = $this->findCmsGlossaryAttributesTransfer($cmsGlossaryTransfer, $value);
 
-        if ($cmsAttributesGlossaryTransfer->getSearchOption() != $constraint->getGlossarySerchTypeValidate()) {
+        if ($cmsAttributesGlossaryTransfer->getSearchOption() != $constraint->getGlossarySearchTypeValidate()) {
             return;
         }
 
@@ -51,7 +51,8 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
             ->hasKey($value);
 
         if ($hasKey) {
-            $this->buildViolation('Translation key is already taken.')
+            $this->context
+                ->buildViolation(sprintf('Translation key "%s" is already taken.', $value))
                 ->addViolation();
         }
     }
@@ -95,7 +96,7 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
     protected function findCmsGlossaryAttributesTransfer(CmsGlossaryTransfer $cmsGlossaryTransfer, $translationKey)
     {
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
-            if ($cmsGlossaryAttributesTransfer->getTranslationKey() == $translationKey) {
+            if ($cmsGlossaryAttributesTransfer->getTranslationKey() === $translationKey) {
                 return $cmsGlossaryAttributesTransfer;
             }
         }

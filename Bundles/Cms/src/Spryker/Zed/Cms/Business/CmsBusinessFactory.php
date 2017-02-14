@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Block\BlockRemover;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGenerator;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
@@ -179,7 +180,11 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsGlossarySaver()
     {
-        return new CmsGlossarySaver($this->getQueryContainer(), $this->getGlossaryFacade());
+        return new CmsGlossarySaver(
+            $this->getQueryContainer(),
+            $this->getGlossaryFacade(),
+            $this->createCmsGlossaryKeyGenerator()
+        );
     }
 
     /**
@@ -195,7 +200,15 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsUrlBuilder()
     {
-        return new CmsPageUrlBuilder();
+        return new CmsPageUrlBuilder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
+     */
+    protected function createCmsGlossaryKeyGenerator()
+    {
+        return new CmsGlossaryKeyGenerator($this->getGlossaryFacade());
     }
 
 }

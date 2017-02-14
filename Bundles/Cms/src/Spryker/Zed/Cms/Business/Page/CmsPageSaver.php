@@ -157,7 +157,7 @@ class CmsPageSaver implements CmsPageSaverInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage)
+    protected function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage)
     {
         $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 

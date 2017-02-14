@@ -13,8 +13,8 @@ interface CmsGlossaryReaderInterface
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function getPageGlossaryAttributes($idCmsPage);
+    public function findPageGlossaryAttributes($idCmsPage);
 
 }

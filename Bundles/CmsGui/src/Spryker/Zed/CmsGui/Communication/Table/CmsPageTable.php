@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
@@ -93,7 +94,11 @@ class CmsPageTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $urlPrefix = $this->cmsFacade->getPageUrlPrefix($localeTransfer->getLocaleName());
+
+        $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
+        $cmsPageAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
+
+        $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
         $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($localeTransfer->getIdLocale());
 
         $queryResults = $this->runQuery($query, $config);
@@ -245,15 +250,15 @@ class CmsPageTable extends AbstractTable
                 ]),
                 'Deactivate'
             );
-        } else {
-            return $this->generateViewButton(
-                Url::generate(static::URL_CMS_PAGE_ACTIVATE, [
-                    EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-                    EditPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
-                ]),
-                'Activate'
-            );
         }
+
+        return $this->generateViewButton(
+            Url::generate(static::URL_CMS_PAGE_ACTIVATE, [
+                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                EditPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
+            ]),
+            'Activate'
+        );
     }
 
     /**
@@ -321,6 +326,8 @@ class CmsPageTable extends AbstractTable
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
             SpyCmsPageTableMap::COL_IS_ACTIVE,
+            static::COL_TEMPLATE,
+            static::COL_NAME,
         ]);
     }
 
@@ -335,6 +342,7 @@ class CmsPageTable extends AbstractTable
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
             static::COL_NAME,
             static::COL_TEMPLATE,
+            static::COL_CMS_URLS,
         ]);
     }
 

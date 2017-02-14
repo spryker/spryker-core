@@ -13,8 +13,8 @@ interface CmsPageReaderInterface
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage);
+    public function findCmsPageById($idCmsPage);
 
 }

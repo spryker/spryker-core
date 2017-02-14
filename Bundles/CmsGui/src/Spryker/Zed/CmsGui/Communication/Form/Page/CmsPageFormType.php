@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -183,7 +184,7 @@ class CmsPageFormType extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_FROM, 'date', [
+        $builder->add(static::FIELD_VALID_FROM, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
@@ -207,7 +208,7 @@ class CmsPageFormType extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_TO, 'date', [
+        $builder->add(static::FIELD_VALID_TO, DateType::class, [
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
@@ -231,7 +232,6 @@ class CmsPageFormType extends AbstractType
     {
         return new Callback([
             'callback' => function ($dateTimeFrom, ExecutionContextInterface $context) {
-                /** @var CmsPageTransfer $cmsPageTransfer */
                 $cmsPageTransfer = $context->getRoot()->getData();
                 if (!$dateTimeFrom) {
                     if ($cmsPageTransfer->getValidTo()) {
@@ -242,7 +242,7 @@ class CmsPageFormType extends AbstractType
                 }
 
                 if ($dateTimeFrom > $cmsPageTransfer->getValidTo()) {
-                    $context->addViolation('Date "Valid from" cannot be larger than "Valid to".');
+                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
                 }
 
                 if ($dateTimeFrom == $cmsPageTransfer->getValidTo()) {
@@ -260,8 +260,7 @@ class CmsPageFormType extends AbstractType
         return new Callback([
            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
 
-               /** @var CmsPageTransfer $cmsPageTransfer */
-               $cmsPageTransfer = $context->getRoot()->getData();
+                $cmsPageTransfer = $context->getRoot()->getData();
 
             if (!$dateTimeTo) {
                 if ($cmsPageTransfer->getValidFrom()) {
@@ -271,7 +270,7 @@ class CmsPageFormType extends AbstractType
             }
 
             if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
-                $context->addViolation('Date "Valid to" cannot be smaller than "Valid from".');
+                $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
             }
            },
         ]);

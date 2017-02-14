@@ -7,9 +7,23 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Spryker\Zed\Cms\CmsConfig;
 
 class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Cms\CmsConfig
+     */
+    protected $cmsConfig;
+
+    /**
+     * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
+     */
+    public function __construct(CmsConfig $cmsConfig)
+    {
+        $this->cmsConfig = $cmsConfig;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
@@ -21,7 +35,11 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
         $cmsPageAttributesTransfer->requireUrl()
             ->requireLocaleName();
 
-        $prefix = $this->getPageUrlPrefix($cmsPageAttributesTransfer->getLocaleName());
+        $prefix = $this->getPageUrlPrefix($cmsPageAttributesTransfer);
+
+        if (!$prefix) {
+            return $cmsPageAttributesTransfer->getUrl();
+        }
 
         $url = $cmsPageAttributesTransfer->getUrl();
         if (preg_match('#^' . $prefix . '#i', $url) > 0) {
@@ -30,19 +48,25 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 
         $url = preg_replace('#^/#', '', $url);
 
-        $urlWithLanguageCode = $prefix . $url;
+        $urlWithPrefix = $prefix . $url;
 
-        return $urlWithLanguageCode;
+        return $urlWithPrefix;
     }
 
     /**
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
     {
-        return '/' . $this->extractLanguageCode($localeName) . '/';
+        if (!$this->cmsConfig->appendPrefixToCmsPageUrl()) {
+            return '';
+        }
+
+        $cmsPageAttributesTransfer->requireLocaleName();
+
+        return '/' . $this->extractLanguageCode($cmsPageAttributesTransfer->getLocaleName()) . '/';
     }
 
     /**

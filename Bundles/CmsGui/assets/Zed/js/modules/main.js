@@ -12,30 +12,34 @@ require('../../img/cms-loader.gif');
 
 $(document).ready( function () {
 
-    $('#cms_page_validFrom').datepicker({
+    var validFrom = $('#cms_page_validFrom');
+    var validTo = $('#cms_page_validTo');
+
+    validFrom.datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
+        maxDate: validTo.val(),
+        minDate: validFrom.val(),
         defaultData: 0,
         onClose: function(selectedDate) {
-            $('#cms_page_validFrom').datepicker('option', 'minDate', selectedDate);
+            validFrom.datepicker('option', 'minDate', selectedDate);
         }
     });
 
-    $('#cms_page_validTo').datepicker({
+    validTo.datepicker({
         defaultData: 0,
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
         onClose: function(selectedDate) {
-            $('#cms_page_validFrom').datepicker('option', 'maxDate', selectedDate);
+            validFrom.datepicker('option', 'maxDate', selectedDate);
         }
     });
 
     $("input[id$='translationKey']").each(function(index, element){
-        var options = {
+        new CmsGlossaryAutocomplete({
             autocompleteElement: $(element)
-        };
-        new CmsGlossaryAutocomplete(options)
+        });
     });
 });

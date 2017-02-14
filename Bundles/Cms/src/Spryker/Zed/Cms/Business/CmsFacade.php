@@ -445,13 +445,13 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage)
+    public function findCmsPageById($idCmsPage)
     {
         return $this->getFactory()
             ->createCmsPageReader()
-            ->getCmsPageById($idCmsPage);
+            ->findCmsPageById($idCmsPage);
     }
 
     /**
@@ -463,11 +463,11 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function getPageGlossaryAttributes($idCmsPage)
+    public function findPageGlossaryAttributes($idCmsPage)
     {
         return $this->getFactory()
             ->createCmsGlossaryReader()
-            ->getPageGlossaryAttributes($idCmsPage);
+            ->findPageGlossaryAttributes($idCmsPage);
     }
 
     /**
@@ -523,15 +523,15 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @api
      *
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
     {
         return $this->getFactory()
             ->createCmsUrlBuilder()
-            ->getPageUrlPrefix($localeName);
+            ->getPageUrlPrefix($cmsPageAttributesTransfer);
     }
 
     /**

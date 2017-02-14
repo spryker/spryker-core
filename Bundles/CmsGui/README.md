@@ -18,6 +18,9 @@ The main difference that each page entity is now holding multiple url so it mean
 
 Old behaviour was that each page belongs to one url.
 
+Each page may have prefix appended (/en/url /de/url, etc..) this is disabled by default in CMS bundle config for BC reasons. 
+To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project and return `true` value.
+
 ## Documentation
 
 [Documentation](http://spryker.github.io)

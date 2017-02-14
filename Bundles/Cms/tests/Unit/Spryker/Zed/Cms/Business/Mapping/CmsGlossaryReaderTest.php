@@ -46,7 +46,7 @@ class CmsGlossaryReaderTest extends CmsMocks
             ->willReturn($cmsPageEntityMock);
 
         $cmsGlossaryReaderMock->expects($this->once())
-            ->method('isFileExists')
+            ->method('fileExists')
             ->willReturn(true);
 
         $cmsGlossaryReaderMock->expects($this->once())
@@ -59,7 +59,7 @@ class CmsGlossaryReaderTest extends CmsMocks
             ->method('getGlossaryMappingCollection')
             ->willReturn($glossaryMappingCollection);
 
-        $cmsGlossaryTransfer = $cmsGlossaryReaderMock->getPageGlossaryAttributes(1);
+        $cmsGlossaryTransfer = $cmsGlossaryReaderMock->findPageGlossaryAttributes(1);
 
         $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
         $this->assertEquals('title', $cmsGlossaryAttributeTransfer->getPlaceholder());
@@ -100,7 +100,7 @@ class CmsGlossaryReaderTest extends CmsMocks
                 'getCmsPageEntity',
                 'getGlossaryMappingCollection',
                 'readTemplateContents',
-                'isFileExists',
+                'fileExists',
             ])
             ->getMock();
     }

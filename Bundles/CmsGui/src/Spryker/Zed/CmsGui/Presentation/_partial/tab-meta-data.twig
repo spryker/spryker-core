@@ -6,9 +6,9 @@
         {% block content %}
             {% for cmsPagMetaAttributesForm in pageForm.metaAttributes %}
                 {% if cmsPagMetaAttributesForm.vars.data.localeName == locale.localeName %}
-                    {{ form_row(cmsPagMetaAttributesForm.metaTitle) }}
-                    {{ form_row(cmsPagMetaAttributesForm.metaKeywords) }}
-                    {{ form_row(cmsPagMetaAttributesForm.metaDescription) }}
+                    {{ form_row(cmsPagMetaAttributesForm.metaTitle, {'attr': {'data-translation-key': 'metaTitle'}}) }}
+                    {{ form_row(cmsPagMetaAttributesForm.metaKeywords, {'attr': {'data-translation-key': 'metaKeywords'}}) }}
+                    {{ form_row(cmsPagMetaAttributesForm.metaDescription, {'attr': {'data-translation-key': 'metaDescription'}}) }}
                     {{ form_row(cmsPagMetaAttributesForm.localeName) }}
                     {{ form_row(cmsPagMetaAttributesForm.idCmsPageLocalizedAttributes) }}
                 {% endif %}

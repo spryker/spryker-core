@@ -8,6 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -20,6 +21,8 @@ class ViewPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -28,11 +31,17 @@ class ViewPageController extends AbstractController
 
         $cmsPageTransfer = $this->getFactory()
             ->getCmsFacade()
-            ->getCmsPageById($idCmsPage);
+            ->findCmsPageById($idCmsPage);
+
+        if ($cmsPageTransfer === null) {
+            throw new NotFoundHttpException(
+                sprintf('Cms page with id "%d" not found.', $idCmsPage)
+            );
+        }
 
         $cmsGlossaryTransfer = $this->getFactory()
             ->getCmsFacade()
-            ->getPageGlossaryAttributes($idCmsPage);
+            ->findPageGlossaryAttributes($idCmsPage);
 
         return [
             'cmsPage' => $cmsPageTransfer,

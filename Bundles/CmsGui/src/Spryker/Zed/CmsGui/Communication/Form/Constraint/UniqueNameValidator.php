@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -32,38 +32,39 @@ class UniqueNameValidator extends ConstraintValidator
         }
 
         if (!$constraint instanceof UniqueName) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NameUnique');
+            throw new UnexpectedTypeException($constraint, UniqueName::class);
         }
 
         if (!$this->isCmsPageNameModified($value, $constraint)) {
             return;
         }
 
-        if ($this->countCmsPageLocalizedAttributesByName($value, $constraint) > 0) {
-            $this->buildViolation('This name is already taken.')
+        if ($this->countCmsPageLocalizedAttributesByName($value->getName(), $constraint) > 0) {
+            $this->context
+                ->buildViolation(sprintf('Page name "%s" is already taken.', $value->getName()))
+                ->atPath('name')
                 ->addViolation();
         }
     }
 
     /**
-     * @param string $submitedName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName $constraint
      *
      * @return bool
      */
-    protected function isCmsPageNameModified($submitedName, UniqueName $constraint)
-    {
-        $cmsPageTransfer = $this->getCmsPageTransfer();
+    protected function isCmsPageNameModified(
+        CmsPageAttributesTransfer $submittedPageAttributesTransfer,
+        UniqueName $constraint
+    ) {
 
-        if (!$cmsPageTransfer->getFkPage()) {
+        if (!$submittedPageAttributesTransfer->getIdCmsPage()) {
             return true;
         }
 
-        $cmsPageAttributesTransfer = $this->findProcessedCmsPageAttributesTransfer($submitedName, $cmsPageTransfer);
-
         $cmsPageLocalizedAttributesEntity = $this->findCmsPageLocalizedAttributesByNameAndId(
-            $submitedName,
-            $cmsPageTransfer->getFkPage(),
+            $submittedPageAttributesTransfer->getName(),
+            $submittedPageAttributesTransfer->getIdCmsPage(),
             $constraint
         );
 
@@ -71,46 +72,11 @@ class UniqueNameValidator extends ConstraintValidator
             return true;
         }
 
-        if ($cmsPageAttributesTransfer->getName() === $cmsPageLocalizedAttributesEntity->getName()) {
+        if ($submittedPageAttributesTransfer->getName() === $cmsPageLocalizedAttributesEntity->getName()) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param string $submitedName
-     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer|null
-     */
-    protected function findProcessedCmsPageAttributesTransfer($submitedName, CmsPageTransfer $cmsPageTransfer)
-    {
-        $submitedPageAttributesTransfer = null;
-        foreach ($cmsPageTransfer->getPageAttributes() as $pageAttributesTransfer) {
-            if ($pageAttributesTransfer->getName() === $submitedName) {
-                $submitedPageAttributesTransfer = $pageAttributesTransfer;
-            }
-        }
-        return $submitedPageAttributesTransfer;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function getRootForm()
-    {
-        return $this->context->getRoot();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
-     */
-    protected function getCmsPageTransfer()
-    {
-        $root = $this->getRootForm();
-
-        return $root->getData();
     }
 
     /**

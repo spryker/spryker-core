@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -34,17 +34,19 @@ class UniqueUrlValidator extends ConstraintValidator
         }
 
         if (!$constraint instanceof UniqueUrl) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueUrl');
+            throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
 
         $url = $this->buildUrl($value, $constraint);
 
-        if (!$this->isUrlChanged($url, $constraint)) {
+        if (!$this->isUrlChanged($url, $value, $constraint)) {
             return;
         }
 
         if (!$this->isUniqueUrl($url, $constraint)) {
-            $this->buildViolation('Url is already taken.')
+            $this->context
+                ->buildViolation(sprintf('Provided Url "%s" is already taken.', $url))
+                ->atPath('url')
                 ->addViolation();
         }
     }
@@ -62,20 +64,23 @@ class UniqueUrlValidator extends ConstraintValidator
 
     /**
      * @param string $url
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */
-    protected function isUrlChanged($url, UniqueUrl $constraint)
-    {
+    protected function isUrlChanged(
+        $url,
+        CmsPageAttributesTransfer $submittedPageAttributesTransfer,
+        UniqueUrl $constraint
+    ) {
         $urlTransfer = $this->findUrl($constraint, $url);
 
         if ($urlTransfer === null) {
             return true;
         }
 
-        $cmsPageTransfer = $this->getCmsPageTransfer();
-        if ((int)$urlTransfer->getFkResourcePage() === (int)$cmsPageTransfer->getFkPage()) {
+        if ((int)$urlTransfer->getFkResourcePage() === (int)$submittedPageAttributesTransfer->getIdCmsPage()) {
             return false;
         }
 
@@ -83,37 +88,14 @@ class UniqueUrlValidator extends ConstraintValidator
     }
 
     /**
-     * @param string $submitedUrl
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */
-    protected function buildUrl($submitedUrl, UniqueUrl $constraint)
+    protected function buildUrl(CmsPageAttributesTransfer $submittedPageAttributesTransfer, UniqueUrl $constraint)
     {
-        $cmsPageTransfer = $this->getCmsPageTransfer();
-        $submitedPageAttributesTransfer = $this->findProcessedCmsPageAttributesTransfer($submitedUrl, $cmsPageTransfer);
-        if ($submitedPageAttributesTransfer === null) {
-            return true;
-        }
-
-        return $constraint->getCmsFacade()->buildPageUrl($submitedPageAttributesTransfer);
-    }
-
-    /**
-     * @param string $submitedUrl
-     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer|null
-     */
-    protected function findProcessedCmsPageAttributesTransfer($submitedUrl, CmsPageTransfer $cmsPageTransfer)
-    {
-        $submitedPageAttributesTransfer = null;
-        foreach ($cmsPageTransfer->getPageAttributes() as $pageAttributesTransfer) {
-            if ($pageAttributesTransfer->getUrl() === $submitedUrl) {
-                $submitedPageAttributesTransfer = $pageAttributesTransfer;
-            }
-        }
-        return $submitedPageAttributesTransfer;
+        return $constraint->getCmsFacade()->buildPageUrl($submittedPageAttributesTransfer);
     }
 
     /**
@@ -131,24 +113,6 @@ class UniqueUrlValidator extends ConstraintValidator
             ->findUrl($urlTransfer);
 
         return $urlTransfer;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function getRootForm()
-    {
-        return $this->context->getRoot();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
-     */
-    protected function getCmsPageTransfer()
-    {
-        $root = $this->getRootForm();
-
-        return $root->getData();
     }
 
 }

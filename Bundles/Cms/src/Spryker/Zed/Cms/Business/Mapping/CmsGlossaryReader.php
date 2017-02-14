@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
@@ -58,21 +58,14 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function getPageGlossaryAttributes($idCmsPage)
+    public function findPageGlossaryAttributes($idCmsPage)
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
         if ($cmsPageEntity === null) {
-            throw new MissingPageException(
-                sprintf(
-                    'CMS page with id "%d" not found!',
-                    $idCmsPage
-                )
-            );
+            return null;
         }
 
         $pagePlaceholders = $this->findPagePlaceholders($cmsPageEntity);
@@ -107,13 +100,16 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param string $templateFile
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
      *
      * @return array
      */
     protected function getTemplatePlaceholders($templateFile)
     {
         if (!$this->fileExists($templateFile)) {
-            return [];
+            throw new TemplateFileNotFoundException(
+                sprintf('Template file not found in "%s"', $templateFile)
+            );
         }
 
         $templateContent = $this->readTemplateContents($templateFile);

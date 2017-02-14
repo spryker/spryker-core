@@ -50,11 +50,11 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function getPageGlossaryAttributes($idCmsPage)
+    public function findPageGlossaryAttributes($idCmsPage)
     {
-        return $this->cmsFacade->getPageGlossaryAttributes($idCmsPage);
+        return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
     }
 
     /**
@@ -70,11 +70,11 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage)
+    public function findCmsPageById($idCmsPage)
     {
-        return $this->cmsFacade->getCmsPageById($idCmsPage);
+        return $this->cmsFacade->findCmsPageById($idCmsPage);
     }
 
     /**
@@ -108,13 +108,13 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     }
 
     /**
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
     {
-         return $this->cmsFacade->getPageUrlPrefix($localeName);
+         return $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
     }
 
     /**

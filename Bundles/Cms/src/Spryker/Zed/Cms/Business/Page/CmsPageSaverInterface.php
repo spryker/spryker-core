@@ -5,7 +5,6 @@
  */
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsPageSaverInterface
@@ -26,13 +25,5 @@ interface CmsPageSaverInterface
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function updatePage(CmsPageTransfer $cmsPageTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
-     * @param int $idCmsPage
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, $idCmsPage);
 
 }

@@ -22,8 +22,6 @@ use Throwable;
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
 
-    const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -35,15 +33,23 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
+     */
+    protected $cmsGlossaryKeyGenerator;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToGlossaryInterface $glossaryFacade
+        CmsToGlossaryInterface $glossaryFacade,
+        CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->glossaryFacade = $glossaryFacade;
+        $this->cmsGlossaryKeyGenerator = $cmsGlossaryKeyGenerator;
     }
 
     /**
@@ -125,7 +131,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     protected function updatePageKeyMapping(CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer)
     {
         $glossaryKeyMappingEntity = $this->getGlossaryKeyMappingById($cmsGlossaryAttributesTransfer->getFkCmsGlossaryMapping());
-        $glossaryKeyMappingEntity->fromArray($cmsGlossaryAttributesTransfer->toArray());
+        $glossaryKeyMappingEntity->fromArray($cmsGlossaryAttributesTransfer->modifiedToArray());
 
         if (!$glossaryKeyMappingEntity->isModified()) {
             return $glossaryKeyMappingEntity->getPrimaryKey();
@@ -195,30 +201,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param string $templateName
-     * @param string $placeholder
-     * @param bool $autoIncrement
-     *
-     * @return string
-     */
-    protected function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true)
-    {
-        $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
-        $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
-        $keyName .= str_replace([' ', '.'], '-', $placeholder);
-
-        $index = 0;
-
-        $candidate = $keyName . $index;
-
-        while ($this->glossaryFacade->hasKey($candidate) && $autoIncrement === true) {
-            $candidate = $keyName . ++$index;
-        }
-
-        return $candidate;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
      *
      * @return string
@@ -227,7 +209,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     {
         $translationKey = $glossaryAttributesTransfer->getTranslationKey();
         if (!$glossaryAttributesTransfer->getTranslationKey()) {
-            $translationKey = $this->generateGlossaryKeyName(
+            $translationKey = $this->cmsGlossaryKeyGenerator->generateGlossaryKeyName(
                 $glossaryAttributesTransfer->getTemplateName(),
                 $glossaryAttributesTransfer->getPlaceholder()
             );

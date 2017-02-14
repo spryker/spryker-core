@@ -32,9 +32,9 @@ interface CmsGuiToCmsInterface
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function getPageGlossaryAttributes($idCmsPage);
+    public function findPageGlossaryAttributes($idCmsPage);
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
@@ -46,9 +46,9 @@ interface CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function getCmsPageById($idCmsPage);
+    public function findCmsPageById($idCmsPage);
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
@@ -72,11 +72,11 @@ interface CmsGuiToCmsInterface
     public function deactivatePage($idCmsPage);
 
     /**
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix($localeName);
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer

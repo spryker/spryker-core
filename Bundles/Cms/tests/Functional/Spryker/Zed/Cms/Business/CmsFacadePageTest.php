@@ -48,7 +48,7 @@ class CmsFacadePageTest extends Test
 
         $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
 
-        $cmsGlossaryTransfer = $this->cmsFacade->getPageGlossaryAttributes($idCmsPage);
+        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
 
         $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
 
@@ -83,7 +83,7 @@ class CmsFacadePageTest extends Test
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
 
         $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
-        $persistedCmsPageTransfer = $this->cmsFacade->getCmsPageById($idCmsPage);
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $this->assertEquals($persistedCmsPageTransfer->getFkTemplate(), $cmsPageTransfer->getFkTemplate());
         $this->assertEquals($persistedCmsPageTransfer->getIsActive(), $cmsPageTransfer->getIsActive());
@@ -103,7 +103,7 @@ class CmsFacadePageTest extends Test
         $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
 
         $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
-        $persistedCmsPageTransfer = $this->cmsFacade->getCmsPageById($idCmsPage);
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
         $persistedCmsPageMetaAttributes->setMetaTitle('new title');
@@ -139,7 +139,7 @@ class CmsFacadePageTest extends Test
 
         $this->cmsFacade->activatePage($idCmsPage);
 
-        $persistedCmsPageTransfer = $this->cmsFacade->getCmsPageById($idCmsPage);
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $this->assertTrue($persistedCmsPageTransfer->getIsActive());
     }
@@ -156,7 +156,7 @@ class CmsFacadePageTest extends Test
 
         $this->cmsFacade->deactivatePage($idCmsPage);
 
-        $persistedCmsPageTransfer = $this->cmsFacade->getCmsPageById($idCmsPage);
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $this->assertFalse($persistedCmsPageTransfer->getIsActive());
     }
@@ -166,7 +166,10 @@ class CmsFacadePageTest extends Test
      */
     public function testGetPageUrlPrefixShouldBuildUrlPrefixFromGivenLocalName()
     {
-         $urlPrefix = $this->cmsFacade->getPageUrlPrefix('en_US');
+         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
+         $cmsPageAttributeTransfer->setLocaleName('en_US');
+
+         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer);
 
          $this->assertEquals('/en/', $urlPrefix);
     }

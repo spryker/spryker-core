@@ -31,7 +31,7 @@ class UniqueGlossaryForSearchType extends SymfonyConstraint
     /**
      * @return int
      */
-    public function getGlossarySerchTypeValidate()
+    public function getGlossarySearchTypeValidate()
     {
         return static::OPTION_SEARCH_TYPE;
     }
