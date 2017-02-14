@@ -19,8 +19,6 @@ class GenerateIndexMapConsole extends Console
 
     const COMMAND_NAME = 'setup:search:index-map';
     const DESCRIPTION = 'This command will generate the PageIndexMap without requiring the actual Elasticsearch index';
-    const EXIT_CODE_ERROR = 1;
-    const EXIT_CODE_SUCCESS = 0;
 
     /**
      * @return void
