@@ -6,7 +6,9 @@
 
 namespace Spryker\Client\Queue;
 
-interface QueueClientInterface extends QueueClientConnectionInterface, QueueClientConsumerInterface, QueueClientPublisherInterface
+use Spryker\Client\Queue\Model\Proxy\QueueProxyInterface;
+
+interface QueueClientInterface extends QueueProxyInterface
 {
 
 }

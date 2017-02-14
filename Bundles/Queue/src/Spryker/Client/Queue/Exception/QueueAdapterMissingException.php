@@ -1,18 +1,13 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Queue\Dependency\Publisher;
+namespace Spryker\Client\Queue\Exception;
 
-interface PublisherInterface
+class QueueAdapterMissingException extends \Exception
 {
 
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    public function publish($message);
 }

@@ -6,59 +6,52 @@
 
 namespace Spryker\Client\Queue;
 
-use Generated\Shared\Transfer\QueueConsumerTransfer;
+use Generated\Shared\Transfer\QueueOptionTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method QueueFactory getFactory()
  */
-class QueueClient implements QueueClientInterface
+class QueueClient extends AbstractClient implements QueueClientInterface
 {
 
     /**
      * @return bool
      */
-    public function connect()
+    public function open()
     {
-        return $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->connect();
+        return $this->getFactory()->createQueueProxy()->open();
     }
 
     /**
-     * @return bool
+     * @param QueueOptionTransfer $queueOptionTransfer
+     *
+     * @return void
      */
-    public function disconnect()
+    public function createQueue(QueueOptionTransfer $queueOptionTransfer)
     {
-        return $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->disconnect();
+        $this->getFactory()->createQueueProxy()->createQueue($queueOptionTransfer);
     }
 
     /**
-     * @return bool
-     */
-    public function isConnected()
-    {
-        return $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->isConnected();
-    }
-
-    /**
-     * @param QueueConsumerTransfer $queueConsumerTransfer
+     * @param QueueMessageTransfer $queueMessageTransfer
      *
      * @return QueueMessageTransfer
      */
-    public function consume(QueueConsumerTransfer $queueConsumerTransfer)
+    public function encodeMessage(QueueMessageTransfer $queueMessageTransfer)
     {
-        return $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->consume($queueConsumerTransfer);
+        $this->getFactory()->createQueueProxy()->encodeMessage($queueMessageTransfer);
+    }
+
+    /**
+     * @param QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return QueueMessageTransfer
+     */
+    public function decodeMessage(QueueMessageTransfer $queueMessageTransfer)
+    {
+        $this->getFactory()->createQueueProxy()->decodeMessage($queueMessageTransfer);
     }
 
     /**
@@ -66,12 +59,21 @@ class QueueClient implements QueueClientInterface
      *
      * @return void
      */
-    public function confirm(QueueMessageTransfer $queueMessageTransfer)
+    public function acknowledge(QueueMessageTransfer $queueMessageTransfer)
     {
-        $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->confirm($queueMessageTransfer);
+        $this->getFactory()->createQueueProxy()->acknowledge($queueMessageTransfer);
+    }
+
+    /**
+     * @param string $queueName
+     * @param callable|null $callback
+     * @param QueueOptionTransfer $queueOptionTransfer
+     *
+     * @return mixed
+     */
+    public function consume($queueName, callable $callback = null, QueueOptionTransfer $queueOptionTransfer)
+    {
+        $this->getFactory()->createQueueProxy()->consume($queueName, $callback, $queueOptionTransfer);
     }
 
     /**
@@ -81,9 +83,15 @@ class QueueClient implements QueueClientInterface
      */
     public function publish(QueueMessageTransfer $queueMessageTransfer)
     {
-        $this
-            ->getFactory()
-            ->createAdapterProxy()
-            ->publish($queueMessageTransfer);
+        $this->getFactory()->createQueueProxy()->publish($queueMessageTransfer);
     }
+
+    /**
+     * @return bool
+     */
+    public function close()
+    {
+        return $this->getFactory()->createQueueProxy()->close();
+    }
+
 }

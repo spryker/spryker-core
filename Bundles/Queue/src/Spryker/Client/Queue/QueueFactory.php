@@ -7,25 +7,26 @@
 namespace Spryker\Client\Queue;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Queue\Model\AdapterProxy;
-use Spryker\Client\Queue\Model\AdapterProxyInterface;
+use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
+use Spryker\Client\Queue\Model\Proxy\QueueProxy;
+use Spryker\Client\Queue\Model\Proxy\QueueProxyInterface;
 
 class QueueFactory extends AbstractFactory
 {
 
     /**
-     * @return AdapterProxyInterface
+     * @return QueueProxyInterface
      */
-    public function createAdapterProxy()
+    public function createQueueProxy()
     {
-        return new AdapterProxy($this->getQueueAdapter());
+        return new QueueProxy($this->getQueueAdapter());
     }
 
     /**
-     * @return mixed
+     * @return AdapterInterface
      */
     protected function getQueueAdapter()
     {
-        return $this->getProvidedDependency(QueueDependencyProvider::ADAPTER_QUEUE);
+        return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_ADAPTER);
     }
 }

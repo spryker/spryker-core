@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Queue;
+namespace Spryker\Shared\Queue;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 
-interface QueueClientPublisherInterface
+interface PublisherInterface
 {
 
     /**
@@ -17,5 +18,12 @@ interface QueueClientPublisherInterface
      * @return void
      */
     public function publish(QueueMessageTransfer $queueMessageTransfer);
+
+    /**
+     * @param QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return QueueMessageTransfer
+     */
+    public function encodeMessage(QueueMessageTransfer $queueMessageTransfer);
 
 }
