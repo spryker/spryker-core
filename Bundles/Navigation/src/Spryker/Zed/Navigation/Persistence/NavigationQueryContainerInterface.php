@@ -60,4 +60,11 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryNavigationNodesByFkParentNavigationNode($fkParentNavigationNode);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigation();
+
 }

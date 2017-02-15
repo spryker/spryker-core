@@ -89,4 +89,14 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
             ->orderByWeight(Criteria::DESC);
     }
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigation()
+    {
+        return $this->getFactory()->createNavigationQuery();
+    }
+
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <navigation>
+        <label>Navigation</label>
+        <title>Navigation</title>
+        <bundle>navigation-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <icon>fa-list</icon>
+    </navigation>
+</config>
