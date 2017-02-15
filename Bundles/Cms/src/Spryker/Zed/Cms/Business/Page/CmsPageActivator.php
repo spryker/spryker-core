@@ -79,7 +79,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      */
     protected function assertCanActivatePage($idCmsPage)
     {
-        if ($this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count() === 0) {
+        if ($this->countNumberOfGlossaryKeysForIdCmsPage($idCmsPage) === 0) {
             throw new CannotActivatePageException(
                 sprintf('Cannot activate CMS page, page placeholders not provided!')
             );
@@ -141,6 +141,16 @@ class CmsPageActivator implements CmsPageActivatorInterface
             );
         }
         return $cmsPageEntity;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return int
+     */
+    protected function countNumberOfGlossaryKeysForIdCmsPage($idCmsPage)
+    {
+        return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
     }
 
 }

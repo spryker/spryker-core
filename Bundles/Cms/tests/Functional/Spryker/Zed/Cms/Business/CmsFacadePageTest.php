@@ -137,6 +137,20 @@ class CmsFacadePageTest extends Test
 
         $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
 
+        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+
+        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+
+        $translationFixtures = $this->getTranslationFixtures();
+
+        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
+        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
+            $cmsPlaceholderTranslationTransfer->setTranslation(
+                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
+            );
+        }
+        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+
         $this->cmsFacade->activatePage($idCmsPage);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);

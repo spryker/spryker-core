@@ -27,7 +27,7 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testActivatePageShoulPersistActiveFlagAndTriggerTouch()
+    public function testActivatePageShouldPersistActiveFlagAndTriggerTouch()
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
@@ -39,6 +39,8 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock = $this->createCmsPageActivateMock($cmsPageEntityMock, null, $touchFacadeMock);
 
+        $cmsPageActivatorMock->method('countNumberOfGlossaryKeysForIdCmsPage')->willReturn(5);
+
         $cmsPageActivatorMock->activate(1);
 
         $this->assertTrue($cmsPageEntityMock->getIsActive());
@@ -47,7 +49,7 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @return void
      */
-    public function testDeActivatePageShoulPersistInActiveFlagAndTriggerTouch()
+    public function testDeActivatePageShouldPersistInActiveFlagAndTriggerTouch()
     {
         $cmsPageEntityMock = $this->createCmsPageEntityMock();
         $cmsPageEntityMock->expects($this->once())
@@ -79,6 +81,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
+
         }
 
         if ($touchFacadeMock === null) {
@@ -86,7 +89,7 @@ class CmsPageActivatorTest extends CmsMocks
         }
 
         $cmsPageActivatorMock = $this->getMockBuilder(CmsPageActivator::class)
-            ->setMethods(['getCmsPageEntity'])
+            ->setMethods(['getCmsPageEntity', 'countNumberOfGlossaryKeysForIdCmsPage'])
             ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock])
             ->getMock();
 
