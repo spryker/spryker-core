@@ -342,7 +342,6 @@ class CmsPageTable extends AbstractTable
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
             static::COL_NAME,
             static::COL_TEMPLATE,
-            static::COL_CMS_URLS,
         ]);
     }
 
