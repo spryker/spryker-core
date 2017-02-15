@@ -9,7 +9,7 @@ namespace Spryker\Zed\Kernel\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
 
-class NullMessenger implements ZedRequestToMessengerInterface
+class NullMessenger implements KernelToMessengerInterface
 {
 
     /**
