@@ -32,7 +32,9 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
             $handler->setEditor(function ($file, $line) use ($userPath) {
                 $serverPath = Config::get(ErrorHandlerConstants::SERVER_BASE_PATH, '/data/shop/development/current');
                 $file = str_replace($serverPath, $userPath, $file);
-                $url = sprintf('phpstorm://open?file=%s&line=%s', $file, $line);
+
+                $pattern = Config::get(ErrorHandlerConstants::PATTERN_IDE_LINK, 'phpstorm://open?file=%s&line=%s');
+                $url = sprintf($pattern, $file, $line);
 
                 if (!Config::get(ErrorHandlerConstants::AS_AJAX, false)) {
                     return $url;

@@ -54,6 +54,16 @@ interface ErrorHandlerConstants
 
     /**
      * Specification:
+     * - Pattern for the link from the browser to the IDE.
+     * - For MacOS the default `phpstorm://open?file=%s&line=%s` works.
+     * - For Linux use e.g. `phpstorm://open?url=file://%s&line=%s` and the documentation tips.
+     *
+     * @api
+     */
+    const PATTERN_IDE_LINK = 'PATTERN_IDE_LINK';
+
+    /**
+     * Specification:
      * - Path to the project on local machine e.g. `/Users/foo/www/spryker/project`
      * - This is used to replace the path from server (/data/shop/development/current) with the user path.
      * - Enables file opening in IDE.
