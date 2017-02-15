@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
+use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -24,8 +24,6 @@ class EditPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
@@ -36,25 +34,11 @@ class EditPageController extends AbstractController
 
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
-        $availableLocales = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocaleCollection();
-
-        $cmsPageTransfer = $this->getFactory()
-            ->getCmsFacade()
-            ->findCmsPageById($idCmsPage);
-
-        if ($cmsPageTransfer === null) {
-            throw new NotFoundHttpException(
-                sprintf('Cms page with id "%d" not found.', $idCmsPage)
-            );
-        }
-
         $cmsPageFormTypeDataProvider = $this->getFactory()
-            ->createCmsPageFormTypeDataProvider($availableLocales, $cmsPageTransfer);
+            ->createCmsPageFormTypeDataProvider();
 
         $pageForm = $this->getFactory()
-            ->createCmsPageForm($cmsPageFormTypeDataProvider)
+            ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage)
             ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
@@ -74,12 +58,16 @@ class EditPageController extends AbstractController
             }
         }
 
+        $availableLocales = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
+
         $pageTabs = $this->getFactory()->createPageTabs();
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
             'availableLocales' => $availableLocales,
-            'cmsPage' => $cmsPageTransfer,
+            'idCmsPage' => $idCmsPage,
         ];
     }
 
@@ -93,13 +81,18 @@ class EditPageController extends AbstractController
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
-        $this->getFactory()
-            ->getCmsFacade()
-            ->activatePage($idCmsPage);
+        try {
+            $this->getFactory()
+                ->getCmsFacade()
+                ->activatePage($idCmsPage);
 
-        $this->addSuccessMessage('Page successfully activated.');
+            $this->addSuccessMessage('Page successfully activated.');
 
-        return $this->redirectResponse($redirectUrl);
+        } catch (CannotActivatePageException $exception) {
+             $this->addErrorMessage($exception->getMessage());
+        } finally {
+            return $this->redirectResponse($redirectUrl);
+        }
     }
 
     /**

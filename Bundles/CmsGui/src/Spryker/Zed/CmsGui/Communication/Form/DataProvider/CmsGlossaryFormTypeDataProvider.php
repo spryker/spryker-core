@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsGlossaryFormTypeDataProvider
 {
@@ -25,11 +26,16 @@ class CmsGlossaryFormTypeDataProvider
     protected $cmsGlossaryTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
      */
-    public function __construct(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    protected $cmsFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     */
+    public function __construct(CmsGuiToCmsInterface $cmsFacade)
     {
-        $this->cmsGlossaryTransfer = $cmsGlossaryTransfer;
+        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -45,11 +51,13 @@ class CmsGlossaryFormTypeDataProvider
     }
 
     /**
+     * @param int $idCmsPage
+     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function getData()
+    public function getData($idCmsPage)
     {
-        return $this->cmsGlossaryTransfer;
+        return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
     }
 
     /**

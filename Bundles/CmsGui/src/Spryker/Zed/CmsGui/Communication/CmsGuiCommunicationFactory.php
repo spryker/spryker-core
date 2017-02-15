@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
@@ -64,49 +63,49 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
+     * @param int|null $idCmsPage
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider)
+    public function createCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider, $idCmsPage = null)
     {
         $cmsPageFormType = $this->createCmsPageFormType();
 
         return $this->getFormFactory()->create(
             $cmsPageFormType,
-            $cmsPageFormTypeDataProvider->getData(),
+            $cmsPageFormTypeDataProvider->getData($idCmsPage),
             $cmsPageFormTypeDataProvider->getOptions()
         );
     }
 
     /**
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
+     * @param int $idCmsPage
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsGlossaryForm(CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider)
-    {
+    public function createCmsGlossaryForm(
+        CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider,
+        $idCmsPage
+    ) {
         $cmsGlossaryFormType = $this->createCmsGlossaryFormType();
 
         return $this->getFormFactory()->create(
             $cmsGlossaryFormType,
-            $cmsGlossaryFormTypeDataProvider->getData(),
+            $cmsGlossaryFormTypeDataProvider->getData($idCmsPage),
             $cmsGlossaryFormTypeDataProvider->getOptions()
         );
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
-     * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
-     *
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider
      */
-    public function createCmsPageFormTypeDataProvider(array $availableLocales, CmsPageTransfer $cmsPageTransfer = null)
+    public function createCmsPageFormTypeDataProvider()
     {
         return new CmsPageFormTypeDataProvider(
-            $availableLocales,
             $this->getCmsQueryContainer(),
             $this->getCmsFacade(),
-            $cmsPageTransfer
+            $this->getLocaleFacade()
         );
     }
 
@@ -115,17 +114,18 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormType()
     {
-        return new CmsPageFormType($this->createCmsPageAttributesFormType(), $this->createCmsPageMetaAttributesFormType());
+        return new CmsPageFormType(
+            $this->createCmsPageAttributesFormType(),
+            $this->createCmsPageMetaAttributesFormType()
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     *
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider
      */
-    public function createCmsGlossaryFormTypeDataProvider(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    public function createCmsGlossaryFormTypeDataProvider()
     {
-        return new CmsGlossaryFormTypeDataProvider($cmsGlossaryTransfer);
+        return new CmsGlossaryFormTypeDataProvider($this->getCmsFacade());
     }
 
     /**

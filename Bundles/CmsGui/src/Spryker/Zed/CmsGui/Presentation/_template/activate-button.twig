@@ -1,5 +1,5 @@
-{% if cmsPage.isActive %}
-    {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': cmsPage.fkPage, 'redirect-url' : redirectUrl}), 'Deactivate' | trans) }}
+{% if isActive %}
+    {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Deactivate' | trans) }}
 {% else %}
-    {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': cmsPage.fkPage, 'redirect-url' : redirectUrl }), 'Activate' | trans) }}
+    {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl }), 'Activate' | trans) }}
 {% endif %}

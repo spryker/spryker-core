@@ -40,18 +40,14 @@ class CreateGlossaryController extends AbstractController
             );
         }
 
-        $availableLocales = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocaleCollection();
-
         $cmsGlossaryFormDataProvider = $this->getFactory()
-            ->createCmsGlossaryFormTypeDataProvider($cmsGlossaryTransfer);
+            ->createCmsGlossaryFormTypeDataProvider();
 
         $placeholderTabs = $this->getFactory()
             ->createPlaceholderTabs($cmsGlossaryTransfer);
 
         $glossaryForm = $this->getFactory()
-            ->createCmsGlossaryForm($cmsGlossaryFormDataProvider)
+            ->createCmsGlossaryForm($cmsGlossaryFormDataProvider, $idCmsPage)
             ->handleRequest($request);
 
         if ($glossaryForm->isSubmitted()) {
@@ -74,11 +70,14 @@ class CreateGlossaryController extends AbstractController
             }
         }
 
+        $availableLocales = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
             'availableLocales' => $availableLocales,
-            'cmsGlossary' => $cmsGlossaryTransfer,
             'idCmsPage' => $idCmsPage,
         ];
     }

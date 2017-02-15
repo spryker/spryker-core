@@ -6,10 +6,10 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : cmsPage.fkPage}) %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'cmsPage': cmsPage}) }}
+    {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : idCmsPage}) %}
+    {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': pageForm.vars.data.isActive}) }}
 
-    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}
 
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
@@ -23,7 +23,6 @@
     {{ form_end(pageForm) }}
 
 {% endblock %}
-
 
 {% block head_css %}
     {{ parent() }}

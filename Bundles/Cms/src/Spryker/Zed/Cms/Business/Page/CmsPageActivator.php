@@ -8,6 +8,7 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 use Exception;
 use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -48,6 +49,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
+        $this->assertCanActivatePage($idCmsPage);
+
         try {
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -65,6 +68,24 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\CannotActivatePageException
+     *
+     * @return bool
+     */
+    protected function assertCanActivatePage($idCmsPage)
+    {
+        if ($this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count() === 0) {
+            throw new CannotActivatePageException(
+                sprintf('Cannot activate CMS page, page placeholders not provided!')
+            );
+        }
+
+         return true;
     }
 
     /**
