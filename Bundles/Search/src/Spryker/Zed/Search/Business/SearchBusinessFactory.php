@@ -93,7 +93,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    protected function createIndexMapInstaller(MessengerInterface $messenger)
+    public function createIndexMapInstaller(MessengerInterface $messenger)
     {
         return new IndexMapInstaller(
             $this->createJsonIndexDefinitionLoader(),

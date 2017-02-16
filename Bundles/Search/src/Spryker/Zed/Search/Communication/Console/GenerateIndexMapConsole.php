@@ -14,11 +14,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
  */
-class SearchConsole extends Console
+class GenerateIndexMapConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:search';
-    const DESCRIPTION = 'This command will run installer for search';
+    const COMMAND_NAME = 'setup:search:index-map';
+    const DESCRIPTION = 'This command will generate the PageIndexMap without requiring the actual Elasticsearch index';
 
     /**
      * @return void
@@ -39,7 +39,7 @@ class SearchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->install($this->getMessenger());
+        $this->getFacade()->generatePageIndexMap($this->getMessenger());
     }
 
 }
