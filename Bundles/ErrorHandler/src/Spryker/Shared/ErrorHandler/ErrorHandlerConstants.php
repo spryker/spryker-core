@@ -55,8 +55,7 @@ interface ErrorHandlerConstants
     /**
      * Specification:
      * - Pattern for the link from the browser to the IDE.
-     * - For MacOS the default `phpstorm://open?file=%s&line=%s` works.
-     * - For Linux use e.g. `phpstorm://open?url=file://%s&line=%s` and the documentation tips.
+     * - The default `phpstorm://open?file=%s&line=%s` works for most OS.
      *
      * @api
      */
