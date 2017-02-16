@@ -30,11 +30,11 @@ class ZedNavigationCacheBuilderTest extends PHPUnit_Framework_TestCase
      */
     public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache()
     {
-        $navigationCacheMock = $this->getMockBuilder(NavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
+        $navigationCacheMock = $this->getMockBuilder(ZedNavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
         $navigationCacheMock->expects($this->once())
             ->method('setNavigation');
 
-        $navigationCollectorMock = $this->getMockBuilder(NavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
+        $navigationCollectorMock = $this->getMockBuilder(ZedNavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
             ->will($this->returnValue([]));

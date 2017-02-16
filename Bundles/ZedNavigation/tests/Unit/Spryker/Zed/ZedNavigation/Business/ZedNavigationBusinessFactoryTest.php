@@ -37,7 +37,7 @@ class ZedNavigationBusinessFactoryTest extends PHPUnit_Framework_TestCase
     {
         $instance = $this->getFactory()->createNavigationBuilder();
 
-        $this->assertInstanceOf(NavigationBuilder::class, $instance);
+        $this->assertInstanceOf(ZedNavigationBuilder::class, $instance);
     }
 
 }

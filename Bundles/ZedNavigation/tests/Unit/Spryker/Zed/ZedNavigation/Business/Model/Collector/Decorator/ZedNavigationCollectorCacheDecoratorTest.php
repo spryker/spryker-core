@@ -31,14 +31,14 @@ class ZedNavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCas
      */
     public function testIfCacheIsNotEnabledGetNavigationMustReturnNavigationFromCollector()
     {
-        $navigationCacheMock = $this->getMockBuilder(NavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
+        $navigationCacheMock = $this->getMockBuilder(ZedNavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
         $navigationCacheMock->expects($this->never())
             ->method('getNavigation');
 
-        $navigationCollectorMock = $this->getMockBuilder(NavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
+        $navigationCollectorMock = $this->getMockBuilder(ZedNavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
             ->will($this->returnValue([]));
@@ -56,7 +56,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCas
      */
     public function testIfCacheIsEnabledGetNavigationMustReturnNavigationFromCache()
     {
-        $navigationCacheMock = $this->getMockBuilder(NavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
+        $navigationCacheMock = $this->getMockBuilder(ZedNavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
@@ -64,7 +64,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCas
             ->method('getNavigation')
             ->will($this->returnValue([]));
 
-        $navigationCollectorMock = $this->getMockBuilder(NavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
+        $navigationCollectorMock = $this->getMockBuilder(ZedNavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->never())
             ->method('getNavigation');
 

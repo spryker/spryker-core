@@ -29,7 +29,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
      * @param \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface $navigationSchemaFinder
      * @param string $rootNavigationFile
      */
-    public function __construct(NavigationSchemaFinderInterface $navigationSchemaFinder, $rootNavigationFile)
+    public function __construct(ZedNavigationSchemaFinderInterface $navigationSchemaFinder, $rootNavigationFile)
     {
         $this->navigationSchemaFinder = $navigationSchemaFinder;
         $this->rootNavigationFile = $rootNavigationFile;

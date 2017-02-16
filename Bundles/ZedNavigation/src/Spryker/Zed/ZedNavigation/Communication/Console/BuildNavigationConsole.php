@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
  */
-class BuildZedNavigationConsole extends Console
+class BuildNavigationConsole extends Console
 {
 
     const COMMAND_NAME = 'navigation:build-cache';

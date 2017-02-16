@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ZedNavigation\Business\Exception;
 
 use Exception;
-use Spryker\Zed\ZedNavigation\Communication\Console\BuildZedNavigationConsole;
+use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 abstract class AbstractZedNavigationCacheException extends Exception
 {
 
     const MESSAGE = 'To create a zed-navigation cache run:' . PHP_EOL
-        . PHP_EOL . '$ vendor/bin/console ' . BuildZedNavigationConsole::COMMAND_NAME;
+        . PHP_EOL . '$ vendor/bin/console ' . BuildNavigationConsole::COMMAND_NAME;
 
     /**
      * @param string $message

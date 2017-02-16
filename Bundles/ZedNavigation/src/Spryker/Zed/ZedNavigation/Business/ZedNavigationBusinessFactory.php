@@ -14,10 +14,10 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCo
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
-use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator;
+use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
 
 /**

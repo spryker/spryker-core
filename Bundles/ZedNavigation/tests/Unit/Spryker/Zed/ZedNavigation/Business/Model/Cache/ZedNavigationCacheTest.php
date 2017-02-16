@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\ZedNavigation\Business\Model\Cache;
 
+use Application\Module\Zed;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheEmptyException;
@@ -111,7 +112,7 @@ class ZedNavigationCacheTest extends PHPUnit_Framework_TestCase
      */
     public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists()
     {
-        $this->expectException(NavigationCacheFileDoesNotExistException::class);
+        $this->expectException(ZedNavigationCacheFileDoesNotExistException::class);
 
         $isEnabled = true;
         $navigationCache = new ZedNavigationCache('', $isEnabled, $this->getUtilEncodingService());
@@ -123,7 +124,7 @@ class ZedNavigationCacheTest extends PHPUnit_Framework_TestCase
      */
     public function testGetMustThrowExceptionIfCacheEnabledCacheFileGivenButEmpty()
     {
-        $this->expectException(NavigationCacheEmptyException::class);
+        $this->expectException(ZedNavigationCacheEmptyException::class);
 
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;

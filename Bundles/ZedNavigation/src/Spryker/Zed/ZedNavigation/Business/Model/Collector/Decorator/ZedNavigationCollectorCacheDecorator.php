@@ -27,7 +27,7 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
      */
-    public function __construct(NavigationCollectorInterface $navigationCollector, ZedNavigationCacheInterface $navigationCache)
+    public function __construct(ZedNavigationCollectorInterface $navigationCollector, ZedNavigationCacheInterface $navigationCache)
     {
         $this->navigationCollector = $navigationCollector;
         $this->navigationCache = $navigationCache;
