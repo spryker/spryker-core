@@ -1,22 +1,25 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Queue;
 
-use Generated\Shared\Transfer\QueueOptionTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
+use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method QueueFactory getFactory()
+ * @method \Spryker\Client\Queue\QueueFactory getFactory()
  */
 class QueueClient extends AbstractClient implements QueueClientInterface
 {
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function open()
@@ -25,7 +28,9 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
      * @return void
      */
@@ -35,9 +40,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @api
      *
-     * @return QueueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function encodeMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -45,9 +52,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @api
      *
-     * @return QueueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function decodeMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -55,7 +64,9 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return void
      */
@@ -65,19 +76,23 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $queueName
      * @param callable|null $callback
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
      * @return mixed
      */
-    public function consume($queueName, callable $callback = null, QueueOptionTransfer $queueOptionTransfer)
+    public function consume($queueName, callable $callback, QueueOptionTransfer $queueOptionTransfer)
     {
         $this->getFactory()->createQueueProxy()->consume($queueName, $callback, $queueOptionTransfer);
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return void
      */
@@ -87,6 +102,8 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function close()

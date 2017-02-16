@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,7 +9,6 @@ namespace Spryker\Client\Queue;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
 
 class QueueDependencyProvider extends AbstractDependencyProvider
 {
@@ -16,9 +16,9 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     const QUEUE_ADAPTER = 'adapter queue';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {
@@ -32,11 +32,12 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected function createQueueAdapter(Container $container)
     {
     }
+
 }

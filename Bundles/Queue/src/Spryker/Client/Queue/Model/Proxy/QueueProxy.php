@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Queue\Model\Proxy;
 
-use Generated\Shared\Transfer\QueueOptionTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
-use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
+use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Queue\Exception\QueueAdapterMissingException;
+use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
 
 class QueueProxy implements QueueProxyInterface
 {
 
     /**
-     * @var AdapterInterface
+     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected $queueAdapter;
 
     /**
-     * @param AdapterInterface $queueAdapter
+     * @param \Spryker\Client\Queue\Model\Adapter\AdapterInterface $queueAdapter
      */
     public function __construct(AdapterInterface $queueAdapter)
     {
@@ -29,7 +29,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @throws QueueAdapterMissingException
+     * @throws \Spryker\Client\Queue\Exception\QueueAdapterMissingException
      *
      * @return mixed
      */
@@ -43,7 +43,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
      * @return void
      */
@@ -55,19 +55,19 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param string $queueName
      * @param callable|null $callback
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
      * @return mixed
      */
-    public function consume($queueName, callable $callback = null, QueueOptionTransfer $queueOptionTransfer)
+    public function consume($queueName, callable $callback, QueueOptionTransfer $queueOptionTransfer)
     {
         $this->queueAdapter->consume($queueName, $callback, $queueOptionTransfer);
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function encodeMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -75,9 +75,9 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function decodeMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -85,7 +85,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return void
      */
@@ -111,4 +111,5 @@ class QueueProxy implements QueueProxyInterface
     {
         return $this->queueAdapter->close();
     }
+
 }
