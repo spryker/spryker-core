@@ -11,7 +11,7 @@ use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Navigation\Communication\Console\BuildNavigationConsole;
+use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
