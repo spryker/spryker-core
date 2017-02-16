@@ -1,0 +1,45 @@
+{
+  "name": "spryker/zed-navigation",
+  "require": {
+    "spryker/kernel": "^2.0.0",
+    "spryker/symfony": "^2.0.0",
+    "spryker/url": "^2.0.0",
+    "spryker/util-encoding": "^1.0.0",
+    "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
+  },
+  "description": "ZedNavigation bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
+}
