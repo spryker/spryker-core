@@ -1,6 +1,8 @@
 <?php
 namespace Queue;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace Queue;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class FunctionalTester extends \Codeception\Actor
+ */
+class FunctionalTester extends Actor
 {
+
     use _generated\FunctionalTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }
