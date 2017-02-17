@@ -15,7 +15,8 @@
     "spryker/config": "^2.2.1",
     "spryker/library": "^2.0.0",
     "spryker/log": "^2.1.0",
-    "spryker/new-relic": "^2.1.0"
+    "spryker/new-relic": "^2.1.0",
+    "spryker/silex": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
