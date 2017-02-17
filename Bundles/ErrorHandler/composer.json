@@ -11,6 +11,7 @@
     }
   },
   "require": {
+    "filp/whoops": "^2.1",
     "spryker/config": "^2.2.1",
     "spryker/library": "^2.0.0",
     "spryker/log": "^2.1.0",
