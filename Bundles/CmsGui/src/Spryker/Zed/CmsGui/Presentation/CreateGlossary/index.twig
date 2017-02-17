@@ -12,12 +12,21 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(glossaryForm) }}
 
-    {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
-    {% do glossaryForm.glossaryAttributes.setRendered %}
+    {% if placeholderTabs.tabs | length > 0 %}
 
-{{ form_end(glossaryForm) }}
+        {{ form_start(glossaryForm) }}
+
+        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
+        {% do glossaryForm.glossaryAttributes.setRendered %}
+
+        {{ form_end(glossaryForm) }}
+
+    {% else %}
+        <div class="alert alert-danger">
+            {{ "Missing placeholders for selected template." | trans }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 
