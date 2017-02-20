@@ -16,7 +16,7 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/transfer": "^*"
+    "spryker/transfer": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
