@@ -5,6 +5,10 @@
 
 'use strict';
 
+// polyfill for Promise()
+// extend webpack 2 support on IE11 and PhantomJS
+require('es6-promise/auto');
+
 // external dependencies
 require('jquery');
 require('jquery-ui');
