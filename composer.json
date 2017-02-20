@@ -112,6 +112,7 @@
       "Functional\\Spryker\\Shared\\Cms\\": "Bundles/Cms/tests",
       "Spryker\\Zed\\Cms\\": "Bundles/Cms/src",
       "Functional\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
+      "Unit\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
       "Spryker\\Client\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Client\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Shared\\Collector\\": "Bundles/Collector/src",
@@ -581,6 +582,11 @@
       "Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/src",
       "Unit\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
       "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
+
+      "Spryker\\Shared\\CmsGui\\": "Bundles/CmsGui/src",
+      "Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/src",
+      "Unit\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests",
+      "Functional\\Spryker\\Zed\\CmsGui\\": "Bundles/CmsGui/tests",
 
       "Spryker\\Shared\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
       "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",

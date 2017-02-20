@@ -1,0 +1,20 @@
+
+<h4>{{ 'Fill in SEO information' | trans }}</h4>
+
+{% for locale in availableLocales %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true) , 'hasError': false} %}
+        {% block content %}
+            {% for cmsPagMetaAttributesForm in pageForm.metaAttributes %}
+                {% if cmsPagMetaAttributesForm.vars.data.localeName == locale.localeName %}
+                    {{ form_row(cmsPagMetaAttributesForm.metaTitle, {'attr': {'data-translation-key': 'metaTitle'}}) }}
+                    {{ form_row(cmsPagMetaAttributesForm.metaKeywords, {'attr': {'data-translation-key': 'metaKeywords'}}) }}
+                    {{ form_row(cmsPagMetaAttributesForm.metaDescription, {'attr': {'data-translation-key': 'metaDescription'}}) }}
+                    {{ form_row(cmsPagMetaAttributesForm.localeName) }}
+                    {{ form_row(cmsPagMetaAttributesForm.idCmsPageLocalizedAttributes) }}
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}
+
+{% do pageForm.metaAttributes.setRendered %}

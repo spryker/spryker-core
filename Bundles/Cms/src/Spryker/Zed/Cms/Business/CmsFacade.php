@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -401,6 +404,150 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         $this->getFactory()
             ->createBlockRemover()
             ->delete($idCmsBlock);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsGlossarySaver()
+            ->saveCmsGlossary($cmsGlossaryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return int
+     */
+    public function createPage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageSaver()
+            ->createPage($cmsPageTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
+     */
+    public function findCmsPageById($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createCmsPageReader()
+            ->findCmsPageById($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function findPageGlossaryAttributes($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createCmsGlossaryReader()
+            ->findPageGlossaryAttributes($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function updatePage(CmsPageTransfer $cmsPageTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageSaver()
+            ->updatePage($cmsPageTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function activatePage($idCmsPage)
+    {
+         $this->getFactory()
+            ->createCmsPageActivator()
+            ->activate($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deactivatePage($idCmsPage)
+    {
+        $this->getFactory()
+            ->createCmsPageActivator()
+            ->deactivate($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsUrlBuilder()
+            ->getPageUrlPrefix($cmsPageAttributesTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsUrlBuilder()
+            ->buildPageUrl($cmsPageAttributesTransfer);
     }
 
 }

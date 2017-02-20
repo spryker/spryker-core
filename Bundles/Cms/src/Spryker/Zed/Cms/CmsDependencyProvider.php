@@ -74,6 +74,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsToUrlBridge($container->getLocator()->url()->facade());
         };
 
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
         return $container;
     }
 
