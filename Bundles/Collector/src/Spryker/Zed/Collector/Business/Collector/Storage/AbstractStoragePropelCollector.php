@@ -12,6 +12,7 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Collector\Business\Collector\AbstractPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -26,10 +27,15 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
      */
     protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
-        $touchQuery->addJoin(
+        $storageJoin = new Join(
             SpyTouchTableMap::COL_ID_TOUCH,
             SpyTouchStorageTableMap::COL_FK_TOUCH,
             Criteria::LEFT_JOIN
+        );
+        $touchQuery->addJoinObject($storageJoin, 'storageJoin');
+        $touchQuery->addJoinCondition(
+            'storageJoin',
+            sprintf('%s = %s', SpyTouchStorageTableMap::COL_FK_LOCALE, (int)$locale->requireIdLocale()->getIdLocale())
         );
 
         $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
