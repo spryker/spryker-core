@@ -14,6 +14,7 @@
     "datatables.net-responsive-bs": "~2.0.0",
     "datatables.net-select": "~1.1.0",
     "datatables.net-select-bs": "~1.1.0",
+    "es6-promise": "~4.0.5",
     "font-awesome": "~4.5.0",
     "jquery": "~2.2.0",
     "jquery-ui": "~1.10.5",
