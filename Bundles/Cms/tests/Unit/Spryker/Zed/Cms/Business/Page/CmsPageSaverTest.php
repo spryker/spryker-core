@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacadeInterface;
 use Unit\Spryker\Zed\Cms\Business\CmsMocks;
 
@@ -108,7 +108,7 @@ class CmsPageSaverTest extends CmsMocks
     /**
      * @param \Spryker\Zed\Url\Business\UrlFacadeInterface|null $urlFacadeMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface|null $touchFacadeMock
-     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface|null $cmsQueryContainerMock
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface|null $cmsPageUrlBuilderMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
@@ -116,7 +116,7 @@ class CmsPageSaverTest extends CmsMocks
     protected function createCmsPageSaverMock(
         UrlFacadeInterface $urlFacadeMock = null,
         CmsToTouchInterface $touchFacadeMock = null,
-        CmsGuiToCmsQueryContainerInterface $cmsQueryContainerMock = null,
+        CmsQueryContainerInterface $cmsQueryContainerMock = null,
         CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null
     ) {
 
