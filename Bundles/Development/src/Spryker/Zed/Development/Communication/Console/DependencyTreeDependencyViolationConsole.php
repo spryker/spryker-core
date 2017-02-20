@@ -97,7 +97,7 @@ class DependencyTreeDependencyViolationConsole extends Console
                 }
 
                 if ($composerDependency['src'] && $composerDependency['isOptional'] && !$composerDependency['suggested']) {
-                    $violations[] = $composerDependency['src'] . ' is a optional but missing in composer suggest';
+                    $violations[] = $composerDependency['src'] . ' is optional but missing in composer suggest';
                 }
 
             }
