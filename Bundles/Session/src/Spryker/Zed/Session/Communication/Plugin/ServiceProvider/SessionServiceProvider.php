@@ -63,7 +63,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function boot(Application $app)
     {
-        if (PHP_SAPI === 'cli') {
+        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
             return;
         }
 

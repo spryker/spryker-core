@@ -302,7 +302,7 @@ $command</command>";
      */
     protected function getRoles()
     {
-        if (PHP_SAPI !== 'cli') {
+        if (PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg') {
             return false;
         }
 
