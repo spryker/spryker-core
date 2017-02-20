@@ -117,7 +117,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     /**
      * @return bool
      */
-    protected function isCli() {
+    protected function isCli()
+    {
         return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
     }
 
