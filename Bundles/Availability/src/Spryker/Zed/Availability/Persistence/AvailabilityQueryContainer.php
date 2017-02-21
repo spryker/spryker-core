@@ -36,6 +36,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     const ID_PRODUCT = 'idProduct';
     const GROUP_CONCAT = "GROUP_CONCAT";
     const CONCAT = "CONCAT";
+    const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
 
     /**
      * @api
@@ -91,8 +92,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         return $this->getFactory()
             ->createSpyAvailabilityQuery()
             ->filterByFkAvailabilityAbstract($idAvailabilityAbstract)
-            ->withColumn('SUM(' . SpyAvailabilityTableMap::COL_QUANTITY . ')', self::SUM_QUANTITY)
-            ->select([self::SUM_QUANTITY]);
+            ->withColumn('SUM(' . SpyAvailabilityTableMap::COL_QUANTITY . ')', static::SUM_QUANTITY)
+            ->select([static::SUM_QUANTITY]);
     }
 
     /**
@@ -105,10 +106,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale)
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
+            ->withColumn(static::GROUP_CONCAT . '(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
             ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
             ->withColumn(
-                "" . self::GROUP_CONCAT . "(" . self::CONCAT . "(" . SpyProductTableMap::COL_ID_PRODUCT . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "))",
-                self::RESERVATION_QUANTITY
+                static::GROUP_CONCAT . "(" . static::CONCAT . "(" . SpyProductTableMap::COL_ID_PRODUCT . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "))",
+                static::RESERVATION_QUANTITY
             )
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
@@ -141,8 +143,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, self::PRODUCT_NAME)
-            ->withColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY, self::AVAILABILITY_QUANTITY);
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::PRODUCT_NAME)
+            ->withColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY, static::AVAILABILITY_QUANTITY);
     }
 
     /**
@@ -196,15 +198,16 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
         return $this->queryAvailabilityWithStockByIdLocale($idLocale)
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, self::ID_PRODUCT)
-            ->withColumn(SpyProductTableMap::COL_SKU, self::CONCRETE_SKU)
-            ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, self::CONCRETE_AVAILABILITY)
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::CONCRETE_NAME)
+            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT)
+            ->withColumn(SpyProductTableMap::COL_SKU, static::CONCRETE_SKU)
+            ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, static::CONCRETE_AVAILABILITY)
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::CONCRETE_NAME)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
-            ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, self::RESERVATION_QUANTITY)
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
+            ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, static::RESERVATION_QUANTITY)
             ->filterByIdProductAbstract($idProductAbstract)
-            ->select([self::CONCRETE_SKU])
+            ->select([static::CONCRETE_SKU])
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 

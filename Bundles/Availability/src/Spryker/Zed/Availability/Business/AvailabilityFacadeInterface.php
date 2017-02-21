@@ -88,4 +88,33 @@ interface AvailabilityFacadeInterface
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
 
+    /**
+     *
+     * Specification:
+     *  - Touches availability abstract collector for given abstract product
+     *
+     * @api
+     *
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract);
+
+    /**
+     *
+     * Specification:
+     *  - Updates availability for given sku, by quantity
+     *  - Touches availability collector if data changed
+     *  - Returns id of availability abstract
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity);
+
 }

@@ -1,0 +1,41 @@
+{
+  "name": "spryker/product-bundle",
+  "require": {
+    "spryker/availability": "^3.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/locale": "^2.0.0",
+    "spryker/product": "^3.0.0",
+    "spryker/propel": "^2.2.0",
+    "spryker/price": "^3.0.0",
+    "spryker/stock": "^3.0.0",
+    "spryker/sales": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "description": "ProductBundle bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "Acceptance": "tests/"
+    }
+  }
+}

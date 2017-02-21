@@ -49,6 +49,8 @@
         <property name="sumTotalDiscountAmount" type="int" />
         <property name="sku" type="string" />
         <property name="abstractSku" type="string" />
+        <property name="finalUnitDiscountAmount" type="int" />
+        <property name="finalSumDiscountAmount" type="int" />
     </transfer>
 
     <transfer name="Expense">
@@ -56,8 +58,8 @@
         <property name="sumGrossPriceWithDiscounts" type="int" />
         <property name="unitTaxAmountWithDiscounts" type="int" />
         <property name="sumTaxAmountWithDiscounts" type="int" />
-        <property name="unitTotalDiscountAmount"  type="int" />
-        <property name="sumTotalDiscountAmount" type="int" />
+        <property name="finalUnitDiscountAmount"  type="int" />
+        <property name="finalSumDiscountAmount" type="int" />
     </transfer>
 
     <transfer name="DiscountableItem">

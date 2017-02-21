@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -17,9 +18,25 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGe
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
+
+    /**
+     * @param int|null $idProductAbstract |null
+     * @param string|null $type
+     *
+     * @return mixed
+     */
+    public function getOptions($idProductAbstract = null, $type = null)
+    {
+        $formOptions = parent::getOptions($idProductAbstract);
+
+        $formOptions[ProductConcreteFormEdit::OPTION_IS_BUNDLE_ITEM] = ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) ? true : false;
+
+        return $formOptions;
+    }
 
     /**
      * @return array
@@ -77,6 +94,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantAbstractAttributes($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
+            $formData = $this->appendBundledProducts($productTransfer, $formData);
         }
 
         return $formData;
@@ -146,6 +164,30 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
 
             $formData[ProductFormAdd::FORM_PRICE_AND_STOCK][] = $stock;
+        }
+
+        return $formData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function appendBundledProducts(ProductConcreteTransfer $productTransfer, array $formData)
+    {
+        if ($productTransfer->getProductBundle() === null) {
+            return $formData;
+        }
+
+        $bundledProducts = $productTransfer->getProductBundle()->getBundledProducts();
+        foreach ($bundledProducts as $productForBundleTransfer) {
+            $bundledProduct[BundledProductForm::FIELD_QUANTITY] = $productForBundleTransfer->getQuantity();
+            $bundledProduct[BundledProductForm::FIELD_ID_PRODUCT_CONCRETE] = $productForBundleTransfer->getIdProductConcrete();
+            $bundledProduct[BundledProductForm::FIELD_SKU] = $productForBundleTransfer->getSku();
+
+            $formData[ProductConcreteFormEdit::FORM_ASSIGNED_BUNDLED_PRODUCTS][] = $bundledProduct;
         }
 
         return $formData;

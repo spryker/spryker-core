@@ -44,13 +44,13 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
-    const FORM_IMAGE_SET = 'image_set';
 
+    const FORM_IMAGE_SET = 'image_set';
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
     const OPTION_ID_LOCALE = 'option_id_locale';
-    const OPTION_TAX_RATES = 'option_tax_rates';
 
+    const OPTION_TAX_RATES = 'option_tax_rates';
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
@@ -425,19 +425,6 @@ class ProductFormAdd extends AbstractType
                                         $type
                                     ));
                                 }
-                            }
-
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
-                                    $selectedAttributes[] = $valueSet[AttributeSuperForm::FIELD_VALUE];
-                                    break;
-                                }
-                            }
-
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please select at least one attribute and its value under Variants');
-                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],

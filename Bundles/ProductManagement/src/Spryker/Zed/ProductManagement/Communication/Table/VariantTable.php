@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class VariantTable extends AbstractProductTable
@@ -27,6 +28,8 @@ class VariantTable extends AbstractProductTable
     const COL_NAME = 'name';
     const COL_STATUS = 'status';
     const COL_ACTIONS = 'actions';
+    const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
+    const COL_IS_BUNDLE = 'is_bundle';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -41,20 +44,36 @@ class VariantTable extends AbstractProductTable
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
-    private $localeTransfer;
+    protected $localeTransfer;
+
+    /**
+     * @var string
+     */
+    protected $type;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $type
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer, $idProductAbstract, LocaleTransfer $localeTransfer)
-    {
+    public function __construct(
+        ProductQueryContainerInterface $productQueryContainer,
+        $idProductAbstract,
+        LocaleTransfer $localeTransfer,
+        $type
+    ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->idProductAbstract = $idProductAbstract;
         $this->localeTransfer = $localeTransfer;
-        $this->defaultUrl = sprintf('variantTable?%s=%d', EditController::PARAM_ID_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->defaultUrl = sprintf(
+            'variantTable?%s=%d&type=%s',
+            EditController::PARAM_ID_PRODUCT_ABSTRACT,
+            $idProductAbstract,
+            $type
+        );
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->type = $type;
     }
 
     /**
@@ -69,6 +88,7 @@ class VariantTable extends AbstractProductTable
             static::COL_SKU => 'Sku',
             static::COL_NAME => 'Name',
             static::COL_STATUS => 'Status',
+            static::COL_IS_BUNDLE => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
         ]);
 
@@ -131,8 +151,23 @@ class VariantTable extends AbstractProductTable
             static::COL_SKU => $productEntity->getSku(),
             static::COL_NAME => $productEntity->getVirtualColumn(static::COL_NAME),
             static::COL_STATUS => $this->getStatusLabel($productEntity->getIsActive()),
+            static::COL_IS_BUNDLE => $this->getIsBundleProduct($productEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productEntity)),
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return string
+     */
+    protected function getIsBundleProduct(SpyProduct $productEntity)
+    {
+        if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0 ||
+            $this->type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+            return 'Yes';
+        }
+        return 'No';
     }
 
     /**
@@ -146,22 +181,24 @@ class VariantTable extends AbstractProductTable
 
         $urls[] = $this->generateViewButton(
             sprintf(
-                '/product-management/view/variant?%s=%d&%s=%d',
+                '/product-management/view/variant?%s=%d&%s=%d&type=%s',
                 EditController::PARAM_ID_PRODUCT,
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
-                $productEntity->getFkProductAbstract()
+                $productEntity->getFkProductAbstract(),
+                $this->type
             ),
             'View'
         );
 
         $urls[] = $this->generateEditButton(
             sprintf(
-                '/product-management/edit/variant?%s=%d&%s=%d',
+                '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
                 EditController::PARAM_ID_PRODUCT,
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
-                $productEntity->getFkProductAbstract()
+                $productEntity->getFkProductAbstract(),
+                $this->type
             ),
             'Edit'
         );

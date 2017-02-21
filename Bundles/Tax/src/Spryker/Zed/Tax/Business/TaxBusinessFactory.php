@@ -64,7 +64,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
+     * @return \Spryker\Zed\Tax\Business\Model\ItemTaxCalculator
      */
     public function createTaxItemAmountCalculator()
     {

@@ -45,6 +45,9 @@ class ExpenseTaxCalculator implements CalculatorInterface
 
             $expenseTransfer->setUnitTaxAmount((int)round($unitTaxAmount));
             $expenseTransfer->setSumTaxAmount((int)round($sumTaxAmount));
+
+            $expenseTransfer->setUnitTaxTotal((int)round($unitTaxAmount));
+            $expenseTransfer->setSumTaxTotal((int)round($sumTaxAmount));
         }
     }
 

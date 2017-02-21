@@ -102,4 +102,37 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->touchAvailabilityAbstract($idAvailabilityAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity)
+    {
+        return $this->getFactory()
+            ->createAvailabilityHandler()
+            ->saveCurrentAvailability($sku, $quantity);
+    }
+
 }

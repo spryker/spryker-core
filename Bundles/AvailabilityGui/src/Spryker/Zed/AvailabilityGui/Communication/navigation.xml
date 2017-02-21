@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <AvailabilityGui>
+                <label>Availability</label>
+                <title>Availability</title>
+                <bundle>availability-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </AvailabilityGui>
+        </pages>
+    </product>
+</config>

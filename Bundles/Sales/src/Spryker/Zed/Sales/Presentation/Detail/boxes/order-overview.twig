@@ -7,7 +7,7 @@
                 <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | money }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | money }}</p>
-                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.items|length }}</p>
+                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.uniqueProductQuantity }}</p>
             </div>
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Customer name' | trans }}:</b>

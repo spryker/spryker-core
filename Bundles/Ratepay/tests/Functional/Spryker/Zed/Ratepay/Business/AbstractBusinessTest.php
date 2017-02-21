@@ -29,8 +29,6 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
 use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
@@ -387,14 +385,12 @@ abstract class AbstractBusinessTest extends Test
     {
         $stateEntity = $this->createOrderItemStateEntity();
         $processEntity = $this->createOrderProcessEntity();
-        $bundleEntity = $this->createOrderItemBundleEntity();
 
         $orderItemEntity = new SpySalesOrderItem();
         $orderItemEntity
             ->setFkSalesOrder($idSalesOrder)
             ->setFkOmsOrderItemState($stateEntity->getIdOmsOrderItemState())
             ->setFkOmsOrderProcess($processEntity->getIdOmsOrderProcess())
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
             ->setName('test product')
             ->setSku('1324354657687980')
             ->setGrossPrice(1000)
@@ -426,31 +422,6 @@ abstract class AbstractBusinessTest extends Test
         $processEntity->save();
 
         return $processEntity;
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
-     */
-    protected function createOrderItemBundleEntity()
-    {
-        $bundleEntity = new SpySalesOrderItemBundle();
-        $bundleEntity
-            ->setName('test bundle')
-            ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setBundleType('NonSplitBundle');
-        $bundleEntity->save();
-
-        $bundleItemEntity = new SpySalesOrderItemBundleItem();
-        $bundleItemEntity
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
-            ->setName('test bundle item')
-            ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setVariety('Simple');
-        $bundleItemEntity->save();
-
-        return $bundleEntity;
     }
 
 }

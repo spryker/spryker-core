@@ -21,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
+use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
@@ -254,6 +255,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection()
@@ -413,15 +422,35 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idProductAbstract
+     * @param string $type
      *
      * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
-    public function createVariantTable($idProductAbstract)
+    public function createVariantTable($idProductAbstract, $type)
     {
         return new VariantTable(
             $this->getProductQueryContainer(),
             $idProductAbstract,
-            $this->getLocaleFacade()->getCurrentLocale()
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $type
+        );
+    }
+
+    /**
+     * @param int|null $idProductConcrete
+     *
+     * @return \Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable
+     */
+    public function createBundledProductTable($idProductConcrete = null)
+    {
+        return new BundledProductTable(
+            $this->getProductQueryContainer(),
+            $this->getUtilEncoding(),
+            $this->getPriceFacade(),
+            $this->getMoneyFacade(),
+            $this->getAvailabilityFacade(),
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $idProductConcrete
         );
     }
 
@@ -463,6 +492,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface
+     */
+    protected function getAvailabilityFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_AVAILABILITY);
     }
 
 }

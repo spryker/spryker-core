@@ -1,15 +1,29 @@
-<div class="well">
-    {% filter trans|raw %}
-        <h3>Manage product variants</h3>
-        <p>For the creation of product variants, start by selecting attributes and values that define the difference between your variations. Below only those attributes are listed that are marked as being super attributes.</p>
-        <p><i>Note: The super attributes that are assigned to a product variant when its created cannot be changed afterwards anymore.</i></p>
-    {% endfilter %}
-</div>
+{% if type == "bundle" %}
 
-{% for inputGroup in form.attribute_super %}
-    {% include '@ProductManagement/Product/_partials/input-group.twig' %}
-{% else %}
-    <div class="alert alert-warning">
-        {{ ('There is no super attribute defined. <a href="%url%">Define super attributes</a> in order to be able to create variants.' | trans({'%url%': url('/product-management/attribute')})) | raw }}
+    <div class="well">
+        {% filter trans|raw %}
+            <p>Product bundle does not have variants!</p>
+        {% endfilter %}
     </div>
-{% endfor %}
+
+    {% do form.attribute_super.setRendered %}
+
+{% else %}
+
+    <div class="well">
+        {% filter trans|raw %}
+            <h3>Manage product variants</h3>
+            <p>For the creation of product variants, start by selecting attributes and values that define the difference between your variations. Below only those attributes are listed that are marked as being super attributes.</p>
+            <p><i>Note: The super attributes that are assigned to a product variant when its created cannot be changed afterwards anymore.</i></p>
+        {% endfilter %}
+    </div>
+
+    {% for inputGroup in form.attribute_super %}
+        {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+    {% else %}
+        <div class="alert alert-warning">
+            {{ ('There is no super attribute defined. <a href="%url%">Define super attributes</a> in order to be able to create variants.' | trans({'%url%': url('/product-management/attribute')})) | raw }}
+        </div>
+    {% endfor %}
+
+{% endif %}

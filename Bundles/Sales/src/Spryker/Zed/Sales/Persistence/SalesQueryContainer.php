@@ -241,4 +241,20 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         }
     }
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryCountUniqueProductsForOrder($idSalesOrder)
+    {
+        return $this->querySalesOrderItemsByIdSalesOrder($idSalesOrder)
+            ->withColumn('COUNT(*)', 'Count')
+            ->select(['Count'])
+            ->groupBySku()
+            ->orderByCount();
+    }
+
 }
