@@ -44,15 +44,16 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
      * @dataProvider suggestionQueryExpanderDataProvider
      *
      * @param \Elastica\Query $expectedQuery
+     * @param Suggest $expectedSuggest
      *
      * @return void
      */
-    public function testSuggestionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery)
+    public function testSuggestionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery, Suggest $expectedSuggest)
     {
         $queryExpander = new SpellingSuggestionQueryExpanderPlugin();
 
         $baseQuery = $this->createBaseQueryPlugin();
-        $baseQuery->getSearchQuery()->setSuggest(new Suggest());
+        $baseQuery->getSearchQuery()->setSuggest($expectedSuggest);
 
         $query = $queryExpander->expandQuery($baseQuery);
 
@@ -68,6 +69,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
     {
         return [
             'simple suggestion query' => $this->getDataForSimpleSuggestionQuery(),
+            'empty suggestion query' => $this->getDataForEmptySuggestionQuery(),
         ];
     }
 
@@ -85,11 +87,30 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
         $expectedTermSuggest->setSize(SpellingSuggestionQueryExpanderPlugin::SIZE);
 
         $expectedSuggest = new Suggest();
+        $expectedSuggest->setGlobalText('foo');
         $expectedSuggest->addSuggestion($expectedTermSuggest);
 
         $expectedQuery->setSuggest($expectedSuggest);
 
-        return [$expectedQuery];
+        return [$expectedQuery, $expectedSuggest];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForEmptySuggestionQuery()
+    {
+        /** @var \Elastica\Query $expectedQuery */
+        $expectedQuery = $this
+            ->createBaseQueryPlugin()
+            ->getSearchQuery();
+
+        $expectedSuggest = new Suggest();
+        $expectedSuggest->setGlobalText('');
+
+        $expectedQuery->setSuggest($expectedSuggest);
+
+        return [$expectedQuery, $expectedSuggest];
     }
 
 }

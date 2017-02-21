@@ -43,7 +43,10 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     {
         $this->assertQueryHasSuggestion($query);
 
-        $this->addSuggestion($query, $this->createSuggestion($query, $requestParameters));
+        $suggestion = $this->createSuggestion($query, $requestParameters);
+        if ($suggestion) {
+            $this->addSuggestion($query, $suggestion);
+        }
     }
 
     /**
@@ -70,17 +73,25 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
      */
     protected function addSuggestion(Query $query, AbstractSuggest $suggest)
     {
-        /** @var \Elastica\Suggest $suggestion */
-        $suggestion = $query->getParam('suggest');
-
+        $suggestion = $this->getSuggestion($query);
         $suggestion->addSuggestion($suggest);
+    }
+
+    /**
+     * @param Query $query
+     *
+     * @return \Elastica\Suggest
+     */
+    protected function getSuggestion(Query $query)
+    {
+        return $query->getParam('suggest');
     }
 
     /**
      * @param \Elastica\Query $query
      * @param array $requestParameters
      *
-     * @return \Elastica\Suggest\AbstractSuggest
+     * @return \Elastica\Suggest\AbstractSuggest|null
      */
     abstract protected function createSuggestion(Query $query, array $requestParameters = []);
 
