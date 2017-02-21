@@ -78,7 +78,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return \Elastica\Suggest
      */

@@ -44,7 +44,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
      * @dataProvider suggestionQueryExpanderDataProvider
      *
      * @param \Elastica\Query $expectedQuery
-     * @param Suggest $expectedSuggest
+     * @param \Elastica\Suggest $expectedSuggest
      *
      * @return void
      */
