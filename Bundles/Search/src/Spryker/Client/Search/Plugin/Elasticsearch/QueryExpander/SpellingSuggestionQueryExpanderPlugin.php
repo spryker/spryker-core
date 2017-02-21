@@ -29,7 +29,7 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
     protected function createSuggestion(Query $query, array $requestParameters = [])
     {
         $suggestion = $this->getSuggestion($query);
-        if (!$suggestion->hasParam('text')) {
+        if (!$suggestion->hasParam('text') || $suggestion->getParam('text') === '') {
             return null;
         }
 
