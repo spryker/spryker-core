@@ -9,6 +9,7 @@ namespace Spryker\Zed\NavigationGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleBridge;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationBridge;
 use Spryker\Zed\NavigationGui\Dependency\QueryContainer\NavigationGuiToNavigationBridge as NavigationGuiToNavigationQueryContainerBridge;
 
@@ -17,6 +18,7 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
     const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +28,7 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $this->provideNavigationFacade($container);
+        $this->provideLocaleFacade($container);
 
         return $container;
     }
@@ -51,6 +54,18 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_NAVIGATION] = function (Container $container) {
             return new NavigationGuiToNavigationBridge($container->getLocator()->navigation()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideLocaleFacade(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new NavigationGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
     }
 

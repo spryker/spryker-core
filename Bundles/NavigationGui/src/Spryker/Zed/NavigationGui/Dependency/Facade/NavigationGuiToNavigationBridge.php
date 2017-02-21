@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 
 class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterface
@@ -63,6 +64,56 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     public function deleteNavigation(NavigationTransfer $navigationTransfer)
     {
         $this->navigationFacade->deleteNavigation($navigationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    public function findNavigationTree(NavigationTransfer $navigationTransfer)
+    {
+        return $this->navigationFacade->findNavigationTree($navigationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->navigationFacade->createNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->navigationFacade->updateNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
+     */
+    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        return $this->navigationFacade->findNavigationNode($navigationNodeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $this->navigationFacade->deleteNavigationNode($navigationNodeTransfer);
     }
 
 }

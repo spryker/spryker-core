@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\NavigationGui\Communication;
 
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
+use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
+use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
@@ -57,11 +60,46 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createNavigationNodeForm(NavigationNodeTransfer $data = null, array $options = [])
+    {
+        return $this->getFormFactory()->create($this->createNavigationNodeFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType
+     */
+    protected function createNavigationNodeFormType()
+    {
+        return new NavigationNodeFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider
+     */
+    public function createNavigationNodeFormDataProvider()
+    {
+        return new NavigationNodeFormDataProvider($this->getNavigationFacade(), $this->getLocaleFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface
      */
     public function getNavigationFacade()
     {
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_NAVIGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_LOCALE);
     }
 
 }

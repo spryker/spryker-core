@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationGuiToNavigationInterface
@@ -39,5 +40,40 @@ interface NavigationGuiToNavigationInterface
      * @return void
      */
     public function deleteNavigation(NavigationTransfer $navigationTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    public function findNavigationTree(NavigationTransfer $navigationTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
+     */
+    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
 }

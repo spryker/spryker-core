@@ -1,0 +1,36 @@
+{% extends '@Gui/Layout/empty-layout.twig' %}
+
+{% block content %}
+
+    <div class="ibox float-e-margins">
+        {{ form_start(navigationNodeForm) }}
+
+            <div class="ibox-title">
+                <h5>{{ 'Update node' | trans }}</h5>
+
+                <div class="pull-right">
+                    <a href="{{ url('/navigation-gui/node/create', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}" class="btn btn-xs btn-primary">
+                        <i class="fa fa-pencil-square-o"></i> {{ 'Add child' | trans }}
+                    </a>
+
+                    {% if idNavigationNode %}
+                        <button type="button" id="navigation-tree-save-btn" class="btn btn-xs btn-danger">
+                            <i class="fa fa-trash"></i> {{ 'Remove selected node' | trans }}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                {% include '@NavigationGui/Node/_partials/navigation-node-form-content.twig' %}
+            </div>
+
+            <div class="ibox-footer">
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            </div>
+        {{ form_end(navigationNodeForm) }}
+    </div>
+
+    {% include '@NavigationGui/Node/_partials/tree-reloader.twig' %}
+
+{% endblock %}

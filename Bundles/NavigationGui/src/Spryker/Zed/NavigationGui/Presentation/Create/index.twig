@@ -1,29 +1,21 @@
-{% extends '@Gui/Layout/layout.twig' %}
-
-{% set widget_title = 'Create navigation' %}
-
-{% block head_title widget_title %}
-{% block section_title widget_title %}
-
-{% block action %}
-    {{ backActionButton('/navigation-gui', 'Back to list' | trans) }}
-{% endblock %}
+{% extends '@Gui/Layout/empty-layout.twig' %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {{ form_start(navigationForm) }}
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>{{ 'Add child' | trans }}</h5>
+            </div>
 
-        {% block widget_content %}
-
-            {{ form_start(navigationForm) }}
+            <div class="ibox-content">
                 {{ form_widget(navigationForm) }}
+            </div>
 
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(navigationForm) }}
-
-        {% endblock %}
-
-    {% endembed %}
+            <div class="ibox-footer">
+                <input type="submit" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            </div>
+        </div>
+    {{ form_end(navigationForm) }}
 
 {% endblock %}
-

@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
+use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  */
-class CreateController extends AbstractController
+class TreeController extends AbstractController
 {
+
+    const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -23,23 +26,17 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $navigationForm = $this->getFactory()
-            ->createNavigationForm()
-            ->handleRequest($request);
+        $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
-        if ($navigationForm->isValid()) {
-            $navigationTransfer = $navigationForm->getData();
-            $navigationTransfer = $this->getFactory()
-                ->getNavigationFacade()
-                ->createNavigation($navigationTransfer);
+        $navigationTransfer = new NavigationTransfer();
+        $navigationTransfer->setIdNavigation($idNavigation);
 
-            $this->addSuccessMessage(sprintf('Navigation #%d successfully created.', $navigationTransfer->getIdNavigation()));
-
-            return $this->redirectResponse('/navigation-gui/create');
-        }
+        $navigationTreeTransfer = $this->getFactory()
+            ->getNavigationFacade()
+            ->findNavigationTree($navigationTransfer);
 
         return $this->viewResponse([
-            'navigationForm' => $navigationForm->createView(),
+            'navigationTree' => $navigationTreeTransfer,
         ]);
     }
 

@@ -17,6 +17,16 @@
 
     {% endembed %}
 
+    <div class="row">
+        <div class="col-lg-7">
+            {% include '@NavigationGui/Index/_partials/navigation-tree.twig' %}
+        </div>
+
+        <div class="col-lg-5">
+            {% include '@NavigationGui/Index/_partials/navigation-tree-form-container.twig' %}
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block head_css %}

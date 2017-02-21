@@ -1,0 +1,32 @@
+<div class="ibox float-e-margins">
+
+    <div class="ibox-title">
+        <h5>{{ 'Navigation tree' | trans }}</h5>
+        <div class="pull-right">
+            <label>{{ 'Search' | trans }}: <input type="text" id="navigation-tree-search-field" class="input" /></label>
+        </div>
+    </div>
+
+    <div class="ibox-content">
+        <div class="alert alert-info alert-dismissable">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            {% filter trans|raw %}
+                <ul>
+                    <li>If a category or CMS page is inactive, then this item and all navigation items under this one will not be visible.
+                        You can edit the category or page to activate it. Removing an item will remove it from navigation.
+                        This will not remove the category or the page.
+                    </li>
+                    <li>You can drag and drop to define item order.</li>
+                </ul>
+            {% endfilter %}
+        </div>
+
+        {% include '@NavigationGui/_partials/progressbar.twig' with {idProgressbar: 'navigation-tree-loader'} %}
+
+        <div id="navigation-tree-container"></div>
+    </div>
+
+    <div class="ibox-footer">
+        <input type="button" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+    </div>
+</div>

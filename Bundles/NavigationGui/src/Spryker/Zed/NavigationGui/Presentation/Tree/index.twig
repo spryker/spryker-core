@@ -1,0 +1,32 @@
+<div id="jstree1">
+    <ul>
+        <li id="navigation-node-0" data-id-navigation="1" class="jstree-open" data-jstree='{"type":"navigation"}'>
+            {{ navigationTree.navigation.name }}
+            {% include '@NavigationGui/Tree/_partials/nodes.twig' with {nodes: navigationTree.nodes} %}
+
+            {#<ul>#}
+                {#<li data-id-navigation-node="1" class="jstree-open">Node 1#}
+                    {#<ul>#}
+                        {#<li data-id-navigation-node="2" data-jstree='{"type":"category"}' class="jstree-open">#}
+                            {#Node 1.1#}
+                            {#<ul>#}
+                                {#<li data-id-navigation-node="3" data-jstree='{"type":"category"}'>Node 1.1.1</li>#}
+                                {#<li data-id-navigation-node="4" data-jstree='{"type":"cms"}'>Node 1.1.2</li>#}
+                                {#<li data-id-navigation-node="5" data-jstree='{"type":"external_url"}'>Node 1.1.3</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                        {#<li data-id-navigation-node="6">Node 1.2</li>#}
+                    {#</ul>#}
+                {#</li>#}
+                {#<li data-id-navigation-node="7" class="jstree-open">Node 2</li>#}
+                {#<li data-id-navigation-node="8" class="jstree-open">Node 3#}
+                    {#<ul>#}
+                        {#<li data-id-navigation-node="9">Node 3.1</li>#}
+                        {#<li data-id-navigation-node="10">Node 3.2</li>#}
+                        {#<li data-id-navigation-node="11">Node 3.3</li>#}
+                    {#</ul>#}
+                {#</li>#}
+            {#</ul>#}
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,19 @@
+<div class="form-group">
+    {% for locale,navigationNodeLocalizedAttributes in navigationNodeForm.navigation_node_localized_attributes %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale, 'collapsed': (not loop.first), 'hasError': (not navigationNodeLocalizedAttributes.vars.valid) } %}
+            {% block content %}
+                <div class="form-group {% if navigationNodeLocalizedAttributes.title.vars.errors|length %}has-error{% endif %}">
+                    {{ form_label(navigationNodeLocalizedAttributes.title) }}
+                    {{ form_widget(navigationNodeLocalizedAttributes.title, {'attr': {'class': 'name-translation', 'data-translation-key': navigationNodeLocalizedAttributes.title.vars.name}}) }}
+                    {{ form_errors(navigationNodeLocalizedAttributes.title) }}
+                </div>
+
+                <p>External URL / CMS / Category / None ...</p>
+
+                {{ form_rest(navigationNodeLocalizedAttributes) }}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+</div>
+
+{{ form_widget(navigationNodeForm.is_active) }}
