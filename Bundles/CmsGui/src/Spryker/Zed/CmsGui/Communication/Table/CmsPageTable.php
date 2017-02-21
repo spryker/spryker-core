@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
 use Spryker\Zed\CmsGui\Communication\Controller\EditPageController;
