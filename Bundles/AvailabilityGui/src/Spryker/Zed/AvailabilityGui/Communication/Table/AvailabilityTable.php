@@ -10,8 +10,8 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -144,6 +144,7 @@ class AvailabilityTable extends AbstractTable
         if ($this->productBundleQueryContainer->queryBundleProduct($idProduct)->count() > 0) {
             return true;
         }
+
         return false;
     }
 

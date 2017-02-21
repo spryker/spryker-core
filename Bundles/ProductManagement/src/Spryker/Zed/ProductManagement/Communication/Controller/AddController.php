@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\Form\FormInterface;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -165,6 +165,7 @@ class AddController extends AbstractController
             $productConcreteTransfer->setIsActive(false);
             $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+
             return [$productConcreteTransfer];
         }
 
