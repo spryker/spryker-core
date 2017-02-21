@@ -96,8 +96,15 @@ class DependencyController extends AbstractController
      */
     public function stabilityAction()
     {
+        $bundles = [];
+        if (!file_exists(APPLICATION_ROOT_DIR . '/data/dependencyTree.json')) {
+            $this->addInfoMessage('You need to run "vendor/bin/console dev:dependency:build-tree" to calculate stability for all bundles.');
+        } else {
+            $bundles = $this->getFacade()->calculateStability();
+        }
+
         return $this->viewResponse([
-            'bundles' => $this->getFacade()->calculateStability(),
+            'bundles' => $bundles,
         ]);
     }
 
