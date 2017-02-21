@@ -12,6 +12,10 @@ If you have not yet installed the Spryker Framework, ignore these instructions a
 
 You can download and install this bundle from: https://github.com/spryker/spryker/tree/feature/core-520-product-bundles/Bundles/ProductBundle
 
+Make sure you updated bundles to:
+
+Calculation: >=2.2.0, ProductOption: >=3.1.0, SalesAggregator: >=3.1.0, Tax: >=3.1.0 ,  Cart: >= 2.4.0.  Those all minor releases are BC.
+
 ### Plugin configuration
 
 Plugin configuration is the process of incorporating the bundle into the Spryker framework by registering the bundle plugins.
