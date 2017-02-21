@@ -1,0 +1,51 @@
+
+{% set attributeForm = '' %}
+{% for glossaryAttributes in glossaryForm.glossaryAttributes %}
+    {% if tab.name == glossaryAttributes.vars.data.placeholder %}
+        {% set attributeForm = glossaryAttributes %}
+    {% endif %}
+{% endfor %}
+
+<div class="placeholder-translation-container">
+    {{ form_row(attributeForm.searchOption) }}
+
+    <div class="form-group {% if attributeForm.translationKey.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(attributeForm.translationKey) }}
+        {{ form_widget(attributeForm.translationKey, { 'attr': {'autocomplete' : 'off'} }) }}
+
+        <div class="loading loading-{{ tab.name }}">
+            <img src="/assets/img/cms-loader.gif">
+            Loading...
+        </div>
+
+        <div class="keyListCanvas"></div>
+        {{ form_errors(attributeForm.translationKey) }}
+    </div>
+
+
+    {{ form_row(attributeForm.fkCmsGlossaryMapping) }}
+    {{ form_row(attributeForm.templateName) }}
+    {{ form_row(attributeForm.fkPage) }}
+
+    {% for locale in availableLocales %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true) , 'hasError': false} %}
+            {% block content %}
+
+                {% for translationForm in attributeForm.translations %}
+                    {% if translationForm.vars.data.localeName == locale.localeName   %}
+                        <div class="row">
+                            <div class="col-sm-12" class="translation {% if translationForm.translation.vars.errors|length > 0 %}has-error{% endif %}">
+                                {{ form_label(translationForm.translation) }}
+                                {{ form_widget(translationForm.translation, {'attr': {'rows': 5}}) }}
+                                {{ form_errors(translationForm.translation) }}
+                            </div>
+                            {{ form_row(translationForm.fkLocale) }}
+                            {{ form_row(translationForm.localeName) }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+</div>

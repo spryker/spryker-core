@@ -23,8 +23,10 @@ class TransferGenerator implements TransferGeneratorInterface
      */
     public function convertCategory(SpyCategory $categoryEntity)
     {
-        return (new CategoryTransfer())
-            ->fromArray($categoryEntity->toArray());
+        $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
+
+        return $categoryTransfer;
     }
 
     /**
@@ -49,8 +51,10 @@ class TransferGenerator implements TransferGeneratorInterface
      */
     public function convertCategoryNode(SpyCategoryNode $nodeEntity)
     {
-        return (new NodeTransfer())
-            ->fromArray($nodeEntity->toArray());
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->fromArray($nodeEntity->toArray(), true);
+
+        return $categoryNodeTransfer;
     }
 
     /**

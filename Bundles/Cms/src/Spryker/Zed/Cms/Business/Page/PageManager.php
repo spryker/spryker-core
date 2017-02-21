@@ -310,13 +310,19 @@ class PageManager implements PageManagerInterface
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer)
     {
+        $this->cmsQueryContainer->getConnection()->beginTransaction();
+
         if (!$this->hasPageId($pageTransfer->getIdCmsPage())) {
             $pageTransfer = $this->savePage($pageTransfer);
         }
 
-        $urlTransfer = $this->createPageUrl($pageTransfer);
-        $pageTransfer->setUrl($urlTransfer);
-        $this->urlFacade->activateUrl($urlTransfer);
+        $urlTransfer = $pageTransfer->getUrl();
+        if (!$this->urlFacade->hasUrl($urlTransfer)) {
+            $urlTransfer = $this->createPageUrl($pageTransfer);
+            $pageTransfer->setUrl($urlTransfer);
+        }
+
+        $this->cmsQueryContainer->getConnection()->commit();
 
         return $urlTransfer;
     }

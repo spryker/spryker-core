@@ -100,24 +100,4 @@ class ProductManager implements ProductManagerInterface
         return $idProductAbstract;
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function isProductActive($idProductAbstract)
-    {
-        $productConcreteCollection = $this->productQueryContainer
-            ->queryProduct()
-            ->findByFkProductAbstract($idProductAbstract);
-
-        foreach ($productConcreteCollection as $productConcreteEntity) {
-            if ($productConcreteEntity->getIsActive()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 }

@@ -106,4 +106,19 @@ interface SearchFacadeInterface
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
 
+    /**
+     * Specification:
+     * - Loads index definition json files from the folders
+     * - Generates IndexMap class for each mapping type
+     * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
+     * - The generated files will be removed and re-created always when the command runs
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return void
+     */
+    public function generatePageIndexMap(MessengerInterface $messenger);
+
 }

@@ -102,8 +102,6 @@ class Filesystem extends Twig_Loader_Filesystem
 
         $nameParts = explode('/', $name);
         $templateName = array_pop($nameParts);
-        $filter = new CamelCaseToDash();
-        $templateName = strtolower($filter->filter($templateName));
         array_push($nameParts, $templateName);
         $name = implode('/', $nameParts);
 

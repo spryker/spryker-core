@@ -191,6 +191,32 @@ class UrlFacadeTest extends Test
     /**
      * @return void
      */
+    public function testHasUrlIgnoresRedirectedUrls()
+    {
+        $localeTransfer = $this->localeFacade->createLocale('ab_CD');
+        $urlRedirectEntity = new SpyUrlRedirect();
+        $urlRedirectEntity
+            ->setToUrl('/some/url/to/redirect/to')
+            ->save();
+
+        $urlEntity = new SpyUrl();
+        $urlEntity
+            ->setUrl('/some/url/like/string')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->setFkResourceRedirect($urlRedirectEntity->getIdUrlRedirect())
+            ->save();
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl('/some/url/like/string');
+
+        $hasUrl = $this->urlFacade->hasUrl($urlTransfer);
+
+        $this->assertFalse($hasUrl, 'Checking if URL redirect entity exists should get ignored.');
+    }
+
+    /**
+     * @return void
+     */
     public function testHasUrlEntityById()
     {
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
@@ -206,6 +232,32 @@ class UrlFacadeTest extends Test
         $hasUrl = $this->urlFacade->hasUrl($urlTransfer);
 
         $this->assertTrue($hasUrl, 'Checking if URL entity exists by ID should return true.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasUrlOrRedirectedUrlById()
+    {
+        $localeTransfer = $this->localeFacade->createLocale('ab_CD');
+        $urlRedirectEntity = new SpyUrlRedirect();
+        $urlRedirectEntity
+            ->setToUrl('/some/url/to/redirect/to')
+            ->save();
+
+        $urlEntity = new SpyUrl();
+        $urlEntity
+            ->setUrl('/some/url/like/string')
+            ->setFkLocale($localeTransfer->getIdLocale())
+            ->setFkResourceRedirect($urlRedirectEntity->getIdUrlRedirect())
+            ->save();
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setIdUrl($urlEntity->getIdUrl());
+
+        $hasUrl = $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+
+        $this->assertTrue($hasUrl, 'Checking if URL redirect entity exists by ID should return true.');
     }
 
     /**

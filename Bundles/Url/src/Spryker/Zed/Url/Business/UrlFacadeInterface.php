@@ -63,6 +63,19 @@ interface UrlFacadeInterface
 
     /**
      * Specification:
+     * - Checks if URL entity exists in database by the provided `id_url` or `url`.
+     * - Redirected URLs are also considered.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * Specification:
      * - Persists changes of existing URL entity in database.
      * - Touches active "url" entry.
      * - Existing redirect from the URL of the updated entity will be deleted.

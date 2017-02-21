@@ -19,8 +19,6 @@ class SearchConsole extends Console
 
     const COMMAND_NAME = 'setup:search';
     const DESCRIPTION = 'This command will run installer for search';
-    const EXIT_CODE_ERROR = 1;
-    const EXIT_CODE_SUCCESS = 0;
 
     /**
      * @return void

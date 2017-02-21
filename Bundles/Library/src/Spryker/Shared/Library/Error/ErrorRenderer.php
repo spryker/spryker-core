@@ -28,7 +28,7 @@ class ErrorRenderer
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
 
-        $errorString = '<div style="font-family: courier; font-size: 14px">';
+        $errorString = '<div style="font-family: Helvetica, Arial, sans-serif; font-size: 14px">';
         $message = get_class($e) . ' - ' . $e->getMessage();
         $errorString .= '<h1>' . APPLICATION . ' Exception</h1><div style="background: #dadada; padding: 5px"><font style="12"><b>' . $message . '</b></font></div><br/>';
 

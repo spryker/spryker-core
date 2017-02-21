@@ -31,3 +31,4 @@ Bundles/*/tests/_support/_generated
 .sass-cache
 node_modules/
 /static/public/
+yarn.lock

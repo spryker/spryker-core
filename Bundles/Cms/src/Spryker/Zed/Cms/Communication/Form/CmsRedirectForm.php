@@ -177,8 +177,8 @@ class CmsRedirectForm extends AbstractType
                     $urlTransfer = new UrlTransfer();
                     $urlTransfer->setUrl($url);
 
-                    if ($this->urlFacade->hasUrl($urlTransfer)) {
-                        $context->addViolation('URL is already used');
+                    if ($this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer)) {
+                        $context->addViolation('URL is already used.');
                     }
                 },
             ],

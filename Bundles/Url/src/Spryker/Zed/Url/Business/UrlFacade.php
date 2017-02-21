@@ -98,6 +98,22 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer String format is only for BC reasons.
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
      * @deprecated
      *
      * @param string $url

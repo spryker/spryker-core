@@ -558,6 +558,7 @@ class Address
     {
         $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
+        $addressEntity->setIdCustomerAddress(null);
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
         $addressEntity->setFkCountry($fkCountry);

@@ -1,0 +1,5 @@
+{% if isActive %}
+    {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Deactivate' | trans) }}
+{% else %}
+    {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl }), 'Activate' | trans) }}
+{% endif %}

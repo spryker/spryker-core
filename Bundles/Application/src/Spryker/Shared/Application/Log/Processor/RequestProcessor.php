@@ -97,7 +97,7 @@ class RequestProcessor
      */
     protected function getSapi()
     {
-        return (PHP_SAPI === 'cli') ? 'CLI' : 'WEB';
+        return (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') ? 'CLI' : 'WEB';
     }
 
     /**

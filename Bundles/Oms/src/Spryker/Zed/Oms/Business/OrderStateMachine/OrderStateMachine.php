@@ -640,6 +640,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $this->states[$stateName] = $state;
         }
         $orderItem->setState($state);
+        $orderItem->setLastStateChange(new DateTime());
     }
 
     /**
