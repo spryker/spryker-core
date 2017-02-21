@@ -36,7 +36,6 @@ class AvailabilityListCest
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
         $i->assertTableWithDataExists();
 
-
         $i->clickViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
