@@ -35,7 +35,7 @@ class CreateController extends AbstractController
 
             $this->addSuccessMessage(sprintf('Navigation #%d successfully created.', $navigationTransfer->getIdNavigation()));
 
-            return $this->redirectResponse('/navigation-gui/create');
+            return $this->redirectResponse('/navigation-gui');
         }
 
         return $this->viewResponse([

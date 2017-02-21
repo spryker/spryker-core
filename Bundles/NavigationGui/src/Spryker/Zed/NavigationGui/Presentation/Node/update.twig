@@ -14,9 +14,9 @@
                     </a>
 
                     {% if idNavigationNode %}
-                        <button type="button" id="navigation-tree-save-btn" class="btn btn-xs btn-danger">
+                        <a href="{{ url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}" class="btn btn-xs btn-danger">
                             <i class="fa fa-trash"></i> {{ 'Remove selected node' | trans }}
-                        </button>
+                        </a>
                     {% endif %}
                 </div>
             </div>

@@ -9,7 +9,8 @@
 require('jstree');
 
 var treeProgressBar = $('#navigation-tree-loader');
-var targetElement = $('#navigation-tree-container');
+var treeContainer = $('#navigation-tree-container');
+var targetElement = $('#navigation-tree-content');
 
 /**
  * @param {int} idNavigation
@@ -21,6 +22,7 @@ var targetElement = $('#navigation-tree-container');
 function loadTree(idNavigation, selected, skipFormLoad)
 {
     treeProgressBar.removeClass('hidden');
+    treeContainer.addClass('hidden');
 
     var url = '/navigation-gui/tree/?id-navigation=' + idNavigation;
 
@@ -28,7 +30,7 @@ function loadTree(idNavigation, selected, skipFormLoad)
         targetElement.html(response);
 
         // tree init
-        var tree = $('#jstree1').jstree({
+        $('#navigation-tree').jstree({
             'core': {
                 'check_callback': function (op, node, par, pos, more) {
                     // disable drop on root level
@@ -65,6 +67,8 @@ function loadTree(idNavigation, selected, skipFormLoad)
             }
         });
 
+        treeContainer.removeClass('hidden');
+
         if (skipFormLoad) {
             selectNode(selected);
             setNodeSelectListener(idNavigation);
@@ -88,13 +92,23 @@ function resetTree()
     resetForm();
 }
 
+/**
+ * @param {int} idNavigationNode
+ *
+ * @return {void}
+ */
 function selectNode(idNavigationNode) {
     var nodeToSelect = 'navigation-node-' + (idNavigationNode ? idNavigationNode : 0);
-    $('#jstree1').jstree(true).select_node(nodeToSelect);
+    $('#navigation-tree').jstree(true).select_node(nodeToSelect);
 }
 
+/**
+ * @param {int} idNavigation
+ *
+ * @return {void}
+ */
 function setNodeSelectListener(idNavigation) {
-    $('#jstree1').on('select_node.jstree', function(e, data){
+    $('#navigation-tree').on('select_node.jstree', function(e, data){
         var idNavigationNode = data.node.data.idNavigationNode;
 
         loadForm(idNavigation, idNavigationNode);
@@ -142,6 +156,7 @@ function resetForm()
     iframe.hide();
 }
 
+// Load event handler for iframe
 iframe.on('load', function(){
     formProgressBar.addClass('hidden');
     iframe.show();
@@ -153,12 +168,10 @@ iframe.on('load', function(){
     // tree reloading
     var treeReloader = iframe.contents().find('#navigation-tree-reloader');
     if (treeReloader.length) {
-        // console.log($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('selectedTreeNode'));
-        loadTree($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('selectedTreeNode'), true);
+        // console.log($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'));
+        loadTree($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'), true);
     }
 });
-
-
 
 
 
@@ -172,17 +185,20 @@ $('#navigation-tree-search-field').keyup(function () {
     }
     timeout = setTimeout(function () {
         var term = $('#navigation-tree-search-field').val();
-        $('#jstree1').jstree(true).search(term);
+        $('#navigation-tree').jstree(true).search(term);
     }, 250);
 });
 
-// click save
+// click save order
 $('#navigation-tree-save-btn').on('click', function(){
-    var json = $('#jstree1').jstree(true).get_json();
+    var json = $('#navigation-tree').jstree(true).get_json();
     console.log(json);
     // TODO: save tree order
 });
 
+/**
+ * Open public methods
+ */
 module.exports = {
     load: loadTree,
     reset: resetTree

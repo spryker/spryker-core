@@ -30,7 +30,6 @@ $(document).ready(function() {
 
     navigationTable.on('deselect', function() {
         navigationTree.reset();
-        // navigationNodeForm.reset();
     });
 
 });

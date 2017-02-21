@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business\Tree;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationTreeReaderInterface
@@ -14,9 +15,10 @@ interface NavigationTreeReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer);
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
 
 }

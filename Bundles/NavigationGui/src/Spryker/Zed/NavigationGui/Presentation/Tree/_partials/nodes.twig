@@ -1,6 +1,9 @@
 <ul>
     {% for node in nodes %}
-        <li id="navigation-node-{{ node.navigationNode.idNavigationNode }}" data-id-navigation-node="{{ node.navigationNode.idNavigationNode }}" class="jstree-open" data-jstree='{"type":"category"}'>
+        <li id="navigation-node-{{ node.navigationNode.idNavigationNode }}" data-id-navigation-node="{{ node.navigationNode.idNavigationNode }}"
+            class="jstree-open {% if not node.navigationNode.isActive %}node-inactive{% endif %}"
+            data-jstree='{"type":"category"}'
+        >
             {{ node.navigationNode.navigationNodeLocalizedAttributes[0].title }}
             {% include '@NavigationGui/Tree/_partials/nodes.twig' with {nodes: node.children} %}
         </li>

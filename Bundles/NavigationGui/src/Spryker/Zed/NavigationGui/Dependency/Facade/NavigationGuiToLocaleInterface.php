@@ -13,18 +13,11 @@ interface NavigationGuiToLocaleInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-//    public function getCurrentLocale();
+    public function getCurrentLocale();
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-//    public function getLocale($localeName);
 
 }

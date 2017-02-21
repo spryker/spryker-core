@@ -5,46 +5,9 @@
 
 @import '~jstree/dist/themes/default/style';
 
-//@mixin coloredButton($backgroundColor, $color, $hoverColor:'') {
-//    background-color: $backgroundColor;
-//    border-color: $backgroundColor;
-//    color: $color;
-//
-//    &.btn-outline {
-//        background: transparent;
-//        color: $backgroundColor;
-//
-//        &:hover {
-//            background-color: $backgroundColor;
-//            border-color: $backgroundColor;
-//            @if $hoverColor == '' {
-//                color: $color;
-//            } @else {
-//                color: $hoverColor;
-//            }
-//        }
-//    }
-//}
-//
-//#navigation-table {
-//    tbody {
-//        tr {
-//            &.selected {
-//                background-color: rgba(#0088cc, .2);
-//                color: inherit;
-//
-//                a.btn-view {
-//                    @include coloredButton(#1c84c6, #ffffff);
-//                }
-//
-//                a.btn-create {
-//                    @include coloredButton(#108548, #ffffff);
-//                }
-//            }
-//
-//            td:last-child {
-//                text-align: right;
-//            }
-//        }
-//    }
-//}
+/*
+ * Inactive nodes
+ */
+.jstree-default .jstree-node.node-inactive > a {
+  opacity: 0.5;
+}

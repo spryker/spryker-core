@@ -26,10 +26,10 @@ class NavigationGuiToLocaleBridge implements NavigationGuiToLocaleInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-//    public function getCurrentLocale()
-//    {
-//        return $this->localeFacade->getCurrentLocale();
-//    }
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
+    }
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
@@ -38,15 +38,5 @@ class NavigationGuiToLocaleBridge implements NavigationGuiToLocaleInterface
     {
         return $this->localeFacade->getLocaleCollection();
     }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-//    public function getLocale($localeName)
-//    {
-//        return $this->localeFacade->getLocale($localeName);
-//    }
 
 }

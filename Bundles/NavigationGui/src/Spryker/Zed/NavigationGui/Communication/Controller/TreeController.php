@@ -31,9 +31,13 @@ class TreeController extends AbstractController
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($idNavigation);
 
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+
         $navigationTreeTransfer = $this->getFactory()
             ->getNavigationFacade()
-            ->findNavigationTree($navigationTransfer);
+            ->findNavigationTree($navigationTransfer, $localeTransfer);
 
         return $this->viewResponse([
             'navigationTree' => $navigationTreeTransfer,

@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Navigation\Business\Tree;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes;
+use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTableMap;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTreeReader implements NavigationTreeReaderInterface
@@ -35,12 +38,14 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer)
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
     {
         $this->assertNavigationForRead($navigationTransfer);
+        $this->assertLocaleForRead($localeTransfer);
 
         $navigationEntity = $this->findNavigationEntity($navigationTransfer);
 
@@ -48,7 +53,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
             return null;
         }
 
-        return $this->mapNavigationEntityToNavigationTreeTransfer($navigationEntity);
+        return $this->mapNavigationEntityToNavigationTreeTransfer($navigationEntity, $localeTransfer);
     }
 
     /**
@@ -59,6 +64,20 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     protected function assertNavigationForRead(NavigationTransfer $navigationTransfer)
     {
         $navigationTransfer->requireIdNavigation();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    protected function assertLocaleForRead(LocaleTransfer $localeTransfer = null)
+    {
+        if (!$localeTransfer) {
+            return;
+        }
+
+        $localeTransfer->requireIdLocale();
     }
 
     /**
@@ -75,10 +94,11 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    protected function mapNavigationEntityToNavigationTreeTransfer(SpyNavigation $navigationEntity)
+    protected function mapNavigationEntityToNavigationTreeTransfer(SpyNavigation $navigationEntity, LocaleTransfer $localeTransfer = null)
     {
         $navigationTreeTransfer = new NavigationTreeTransfer();
 
@@ -87,7 +107,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
         $rootNavigationNodes = $this->findRootNavigationNodes($navigationEntity);
         foreach ($rootNavigationNodes as $navigationNodeEntity) {
-            $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity);
+            $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity, $localeTransfer);
             $navigationTreeTransfer->addNode($navigationTreeNodeTransfer);
         }
 
@@ -121,19 +141,20 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTreeNodeTransfer
      */
-    protected function getNavigationTreeNodeRecursively(SpyNavigationNode $navigationNodeEntity)
+    protected function getNavigationTreeNodeRecursively(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
     {
         $navigationTreeNodeTransfer = new NavigationTreeNodeTransfer();
 
-        $navigationNodeTransfer = $this->mapNavigationNodeEntityToTransfer($navigationNodeEntity);
+        $navigationNodeTransfer = $this->mapNavigationNodeEntityToTransfer($navigationNodeEntity, $localeTransfer);
         $navigationTreeNodeTransfer->setNavigationNode($navigationNodeTransfer);
 
         $childrenNavigationNodeEntities = $this->findChildrenNavigationNodes($navigationNodeTransfer);
         foreach ($childrenNavigationNodeEntities as $childrenNavigationNodeEntity) {
-            $childNavigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($childrenNavigationNodeEntity);
+            $childNavigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($childrenNavigationNodeEntity, $localeTransfer);
             $navigationTreeNodeTransfer->addChild($childNavigationTreeNodeTransfer);
         }
 
@@ -142,20 +163,51 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    protected function mapNavigationNodeEntityToTransfer(SpyNavigationNode $navigationNodeEntity)
+    protected function mapNavigationNodeEntityToTransfer(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
     {
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
 
-        foreach ($navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess() as $navigationNodeLocalizedAttributesEntity) {
+        $localizedAttributes = $this->findLocalizedAttributes($navigationNodeEntity, $localeTransfer);
+        foreach ($localizedAttributes as $navigationNodeLocalizedAttributesEntity) {
             $navigationNodeLocalizedAttributesTransfer = $this->mapNavigationNodeLocalizedAttributesEntityToTransfer($navigationNodeLocalizedAttributesEntity);
             $navigationNodeTransfer->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer);
         }
 
         return $navigationNodeTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer)
+    {
+        $criteria = $this->createLocalizedAttributeFilterCriteria($localeTransfer);
+
+        return $navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess($criteria);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function createLocalizedAttributeFilterCriteria(LocaleTransfer $localeTransfer)
+    {
+        $criteria = new Criteria();
+
+        if ($localeTransfer) {
+            $criteria->add(SpyNavigationNodeLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale());
+        }
+
+        return $criteria;
     }
 
     /**

@@ -1,4 +1,6 @@
-<div class="ibox float-e-margins">
+{% include '@NavigationGui/_partials/progressbar.twig' with {idProgressbar: 'navigation-tree-loader'} %}
+
+<div id="navigation-tree-container" class="ibox hidden">
 
     <div class="ibox-title">
         <h5>{{ 'Navigation tree' | trans }}</h5>
@@ -21,12 +23,10 @@
             {% endfilter %}
         </div>
 
-        {% include '@NavigationGui/_partials/progressbar.twig' with {idProgressbar: 'navigation-tree-loader'} %}
-
-        <div id="navigation-tree-container"></div>
+        <div id="navigation-tree-content"></div>
     </div>
 
     <div class="ibox-footer">
-        <input type="button" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+        <input type="button" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save order' | trans }}" />
     </div>
 </div>
