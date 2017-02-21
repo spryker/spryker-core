@@ -7,7 +7,7 @@
 namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
