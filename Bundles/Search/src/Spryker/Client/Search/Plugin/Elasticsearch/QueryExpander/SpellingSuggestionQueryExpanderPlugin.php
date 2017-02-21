@@ -24,10 +24,15 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
      * @param \Elastica\Query $query
      * @param array $requestParameters
      *
-     * @return \Elastica\Suggest\AbstractSuggest
+     * @return \Elastica\Suggest\AbstractSuggest|null
      */
     protected function createSuggestion(Query $query, array $requestParameters = [])
     {
+        $suggestion = $this->getSuggestion($query);
+        if (!$suggestion->hasParam('text')) {
+            return null;
+        }
+
         $termSuggest = $this->getFactory()
             ->createSuggestBuilder()
             ->createTerm(static::SUGGESTION_NAME, PageIndexMap::SUGGESTION_TERMS)
