@@ -27,4 +27,12 @@ class AvailabilityTester extends ZedAcceptanceTester
         $this->assertGreaterThan(0, $itemListItems);
     }
 
+    /**
+     * @return void
+     */
+    public function clickViewButton()
+    {
+        $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
+    }
+
 }

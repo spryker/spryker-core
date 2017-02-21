@@ -36,7 +36,8 @@ class AvailabilityListCest
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
         $i->assertTableWithDataExists();
 
-        $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[7]/a");
+
+        $i->clickViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
 
