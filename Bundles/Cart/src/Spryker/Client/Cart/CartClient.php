@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
 use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -46,6 +45,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getItemCount()
@@ -54,7 +55,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return ItemCountPluginInterface
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
      */
     protected function getItemCounter()
     {
