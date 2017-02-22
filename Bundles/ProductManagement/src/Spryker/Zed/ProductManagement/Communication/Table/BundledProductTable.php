@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;

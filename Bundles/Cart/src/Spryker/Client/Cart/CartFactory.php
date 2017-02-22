@@ -37,4 +37,12 @@ class CartFactory extends AbstractFactory
         return $this->getProvidedDependency(CartDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
+     */
+    public function getItemCounter()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGIN_ITEM_COUNT);
+    }
+
 }

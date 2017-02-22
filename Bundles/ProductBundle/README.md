@@ -166,7 +166,7 @@ In `\Pyz\Yves\Checkout\Process\Steps\SummaryStep`, inject the grouper and cart c
 
  ```
  /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -178,7 +178,6 @@ In `\Pyz\Yves\Checkout\Process\Steps\SummaryStep`, inject the grouper and cart c
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
-            'numberOfItems' => $this->cartClient->getItemCount(),
         ];
     }
 ```

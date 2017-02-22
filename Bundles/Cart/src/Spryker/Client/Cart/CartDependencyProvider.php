@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
 
     const CLIENT_QUOTE = 'quote client';
     const CLIENT_ZED_REQUEST = 'zed request client';
+    const PLUGIN_ITEM_COUNT = 'item count plugin';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,6 +28,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addQuoteClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addItemCountPlugin($container);
 
         return $container;
     }
@@ -53,6 +56,20 @@ class CartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addItemCountPlugin(Container $container)
+    {
+        $container[static::PLUGIN_ITEM_COUNT] = function (Container $container) {
+            return new ItemCountPlugin();
         };
 
         return $container;

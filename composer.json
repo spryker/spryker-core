@@ -616,6 +616,7 @@
       "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
       "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
 
+      "Spryker\\Client\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Shared\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Yves\\ProductBundle\\": "Bundles/ProductBundle/src",

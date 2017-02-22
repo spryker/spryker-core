@@ -11,7 +11,7 @@ use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;

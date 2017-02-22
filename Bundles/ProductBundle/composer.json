@@ -5,14 +5,23 @@
     "spryker/kernel": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/product": "^4.0.0",
-    "spryker/propel": "^2.2.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/price": "^3.0.0",
     "spryker/stock": "^3.0.0",
     "spryker/sales": "^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart.",
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
+    "spryker/oms": "If you want to use Oms plugins you need to install spryker/oms.",
+    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
   },
   "description": "ProductBundle bundle",
   "license": "proprietary",

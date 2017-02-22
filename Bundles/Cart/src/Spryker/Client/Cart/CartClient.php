@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
 use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -45,17 +46,19 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Returns number of items in quote
-     *
-     * @api
-     *
-     * @param int $itemCount
-     *
-     * @return void
+     * @return int
      */
-    public function setItemCount($itemCount)
+    public function getItemCount()
     {
-        $this->getSession()->setItemCount($itemCount);
+        return $this->getItemCounter()->getItemCount($this->getQuote());
+    }
+
+    /**
+     * @return ItemCountPluginInterface
+     */
+    protected function getItemCounter()
+    {
+        return $this->getFactory()->getItemCounter();
     }
 
     /**
@@ -84,6 +87,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function addItem(ItemTransfer $itemTransfer)
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->addItem($cartChangeTransfer);
     }
 
@@ -101,6 +105,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $itemTransfer = $this->findItem($sku, $groupKey);
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->removeItem($cartChangeTransfer);
     }
 
@@ -119,6 +124,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartChangeTransfer = $this->createCartChangeTransfer();
         $cartChangeTransfer->setItems($items);
+
         return $this->getZedStub()->removeItem($cartChangeTransfer);
     }
 
@@ -137,6 +143,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
                 $itemTransfer->getGroupKey() === $groupKey) {
+
                 return $itemTransfer;
             }
         }
@@ -195,6 +202,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->removeItem($cartChangeTransfer);
     }
 
@@ -215,6 +223,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->addItem($cartChangeTransfer);
     }
 

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -170,6 +171,27 @@ class CartClientTest extends PHPUnit_Framework_TestCase
         $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 2);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
+    }
+
+    /***
+     * @return void
+     */
+    public function testGetItemCountReturnNumberOfItemsInCart()
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSku('sku');
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $mockBuilder = $this->getMockBuilder(CartClient::class);
+        $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
+        $cartClientMock = $mockBuilder->getMock();
+        $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
+        $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
+
+        $this->assertSame(1, $cartClientMock->getItemCount());
     }
 
     /**
