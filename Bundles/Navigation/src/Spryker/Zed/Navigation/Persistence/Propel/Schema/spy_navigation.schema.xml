@@ -28,7 +28,7 @@
         <column name="id_navigation_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_navigation" required="true" type="INTEGER"/>
         <column name="fk_parent_navigation_node" required="false" type="INTEGER" default="NULL"/>
-        <column name="weight" type="INTEGER" required="false" default="0"/>
+        <column name="position" type="INTEGER" required="false" default="NULL"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
         <foreign-key foreignTable="spy_navigation_node" phpName="ParentNavigationNode" refPhpName="ChildrenNavigationNode" onDelete="CASCADE">
@@ -40,7 +40,7 @@
         </foreign-key>
 
         <index>
-            <index-column name="weight"/>
+            <index-column name="position"/>
         </index>
 
         <id-method-parameter value="spy_navigation_node_pk_seq"/>

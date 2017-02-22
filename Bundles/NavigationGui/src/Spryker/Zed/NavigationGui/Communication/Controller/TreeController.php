@@ -8,6 +8,7 @@
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +19,7 @@ class TreeController extends AbstractController
 {
 
     const PARAM_ID_NAVIGATION = 'id-navigation';
+    const PARAM_NAVIGATION_TREE = 'navigation-tree';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,6 +43,35 @@ class TreeController extends AbstractController
 
         return $this->viewResponse([
             'navigationTree' => $navigationTreeTransfer,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function updateHierarchyAction(Request $request)
+    {
+        $navigationTreeData = $request->request->get(self::PARAM_NAVIGATION_TREE);
+
+        if (!$navigationTreeData) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'Incorrect request data.',
+            ]);
+        }
+
+        $navigationTreeTransfer = new NavigationTreeTransfer();
+        $navigationTreeTransfer->fromArray((array)$navigationTreeData);
+
+        $this->getFactory()
+            ->getNavigationFacade()
+            ->updateNavigationTreeHierarchy($navigationTreeTransfer);
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Navigation tree updated successfully.',
         ]);
     }
 

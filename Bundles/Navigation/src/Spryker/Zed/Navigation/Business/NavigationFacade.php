@@ -10,6 +10,7 @@ namespace Spryker\Zed\Navigation\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -161,6 +162,22 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         return $this->getFactory()
             ->createNavigationTreeReader()
             ->findNavigationTree($navigationTransfer, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
+     *
+     * @return void
+     */
+    public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer)
+    {
+        $this->getFactory()
+            ->createNavigationTreeHierarchyUpdater()
+            ->updateNavigationTreeHierarchy($navigationTreeTransfer);
     }
 
 }

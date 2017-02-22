@@ -183,11 +183,11 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer)
+    protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, LocaleTransfer $localeTransfer = null)
     {
         $criteria = $this->createLocalizedAttributeFilterCriteria($localeTransfer);
 
@@ -195,11 +195,11 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function createLocalizedAttributeFilterCriteria(LocaleTransfer $localeTransfer)
+    protected function createLocalizedAttributeFilterCriteria(LocaleTransfer $localeTransfer = null)
     {
         $criteria = new Criteria();
 

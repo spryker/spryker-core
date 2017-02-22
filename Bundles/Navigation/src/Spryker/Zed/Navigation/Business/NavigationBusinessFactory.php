@@ -16,10 +16,12 @@ use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreator;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeDeleter;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeReader;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdater;
+use Spryker\Zed\Navigation\Business\Tree\NavigationTreeHierarchyUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReader;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationBusinessFactory extends AbstractBusinessFactory
 {
@@ -94,6 +96,14 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationTreeReader()
     {
         return new NavigationTreeReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Tree\NavigationTreeHierarchyUpdaterInterface
+     */
+    public function createNavigationTreeHierarchyUpdater()
+    {
+        return new NavigationTreeHierarchyUpdater($this->getQueryContainer());
     }
 
 }

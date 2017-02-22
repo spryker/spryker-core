@@ -9,13 +9,14 @@
 require('jstree');
 
 var treeProgressBar = $('#navigation-tree-loader');
+var treeUpdateProgressBar = $('#navigation-tree-update-loader');
 var treeContainer = $('#navigation-tree-container');
 var targetElement = $('#navigation-tree-content');
 
 /**
  * @param {int} idNavigation
  * @param {int|null} selected
- * @param {bool} skipFormLoad
+ * @param {boolean} skipFormLoad
  *
  * @return {void}
  */
@@ -168,7 +169,6 @@ iframe.on('load', function(){
     // tree reloading
     var treeReloader = iframe.contents().find('#navigation-tree-reloader');
     if (treeReloader.length) {
-        // console.log($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'));
         loadTree($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'), true);
     }
 });
@@ -191,10 +191,50 @@ $('#navigation-tree-search-field').keyup(function () {
 
 // click save order
 $('#navigation-tree-save-btn').on('click', function(){
-    var json = $('#navigation-tree').jstree(true).get_json();
-    console.log(json);
-    // TODO: save tree order
+    treeUpdateProgressBar.removeClass('hidden');
+
+    var jstreeData = $('#navigation-tree').jstree(true).get_json();
+    var params = {
+        'navigation-tree': {
+            'nodes': getNavigationNodesRecursively(jstreeData[0])
+        }
+    };
+
+    $.post('/navigation-gui/tree/update-hierarchy', params, function(response) {
+        window.sweetAlert({
+            title: response.success ? "Success" : "Error",
+            text: response.message,
+            type: response.success ? "success" : "error"
+        });
+    })
+    .always(function() {
+        treeUpdateProgressBar.addClass('hidden');
+    });
 });
+
+/**
+ *
+ * @param {Object} jstreeNode
+ *
+ * @returns {Array}
+ */
+function getNavigationNodesRecursively(jstreeNode) {
+    var nodes = [];
+
+    $.each(jstreeNode.children, function (i, childNode) {
+        var navigationNode = {
+            navigation_node: {
+                id_navigation_node: childNode.data.idNavigationNode,
+                position: (i + 1)
+            },
+            children: getNavigationNodesRecursively(childNode)
+        };
+
+        nodes.push(navigationNode);
+    });
+
+    return nodes;
+}
 
 /**
  * Open public methods

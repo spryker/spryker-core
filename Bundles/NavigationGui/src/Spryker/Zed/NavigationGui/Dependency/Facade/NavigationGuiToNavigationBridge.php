@@ -10,6 +10,7 @@ namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationTreeTransfer;
 
 class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterface
 {
@@ -116,6 +117,16 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
     {
         return $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
+     *
+     * @return void
+     */
+    public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer)
+    {
+        $this->navigationFacade->updateNavigationTreeHierarchy($navigationTreeTransfer);
     }
 
 }

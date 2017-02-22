@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="ibox-content">
+    <div class="ibox-content sk-loading">
         <div class="alert alert-info alert-dismissable">
             <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
             {% filter trans|raw %}
@@ -26,7 +26,8 @@
         <div id="navigation-tree-content"></div>
     </div>
 
-    <div class="ibox-footer">
+    <div class="ibox-footer clearfix">
         <input type="button" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save order' | trans }}" />
+        {% include '@NavigationGui/_partials/progressbar.twig' with {idProgressbar: 'navigation-tree-update-loader'} %}
     </div>
 </div>

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Navigation\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationTreeTransfer;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
@@ -125,5 +126,17 @@ interface NavigationFacadeInterface
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
     public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
+     *
+     * @return void
+     */
+    public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
 
 }

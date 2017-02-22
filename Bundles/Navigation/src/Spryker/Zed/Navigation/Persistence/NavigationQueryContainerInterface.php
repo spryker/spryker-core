@@ -67,4 +67,11 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryNavigation();
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNode();
+
 }

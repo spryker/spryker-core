@@ -71,7 +71,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
             ->createNavigationNodeQuery()
             ->filterByFkNavigation($idNavigation)
             ->filterByFkParentNavigationNode(null, Criteria::ISNULL)
-            ->orderByWeight(Criteria::DESC);
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdNavigationNode(Criteria::ASC);
     }
 
     /**
@@ -86,7 +87,8 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
         return $this->getFactory()
             ->createNavigationNodeQuery()
             ->filterByFkParentNavigationNode($fkParentNavigationNode)
-            ->orderByWeight(Criteria::DESC);
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdNavigationNode(Criteria::ASC);
     }
 
     /**
@@ -97,6 +99,16 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
     public function queryNavigation()
     {
         return $this->getFactory()->createNavigationQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
+     */
+    public function queryNavigationNode()
+    {
+        return $this->getFactory()->createNavigationNodeQuery();
     }
 
 }
