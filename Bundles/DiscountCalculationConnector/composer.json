@@ -6,9 +6,9 @@
     }
   },
   "require": {
-    "spryker/discount": "^2.0.0 || ^3.2.1",
-    "spryker/kernel": "^2.0.0",
-    "spryker/tax": "^3.0.0"
+    "spryker/discount": "^4.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/tax": "^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -23,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

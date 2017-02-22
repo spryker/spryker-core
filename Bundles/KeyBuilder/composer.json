@@ -1,7 +1,7 @@
 {
   "name": "spryker/key-builder",
   "require": {
-    "spryker/kernel": "^2.0.0"
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

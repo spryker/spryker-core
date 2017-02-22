@@ -9,9 +9,9 @@
     }
   },
   "require": {
-    "spryker/customer-group": "^1.0.0",
-    "spryker/discount": "^3.0.0",
-    "spryker/kernel": "^2.8.0"
+    "spryker/customer-group": "^2.0.0",
+    "spryker/discount": "^4.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/assertion": "*",
@@ -26,7 +26,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "repositories": [

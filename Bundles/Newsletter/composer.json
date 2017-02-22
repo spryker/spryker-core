@@ -7,12 +7,12 @@
     }
   },
   "require": {
-    "spryker/customer": "^2.0.0 || ^3.0.0",
-    "spryker/glossary": "^2.0.0",
-    "spryker/kernel": "^2.8.0",
-    "spryker/mail": "^3.0.0",
-    "spryker/util-text": "^1.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/customer": "^4.0.0",
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/mail": "^4.0.0",
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -30,7 +30,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

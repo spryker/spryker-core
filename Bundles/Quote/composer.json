@@ -1,9 +1,9 @@
 {
   "name": "spryker/quote",
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/session": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/session": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

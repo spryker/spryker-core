@@ -1,9 +1,9 @@
 {
   "name": "spryker/collector-search-connector",
   "require": {
-    "spryker/collector": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0"
+    "spryker/collector": "^5.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/search": "^6.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

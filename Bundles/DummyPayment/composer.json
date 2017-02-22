@@ -1,14 +1,14 @@
 {
   "name": "spryker/dummy-payment",
   "require": {
-    "spryker/checkout": "^2.1.0",
-    "spryker/kernel": "^2.4.3",
-    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/payment": "^2.0.0",
-    "spryker/refund": "^3.0.0",
-    "spryker/sales": "^2.2.5 || ^3.0.0 || ^4.0.0",
-    "spryker/step-engine": "^1.0.0",
-    "spryker/symfony": "^2.1.6"
+    "spryker/checkout": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/oms": "^6.0.0",
+    "spryker/payment": "^3.0.0",
+    "spryker/refund": "^4.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/step-engine": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -22,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

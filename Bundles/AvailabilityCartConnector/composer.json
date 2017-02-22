@@ -6,8 +6,8 @@
     }
   },
   "require": {
-    "spryker/availability": "^3.0.0 || ^4.0.0",
-    "spryker/kernel": "^2.0.0"
+    "spryker/availability": "^5.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -22,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

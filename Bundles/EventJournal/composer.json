@@ -6,11 +6,11 @@
     }
   },
   "require": {
-    "spryker/config": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
+    "spryker/config": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/new-relic-api": "^1.0.0",
-    "spryker/util-network": "^1.0.0",
-    "spryker/util-text": "^1.0.0"
+    "spryker/util-network": "^1.1.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -22,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

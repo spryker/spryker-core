@@ -12,7 +12,7 @@
   },
   "require": {
     "psr/log": "~1.0.0",
-    "spryker/config": "^2.0.0",
+    "spryker/config": "^3.0.0",
     "spryker/monolog": "^2.0.0"
   },
   "suggest": {
@@ -28,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

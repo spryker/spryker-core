@@ -1,8 +1,8 @@
 {
   "name": "spryker/mail",
   "require": {
-    "spryker/glossary": "^2.0.0",
-    "spryker/kernel": "^2.0.0"
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -18,7 +18,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

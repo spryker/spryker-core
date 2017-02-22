@@ -1,10 +1,10 @@
 {
   "name": "spryker/zed-navigation",
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/url": "^2.0.0",
-    "spryker/util-encoding": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/url": "^3.0.0",
+    "spryker/util-encoding": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
   "require-dev": {
@@ -20,7 +20,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

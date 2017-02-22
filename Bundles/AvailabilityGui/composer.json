@@ -6,16 +6,16 @@
     }
   },
   "require": {
-    "spryker/availability": "^4.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/locale": "^2.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/product-bundle": "^1.0.0",
+    "spryker/availability": "^5.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/product-bundle": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/stock": "^2.0.0 || ^3.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/util-text": "^1.0.0"
+    "spryker/stock": "^4.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -29,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

@@ -1,8 +1,8 @@
 {
   "name": "spryker/currency",
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/symfony": "^2.1.3"
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -23,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

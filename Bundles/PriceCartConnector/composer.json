@@ -6,8 +6,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/price": "^2.0.0 || ^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/price": "^4.0.0"
   },
   "require-dev": {
     "spryker/calculation": "*",
@@ -23,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

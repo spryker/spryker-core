@@ -6,15 +6,15 @@
     }
   },
   "require": {
-    "spryker/application": "^2.3.0",
-    "spryker/config": "^2.2.0",
+    "spryker/application": "^3.0.0",
+    "spryker/config": "^3.0.0",
     "spryker/elastica": "^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^2.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/redis": "^2.0.0",
-    "spryker/session": "^2.1.2",
-    "spryker/storage": "^2.1.4",
-    "spryker/symfony": "^2.0.0"
+    "spryker/session": "^3.0.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -26,7 +26,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {
