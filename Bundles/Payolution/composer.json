@@ -17,7 +17,6 @@
     "spryker/money": "^1.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/sales-aggregator": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/session": "^3.0.0",
     "spryker/step-engine": "^1.0.0",

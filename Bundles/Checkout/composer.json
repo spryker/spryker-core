@@ -6,14 +6,9 @@
     }
   },
   "require": {
-    "spryker/availability": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/cart": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/customer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^1.0.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/step-engine": "^1.1.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zed-request": "^2.0.0"

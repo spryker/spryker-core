@@ -7,7 +7,6 @@
   },
   "require": {
     "everon/collection": "^1.0.0",
-    "spryker/application": "^2.0.0",
     "spryker/availability": "^3.0.0 || ^4.0.0",
     "spryker/category": "^2.2.0",
     "spryker/glossary": "^2.2.0",
