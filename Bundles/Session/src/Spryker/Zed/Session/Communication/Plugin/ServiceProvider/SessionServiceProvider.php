@@ -76,7 +76,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         switch ($saveHandler) {
             case SessionConstants::SESSION_HANDLER_COUCHBASE:
                 $savePath = !empty($savePath) ? $savePath : null;
-
                 $sessionHelper->registerCouchbaseSessionHandler($savePath);
                 break;
 
@@ -88,6 +87,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             case SessionConstants::SESSION_HANDLER_REDIS:
                 $savePath = !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerRedisSessionHandler($savePath);
+                break;
+
+            case SessionConstants::SESSION_HANDLER_REDIS_LOCKING:
+                $savePath = !empty($savePath) ? $savePath : null;
+                $sessionHelper->registerRedisLockingSessionHandler($savePath);
                 break;
 
             case SessionConstants::SESSION_HANDLER_FILE:
@@ -116,7 +120,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         $path = null;
 
-        if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
+        if ($this->isRedisSaveHandler($saveHandler)) {
             $path = sprintf(
                 '%s://%s:%s?database=%s',
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
@@ -144,6 +148,21 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         }
 
         return $path;
+    }
+
+    /**
+     * @param string $saveHandler
+     *
+     * @return bool
+     */
+    protected function isRedisSaveHandler($saveHandler)
+    {
+        $redisSaveHandlers = [
+            SessionConstants::SESSION_HANDLER_REDIS,
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING,
+        ];
+
+        return in_array($saveHandler, $redisSaveHandlers);
     }
 
     /**

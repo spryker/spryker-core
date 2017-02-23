@@ -7,13 +7,19 @@
 
 namespace Spryker\Shared\Session\Business\Model;
 
+use Predis\Client;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
+use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
+use Spryker\Shared\Session\Business\Handler\Logger\NewRelicSessionTimedLogger;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\Session\SessionConstants;
 
 abstract class SessionFactory
 {
@@ -75,6 +81,67 @@ abstract class SessionFactory
         $this->setSessionSaveHandler($handler);
 
         return $handler;
+    }
+
+    /**
+     * @param string $dsn
+     *
+     * @return void
+     */
+    public function registerRedisLockingSessionHandler($dsn)
+    {
+        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($dsn));
+    }
+
+    /**
+     * @param string $dsn
+     *
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
+     */
+    public function createRedisLockingSessionHandler($dsn)
+    {
+        $redisClient = $this->createRedisClient($dsn);
+
+        return new SessionHandlerRedisLocking(
+            $redisClient,
+            $this->createRedisSpinLockLocker($redisClient),
+            $this->getSessionLifetime(),
+            $this->createNewRelicTimedLogger()
+        );
+    }
+
+    /**
+     * @param string $dsn
+     *
+     * @return \Predis\Client
+     */
+    protected function createRedisClient($dsn)
+    {
+        return new Client($dsn);
+    }
+
+    /**
+     * @param \Predis\Client $redisClient
+     *
+     * @return \Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface
+     */
+    protected function createRedisSpinLockLocker(Client $redisClient)
+    {
+        return new RedisSpinLockLocker(
+            $redisClient,
+            $this->createNewRelicTimedLogger(),
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS),
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS),
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS)
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface
+     */
+    protected function createNewRelicTimedLogger()
+    {
+        return new NewRelicSessionTimedLogger($this->createNewRelicApi());
     }
 
     /**
