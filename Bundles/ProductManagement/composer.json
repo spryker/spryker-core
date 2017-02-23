@@ -30,8 +30,8 @@
     "spryker/propel": "*",
     "spryker/silex": "*"
   },
-  "description": "ProductManagement bundle",
   "license": "proprietary",
+  "description": "ProductManagement bundle",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
