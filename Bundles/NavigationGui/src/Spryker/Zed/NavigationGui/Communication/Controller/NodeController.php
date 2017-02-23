@@ -8,8 +8,8 @@
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\NavigationNodeTransfer;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
