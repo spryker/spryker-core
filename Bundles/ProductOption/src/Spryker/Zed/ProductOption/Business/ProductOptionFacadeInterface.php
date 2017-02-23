@@ -31,7 +31,7 @@ interface ProductOptionFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return int
      */
@@ -46,7 +46,7 @@ interface ProductOptionFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return int
      */

@@ -11,7 +11,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Cart\CartClient;
-use Spryker\Client\Cart\Session\QuoteSessionInterface;
+use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -31,12 +32,12 @@ class CartClientTest extends PHPUnit_Framework_TestCase
     public function testGetCartMustReturnInstanceOfQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->once())
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->once())
             ->method('getQuote')
             ->will($this->returnValue($quoteTransfer));
 
-        $factoryMock = $this->getFactoryMock($sessionMock);
+        $factoryMock = $this->getFactoryMock($quoteMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $this->assertSame($quoteTransfer, $cartClientMock->getQuote());
@@ -47,12 +48,12 @@ class CartClientTest extends PHPUnit_Framework_TestCase
      */
     public function testClearCartMustSetItemCountInSessionToZero()
     {
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->once())
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->once())
             ->method('clearQuote')
-            ->will($this->returnValue($sessionMock));
+            ->will($this->returnValue($quoteMock));
 
-        $factoryMock = $this->getFactoryMock($sessionMock);
+        $factoryMock = $this->getFactoryMock($quoteMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $cartClientMock->clearQuote();
@@ -63,31 +64,15 @@ class CartClientTest extends PHPUnit_Framework_TestCase
      */
     public function testClearCartMustSetCartTransferInSessionToAnEmptyInstance()
     {
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->once())
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->once())
             ->method('clearQuote')
-            ->will($this->returnValue($sessionMock));
+            ->will($this->returnValue($quoteMock));
 
-        $factoryMock = $this->getFactoryMock($sessionMock);
+        $factoryMock = $this->getFactoryMock($quoteMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $cartClientMock->clearQuote();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetItemCountMustReturnItemCountFromSession()
-    {
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->once())
-            ->method('getItemCount')
-            ->will($this->returnValue(0));
-
-        $factoryMock = $this->getFactoryMock($sessionMock);
-        $cartClientMock = $this->getCartClientMock($factoryMock);
-
-        $this->assertSame(0, $cartClientMock->getItemCount());
     }
 
     /**
@@ -97,8 +82,8 @@ class CartClientTest extends PHPUnit_Framework_TestCase
     {
         $itemTransfer = new ItemTransfer();
         $quoteTransfer = new QuoteTransfer();
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->once())
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->once())
             ->method('getQuote')
             ->will($this->returnValue($quoteTransfer));
 
@@ -107,7 +92,7 @@ class CartClientTest extends PHPUnit_Framework_TestCase
             ->method('addItem')
             ->will($this->returnValue($quoteTransfer));
 
-        $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
+        $factoryMock = $this->getFactoryMock($quoteMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $quoteTransfer = $cartClientMock->addItem($itemTransfer);
@@ -127,8 +112,8 @@ class CartClientTest extends PHPUnit_Framework_TestCase
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->exactly(3))
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->exactly(3))
             ->method('getQuote')
             ->will($this->returnValue($quoteTransfer));
 
@@ -140,7 +125,7 @@ class CartClientTest extends PHPUnit_Framework_TestCase
             ->method('addItem')
             ->will($this->returnValue($quoteTransfer));
 
-        $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
+        $factoryMock = $this->getFactoryMock($quoteMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $itemTransfer = new ItemTransfer();
@@ -163,8 +148,8 @@ class CartClientTest extends PHPUnit_Framework_TestCase
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->exactly(3))
+        $quoteMock = $this->getQuoteMock();
+        $quoteMock->expects($this->exactly(3))
             ->method('getQuote')
             ->will($this->returnValue($quoteTransfer));
 
@@ -177,7 +162,7 @@ class CartClientTest extends PHPUnit_Framework_TestCase
             ->method('addItem')
             ->will($this->returnValue($quoteTransfer));
 
-        $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
+        $factoryMock = $this->getFactoryMock($quoteMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $itemTransfer = new ItemTransfer();
@@ -188,22 +173,43 @@ class CartClientTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
+    /***
+     * @return void
+     */
+    public function testGetItemCountReturnNumberOfItemsInCart()
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSku('sku');
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $mockBuilder = $this->getMockBuilder(CartClient::class);
+        $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
+        $cartClientMock = $mockBuilder->getMock();
+        $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
+        $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
+
+        $this->assertSame(1, $cartClientMock->getItemCount());
+    }
+
     /**
-     * @param \Spryker\Client\Cart\Session\QuoteSessionInterface|null $cartSession
+     * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|null $quote
      * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getFactoryMock(
-        QuoteSessionInterface $cartSession = null,
+        CartToQuoteInterface $quote = null,
         CartStubInterface $cartStub = null
     ) {
-        $factoryMock = $this->getMockBuilder(AbstractFactory::class)->setMethods(['createSession', 'createZedStub'])->disableOriginalConstructor()->getMock();
+        $factoryMock = $this->getMockBuilder(AbstractFactory::class)->setMethods(['getQuoteClient', 'createZedStub'])->disableOriginalConstructor()->getMock();
 
-        if ($cartSession !== null) {
+        if ($quote !== null) {
             $factoryMock->expects($this->any())
-                ->method('createSession')
-                ->will($this->returnValue($cartSession));
+                ->method('getQuoteClient')
+                ->will($this->returnValue($quote));
         }
         if ($cartStub !== null) {
             $factoryMock->expects($this->any())
@@ -233,17 +239,15 @@ class CartClientTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getSessionMock()
+    private function getQuoteMock()
     {
-        $sessionMock = $this->getMockBuilder(QuoteSessionInterface::class)->setMethods([
+        $quoteMock = $this->getMockBuilder(CartToQuoteInterface::class)->setMethods([
             'getQuote',
             'setQuote',
-            'getItemCount',
-            'setItemCount',
             'clearQuote',
         ])->getMock();
 
-        return $sessionMock;
+        return $quoteMock;
     }
 
     /**
@@ -254,7 +258,6 @@ class CartClientTest extends PHPUnit_Framework_TestCase
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addItem',
             'removeItem',
-            'storeQuote',
         ])->getMock();
     }
 

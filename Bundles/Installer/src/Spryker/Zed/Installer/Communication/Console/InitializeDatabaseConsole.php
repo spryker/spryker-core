@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Installer\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -39,16 +39,12 @@ class InitializeDatabaseConsole extends Console
     {
         $installerPlugins = $this->getInstallerPlugins();
 
-        $messenger = $this->getMessenger();
-
         try {
             foreach ($installerPlugins as $plugin) {
                 $name = $this->getPluginNameFromClass(get_class($plugin));
 
                 $output->writeln('Installing DB data for ' . $name);
-
-                $plugin->setMessenger($messenger);
-                $plugin->run();
+                $plugin->install();
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -60,7 +56,7 @@ class InitializeDatabaseConsole extends Console
     }
 
     /**
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     protected function getInstallerPlugins()
     {

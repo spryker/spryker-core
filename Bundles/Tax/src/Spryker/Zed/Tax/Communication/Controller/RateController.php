@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

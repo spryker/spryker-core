@@ -10,12 +10,11 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Storage\StorageConfig;
+use Spryker\Zed\Session\SessionConfig;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
@@ -123,7 +122,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
             );
 
             if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
@@ -133,7 +132,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
                 );
             }
 
@@ -155,7 +154,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function secureCookie()
     {
-        if (Config::get(ApplicationConstants::ZED_SSL_ENABLED, false)
+        if (Config::get(SessionConstants::ZED_SSL_ENABLED, false)
             && Config::get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true)
         ) {
             return true;

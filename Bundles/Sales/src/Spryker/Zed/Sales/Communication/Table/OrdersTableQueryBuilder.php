@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Communication\Table;
 use DateTime;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 {

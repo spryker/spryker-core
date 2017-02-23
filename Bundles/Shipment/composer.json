@@ -1,22 +1,27 @@
 {
   "name": "spryker/shipment",
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/money": "^1.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/session": "^2.0.0",
-    "spryker/symfony": "^2.1.6",
-    "spryker/tax": "^3.0.0",
-    "spryker/url": "^2.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/session": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/tax": "^4.0.0",
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
   "description": "Shipment bundle",
   "license": "proprietary",
@@ -24,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

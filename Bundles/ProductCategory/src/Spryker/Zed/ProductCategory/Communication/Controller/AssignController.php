@@ -7,7 +7,7 @@
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

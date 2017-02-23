@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Glossary;
 
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryConfig extends AbstractBundleConfig
@@ -21,7 +21,7 @@ class GlossaryConfig extends AbstractBundleConfig
     public function getGlossaryFilePaths()
     {
         return glob(
-            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
+            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
         );
     }
 

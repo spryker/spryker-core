@@ -10,8 +10,8 @@ namespace Spryker\Zed\Payolution\Business\Payment\Method;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentMethod
@@ -33,11 +33,18 @@ abstract class AbstractPaymentMethod
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
+     * @var \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
      */
-    public function __construct(PayolutionConfig $config)
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface $moneyFacade
+     */
+    public function __construct(PayolutionConfig $config, PayolutionToMoneyInterface $moneyFacade)
     {
         $this->config = $config;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -83,7 +90,7 @@ abstract class AbstractPaymentMethod
             ApiConstants::SECURITY_SENDER => $this->getConfig()->getTransactionSecuritySender(),
             ApiConstants::USER_LOGIN => $this->getConfig()->getTransactionUserLogin(),
             ApiConstants::USER_PWD => $this->getConfig()->getTransactionUserPassword(),
-            ApiConstants::PRESENTATION_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($grandTotal),
+            ApiConstants::PRESENTATION_AMOUNT => $this->moneyFacade->convertIntegerToDecimal((int)$grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
             ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
@@ -170,16 +177,6 @@ abstract class AbstractPaymentMethod
             $addressTransfer->getAddress2(),
             $addressTransfer->getAddress3()
         ));
-    }
-
-    /**
-     * @todo: use currency/money bundle #989
-     *
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
-     */
-    protected function getCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
     }
 
 }

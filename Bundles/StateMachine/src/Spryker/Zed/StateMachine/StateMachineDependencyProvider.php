@@ -16,6 +16,7 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +31,10 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGIN_GRAPH] = function () {
             return $this->getGraphPlugin();
+        };
+
+        $container[static::SERVICE_NETWORK] = function (Container $container) {
+            return $container->getLocator()->utilNetwork()->service();
         };
     }
 

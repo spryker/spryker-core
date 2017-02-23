@@ -9,7 +9,8 @@ namespace Spryker\Zed\ProductSearch\Business\Collector\Storage;
 
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\ProductSearch\ProductSearchConfig as SharedProductSearchConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
@@ -30,16 +31,24 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     protected $productSearchConfig;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
      * @param \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface $attributeReader
      * @param \Spryker\Zed\ProductSearch\ProductSearchConfig $productSearchConfig
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      */
-    public function __construct(AttributeReaderInterface $attributeReader, ProductSearchConfig $productSearchConfig, KeyBuilderInterface $keyBuilder)
-    {
+    public function __construct(
+        AttributeReaderInterface $attributeReader,
+        ProductSearchConfig $productSearchConfig,
+        KeyBuilderInterface $keyBuilder,
+        UtilDataReaderServiceInterface $utilDataReaderService
+    ) {
+        parent::__construct($utilDataReaderService);
+
         $this->attributeReader = $attributeReader;
         $this->productSearchConfig = $productSearchConfig;
         $this->keyBuilder = $keyBuilder;

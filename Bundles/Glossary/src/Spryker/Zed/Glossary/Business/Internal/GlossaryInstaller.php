@@ -11,10 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Symfony\Component\Yaml\Yaml;
 
-class GlossaryInstaller extends AbstractInstaller
+class GlossaryInstaller implements GlossaryInstallerInterface
 {
 
     /**

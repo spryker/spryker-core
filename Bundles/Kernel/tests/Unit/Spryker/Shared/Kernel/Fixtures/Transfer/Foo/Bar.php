@@ -6,7 +6,7 @@
 
 namespace Unit\Spryker\Shared\Kernel\Fixtures\Transfer\Foo;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class Bar extends AbstractTransfer
 {

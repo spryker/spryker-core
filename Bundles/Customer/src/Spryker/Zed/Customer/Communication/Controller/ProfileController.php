@@ -9,8 +9,8 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,16 +33,9 @@ class ProfileController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCustomer = $this->castId($request->query->get('id'));
-        $customerUri = '/customer';
-
-        $this->clearBreadcrumbs();
-        $this->addBreadcrumb('Customer', $customerUri);
-        $this->addBreadcrumb('Customer ID ' . $idCustomer, '/customer/profile?id=' . $idCustomer);
-
-        $this->setMenuHighlight($customerUri);
 
         $form = $this->getFactory()
-            ->createCustomerForm($request);
+            ->createCustomerForm($idCustomer);
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);

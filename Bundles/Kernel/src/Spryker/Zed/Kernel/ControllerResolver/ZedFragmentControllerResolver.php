@@ -39,7 +39,7 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @return \Spryker\Zed\Application\Communication\Controller\AbstractController
+     * @return \Spryker\Zed\Kernel\Communication\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)
     {

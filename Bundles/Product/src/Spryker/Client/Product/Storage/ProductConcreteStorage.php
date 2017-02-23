@@ -9,7 +9,7 @@ namespace Spryker\Client\Product\Storage;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Product\Dependency\Client\ProductToStorageInterface;
 use Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductConcreteStorage implements ProductConcreteStorageInterface
 {
@@ -25,7 +25,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     protected $storage;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
@@ -36,7 +36,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
 
     /**
      * @param \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface $storage
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
      * @param string $localeName
      */

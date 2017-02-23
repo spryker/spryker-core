@@ -16,7 +16,7 @@ interface PaymentInitTransactionInterface
     /**
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function request(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer);
 

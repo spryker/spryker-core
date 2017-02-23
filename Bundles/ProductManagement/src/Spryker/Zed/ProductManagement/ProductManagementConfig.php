@@ -38,7 +38,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getImageUrlPrefix()
     {
-        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
+        return $this->get(ProductManagementConstants::HOST_YVES);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
+        return $this->get(ProductManagementConstants::HOST_YVES);
     }
 
 }

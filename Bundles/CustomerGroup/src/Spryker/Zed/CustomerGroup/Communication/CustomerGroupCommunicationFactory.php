@@ -70,7 +70,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\DateFormatterInterface
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected function getDateFormatterService()
     {

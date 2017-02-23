@@ -8,7 +8,6 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
@@ -17,6 +16,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -139,11 +139,11 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\Model\ConsoleMessenger
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
     protected function getMessenger()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+        $messenger = new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
         return $messenger;
     }

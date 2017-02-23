@@ -6,7 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -121,7 +121,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -183,7 +183,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -228,7 +228,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -290,7 +290,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

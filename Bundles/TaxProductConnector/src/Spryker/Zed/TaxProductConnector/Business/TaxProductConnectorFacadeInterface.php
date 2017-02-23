@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface TaxProductConnectorFacadeInterface
 {
@@ -35,5 +36,17 @@ interface TaxProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function mapTaxSet(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     *  - Set tax rate for each item
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer);
 
 }

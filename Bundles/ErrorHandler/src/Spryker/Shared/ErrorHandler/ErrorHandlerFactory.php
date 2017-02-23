@@ -11,7 +11,6 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
-use Spryker\Shared\Library\LibraryConstants;
 
 class ErrorHandlerFactory
 {
@@ -89,10 +88,10 @@ class ErrorHandlerFactory
     protected function getLegacyConfigKey()
     {
         if ($this->application === static::APPLICATION_ZED) {
-            return LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE;
+            return ErrorHandlerConstants::ERROR_RENDERER;
         }
 
-        return LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE;
+        return ErrorHandlerConstants::ERROR_RENDERER;
     }
 
     /**

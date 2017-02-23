@@ -13,11 +13,16 @@ use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
+
+    /**
+     * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
+     */
+    protected $utilDataReaderService;
 
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
@@ -30,24 +35,18 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
-     * @var \Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface
-     */
-    protected $batchIteratorBuilder;
-
-    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
-     * @param \Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface $batchIteratorBuilder
      */
     public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
         TouchQueryContainerInterface $queryContainer,
-        ConnectionInterface $connection,
-        BatchIteratorBuilderInterface $batchIteratorBuilder
+        ConnectionInterface $connection
     ) {
-
+        $this->utilDataReaderService = $utilDataReaderService;
         $this->touchQueryContainer = $queryContainer;
         $this->connection = $connection;
-        $this->batchIteratorBuilder = $batchIteratorBuilder;
     }
 
     /**
@@ -272,13 +271,13 @@ class TouchRecord implements TouchRecordInterface
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $query
      *
-     * @return \Spryker\Shared\Library\BatchIterator\PropelBatchIterator
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {
         $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
 
-        return $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
+        return $this->utilDataReaderService->getPropelBatchIterator($touchIdsToRemoveQuery);
     }
 
     /**

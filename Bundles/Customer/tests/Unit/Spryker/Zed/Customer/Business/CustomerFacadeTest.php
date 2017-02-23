@@ -10,7 +10,7 @@ namespace Unit\Spryker\Zed\Customer\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Customer\Address;
@@ -28,7 +28,7 @@ class CustomerFacadeTest extends Test
 {
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail
      *
      * @return \Spryker\Zed\Customer\Business\CustomerFacade
@@ -42,7 +42,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory

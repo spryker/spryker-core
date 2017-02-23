@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+
 interface DevelopmentFacadeInterface
 {
 
@@ -96,6 +98,27 @@ interface DevelopmentFacadeInterface
     public function buildDependencyTree($application, $bundle, $layer);
 
     /**
+     * Specification:
+     * - Calculates the stability of each bundle.
+
+     * @api
+     *
+     * @return array
+     */
+    public function calculateStability();
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     * @param array $excludedBundles
+     * @param bool $showIncomingDependencies
+     *
+     * @return string
+     */
+    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false);
+
+    /**
      * @api
      *
      * @param string|bool $bundleToView
@@ -163,12 +186,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param string $bundleName
-     * @param array $dependencies
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison($bundleName, array $dependencies);
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer);
 
     /**
      * @api

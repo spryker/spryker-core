@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;

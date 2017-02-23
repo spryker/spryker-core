@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
@@ -31,11 +31,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createSearchInstaller(MessengerInterface $messenger)
+    public function createSearchInstaller(LoggerInterface $messenger)
     {
         return new SearchInstaller($this->getSearchInstallerStack($messenger));
     }
@@ -62,11 +62,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
-    protected function getSearchInstallerStack(MessengerInterface $messenger)
+    protected function getSearchInstallerStack(LoggerInterface $messenger)
     {
         return [
             $this->createElasticsearchIndexInstaller($messenger),
@@ -75,11 +75,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    protected function createElasticsearchIndexInstaller(MessengerInterface $messenger)
+    protected function createElasticsearchIndexInstaller(LoggerInterface $messenger)
     {
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
@@ -89,11 +89,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createIndexMapInstaller(MessengerInterface $messenger)
+    public function createIndexMapInstaller(LoggerInterface $messenger)
     {
         return new IndexMapInstaller(
             $this->createJsonIndexDefinitionLoader(),

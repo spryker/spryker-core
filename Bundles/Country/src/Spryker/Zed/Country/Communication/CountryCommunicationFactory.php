@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Country\Communication;
 
 use Spryker\Zed\Country\Communication\Table\CountryTable;
-use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -26,14 +25,6 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
         $countryQuery = $this->getQueryContainer()->queryCountries();
 
         return new CountryTable($countryQuery);
-    }
-
-    /**
-     * @return \Spryker\Zed\User\Persistence\UserQueryContainerInterface
-     */
-    protected function getUserQueryContainer()
-    {
-        return $this->getProvidedDependency(CountryDependencyProvider::QUERY_CONTAINER_USER);
     }
 
 }

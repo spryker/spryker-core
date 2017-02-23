@@ -16,7 +16,6 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerFactory;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
-use Spryker\Shared\Library\LibraryConstants;
 
 /**
  * @group Unit
@@ -115,48 +114,6 @@ class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithWebExceptionErrorRendererWhenSapiNotCliAndLegacyZedShowExceptionStackTraceConfigGiven()
-    {
-        $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
-        $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
-        $errorHandlerFactoryMock->expects($this->once())->method('createWebErrorRenderer')
-            ->with(WebExceptionErrorRenderer::class)
-            ->willReturn(new WebExceptionErrorRenderer());
-
-        $this->unsetAllErrorRelatedConfigs();
-        $configProperty = $this->getConfigReflectionProperty();
-        $config = $configProperty->getValue();
-        $config[LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE] = WebExceptionErrorRenderer::class;
-        $configProperty->setValue($config);
-
-        $errorHandler = $errorHandlerFactoryMock->createErrorHandler();
-        $this->assertInstanceOf(ErrorHandler::class, $errorHandler);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithWebExceptionErrorRendererWhenSapiNotCliAndLegacyYvesShowExceptionStackTraceConfigGiven()
-    {
-        $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('YVES', ['isCliCall', 'createWebErrorRenderer']);
-        $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
-        $errorHandlerFactoryMock->expects($this->once())->method('createWebErrorRenderer')
-            ->with(WebExceptionErrorRenderer::class)
-            ->willReturn(new WebExceptionErrorRenderer());
-
-        $this->unsetAllErrorRelatedConfigs();
-        $configProperty = $this->getConfigReflectionProperty();
-        $config = $configProperty->getValue();
-        $config[LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE] = WebExceptionErrorRenderer::class;
-        $configProperty->setValue($config);
-
-        $errorHandler = $errorHandlerFactoryMock->createErrorHandler();
-        $this->assertInstanceOf(ErrorHandler::class, $errorHandler);
-    }
-
-    /**
      * @param string $application
      * @param array $methods
      *
@@ -179,12 +136,6 @@ class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
         $config = $configProperty->getValue();
         if (isset($config[ErrorHandlerConstants::ERROR_RENDERER])) {
             unset($config[ErrorHandlerConstants::ERROR_RENDERER]);
-        }
-        if (isset($config[LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE])) {
-            unset($config[LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE]);
-        }
-        if (isset($config[LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE])) {
-            unset($config[LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE]);
         }
 
         $configProperty->setValue($config);

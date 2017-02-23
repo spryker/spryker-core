@@ -9,7 +9,6 @@ namespace Spryker\Zed\Console;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\NewRelic\Communication\Plugin\NewRelicConsolePlugin;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -75,20 +74,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getEventSubscriber(Container $container)
     {
-        return [
-            $this->createNewRelicConsolePlugin()
-        ];
-    }
-
-    /**
-     * @deprecated This will be removed with next major. If you want to use the NewRelic feature add plugin to
-     * projects ConsoleDependencyProvider.
-     *
-     * @return \Spryker\Zed\NewRelic\Communication\Plugin\NewRelicConsolePlugin
-     */
-    private function createNewRelicConsolePlugin()
-    {
-        return new NewRelicConsolePlugin();
+        return [];
     }
 
 }

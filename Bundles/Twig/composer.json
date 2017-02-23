@@ -6,12 +6,18 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/zend": "^2.0.0",
     "twig/twig": "^1.20.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/config": "If you want to use the TwigServiceProvider you need to install spryker/config.",
+    "spryker/silex": "If you want to use the TwigServiceProvider you need to install spryker/silex.",
+    "spryker/symfony": "If you want to use the TwigServiceProvider you need to install spryker/symfony."
   },
   "description": "Twig bundle",
   "license": "proprietary",
@@ -19,7 +25,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

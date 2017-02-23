@@ -11,7 +11,6 @@ use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
-use Spryker\Yves\Application\Plugin\ZedRequestHeaderMiddleware;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,14 +43,6 @@ class ApplicationFactory extends AbstractFactory
     public function createKernelLogListener()
     {
         return new KernelLogListener($this->getLogger());
-    }
-
-    /**
-     * @return \Spryker\Yves\Application\Plugin\ZedRequestHeaderMiddleware
-     */
-    public function createZedRequestHeaderMiddleware()
-    {
-        return new ZedRequestHeaderMiddleware();
     }
 
 }

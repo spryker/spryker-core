@@ -1,22 +1,25 @@
 {
   "name": "spryker/discount",
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/gui": "^2.2.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/log": "^2.0.0",
-    "spryker/messenger": "^2.0.0",
-    "spryker/money": "^1.0.0",
-    "spryker/propel": "^2.2.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.1.1",
-    "spryker/url": "^2.0.0"
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/log": "^3.0.0",
+    "spryker/messenger": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/sales-split": "^1.0.0 || ^2.0.0",
-    "spryker/testify": "*"
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/transfer": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
   "description": "Discount bundle",
   "license": "proprietary",
@@ -24,7 +27,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

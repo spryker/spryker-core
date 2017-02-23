@@ -9,11 +9,9 @@ namespace Spryker\Zed\Setup\Communication\Controller;
 
 use ErrorException;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\DataDirectory;
-use Spryker\Shared\Library\Environment;
-use Spryker\Shared\Library\Log;
+use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Setup\SetupConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @deprecated Will be removed in 1.0.0.
@@ -60,9 +58,9 @@ class JenkinsController extends AbstractController
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
+        //Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $head = curl_exec($ch);
-        Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+        //Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -195,7 +193,7 @@ $command</command>";
             ]
         );
 
-        $jobs_dir = DataDirectory::getLocalCommonPath('/jenkins/jobs/');
+        $jobs_dir = APPLICATION_ROOT_DIR . '/data/common/jenkins/jobs/';
 
         $roles = $this->getRoles();
 

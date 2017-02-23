@@ -8,8 +8,10 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter;
+use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
@@ -32,6 +34,22 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractTaxSetMapper()
     {
         return new ProductAbstractTaxSetMapper($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
+     */
+    public function createProductItemTaxRateCalculator()
+    {
+        return new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface
+     */
+    protected function getTaxFacade()
+    {
+        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_TAX);
     }
 
 }

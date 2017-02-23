@@ -72,7 +72,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
      * @param string $className
      *
      * @return void
@@ -83,7 +83,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
      *
      * @return void
      */
@@ -108,7 +108,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseTransferObject($responseXml)
     {
@@ -122,7 +122,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseInstallmentConfigurationObject($responseXml)
     {
@@ -136,7 +136,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseInstallmentCalculationObject($responseXml)
     {

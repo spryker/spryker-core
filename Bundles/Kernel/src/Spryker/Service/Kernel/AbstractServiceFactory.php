@@ -37,7 +37,7 @@ class AbstractServiceFactory
      *
      * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return object
+     * @return mixed
      */
     public function getProvidedDependency($key)
     {

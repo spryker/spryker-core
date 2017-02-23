@@ -88,4 +88,14 @@ interface ErrorHandlerConstants
      */
     const AS_AJAX = 'AS_AJAX';
 
+    /**
+     * Specification:
+     * - Set php.ini config 'display_errors'
+     * - type bool
+     * - default false
+     *
+     * @api
+     */
+    const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
+
 }

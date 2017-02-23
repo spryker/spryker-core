@@ -140,7 +140,8 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createLoggerTransitionLog()
     {
         return new TransitionLog(
-            $this->createPathFinder()
+            $this->createPathFinder(),
+            $this->getUtilNetworkService()
         );
     }
 
@@ -227,6 +228,14 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function getStateMachineHandlerPlugins()
     {
         return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+     */
+    protected function getUtilNetworkService()
+    {
+        return $this->getProvidedDependency(StateMachineDependencyProvider::SERVICE_NETWORK);
     }
 
 }

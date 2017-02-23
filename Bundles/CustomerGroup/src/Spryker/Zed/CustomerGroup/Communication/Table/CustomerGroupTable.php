@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -31,18 +31,18 @@ class CustomerGroupTable extends AbstractTable
     protected $customerGroupQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(CustomerGroupQueryContainerInterface $customerQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(CustomerGroupQueryContainerInterface $customerQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->customerGroupQueryContainer = $customerQueryContainer;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -140,7 +140,7 @@ class CustomerGroupTable extends AbstractTable
     {
         $customerRow = $customerGroup->toArray();
 
-        $customerRow[static::COL_CREATED_AT] = $this->dateFormatter->dateTime($customerGroup->getCreatedAt());
+        $customerRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($customerGroup->getCreatedAt());
         $customerRow[static::ACTIONS] = $this->buildLinks($customerGroup);
 
         return $customerRow;

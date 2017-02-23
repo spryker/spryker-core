@@ -1,9 +1,0 @@
-{
-  "description": "Needed for core dependency management - overwrites dependencies between bundles",
-  "include": {
-    "Transfer": "Required by transfer XML"
-  },
-  "exclude": {
-    "Application": "Required by tests"
-  }
-}

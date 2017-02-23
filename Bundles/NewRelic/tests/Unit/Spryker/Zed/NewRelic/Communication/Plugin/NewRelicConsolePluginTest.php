@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\NewRelic\Communication\Plugin;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\NewRelic\Communication\Plugin\NewRelicConsolePlugin;
 use Symfony\Component\Console\Command\Command;
@@ -116,19 +116,19 @@ class NewRelicConsolePluginTest extends PHPUnit_Framework_TestCase
     protected function getFactoryMock()
     {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
-            ->setMethods(['getNewRelicApi', 'provideExternalDependencies', 'injectExternalDependencies', 'getSystem'])
+            ->setMethods(['getNewRelicApi', 'provideExternalDependencies', 'injectExternalDependencies', 'getUtilNetworkService'])
             ->getMock();
 
         $newRelicApiMock = $this->getNewRelicApiMock();
         $factoryMock->method('getNewRelicApi')->willReturn($newRelicApiMock);
 
-        $factoryMock->method('getSystem')->willReturn(new System());
+        $factoryMock->method('getUtilNetworkService')->willReturn(new UtilNetworkService());
 
         return $factoryMock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApi
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApi
      */
     protected function getNewRelicApiMock()
     {

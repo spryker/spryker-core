@@ -8,6 +8,7 @@ namespace Spryker\Service\UtilNetwork;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilNetwork\Model\Host;
+use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
 class UtilNetworkServiceFactory extends AbstractServiceFactory
 {
@@ -18,6 +19,14 @@ class UtilNetworkServiceFactory extends AbstractServiceFactory
     public function createHost()
     {
         return new Host();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNetwork\Model\Request\RequestIdInterface
+     */
+    public function createRequestId()
+    {
+        return new RequestId();
     }
 
 }

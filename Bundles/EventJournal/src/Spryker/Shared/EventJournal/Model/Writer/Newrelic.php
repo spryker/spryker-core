@@ -8,7 +8,7 @@
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
-use Spryker\Shared\NewRelic\NewRelicApiTrait;
+use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 
 /**
  * @deprecated Use Log bundle instead

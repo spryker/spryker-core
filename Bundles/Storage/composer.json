@@ -12,21 +12,24 @@
     }
   },
   "require": {
-    "spryker/application": "^2.3.0",
-    "spryker/collector": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/config": "^2.2.1",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
+    "spryker/config": "^3.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/redis": "^2.0.0",
-    "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/url": "^2.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-sanitize": "^2.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/collector-storage-connector": "You need to add this bundle if you want to use dropStorageTimestamps functionality from Collector bundle"
   },
   "description": "Storage bundle",
   "license": "proprietary",
@@ -34,7 +37,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

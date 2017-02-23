@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Shared\Url\Url;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
  * @group Spryker

@@ -227,7 +227,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     /**
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getTransferObjectFromPayment($payment)
     {
@@ -240,7 +240,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     /**
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     abstract protected function getPaymentTransferObject($payment);
 
@@ -291,7 +291,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentData
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param bool $needToSendShipping
      *

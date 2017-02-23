@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Yves\NewRelic\Plugin;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Yves\NewRelic\Plugin\ControllerListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -34,7 +34,7 @@ class ControllerListenerTest extends PHPUnit_Framework_TestCase
         $newRelicApiMock = $this->getNewRelicApiMock();
         $newRelicApiMock->expects($this->once())->method('markIgnoreTransaction');
 
-        $controllerListener = new ControllerListener($newRelicApiMock, new System(), ['bar/baz']);
+        $controllerListener = new ControllerListener($newRelicApiMock, new UtilNetworkService(), ['bar/baz']);
         $request = new Request();
         $request->attributes->set('_route', 'foo/bar/baz');
 
@@ -50,7 +50,7 @@ class ControllerListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function getNewRelicApiMock()
     {

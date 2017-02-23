@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Zed\Refund;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
@@ -81,7 +81,7 @@ class RefundDependencyProviderTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testProvideCommunicationLayerDependenciesShouldAddCurrencyManager()
+    public function testProvideCommunicationLayerDependenciesShouldAddRefundToMoneyBridge()
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
@@ -100,8 +100,8 @@ class RefundDependencyProviderTest extends PHPUnit_Framework_TestCase
         $container = new Container();
         $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::DATE_FORMATTER, $container);
-        $this->assertInstanceOf(DateFormatterInterface::class, $container[RefundDependencyProvider::DATE_FORMATTER]);
+        $this->assertArrayHasKey(RefundDependencyProvider::SERVICE_DATE_TIME, $container);
+        $this->assertInstanceOf(UtilDateTimeServiceInterface::class, $container[RefundDependencyProvider::SERVICE_DATE_TIME]);
     }
 
 }

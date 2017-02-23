@@ -8,13 +8,13 @@
 namespace Spryker\Client\Collector\Matcher;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class UrlMatcher implements UrlMatcherInterface
 {
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $urlKeyBuilder;
 
@@ -24,7 +24,7 @@ class UrlMatcher implements UrlMatcherInterface
     protected $keyValueReader;
 
     /**
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $urlKeyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $urlKeyBuilder
      * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader
      */
     public function __construct(KeyBuilderInterface $urlKeyBuilder, StorageClientInterface $keyValueReader)

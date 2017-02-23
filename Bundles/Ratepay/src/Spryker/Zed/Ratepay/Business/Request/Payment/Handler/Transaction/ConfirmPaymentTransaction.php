@@ -20,7 +20,7 @@ class ConfirmPaymentTransaction extends BaseTransaction implements OrderTransact
      * @param \Generated\Shared\Transfer\OrderTransfer|null $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function request(
         OrderTransfer $orderTransfer,

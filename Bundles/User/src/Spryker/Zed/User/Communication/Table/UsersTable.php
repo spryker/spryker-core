@@ -8,8 +8,8 @@
 namespace Spryker\Zed\User\Communication\Table;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -30,18 +30,18 @@ class UsersTable extends AbstractTable
     protected $userQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(UserQueryContainerInterface $userQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(UserQueryContainerInterface $userQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->userQueryContainer = $userQueryContainer;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -95,7 +95,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_USERNAME => $item[SpyUserTableMap::COL_USERNAME],
                 SpyUserTableMap::COL_FIRST_NAME => $item[SpyUserTableMap::COL_FIRST_NAME],
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
-                SpyUserTableMap::COL_LAST_LOGIN => $this->dateFormatter->dateTime($item[SpyUserTableMap::COL_LAST_LOGIN]),
+                SpyUserTableMap::COL_LAST_LOGIN => $this->utilDateTimeService->formatDateTime($item[SpyUserTableMap::COL_LAST_LOGIN]),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
                 self::ACTION => implode(' ', $this->createActionButtons($item)),
             ];

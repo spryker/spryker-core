@@ -38,7 +38,7 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @return \Spryker\Yves\Application\Controller\AbstractController
+     * @return \Spryker\Yves\Kernel\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)
     {

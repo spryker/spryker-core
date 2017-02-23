@@ -37,10 +37,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDep
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\PackageNameHydrator;
@@ -70,6 +72,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
@@ -150,7 +153,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $config = $this->getConfig();
 
-        return new BundleParser($this->createFinder(), $config);
+        return new BundleParser($config);
     }
 
     /**
@@ -161,6 +164,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
 
         return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Stability\StabilityCalculatorInterface
+     */
+    public function createStabilityCalculator()
+    {
+        return new StabilityCalculator();
     }
 
     /**
@@ -246,6 +257,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createLocatorFacadeChecker(),
             $this->createLocatorQueryContainerChecker(),
             $this->createLocatorClientChecker(),
+            $this->createLocatorServiceChecker(),
             $this->createExternalDependencyChecker(),
         ];
     }
@@ -283,11 +295,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     */
+    protected function createLocatorServiceChecker()
+    {
+        return new LocatorService();
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency
      */
     protected function createExternalDependencyChecker()
     {
-        return new ExternalDependency();
+        return new ExternalDependency($this->getConfig()->getExternalToInternalNamespaceMap());
     }
 
     /**
@@ -336,6 +356,33 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $bundleToView
+     * @param array $excludedBundles
+     *
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder
+     */
+    public function createOutgoingDependencyGraphBuilder($bundleToView, array $excludedBundles = [])
+    {
+        $outgoingDependencyGraphBuilder = new OutgoingGraphBuilder(
+            $bundleToView,
+            $this->getGraph(),
+            $this->createDependencyBundleParser(),
+            $this->createDependencyManager(),
+            $excludedBundles
+        );
+
+        return $outgoingDependencyGraphBuilder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     */
+    protected function createOutgoingGraphBuilder()
+    {
+        return new DetailedGraphBuilder($this->getGraph()->init('Dependency Tree'));
+    }
+
+    /**
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
@@ -355,7 +402,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder
      */
     protected function createSimpleGraphBuilder()
     {
@@ -433,7 +480,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder
      */
     protected function createExternalGraphBuilder()
     {

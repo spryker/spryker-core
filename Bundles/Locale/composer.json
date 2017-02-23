@@ -6,13 +6,17 @@
     }
   },
   "require": {
-    "spryker/installer": "^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/messenger": "^2.0.0"
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer."
   },
   "description": "Locale bundle",
   "license": "proprietary",
@@ -20,7 +24,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

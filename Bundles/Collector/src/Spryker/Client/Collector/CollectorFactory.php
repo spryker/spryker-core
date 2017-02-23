@@ -26,6 +26,14 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
      * @return \Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder
      */
     protected function createUrlKeyBuilder()

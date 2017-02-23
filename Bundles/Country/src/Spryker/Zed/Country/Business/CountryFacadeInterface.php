@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Psr\Log\LoggerInterface;
-
 interface CountryFacadeInterface
 {
 
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger);
+    public function install();
 
     /**
      * @api

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
-use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs

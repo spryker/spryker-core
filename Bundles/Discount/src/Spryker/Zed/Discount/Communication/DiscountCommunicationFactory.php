@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
@@ -167,14 +166,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $idDiscount,
             $batchValue
         );
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected function getFormFactory()
-    {
-        return (new Pimple())->getApplication()[self::FORM_FACTORY];
     }
 
     /**

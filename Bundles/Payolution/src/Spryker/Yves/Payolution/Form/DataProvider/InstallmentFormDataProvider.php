@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
-use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\Payolution\Exception\InstallmentNotFoundException;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
@@ -28,24 +28,24 @@ class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $payolutionClient;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    protected $currencyManager;
+    protected $moneyPlugin;
 
     /**
      * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      */
-    public function __construct(PayolutionClientInterface $payolutionClient, CurrencyManager $currencyManager)
+    public function __construct(PayolutionClientInterface $payolutionClient, MoneyPluginInterface $moneyPlugin)
     {
         $this->payolutionClient = $payolutionClient;
-        $this->currencyManager = $currencyManager;
+        $this->moneyPlugin = $moneyPlugin;
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
@@ -60,7 +60,7 @@ class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -163,7 +163,7 @@ class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function convertCentToDecimal($amount)
     {
-        return $this->currencyManager->convertCentToDecimal($amount);
+        return $this->moneyPlugin->convertIntegerToDecimal((int)$amount);
     }
 
 }

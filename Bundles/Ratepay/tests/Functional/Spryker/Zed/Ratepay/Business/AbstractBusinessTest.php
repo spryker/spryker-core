@@ -291,14 +291,14 @@ abstract class AbstractBusinessTest extends Test
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */
     abstract protected function setRatepayPaymentDataToPaymentTransfer($payment, $paymentTransfer);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     abstract protected function getRatepayPaymentMethodTransfer();
 
