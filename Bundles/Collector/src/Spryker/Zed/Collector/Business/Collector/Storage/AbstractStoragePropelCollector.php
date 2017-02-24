@@ -20,12 +20,36 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
 {
 
     /**
+     * @var \Spryker\Zed\Collector\CollectorConfig|null
+     */
+    protected $config = null;
+
+    /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
     protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    {
+        if ($this->config && $this->config->getEnablePrepareScopeKeyJoinFixFeatureFlag() === true) {
+            $this->joinStorageTableWithLocale($touchQuery, $locale);
+        } else {
+            $this->joinStorageTable($touchQuery);
+        }
+
+        $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
+
+        parent::prepareCollectorScope($touchQuery, $locale);
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function joinStorageTableWithLocale(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
         $storageJoin = new Join(
             SpyTouchTableMap::COL_ID_TOUCH,
@@ -35,12 +59,36 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
         $touchQuery->addJoinObject($storageJoin, 'storageJoin');
         $touchQuery->addJoinCondition(
             'storageJoin',
-            sprintf('%s = %s', SpyTouchStorageTableMap::COL_FK_LOCALE, (int)$locale->requireIdLocale()->getIdLocale())
+            sprintf(
+                '%s = %s',
+                SpyTouchStorageTableMap::COL_FK_LOCALE,
+                (int)$localeTransfer->requireIdLocale()->getIdLocale()
+            )
         );
+    }
 
-        $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     *
+     * @return void
+     */
+    protected function joinStorageTable(SpyTouchQuery $touchQuery)
+    {
+        $touchQuery->addJoin(
+            SpyTouchTableMap::COL_ID_TOUCH,
+            SpyTouchStorageTableMap::COL_FK_TOUCH,
+            Criteria::LEFT_JOIN
+        );
+    }
 
-        parent::prepareCollectorScope($touchQuery, $locale);
+    /**
+     * @param \Spryker\Zed\Collector\CollectorConfig $config
+     *
+     * @return void
+     */
+    public function setConfig(CollectorConfig $config)
+    {
+        $this->config = $config;
     }
 
 }
