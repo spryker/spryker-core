@@ -10,6 +10,7 @@ use Codeception\Module;
 use Codeception\Scenario;
 use Codeception\Step\Action;
 use Codeception\TestCase;
+use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
@@ -21,11 +22,11 @@ class IdeAutoCompletion extends Module
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
-
-        $this->removeTestTargetDirectory($test->getScenario());
+        
+        $this->removeTestTargetDirectory($test->getMetadata()->getFeature());
         $this->createTestTargetDirectory();
     }
 
