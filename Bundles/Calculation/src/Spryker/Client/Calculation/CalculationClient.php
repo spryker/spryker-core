@@ -30,4 +30,14 @@ class CalculationClient extends AbstractClient implements CalculationClientInter
         return $this->getFactory()->createZedStub()->recalculate($quoteTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @return \Spryker\Client\Calculation\Zed\CalculationStub
+     */
+    public function getZedStub()
+    {
+        return $this->getFactory()->createZedStub();
+    }
+
 }
