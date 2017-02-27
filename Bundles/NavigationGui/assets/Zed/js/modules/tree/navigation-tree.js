@@ -5,13 +5,21 @@
 
 'use strict';
 
-// var navigationNodeForm = require('./navigation-node-form');
 require('jstree');
+
+/*
+ * TODO: Clean up JS code
+ *
+ * TODO: Cancel existing ajax requests when new one initiated.
+ *
+ * TODO: standardize success messages across the UI
+ */
 
 var treeProgressBar = $('#navigation-tree-loader');
 var treeUpdateProgressBar = $('#navigation-tree-update-loader');
 var treeContainer = $('#navigation-tree-container');
 var targetElement = $('#navigation-tree-content');
+var treeOrderSaveBtn = $('#navigation-tree-save-btn');
 
 /**
  * @param {int} idNavigation
@@ -190,7 +198,7 @@ $('#navigation-tree-search-field').keyup(function () {
 });
 
 // click save order
-$('#navigation-tree-save-btn').on('click', function(){
+treeOrderSaveBtn.on('click', function(){
     treeUpdateProgressBar.removeClass('hidden');
 
     var jstreeData = $('#navigation-tree').jstree(true).get_json();
@@ -206,10 +214,17 @@ $('#navigation-tree-save-btn').on('click', function(){
             text: response.message,
             type: response.success ? "success" : "error"
         });
+
+        treeOrderSaveBtn.attr('disabled', 'disabled');
     })
     .always(function() {
         treeUpdateProgressBar.addClass('hidden');
     });
+});
+
+// Enable save order button on tree change
+$(document).bind('dnd_stop.vakata', function(e, data) {
+    treeOrderSaveBtn.removeAttr('disabled');
 });
 
 /**

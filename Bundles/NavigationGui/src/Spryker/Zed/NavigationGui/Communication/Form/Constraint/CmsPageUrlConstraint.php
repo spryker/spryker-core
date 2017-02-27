@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\NavigationGui\Communication\Form\Constraint;
+
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
+
+class CmsPageUrlConstraint extends SymfonyConstraint
+{
+
+    const OPTION_URL_FACADE = 'urlFacade';
+
+    /**
+     * @var \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
+     */
+    protected $urlFacade;
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->urlFacade;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTargets()
+    {
+        return static::CLASS_CONSTRAINT;
+    }
+
+}

@@ -20,4 +20,22 @@ interface NavigationGuiQueryContainerInterface
      */
     public function queryNavigation();
 
+    /**
+     * @param string $searchText
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryCmsPageUrlSuggestions($searchText, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param string $searchText
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryCategoryNodeUrlSuggestions($searchText, $idLocale);
+
 }

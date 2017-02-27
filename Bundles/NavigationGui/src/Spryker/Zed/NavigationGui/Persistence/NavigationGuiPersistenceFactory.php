@@ -25,4 +25,12 @@ class NavigationGuiPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::QUERY_CONTAINER_NAVIGATION);
     }
 
+    /**
+     * @return \Spryker\Zed\NavigationGui\Dependency\QueryContainer\NavigationGuiToCmsInterface
+     */
+    public function getCmsQueryContainer()
+    {
+        return $this->getProvidedDependency(NavigationGuiDependencyProvider::QUERY_CONTAINER_CMS);
+    }
+
 }

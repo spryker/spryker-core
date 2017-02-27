@@ -14,6 +14,7 @@ use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormData
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
+use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
@@ -75,7 +76,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createNavigationNodeFormType()
     {
-        return new NavigationNodeFormType();
+        return new NavigationNodeFormType($this->createNavigationNodeLocalizedAttributesFormType());
     }
 
     /**
@@ -84,6 +85,14 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createNavigationNodeFormDataProvider()
     {
         return new NavigationNodeFormDataProvider($this->getNavigationFacade(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType
+     */
+    protected function createNavigationNodeLocalizedAttributesFormType()
+    {
+        return new NavigationNodeLocalizedAttributesFormType($this->getUrlFacade());
     }
 
     /**
@@ -100,6 +109,14 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_URL);
     }
 
 }

@@ -7,7 +7,6 @@
 
 require('ZedGui');
 var navigationTree = require('./tree/navigation-tree');
-// var navigationNodeForm = require('./tree/navigation-node-form');
 
 // TODO: Clean up JS code
 
@@ -24,8 +23,8 @@ $(document).ready(function() {
     });
 
     navigationTable.on('select', function(event, api, type, indexes) {
-        var data = navigationTable.row(indexes[0]).data();
-        navigationTree.load(data[0]);
+        var rowData = navigationTable.row(indexes[0]).data();
+        navigationTree.load(rowData[0]);
     });
 
     navigationTable.on('deselect', function() {

@@ -1,3 +1,5 @@
+{{ form_row(navigationNodeForm.node_type) }}
+
 <div class="form-group">
     {% for localeTransfer in localeCollection %}
         {% for navigationNodeLocalizedAttributes in navigationNodeForm.navigation_node_localized_attributes %}
@@ -11,7 +13,17 @@
                             {{ form_errors(navigationNodeLocalizedAttributes.title) }}
                         </div>
 
-                        <p>External URL / CMS / Category / None ...</p>
+                        <div class="js-node-type-field hidden" data-node-type="external_url">
+                            {{ form_row(navigationNodeLocalizedAttributes.external_url) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="cms">
+                            {{ form_row(navigationNodeLocalizedAttributes.cms_page_url, {'url': url('/navigation-gui/url-suggestion/cms-page', {'id-locale': localeTransfer.idLocale})}) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="category">
+                            {{ form_row(navigationNodeLocalizedAttributes.category_url, {'url': url('/navigation-gui/url-suggestion/category', {'id-locale': localeTransfer.idLocale})}) }}
+                        </div>
 
                         {{ form_rest(navigationNodeLocalizedAttributes) }}
                     {% endblock %}

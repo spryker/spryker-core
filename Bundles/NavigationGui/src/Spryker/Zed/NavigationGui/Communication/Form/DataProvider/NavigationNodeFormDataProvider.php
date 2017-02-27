@@ -9,6 +9,7 @@ namespace Spryker\Zed\NavigationGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleInterface;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface;
 
@@ -25,6 +26,10 @@ class NavigationNodeFormDataProvider
      */
     protected $localeFacade;
 
+    /**
+     * @param \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface $navigationFacade
+     * @param \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleInterface $localeFacade
+     */
     public function __construct(NavigationGuiToNavigationInterface $navigationFacade, NavigationGuiToLocaleInterface $localeFacade)
     {
         $this->navigationFacade = $navigationFacade;
@@ -54,7 +59,19 @@ class NavigationNodeFormDataProvider
      */
     public function getOptions()
     {
-        return [];
+        return [
+            // TODO: refactor
+            NavigationNodeFormType::OPTION_NODE_TYPE_OPTIONS => [
+                'Category' => 'category',
+                'CMS page' => 'cms',
+                'External URL' => 'external_url',
+            ],
+            NavigationNodeFormType::OPTION_NODE_TYPE_OPTION_ATTRIBUTES => [
+                'Category' => ['data-url' => '/search-for-category'],
+                'CMS page' => ['data-url' => '/search-for-cms'],
+                'External URL' => [],
+            ],
+        ];
     }
 
     /**
@@ -66,14 +83,11 @@ class NavigationNodeFormDataProvider
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
-        $fields = [];
         foreach ($availableLocales as $localeTransfer) {
             $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
             $navigationNodeLocalizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
 
             $navigationNodeTransfer->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer);
-
-//            $fields[$localeTransfer->getLocaleName()] = $navigationNodeTransfer;
         }
 
         return $navigationNodeTransfer;

@@ -10,7 +10,7 @@
 
                 <div class="pull-right">
                     <a href="{{ url('/navigation-gui/node/create', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}" class="btn btn-xs btn-primary">
-                        <i class="fa fa-pencil-square-o"></i> {{ 'Add child' | trans }}
+                        <i class="fa fa-pencil-square-o"></i> {{ 'Add child node' | trans }}
                     </a>
 
                     {% if idNavigationNode %}
@@ -33,4 +33,9 @@
 
     {% include '@NavigationGui/Node/_partials/tree-reloader.twig' %}
 
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>
 {% endblock %}
