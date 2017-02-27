@@ -13,7 +13,6 @@ use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
-use Spryker\Shared\Session\Business\Handler\Logger\NewRelicSessionTimedLogger;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -105,8 +104,7 @@ abstract class SessionFactory
         return new SessionHandlerRedisLocking(
             $redisClient,
             $this->createRedisSpinLockLocker($redisClient),
-            $this->getSessionLifetime(),
-            $this->createNewRelicTimedLogger()
+            $this->getSessionLifetime()
         );
     }
 
@@ -129,19 +127,10 @@ abstract class SessionFactory
     {
         return new RedisSpinLockLocker(
             $redisClient,
-            $this->createNewRelicTimedLogger(),
-            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS),
-            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS),
-            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS)
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS, 0),
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS, 0),
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS, 0)
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface
-     */
-    protected function createNewRelicTimedLogger()
-    {
-        return new NewRelicSessionTimedLogger($this->createNewRelicApi());
     }
 
     /**

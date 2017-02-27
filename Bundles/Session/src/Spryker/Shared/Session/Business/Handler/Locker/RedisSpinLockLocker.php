@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Session\Business\Handler\Locker;
 
 use Predis\Client;
-use Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface;
 
 class RedisSpinLockLocker implements SessionLockerInterface
 {
@@ -44,11 +43,6 @@ class RedisSpinLockLocker implements SessionLockerInterface
     protected $retryDelayMicroseconds;
 
     /**
-     * @var \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface
-     */
-    protected $logger;
-
-    /**
      * @var string
      */
     protected $token;
@@ -59,24 +53,70 @@ class RedisSpinLockLocker implements SessionLockerInterface
     protected $key;
 
     /**
+     * @var bool
+     */
+    protected $isLocked = false;
+
+    /**
      * @param \Predis\Client $redisClient
-     * @param \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface $logger
      * @param int|null $timeoutMilliseconds
      * @param int|null $retryDelayMicroseconds
      * @param int|null $lockTtlMilliseconds
      */
     public function __construct(
         Client $redisClient,
-        SessionTimedLoggerInterface $logger,
         $timeoutMilliseconds = null,
         $retryDelayMicroseconds = null,
         $lockTtlMilliseconds = null
     ) {
         $this->redisClient = $redisClient;
-        $this->logger = $logger;
-        $this->timeoutMilliseconds = $timeoutMilliseconds ?: static::DEFAULT_TIMEOUT_MILLISECONDS;
+        $this->timeoutMilliseconds = $this->getTimeoutMilliseconds($timeoutMilliseconds);
         $this->retryDelayMicroseconds = $retryDelayMicroseconds ?: static::DEFAULT_RETRY_DELAY_MICROSECONDS;
-        $this->lockTtlMilliseconds = $lockTtlMilliseconds ?: static::DEFAULT_LOCK_TTL_MILLISECONDS;
+        $this->lockTtlMilliseconds = $this->getLockTtlMilliseconds($lockTtlMilliseconds);
+    }
+
+    /**
+     * @param int|null $timeoutMilliseconds
+     *
+     * @return int
+     */
+    protected function getTimeoutMilliseconds($timeoutMilliseconds)
+    {
+        if ((int)$timeoutMilliseconds) {
+            return (int)$timeoutMilliseconds;
+        }
+
+        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS);
+    }
+
+    /**
+     * @param int|null $lockTtlMilliseconds
+     *
+     * @return int
+     */
+    protected function getLockTtlMilliseconds($lockTtlMilliseconds)
+    {
+        if ((int)$lockTtlMilliseconds) {
+            return (int)$lockTtlMilliseconds;
+        }
+
+        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_LOCK_TTL_MILLISECONDS, 0.75);
+    }
+
+    /**
+     * @param int $defaultMilliseconds
+     * @param int $fraction
+     *
+     * @return int
+     */
+    protected function getMillisecondsFromMaxExecutionTime($defaultMilliseconds, $fraction = 1)
+    {
+        $maxExecutionTime = (int)round((int)ini_get('max_execution_time') * $fraction);
+        if ($maxExecutionTime) {
+            return ($maxExecutionTime * 1000);
+        }
+
+        return $defaultMilliseconds;
     }
 
     /**
@@ -115,13 +155,11 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     protected function waitForLock()
     {
-        $this->logger->startTiming();
-
         $startTimeMilliseconds = $this->getMilliTime();
 
         do {
             if ($this->acquire()) {
-                $this->logger->logTimedMetric(static::LOG_METRIC_LOCK_WAIT_TIME);
+                $this->isLocked = true;
 
                 return true;
             }
@@ -130,8 +168,6 @@ class RedisSpinLockLocker implements SessionLockerInterface
 
             $runTimeMilliseconds = ($this->getMilliTime() - $startTimeMilliseconds);
         } while ($runTimeMilliseconds < $this->timeoutMilliseconds);
-
-        $this->logger->logTimedMetric(static::LOG_METRIC_LOCK_WAIT_TIME);
 
         return false;
     }
@@ -149,13 +185,9 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     protected function acquire()
     {
-        $this->logger->startTiming();
-
         $result = $this
             ->redisClient
             ->set($this->key, $this->token, 'PX', $this->lockTtlMilliseconds, 'NX');
-
-        $this->logger->logTimedMetric(static::LOG_METRIC_LOCK_ACQUIRE_TIME);
 
         return ($result ? true : false);
     }
@@ -165,7 +197,9 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     public function unlock()
     {
-        $this->logger->startTiming();
+        if (!$this->isLocked) {
+            return;
+        }
 
         $this
             ->redisClient
@@ -176,10 +210,9 @@ class RedisSpinLockLocker implements SessionLockerInterface
                 $this->token
             );
 
-        $this->logger->logTimedMetric(static::LOG_METRIC_LOCK_RELEASE_TIME);
-
         $this->key = null;
         $this->token = null;
+        $this->isLocked = false;
     }
 
     /**

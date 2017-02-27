@@ -9,7 +9,6 @@ namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 use Codeception\TestCase\Test;
 use Predis\Client;
 use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
-use Spryker\Shared\Session\Business\Handler\Logger\NewRelicSessionTimedLogger;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
 
 /**
@@ -40,8 +39,7 @@ class SessionHandlerRedisLockingTest extends Test
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,
             $lockerMock,
-            60,
-            $this->getNewRelicSessionTimedLoggerMock()
+            60
         );
 
         $sessionData = $sessionHandler->read('session_key');
@@ -67,8 +65,7 @@ class SessionHandlerRedisLockingTest extends Test
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,
             $lockerMock,
-            60,
-            $this->getNewRelicSessionTimedLoggerMock()
+            60
         );
 
         $sessionData = $sessionHandler->read('session_key');
@@ -93,17 +90,6 @@ class SessionHandlerRedisLockingTest extends Test
     {
         return $this
             ->getMockBuilder(RedisSpinLockLocker::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Session\Business\Handler\Logger\NewRelicSessionTimedLogger
-     */
-    private function getNewRelicSessionTimedLoggerMock()
-    {
-        return $this
-            ->getMockBuilder(NewRelicSessionTimedLogger::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

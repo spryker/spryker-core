@@ -10,16 +10,11 @@ namespace Spryker\Shared\Session\Business\Handler;
 use Predis\Client;
 use SessionHandlerInterface;
 use Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface;
-use Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface;
 
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
 
     const KEY_PREFIX = 'session:';
-
-    const LOG_METRIC_READ_TIME = 'Redis/Session_read_time';
-    const LOG_METRIC_WRITE_TIME = 'Redis/Session_write_time';
-    const LOG_METRIC_DELETE_TIME = 'Redis/Session_delete_time';
 
     /**
      * @var \Predis\Client
@@ -37,26 +32,26 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected $locker;
 
     /**
-     * @var \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface $logger
-     */
-    protected $logger;
-
-    /**
      * @param \Predis\Client $redisClient
      * @param \Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface $locker
      * @param int $ttlSeconds
-     * @param \Spryker\Shared\Session\Business\Handler\Logger\SessionTimedLoggerInterface $logger
      */
     public function __construct(
         Client $redisClient,
         SessionLockerInterface $locker,
-        $ttlSeconds,
-        SessionTimedLoggerInterface $logger
+        $ttlSeconds
     ) {
         $this->redisClient = $redisClient;
         $this->locker = $locker;
         $this->ttlSeconds = $ttlSeconds;
-        $this->logger = $logger;
+
+        $this->redisClient->connect();
+    }
+
+    public function __destruct()
+    {
+        $this->locker->unlock();
+        $this->redisClient->disconnect();
     }
 
     /**
@@ -67,8 +62,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->redisClient->connect();
-
         return $this->redisClient->isConnected();
     }
 
@@ -78,7 +71,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     public function close()
     {
         $this->locker->unlock();
-        $this->redisClient->disconnect();
 
         return true;
     }
@@ -94,13 +86,9 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
             return '';
         }
 
-        $this->logger->startTiming();
-
         $sessionData = $this
             ->redisClient
             ->get($this->getKey($sessionId));
-
-        $this->logger->logTimedMetric(static::LOG_METRIC_READ_TIME);
 
         return $this->normalizeSessionData($sessionData);
     }
@@ -127,7 +115,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected function tryDecodeLegacySession($sessionData)
     {
         if (substr($sessionData, 0, 1) === '"') {
-            return json_decode($sessionData);
+            return json_decode($sessionData, true);
         }
 
         return $sessionData;
@@ -141,13 +129,9 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $this->logger->startTiming();
-
         $result = $this
             ->redisClient
             ->setex($this->getKey($sessionId), $this->ttlSeconds, $data);
-
-        $this->logger->logTimedMetric(static::LOG_METRIC_WRITE_TIME);
 
         return ($result ? true : false);
     }
@@ -159,11 +143,8 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $this->logger->startTiming();
-
         $this->redisClient->del([$this->getKey($sessionId)]);
-
-        $this->logger->logTimedMetric(static::LOG_METRIC_DELETE_TIME);
+        $this->locker->unlock();
 
         return true;
     }
