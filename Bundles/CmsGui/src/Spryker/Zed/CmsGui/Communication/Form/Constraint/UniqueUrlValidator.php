@@ -43,7 +43,7 @@ class UniqueUrlValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->isUniqueUrl($url, $constraint)) {
+        if ($this->hasUrl($url, $constraint, $value->getIdCmsPage())) {
             $this->context
                 ->buildViolation(sprintf('Provided Url "%s" is already taken.', $url))
                 ->atPath('url')
@@ -54,12 +54,17 @@ class UniqueUrlValidator extends ConstraintValidator
     /**
      * @param string $url
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param int|null $idCmsPage
      *
      * @return bool
      */
-    protected function isUniqueUrl($url, UniqueUrl $constraint)
+    protected function hasUrl($url, UniqueUrl $constraint, $idCmsPage = null)
     {
-        return $constraint->getUrlFacade()->hasUrl($url) === false;
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setFkResourcePage($idCmsPage);
+        $urlTransfer->setUrl($url);
+
+        return $constraint->getUrlFacade()->hasUrl($urlTransfer);
     }
 
     /**
@@ -80,7 +85,7 @@ class UniqueUrlValidator extends ConstraintValidator
             return true;
         }
 
-        if ((int)$urlTransfer->getFkResourcePage() === (int)$submittedPageAttributesTransfer->getIdCmsPage()) {
+        if ($urlTransfer->getFkResourcePage() && (int)$urlTransfer->getFkResourcePage() === (int)$submittedPageAttributesTransfer->getIdCmsPage()) {
             return false;
         }
 

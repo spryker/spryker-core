@@ -11,11 +11,11 @@ interface CmsGuiToUrlInterface
 {
 
     /**
-     * @param string $url
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($url);
+    public function hasUrl(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

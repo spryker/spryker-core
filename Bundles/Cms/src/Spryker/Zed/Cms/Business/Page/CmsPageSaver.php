@@ -286,6 +286,10 @@ class CmsPageSaver implements CmsPageSaverInterface
 
         $cmsPageLocalizedAttributesEntity->save();
 
+        $cmsPageAttributesTransfer->setIdCmsPageLocalizedAttributes(
+            $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+        );
+
         $this->createPageUrl($cmsPageAttributesTransfer, $cmsPageEntity->getIdCmsPage());
 
         return $cmsPageLocalizedAttributesEntity;
@@ -332,6 +336,10 @@ class CmsPageSaver implements CmsPageSaverInterface
                 $cmsPageMetaAttributesTransfer
             );
             $cmsPageLocalizedAttributesEntity->save();
+
+            $cmsPageMetaAttributesTransfer->setIdCmsPageLocalizedAttributes(
+                $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+            );
         }
     }
 
