@@ -137,7 +137,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     protected function generateToken()
     {
-        return uniqid();
+        return random_bytes(20);
     }
 
     /**
