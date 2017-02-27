@@ -10,8 +10,6 @@ require('jstree');
 /*
  * TODO: Clean up JS code
  *
- * TODO: Cancel existing ajax requests when new one initiated.
- *
  * TODO: standardize success messages across the UI
  */
 
@@ -20,6 +18,7 @@ var treeUpdateProgressBar = $('#navigation-tree-update-loader');
 var treeContainer = $('#navigation-tree-container');
 var targetElement = $('#navigation-tree-content');
 var treeOrderSaveBtn = $('#navigation-tree-save-btn');
+var ajaxRequest;
 
 /**
  * @param {int} idNavigation
@@ -35,7 +34,11 @@ function loadTree(idNavigation, selected, skipFormLoad)
 
     var url = '/navigation-gui/tree/?id-navigation=' + idNavigation;
 
-    $.get(url, $.proxy(function(targetElement, response) {
+    if (ajaxRequest) {
+        ajaxRequest.abort();
+    }
+
+    ajaxRequest = $.get(url, $.proxy(function(targetElement, response) {
         targetElement.html(response);
 
         // tree init
@@ -97,6 +100,10 @@ function loadTree(idNavigation, selected, skipFormLoad)
  */
 function resetTree()
 {
+    if (ajaxRequest) {
+        ajaxRequest.abort();
+    }
+
     targetElement.html('');
     resetForm();
 }

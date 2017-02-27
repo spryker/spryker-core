@@ -8,7 +8,6 @@ namespace Spryker\Zed\NavigationGui\Communication\Table;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -68,6 +67,8 @@ class NavigationTable extends AbstractTable
             SpyNavigationTableMap::COL_KEY,
         ]);
 
+        $config->setDefaultSortField(SpyNavigationTableMap::COL_ID_NAVIGATION, TableConfiguration::SORT_DESC);
+
         return $config;
     }
 
@@ -78,9 +79,7 @@ class NavigationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->navigationGuiQueryContainer
-            ->queryNavigation()
-            ->orderByIdNavigation(Criteria::DESC);
+        $query = $this->navigationGuiQueryContainer->queryNavigation();
 
         $queryResults = $this->runQuery($query, $config, true);
 

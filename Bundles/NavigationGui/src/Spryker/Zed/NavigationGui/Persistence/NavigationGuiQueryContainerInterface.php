@@ -21,6 +21,8 @@ interface NavigationGuiQueryContainerInterface
     public function queryNavigation();
 
     /**
+     * @api
+     *
      * @param string $searchText
      * @param int $idLocale
      *

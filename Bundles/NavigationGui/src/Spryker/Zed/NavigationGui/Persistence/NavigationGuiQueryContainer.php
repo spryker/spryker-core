@@ -9,7 +9,6 @@ namespace Spryker\Zed\NavigationGui\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -29,9 +28,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
      */
     public function queryNavigation()
     {
-        return $this->getFactory()
-            ->getNavigationQueryContainer()
-            ->queryNavigation();
+        return $this->getFactory()->createNavigationQuery();
     }
 
     /**
@@ -55,8 +52,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
          *   AND scpla.name ILIKE '%:searchText%'
          */
         $query = $this->getFactory()
-            ->getCmsQueryContainer()
-            ->queryCmsPageLocalizedAttributes()
+            ->createCmsPageLocalizedAttributes()
             ->addJoin(
                 [SpyCmsPageLocalizedAttributesTableMap::COL_FK_CMS_PAGE, SpyCmsPageLocalizedAttributesTableMap::COL_FK_LOCALE],
                 [SpyUrlTableMap::COL_FK_RESOURCE_PAGE, SpyUrlTableMap::COL_FK_LOCALE],
@@ -92,7 +88,8 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
          *   sca.fk_locale = :idLocale
          *   AND sca.name ILIKE '%:searchText%'
          */
-        $query = SpyCategoryAttributeQuery::create() // TODO: fix direct usage of SpyCategoryAttributeQuery::create()
+        $query = $this->getFactory()
+            ->createCategoryAttributeQuery()
             ->addJoin(
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,

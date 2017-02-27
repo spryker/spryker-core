@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\NavigationGui\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
+use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
@@ -18,19 +20,27 @@ class NavigationGuiPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Dependency\QueryContainer\NavigationGuiToNavigationInterface
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
-    public function getNavigationQueryContainer()
+    public function createNavigationQuery()
     {
-        return $this->getProvidedDependency(NavigationGuiDependencyProvider::QUERY_CONTAINER_NAVIGATION);
+        return SpyNavigationQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Dependency\QueryContainer\NavigationGuiToCmsInterface
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function getCmsQueryContainer()
+    public function createCmsPageLocalizedAttributes()
     {
-        return $this->getProvidedDependency(NavigationGuiDependencyProvider::QUERY_CONTAINER_CMS);
+        return SpyCmsPageLocalizedAttributesQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function createCategoryAttributeQuery()
+    {
+        return SpyCategoryAttributeQuery::create();
     }
 
 }

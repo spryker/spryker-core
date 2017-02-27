@@ -60,17 +60,8 @@ class NavigationNodeFormDataProvider
     public function getOptions()
     {
         return [
-            // TODO: refactor
-            NavigationNodeFormType::OPTION_NODE_TYPE_OPTIONS => [
-                'Category' => 'category',
-                'CMS page' => 'cms',
-                'External URL' => 'external_url',
-            ],
-            NavigationNodeFormType::OPTION_NODE_TYPE_OPTION_ATTRIBUTES => [
-                'Category' => ['data-url' => '/search-for-category'],
-                'CMS page' => ['data-url' => '/search-for-cms'],
-                'External URL' => [],
-            ],
+            NavigationNodeFormType::OPTION_NODE_TYPE_OPTIONS => $this->getNodeTypeOptions(),
+            NavigationNodeFormType::OPTION_NODE_TYPE_OPTION_ATTRIBUTES => $this->getNodeTypeOptionAttributes(),
         ];
     }
 
@@ -91,6 +82,30 @@ class NavigationNodeFormDataProvider
         }
 
         return $navigationNodeTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getNodeTypeOptions()
+    {
+        return [
+            'Category' => 'category',
+            'CMS page' => 'cms',
+            'External URL' => 'external_url',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getNodeTypeOptionAttributes()
+    {
+        return [
+            'Category' => ['data-url' => '/search-for-category'],
+            'CMS page' => ['data-url' => '/search-for-cms'],
+            'External URL' => [],
+        ];
     }
 
 }
