@@ -18,12 +18,12 @@ class CategoryQueryBuilder extends QueryBuilderAbstract implements QueryBuilderI
 {
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     protected $categoryQueryContainer;
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct(CategoryQueryContainerInterface $categoryQueryContainer)
     {
@@ -50,9 +50,9 @@ class CategoryQueryBuilder extends QueryBuilderAbstract implements QueryBuilderI
     }
 
     /**
-     * @param SpyCategoryQuery $categoryQuery
-     * @param CategoryFeedJoinTransfer $categoryFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryFeedJoinTransfer $categoryFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -65,8 +65,8 @@ class CategoryQueryBuilder extends QueryBuilderAbstract implements QueryBuilderI
     }
 
     /**
-     * @param SpyCategoryQuery $categoryQuery
-     * @param DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
      *
      * @return void
      */

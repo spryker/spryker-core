@@ -7,29 +7,23 @@
 
 namespace Spryker\Zed\DataFeed\Persistence\QueryBuilder;
 
-use Generated\Shared\Transfer\CategoryFeedJoinTransfer;
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
 use Generated\Shared\Transfer\DataFeedDateFilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\PriceFeedJoinTransfer;
 use Generated\Shared\Transfer\StockFeedJoinTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class StockQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInterface
 {
 
     /**
-     * @param StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      */
     protected $stockQueryContainer;
 
     /**
-     * @param StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      */
     public function __construct(StockQueryContainerInterface $stockQueryContainer)
     {
@@ -39,7 +33,7 @@ class StockQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     /**
      * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function getDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
     {
@@ -56,9 +50,9 @@ class StockQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     }
 
     /**
-     * @param SpyStockProductQuery $stockProductQuery
-     * @param StockFeedJoinTransfer $stockFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
+     * @param \Generated\Shared\Transfer\StockFeedJoinTransfer $stockFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -71,8 +65,8 @@ class StockQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     }
 
     /**
-     * @param SpyStockProductQuery $stockProductQuery
-     * @param DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
+     * @param \Generated\Shared\Transfer\DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
      *
      * @return void
      */

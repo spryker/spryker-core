@@ -7,16 +7,12 @@
 
 namespace Spryker\Zed\DataFeed\Persistence;
 
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\DataFeed\DataFeedDependencyProvider;
 use Spryker\Zed\DataFeed\Persistence\QueryBuilder\CategoryQueryBuilder;
-use Spryker\Zed\DataFeed\Persistence\QueryBuilder\StockQueryBuilder;
 use Spryker\Zed\DataFeed\Persistence\QueryBuilder\PriceQueryBuilder;
 use Spryker\Zed\DataFeed\Persistence\QueryBuilder\ProductQueryBuilder;
+use Spryker\Zed\DataFeed\Persistence\QueryBuilder\StockQueryBuilder;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\DataFeed\DataFeedDependencyProvider;
-use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\DataFeed\DataFeedConfig getConfig()
@@ -66,7 +62,7 @@ class DataFeedPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return ProductQueryContainerInterface
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     public function getProductQueryContainer()
     {
@@ -74,7 +70,7 @@ class DataFeedPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return CategoryQueryContainerInterface
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
     {
@@ -82,7 +78,7 @@ class DataFeedPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return StockQueryContainerInterface
+     * @return \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
     public function getStockQueryContainer()
     {
@@ -90,7 +86,7 @@ class DataFeedPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return PriceQueryContainerInterface
+     * @return \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
      */
     public function getPriceQueryContainer()
     {

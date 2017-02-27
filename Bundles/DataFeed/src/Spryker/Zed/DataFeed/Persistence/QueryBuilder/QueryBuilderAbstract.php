@@ -14,8 +14,8 @@ abstract class QueryBuilderAbstract implements QueryBuilderInterface
 {
 
     /**
-     * @param ModelCriteria $entityQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
+     * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
      * @return void
      */
@@ -28,8 +28,8 @@ abstract class QueryBuilderAbstract implements QueryBuilderInterface
     }
 
     /**
-     * @param ModelCriteria $entityQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
+     * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
      * @return void
      */
@@ -44,8 +44,8 @@ abstract class QueryBuilderAbstract implements QueryBuilderInterface
     }
 
     /**
-     * @param ModelCriteria $entityQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
+     * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
      * @return void
      */

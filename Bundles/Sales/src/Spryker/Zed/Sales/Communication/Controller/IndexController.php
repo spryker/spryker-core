@@ -22,7 +22,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $result = (new \Spryker\Zed\DataFeed\Business\DataFeedFacade())
-            ->getCategoryDataFeed(
+            ->getPriceDataFeed(
                 (new \Generated\Shared\Transfer\DataFeedConditionTransfer())
                     ->setLocale((new \Generated\Shared\Transfer\LocaleTransfer())->setIdLocale(46))
                     ->setPagination((new \Generated\Shared\Transfer\DataFeedPaginationTransfer())->setLimit(20)->setOffset(0))

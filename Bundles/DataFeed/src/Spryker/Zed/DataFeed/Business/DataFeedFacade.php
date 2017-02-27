@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataFeed\Business;
 
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
-use Generated\Shared\Transfer\ProductFeedConditionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

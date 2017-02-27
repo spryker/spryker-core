@@ -12,10 +12,6 @@ use Generated\Shared\Transfer\DataFeedDateFilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductFeedJoinTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Orm\Zed\ProductImage\Persistence\Base\SpyProductImage;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
@@ -23,12 +19,12 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
 {
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     protected $productQueryContainer;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
@@ -56,8 +52,8 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
      *
      * @return void
      */
@@ -69,9 +65,9 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -88,8 +84,8 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -101,9 +97,9 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -124,9 +120,9 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -148,8 +144,8 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\ProductFeedJoinTransfer $productFeedJoinTransfer
      *
      * @return void
      */
@@ -167,9 +163,9 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -189,8 +185,8 @@ class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderIn
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */

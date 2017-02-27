@@ -7,26 +7,22 @@
 
 namespace Spryker\Zed\DataFeed\Persistence\QueryBuilder;
 
-use Generated\Shared\Transfer\CategoryFeedJoinTransfer;
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
 use Generated\Shared\Transfer\DataFeedDateFilterTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceFeedJoinTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 
 class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInterface
 {
 
     /**
-     * @param PriceQueryContainerInterface $priceQueryContainer
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
      */
     protected $priceQueryContainer;
 
     /**
-     * @param PriceQueryContainerInterface $priceQueryContainer
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
      */
     public function __construct(PriceQueryContainerInterface $priceQueryContainer)
     {
@@ -36,7 +32,7 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     /**
      * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function getDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
     {
@@ -52,8 +48,8 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     }
 
     /**
-     * @param SpyPriceProductQuery $productPriceQuery
-     * @param PriceFeedJoinTransfer $priceFeedJoinTransfer
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
+     * @param \Generated\Shared\Transfer\PriceFeedJoinTransfer $priceFeedJoinTransfer
      *
      * @return void
      */
@@ -65,8 +61,8 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
     }
 
     /**
-     * @param SpyPriceProductQuery $productPriceQuery
-     * @param DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
+     * @param \Generated\Shared\Transfer\DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
      *
      * @return void
      */

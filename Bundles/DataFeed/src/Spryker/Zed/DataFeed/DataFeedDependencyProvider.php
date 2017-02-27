@@ -9,12 +9,6 @@ namespace Spryker\Zed\DataFeed;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
-use Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlBridge as ProductToUrlQueryContainerBridge;
-use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingBridge;
-use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
 class DataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
