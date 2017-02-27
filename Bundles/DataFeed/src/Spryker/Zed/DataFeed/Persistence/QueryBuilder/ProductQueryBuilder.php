@@ -8,14 +8,18 @@
 namespace Spryker\Zed\DataFeed\Persistence\QueryBuilder;
 
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
-use Generated\Shared\Transfer\DataFeedPaginationTransfer;
+use Generated\Shared\Transfer\DataFeedDateFilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductFeedJoinsTransfer;
 use Generated\Shared\Transfer\ProductFeedJoinTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductQueryBuilder implements QueryBuilderInterface
+class ProductQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInterface
 {
 
     /**
@@ -46,8 +50,22 @@ class ProductQueryBuilder implements QueryBuilderInterface
         $this->applyJoins($abstractProductQuery, $productFeedJoinTransfer, $localeTransfer);
         $this->applyLocaleFilter($abstractProductQuery, $dataFeedConditionTransfer->getLocale());
         $this->applyPagination($abstractProductQuery, $dataFeedConditionTransfer->getPagination());
+        $this->applyDateFilter($abstractProductQuery, $dataFeedConditionTransfer->getDateFilter());
 
         return $abstractProductQuery;
+    }
+
+    /**
+     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+     *
+     * @return void
+     */
+    protected function applyDateFilter(
+        SpyProductAbstractQuery $abstractProductQuery,
+        DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+    ) {
+        //todo: implement
     }
 
     /**
@@ -62,56 +80,11 @@ class ProductQueryBuilder implements QueryBuilderInterface
         ProductFeedJoinTransfer $productFeedJoinTransfer,
         LocaleTransfer $localeTransfer
     ) {
-        //todo: implement joins / split method
-
-        $abstractProductQuery->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->endUse();
-
-        //image
-        if ($productFeedJoinTransfer->getIsJoinImage()) {
-            $abstractProductQuery
-                ->useSpyProductImageSetQuery()
-                    ->filterByFkLocale($localeTransfer->getIdLocale())
-                    ->useSpyProductImageSetToProductImageQuery()
-                    ->endUse()
-                ->endUse();
-        }
-
-        //category
-        if ($productFeedJoinTransfer->getIsJoinCategory()) {
-            $abstractProductQuery
-                ->useSpyProductCategoryQuery()
-                    ->useSpyCategoryQuery()
-                        ->useAttributeQuery()
-                            ->filterByFkLocale($localeTransfer->getIdLocale())
-                        ->endUse()
-                    ->endUse()
-                    ->useCategoryQuery()
-                    ->endUse()
-                ->endUse();
-        }
-
-        //price
-        if ($productFeedJoinTransfer->getIsJoinPrice()) {
-            $abstractProductQuery
-                ->usePriceProductQuery()
-                    ->usePriceTypeQuery()
-                    ->endUse()
-                ->endUse();
-        }
-
-        //variants
-        if ($productFeedJoinTransfer->getIsJoinVariant()) {
-            $abstractProductQuery
-                ->useSpyProductQuery()
-                    ->useSpyProductLocalizedAttributesQuery()
-                        ->filterByFkLocale($localeTransfer->getIdLocale())
-                    ->endUse()
-                ->useSpyCategoryAttributeQuery()
-                    ->filterByFkLocale($localeTransfer->getIdLocale())
-                ->endUse();
-        }
+//        $this->joinProductLocalizedAttributes($abstractProductQuery, $localeTransfer);
+        $this->joinProductImage($abstractProductQuery, $productFeedJoinTransfer, $localeTransfer);
+//        $this->joinProductCategory($abstractProductQuery, $productFeedJoinTransfer, $localeTransfer);
+//        $this->joinProductPrice($abstractProductQuery, $productFeedJoinTransfer);
+//        $this->joinProductVariant($abstractProductQuery, $productFeedJoinTransfer, $localeTransfer);
     }
 
     /**
@@ -129,48 +102,106 @@ class ProductQueryBuilder implements QueryBuilderInterface
 
     /**
      * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
+     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function applyPagination(
+    protected function joinProductImage(
         SpyProductAbstractQuery $abstractProductQuery,
-        DataFeedPaginationTransfer $dataFeedPaginationTransfer
+        ProductFeedJoinTransfer $productFeedJoinTransfer,
+        LocaleTransfer $localeTransfer
     ) {
-        $this->setQueryLimit($abstractProductQuery, $dataFeedPaginationTransfer);
-        $this->setQueryOffset($abstractProductQuery, $dataFeedPaginationTransfer);
-    }
-
-    /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
-     *
-     * @return void
-     */
-    protected function setQueryLimit(
-        SpyProductAbstractQuery $abstractProductQuery,
-        DataFeedPaginationTransfer $dataFeedPaginationTransfer
-    ) {
-        if ($dataFeedPaginationTransfer->getLimit()) {
-            $abstractProductQuery
-                ->setLimit($dataFeedPaginationTransfer->getLimit());
+        if ($productFeedJoinTransfer->getIsJoinImage()) {
+//            $abstractProductQuery
+//                ->useSpyProductImageSetQuery();
+//                ->useSpyProductImageSetQuery('SpyProductImageSet', Criteria::LEFT_JOIN)
+//                    ->filterByFkLocale($localeTransfer->getIdLocale())
+//                    ->useSpyProductImageSetToProductImageQuery('SpyProductImage', Criteria::LEFT_JOIN)
+//                    ->endUse()
+//                ->endUse();
         }
     }
 
     /**
      * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param DataFeedPaginationTransfer $dataFeedPaginationTransfer
+     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function setQueryOffset(
+    protected function joinProductCategory(
         SpyProductAbstractQuery $abstractProductQuery,
-        DataFeedPaginationTransfer $dataFeedPaginationTransfer
+        ProductFeedJoinTransfer $productFeedJoinTransfer,
+        LocaleTransfer $localeTransfer
     ) {
-        if ($dataFeedPaginationTransfer->getOffset()) {
+        if ($productFeedJoinTransfer->getIsJoinCategory()) {
             $abstractProductQuery
-                ->setOffset($dataFeedPaginationTransfer->getOffset());
+                ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
+                        ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                            ->filterByFkLocale($localeTransfer->getIdLocale())
+                        ->endUse()
+                    ->endUse()
+                ->endUse();
         }
+    }
+
+    /**
+     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
+     *
+     * @return void
+     */
+    protected function joinProductPrice(
+        SpyProductAbstractQuery $abstractProductQuery,
+        ProductFeedJoinTransfer $productFeedJoinTransfer
+    ) {
+        if ($productFeedJoinTransfer->getIsJoinPrice()) {
+            $abstractProductQuery
+                ->usePriceProductQuery(null, Criteria::LEFT_JOIN)
+                    ->usePriceTypeQuery(null, Criteria::LEFT_JOIN)
+                    ->endUse()
+                ->endUse();
+        }
+    }
+
+    /**
+     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param ProductFeedJoinTransfer $productFeedJoinTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function joinProductVariant(
+        SpyProductAbstractQuery $abstractProductQuery,
+        ProductFeedJoinTransfer $productFeedJoinTransfer,
+        LocaleTransfer $localeTransfer
+    ) {
+        if ($productFeedJoinTransfer->getIsJoinVariant()) {
+            $abstractProductQuery
+                ->useSpyProductQuery('useSpyProductQuery', Criteria::LEFT_JOIN)
+                    ->useSpyProductLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByFkLocale($localeTransfer->getIdLocale())
+                    ->endUse()
+                ->endUse();
+        }
+    }
+
+    /**
+     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function joinProductLocalizedAttributes(
+        SpyProductAbstractQuery $abstractProductQuery,
+        LocaleTransfer $localeTransfer
+    ) {
+        $abstractProductQuery
+            ->useSpyProductAbstractLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->endUse();
     }
 
 }

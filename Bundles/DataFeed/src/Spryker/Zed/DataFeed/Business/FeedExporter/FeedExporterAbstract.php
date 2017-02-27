@@ -8,9 +8,16 @@
 namespace Spryker\Zed\DataFeed\Business\FeedExporter;
 
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\DataFeed\Persistence\DataFeedQueryContainerInterface;
 
-class ProductExporter implements FeedExporterInterface
+abstract class FeedExporterAbstract
 {
 
     /**
@@ -29,16 +36,13 @@ class ProductExporter implements FeedExporterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     * @param ObjectCollection $entityCollection
      *
      * @return array
      */
-    public function getDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
+    protected function convertEntityCollection(ObjectCollection $entityCollection)
     {
-        return $this->queryContainer
-            ->queryDataFeedCollection($dataFeedConditionTransfer)
-            ->find()
-            ->toArray();
+        return $entityCollection->toArray();
     }
 
 }

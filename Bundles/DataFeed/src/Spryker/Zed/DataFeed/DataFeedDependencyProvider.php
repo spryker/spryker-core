@@ -20,6 +20,9 @@ class DataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';
+    const CATEGORY_QUERY_CONTAINER = 'CATEGORY_QUERY_CONTAINER';
+    const PRICE_QUERY_CONTAINER = 'PRICE_QUERY_CONTAINER';
+    const STOCK_QUERY_CONTAINER = 'STOCK_QUERY_CONTAINER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +54,21 @@ class DataFeedDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PRODUCT_QUERY_CONTAINER] = function (Container $container) {
             //todo: add bridge.
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+            //todo: add bridge.
+            return $container->getLocator()->category()->queryContainer();
+        };
+
+        $container[self::PRICE_QUERY_CONTAINER] = function (Container $container) {
+            //todo: add bridge.
+            return $container->getLocator()->price()->queryContainer();
+        };
+
+        $container[self::STOCK_QUERY_CONTAINER] = function (Container $container) {
+            //todo: add bridge.
+            return $container->getLocator()->stock()->queryContainer();
         };
 
         return $container;

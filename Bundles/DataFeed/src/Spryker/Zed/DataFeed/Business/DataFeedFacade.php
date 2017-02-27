@@ -29,7 +29,55 @@ class DataFeedFacade extends AbstractFacade implements DataFeedFacadeInterface
     public function getProductDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
     {
         return $this->getFactory()
-            ->createProductExporter()
+            ->createProductFeedExporter()
+            ->getDataFeed($dataFeedConditionTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getCategoryDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
+    {
+        return $this->getFactory()
+            ->createCategoryFeedExporter()
+            ->getDataFeed($dataFeedConditionTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getPriceDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
+    {
+        return $this->getFactory()
+            ->createPriceFeedExporter()
+            ->getDataFeed($dataFeedConditionTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getStockDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
+    {
+        return $this->getFactory()
+            ->createStockFeedExporter()
             ->getDataFeed($dataFeedConditionTransfer);
     }
 

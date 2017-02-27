@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\DataFeed\Business;
 
-use Spryker\Zed\DataFeed\Business\FeedExporter\ProductExporter;
+use Spryker\Zed\DataFeed\Business\FeedExporter\CategoryFeedExporter;
+use Spryker\Zed\DataFeed\Business\FeedExporter\PriceFeedExporter;
+use Spryker\Zed\DataFeed\Business\FeedExporter\ProductFeedExporter;
+use Spryker\Zed\DataFeed\Business\FeedExporter\StockFeedExporter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -20,9 +23,39 @@ class DataFeedBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DataFeed\Business\FeedExporter\FeedExporterInterface
      */
-    public function createProductExporter()
+    public function createProductFeedExporter()
     {
-        return new ProductExporter(
+        return new ProductFeedExporter(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataFeed\Business\FeedExporter\FeedExporterInterface
+     */
+    public function createCategoryFeedExporter()
+    {
+        return new CategoryFeedExporter(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataFeed\Business\FeedExporter\FeedExporterInterface
+     */
+    public function createPriceFeedExporter()
+    {
+        return new PriceFeedExporter(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataFeed\Business\FeedExporter\FeedExporterInterface
+     */
+    public function createStockFeedExporter()
+    {
+        return new StockFeedExporter(
             $this->getQueryContainer()
         );
     }

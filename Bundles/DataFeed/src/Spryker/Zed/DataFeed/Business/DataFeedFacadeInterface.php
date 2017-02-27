@@ -23,4 +23,37 @@ interface DataFeedFacadeInterface
      */
     public function getProductDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer);
 
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getCategoryDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer);
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getPriceDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer);
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getStockDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer);
+
 }

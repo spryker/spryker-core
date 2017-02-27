@@ -5,7 +5,11 @@
 
     <transfer name="DataFeedCondition">
         <property name="productFeedJoin" type="ProductFeedJoin" />
+        <property name="categoryFeedJoin" type="CategoryFeedJoin" />
+        <property name="priceFeedJoin" type="PriceFeedJoin" />
+        <property name="stockFeedJoin" type="StockFeedJoin" />
         <property name="pagination" type="DataFeedPagination" />
+        <property name="dateFilter" type="DataFeedDateFilter" />
         <property name="locale" type="Locale" />
     </transfer>
 
@@ -17,9 +21,26 @@
         <property name="isJoinOption" type="bool" />
     </transfer>
 
+    <transfer name="CategoryFeedJoin">
+        <property name="isJoinProduct" type="bool" />
+    </transfer>
+
+    <transfer name="PriceFeedJoin">
+        <property name="isJoinType" type="bool" />
+    </transfer>
+
+    <transfer name="StockFeedJoin">
+        <property name="isJoinProduct" type="bool" />
+    </transfer>
+
     <transfer name="DataFeedPagination">
         <property name="limit" type="int" />
         <property name="offset" type="int" />
+    </transfer>
+
+    <transfer name="DataFeedDateFilter">
+        <property name="updatedFrom" type="string" />
+        <property name="updatedTo" type="string" />
     </transfer>
 
 </transfers>
