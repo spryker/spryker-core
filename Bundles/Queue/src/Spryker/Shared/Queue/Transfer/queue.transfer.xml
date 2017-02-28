@@ -11,11 +11,14 @@
     </transfer>
 
     <transfer name="QueueOption">
-        <property name="name" type="string"/>
+        <property name="queueName" type="string"/>
+        <property name="chunkSize" type="int"/>
     </transfer>
 
     <transfer name="QueueMessage">
         <property name="queueName" type="string" />
         <property name="body" type="string" />
+        <property name="acknowledge" type="bool"/>
+        <property name="hasError" type="bool"/>
     </transfer>
 </transfers>

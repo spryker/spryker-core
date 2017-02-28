@@ -10,6 +10,9 @@ namespace Spryker\Shared\Queue;
 interface QueueConstants
 {
 
+    const QUEUE_ADAPTOR_NAME_MAPPING = 'QUEUE_ADAPTOR_NAME_MAPPING';
+    const QUEUE_ADAPTOR_NAME_DEFAULT = 'QUEUE_ADAPTOR_NAME_DEFAULT';
+
     const QUEUE_HOST = 'QUEUE_HOST';
     const QUEUE_PORT = 'QUEUE_PORT';
     const QUEUE_USERNAME = 'QUEUE_USERNAME';

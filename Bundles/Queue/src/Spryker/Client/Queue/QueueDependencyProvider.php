@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Container;
 class QueueDependencyProvider extends AbstractDependencyProvider
 {
 
-    const QUEUE_ADAPTER = 'adapter queue';
+    const QUEUE_ADAPTERS = 'queue adapters';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,8 +24,8 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[static::QUEUE_ADAPTER] = function (Container $container) {
-            return $this->createQueueAdapter($container);
+        $container[static::QUEUE_ADAPTERS] = function (Container $container) {
+            return $this->createQueueAdapters($container);
         };
 
         return $container;
@@ -34,9 +34,9 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
      */
-    protected function createQueueAdapter(Container $container)
+    protected function createQueueAdapters(Container $container)
     {
     }
 

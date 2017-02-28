@@ -9,6 +9,6 @@ namespace Spryker\Client\Queue\Exception;
 
 use Exception;
 
-class QueueAdapterMissingException extends Exception
+class MissingQueueAdapterException extends Exception
 {
 }

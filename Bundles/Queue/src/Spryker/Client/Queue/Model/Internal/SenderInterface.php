@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Queue;
+namespace Spryker\Client\Queue\Model\Internal;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 
-interface PublisherInterface
+interface SenderInterface
 {
 
     /**
@@ -17,13 +17,14 @@ interface PublisherInterface
      *
      * @return void
      */
-    public function publish(QueueMessageTransfer $queueMessageTransfer);
+    public function sendMessage(QueueMessageTransfer $queueMessageTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
+     * @return void
      */
-    public function encodeMessage(QueueMessageTransfer $queueMessageTransfer);
+    public function sendMessages($queueName ,array $queueMessageTransfers);
 
 }
