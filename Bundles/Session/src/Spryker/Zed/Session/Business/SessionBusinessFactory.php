@@ -103,7 +103,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $dsn
+     * @param string $dsn
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */

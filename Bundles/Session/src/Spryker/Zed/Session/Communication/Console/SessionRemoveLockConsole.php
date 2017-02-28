@@ -51,7 +51,6 @@ session:lock:remove --yves <session_id>
 For Zed:
 session:lock:remove --zed <session_id>
 HELPTEXT;
-
     }
 
     /**

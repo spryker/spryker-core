@@ -66,7 +66,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
 
     /**
      * @param \Predis\Client $redisClient
-     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface $lockKeyGenerator,
+     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface $lockKeyGenerator
      * @param int|null $timeoutMilliseconds
      * @param int|null $retryDelayMicroseconds
      * @param int|null $lockTtlMilliseconds

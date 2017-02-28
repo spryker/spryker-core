@@ -16,6 +16,8 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @inheritdoc
      *
      * @param string $sessionId
@@ -31,6 +33,8 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @inheritdoc
      *
      * @param string $sessionId

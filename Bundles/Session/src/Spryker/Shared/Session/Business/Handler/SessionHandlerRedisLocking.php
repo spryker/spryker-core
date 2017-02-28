@@ -9,6 +9,7 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
 use SessionHandlerInterface;
+use Spryker\Shared\Session\Business\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
@@ -87,12 +88,18 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     /**
      * @param string $sessionId
      *
+     * @throws \Spryker\Shared\Session\Business\Handler\Exception\LockCouldNotBeAcquiredException
+     *
      * @return string
      */
     public function read($sessionId)
     {
         if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
-            return '';
+            throw new LockCouldNotBeAcquiredException(sprintf(
+                '%s could not acquire access to the session %s',
+                get_class($this),
+                $sessionId
+            ));
         }
 
         $sessionData = $this
