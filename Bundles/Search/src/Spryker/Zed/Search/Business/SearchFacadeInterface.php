@@ -115,10 +115,10 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function generatePageIndexMap(MessengerInterface $messenger);
+    public function generatePageIndexMap(LoggerInterface $messenger);
 
 }
