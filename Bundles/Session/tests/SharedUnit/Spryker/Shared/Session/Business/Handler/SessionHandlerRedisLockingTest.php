@@ -8,7 +8,8 @@ namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
 use Codeception\TestCase\Test;
 use Predis\Client;
-use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
+use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
 
 /**
@@ -39,6 +40,7 @@ class SessionHandlerRedisLockingTest extends Test
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,
             $lockerMock,
+            new RedisSessionKeyGenerator(),
             60
         );
 
@@ -65,6 +67,7 @@ class SessionHandlerRedisLockingTest extends Test
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,
             $lockerMock,
+            new RedisSessionKeyGenerator(),
             60
         );
 
@@ -84,7 +87,7 @@ class SessionHandlerRedisLockingTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
      */
     private function getRedisSpinLockLockerMock()
     {

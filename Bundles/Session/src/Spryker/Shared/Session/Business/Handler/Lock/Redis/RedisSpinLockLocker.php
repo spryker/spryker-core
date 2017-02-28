@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Session\Business\Handler\Locker;
+namespace Spryker\Shared\Session\Business\Handler\Lock\Redis;
 
 use Predis\Client;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface;
+use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class RedisSpinLockLocker implements SessionLockerInterface
 {
@@ -26,6 +28,11 @@ class RedisSpinLockLocker implements SessionLockerInterface
      * @var \Predis\Client
      */
     protected $redisClient;
+
+    /**
+     * @var \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
+     */
+    protected $lockKeyGenerator;
 
     /**
      * @var int
@@ -50,7 +57,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
     /**
      * @var string
      */
-    protected $key;
+    protected $sessionId;
 
     /**
      * @var bool
@@ -59,17 +66,20 @@ class RedisSpinLockLocker implements SessionLockerInterface
 
     /**
      * @param \Predis\Client $redisClient
+     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface $lockKeyGenerator,
      * @param int|null $timeoutMilliseconds
      * @param int|null $retryDelayMicroseconds
      * @param int|null $lockTtlMilliseconds
      */
     public function __construct(
         Client $redisClient,
+        LockKeyGeneratorInterface $lockKeyGenerator,
         $timeoutMilliseconds = null,
         $retryDelayMicroseconds = null,
         $lockTtlMilliseconds = null
     ) {
         $this->redisClient = $redisClient;
+        $this->lockKeyGenerator = $lockKeyGenerator;
         $this->timeoutMilliseconds = $this->getTimeoutMilliseconds($timeoutMilliseconds);
         $this->retryDelayMicroseconds = $retryDelayMicroseconds ?: static::DEFAULT_RETRY_DELAY_MICROSECONDS;
         $this->lockTtlMilliseconds = $this->getLockTtlMilliseconds($lockTtlMilliseconds);
@@ -120,14 +130,14 @@ class RedisSpinLockLocker implements SessionLockerInterface
     }
 
     /**
-     * @param string $sessionKey
+     * @param string $sessionId
      *
      * @return bool
      */
-    public function lock($sessionKey)
+    public function lock($sessionId)
     {
         $this->token = $this->generateToken();
-        $this->key = $this->generateKey($sessionKey);
+        $this->sessionId = $sessionId;
 
         return $this->waitForLock();
     }
@@ -138,16 +148,6 @@ class RedisSpinLockLocker implements SessionLockerInterface
     protected function generateToken()
     {
         return random_bytes(20);
-    }
-
-    /**
-     * @param string $sessionKey
-     *
-     * @return string
-     */
-    protected function generateKey($sessionKey)
-    {
-        return $sessionKey . static::KEY_SUFFIX;
     }
 
     /**
@@ -185,9 +185,11 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     protected function acquire()
     {
+        $lockKey = $this->lockKeyGenerator->generateLockKey($this->sessionId);
+
         $result = $this
             ->redisClient
-            ->set($this->key, $this->token, 'PX', $this->lockTtlMilliseconds, 'NX');
+            ->set($lockKey, $this->token, 'PX', $this->lockTtlMilliseconds, 'NX');
 
         return ($result ? true : false);
     }
@@ -195,24 +197,39 @@ class RedisSpinLockLocker implements SessionLockerInterface
     /**
      * @return void
      */
-    public function unlock()
+    public function unlockCurrent()
     {
         if (!$this->isLocked) {
             return;
         }
 
-        $this
+        $this->unlock($this->sessionId, $this->token);
+
+        $this->sessionId = null;
+        $this->token = null;
+        $this->isLocked = false;
+    }
+
+    /**
+     * @param string $sessionId
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function unlock($sessionId, $token)
+    {
+        $lockKey = $this->lockKeyGenerator->generateLockKey($sessionId);
+
+        $result = $this
             ->redisClient
             ->eval(
                 $this->getUnlockScript(),
                 1,
-                $this->key,
-                $this->token
+                $lockKey,
+                $token
             );
 
-        $this->key = null;
-        $this->token = null;
-        $this->isLocked = false;
+        return ($result ? true : false);
     }
 
     /**

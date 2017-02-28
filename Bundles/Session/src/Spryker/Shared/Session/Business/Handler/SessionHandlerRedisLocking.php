@@ -9,7 +9,8 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
 use SessionHandlerInterface;
-use Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
+use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
@@ -27,22 +28,30 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected $ttlSeconds;
 
     /**
-     * @var \Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface
+     * @var \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
      */
     protected $locker;
 
     /**
+     * @var \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface
+     */
+    protected $keyGenerator;
+
+    /**
      * @param \Predis\Client $redisClient
-     * @param \Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface $locker
+     * @param \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface $locker
+     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface $keyGenerator
      * @param int $ttlSeconds
      */
     public function __construct(
         Client $redisClient,
         SessionLockerInterface $locker,
+        SessionKeyGeneratorInterface $keyGenerator,
         $ttlSeconds
     ) {
         $this->redisClient = $redisClient;
         $this->locker = $locker;
+        $this->keyGenerator = $keyGenerator;
         $this->ttlSeconds = $ttlSeconds;
 
         $this->redisClient->connect();
@@ -50,7 +59,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
 
     public function __destruct()
     {
-        $this->locker->unlock();
+        $this->locker->unlockCurrent();
         $this->redisClient->disconnect();
     }
 
@@ -70,7 +79,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function close()
     {
-        $this->locker->unlock();
+        $this->locker->unlockCurrent();
 
         return true;
     }
@@ -82,13 +91,13 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function read($sessionId)
     {
-        if (!$this->locker->lock($this->getKey($sessionId))) {
+        if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
             return '';
         }
 
         $sessionData = $this
             ->redisClient
-            ->get($this->getKey($sessionId));
+            ->get($this->keyGenerator->generateSessionKey($sessionId));
 
         return $this->normalizeSessionData($sessionData);
     }
@@ -131,7 +140,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     {
         $result = $this
             ->redisClient
-            ->setex($this->getKey($sessionId), $this->ttlSeconds, $data);
+            ->setex($this->keyGenerator->generateSessionKey($sessionId), $this->ttlSeconds, $data);
 
         return ($result ? true : false);
     }
@@ -143,8 +152,8 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $this->redisClient->del([$this->getKey($sessionId)]);
-        $this->locker->unlock();
+        $this->redisClient->del([$this->keyGenerator->generateSessionKey($sessionId)]);
+        $this->locker->unlockCurrent();
 
         return true;
     }
@@ -157,16 +166,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     public function gc($maxLifeTime)
     {
         return true;
-    }
-
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
-    protected function getKey($sessionId)
-    {
-        return static::KEY_PREFIX . $sessionId;
     }
 
 }

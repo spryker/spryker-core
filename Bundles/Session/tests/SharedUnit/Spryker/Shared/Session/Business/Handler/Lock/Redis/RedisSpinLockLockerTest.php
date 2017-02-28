@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SharedUnit\Spryker\Shared\Session\Business\Handler\Locker;
+namespace SharedUnit\Spryker\Shared\Session\Business\Handler\Lock\Redis;
 
 use Codeception\TestCase\Test;
 use Predis\Client;
-use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
+use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 
 /**
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
- * @group Locker
+ * @group Lock
+ * @group Redis
  * @group RedisSpinLockLocker
  */
 class RedisSpinLockLockerTest extends Test
@@ -31,14 +34,14 @@ class RedisSpinLockLockerTest extends Test
             ->with($this->equalTo('set'), $this->anything())
             ->will($this->onConsecutiveCalls(0, 0, 1));
 
-        $locker = new RedisSpinLockLocker($redisClientMock);
+        $locker = new RedisSpinLockLocker($redisClientMock, new RedisLockKeyGenerator(new RedisSessionKeyGenerator()));
         $locker->lock('session_id');
     }
 
-    public function testUnlockUsesGeneratedKeyFromStoredSessionKey()
+    public function testUnlockUsesGeneratedKeyFromStoredSessionId()
     {
-        $sessionKey = 'test_session_key';
-        $expectedGeneratedKey = "{$sessionKey}:lock";
+        $sessionId = 'test_session_id';
+        $expectedGeneratedKey = "session:{$sessionId}:lock";
         $redisClientMock = $this->getRedisClientMock();
         $redisClientMock
             ->expects($this->exactly(2))
@@ -49,9 +52,9 @@ class RedisSpinLockLockerTest extends Test
             )
             ->will($this->onConsecutiveCalls(1, 1));
 
-        $locker = new RedisSpinLockLocker($redisClientMock);
-        $locker->lock($sessionKey);
-        $locker->unlock();
+        $locker = new RedisSpinLockLocker($redisClientMock, new RedisLockKeyGenerator(new RedisSessionKeyGenerator()));
+        $locker->lock($sessionId);
+        $locker->unlockCurrent();
     }
 
     /**

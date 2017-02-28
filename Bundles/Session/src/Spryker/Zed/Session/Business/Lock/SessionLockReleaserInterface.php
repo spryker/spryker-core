@@ -5,21 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Session\Business\Handler\Locker;
+namespace Spryker\Zed\Session\Business\Lock;
 
-interface SessionLockerInterface
+interface SessionLockReleaserInterface
 {
 
     /**
-     * @param string $sessionKey
+     * @param string $sessionId
      *
      * @return bool
      */
-    public function lock($sessionKey);
-
-    /**
-     * @return void
-     */
-    public function unlock();
+    public function release($sessionId);
 
 }

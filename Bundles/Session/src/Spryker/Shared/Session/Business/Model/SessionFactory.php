@@ -12,7 +12,9 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
-use Spryker\Shared\Session\Business\Handler\Locker\RedisSpinLockLocker;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
+use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
+use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -104,6 +106,7 @@ abstract class SessionFactory
         return new SessionHandlerRedisLocking(
             $redisClient,
             $this->createRedisSpinLockLocker($redisClient),
+            $this->createRedisSessionKeyGenerator(),
             $this->getSessionLifetime()
         );
     }
@@ -113,7 +116,7 @@ abstract class SessionFactory
      *
      * @return \Predis\Client
      */
-    protected function createRedisClient($dsn)
+    public function createRedisClient($dsn)
     {
         return new Client($dsn);
     }
@@ -121,16 +124,35 @@ abstract class SessionFactory
     /**
      * @param \Predis\Client $redisClient
      *
-     * @return \Spryker\Shared\Session\Business\Handler\Locker\SessionLockerInterface
+     * @return \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
      */
-    protected function createRedisSpinLockLocker(Client $redisClient)
+    public function createRedisSpinLockLocker(Client $redisClient)
     {
         return new RedisSpinLockLocker(
             $redisClient,
+            $this->createRedisLockKeyGenerator(),
             Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS, 0),
             Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS, 0),
             Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS, 0)
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
+     */
+    public function createRedisLockKeyGenerator()
+    {
+        return new RedisLockKeyGenerator(
+            $this->createRedisSessionKeyGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface
+     */
+    protected function createRedisSessionKeyGenerator()
+    {
+        return new RedisSessionKeyGenerator();
     }
 
     /**
