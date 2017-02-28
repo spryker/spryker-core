@@ -94,7 +94,9 @@ class CategoryNode implements CategoryNodeInterface
 
         $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
         $parentCategoryNodeTransfer = new NodeTransfer();
-        $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray());
+        if ($parentCategoryNodeEntity !== null) {
+            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray());
+        }
         $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
 
         return $categoryTransfer;
