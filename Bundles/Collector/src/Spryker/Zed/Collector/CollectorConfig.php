@@ -125,4 +125,12 @@ class CollectorConfig extends AbstractBundleConfig
         return $classMap[$this->getCurrentEngineName()];
     }
 
+    /**
+     * @return bool
+     */
+    public function getEnablePrepareScopeKeyJoinFixFeatureFlag()
+    {
+        return false;
+    }
+
 }
