@@ -48,7 +48,10 @@ class TransferFacadeTest extends PHPUnit_Framework_TestCase
     {
         $this->getFacade()->deleteGeneratedTransferObjects();
 
-        $this->assertFalse(is_dir($this->getConfig()->getClassTargetDirectory()));
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php')->files();
+
+        $this->assertCount(0, $finder, 'Directory containing generated transfer object files is not empty');
     }
 
     /**
