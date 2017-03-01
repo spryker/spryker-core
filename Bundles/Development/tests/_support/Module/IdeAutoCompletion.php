@@ -7,8 +7,6 @@
 namespace Development\Module;
 
 use Codeception\Module;
-use Codeception\Scenario;
-use Codeception\Step\Action;
 use Codeception\TestCase;
 use Codeception\TestInterface;
 
@@ -25,23 +23,30 @@ class IdeAutoCompletion extends Module
     public function _before(TestInterface $test)
     {
         parent::_before($test);
-        
-        $this->removeTestTargetDirectory($test->getMetadata()->getFeature());
+
+        $this->removeTestTargetDirectory();
         $this->createTestTargetDirectory();
     }
 
     /**
-     * @param \Codeception\Scenario $scenario
-     *
      * @return void
      */
-    protected function removeTestTargetDirectory(Scenario $scenario)
+    protected function removeTestTargetDirectory()
     {
         if (!is_dir(static::TEST_TARGET_DIRECTORY)) {
             return;
         }
 
-        $scenario->runStep(new Action('deleteDir', [static::TEST_TARGET_DIRECTORY]));
+        $this->getFilesystem()->deleteDir(static::TEST_TARGET_DIRECTORY);
+//        $scenario->runStep(new Action('deleteDir', [static::TEST_TARGET_DIRECTORY]));
+    }
+
+    /**
+     * @return \Codeception\Module\Filesystem|\Codeception\Module
+     */
+    protected function getFilesystem()
+    {
+        return $this->getModule('Filesystem');
     }
 
     /**
@@ -61,7 +66,7 @@ class IdeAutoCompletion extends Module
     {
         parent::_after($test);
 
-        $this->removeTestTargetDirectory($test->getScenario());
+        $this->removeTestTargetDirectory();
     }
 
     /**
@@ -74,7 +79,7 @@ class IdeAutoCompletion extends Module
     {
         parent::_failed($test, $fail);
 
-        $this->removeTestTargetDirectory($test->getScenario());
+        $this->removeTestTargetDirectory();
     }
 
 }
