@@ -10,6 +10,7 @@ namespace Spryker\Zed\NavigationGui\Communication\Controller;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
@@ -22,10 +23,16 @@ class DeleteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
         $navigationTransfer = new NavigationTransfer();

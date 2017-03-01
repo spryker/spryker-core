@@ -4,8 +4,11 @@
     {% for localeTransfer in localeCollection %}
         {% for navigationNodeLocalizedAttributes in navigationNodeForm.navigation_node_localized_attributes %}
             {% if localeTransfer.idLocale == navigationNodeLocalizedAttributes.fk_locale.vars.value %}
-
-                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localeTransfer.localeName, 'collapsed': (not loop.parent.loop.first) } %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {
+                    'id': 'localized_attributes_container-' ~ localeTransfer.localeName,
+                    'localeName': localeTransfer.localeName,
+                    'collapsed': (not loop.parent.loop.first)
+                } %}
                     {% block content %}
                         <div class="form-group {% if navigationNodeLocalizedAttributes.title.vars.errors|length %}has-error{% endif %}">
                             {{ form_label(navigationNodeLocalizedAttributes.title) }}

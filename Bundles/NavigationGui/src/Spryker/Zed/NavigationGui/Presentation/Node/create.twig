@@ -1,7 +1,6 @@
 {% extends '@Gui/Layout/empty-layout.twig' %}
 
 {% block content %}
-
     <div class="ibox float-e-margins">
         {{ form_start(navigationNodeForm) }}
             <div class="ibox-title">
@@ -13,7 +12,7 @@
             </div>
 
             <div class="ibox-footer">
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
             </div>
         {{ form_end(navigationNodeForm) }}
     </div>

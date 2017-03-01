@@ -157,7 +157,8 @@ function loadForm(idNavigation, idNavigationNode)
 
     var data = {
         'id-navigation': idNavigation,
-        'id-navigation-node': idNavigationNode
+        'id-navigation-node': idNavigationNode,
+        'no-cache': new Date()
     };
     var url = baseUri + '?' + $.param(data);
 
