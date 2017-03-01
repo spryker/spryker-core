@@ -38,7 +38,6 @@ class IdeAutoCompletion extends Module
         }
 
         $this->getFilesystem()->deleteDir(static::TEST_TARGET_DIRECTORY);
-//        $scenario->runStep(new Action('deleteDir', [static::TEST_TARGET_DIRECTORY]));
     }
 
     /**
