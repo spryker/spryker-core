@@ -15,6 +15,7 @@ use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeForm
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
+use Spryker\Zed\NavigationGui\Communication\Form\UpdateNavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
@@ -50,6 +51,25 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createNavigationFormType()
     {
         return new NavigationFormType($this->getQueryContainer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array|null $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createUpdateNavigationForm(NavigationTransfer $data = null, array $options = [])
+    {
+        return $this->getFormFactory()->create($this->createUpdateNavigationFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType
+     */
+    protected function createUpdateNavigationFormType()
+    {
+        return new UpdateNavigationFormType($this->getQueryContainer());
     }
 
     /**

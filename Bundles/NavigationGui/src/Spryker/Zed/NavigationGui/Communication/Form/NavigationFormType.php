@@ -100,7 +100,6 @@ class NavigationFormType extends AbstractType
      */
     protected function addKeyField(FormBuilderInterface $builder)
     {
-        // TODO: disable editing key
         $builder
             ->add(self::FIELD_KEY, TextType::class, [
                 'label' => 'Key',
