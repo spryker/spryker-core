@@ -20,11 +20,18 @@ class NavigationUpdater implements NavigationUpdaterInterface
     protected $navigationQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
      */
-    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer)
+    protected $navigationTouch;
+
+    /**
+     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
+     */
+    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationTouchInterface $navigationTouch)
     {
         $this->navigationQueryContainer = $navigationQueryContainer;
+        $this->navigationTouch = $navigationTouch;
     }
 
     /**
@@ -36,8 +43,12 @@ class NavigationUpdater implements NavigationUpdaterInterface
     {
         $this->assertNavigationForUpdate($navigationTransfer);
 
+        $this->navigationQueryContainer->getConnection()->beginTransaction();
+
         $navigationTransfer = $this->persistNavigation($navigationTransfer);
-        // TODO: touch
+        $this->navigationTouch->touchActive($navigationTransfer);
+
+        $this->navigationQueryContainer->getConnection()->commit();
 
         return $navigationTransfer;
     }

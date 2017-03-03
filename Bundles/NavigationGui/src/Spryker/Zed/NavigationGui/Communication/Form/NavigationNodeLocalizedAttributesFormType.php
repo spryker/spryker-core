@@ -109,7 +109,6 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ->addExternalUrlField($builder)
             ->addCmsPageUrlField($builder)
             ->addCategoryUrlField($builder)
-            ->addFkUrlField($builder)
             ->addFkLocaleField($builder);
     }
 
@@ -213,18 +212,6 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addFkUrlField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_FK_URL, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
@@ -244,7 +231,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         }
 
         $urlTransfer = $this->findUrlTransferById($localizedAttributesTransfer->getFkUrl());
-        if ($urlTransfer) {
+        if ($urlTransfer && $urlTransfer->getFkResourcePage()) {
             $localizedAttributesTransfer->setCmsPageUrl($urlTransfer->getUrl());
         }
 
@@ -282,7 +269,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         }
 
         $urlTransfer = $this->findUrlTransferById($localizedAttributesTransfer->getFkUrl());
-        if ($urlTransfer) {
+        if ($urlTransfer && $urlTransfer->getFkResourceCategorynode()) {
             $localizedAttributesTransfer->setCategoryUrl($urlTransfer->getUrl());
         }
 

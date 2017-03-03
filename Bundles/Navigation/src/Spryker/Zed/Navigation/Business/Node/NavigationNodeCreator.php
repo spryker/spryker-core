@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Navigation\Business\Node;
 
-use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
@@ -22,11 +22,17 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
     protected $navigationQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Navigation\Business\Node\NavigationNodeTouchInterface
+     */
+    protected $navigationNodeTouch;
+
+    /**
      * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
      */
-    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer)
+    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationNodeTouchInterface $navigationNodeTouch)
     {
         $this->navigationQueryContainer = $navigationQueryContainer;
+        $this->navigationNodeTouch = $navigationNodeTouch;
     }
 
     /**
@@ -42,7 +48,7 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
 
         $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
         $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
-        // TODO: touch
+        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
 
         $this->navigationQueryContainer->getConnection()->commit();
 

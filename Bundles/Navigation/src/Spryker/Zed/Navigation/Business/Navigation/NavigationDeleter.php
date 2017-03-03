@@ -21,11 +21,18 @@ class NavigationDeleter implements NavigationDeleterInterface
     protected $navigationQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
      */
-    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer)
+    protected $navigationTouch;
+
+    /**
+     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
+     */
+    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationTouchInterface $navigationTouch)
     {
         $this->navigationQueryContainer = $navigationQueryContainer;
+        $this->navigationTouch = $navigationTouch;
     }
 
     /**
@@ -39,8 +46,12 @@ class NavigationDeleter implements NavigationDeleterInterface
 
         $navigationEntity = $this->getNavigationEntity($navigationTransfer);
 
+        $this->navigationQueryContainer->getConnection()->beginTransaction();
+
         $this->deleteNavigationEntity($navigationEntity);
-        // TODO: touch
+        $this->navigationTouch->touchDeleted($navigationTransfer);
+
+        $this->navigationQueryContainer->getConnection()->commit();
     }
 
     /**

@@ -11,13 +11,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationCreator;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationDeleter;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationReader;
+use Spryker\Zed\Navigation\Business\Navigation\NavigationTouch;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationUpdater;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreator;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeDeleter;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeReader;
+use Spryker\Zed\Navigation\Business\Node\NavigationNodeTouch;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeHierarchyUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReader;
+use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
@@ -31,7 +34,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationCreator()
     {
-        return new NavigationCreator();
+        return new NavigationCreator($this->getQueryContainer(), $this->createNavigationTouch());
     }
 
     /**
@@ -39,7 +42,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationUpdater()
     {
-        return new NavigationUpdater($this->getQueryContainer());
+        return new NavigationUpdater($this->getQueryContainer(), $this->createNavigationTouch());
     }
 
     /**
@@ -55,7 +58,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationDeleter()
     {
-        return new NavigationDeleter($this->getQueryContainer());
+        return new NavigationDeleter($this->getQueryContainer(), $this->createNavigationTouch());
     }
 
     /**
@@ -63,7 +66,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationNodeCreator()
     {
-        return new NavigationNodeCreator($this->getQueryContainer());
+        return new NavigationNodeCreator($this->getQueryContainer(), $this->createNavigationNodeTouch());
     }
 
     /**
@@ -71,7 +74,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationNodeUpdater()
     {
-        return new NavigationNodeUpdater($this->getQueryContainer());
+        return new NavigationNodeUpdater($this->getQueryContainer(), $this->createNavigationNodeTouch());
     }
 
     /**
@@ -87,7 +90,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationNodeDeleter()
     {
-        return new NavigationNodeDeleter($this->getQueryContainer());
+        return new NavigationNodeDeleter($this->getQueryContainer(), $this->createNavigationNodeTouch());
     }
 
     /**
@@ -103,7 +106,31 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationTreeHierarchyUpdater()
     {
-        return new NavigationTreeHierarchyUpdater($this->getQueryContainer());
+        return new NavigationTreeHierarchyUpdater($this->getQueryContainer(), $this->createNavigationTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
+     */
+    public function createNavigationTouch()
+    {
+        return new NavigationTouch($this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Node\NavigationNodeTouchInterface
+     */
+    public function createNavigationNodeTouch()
+    {
+        return new NavigationNodeTouch($this->createNavigationTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Dependency\NavigationToTouchInterface
+     */
+    public function getTouchFacade()
+    {
+        return $this->getProvidedDependency(NavigationDependencyProvider::FACADE_TOUCH);
     }
 
 }

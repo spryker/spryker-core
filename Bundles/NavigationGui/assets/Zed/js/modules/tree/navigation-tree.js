@@ -145,7 +145,7 @@ var iframe = $('#navigation-node-form-iframe');
  */
 function loadForm(idNavigation, idNavigationNode)
 {
-    iframe.hide();
+    iframe.addClass('hidden');
     formProgressBar.removeClass('hidden');
 
     var baseUri = '/navigation-gui/node/';
@@ -162,6 +162,7 @@ function loadForm(idNavigation, idNavigationNode)
     };
     var url = baseUri + '?' + $.param(data);
 
+    iframe.one('load', iFrameOnLoad);
     iframe.attr('src', url);
 }
 
@@ -170,26 +171,33 @@ function loadForm(idNavigation, idNavigationNode)
  */
 function resetForm()
 {
-    iframe.hide();
+    iframe.addClass('hidden');
 }
 
-// Load event handler for iframe
-iframe.on('load', function(){
+/**
+ * @return {void}
+ */
+function iFrameOnLoad(){
     formProgressBar.addClass('hidden');
-    iframe.show();
+    iframe.removeClass('hidden');
 
-    // set iframe height on load
-    var iframeContentHeight = iframe[0].contentWindow.document.body.scrollHeight;
-    iframe.height(iframeContentHeight);
+    // set iframe height on change
+    changeIframeHeight();
 
     // tree reloading
     var treeReloader = iframe.contents().find('#navigation-tree-reloader');
     if (treeReloader.length) {
         loadTree($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'), true);
     }
-});
+}
 
-
+/**
+ * @return {void}
+ */
+function changeIframeHeight() {
+    var iframeContentHeight = iframe[0].contentWindow.document.body.scrollHeight;
+    iframe.height(iframeContentHeight);
+}
 
 
 
@@ -212,6 +220,9 @@ treeOrderSaveBtn.on('click', function(){
     var jstreeData = $('#navigation-tree').jstree(true).get_json();
     var params = {
         'navigation-tree': {
+            'navigation': {
+                'id_navigation': jstreeData[0].data.idNavigation
+            },
             'nodes': getNavigationNodesRecursively(jstreeData[0])
         }
     };
@@ -236,7 +247,6 @@ $(document).bind('dnd_stop.vakata', function(e, data) {
 });
 
 /**
- *
  * @param {Object} jstreeNode
  *
  * @returns {Array}
@@ -246,11 +256,11 @@ function getNavigationNodesRecursively(jstreeNode) {
 
     $.each(jstreeNode.children, function (i, childNode) {
         var navigationNode = {
-            navigation_node: {
-                id_navigation_node: childNode.data.idNavigationNode,
-                position: (i + 1)
+            'navigation_node': {
+                'id_navigation_node': childNode.data.idNavigationNode,
+                'position': (i + 1)
             },
-            children: getNavigationNodesRecursively(childNode)
+            'children': getNavigationNodesRecursively(childNode)
         };
 
         nodes.push(navigationNode);

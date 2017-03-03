@@ -14,19 +14,13 @@
 </head>
 <body style="background: transparent">
 
-{# TODO: clean up this template #}
+    {% include '@Messenger/Partials/flash-messages.twig' %}
 
-    {#<div class="wrapper wrapper-content">#}
+    {% block content -%}{%- endblock %}
 
-        {% include '@Messenger/Partials/flash-messages.twig' %}
-
-        {% block content -%}{%- endblock %}
-
-    {#</div>#}
-
-{% block footer_js %}
-    <script src="/assets/js/spryker-zed-gui-commons.js"></script>
-{% endblock %}
+    {% block footer_js %}
+        <script src="/assets/js/spryker-zed-gui-commons.js"></script>
+    {% endblock %}
 
 </body>
 </html>

@@ -13,7 +13,11 @@ var navigationTree = require('./tree/navigation-tree');
 $(document).ready(function() {
     var navigationTable = $('#navigation-table').DataTable();
 
-    $('#navigation-table tbody').on('click', 'tr', function() {
+    $('#navigation-table tbody').on('click', 'tr', function(e) {
+        if (!$(e.target).is('td')) {
+            return;
+        }
+
         navigationTable.rows().deselect();
         navigationTable.row($(this).index()).select();
     });

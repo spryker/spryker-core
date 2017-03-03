@@ -191,7 +191,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     {
         $criteria = $this->createLocalizedAttributeFilterCriteria($localeTransfer);
 
-        return $navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess($criteria);
+        return $navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess($criteria); // TODO: possibly change this to query container that also gets URLs as relation?
     }
 
     /**
@@ -219,6 +219,11 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     {
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer->fromArray($navigationNodeLocalizedAttributesEntity->toArray(), true);
+
+        // TODO: refactor
+        if ($navigationNodeLocalizedAttributesEntity->getFkUrl()) {
+            $navigationNodeLocalizedAttributesTransfer->setUrl($navigationNodeLocalizedAttributesEntity->getSpyUrl()->getUrl());
+        }
 
         return $navigationNodeLocalizedAttributesTransfer;
     }

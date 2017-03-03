@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
+use Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterInterface
@@ -22,11 +23,18 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     protected $navigationQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
      */
-    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer)
+    protected $navigationTouch;
+
+    /**
+     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
+     */
+    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationTouchInterface $navigationTouch)
     {
         $this->navigationQueryContainer = $navigationQueryContainer;
+        $this->navigationTouch = $navigationTouch;
     }
 
     /**
@@ -41,7 +49,7 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
         $this->navigationQueryContainer->getConnection()->beginTransaction();
 
         $this->persistNavigationTree($navigationTreeTransfer);
-        // TODO: touch
+        $this->navigationTouch->touchActive($navigationTreeTransfer->getNavigation());
 
         $this->navigationQueryContainer->getConnection()->commit();
     }
@@ -54,6 +62,8 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     protected function assertNavigationTreeForUpdate(NavigationTreeTransfer $navigationTreeTransfer)
     {
         $navigationTreeTransfer->requireNodes();
+        $navigationTreeTransfer->requireNavigation();
+
 
         foreach ($navigationTreeTransfer->getNodes() as $navigationTreeNodeTransfer) {
             $this->assertNavigationTreeNodeRecursively($navigationTreeNodeTransfer);
@@ -91,7 +101,7 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     }
 
     /**
-     * @param NavigationTreeNodeTransfer $navigationTreeNodeTransfer
+     * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer $navigationTreeNodeTransfer
      * @param $fkParentNavigationNode
      *
      * @return void

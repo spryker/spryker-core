@@ -23,11 +23,18 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     protected $navigationQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @var \Spryker\Zed\Navigation\Business\Node\NavigationNodeTouchInterface
      */
-    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer)
+    protected $navigationNodeTouch;
+
+    /**
+     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeTouchInterface $navigationNodeTouch
+     */
+    public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationNodeTouchInterface $navigationNodeTouch)
     {
         $this->navigationQueryContainer = $navigationQueryContainer;
+        $this->navigationNodeTouch = $navigationNodeTouch;
     }
 
     /**
@@ -43,7 +50,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
 
         $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
         $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
-        // TODO: touch
+        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
 
         $this->navigationQueryContainer->getConnection()->commit();
 

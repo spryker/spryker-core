@@ -153,7 +153,11 @@ class NavigationTreeTest extends Test
      */
     public function testUpdateNavigationTreeHierarchyPersistsToDatabase()
     {
+        $navigationTransfer = new NavigationTransfer();
+        $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
+
         $navigationTreeTransfer = new NavigationTreeTransfer();
+        $navigationTreeTransfer->setNavigation($navigationTransfer);
 
         // Node 1 -> position 2
         $navigationTreeNodeTransfer1 = new NavigationTreeNodeTransfer();

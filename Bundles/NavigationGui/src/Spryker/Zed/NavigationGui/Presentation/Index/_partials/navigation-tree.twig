@@ -27,7 +27,10 @@
     </div>
 
     <div class="ibox-footer clearfix">
-        <input type="button" id="navigation-tree-save-btn" class="btn btn-primary" value="{{ 'Save order' | trans }}" disabled="disabled" />
-        {% include '@NavigationGui/_partials/progressbar.twig' with {idProgressbar: 'navigation-tree-update-loader'} %}
+            <input type="button" id="navigation-tree-save-btn" class="btn btn-primary pull-left m-r-sm" value="{{ 'Save order' | trans }}" disabled="disabled" />
+            {% include '@NavigationGui/_partials/progressbar.twig' with {
+            idProgressbar: 'navigation-tree-update-loader',
+            navigationProgressbarClass: 'progress-inline'
+            } %}
     </div>
 </div>

@@ -98,6 +98,11 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer->fromArray($navigationNodeLocalizedAttributesEntity->toArray(), true);
 
+        // TODO: refactor
+        if ($navigationNodeLocalizedAttributesEntity->getFkUrl()) {
+            $navigationNodeLocalizedAttributesTransfer->setUrl($navigationNodeLocalizedAttributesEntity->getSpyUrl()->getUrl());
+        }
+
         return $navigationNodeLocalizedAttributesTransfer;
     }
 
