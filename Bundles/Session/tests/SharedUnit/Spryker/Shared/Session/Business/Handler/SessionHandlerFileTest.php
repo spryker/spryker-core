@@ -14,11 +14,13 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
- * @group SessionHandlerFile
+ * @group Handler
+ * @group SessionHandlerFileTest
  */
 class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
 {
