@@ -46,6 +46,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
      */
     protected $requestTransfer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -56,6 +59,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $this->converterFactory = new ConverterFactory($ratepayToMoneyBridge);
     }
 
+    /**
+     * @return void
+     */
     public function testConverterData()
     {
         $responseTransfer = $this->getResponseTransferObject((new Response)->getTestPaymentConfirmResponseData());
@@ -95,6 +101,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $responseTransfer->getSuccessful());
     }
 
+    /**
+     * @return void
+     */
     public function testResponseSuccessState()
     {
         $response = new Response;

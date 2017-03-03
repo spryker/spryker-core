@@ -62,6 +62,11 @@ abstract class SubFormAbstract extends AbstractSubFormType implements SubFormInt
         return $this;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addPhone(FormBuilderInterface $builder)
     {
         $builder->add(
@@ -80,7 +85,7 @@ abstract class SubFormAbstract extends AbstractSubFormType implements SubFormInt
     }
 
     /**
-     * @param null $groups
+     * @param string|null $groups
      *
      * @return \Symfony\Component\Validator\Constraint
      */

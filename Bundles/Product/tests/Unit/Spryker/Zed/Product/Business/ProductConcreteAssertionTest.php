@@ -44,6 +44,9 @@ class ProductConcreteAssertionTest extends Test
         $this->productQueryContainer = $this->getMock(ProductQueryContainerInterface::class, [], [], '', false);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertSkuIsUnique()
     {
         $query = $this->getMock(SpyProductQuery::class, [], [], '', false);
@@ -64,6 +67,9 @@ class ProductConcreteAssertionTest extends Test
         $productConcreteAssertion->assertSkuIsUnique(self::SKU);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertSkuIsUniqueShouldThrowException()
     {
         $this->expectException(ProductConcreteExistsException::class);
@@ -90,6 +96,9 @@ class ProductConcreteAssertionTest extends Test
         $productConcreteAssertion->assertSkuIsUnique(self::SKU);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertSkuIsUniqueWhenUpdatingProduct()
     {
         $query = $this->getMock(SpyProductQuery::class, [], [], '', false);
@@ -116,6 +125,9 @@ class ProductConcreteAssertionTest extends Test
         $productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct(self::ID_PRODUCT_CONCRETE, self::SKU);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertSkuIsUniqueWhenUpdatingProductShouldThrowException()
     {
         $this->expectException(ProductConcreteExistsException::class);
@@ -148,6 +160,9 @@ class ProductConcreteAssertionTest extends Test
         $productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct(self::ID_PRODUCT_CONCRETE, self::SKU);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertProductExists()
     {
         $query = $this->getMock(SpyProductQuery::class, [], [], '', false);
@@ -173,6 +188,9 @@ class ProductConcreteAssertionTest extends Test
         $productConcreteAssertion->assertProductExists(self::ID_PRODUCT_CONCRETE);
     }
 
+    /**
+     * @return void
+     */
     public function testAssertProductExistsShouldThrowException()
     {
         $this->expectException(MissingProductException::class);

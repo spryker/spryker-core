@@ -47,6 +47,9 @@ class ProductImageWriterTest extends Test
      */
     protected $transferGenerator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         $this->writer = new Writer(
@@ -56,6 +59,9 @@ class ProductImageWriterTest extends Test
         $this->localeFacade = new LocaleFacade();
     }
 
+    /**
+     * @return void
+     */
     public function testPersistProductImage()
     {
         $imageTransfer = new ProductImageTransfer();
@@ -72,6 +78,9 @@ class ProductImageWriterTest extends Test
         //$this->assertNotNull($imageTransfer->getIdProductImage());
     }
 
+    /**
+     * @return void
+     */
     public function testPersistProductImageSet()
     {
         $imageTransfer = new ProductImageTransfer();

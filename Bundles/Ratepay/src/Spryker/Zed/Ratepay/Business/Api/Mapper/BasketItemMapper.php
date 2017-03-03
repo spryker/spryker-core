@@ -88,6 +88,9 @@ class BasketItemMapper extends BaseMapper
         return $itemDiscount;
     }
 
+    /**
+     * @return void
+     */
     protected function initBasketIfEmpty()
     {
         if (!$this->requestTransfer->getShoppingBasket()) {

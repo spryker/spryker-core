@@ -47,6 +47,9 @@ class ProductImageTransferMapperTest extends Test
      */
     protected $transferGenerator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         $this->queryContainer = new ProductImageQueryContainer();
@@ -61,6 +64,9 @@ class ProductImageTransferMapperTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testConvertProductImageSetEntitiesIntoTransfer()
     {
         $transferCollection = $this->reader

@@ -31,11 +31,17 @@ class FooTable extends AbstractTable
     {
     }
 
+    /**
+     * @return void
+     */
     public function setRequest($request)
     {
         $this->request = $request;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
     public function getRequest()
     {
         return $this->request;

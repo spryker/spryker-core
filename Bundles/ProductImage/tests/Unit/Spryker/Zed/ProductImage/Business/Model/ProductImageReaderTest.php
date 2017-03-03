@@ -46,6 +46,9 @@ class ProductImageReaderTest extends Test
      */
     protected $transferGenerator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         $this->queryContainer = new ProductImageQueryContainer();
@@ -60,6 +63,9 @@ class ProductImageReaderTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductImagesByProductAbstractId()
     {
         $imageCollection = $this->reader

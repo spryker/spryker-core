@@ -135,6 +135,9 @@ class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FormInterface::class, $formCollectionHandlerMock->handleRequest($request, $this->getDataTransferMock()));
     }
 
+    /**
+     * @return void
+     */
     public function testProvideDefaultFormData()
     {
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock(['getForms']);

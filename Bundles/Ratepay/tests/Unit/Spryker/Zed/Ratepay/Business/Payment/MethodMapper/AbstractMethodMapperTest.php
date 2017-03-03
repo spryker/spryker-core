@@ -272,6 +272,9 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->testBasketAndItems();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     protected function getCustomerTransfer()
     {
         $customerTransfer = new CustomerTransfer();
@@ -283,6 +286,9 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         return $customerTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
     protected function getTotalsTransfer()
     {
         $totalsTransfer = new TotalsTransfer();
@@ -295,6 +301,11 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         return $totalsTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
     protected function getAddressTransfer($itemPrefix)
     {
         $addressTransfer = new AddressTransfer();
@@ -313,6 +324,11 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         return $addressTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
     protected function getItemTransfer($itemPrefix)
     {
         $itemTransfer = new ItemTransfer();

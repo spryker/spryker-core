@@ -113,6 +113,9 @@ class PartialBasketMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function initBasketIfEmpty()
     {
         if (!$this->requestTransfer->getShoppingBasket()) {

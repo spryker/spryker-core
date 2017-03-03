@@ -119,6 +119,9 @@ class ProfileTest extends AbstractFacadeTest
         return new ProfileResponse($adapterMock->sendRequest($request));
     }
 
+    /**
+     * @return void
+     */
     protected function testResponseInstance()
     {
         $this->assertInstanceOf('Generated\Shared\Transfer\RatepayProfileResponseTransfer', $this->responseTransfer);

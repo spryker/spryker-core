@@ -57,7 +57,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addBundledProductsToBeRemoved($builder);
     }
 
-    /***
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this

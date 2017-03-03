@@ -25,8 +25,8 @@ class ZedNavigationToUtilEncodingBridge implements ZedNavigationToUtilEncodingIn
 
     /**
      * @param string $jsonValue
-     * @param null $options
-     * @param null $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */
@@ -38,8 +38,8 @@ class ZedNavigationToUtilEncodingBridge implements ZedNavigationToUtilEncodingIn
     /**
      * @param string $jsonValue
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return array
      */
