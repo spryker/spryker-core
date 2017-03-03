@@ -162,7 +162,7 @@ function loadForm(idNavigation, idNavigationNode)
     };
     var url = baseUri + '?' + $.param(data);
 
-    iframe.one('load', iFrameOnLoad);
+    iframe.off('load').on('load', iFrameOnLoad);
     iframe.attr('src', url);
 }
 
