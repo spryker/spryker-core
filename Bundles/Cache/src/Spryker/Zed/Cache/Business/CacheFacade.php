@@ -19,6 +19,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     /**
      * @api
      *
+     * @deprecated Please use emptyCache() instead
+     *
      * @return array
      */
     public function deleteAllFiles()
@@ -29,11 +31,33 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     /**
      * @api
      *
+     * @return string[]
+     */
+    public function emptyCache()
+    {
+        return $this->getFactory()->createCacheClearer()->clearCache();
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Please use emptyAutoLoaderCache() instead
+     *
      * @return array
      */
     public function deleteAllAutoloaderFiles()
     {
         return $this->getFactory()->createAutoloaderCacheDelete()->deleteAllFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function emptyAutoLoaderCache()
+    {
+        return $this->getFactory()->createCacheClearer()->clearAutoLoadCache();
     }
 
 }

@@ -617,17 +617,15 @@
 
       "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
       "Unit\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/tests",
+      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilDataReader/tests",
 
       "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
       "Unit\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
       "Functional\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
+      "Spryker\\Shared\\UtilDateTime\\": "Bundles/UtilDateTime/src",
 
       "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
       "Unit\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
-
-      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilDataReader/tests",
-
-      "Spryker\\Shared\\UtilDateTime\\": "Bundles/UtilDateTime/src",
 
       "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
       "Functional\\Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/tests",

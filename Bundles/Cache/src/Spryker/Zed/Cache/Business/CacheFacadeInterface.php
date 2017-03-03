@@ -20,8 +20,26 @@ interface CacheFacadeInterface
     /**
      * @api
      *
+     * @deprecated Please use emptyCache() instead
+     *
+     * @return string[]
+     */
+    public function emptyCache();
+
+    /**
+     * @api
+     *
+     * @deprecated Please use emptyAutoLoaderCache() instead
+     *
      * @return array
      */
     public function deleteAllAutoloaderFiles();
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function emptyAutoLoaderCache();
 
 }

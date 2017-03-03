@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Cache\Business;
 
 use Spryker\Zed\Cache\Business\Model\AutoloaderCacheDelete;
+use Spryker\Zed\Cache\Business\Model\CacheClearer;
 use Spryker\Zed\Cache\Business\Model\CacheDelete;
+use Spryker\Zed\Cache\CacheDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -18,23 +20,51 @@ class CacheBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @deprecated Please see createCacheClearer() for a replacement
+     *
      * @return \Spryker\Zed\Cache\Business\Model\CacheDelete
      */
     public function createCacheDelete()
     {
-        $config = $this->getConfig();
-
-        return new CacheDelete($config);
+        return new CacheDelete($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Zed\Cache\Business\Model\CacheDelete
+     * @deprecated Please see createCacheClearer() for a replacement
+     *
+     * @return \Spryker\Zed\Cache\Business\Model\AutoloaderCacheDelete
      */
     public function createAutoloaderCacheDelete()
     {
-        $config = $this->getConfig();
+        return new AutoloaderCacheDelete($this->getConfig());
+    }
 
-        return new AutoloaderCacheDelete($config);
+    /**
+     * @return \Spryker\Zed\Cache\Business\Model\CacheClearerInterface
+     */
+    public function createCacheClearer()
+    {
+        return new CacheClearer(
+            $this->getConfig(),
+            $this->getFileSystem(),
+            $this->getFinder()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFileSystem()
+    {
+        return $this->getProvidedDependency(CacheDependencyProvider::SYMFONY_FILE_SYSTEM);
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder()
+    {
+        return $this->getProvidedDependency(CacheDependencyProvider::SYMFONY_FINDER);
     }
 
 }

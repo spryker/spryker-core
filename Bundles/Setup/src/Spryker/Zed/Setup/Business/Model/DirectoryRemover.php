@@ -9,6 +9,9 @@ namespace Spryker\Zed\Setup\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @deprecated Please use \Spryker\Zed\Setup\Business\Model\GeneratedDirectory instead
+ */
 class DirectoryRemover implements DirectoryRemoverInterface
 {
 

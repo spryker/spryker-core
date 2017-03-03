@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Setup\Business\Model;
+namespace Spryker\Zed\Transfer\Business\Model;
 
-/**
- * @deprecated Please use \Spryker\Zed\Setup\Business\Model\GeneratedDirectoryInterface instead
- */
-interface DirectoryRemoverInterface
+interface GeneratedTransferDirectoryInterface
 {
 
     /**
      * @return void
      */
-    public function execute();
+    public function clear();
 
 }
