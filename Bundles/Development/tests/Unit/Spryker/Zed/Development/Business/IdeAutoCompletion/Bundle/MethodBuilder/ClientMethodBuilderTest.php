@@ -29,6 +29,9 @@ class ClientMethodBuilderTest extends Test
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
     const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Client/';
 
+    /**
+     * @return void
+     */
     public function testMethodNameIsClient()
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();
@@ -42,6 +45,9 @@ class ClientMethodBuilderTest extends Test
         $this->assertSame('client', $bundleMethodTransfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupIsPerformedInClientApplication()
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();

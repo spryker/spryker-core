@@ -25,6 +25,9 @@ use Twig_Environment;
 class BundleMethodGeneratorTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testTemplateNameIsDerivedFromGeneratorName()
     {
         $twigEnvironmentMock = $this->createTwigEnvironmentMock();

@@ -12,7 +12,7 @@ interface ProductManagementToPriceInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
@@ -20,7 +20,7 @@ interface ProductManagementToPriceInterface
 
     /**
      * @param int $idProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */

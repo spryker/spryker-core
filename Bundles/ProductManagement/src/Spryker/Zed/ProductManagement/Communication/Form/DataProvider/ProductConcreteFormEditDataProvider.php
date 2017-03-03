@@ -24,7 +24,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 {
 
     /**
-     * @param int|null $idProductAbstract |null
+     * @param int|null $idProductAbstract
      * @param string|null $type
      *
      * @return mixed

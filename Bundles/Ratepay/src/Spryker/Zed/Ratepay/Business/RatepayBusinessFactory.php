@@ -379,6 +379,11 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Request\Service\Method\Service
+     */
     public function createProfile(RatepayRequestTransfer $requestTransfer)
     {
         return new Service(

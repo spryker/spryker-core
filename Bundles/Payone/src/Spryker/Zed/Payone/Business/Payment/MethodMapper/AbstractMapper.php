@@ -33,6 +33,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      */
     protected $storeConfig;
 
+    /**
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
+     */
     public function __construct(Store $storeConfig)
     {
         $this->storeConfig = $storeConfig;

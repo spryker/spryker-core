@@ -52,6 +52,9 @@ class BaseMethodMapperTest extends PHPUnit_Framework_TestCase
         $this->payment->setBankAccountHolder('acchold');
     }
 
+    /**
+     * @return void
+     */
     protected function testAbstractMapMethodDataToPayment()
     {
         $this->assertEquals($this->paymentMethod, $this->payment->getPaymentType());

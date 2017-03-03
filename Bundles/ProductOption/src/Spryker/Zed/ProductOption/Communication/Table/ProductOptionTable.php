@@ -136,7 +136,7 @@ class ProductOptionTable extends AbstractTable
         return $results;
     }
 
-    /***
+    /**
      * @param array $productOption
      *
      * @return array
@@ -154,7 +154,7 @@ class ProductOptionTable extends AbstractTable
         ];
     }
 
-    /***
+    /**
      * @return array
      */
     protected function buildHeaderActionByTableContext()

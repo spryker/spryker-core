@@ -21,7 +21,7 @@ class TransferGenerate extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param array|null $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {

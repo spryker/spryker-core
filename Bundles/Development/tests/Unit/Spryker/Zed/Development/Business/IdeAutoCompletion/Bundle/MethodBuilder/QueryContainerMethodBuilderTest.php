@@ -29,6 +29,9 @@ class QueryContainerMethodBuilderTest extends Test
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
     const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/FooApplication/';
 
+    /**
+     * @return void
+     */
     public function testMethodNameIsQueryConntainer()
     {
         $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();
@@ -42,6 +45,9 @@ class QueryContainerMethodBuilderTest extends Test
         $this->assertSame('queryContainer', $bundleMethodTransfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupIsPerformedInPersistenceLayer()
     {
         $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();

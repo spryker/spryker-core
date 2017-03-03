@@ -22,7 +22,7 @@ class Category extends Module
 {
 
     /**
-     * @param null $config
+     * @param array|null $config
      */
     public function __construct($config = null)
     {

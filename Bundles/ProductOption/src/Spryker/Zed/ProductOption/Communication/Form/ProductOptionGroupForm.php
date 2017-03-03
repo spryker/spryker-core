@@ -278,7 +278,7 @@ class ProductOptionGroupForm extends AbstractType
         return $this;
     }
 
-    /***
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this

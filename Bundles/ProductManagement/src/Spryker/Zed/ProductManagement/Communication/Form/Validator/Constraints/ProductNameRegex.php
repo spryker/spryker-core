@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 class ProductNameRegex extends Regex
 {
 
+    /**
+     * @param array|null $options
+     */
     public function __construct($options = null)
     {
         $defaults = [
@@ -19,7 +22,7 @@ class ProductNameRegex extends Regex
             'message' => 'Invalid value provided. Please use only alphanumeric characters and  ", . - _"',
         ];
 
-        $options = array_merge($defaults, $options);
+        $options = array_merge($defaults, (array)$options);
 
         parent::__construct($options);
     }

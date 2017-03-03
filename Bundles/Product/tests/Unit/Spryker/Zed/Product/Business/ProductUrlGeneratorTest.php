@@ -146,6 +146,9 @@ class ProductUrlGeneratorTest extends Test
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductUrlShouldReturnTransfer()
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())

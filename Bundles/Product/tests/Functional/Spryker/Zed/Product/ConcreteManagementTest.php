@@ -22,6 +22,9 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 class ConcreteManagementTest extends FacadeTestAbstract
 {
 
+    /**
+     * @return void
+     */
     protected function a222setupDefaultProducts()
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);

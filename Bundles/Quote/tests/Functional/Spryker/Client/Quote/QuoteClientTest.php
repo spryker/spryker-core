@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class QuoteClientTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $sessionContainer = new Session();

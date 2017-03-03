@@ -30,6 +30,9 @@ class FacadeMethodBuilderTest extends Test
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
     const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/FooApplication/';
 
+    /**
+     * @return void
+     */
     public function testMethodNameIsFacade()
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
@@ -43,6 +46,9 @@ class FacadeMethodBuilderTest extends Test
         $this->assertSame('facade', $bundleMethodTransfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupIsPerformedInBusinessLayer()
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
@@ -54,6 +60,9 @@ class FacadeMethodBuilderTest extends Test
         $methodBuilderMock->getMethod($this->getBundleTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupPrefersInterface()
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
@@ -73,6 +82,9 @@ class FacadeMethodBuilderTest extends Test
         $this->assertSame('FooBundleFacadeInterface', $bundleMethodTransfer->getClassName());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing()
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
