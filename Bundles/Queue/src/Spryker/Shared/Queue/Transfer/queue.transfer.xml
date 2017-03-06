@@ -19,6 +19,7 @@
         <property name="queueName" type="string" />
         <property name="body" type="string" />
         <property name="acknowledge" type="bool"/>
+        <property name="reject" type="bool"/>
         <property name="hasError" type="bool"/>
     </transfer>
 </transfers>

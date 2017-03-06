@@ -34,4 +34,11 @@ interface ReceiverInterface
      */
     public function acknowledge(QueueMessageTransfer $queueMessageTransfer);
 
+    /**
+     * @param QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return bool
+     */
+    public function reject(QueueMessageTransfer $queueMessageTransfer);
+
 }

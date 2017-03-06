@@ -90,8 +90,10 @@ class Task implements TaskInterface
         foreach ($processedMessages as $processedMessage) {
             if ($processedMessage->getAcknowledge()) {
                 $this->client->acknowledge($processedMessage);
+            }
 
-                continue;
+            if ($processedMessage->getReject()) {
+                $this->client->reject($processedMessage);
             }
 
             if ($processedMessage->getHasError()) {

@@ -128,6 +128,18 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
+     * @param QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return bool
+     */
+    public function reject(QueueMessageTransfer $queueMessageTransfer)
+    {
+        $queueAdapter = $this->getQueueAdapter($queueMessageTransfer->getQueueName());
+
+        return $queueAdapter->reject($queueMessageTransfer);
+    }
+
+    /**
      * @param string $queueName
      *
      * @return bool

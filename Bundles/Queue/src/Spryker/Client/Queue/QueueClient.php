@@ -83,6 +83,18 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return bool
+     */
+    public function reject(QueueMessageTransfer $queueMessageTransfer)
+    {
+        return $this->getFactory()->createQueueProxy()->reject($queueMessageTransfer);
+    }
+
+    /**
      * @param QueueMessageTransfer $queueMessageTransfer
      *
      * @return QueueMessageTransfer
