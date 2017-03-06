@@ -60,7 +60,7 @@ class PayolutionFacadeMockBuilder
     protected static function getBusinessFactoryMock(PHPUnit_Framework_TestCase $testCase)
     {
         $businessFactoryMock = $testCase->getMockBuilder(PayolutionBusinessFactory::class)
-            ->setMethodsExcept(
+            ->setMethods(
             ['createAdapter', 'getMoneyFacade']
         )->getMock();
 
