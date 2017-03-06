@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RuleQueryTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\QueryPropelRule\Persistence\QueryPropelRuleQueryContainer;
 
 /**
@@ -26,17 +27,28 @@ use Spryker\Zed\QueryPropelRule\Persistence\QueryPropelRuleQueryContainer;
 class QueryContainerTest extends Test
 {
 
-    const EXPECTED_SKU_COLLECTION = ['019', '029', '031'];
+    const EXPECTED_SKU_COLLECTION = [
+        '001_25904004',
+        '019_30395396',
+        '019_31080444',
+        '029_13374503',
+        '029_20370432',
+        '029_13391322',
+        '031_19618271',
+        '031_21927455',
+    ];
+
+    const EXPECTED_COUNT = 8;
 
     /**
      * @var string
      */
-    protected $jsonDataNoMappings = '{"condition":"AND","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
+    protected $jsonDataWithMappings = '{"condition":"OR","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
 
     /**
      * @var string
      */
-    protected $jsonData  = '{"condition":"AND","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
+    protected $jsonDataNoMappings = '{"condition":"OR","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"spy_product_abstract.sku","field":"spy_product.sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
 
     /**
      * @var \Spryker\Zed\QueryPropelRule\Persistence\QueryPropelRuleQueryContainerInterface
@@ -56,17 +68,18 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithoutMappings()
     {
-        $query = SpyProductAbstractQuery::create();
+        $query = SpyProductQuery::create();
+        $query->innerJoinSpyProductAbstract();
 
         $ruleQuerySetTransfer = new RuleQuerySetTransfer();
-        $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
+        $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
         $ruleQueryTransfer = new RuleQueryTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
 
         $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
         $results = $query->find();
 
-        $this->assertCount(3, $results);
+        $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
 
@@ -75,11 +88,11 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithMappings()
     {
-        $query = SpyProductAbstractQuery::create();
-        $query->innerJoinSpyProduct();
+        $query = SpyProductQuery::create();
+        $query->innerJoinSpyProductAbstract();
 
         $ruleQuerySetTransfer = new RuleQuerySetTransfer();
-        $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
+        $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
         $ruleQueryTransfer = new RuleQueryTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
         $ruleQueryTransfer->setMappings([
@@ -92,7 +105,7 @@ class QueryContainerTest extends Test
         $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
         $results = $query->find();
 
-        $this->assertCount(7, $results);
+        $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
 
@@ -115,7 +128,7 @@ class QueryContainerTest extends Test
             ],
         ]);
 
-        $ruleQuerySetTransfer = $this->queryContainer->createRuleSetFromJson($this->jsonData);
+        $ruleQuerySetTransfer = $this->queryContainer->createRuleSetFromJson($this->jsonDataWithMappings);
 
         $this->assertInstanceOf(RuleQuerySetTransfer::class, $ruleQuerySetTransfer);
         $this->assertInstanceOf(RuleQuerySetTransfer::class, current($ruleQuerySetTransfer->getRules()));
@@ -126,7 +139,7 @@ class QueryContainerTest extends Test
      */
     protected function getCriteriaData()
     {
-        return json_decode($this->jsonData, true);
+        return json_decode($this->jsonDataWithMappings, true);
     }
 
     /**
@@ -145,7 +158,7 @@ class QueryContainerTest extends Test
      */
     protected function assertSkuCollection($collection, array $expectedSkuCollection)
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract|\Orm\Zed\Product\Persistence\SpyProduct $productAbstractEntity */
         foreach ($collection as $productAbstractEntity) {
             $sku = $productAbstractEntity->getSku();
             $this->assertContains($sku, $expectedSkuCollection);
