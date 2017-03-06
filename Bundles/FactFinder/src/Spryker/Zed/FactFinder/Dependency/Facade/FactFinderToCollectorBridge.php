@@ -45,7 +45,7 @@ class FactFinderToCollectorBridge implements FactFinderToCollectorInterface
      */
     public function getCsvFileName($type, LocaleTransfer $locale, $number = '')
     {
-        $this->collectorFacade->getCsvFileName($type, $locale, $number);
+        return $this->collectorFacade->getCsvFileName($type, $locale, $number);
     }
 
     /**

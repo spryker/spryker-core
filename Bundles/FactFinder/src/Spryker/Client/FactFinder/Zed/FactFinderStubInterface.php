@@ -21,11 +21,11 @@ interface FactFinderStubInterface
      */
     public function getExportedCsv($locale, $type, $number = '');
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
-     */
-    public function search(QuoteTransfer $quoteTransfer);
+//    /**
+//     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
+//     */
+//    public function search(QuoteTransfer $quoteTransfer);
 
 }
