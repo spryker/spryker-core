@@ -28,8 +28,14 @@ class QueryContainerTest extends Test
 
     const EXPECTED_SKU_COLLECTION = ['019', '029', '031'];
 
+    /**
+     * @var string
+     */
     protected $jsonData = '{"condition":"AND","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
 
+    /**
+     * @var string
+     */
     protected $jsonDataNoMappings = '{"condition":"AND","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
 
     /**
