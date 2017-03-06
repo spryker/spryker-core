@@ -31,12 +31,12 @@ class QueryContainerTest extends Test
     /**
      * @var string
      */
-    protected $jsonData = '{"condition":"AND","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
+    protected $jsonDataNoMappings = '{"condition":"AND","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
 
     /**
      * @var string
      */
-    protected $jsonDataNoMappings = '{"condition":"AND","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
+    protected $jsonData  = '{"condition":"AND","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"}]}';
 
     /**
      * @var \Spryker\Zed\QueryPropelRule\Persistence\QueryPropelRuleQueryContainerInterface
