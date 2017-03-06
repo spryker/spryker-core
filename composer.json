@@ -633,7 +633,14 @@
       "Spryker\\Shared\\Queue\\": "Bundles/Queue/src",
       "Functional\\Spryker\\Shared\\Queue\\": "Bundles/Queue/tests",
       "Spryker\\Zed\\Queue\\": "Bundles/Queue/src",
-      "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests"
+      "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests",
+
+      "Spryker\\Yves\\QueryPropelRule\\": "Bundles/QueryPropelRule/src",
+      "Spryker\\Client\\QueryPropelRule\\": "Bundles/QueryPropelRule/src",
+      "Spryker\\Shared\\QueryPropelRule\\": "Bundles/QueryPropelRule/src",
+      "Spryker\\Zed\\QueryPropelRule\\": "Bundles/QueryPropelRule/src",
+      "Unit\\Spryker\\Zed\\QueryPropelRule\\": "Bundles/QueryPropelRule/tests",
+      "Functional\\Spryker\\Zed\\QueryPropelRule\\": "Bundles/QueryPropelRule/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",
