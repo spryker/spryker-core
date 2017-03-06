@@ -19,7 +19,7 @@ class QueueReceiverConsole extends Console
 {
 
     const COMMAND_NAME = 'queue:receiver:start';
-    const DESCRIPTION = 'Start consuming messages from queues';
+    const DESCRIPTION = 'Start receiving messages from queues';
 
     /**
      * @return void

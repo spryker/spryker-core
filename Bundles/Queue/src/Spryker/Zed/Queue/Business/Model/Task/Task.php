@@ -51,14 +51,7 @@ class Task implements TaskInterface
      */
     public function run()
     {
-        $startTime = time();
-        $passedSeconds = 0;
-
-        while ($passedSeconds < 55) {
-            $this->startReceiving();
-            sleep(5);
-            $passedSeconds = time() - $startTime;
-        }
+        $this->startReceiving();
     }
 
     /**
