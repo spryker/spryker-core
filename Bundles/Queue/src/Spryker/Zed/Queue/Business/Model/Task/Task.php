@@ -51,14 +51,6 @@ class Task implements TaskInterface
      */
     public function run()
     {
-        $this->startReceiving();
-    }
-
-    /**
-     * @return void
-     */
-    protected function startReceiving()
-    {
         foreach ($this->messageProcessorPlugins as $queueName => $processorPlugin) {
             $queueOptionTransfer = $this->getQueueReceiverOptionTransfer($queueName, $processorPlugin->getChunkSize());
             $messages = $this->receiveMessages($queueOptionTransfer);
@@ -78,28 +70,6 @@ class Task implements TaskInterface
     protected function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
     {
         return $this->client->receiveMessages($queueOptionTransfer);
-    }
-
-    /**
-     * @param QueueMessageTransfer[] $processedMessages
-     *
-     * @return void
-     */
-    protected function postProcessMessages(array $processedMessages)
-    {
-        foreach ($processedMessages as $processedMessage) {
-            if ($processedMessage->getAcknowledge()) {
-                $this->client->acknowledge($processedMessage);
-            }
-
-            if ($processedMessage->getReject()) {
-                $this->client->reject($processedMessage);
-            }
-
-            if ($processedMessage->getHasError()) {
-                $this->client->handleErrorMessage($processedMessage);
-            }
-        }
     }
 
     /**
@@ -124,5 +94,27 @@ class Task implements TaskInterface
         }
 
         return $queueOptionTransfer;
+    }
+
+    /**
+     * @param QueueMessageTransfer[] $processedMessages
+     *
+     * @return void
+     */
+    protected function postProcessMessages(array $processedMessages)
+    {
+        foreach ($processedMessages as $processedMessage) {
+            if ($processedMessage->getAcknowledge()) {
+                $this->client->acknowledge($processedMessage);
+            }
+
+            if ($processedMessage->getReject()) {
+                $this->client->reject($processedMessage);
+            }
+
+            if ($processedMessage->getHasError()) {
+                $this->client->handleErrorMessage($processedMessage);
+            }
+        }
     }
 }

@@ -191,7 +191,9 @@ class QueueProxy implements QueueProxyInterface
     protected function getDefaultQueueAdapter()
     {
         if (!array_key_exists($this->defaultQueueAdapterName, $this->queueAdapters)) {
-            throw new MissingQueueAdapterException(sprintf('There is no such a adapter with this name: %s', $this->defaultQueueAdapterName));
+            throw new MissingQueueAdapterException(
+                sprintf('There is no such a adapter with this name: %s', $this->defaultQueueAdapterName)
+            );
         }
 
         return $this->queueAdapters[$this->defaultQueueAdapterName];
