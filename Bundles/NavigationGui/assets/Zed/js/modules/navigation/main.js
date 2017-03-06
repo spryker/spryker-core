@@ -5,4 +5,9 @@
 
 'use strict';
 
-require('./modules/navigation-node-form/main');
+require('ZedGui');
+var navigationTable = require('./navigation-table');
+
+$(document).ready(function() {
+    navigationTable.initialize('#navigation-table');
+});

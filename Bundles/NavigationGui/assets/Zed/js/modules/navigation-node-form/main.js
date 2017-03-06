@@ -7,22 +7,11 @@
 
 require('ZedGui');
 
-// TODO: Clean up JS code
-
 $(document).ready(function() {
     var $nodeTypeField = $('#navigation_node_node_type');
 
     displaySelectedNodeTypeField($nodeTypeField.val());
-
-    $nodeTypeField.on('change', function() {
-        // reset node type fields
-        $('.js-node-type-field').addClass('hidden');
-        $('.js-node-type-field').find('input[type="text"]').val('');
-
-        // show selected
-        var type = $(this).val();
-        displaySelectedNodeTypeField(type);
-    });
+    $nodeTypeField.on('change', changeNodeType);
 });
 
 /**
@@ -32,4 +21,21 @@ $(document).ready(function() {
  */
 function displaySelectedNodeTypeField(type) {
     $('[data-node-type="' + type + '"]').removeClass('hidden');
+}
+
+/**
+ * @return {void}
+ */
+function changeNodeType() {
+    resetNodeTypeFields();
+    displaySelectedNodeTypeField($(this).val());
+}
+
+/**
+ * @return {void}
+ */
+function resetNodeTypeFields() {
+    $('.js-node-type-field')
+        .addClass('hidden')
+        .find('input[type="text"]').val('');
 }

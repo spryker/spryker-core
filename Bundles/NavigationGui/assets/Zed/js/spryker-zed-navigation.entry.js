@@ -5,5 +5,5 @@
 
 'use strict';
 
-require('./modules/navigation');
+require('./modules/navigation/main');
 require('../sass/main.scss');

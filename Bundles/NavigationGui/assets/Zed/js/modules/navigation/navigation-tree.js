@@ -9,8 +9,6 @@ require('jstree');
 
 /*
  * TODO: Clean up JS code
- *
- * TODO: standardize success messages across the UI
  */
 
 var treeProgressBar = $('#navigation-tree-loader');
@@ -19,6 +17,23 @@ var treeContainer = $('#navigation-tree-container');
 var targetElement = $('#navigation-tree-content');
 var treeOrderSaveBtn = $('#navigation-tree-save-btn');
 var ajaxRequest;
+var navigationTreeTypes = {
+    'default': {
+        'icon': 'fa fa-folder'
+    },
+    'navigation': {
+        'icon': 'fa fa-list'
+    },
+    'cms': {
+        'icon': 'fa fa-file-o'
+    },
+    'category': {
+        'icon': 'fa fa-sitemap'
+    },
+    'external_url': {
+        'icon': 'fa fa-external-link'
+    }
+};
 
 /**
  * @param {int} idNavigation
@@ -54,23 +69,7 @@ function loadTree(idNavigation, selected, skipFormLoad)
                 }
             },
             'plugins': ['types', 'wholerow', 'dnd', 'search'],
-            'types': {
-                'default': {
-                    'icon': 'fa fa-folder'
-                },
-                'navigation': {
-                    'icon': 'fa fa-list'
-                },
-                'cms': {
-                    'icon': 'fa fa-file-o'
-                },
-                'category': {
-                    'icon': 'fa fa-sitemap'
-                },
-                'external_url': {
-                    'icon': 'fa fa-external-link'
-                }
-            },
+            'types': navigationTreeTypes,
             'dnd': {
                 'is_draggable': function(items) {
                     var idNavigationNode = items[0].data.idNavigationNode;
