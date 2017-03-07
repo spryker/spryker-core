@@ -22,6 +22,12 @@
       "Functional\\Spryker\\Shared\\Acl\\": "Bundles/Acl/tests",
       "Spryker\\Zed\\Acl\\": "Bundles/Acl/src",
       "Functional\\Spryker\\Zed\\Acl\\": "Bundles/Acl/tests",
+
+      "Spryker\\Shared\\Api\\": "Bundles/Api/src",
+      "Functional\\Spryker\\Shared\\Api\\": "Bundles/Api/tests",
+      "Spryker\\Zed\\Api\\": "Bundles/Api/src",
+      "Functional\\Spryker\\Zed\\Api\\": "Bundles/Api/tests",
+
       "Spryker\\Shared\\Application\\": "Bundles/Application/src",
       "Unit\\Spryker\\Shared\\Application\\": "Bundles/Application/tests",
       "Spryker\\Yves\\Application\\": "Bundles/Application/src",
