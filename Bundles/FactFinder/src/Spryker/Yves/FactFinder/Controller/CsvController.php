@@ -44,7 +44,7 @@ class CsvController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function categoriesAction($request)
+    public function categoriesAction(Request $request)
     {
         $locale = $request->get('locale', $this->getLocale());
         $response = $this->getClient()
