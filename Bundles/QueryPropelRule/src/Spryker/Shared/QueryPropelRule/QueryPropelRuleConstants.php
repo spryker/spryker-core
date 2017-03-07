@@ -7,11 +7,9 @@
 
 namespace Spryker\Shared\QueryPropelRule;
 
-use Spryker\Shared\Propel\PropelConstants;
-
 interface QueryPropelRuleConstants
 {
 
-    const ZED_DB_ENGINE = PropelConstants::ZED_DB_ENGINE;
+    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
 
 }
