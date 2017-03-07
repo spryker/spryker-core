@@ -86,6 +86,24 @@ class UrlTest extends Test
     /**
      * @return void
      */
+    public function testBuildWithNestedQuery()
+    {
+        $url = new Url(['path' => '/foo/bar', 'query' => [
+            'x' => [
+                'y',
+                'z'
+            ],
+            'foo' => [
+                'bar' => 'baz',
+            ],
+        ]]);
+
+        $this->assertSame('/foo/bar?x%5B0%5D=y&x%5B1%5D=z&foo%5Bbar%5D=baz', $url->build());
+    }
+
+    /**
+     * @return void
+     */
     public function testBuildEscaped()
     {
         $url = new Url(['path' => '/foo/bar', 'query' => ['x' => 'y', 'ö' => 'ä'], 'fragment' => 'z']);
