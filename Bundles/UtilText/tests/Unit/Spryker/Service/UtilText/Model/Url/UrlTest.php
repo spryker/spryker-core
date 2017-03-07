@@ -88,15 +88,18 @@ class UrlTest extends Test
      */
     public function testBuildWithNestedQuery()
     {
-        $url = new Url(['path' => '/foo/bar', 'query' => [
-            'x' => [
-                'y',
-                'z'
+        $url = new Url([
+            'path' => '/foo/bar',
+            'query' => [
+                'x' => [
+                    'y',
+                    'z',
+                ],
+                'foo' => [
+                    'bar' => 'baz',
+                ],
             ],
-            'foo' => [
-                'bar' => 'baz',
-            ],
-        ]]);
+        ]);
 
         $this->assertSame('/foo/bar?x%5B0%5D=y&x%5B1%5D=z&foo%5Bbar%5D=baz', $url->build());
     }
