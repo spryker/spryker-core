@@ -28,7 +28,7 @@ class TransferController extends AbstractController
     {
         $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
 
-        if (!is_array($repeatData)) {
+        if (!is_array($repeatData) || !$repeatData) {
             return new Response('No request to repeat.');
         }
 
