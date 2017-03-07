@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\Log\Processor;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\EntitySanitizerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Unit\Spryker\Shared\Application\Log\Processor\Fixtures\Entity;
@@ -20,7 +21,7 @@ use Unit\Spryker\Shared\Application\Log\Processor\Fixtures\Entity;
  * @group Processor
  * @group EntitySanitizerProcessorTest
  */
-class EntitySanitizerProcessorTest extends \PHPUnit_Framework_TestCase
+class EntitySanitizerProcessorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

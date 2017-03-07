@@ -11,8 +11,15 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Newsletter\Business\NewsletterBusinessFactory;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
+use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
  * @group Functional
@@ -216,9 +223,53 @@ class NewsletterFacadeTest extends Test
     /**
      * @return void
      */
+    public function testAssignCustomerToExistingSubscriber()
+    {
+        $newsletterSubscriberTransfer = $this->createSubscriber();
+
+        $subscriberQuery = SpyNewsletterSubscriberQuery::create();
+        $subscriberQuery->filterByEmail($newsletterSubscriberTransfer->getEmail());
+        $subscriberQuery->filterBySubscriberKey($newsletterSubscriberTransfer->getSubscriberKey());
+        $subscriberEntity = $subscriberQuery->findOneOrCreate();
+        if ($subscriberEntity->getFkCustomer()) {
+            $subscriberEntity->setFkCustomer(null);
+        }
+        $subscriberEntity->save();
+
+        $customerQuery = SpyCustomerQuery::create();
+        $customerQuery->filterByEmail($newsletterSubscriberTransfer->getEmail());
+        $customerQuery->filterByCustomerReference('123');
+        $customer = $customerQuery->findOneOrCreate();
+        $customer->save();
+
+        $newsletterSubscriberTransfer->setFkCustomer($customer->getIdCustomer());
+
+        $result = $this->newsletterFacade->assignCustomerToExistingSubscriber($newsletterSubscriberTransfer);
+        $this->assertTrue($result);
+
+        $queryContainer = new NewsletterQueryContainer();
+        $subscriberEntity = $queryContainer->querySubscriber()->filterByEmail($newsletterSubscriberTransfer->getEmail())->findOne();
+
+        $this->assertSame($customer->getIdCustomer(), $subscriberEntity->getFkCustomer());
+    }
+
+    /**
+     * @return void
+     */
     protected function setNewsletterFacade()
     {
         $this->newsletterFacade = new NewsletterFacade();
+        $container = new Container();
+        $newsletterDependencyProvider = new NewsletterDependencyProvider();
+        $newsletterDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $mailFacadeMock = $this->getMockBuilder(NewsletterToMailInterface::class)->getMock();
+        $container[NewsletterDependencyProvider::FACADE_MAIL] = $mailFacadeMock;
+
+        $newsletterBusinessFactory = new NewsletterBusinessFactory();
+        $newsletterBusinessFactory->setContainer($container);
+
+        $this->newsletterFacade->setFactory($newsletterBusinessFactory);
     }
 
     /**

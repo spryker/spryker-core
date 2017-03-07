@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
@@ -33,7 +33,7 @@ class ConditionsForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|string[] $options
+     * @param string[] $options
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class ConditionsForm extends AbstractType
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [
-                        'type' => MetaProviderFactory::TYPE_DECISION_RULE
+                        'type' => MetaProviderFactory::TYPE_DECISION_RULE,
                     ]
                 )->build(),
             ],

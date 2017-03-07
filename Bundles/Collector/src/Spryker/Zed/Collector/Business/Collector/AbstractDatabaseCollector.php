@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Shared\Library\BatchIterator\CountableIteratorInterface;
+use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -26,7 +26,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     public function collectDataFromDatabase(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
@@ -37,7 +37,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     }
 
     /**
-     * @param \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface $batchCollection
+     * @param \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface $batchCollection
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
@@ -103,13 +103,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             $locale->getIdLocale(),
             $this->touchQueryContainer->getConnection()
         );
-        $storeWriter->write($collectedData, $this->collectResourceType());
+        $storeWriter->write($collectedData);
 
         $batchResult->increaseProcessedCount($collectedDataCount);
     }
 
     /**
-     * @param \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface $batchCollection
+     * @param \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface $batchCollection
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *

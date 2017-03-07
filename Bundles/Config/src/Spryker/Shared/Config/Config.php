@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Config;
 
+use ArrayObject;
+use Exception;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
 
 class Config
 {
@@ -57,7 +58,7 @@ class Config
         }
 
         if (!self::hasValue($key)) {
-            throw new \Exception(sprintf('Could not find config key "%s" in "%s"', $key, __CLASS__));
+            throw new Exception(sprintf('Could not find config key "%s" in "%s"', $key, __CLASS__));
         }
 
         return self::$config[$key];
@@ -96,7 +97,7 @@ class Config
 
         $storeName = Store::getInstance()->getStoreName();
 
-        $config = new \ArrayObject();
+        $config = new ArrayObject();
 
         /*
          * e.g. config_default.php
@@ -147,7 +148,7 @@ class Config
      *
      * @return \ArrayObject
      */
-    protected static function buildConfig($type, \ArrayObject $config)
+    protected static function buildConfig($type, ArrayObject $config)
     {
         $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
         if (file_exists($fileName)) {

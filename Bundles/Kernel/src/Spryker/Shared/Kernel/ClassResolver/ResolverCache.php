@@ -7,14 +7,14 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use Everon\Component\Collection\Lazy;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
-use Spryker\Shared\Library\Collection\LazyCollection;
 
 class ResolverCache implements ResolverCacheInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected static $unresolvableCollection;
 
@@ -37,7 +37,7 @@ class ResolverCache implements ResolverCacheInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return \Everon\Component\Collection\CollectionInterface
      */
     protected function getUnresolvableCollection()
     {
@@ -46,7 +46,7 @@ class ResolverCache implements ResolverCacheInterface
                 return $this->getData();
             };
 
-            self::$unresolvableCollection = new LazyCollection($callback);
+            self::$unresolvableCollection = new Lazy($callback);
         }
 
         return self::$unresolvableCollection;

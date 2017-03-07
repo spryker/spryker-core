@@ -59,7 +59,7 @@ class InvoiceTest extends InvoiceAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->refundPayment($this->orderTransfer, $this->orderTransfer->getItems()->getArrayCopy());
+        return $facade->refundPayment($this->orderTransfer, $this->orderPartialTransfer, $this->orderTransfer->getItems()->getArrayCopy());
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -55,7 +56,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
      *
      * @return int
      */
-    protected function getTotalDiscountAmountWithProductOptions(TotalsTransfer $totalsTransfer, \ArrayObject $items)
+    protected function getTotalDiscountAmountWithProductOptions(TotalsTransfer $totalsTransfer, ArrayObject $items)
     {
         $currentTotalDiscountAmount = $totalsTransfer->getDiscountTotal();
         $discountTotalAmountForProductOptions = $this->getSumTotalGrossDiscountAmount($items);
@@ -68,7 +69,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
      *
      * @return int
      */
-    protected function getSumTotalGrossDiscountAmount(\ArrayObject $items)
+    protected function getSumTotalGrossDiscountAmount(ArrayObject $items)
     {
         $totalSumGrossDiscountAmount = 0;
         foreach ($items as $itemTransfer) {
@@ -117,7 +118,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
      *
      * @return int
      */
-    protected function getCalculatedDiscountSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalSumGrossDiscountAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {

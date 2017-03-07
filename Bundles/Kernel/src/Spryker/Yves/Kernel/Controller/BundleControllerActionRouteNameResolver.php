@@ -57,7 +57,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     }
 
     /**
-     * @return \Zend\Filter\Word\CamelCaseToDash
+     * @return \Zend\Filter\FilterChain
      */
     private function getFilter()
     {

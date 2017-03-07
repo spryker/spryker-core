@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
@@ -87,6 +87,7 @@ class GlossaryController extends AbstractController
             'title' => $title,
             'type' => $type,
             'forms' => $formViews,
+            'localeTransfer' => $localeTransfer,
         ];
     }
 
@@ -198,7 +199,8 @@ class GlossaryController extends AbstractController
                 ->find();
 
             return $searchedItems;
-        } elseif ($key !== null) {
+        }
+        if ($key !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(self::SEARCH_LIMIT)
@@ -284,7 +286,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param array $forms
+     * @param \Symfony\Component\Form\FormInterface[] $forms
      * @param int $idForm
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -303,13 +305,13 @@ class GlossaryController extends AbstractController
                 'glossaryKeyName' => $this->glossaryKeyName,
                 'data' => $data,
             ]);
-        } else {
-            return $this->jsonResponse([
-                'success' => 'false',
-                'errorMessages' => $forms[$idForm]->getErrors()
-                    ->__toString(),
-            ]);
         }
+
+        return $this->jsonResponse([
+            'success' => 'false',
+            'errorMessages' => $forms[$idForm]->getErrors()
+                ->__toString(),
+        ]);
     }
 
     /**

@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Zed\Library\Sanitize\Html;
+use DateTime;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
@@ -47,11 +48,20 @@ class OrderItemMatrix
     protected $orderItemStateBlacklist = [];
 
     /**
+     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\OmsConfig $config
+     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface $utilSanitizeService
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, OmsConfig $config)
-    {
+    public function __construct(
+        OmsQueryContainerInterface $queryContainer,
+        OmsConfig $config,
+        OmsToUtilSanitizeInterface $utilSanitizeService
+    ) {
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
@@ -60,6 +70,7 @@ class OrderItemMatrix
         $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist())
             ->find();
         $this->orderItems = $this->preProcessItems($orderItems);
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -125,16 +136,16 @@ class OrderItemMatrix
             'other' => 0,
         ];
         foreach ($orderItems as $orderItem) {
-            $created = $orderItem->getLastStateChange();
+            $lastStateChange = $orderItem->getLastStateChange();
 
-            $lastDay = new \DateTime('-1 day');
-            if ($created > $lastDay) {
+            $lastDay = new DateTime('-1 day');
+            if ($lastStateChange > $lastDay) {
                 ++$grid['day'];
                 continue;
             }
 
-            $lastDay = new \DateTime('-7 day');
-            if ($created > $lastDay) {
+            $lastDay = new DateTime('-7 day');
+            if ($lastStateChange >= $lastDay) {
                 ++$grid['week'];
                 continue;
             }
@@ -149,7 +160,7 @@ class OrderItemMatrix
             }
 
             $url = sprintf('/sales?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idProcess, $idState, $key);
-            $grid[$key] = '<a href="' . Html::escape($url) . '">' . $value . '</a>';
+            $grid[$key] = '<a href="' . $this->utilSanitizeService->escapeHtml($url) . '">' . $value . '</a>';
         }
 
         return implode(' | ', $grid);

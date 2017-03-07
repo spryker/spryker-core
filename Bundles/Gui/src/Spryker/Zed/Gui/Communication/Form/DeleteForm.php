@@ -10,6 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DeleteForm extends AbstractType
@@ -24,22 +25,32 @@ class DeleteForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired('action');
+        $resolver->setRequired('fields');
+
+        $resolver->setDefaults([
+            'attr' => [
+                'class' => 'form-inline',
+            ],
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired('action');
-        $resolver->setRequired('fields');
-
-        $resolver->setDefaults([
-            'attr' => [
-                'class' => 'form-inline'
-            ],
-        ]);
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -66,7 +77,7 @@ class DeleteForm extends AbstractType
     {
         foreach ($options['fields'] as $key => $value) {
             $builder->add($key, 'hidden', [
-                'data' => $value
+                'data' => $value,
             ]);
         }
 

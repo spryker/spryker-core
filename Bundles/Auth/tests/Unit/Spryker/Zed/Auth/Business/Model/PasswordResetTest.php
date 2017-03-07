@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
@@ -23,7 +24,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Model
  * @group PasswordResetTest
  */
-class PasswordResetTest extends \PHPUnit_Framework_TestCase
+class PasswordResetTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -56,11 +57,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMock(
-            AuthToUserBridge::class,
-            ['getUserByUsername'],
-            [new UserFacade()]
-        );
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(['getUserByUsername'])->setConstructorArgs([new UserFacade()])->getMock();
 
         return $userFacade;
     }
@@ -74,11 +71,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
      */
     protected function createPasswordReset($authQueryContainer, $userFacade, $authConfig)
     {
-        $passwordReset = $this->getMock(
-            PasswordReset::class,
-            ['persistResetPassword'],
-            [$authQueryContainer, $userFacade, $authConfig]
-        );
+        $passwordReset = $this->getMockBuilder(PasswordReset::class)->setMethods(['persistResetPassword'])->setConstructorArgs([$authQueryContainer, $userFacade, $authConfig])->getMock();
 
         return $passwordReset;
     }

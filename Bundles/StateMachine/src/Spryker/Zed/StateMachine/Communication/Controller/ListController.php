@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\StateMachine\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,7 +30,7 @@ class ListController extends AbstractController
         }
 
         return $this->viewResponse([
-            'stateMachines' => $stateMachines
+            'stateMachines' => $stateMachines,
         ]);
     }
 

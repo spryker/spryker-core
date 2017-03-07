@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Storage;
 
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface;
 
 class RedisWriter implements WriterInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface|\Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite
+     * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\RedisReadWrite
      */
     protected $redis;
 
     /**
-     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
+     * @param \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
      */
     public function __construct(ReadWriteInterface $kvAdapter)
     {
@@ -28,11 +28,10 @@ class RedisWriter implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $type
      *
      * @return bool
      */
-    public function write(array $dataSet, $type = '')
+    public function write(array $dataSet)
     {
         return $this->redis->setMulti($dataSet);
     }

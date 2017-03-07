@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
@@ -22,7 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
  * @group Specification
  * @group MetaProviderFactoryTest
  */
-class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
+class MetaProviderFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -79,7 +80,6 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MetaDataProvider::class, $collectorProvider);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
      *
@@ -99,9 +99,8 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountBusinessFactoryMock()
     {
-        return $this->getMock(DiscountBusinessFactory::class);
+        return $this->getMockBuilder(DiscountBusinessFactory::class)->getMock();
     }
-
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
@@ -118,7 +117,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function createLogicalComparatorsMock()
     {
-        return $this->getMock(LogicalComparators::class);
+        return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
 
 }

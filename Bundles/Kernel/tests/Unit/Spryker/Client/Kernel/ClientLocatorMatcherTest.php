@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\ClientLocatorMatcher;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Client\Kernel\ClientLocatorMatcher;
  * @group Kernel
  * @group ClientLocatorMatcherTest
  */
-class ClientLocatorMatcherTest extends \PHPUnit_Framework_TestCase
+class ClientLocatorMatcherTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -41,14 +42,6 @@ class ClientLocatorMatcherTest extends \PHPUnit_Framework_TestCase
     public function testMatchShouldReturnFalseIfMethodNotStartsWithClientButClientInString()
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorClient'));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnClassName()
-    {
-        $this->assertSame('Foo', (new ClientLocatorMatcher())->filter('clientFoo'));
     }
 
 }

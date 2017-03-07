@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +19,7 @@ class JenkinsGenerateConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:generate';
-    const DESCRIPTION = 'Generate jenkins jobs configuration';
+    const DESCRIPTION = 'Generate Jenkins jobs configuration';
 
     /**
      * @return void

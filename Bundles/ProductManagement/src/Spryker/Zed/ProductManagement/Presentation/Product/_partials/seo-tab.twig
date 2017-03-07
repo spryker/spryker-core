@@ -1,0 +1,25 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>SEO (Meta Information)</h3>
+        <p>Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as "natural," "organic," or "earned" results.</p>
+        <p><i>Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</i></p>
+    {% endfilter %}
+</div>
+
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'seo_' ~ localeTransfer.localeName %}
+
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+            {% block content %}
+                {% for input in form[formKey] %}
+                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                        {{ form_label(input) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation', 'data-translation-key': input.vars.name}}) }}
+                        {{ form_errors(input) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

@@ -26,4 +26,12 @@ class CmsConfig extends AbstractBundleConfig
         return $physicalAddress;
     }
 
+    /**
+     * @return bool
+     */
+    public function appendPrefixToCmsPageUrl()
+    {
+        return false;
+    }
+
 }

@@ -21,4 +21,12 @@ class RatepayFactory extends AbstractFactory
         return new RatepayStub($this->getZedRequestClient());
     }
 
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
 }

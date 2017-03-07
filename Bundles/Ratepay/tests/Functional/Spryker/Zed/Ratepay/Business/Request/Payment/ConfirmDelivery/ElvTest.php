@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -59,7 +60,7 @@ class ElvTest extends ElvAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->confirmDelivery($this->orderTransfer, $this->orderTransfer->getItems()->getArrayCopy());
+        return $facade->confirmDelivery($this->orderTransfer, $this->orderPartialTransfer, $this->orderTransfer->getItems()->getArrayCopy());
     }
 
 }

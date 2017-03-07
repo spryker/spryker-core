@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
@@ -22,7 +23,7 @@ use Unit\Spryker\Zed\Kernel\Fixtures\Factory;
  * @group Kernel
  * @group AbstractFactoryTest
  */
-class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const CONTAINER_KEY = 'key';
@@ -112,15 +113,15 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
 
-        $dependencyInjectorMock = $this->getMock(DependencyInjectorInterface::class);
+        $dependencyInjectorMock = $this->getMockBuilder(DependencyInjectorInterface::class)->getMock();
         $dependencyInjectorMock->expects($this->once())->method('injectBusinessLayerDependencies')->willReturn($container);
         $dependencyInjectorMock->expects($this->once())->method('injectCommunicationLayerDependencies')->willReturn($container);
         $dependencyInjectorMock->expects($this->once())->method('injectPersistenceLayerDependencies')->willReturn($container);
 
-        $dependencyInjectorCollectionMock = $this->getMock(DependencyInjectorCollection::class, ['getDependencyInjector']);
+        $dependencyInjectorCollectionMock = $this->getMockBuilder(DependencyInjectorCollection::class)->setMethods(['getDependencyInjector'])->getMock();
         $dependencyInjectorCollectionMock->method('getDependencyInjector')->willReturn([$dependencyInjectorMock]);
 
-        $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, ['resolve']);
+        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods(['resolve'])->getMock();
         $dependencyInjectorResolverMock->expects($this->once())->method('resolve')->willReturn($dependencyInjectorCollectionMock);
 
         return $dependencyInjectorResolverMock;
@@ -133,7 +134,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFactoryMock(array $methods)
     {
-        $factoryMock = $this->getMock(Factory::class, $methods);
+        $factoryMock = $this->getMockBuilder(Factory::class)->setMethods($methods)->getMock();
 
         return $factoryMock;
     }

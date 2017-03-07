@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
+use PDO;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -20,7 +22,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PropelDatabase
  * @group MySqlDatabaseCreatorTest
  */
-class MySqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
+class MySqlDatabaseCreatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -48,8 +50,8 @@ class MySqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMySqlDatabaseCreatorMock()
     {
-        $mySqlDatabaseCreatorMock = $this->getMock(MySqlDatabaseCreator::class, ['getConnection']);
-        $pdo = new \PDO('sqlite::memory:');
+        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)->setMethods(['getConnection'])->getMock();
+        $pdo = new PDO('sqlite::memory:');
         $mySqlDatabaseCreatorMock->expects($this->once())->method('getConnection')->willReturn($pdo);
 
         return $mySqlDatabaseCreatorMock;

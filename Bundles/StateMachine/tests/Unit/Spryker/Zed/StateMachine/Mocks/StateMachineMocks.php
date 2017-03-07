@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Mocks;
 
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
@@ -25,7 +26,7 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Spryker\Zed\StateMachine\StateMachineConfig;
 
-class StateMachineMocks extends \PHPUnit_Framework_TestCase
+class StateMachineMocks extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,7 +34,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createTransitionLogMock()
     {
-        $transitionLogMock = $this->getMock(TransitionLogInterface::class);
+        $transitionLogMock = $this->getMockBuilder(TransitionLogInterface::class)->getMock();
 
         return $transitionLogMock;
     }
@@ -43,7 +44,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createFinderMock()
     {
-        $finderMock = $this->getMock(FinderInterface::class);
+        $finderMock = $this->getMockBuilder(FinderInterface::class)->getMock();
 
         return $finderMock;
     }
@@ -53,7 +54,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createHandlerResolverMock()
     {
-        $handlerResolverMock = $this->getMock(HandlerResolverInterface::class);
+        $handlerResolverMock = $this->getMockBuilder(HandlerResolverInterface::class)->getMock();
 
         return $handlerResolverMock;
     }
@@ -63,7 +64,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachineHandlerMock()
     {
-        $stateMachineHandlerMock = $this->getMock(StateMachineHandlerInterface::class);
+        $stateMachineHandlerMock = $this->getMockBuilder(StateMachineHandlerInterface::class)->getMock();
 
         return $stateMachineHandlerMock;
     }
@@ -73,7 +74,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createPersistenceMock()
     {
-        $persistenceMock = $this->getMock(PersistenceInterface::class);
+        $persistenceMock = $this->getMockBuilder(PersistenceInterface::class)->getMock();
 
         return $persistenceMock;
     }
@@ -83,7 +84,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createStateUpdaterMock()
     {
-        $stateUpdaterMock = $this->getMock(StateUpdaterInterface::class);
+        $stateUpdaterMock = $this->getMockBuilder(StateUpdaterInterface::class)->getMock();
 
         return $stateUpdaterMock;
     }
@@ -93,7 +94,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createConditionPluginMock()
     {
-        $conditionPluginMock = $this->getMock(ConditionPluginInterface::class);
+        $conditionPluginMock = $this->getMockBuilder(ConditionPluginInterface::class)->getMock();
 
         return $conditionPluginMock;
     }
@@ -103,7 +104,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     public function createBuilderMock()
     {
-        $builderMock = $this->getMock(BuilderInterface::class);
+        $builderMock = $this->getMockBuilder(BuilderInterface::class)->getMock();
 
         return $builderMock;
     }
@@ -113,18 +114,17 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachineQueryContainerMock()
     {
-        $builderMock = $this->getMock(StateMachineQueryContainerInterface::class);
+        $builderMock = $this->getMockBuilder(StateMachineQueryContainerInterface::class)->getMock();
 
         return $builderMock;
     }
-
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */
     protected function createProcessMock()
     {
-        $processMock = $this->getMock(ProcessInterface::class);
+        $processMock = $this->getMockBuilder(ProcessInterface::class)->getMock();
 
         return $processMock;
     }
@@ -134,7 +134,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createTimeoutMock()
     {
-        $timeoutMock = $this->getMock(TimeoutInterface::class);
+        $timeoutMock = $this->getMockBuilder(TimeoutInterface::class)->getMock();
 
         return $timeoutMock;
     }
@@ -144,7 +144,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachinePersitenceMock()
     {
-        $persistenceMock = $this->getMock(PersistenceInterface::class);
+        $persistenceMock = $this->getMockBuilder(PersistenceInterface::class)->getMock();
 
         return $persistenceMock;
     }
@@ -154,7 +154,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createPropelConnectionMock()
     {
-        $propelConnectionMock = $this->getMock(ConnectionInterface::class);
+        $propelConnectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
 
         return $propelConnectionMock;
     }
@@ -164,7 +164,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createConditionMock()
     {
-        $conditionMock = $this->getMock(ConditionInterface::class);
+        $conditionMock = $this->getMockBuilder(ConditionInterface::class)->getMock();
 
         return $conditionMock;
     }
@@ -174,7 +174,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createCommandMock()
     {
-        $commandMock = $this->getMock(CommandPluginInterface::class);
+        $commandMock = $this->getMockBuilder(CommandPluginInterface::class)->getMock();
 
         return $commandMock;
     }
@@ -184,7 +184,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachineConfigMock()
     {
-        $stateMachineConfigMock = $this->getMock(StateMachineConfig::class);
+        $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
 
         return $stateMachineConfigMock;
     }
@@ -194,7 +194,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createTriggerMock()
     {
-        $triggerLockMock = $this->getMock(TriggerInterface::class);
+        $triggerLockMock = $this->getMockBuilder(TriggerInterface::class)->getMock();
 
         return $triggerLockMock;
     }
@@ -204,7 +204,7 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
      */
     protected function createItemLockMock()
     {
-        $itemLockMock = $this->getMock(ItemLockInterface::class);
+        $itemLockMock = $this->getMockBuilder(ItemLockInterface::class)->getMock();
 
         return $itemLockMock;
     }

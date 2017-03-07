@@ -8,13 +8,13 @@
 namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
 use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
-use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemOptionMock;
 
 /**
  * @group Unit
@@ -25,7 +25,7 @@ use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemOptionM
  * @group Model
  * @group OrderItemSplitTest
  */
-class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
+class OrderItemSplitTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -39,15 +39,6 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         'updated_at',
         'group_key',
 
-    ];
-
-    /**
-     * @var array
-     */
-    private $notCopiedOrderItemOptionFields = [
-        'created_at',
-        'updated_at',
-        'fk_sales_order_item',
     ];
 
     /**
@@ -82,21 +73,6 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($oldSalesOrderItemArray, $copyOfItemSalesOrderItemArray);
-
-        $options = $spySalesOrderItem->getOptions();
-
-        foreach ($options as $option) {
-            $oldOption = $this->filterOutNotCopiedFields(
-                $option->toArray(),
-                $this->notCopiedOrderItemOptionFields
-            );
-            $copyOfOptions = $this->filterOutNotCopiedFields(
-                $option->getCreatedCopy()->toArray(),
-                $this->notCopiedOrderItemOptionFields
-            );
-
-            $this->assertEquals($oldOption, $copyOfOptions);
-        }
     }
 
     /**
@@ -231,21 +207,6 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem->setName('123');
         $spySalesOrderItem->setSku('A');
         $spySalesOrderItem->setGrossPrice(100);
-
-        $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
-        $spySalesOrderItemOption->setLabelOptionType('X');
-        $spySalesOrderItemOption->setLabelOptionValue('Y');
-        $spySalesOrderItemOption->setGrossPrice(5);
-
-        $spySalesOrderItem->addOption($spySalesOrderItemOption);
-
-        $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
-        $spySalesOrderItemOption->setLabelOptionType('XX');
-        $spySalesOrderItemOption->setLabelOptionValue('YY');
-        $spySalesOrderItemOption->setGrossPrice(30);
-        $spySalesOrderItemOption->setTaxRate(15);
-
-        $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
         return $spySalesOrderItem;
     }

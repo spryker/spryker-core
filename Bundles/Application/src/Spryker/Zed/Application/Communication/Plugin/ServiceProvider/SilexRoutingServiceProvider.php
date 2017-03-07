@@ -31,7 +31,6 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-
     }
 
 }

@@ -10,7 +10,6 @@ namespace Spryker\Shared\EventJournal\Model\Writer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\EventInterface;
-use Spryker\Shared\Library\DataDirectory;
 
 /**
  * @deprecated Use Log bundle instead
@@ -125,7 +124,7 @@ class File extends AbstractWriter
     protected function getLogPath()
     {
         if (!isset($this->options[EventJournalConstants::OPTION_LOG_PATH])) {
-            return DataDirectory::getLocalCommonPath('event_journal');
+            return APPLICATION_ROOT_DIR . '/data/common/event_journal';
         }
 
         return $this->options[EventJournalConstants::OPTION_LOG_PATH];

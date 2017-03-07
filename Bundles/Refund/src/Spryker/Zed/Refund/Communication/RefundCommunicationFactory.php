@@ -26,26 +26,26 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         $refundTable = new RefundTable(
             $this->getQueryContainer(),
             $this->getDateFormatter(),
-            $this->getCurrencyManager()
+            $this->getMoneyFacade()
         );
 
         return $refundTable;
     }
 
     /**
-     * @return \Spryker\Shared\Library\DateFormatterInterface
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected function getDateFormatter()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::DATE_FORMATTER);
+        return $this->getProvidedDependency(RefundDependencyProvider::SERVICE_DATE_TIME);
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface
      */
-    protected function getCurrencyManager()
+    protected function getMoneyFacade()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::CURRENCY_MANAGER);
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_MONEY);
     }
 
 }

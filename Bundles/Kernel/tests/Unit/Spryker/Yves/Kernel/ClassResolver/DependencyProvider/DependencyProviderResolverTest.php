@@ -26,12 +26,12 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Yves\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Yves\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Yves\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
 
     /**
      * @var string
@@ -50,7 +50,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(DependencyProviderResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }

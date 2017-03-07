@@ -33,7 +33,7 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
 
 $config[OmsConstants::PROCESS_LOCATION] = [
   OmsConfig::DEFAULT_PROCESS_LOCATION,
-  $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Ratepay/config/Zed/Oms'
+  $config[KernelConstants::SPRYKER_ROOT] . '/Ratepay/config/Zed/Oms',
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [

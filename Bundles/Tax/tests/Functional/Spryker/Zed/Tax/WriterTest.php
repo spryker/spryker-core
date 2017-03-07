@@ -33,14 +33,9 @@ class WriterTest extends Test
     const NON_EXISTENT_ID = 999999999;
 
     /**
-     * @var \Spryker\Zed\Tax\Business\TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
     private $taxFacade;
-
-    /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @return void
@@ -255,7 +250,7 @@ class WriterTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate()
     {
-        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
+        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
 
         $taxRateTransfer = $this->createTaxRateTransfer();
         $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator;
 
+use ReflectionClass;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class PackageNameHydrator implements DependencyHydratorInterface
@@ -30,7 +31,7 @@ class PackageNameHydrator implements DependencyHydratorInterface
     private function getComposerNameByClassName(array $dependency)
     {
         try {
-            $reflection = new \ReflectionClass($dependency[DependencyTree::META_FOREIGN_CLASS_NAME]);
+            $reflection = new ReflectionClass($dependency[DependencyTree::META_FOREIGN_CLASS_NAME]);
             $filePath = $reflection->getFileName();
             $relativeFilePath = str_replace(APPLICATION_VENDOR_DIR, '', $filePath);
 
@@ -49,10 +50,10 @@ class PackageNameHydrator implements DependencyHydratorInterface
                 }
 
             } while (count($pathParts) > 0);
-
-            return false;
         } catch (\Exception $e) {
         }
+
+        return false;
     }
 
 }

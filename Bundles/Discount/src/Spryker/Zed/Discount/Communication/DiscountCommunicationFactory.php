@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
@@ -54,7 +53,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountFormType,
             $discountDataProvider->getData($idDiscount),
             [
-              'data_class' => DiscountConfiguratorTransfer::class
+                'data_class' => DiscountConfiguratorTransfer::class,
             ]
         );
     }
@@ -111,7 +110,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountVoucherFormType,
             $discountVoucherTransfer,
             [
-                'data_class' => DiscountVoucherTransfer::class
+                'data_class' => DiscountVoucherTransfer::class,
             ]
         );
     }
@@ -170,14 +169,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected function getFormFactory()
-    {
-        return (new Pimple())->getApplication()[self::FORM_FACTORY];
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     public function getCalculatorPlugins()
@@ -214,6 +205,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
+     */
+    public function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MONEY);
     }
 
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +21,7 @@ class LogController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -30,11 +30,11 @@ class LogController extends AbstractController
         return $this->viewResponse(['transitionLogTable' => $transitionLogTable->render()]);
     }
 
-        /**
-         * @param \Symfony\Component\HttpFoundation\Request $request
-         *
-         * @return mixed
-         */
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function tableAjaxAction(Request $request)
     {
         $transitionLogTable = $this->getFactory()->createTransitionLogTable();

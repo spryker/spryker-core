@@ -13,8 +13,8 @@ interface AvailabilityToOmsInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return int
      */
-    public function countReservedOrderItemsForSku($sku);
+    public function sumReservedProductQuantitiesForSku($sku);
 
 }

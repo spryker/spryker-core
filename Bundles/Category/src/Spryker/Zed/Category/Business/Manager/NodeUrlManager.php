@@ -10,13 +10,18 @@ namespace Spryker\Zed\Category\Business\Manager;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class NodeUrlManager implements NodeUrlManagerInterface
 {
 
@@ -36,18 +41,26 @@ class NodeUrlManager implements NodeUrlManagerInterface
     protected $urlFacade;
 
     /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
+     */
+    protected $categoryQueryContainer;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct(
         CategoryTreeReaderInterface $categoryTreeReader,
         UrlPathGeneratorInterface $urlPathGenerator,
-        CategoryToUrlInterface $urlFacade
+        CategoryToUrlInterface $urlFacade,
+        CategoryQueryContainerInterface $categoryQueryContainer
     ) {
         $this->categoryTreeReader = $categoryTreeReader;
         $this->urlPathGenerator = $urlPathGenerator;
         $this->urlFacade = $urlFacade;
+        $this->categoryQueryContainer = $categoryQueryContainer;
     }
 
     /**
@@ -62,16 +75,18 @@ class NodeUrlManager implements NodeUrlManagerInterface
     {
         $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
         $categoryUrl = $this->generateUrlFromPathTokens($path);
-        $idNode = $categoryNodeTransfer->getIdCategoryNode();
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer
+            ->setUrl($categoryUrl)
+            ->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale())
+            ->setFkResourceCategorynode($categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode());
 
         try {
-            $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+            $this->urlFacade->createUrl($urlTransfer);
         } catch (UrlExistsException $e) {
             throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
         }
-
-        $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
-        $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
 
     /**
@@ -82,19 +97,24 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $path = $this->categoryTreeReader->getPath($idCategoryNode, $localeTransfer);
         $categoryUrl = $this->generateUrlFromPathTokens($path);
-        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer)) {
+        if (!$this->hasCategoryNodeUrl($idCategoryNode, $localeTransfer)) {
             $urlTransfer = new UrlTransfer();
-            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
-        } else {
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
-            $this->updateTransferUrl($urlTransfer, $categoryUrl);
-        }
+            $urlTransfer
+                ->setUrl($categoryUrl)
+                ->setFkLocale($localeTransfer->getIdLocale())
+                ->setFkResourceCategorynode($idCategoryNode);
 
-        $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->urlFacade->createUrl($urlTransfer);
+        } else {
+            $urlTransfer = $this->getCategoryNodeUrl($idCategoryNode, $localeTransfer);
+            $urlTransfer->setUrl($categoryUrl);
+
+            $this->urlFacade->updateUrl($urlTransfer);
+        }
 
         $this->updateChildrenUrls($categoryNodeTransfer, $localeTransfer);
     }
@@ -110,14 +130,19 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
             /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $child */
-            if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer)) {
+            if (!$this->hasCategoryNodeUrl($child->getFkCategoryNodeDescendant(), $localeTransfer)) {
                 continue;
             }
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
+            $urlTransfer = $this->getCategoryNodeUrl($child->getFkCategoryNodeDescendant(), $localeTransfer);
 
             $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant(), $localeTransfer);
-            $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNodeDescendant(), $localeTransfer->getIdLocale());
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+
+            $urlTransfer
+                ->setUrl($childUrl)
+                ->setFkResourceCategorynode($child->getFkCategoryNodeDescendant())
+                ->setFkLocale($localeTransfer->getIdLocale());
+
+            $this->urlFacade->updateUrl($urlTransfer);
         }
     }
 
@@ -152,9 +177,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
     public function removeUrl(NodeTransfer $categoryNodeTransfer)
     {
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
-        $urls = $this->urlFacade->getResourceUrlCollectionByCategoryNodeId($idNode);
+        $urlTransfers = $this->getCategoryNodeUrlCollection($idNode);
 
-        foreach ($urls as $urlTransfer) {
+        foreach ($urlTransfers as $urlTransfer) {
             $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
@@ -185,6 +210,67 @@ class NodeUrlManager implements NodeUrlManagerInterface
     protected function generateUrlFromPathTokens(array $pathTokens)
     {
         return $this->urlPathGenerator->generate($pathTokens);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return int
+     */
+    protected function hasCategoryNodeUrl($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        return $this->categoryQueryContainer
+            ->queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $localeTransfer->getIdLocale())
+            ->count() > 0;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function getCategoryNodeUrl($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        $urlEntity = $this->categoryQueryContainer
+            ->queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $localeTransfer->getIdLocale())
+            ->findOne();
+
+        return $this->mapUrlEntityToTransfer($urlEntity);
+    }
+
+    /**
+     * @param int $idNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    protected function getCategoryNodeUrlCollection($idNode)
+    {
+        $categoryNodeUrlCollection = [];
+
+        $urlEntities = $this->categoryQueryContainer
+            ->queryResourceUrlByCategoryNodeId($idNode)
+            ->find();
+
+        foreach ($urlEntities as $urlEntity) {
+            $categoryNodeUrlCollection[] = $this->mapUrlEntityToTransfer($urlEntity);
+        }
+
+        return $categoryNodeUrlCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function mapUrlEntityToTransfer(SpyUrl $urlEntity)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->fromArray($urlEntity->toArray(), true);
+
+        return $urlTransfer;
     }
 
 }

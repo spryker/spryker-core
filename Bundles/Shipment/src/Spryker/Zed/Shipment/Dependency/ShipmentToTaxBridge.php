@@ -15,8 +15,6 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     protected $taxFacade;
 
     /**
-     * ShipmentToTaxBridge constructor.
-     *
      * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
      */
     public function __construct($taxFacade)

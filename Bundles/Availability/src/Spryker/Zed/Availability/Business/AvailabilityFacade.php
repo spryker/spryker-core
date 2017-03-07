@@ -18,6 +18,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -27,10 +29,14 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getFactory()->createSellableModel()->isProductSellable($sku, $quantity);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->isProductSellable($sku, $quantity);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -39,10 +45,14 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->calculateStockForProduct($sku);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -57,6 +67,72 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         $this->getFactory()
             ->createProductsAvailablePreCondition()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateAvailability($sku)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->updateAvailability($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductReservationReader()
+            ->getProductAbstractAvailability($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->touchAvailabilityAbstract($idAvailabilityAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity)
+    {
+        return $this->getFactory()
+            ->createAvailabilityHandler()
+            ->saveCurrentAvailability($sku, $quantity);
     }
 
 }

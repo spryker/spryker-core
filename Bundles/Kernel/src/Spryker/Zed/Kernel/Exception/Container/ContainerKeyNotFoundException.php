@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Kernel\Exception\Container;
 
+use Exception;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
-class ContainerKeyNotFoundException extends \Exception
+class ContainerKeyNotFoundException extends Exception
 {
 
     /**

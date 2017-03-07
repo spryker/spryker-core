@@ -7,22 +7,20 @@
 
 namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
-use Exception;
-
 class WebExceptionErrorRenderer implements ErrorRendererInterface
 {
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return string
      */
-    public function render(Exception $exception)
+    public function render($exception)
     {
         $errorMessageTemplate =
-            '<div style="font-family: courier; font-size: 14px">'
+            '<div style="font-family: Helvetica, Arial, sans-serif; font-size: 14px">'
             . '<h1>%s Exception</h1>'
-            . '<div style="background: #dadada; padding: 5px"><font style="12"><b>%s - %s</b></font></div><br />'
+            . '<div style="background: #dadada; padding: 5px"><font style="12"><b>%s - %s</b></font></div>'
             . '<p>in %s (%s)</p>'
             . '<p><b>Url:</b>%s</p>'
             . '<p><b>Trace:</b></p>'

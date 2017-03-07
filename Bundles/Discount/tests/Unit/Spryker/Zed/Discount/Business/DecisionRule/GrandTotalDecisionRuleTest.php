@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
@@ -93,29 +92,23 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $this->assertFalse($isSatisfied);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
      */
-    protected function createGrandTotalDecisionRule(
-        ComparatorOperatorsInterface $comparatorMock = null,
-        CurrencyManagerInterface $currencyManagerMock = null
-    ) {
+    protected function createGrandTotalDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();
         }
 
-        if ($currencyManagerMock === null) {
-            $currencyManagerMock = $this->createCurrencyCoverterMock();
-            $currencyManagerMock->method('convertDecimalToCent')->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
-                return $clauseTransfer->setValue($clauseTransfer->getValue() * 100);
-            });
-        }
+        $currencyConverterMock = $this->createCurrencyConverterMock();
+        $currencyConverterMock->method('convertDecimalToCent')->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+            return $clauseTransfer->setValue($clauseTransfer->getValue() * 100);
+        });
 
-        return new GrandTotalDecisionRule($comparatorMock, $currencyManagerMock);
+        return new GrandTotalDecisionRule($comparatorMock, $currencyConverterMock);
     }
 
 }

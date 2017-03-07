@@ -7,23 +7,28 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
+use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
+use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin;
+use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
+use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
 use Spryker\Zed\Customer\CustomerConfig;
-use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
-use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
@@ -43,35 +48,47 @@ class Customer
     protected $customerReferenceGenerator;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface[]
-     */
-    protected $passwordRestoredConfirmationSender = [];
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface[]
-     */
-    protected $passwordRestoreTokenSender = [];
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface[]
-     */
-    protected $registrationTokenSender = [];
-
-    /**
      * @var \Spryker\Zed\Customer\CustomerConfig
      */
     protected $customerConfig;
 
     /**
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
+     */
+    protected $mailFacade;
+
+    /**
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     */
+    protected $localeQueryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
-    {
+    public function __construct(
+        CustomerQueryContainerInterface $queryContainer,
+        CustomerReferenceGeneratorInterface $customerReferenceGenerator,
+        CustomerConfig $customerConfig,
+        CustomerToMailInterface $mailFacade,
+        LocaleQueryContainerInterface $localeQueryContainer,
+        Store $store
+    ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
         $this->customerConfig = $customerConfig;
+        $this->mailFacade = $mailFacade;
+        $this->localeQueryContainer = $localeQueryContainer;
+        $this->store = $store;
     }
 
     /**
@@ -86,36 +103,6 @@ class Customer
             ->count();
 
         return ($customerCount > 0);
-    }
-
-    /**
-     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface $sender
-     *
-     * @return void
-     */
-    public function addPasswordRestoredConfirmationSender(PasswordRestoredConfirmationSenderPluginInterface $sender)
-    {
-        $this->passwordRestoredConfirmationSender[] = $sender;
-    }
-
-    /**
-     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface $sender
-     *
-     * @return void
-     */
-    public function addPasswordRestoreTokenSender(PasswordRestoreTokenSenderPluginInterface $sender)
-    {
-        $this->passwordRestoreTokenSender[] = $sender;
-    }
-
-    /**
-     * @param \Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface $sender
-     *
-     * @return void
-     */
-    public function addRegistrationTokenSender(RegistrationTokenSenderPluginInterface $sender)
-    {
-        $this->registrationTokenSender[] = $sender;
     }
 
     /**
@@ -147,6 +134,8 @@ class Customer
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
 
+        $this->addLocale($customerEntity);
+
         if (!$this->isEmailAvailableForCustomer($customerEntity)) {
             $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
 
@@ -174,13 +163,28 @@ class Customer
     }
 
     /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return void
+     */
+    protected function addLocale(SpyCustomer $customerEntity)
+    {
+        $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $customerEntity->setLocale($localeEntity);
+        }
+    }
+
+    /**
      * @return string
      */
     protected function generateKey()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**
@@ -193,9 +197,15 @@ class Customer
         $customerTransfer = $this->get($customerTransfer);
         $confirmationLink = $this->customerConfig
             ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());
-        foreach ($this->passwordRestoreTokenSender as $sender) {
-            $sender->send($customerTransfer->getEmail(), $confirmationLink);
-        }
+
+        $customerTransfer->setConfirmationLink($confirmationLink);
+
+        $mailTransfer = new MailTransfer();
+        $mailTransfer->setType(CustomerRestorePasswordMailTypePlugin::MAIL_TYPE);
+        $mailTransfer->setCustomer($customerTransfer);
+        $mailTransfer->setLocale($customerTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**
@@ -205,14 +215,17 @@ class Customer
      */
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
-        if (!$customerTransfer->getSendPasswordToken()) {
-            return false;
-        }
         $confirmationLink = $this->customerConfig
             ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey());
-        foreach ($this->registrationTokenSender as $sender) {
-            $sender->send($customerTransfer->getEmail(), $confirmationLink);
-        }
+
+        $customerTransfer->setConfirmationLink($confirmationLink);
+
+        $mailTransfer = new MailTransfer();
+        $mailTransfer->setType(CustomerRegistrationMailTypePlugin::MAIL_TYPE);
+        $mailTransfer->setCustomer($customerTransfer);
+        $mailTransfer->setLocale($customerTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
 
         return true;
     }
@@ -224,9 +237,12 @@ class Customer
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {
-        foreach ($this->passwordRestoredConfirmationSender as $sender) {
-            $sender->send($customerTransfer->getEmail());
-        }
+        $mailTransfer = new MailTransfer();
+        $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
+        $mailTransfer->setCustomer($customerTransfer);
+        $mailTransfer->setLocale($customerTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**
@@ -244,7 +260,7 @@ class Customer
             throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));
         }
 
-        $customerEntity->setRegistered(new \DateTime());
+        $customerEntity->setRegistered(new DateTime());
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
@@ -268,7 +284,7 @@ class Customer
             return $customerResponseTransfer;
         }
 
-        $customerEntity->setRestorePasswordDate(new \DateTime());
+        $customerEntity->setRestorePasswordDate(new DateTime());
         $customerEntity->setRestorePasswordKey($this->generateKey());
 
         $customerEntity->save();

@@ -13,6 +13,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Oms\Business\Exception\TransitionLogException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use UnexpectedValueException;
 
 class TransitionLogTable extends AbstractTable
 {
@@ -57,7 +58,7 @@ class TransitionLogTable extends AbstractTable
 
         $createdAtColumnIndex = array_search(SpyOmsTransitionLogTableMap::COL_CREATED_AT, array_keys($config->getHeader()));
         if ($createdAtColumnIndex === false) {
-            throw new \UnexpectedValueException('Not a valid column index');
+            throw new UnexpectedValueException('Not a valid column index');
         }
 
         if (!$createdAtColumnIndex) {
@@ -136,7 +137,7 @@ class TransitionLogTable extends AbstractTable
      * @param array $row
      * @param string $column
      *
-     * @return mixed
+     * @return array
      */
     protected function formatEmptyValues($row, $column)
     {

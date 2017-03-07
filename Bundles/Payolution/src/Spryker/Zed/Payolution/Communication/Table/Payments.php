@@ -9,7 +9,7 @@ namespace Spryker\Zed\Payolution\Communication\Table;
 
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

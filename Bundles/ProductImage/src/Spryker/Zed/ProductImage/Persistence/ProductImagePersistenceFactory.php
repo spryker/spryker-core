@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
+use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -23,6 +25,22 @@ class ProductImagePersistenceFactory extends AbstractPersistenceFactory
     public function createProductImageSetToProductImageQuery()
     {
         return SpyProductImageSetToProductImageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function createProductImageSetQuery()
+    {
+        return SpyProductImageSetQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function createProductImageQuery()
+    {
+        return SpyProductImageQuery::create();
     }
 
 }

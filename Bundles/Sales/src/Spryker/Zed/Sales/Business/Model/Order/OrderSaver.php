@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -17,6 +18,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Propel;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -45,21 +48,37 @@ class OrderSaver implements OrderSaverInterface
     protected $salesConfiguration;
 
     /**
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     */
+    protected $localeQueryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
         SalesToOmsInterface $omsFacade,
         OrderReferenceGeneratorInterface $orderReferenceGenerator,
-        SalesConfig $salesConfiguration
+        SalesConfig $salesConfiguration,
+        LocaleQueryContainerInterface $localeQueryContainer,
+        Store $store
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
         $this->salesConfiguration = $salesConfiguration;
+        $this->localeQueryContainer = $localeQueryContainer;
+        $this->store = $store;
     }
 
     /**
@@ -92,6 +111,7 @@ class OrderSaver implements OrderSaverInterface
         $salesOrderEntity = $this->createSalesOrderEntity();
         $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity);
         $this->hydrateAddresses($quoteTransfer, $salesOrderEntity);
+        $this->addLocale($salesOrderEntity);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -110,6 +130,21 @@ class OrderSaver implements OrderSaverInterface
 
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
         $salesOrderEntity->setShippingAddress($shippingAddressEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addLocale(SpySalesOrder $salesOrderEntity)
+    {
+        $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $salesOrderEntity->setLocale($localeEntity);
+        }
     }
 
     /**
@@ -198,9 +233,9 @@ class OrderSaver implements OrderSaverInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItems(\ArrayObject $items)
+    protected function expandItems(ArrayObject $items)
     {
-        $expandedItems = new \ArrayObject();
+        $expandedItems = new ArrayObject();
         foreach ($items as $itemTransfer) {
             $quantity = $itemTransfer->getQuantity();
             for ($i = 1; $quantity >= $i; $i++) {
@@ -297,7 +332,6 @@ class OrderSaver implements OrderSaverInterface
 
         return $saveOrderTransfer;
     }
-
 
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder

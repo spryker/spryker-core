@@ -85,12 +85,12 @@ class Finder
     private function getDirectories()
     {
         if ($this->application === '*') {
-            $directories = array_merge(
+            $directories = array_unique(array_merge(
                 $this->getZedDirectories(),
                 $this->getYvesDirectories(),
                 $this->getClientDirectories(),
                 $this->getSharedDirectories()
-            );
+            ));
 
             return $directories;
         }
@@ -112,6 +112,7 @@ class Finder
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
         ];
     }
 
@@ -123,6 +124,7 @@ class Finder
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
         ];
     }
 
@@ -134,6 +136,7 @@ class Finder
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
         ];
     }
 
@@ -145,6 +148,7 @@ class Finder
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
         ];
     }
 

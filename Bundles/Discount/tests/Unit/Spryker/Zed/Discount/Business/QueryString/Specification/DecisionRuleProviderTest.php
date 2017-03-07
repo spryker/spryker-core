@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
@@ -26,7 +27,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  * @group Specification
  * @group DecisionRuleProviderTest
  */
-class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
+class DecisionRuleProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -116,7 +117,7 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRulePluginMock()
     {
-        return $this->getMock(DecisionRulePluginInterface::class);
+        return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
 
     /**
@@ -124,7 +125,7 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
 }

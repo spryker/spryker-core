@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\DummyPayment\Business\Model\Payment;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\Refund;
 use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
  * @group Payment
  * @group RefundTest
  */
-class RefundTest extends \PHPUnit_Framework_TestCase
+class RefundTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -56,7 +57,7 @@ class RefundTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRefundFacadeMock(RefundTransfer $refundTransfer)
     {
-        $refundFacadeMock = $this->getMock(DummyPaymentToRefundInterface::class);
+        $refundFacadeMock = $this->getMockBuilder(DummyPaymentToRefundInterface::class)->getMock();
         $refundFacadeMock->method('calculateRefund')->willReturn($refundTransfer);
         if ($refundTransfer->getAmount() > 0) {
             $refundFacadeMock->expects($this->once())->method('saveRefund');

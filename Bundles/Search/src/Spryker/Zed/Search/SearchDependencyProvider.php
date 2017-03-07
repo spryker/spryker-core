@@ -9,14 +9,13 @@ namespace Spryker\Zed\Search;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Search\Dependency\Facade\SearchToCollectorBridge;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_SEARCH = 'search client';
-    const CLIENT_STORAGE = 'storage client';
-    const FACADE_COLLECTOR = 'collector facade';
+    const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,20 +25,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addSearchClient($container);
-        $this->addStorageClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $this->addSearchClient($container);
-        $this->addCollectorFacade($container);
+        $this->addUtilEncodingFacade($container);
 
         return $container;
     }
@@ -61,22 +47,10 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addStorageClient(Container $container)
+    protected function addUtilEncodingFacade(Container $container)
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addCollectorFacade(Container $container)
-    {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new SearchToCollectorBridge($container->getLocator()->collector()->facade());
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
     }
 

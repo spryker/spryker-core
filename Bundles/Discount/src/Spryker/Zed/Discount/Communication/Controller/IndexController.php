@@ -8,10 +8,10 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -272,7 +272,7 @@ class IndexController extends AbstractController
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $idDiscount
+                self::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ]
         )->build() . $hash;
 

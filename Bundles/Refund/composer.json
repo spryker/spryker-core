@@ -1,22 +1,18 @@
 {
   "name": "spryker/refund",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/propel": "^2.2.0",
-    "spryker/sales": "^2.0.0",
-    "spryker/sales-aggregator": "^1.0.0 || ^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/sales-aggregator": "^4.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/testify": "*"
   },
   "description": "Refund bundle",
@@ -25,17 +21,33 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
   },
   "autoload-dev": {
     "psr-0": {
       "Acceptance": "tests/",
       "Functional": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

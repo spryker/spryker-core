@@ -9,8 +9,8 @@ namespace Spryker\Zed\Tax\Communication\Table;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -26,24 +26,24 @@ class SetTable extends AbstractTable
     protected $taxSetQuery;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxSetQuery
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(SpyTaxSetQuery $taxSetQuery, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyTaxSetQuery $taxSetQuery, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->taxSetQuery = $taxSetQuery;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -54,7 +54,7 @@ class SetTable extends AbstractTable
             SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax set ID',
             SpyTaxSetTableMap::COL_NAME => 'Name',
             SpyTaxSetTableMap::COL_CREATED_AT => 'Created at',
-            self::TABLE_COL_ACTIONS => 'Actions'
+            self::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -78,7 +78,7 @@ class SetTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -91,7 +91,7 @@ class SetTable extends AbstractTable
             $result[] = [
                 SpyTaxSetTableMap::COL_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
                 SpyTaxSetTableMap::COL_NAME => $taxSetEntity->getName(),
-                SpyTaxSetTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($taxSetEntity->getCreatedAt()),
+                SpyTaxSetTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($taxSetEntity->getCreatedAt()),
                 self::TABLE_COL_ACTIONS => $this->getActionButtons($taxSetEntity),
             ];
         }
@@ -123,7 +123,7 @@ class SetTable extends AbstractTable
         $editTaxSetUrl = Url::generate(
             '/tax/set/edit',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
             ]
         );
         return $this->generateEditButton($editTaxSetUrl, 'Edit');
@@ -139,7 +139,7 @@ class SetTable extends AbstractTable
         $viewTaxSetUrl = Url::generate(
             '/tax/set/view',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -155,7 +155,7 @@ class SetTable extends AbstractTable
         $deleteTaxSetUrl = Url::generate(
             '/tax/set/delete',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
         );
 

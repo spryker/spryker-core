@@ -7,11 +7,13 @@
 
 namespace Spryker\Shared\Session\Business\Handler;
 
+use PDO;
+use SessionHandlerInterface;
+use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
-class SessionHandlerMysql implements \SessionHandlerInterface
+class SessionHandlerMysql implements SessionHandlerInterface
 {
 
     const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
@@ -54,12 +56,12 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     protected $port = 3306;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
@@ -82,7 +84,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
 
         $databaseName = 'shared_data';
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $databaseName;
-        $this->connection = new \PDO($dsn, $this->user, $this->password);
+        $this->connection = new PDO($dsn, $this->user, $this->password);
 
         $this->initDb();
     }
@@ -127,7 +129,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $result = $statement->fetch();
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result['value'], true) : null;
+        return $result ? json_decode($result['value'], true) : '';
     }
 
     /**
@@ -140,7 +142,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     {
         $key = $this->keyPrefix . $sessionId;
 
-        if (empty($sessionData)) {
+        if (strlen($sessionData) < 1) {
             return false;
         }
 
@@ -175,7 +177,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $result = $this->connection->delete($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : false;
+        return true;
     }
 
     /**

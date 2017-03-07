@@ -7,7 +7,9 @@
 
 namespace Functional\Spryker\Yves\Money\Plugin;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
+use Money\Money;
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\MoneyPlugin;
@@ -121,6 +123,38 @@ class MoneyPluginTest extends PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, self::CURRENCY_EUR);
 
         $this->assertSame('10,00', $moneyPlugin->formatWithoutSymbol($moneyTransfer));
+    }
+
+    /**
+     * @dataProvider parseData
+     *
+     * @param string $value
+     * @param string $isoCode
+     * @param string $expectedAmount
+     *
+     * @return void
+     */
+    public function testParseShouldReturnMoneyTransfer($value, $isoCode, $expectedAmount)
+    {
+        $moneyPlugin = new MoneyPlugin();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode($isoCode);
+
+        $this->assertSame($expectedAmount, $moneyPlugin->parse($value, $currencyTransfer)->getAmount());
+    }
+
+    /**
+     * @return array
+     */
+    public function parseData()
+    {
+        return [
+            ['10,00 €', 'EUR', '1000'],
+            ['10,99 €', 'EUR', '1099'],
+            ['10,999 €', 'EUR', '1100'],
+            ['1000 ¥', 'JPY', '1000'],
+            ['1099 ¥', 'JPY', '1099'],
+        ];
     }
 
     /**

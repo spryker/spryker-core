@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use DateTime;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
@@ -49,7 +50,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryActiveAndRunningDiscounts()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $dateFormatted = $now->format('Y-m-d H:i:s');
 
         $query = $this->getFactory()
@@ -207,7 +208,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->createDiscountVoucherQuery()
             ->filterByIdDiscountVoucher($idVoucher);
     }
-
 
     /**
      * @api

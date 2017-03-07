@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model;
 
-use Spryker\Shared\Library\Json;
+use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Zed\Propel\Business\Exception\ConfigFileNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
 
@@ -81,8 +81,9 @@ class PropelConfigConverterJson implements PropelConfigConverterInterface
     protected function convertToJson()
     {
         $config = ['propel' => $this->config];
+        $jsonUtil = new Json();
 
-        return Json::encode($config);
+        return $jsonUtil->encode($config);
     }
 
     /**

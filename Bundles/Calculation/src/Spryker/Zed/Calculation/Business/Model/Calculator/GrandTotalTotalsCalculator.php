@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Hash\Hash;
+use Spryker\Service\UtilText\Model\Hash;
+use Spryker\Service\UtilText\UtilTextService;
 
 class GrandTotalTotalsCalculator implements CalculatorInterface
 {
@@ -55,7 +56,9 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
      */
     protected function generateTotalsHash($grandTotal)
     {
-        return Hash::hashValue(Hash::SHA256, $grandTotal);
+        $utilTextService = new UtilTextService();
+
+        return $utilTextService->hashValue($grandTotal, Hash::SHA256);
     }
 
 }

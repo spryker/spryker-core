@@ -1,0 +1,13 @@
+{% block checkbox_widget %}
+    {% spaceless %}
+        {% if no_label is not defined or not no_label %}
+            <div class="checkbox"><label for="{{ id }}">
+        {% endif %}
+
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %} {% if checked is defined and checked %} checked="{{ checked }}"{% endif %}/>
+
+        {% if no_label is not defined or not no_label %}
+            {{ label }}</label></div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

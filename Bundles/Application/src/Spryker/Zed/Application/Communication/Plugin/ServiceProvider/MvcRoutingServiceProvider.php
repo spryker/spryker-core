@@ -31,7 +31,6 @@ class MvcRoutingServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-
     }
 
 }

@@ -10,7 +10,7 @@ namespace Spryker\Yves\Money\Plugin\ServiceProvider;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_SimpleFilter;
 
@@ -29,7 +29,8 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
-                $twig->addFilter($this->getFilter());
+                $twig->addFilter($this->getMoneyFilter());
+                $twig->addFilter($this->getMoneyRawFilter());
 
                 return $twig;
             })
@@ -48,33 +49,65 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @return \Twig_SimpleFilter
      */
-    protected function getFilter()
+    protected function getMoneyFilter()
     {
         $moneyFactory = $this->getFactory();
 
         $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
-                if (is_int($money)) {
-                    $money = $moneyFactory->createMoneyBuilder()->fromInteger($money);
-                }
-
-                if (is_string($money)) {
-                    $money = $moneyFactory->createMoneyBuilder()->fromString($money);
-                }
-
-                if (is_float($money)) {
-                    $money = $moneyFactory->createMoneyBuilder()->fromFloat($money);
-                }
+                $money = $this->getMoneyTransfer($money);
             }
 
             if ($withSymbol) {
-                return $moneyFactory->createMoneyFormatter()->format($money, MoneyConstants::FORMATTER_WITH_SYMBOL);
+                return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
             }
 
-            return $moneyFactory->createMoneyFormatter()->format($money, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
+            return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
         });
 
         return $filter;
+    }
+
+    /**
+     * @return \Twig_SimpleFilter
+     */
+    protected function getMoneyRawFilter()
+    {
+        $moneyFactory = $this->getFactory();
+
+        $filter = new Twig_SimpleFilter('moneyRaw', function ($money) use ($moneyFactory) {
+            if (!($money instanceof MoneyTransfer)) {
+                $money = $this->getMoneyTransfer($money);
+            }
+
+            return $moneyFactory->createIntegerToDecimalConverter()->convert((int)$money->getAmount());
+        });
+
+        return $filter;
+    }
+
+    /**
+     * @param int|string|float $money
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    protected function getMoneyTransfer($money)
+    {
+        $moneyFactory = $this->getFactory();
+
+        if (is_int($money)) {
+            $money = $moneyFactory->createMoneyBuilder()->fromInteger($money);
+        }
+
+        if (is_string($money)) {
+            $money = $moneyFactory->createMoneyBuilder()->fromString($money);
+        }
+
+        if (is_float($money)) {
+            $money = $moneyFactory->createMoneyBuilder()->fromFloat($money);
+        }
+
+        return $money;
     }
 
 }

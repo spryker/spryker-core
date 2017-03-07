@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Customer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
@@ -73,7 +74,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
      */
     protected function hydrateOrderListCollectionTransferFromEntityCollection(ObjectCollection $orderCollection)
     {
-        $orders = new \ArrayObject();
+        $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {
             if (count($salesOrderEntity->getItems()) == 0) {
                 continue;

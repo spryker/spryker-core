@@ -35,7 +35,7 @@ class InstallmentSaverTest extends AbstractSaverTest
     }
 
     /**
-     * @return mixed
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getPaymentTransferFromQuote()
     {
@@ -44,7 +44,7 @@ class InstallmentSaverTest extends AbstractSaverTest
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */

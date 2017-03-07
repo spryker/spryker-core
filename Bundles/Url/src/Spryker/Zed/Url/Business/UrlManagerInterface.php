@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 
+/**
+ * @deprecated Use business interfaces from Spryker\Zed\Url\Business\Url namespace.
+ */
 interface UrlManagerInterface
 {
 
@@ -143,6 +146,9 @@ interface UrlManagerInterface
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
 
     /**
+     * @deprecated This method will be removed with next major release because of invalid dependency direction.
+     * Use ProductFacade::getProductUrl() instead.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *

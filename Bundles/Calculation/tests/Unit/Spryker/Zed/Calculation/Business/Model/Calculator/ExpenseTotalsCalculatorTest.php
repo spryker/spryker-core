@@ -10,7 +10,8 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 
 /**
@@ -23,7 +24,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
  * @group Calculator
  * @group ExpenseTotalsCalculatorTest
  */
-class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class ExpenseTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -62,7 +63,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowAssertionExceptionWhenTotalsNotPresent()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
         $quoteTransfer = $this->createQuoteTransfer();
@@ -74,7 +75,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowAssertionExceptionWhenExpenseSumGrossPriceNotPresent()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Ratepay\Business\Exception;
 
-class NoPaymentMapperException extends \Exception
+use Exception;
+
+class NoPaymentMapperException extends Exception
 {
 }

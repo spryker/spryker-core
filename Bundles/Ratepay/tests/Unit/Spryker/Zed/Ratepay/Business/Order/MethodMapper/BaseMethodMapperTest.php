@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @group Unit
@@ -21,7 +22,7 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
  * @group MethodMapper
  * @group BaseMethodMapperTest
  */
-class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
+class BaseMethodMapperTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -48,8 +49,12 @@ class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->quoteTransfer = $this->mockQuoteTransfer();
         $this->payment = new SpyPaymentRatepay();
+        $this->payment->setBankAccountHolder('acchold');
     }
 
+    /**
+     * @return void
+     */
     protected function testAbstractMapMethodDataToPayment()
     {
         $this->assertEquals($this->paymentMethod, $this->payment->getPaymentType());

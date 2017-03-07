@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -40,7 +41,6 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
         $this->addTaxWithProductOptions($orderTransfer->getItems());
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -56,7 +56,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
      *
      * @return void
      */
-    protected function addTaxWithProductOptions(\ArrayObject $items)
+    protected function addTaxWithProductOptions(ArrayObject $items)
     {
         $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
         foreach ($items as $itemTransfer) {
@@ -79,8 +79,11 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
                 );
             }
 
-            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($itemUnitAmount + $unitOptionTaxTotalAmount);
-            $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts($itemSumTaxAmount + $sumOptionTaxTotalAmount);
+            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts((int)round($itemUnitAmount + $unitOptionTaxTotalAmount));
+            $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts((int)round($itemSumTaxAmount + $sumOptionTaxTotalAmount));
+
+            $itemTransfer->setUnitTaxTotal($itemTransfer->getUnitTaxAmountWithProductOptionAndDiscountAmounts());
+            $itemTransfer->setSumTaxTotal($itemTransfer->getSumTaxAmountWithProductOptionAndDiscountAmounts());
 
         }
     }

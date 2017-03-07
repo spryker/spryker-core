@@ -6,21 +6,22 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/category": "^2.0.0",
-    "spryker/cms": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/locale": "^2.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/touch": "^2.0.0"
+    "spryker/category": "^3.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/util-encoding": "Optional dependency. Add this bundle if you want to use it's functionality."
   },
   "description": "ProductCategory bundle",
   "license": "proprietary",
@@ -28,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {
@@ -37,7 +38,8 @@
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
-      "Unit": "tests/"
+      "Unit": "tests/",
+      "Acceptance": "tests/"
     }
   }
 }

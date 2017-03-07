@@ -7,11 +7,13 @@
 
 namespace Spryker\Client\Kernel;
 
-class Container extends \Pimple
+use Pimple;
+
+class Container extends Pimple
 {
 
     /**
-     * @return \Generated\Client\Ide\AutoCompletion
+     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator()
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\EventJournal\Model\Collector;
 
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Service\UtilText\UtilTextService;
 
 /**
  * @deprecated Use Log bundle instead
@@ -42,9 +42,9 @@ class RequestDataCollector extends AbstractDataCollector
      */
     protected function getRandomString()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**

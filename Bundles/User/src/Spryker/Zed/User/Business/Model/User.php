@@ -172,7 +172,6 @@ class User implements UserInterface
         return $amount > 0;
     }
 
-
     /**
      * @param string $username
      *

@@ -13,11 +13,6 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
-    public function getUses();
-
-    /**
-     * @return array
-     */
     public function getConstants();
 
     /**
@@ -39,5 +34,10 @@ interface ClassDefinitionInterface extends DefinitionInterface
      * @return array
      */
     public function getNormalizedProperties();
+
+    /**
+     * @return string|null
+     */
+    public function getDeprecationDescription();
 
 }

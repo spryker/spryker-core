@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -17,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group ClassResolver
  * @group AbstractResolverTest
  */
-abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -82,11 +83,10 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
     {
-        $this->setExpectedException($this->expectedExceptionClass);
+        $this->expectException($this->expectedExceptionClass);
 
         $resolverMock = $this->getResolverMock(['canResolve']);
-        $resolverMock->method('canResolve')
-            ->willReturn(false);
+        $resolverMock->method('canResolve')->willReturn(false);
 
         $resolverMock->resolve($this->unResolvableClassName);
     }
@@ -98,9 +98,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
     {
         $this->createClass($this->coreClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->coreClass, $resolved);
@@ -114,9 +114,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->createClass($this->coreClass);
         $this->createClass($this->projectClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->projectClass, $resolved);
@@ -130,9 +130,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->storeClass, $resolved);

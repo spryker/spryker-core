@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
@@ -53,7 +54,7 @@ class NonPersistentProvider implements StorageProviderInterface
 
             $itemIdentifier = $this->getItemIdentifier($itemTransfer);
             if (isset($cartIndex[$itemIdentifier])) {
-                $this->decreaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+                $this->decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, $cartIndex);
             }
         }
 
@@ -65,7 +66,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return array
      */
-    protected function createCartIndex(\ArrayObject $cartItems)
+    protected function createCartIndex(ArrayObject $cartItems)
     {
         $cartIndex = [];
         foreach ($cartItems as $key => $itemTransfer) {
@@ -88,20 +89,35 @@ class NonPersistentProvider implements StorageProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param int $index
+     * @param string $itemIdentifier
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $cartIndex
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $index, $itemTransfer)
+    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
     {
-        $existingItemTransfer = $existingItems[$index];
+        $existingItemTransfer = null;
+        $itemIndex = null;
+        foreach ($existingItems as $index => $currentItemTransfer) {
+            if ($currentItemTransfer->getGroupKey() === $itemIdentifier) {
+                $existingItemTransfer = $currentItemTransfer;
+                $itemIndex = $index;
+                break;
+            }
+        }
+
+        if ($existingItemTransfer === null) {
+            $itemIndex = $cartIndex[$itemIdentifier];
+            $existingItemTransfer = $existingItems[$itemIndex];
+        }
+
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 
         if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
         } else {
-            unset($existingItems[$index]);
+            unset($existingItems[$itemIndex]);
         }
     }
 

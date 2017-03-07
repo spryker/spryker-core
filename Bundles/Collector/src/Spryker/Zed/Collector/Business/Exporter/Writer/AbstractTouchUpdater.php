@@ -44,9 +44,12 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     protected $bulkTouchDeleteQuery;
 
     /**
+     * @param string $key
+     * @param int $idLocale
+     *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
-    abstract protected function createTouchKeyEntity();
+    abstract protected function findOrCreateTouchKeyEntity($key, $idLocale);
 
     /**
      * @param \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface $bulkTouchUpdateQuery
@@ -81,10 +84,8 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
                 );
             } else {
                 /** @var \Orm\Zed\Touch\Persistence\SpyTouchStorage|\Orm\Zed\Touch\Persistence\SpyTouchSearch $entity */
-                $entity = $this->createTouchKeyEntity();
-                $entity->setKey($key);
+                $entity = $this->findOrCreateTouchKeyEntity($key, $idLocale);
                 $entity->setFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
-                $entity->setFkLocale($idLocale);
                 $entity->save();
             }
         }
@@ -130,7 +131,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     /**
      * @param array $touchData
      *
-     * @return int
+     * @return int|null
      */
     protected function getCollectorKeyFromData(array $touchData)
     {

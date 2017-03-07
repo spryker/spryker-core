@@ -7,14 +7,43 @@
 
 namespace Spryker\Client\Catalog;
 
-use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
-use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
-use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class CatalogFactory extends AbstractFactory
 {
+
+    /**
+     * @param string $searchString
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createCatalogSearchQuery($searchString)
+    {
+        $searchQuery = $this->getCatalogSearchQueryPlugin();
+
+        if ($searchQuery instanceof SearchStringSetterInterface) {
+            $searchQuery->setSearchString($searchString);
+        }
+
+        return $searchQuery;
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createSuggestSearchQuery($searchString)
+    {
+        $searchQuery = $this->getSuggestionQueryPlugin();
+
+        if ($searchQuery instanceof SearchStringSetterInterface) {
+            $searchQuery->setSearchString($searchString);
+        }
+
+        return $searchQuery;
+    }
 
     /**
      * @return \Spryker\Client\Search\SearchClientInterface
@@ -22,18 +51,6 @@ class CatalogFactory extends AbstractFactory
     public function getSearchClient()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CLIENT_SEARCH);
-    }
-
-    /**
-     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
-     *
-     * @param string $searchString
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    public function createCatalogSearchQueryPlugin($searchString)
-    {
-        return new CatalogSearchQueryPlugin($searchString);
     }
 
     /**
@@ -45,31 +62,11 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getCatalogSearchQueryExpanderPlugins() method instead.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    public function createCatalogSearchQueryExpanderPlugins()
-    {
-        return $this->getCatalogSearchQueryExpanderPlugins();
-    }
-
-    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getCatalogSearchQueryExpanderPlugins()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS);
-    }
-
-    /**
-     * @deprecated Use getCatalogSearchResultFormatters() method instead.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     */
-    public function createCatalogSearchResultFormatters()
-    {
-        return $this->getCatalogSearchResultFormatters();
     }
 
     /**
@@ -81,25 +78,27 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
-     *
-     * @return \Spryker\Client\Catalog\Model\Catalog
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function createCatalogModel()
+    public function getSuggestionQueryPlugin()
     {
-        return new ModelCatalog(
-            $this->createProductKeyBuilder(),
-            $this->getStorageClient(),
-            Store::getInstance()->getCurrentLocale()
-        );
+        return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_PLUGIN);
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
-    protected function createProductKeyBuilder()
+    public function getSuggestionQueryExpanderPlugins()
     {
-        return new ProductResourceKeyBuilder();
+        return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getSuggestionResultFormatters()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS);
     }
 
 }

@@ -8,8 +8,9 @@
 namespace Functional\Spryker\Zed\Oms\Business;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Oms\Persistence\Base\SpyOmsStateMachineLockQuery;
+use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -36,7 +37,7 @@ class OmsFacadeTest extends Test
 
         $omsLockEntity = new SpyOmsStateMachineLock();
         $omsLockEntity->setIdentifier($identifier);
-        $omsLockEntity->setExpires(new \DateTime('Yesterday'));
+        $omsLockEntity->setExpires(new DateTime('Yesterday'));
         $omsLockEntity->save();
 
         $omsFacade->clearLocks();

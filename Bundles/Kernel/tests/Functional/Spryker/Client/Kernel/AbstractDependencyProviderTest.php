@@ -7,12 +7,9 @@
 
 namespace Functional\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\SearchClientInterface;
-use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 /**
  * @group Functional
@@ -21,7 +18,7 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
  * @group Kernel
  * @group AbstractDependencyProviderTest
  */
-class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,50 +29,6 @@ class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
         $this->assertInstanceOf(Container::class, $abstractDependencyContainerMock->provideServiceLayerDependencies($container));
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainSessionClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(SessionClientInterface::class, $container[AbstractDependencyProvider::CLIENT_SESSION]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainZedRequestClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(ZedRequestClientInterface::class, $container[AbstractDependencyProvider::CLIENT_ZED_REQUEST]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainKvStorageClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(StorageClientInterface::class, $container[AbstractDependencyProvider::CLIENT_KV_STORAGE]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainSearchClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(SearchClientInterface::class, $container[AbstractDependencyProvider::CLIENT_SEARCH]);
     }
 
     /**

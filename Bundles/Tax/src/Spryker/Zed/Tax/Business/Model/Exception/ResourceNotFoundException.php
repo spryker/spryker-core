@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Business\Model\Exception;
 
-class ResourceNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class ResourceNotFoundException extends RuntimeException
 {
 }

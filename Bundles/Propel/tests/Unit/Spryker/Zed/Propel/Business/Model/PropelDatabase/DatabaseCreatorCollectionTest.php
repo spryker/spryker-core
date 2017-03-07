@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 
@@ -20,11 +21,14 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  * @group PropelDatabase
  * @group DatabaseCreatorCollectionTest
  */
-class DatabaseCreatorCollectionTest extends \PHPUnit_Framework_TestCase
+class DatabaseCreatorCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_ENGINE = 'testEngine';
 
+    /**
+     * @return void
+     */
     public function testAdd()
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
@@ -74,7 +78,7 @@ class DatabaseCreatorCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getDatabaseCreatorMock()
     {
-        $databaseCreatorMock = $this->getMock(DatabaseCreatorInterface::class, ['getEngine', 'createIfNotExists']);
+        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(self::TEST_ENGINE);
 
         return $databaseCreatorMock;

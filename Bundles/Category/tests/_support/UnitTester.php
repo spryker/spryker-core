@@ -1,6 +1,8 @@
 <?php
 namespace Category;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,13 +18,9 @@ namespace Category;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
 
     use _generated\UnitTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
 }

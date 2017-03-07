@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
  * @group Ambulance
  * @group DoctorTest
  */
-class DoctorTest extends \PHPUnit_Framework_TestCase
+class DoctorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -37,7 +38,7 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsPatientAliveMustReturnTrueIfAllHealthIndicatorReturnTrue()
     {
-        $checkerMock = $this->getMock('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
+        $checkerMock = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMock->expects($this->once())
             ->method('doHealthCheck')
             ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(true)));
@@ -52,7 +53,7 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnFalse()
     {
-        $checkerMock = $this->getMock('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
+        $checkerMock = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMock->expects($this->once())
             ->method('doHealthCheck')
             ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)));
@@ -67,12 +68,12 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsPatientAliveMustReturnFalseIfNotAllHealthIndicatorReturnTrue()
     {
-        $checkerMockTrue = $this->getMock('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
+        $checkerMockTrue = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMockTrue->expects($this->once())
             ->method('doHealthCheck')
             ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)));
 
-        $checkerMockFalse = $this->getMock('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
+        $checkerMockFalse = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMockFalse->expects($this->once())
             ->method('doHealthCheck')
             ->will($this->returnValue(new HealthIndicatorReportTransfer()));

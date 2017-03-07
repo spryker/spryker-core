@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Symfony\Component\Finder\Finder;
 
 class Manager
 {
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\BundleParser
+     * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
      */
     protected $bundleParser;
 
@@ -23,10 +24,10 @@ class Manager
     protected $bundleDirectory;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\BundleParser $bundleParser
+     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
      * @param string $bundleDirectory
      */
-    public function __construct(BundleParser $bundleParser, $bundleDirectory)
+    public function __construct(BundleParserInterface $bundleParser, $bundleDirectory)
     {
         $this->bundleParser = $bundleParser;
         $this->bundleDirectory = $bundleDirectory;
@@ -43,20 +44,39 @@ class Manager
 
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
-            try {
-                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
-            } catch (\Exception $e) {
-                $dependencies = []; // TODO illegal try-catch
-            }
-            if (array_key_exists($bundleName, $dependencies)) {
+            $bundleDependencyCollectionTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+            $dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependencyCollectionTransfer);
+
+            if ($dependencyBundle) {
                 if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }
-                $incomingDependencies[$foreignBundle] += $dependencies[$bundleName];
+                $incomingDependencies[$foreignBundle] += count($dependencyBundle->getDependencies());
             }
         }
 
         return $incomingDependencies;
+    }
+
+    /**
+     * @param string $bundleName
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     *
+     * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
+     */
+    protected function findDependencyTo($bundleName, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundle) {
+            if ($dependencyBundle->getBundle() === $bundleName) {
+                foreach ($dependencyBundle->getDependencies() as $dependencyTransfer) {
+                    if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
+                        return $dependencyBundle;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

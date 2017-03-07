@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Cart\Business\StorageProvider;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
  * @group StorageProvider
  * @group NonPersistentProviderTest
  */
-class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
+class NonPersistentProviderTest extends PHPUnit_Framework_TestCase
 {
 
     const COUPON_CODE_1 = 'coupon code 1';
@@ -287,7 +288,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {

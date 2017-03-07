@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Exception;
 
-class LockException extends \Exception
+use Exception;
+
+class LockException extends Exception
 {
 }

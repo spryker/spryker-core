@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SequenceNumber\Business\Exception;
 
-class InvalidSequenceNumberException extends \Exception
+use Exception;
+
+class InvalidSequenceNumberException extends Exception
 {
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -88,7 +88,7 @@ class AddressController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -121,7 +121,7 @@ class AddressController extends AbstractController
             $this->getFacade()->updateAddress($customerAddress);
 
             return $this->redirectResponse(sprintf(
-                '/customer/address/?%s=%d',
+                '/customer/address?%s=%d',
                 CustomerConstants::PARAM_ID_CUSTOMER,
                 $idCustomer
             ));
@@ -137,7 +137,7 @@ class AddressController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request)
     {
@@ -160,7 +160,7 @@ class AddressController extends AbstractController
             $this->getFacade()->createAddress($addressTransfer);
 
             return $this->redirectResponse(
-                sprintf('/customer/address/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/address?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
         }
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

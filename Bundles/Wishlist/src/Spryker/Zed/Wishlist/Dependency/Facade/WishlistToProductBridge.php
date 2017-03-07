@@ -40,7 +40,7 @@ class WishlistToProductBridge implements WishlistToProductInterface
      */
     public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getProductConcreteIdBySku($sku);
+        return $this->productFacade->findProductConcreteIdBySku($sku);
     }
 
 }

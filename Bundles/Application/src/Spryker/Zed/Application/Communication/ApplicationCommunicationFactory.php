@@ -19,6 +19,9 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
 
     use LoggerTrait;
 
+    /**
+     * @return \Spryker\Shared\Application\EventListener\KernelLogListener
+     */
     public function createKernelLogListener()
     {
         return new KernelLogListener(

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DependencyTreeBuilderConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:dependency-tree:build';
+    const COMMAND_NAME = 'dev:dependency:build-tree';
 
     const OPTION_APPLICATION = 'application';
     const OPTION_BUNDLE = 'bundle';
@@ -32,13 +32,13 @@ class DependencyTreeBuilderConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Build dependency tree');
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
+            ->setDescription('Build dependency tree (Spryker core dev only).');
 
-        $this->addOption(self::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree (Client, Shared, Yves, Zed)');
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of bundle to build the dependency tree');
-        $this->addOption(self::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer to build the dependency tree (only for Zed)');
+        $this->addOption(static::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree (Client, Shared, Yves, Zed)');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of bundle to build the dependency tree');
+        $this->addOption(static::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer to build the dependency tree (only for Zed)');
     }
 
     /**
@@ -53,14 +53,14 @@ class DependencyTreeBuilderConsole extends Console
         $bundle = '*';
         $layer = '*';
 
-        if ($this->input->getOption(self::OPTION_APPLICATION)) {
-            $application = $this->input->getOption(self::OPTION_APPLICATION);
+        if ($this->input->getOption(static::OPTION_APPLICATION)) {
+            $application = $this->input->getOption(static::OPTION_APPLICATION);
         }
-        if ($this->input->getOption(self::OPTION_BUNDLE)) {
-            $bundle = $this->input->getOption(self::OPTION_BUNDLE);
+        if ($this->input->getOption(static::OPTION_BUNDLE)) {
+            $bundle = $this->input->getOption(static::OPTION_BUNDLE);
         }
-        if ($this->input->getOption(self::OPTION_LAYER)) {
-            $layer = $this->input->getOption(self::OPTION_LAYER);
+        if ($this->input->getOption(static::OPTION_LAYER)) {
+            $layer = $this->input->getOption(static::OPTION_LAYER);
         }
 
         $this->info(sprintf(

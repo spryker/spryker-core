@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -28,8 +30,7 @@ class BasketItemMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getBasketMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 
@@ -41,7 +42,7 @@ class BasketItemMapperTest extends AbstractMapperTest
             ->setTaxRate('q5')
             ->setUnitGrossPriceWithProductOptions(1200)
             ->setUnitTotalDiscountAmountWithProductOption(1400)
-            ->setProductOptions(new \ArrayObject());
+            ->setProductOptions(new ArrayObject());
 
         $this->mapperFactory
             ->getBasketItemMapper(
@@ -55,7 +56,6 @@ class BasketItemMapperTest extends AbstractMapperTest
         $this->assertEquals('q4', $this->requestTransfer->getShoppingBasket()->getItems()[0]->getQuantity());
         $this->assertEquals('q5', $this->requestTransfer->getShoppingBasket()->getItems()[0]->getTaxRate());
         $this->assertEquals(12, $this->requestTransfer->getShoppingBasket()->getItems()[0]->getUnitPriceGross());
-        $this->assertEquals(14, $this->requestTransfer->getShoppingBasket()->getItems()[0]->getDiscount());
     }
 
 }

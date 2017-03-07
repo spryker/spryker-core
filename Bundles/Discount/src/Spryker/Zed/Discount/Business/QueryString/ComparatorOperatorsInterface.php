@@ -21,19 +21,19 @@ interface ComparatorOperatorsInterface
     public function compare(ClauseTransfer $clauseTransfer, $withValue);
 
     /**
-     * @param array|string[] $acceptedTypes
+     * @param string[] $acceptedTypes
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getOperatorExpressionsByTypes(array $acceptedTypes);
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableComparatorExpressions();
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getCompoundComparatorExpressions();
 

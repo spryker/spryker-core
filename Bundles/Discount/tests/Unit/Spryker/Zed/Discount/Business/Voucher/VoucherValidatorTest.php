@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Voucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Voucher
  * @group VoucherValidatorTest
  */
-class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
+class VoucherValidatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -149,7 +150,6 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isValid);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|null $messengerFacadeMock
@@ -177,7 +177,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -185,7 +185,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMessengerFacadeMock()
     {
-        return $this->getMock(DiscountToMessengerInterface::class);
+        return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
 
     /**
@@ -201,7 +201,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherQueryMock()
     {
-        return $this->getMock(SpyDiscountVoucherQuery::class);
+        return $this->getMockBuilder(SpyDiscountVoucherQuery::class)->getMock();
     }
 
     /**

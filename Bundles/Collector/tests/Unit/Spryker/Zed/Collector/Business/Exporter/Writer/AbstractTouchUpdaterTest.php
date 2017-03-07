@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer;
 
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
@@ -24,7 +25,7 @@ use Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub;
  * @group Writer
  * @group AbstractTouchUpdaterTest
  */
-class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
+class AbstractTouchUpdaterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -176,7 +177,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
             'id_touch1',
             [
                 'collector_touch_id' => 'touch_id',
-                'touchKeyColumnName_value' => 'new value'
+                'touchKeyColumnName_value' => 'new value',
             ]
         );
 
@@ -185,7 +186,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
             'id_touch2',
             [
                 'collector_touch_id' => 'touch_id2',
-                'touchKeyColumnName_value' => 'new value2'
+                'touchKeyColumnName_value' => 'new value2',
             ]
         );
 

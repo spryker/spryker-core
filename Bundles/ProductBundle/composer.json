@@ -1,0 +1,50 @@
+{
+  "name": "spryker/product-bundle",
+  "require": {
+    "spryker/availability": "^5.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/price": "^4.0.0",
+    "spryker/stock": "^4.0.0",
+    "spryker/sales": "^5.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart.",
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
+    "spryker/oms": "If you want to use Oms plugins you need to install spryker/oms.",
+    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
+  },
+  "description": "ProductBundle bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "Acceptance": "tests/"
+    }
+  }
+}

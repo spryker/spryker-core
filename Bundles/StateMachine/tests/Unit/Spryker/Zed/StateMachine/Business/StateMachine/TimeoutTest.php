@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -44,7 +45,7 @@ class TimeoutTest extends StateMachineMocks
             ->method('saveStateMachineItemTimeout')
             ->with(
                 $this->isInstanceOf(StateMachineItemTransfer::class),
-                $this->isInstanceOf(\DateTime::class),
+                $this->isInstanceOf(DateTime::class),
                 $this->isType('string')
             );
 
@@ -73,8 +74,6 @@ class TimeoutTest extends StateMachineMocks
             $this->createStateMachineItemTransfer()
         );
     }
-
-
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process

@@ -61,7 +61,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::PRE_SUBMIT => 'validateToken'
+            FormEvents::PRE_SUBMIT => 'validateToken',
         ];
     }
 
@@ -82,7 +82,6 @@ class FormEventSubscriber implements EventSubscriberInterface
         $this->translator = $translator;
         $this->translationDomain = $translationDomain;
     }
-
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event

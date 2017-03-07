@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
  * @group Business
  * @group FacadeLocatorMatcherTest
  */
-class FacadeLocatorMatcherTest extends \PHPUnit_Framework_TestCase
+class FacadeLocatorMatcherTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -42,14 +43,6 @@ class FacadeLocatorMatcherTest extends \PHPUnit_Framework_TestCase
     public function testMatchShouldReturnFalseIfMethodNotStartsWithFacadeButFacadeInString()
     {
         $this->assertFalse((new FacadeLocatorMatcher())->match('locatorFacade'));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnClassName()
-    {
-        $this->assertSame('Foo', (new FacadeLocatorMatcher())->filter('facadeFoo'));
     }
 
 }

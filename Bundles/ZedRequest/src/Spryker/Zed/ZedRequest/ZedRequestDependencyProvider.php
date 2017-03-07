@@ -7,8 +7,48 @@
 
 namespace Spryker\Zed\ZedRequest;
 
+use LogicException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ZedRequest\Dependency\Facade\NullMessenger;
+use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerBridge;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+
+    const FACADE_MESSENGER = 'messenger facade';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addMessengerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container)
+    {
+        $container[self::FACADE_MESSENGER] = function (Container $container) {
+            try {
+                $messenger = $container->getLocator()->messenger()->facade();
+            } catch (LogicException $exception) {
+                $messenger = new NullMessenger();
+            }
+            $zedRequestToMessengerBridge = new ZedRequestToMessengerBridge($messenger);
+
+            return $zedRequestToMessengerBridge;
+        };
+
+        return $container;
+    }
+
 }

@@ -5,47 +5,83 @@
 
             {% block widget_content %}
 
-                <table class="footable table table-striped toggle-arrow-tiny" data-qa="totals-list">
+                <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
                     <tbody>
-                    {% for orderItem in order.items %}
+                    {% for orderItem in order.items if orderItem.relatedBundleItemIdentifier is empty %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
-                            <td class="text-right">{{ orderItem.sumGrossPriceWithProductOptions | currency  }}</td>
-                            <td>{{ 'gross price per item' | trans }}</td>
+                            <th></th>
+                            <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                            <th></th>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
-                                <td> + {{ orderItemOption.LabelOptionType }}</td>
-                                <td class="text-right">{{ orderItemOption.unitGrossPrice | currency  }}</td>
-                                <td>{{ 'option price' | trans }}</td>
+                                <td> + {{ orderItemOption.value }}</td>
+                                <td class="text-right">{{ orderItemOption.unitGrossPrice | money }}</td>
+                                <td>{{ 'gross option price' | trans }}</td>
                             </tr>
                         {% endfor %}
-                        <tr>
-                            <th>&nbsp;</th>
-                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.unitGrossPriceWithProductOptions | currency  }}</td>
-                        </tr>
                     {% endfor %}
+
+                    {% if order.bundleItems is defined %}
+                        {% for orderItem in order.bundleItems %}
+                            <tr>
+                                <th>{{ orderItem.name }}</th>
+                                <th></th>
+                                <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                                <th></th>
+                            </tr>
+                            {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
+                                <tr>
+                                    <th></th>
+                                    <th>{{ bundledItem.name }}</th>
+                                    <td class="text-right">{{ bundledItem.unitGrossPrice | money  }}</td>
+                                    <td></td>
+                                </tr>
+                                {% for orderItemOption in bundledItem.productOptions %}
+                                    <tr>
+                                        <td></td>
+                                        <td> + {{ orderItemOption.value }}</td>
+                                        <td class="text-right">{{ orderItemOption.unitGrossPrice | money  }}</td>
+                                        <td>{{ 'gross option price' | trans }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                         {% endfor %}
+                    {% endif %}
+
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
-                        <td class="text-right">{{ order.totals.subtotal | currency }}</td>
+                        <th></th>
+                        <td class="text-right">{{ order.totals.subtotal | money }}</td>
                         <td></td>
                     </tr>
                     {% for expense in order.expenses %}
                         <tr>
-                            <th>{{ expense.type|lower|replace({'_' : ' '}) }} -  {{ expense.name }}</th>
-                            <td class="text-right">{{ expense.unitGrossPriceWithDiscounts | currency  }}</td>
+                            <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
+                            <th></th>
+                            <td class="text-right">{{ expense.unitGrossPrice | money  }}</td>
                             <td></td>
                         </tr>
                     {% endfor %}
 
                     <tr>
                         <th>{{ 'Discount' | trans }}</th>
-                        <td class="text-right">-{{ order.totals.discountTotal | currency }}</td>
+                        <th></th>
+                        <td class="text-right">-{{ order.totals.discountTotal | money }}</td>
                         <td></td>
                     </tr>
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
-                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal|currency }}</td>
+                        <th></th>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal | money }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ 'Included tax amount' | trans }}</td>
+                        <th></th>
+                        <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | money }}</td>
                         <td></td>
                     </tr>
                     </tbody>

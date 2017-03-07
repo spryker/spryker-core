@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\ZedRequest;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
@@ -37,43 +39,61 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      * @api
      *
      * @param string $url
-     * @param \Spryker\Shared\Transfer\TransferInterface $object
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {
+        $localeName = Store::getInstance()->getCurrentLocale();
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setLocaleName($localeName);
+
+        $this->getClient()->addMetaTransfer('locale', $localeTransfer);
+
         return $this->getClient()->call($url, $object, $timeoutInSeconds);
     }
 
     /**
      * @api
      *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getInfoMessages();
     }
 
     /**
      * @api
      *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getErrorMessages();
     }
 
     /**
      * @api
      *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getSuccessMessages();
     }
 

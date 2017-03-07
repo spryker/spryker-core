@@ -1,0 +1,9 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: ''
+            browser: phantomjs
+            window_size: 1920x1080
+
+        - \Application\Module\Zed

@@ -15,7 +15,7 @@ interface ProcessInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function draw($highlightState = null, $format = null, $fontSize = null);
 
@@ -44,14 +44,14 @@ interface ProcessInterface
     public function addSubProcess(ProcessInterface $subProcess);
 
     /**
-     * @param mixed $main
+     * @param bool $main
      *
      * @return void
      */
     public function setMain($main);
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getMain();
 
@@ -63,7 +63,7 @@ interface ProcessInterface
     public function setName($name);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName();
 
@@ -174,7 +174,7 @@ interface ProcessInterface
     public function getAllProcesses();
 
     /**
-     * @param mixed $file
+     * @param string $file
      *
      * @return void
      */
@@ -186,7 +186,7 @@ interface ProcessInterface
     public function hasFile();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFile();
 

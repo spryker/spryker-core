@@ -8,8 +8,7 @@
 namespace Spryker\Zed\NewRelic;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -18,7 +17,7 @@ class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
 
     const NEW_RELIC_API = 'new relic api';
     const STORE = 'store';
-    const SYSTEM = 'system';
+    const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,7 +28,7 @@ class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addNewRelicApi($container);
         $container = $this->addStore($container);
-        $container = $this->addSystem($container);
+        $container = $this->addUtilNetworkService($container);
 
         return $container;
     }
@@ -67,10 +66,10 @@ class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSystem(Container $container)
+    protected function addUtilNetworkService(Container $container)
     {
-        $container[static::SYSTEM] = function () {
-            return new System();
+        $container[static::SERVICE_NETWORK] = function (Container $container) {
+            return $container->getLocator()->utilNetwork()->service();
         };
 
         return $container;

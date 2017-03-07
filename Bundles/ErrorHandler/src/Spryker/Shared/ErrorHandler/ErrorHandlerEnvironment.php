@@ -8,7 +8,6 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
-use Exception;
 use Spryker\Shared\Config\Config;
 
 class ErrorHandlerEnvironment
@@ -32,6 +31,8 @@ class ErrorHandlerEnvironment
         $this->setExceptionHandler();
         $this->registerShutDownFunction();
         $this->setAssertOptions();
+
+        ini_set('display_errors', Config::get(ErrorHandlerConstants::DISPLAY_ERRORS, false));
     }
 
     /**
@@ -57,7 +58,16 @@ class ErrorHandlerEnvironment
     {
         $errorLevel = error_reporting();
         $errorHandler = function ($severity, $message, $file, $line) {
-            throw new ErrorException($message, 0, $severity, $file, $line);
+            $exception = new ErrorException($message, 0, $severity, $file, $line);
+
+            $levelsNotThrowingExceptions = Config::get(ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY, 0);
+            $shouldThrowException = ($severity & $levelsNotThrowingExceptions) === 0;
+            if ($shouldThrowException) {
+                throw $exception;
+            }
+
+            $errorLogger = new ErrorLogger();
+            $errorLogger->log($exception);
         };
 
         set_error_handler($errorHandler, $errorLevel);
@@ -68,7 +78,7 @@ class ErrorHandlerEnvironment
      */
     protected function setExceptionHandler()
     {
-        $exceptionHandler = function (Exception $exception) {
+        $exceptionHandler = function ($exception) {
             $errorHandler = $this->getErrorHandler();
             $errorHandler()->handleException($exception);
         };

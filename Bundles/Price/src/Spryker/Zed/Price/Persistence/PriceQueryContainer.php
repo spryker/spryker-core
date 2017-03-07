@@ -60,6 +60,16 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
 
     /**
      * @api
+
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPriceProduct()
+    {
+        return $this->getFactory()->createPriceProductQuery();
+    }
+
+    /**
+     * @api
      *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
@@ -122,6 +132,24 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     {
         return $this->getFactory()->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductAbstractPriceByIdConcreteProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->filterByIdProduct($idProduct)
+                ->endUse()
+            ->endUse();
     }
 
 }

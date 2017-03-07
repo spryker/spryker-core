@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
@@ -21,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
  * @group QueryString
  * @group ClauseValidatorTest
  */
-class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
+class ClauseValidatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -121,7 +122,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorOperatorsMock()
     {
-        return $this->getMock(ComparatorOperatorsInterface::class);
+        return $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
     }
 
     /**
@@ -129,7 +130,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMetaDataProviderMock()
     {
-        return $this->getMock(MetaDataProviderInterface::class);
+        return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
 
     /**

@@ -1,5 +1,4 @@
 class_name: FunctionalTester
 modules:
     enabled:
-        - Filesystem
-        - \Category\Module\Functional
+        - \Testify\Module\Environment

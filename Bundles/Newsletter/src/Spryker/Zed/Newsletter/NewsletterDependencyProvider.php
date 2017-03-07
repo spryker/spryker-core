@@ -15,7 +15,6 @@ use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailBridge;
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const DOUBLE_OPT_IN_SENDER_PLUGINS = 'double opt in sender plugins';
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
 
@@ -26,10 +25,8 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
-
-        $container[self::DOUBLE_OPT_IN_SENDER_PLUGINS] = function (Container $container) {
-            return $this->getDoubleOptInSenderPlugins($container);
+        $container[self::FACADE_MAIL] = function (Container $container) {
+            return new NewsletterToMailBridge($container->getLocator()->mail()->facade());
         };
 
         return $container;
@@ -50,16 +47,6 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getDoubleOptInSenderPlugins(Container $container)
-    {
-        return [];
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\DummyPayment\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  * @group Business
  * @group DummyPaymentBusinessFactoryTest
  */
-class DummyPaymentBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class DummyPaymentBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

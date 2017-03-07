@@ -14,6 +14,8 @@ interface PageMapInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

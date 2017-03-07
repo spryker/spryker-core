@@ -15,11 +15,19 @@ class PayolutionFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Payolution\Session\PayolutionSession
+     * @return \Spryker\Client\Payolution\Session\PayolutionSessionInterface
      */
     public function createPayolutionSession()
     {
-        return new PayolutionSession($this->createSessionClient());
+        return new PayolutionSession($this->getSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_SESSION);
     }
 
     /**
@@ -27,7 +35,15 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createPayolutionStub()
     {
-        return new PayolutionStub($this->createZedRequestClient());
+        return new PayolutionStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
 }

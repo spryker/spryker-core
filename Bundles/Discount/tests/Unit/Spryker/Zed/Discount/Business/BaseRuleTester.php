@@ -6,13 +6,15 @@
 
 namespace Unit\Spryker\Zed\Discount\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface;
 
-class BaseRuleTester extends \PHPUnit_Framework_TestCase
+class BaseRuleTester extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -20,15 +22,15 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorMock()
     {
-        return $this->getMock(ComparatorOperatorsInterface::class);
+        return $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
-    protected function createCurrencyCoverterMock()
+    protected function createCurrencyConverterMock()
     {
-        return $this->getMock(MoneyValueConverterInterface::class);
+        return $this->getMockBuilder(MoneyValueConverterInterface::class)->getMock();
     }
 
     /**
@@ -52,7 +54,7 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
     protected function createQuoteTransfer(array $items = [])
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new \ArrayObject($items));
+        $quoteTransfer->setItems(new ArrayObject($items));
 
         return $quoteTransfer;
     }

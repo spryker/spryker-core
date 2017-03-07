@@ -79,6 +79,18 @@ abstract class AbstractDependencyFinder
     protected function addDependency(SplFileInfo $fileInfo, $to, array $dependencyInformation = [])
     {
         $dependencyInformation[DependencyTree::META_FINDER] = get_class($this);
+        $dependencyInformation[DependencyTree::META_IN_TEST] = false;
+
+        if (strpos($fileInfo->getPath(), '/tests/') !== false) {
+            $dependencyInformation[DependencyTree::META_IN_TEST] = true;
+        }
+
+        if (!isset($dependencyInformation[DependencyTree::META_IS_OPTIONAL])) {
+            $dependencyInformation[DependencyTree::META_IS_OPTIONAL] = false;
+            if (strpos($fileInfo->getPath(), '/Plugin/') !== false) {
+                $dependencyInformation[DependencyTree::META_IS_OPTIONAL] = true;
+            }
+        }
 
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }

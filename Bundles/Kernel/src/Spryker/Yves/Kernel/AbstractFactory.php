@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Pyz\Yves\Application\Plugin\Pimple;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
@@ -18,6 +17,8 @@ use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 abstract class AbstractFactory implements FactoryInterface
 {
+
+    use BundleConfigResolverAwareTrait;
 
     /**
      * @var \Spryker\Yves\Kernel\Container $container
@@ -61,16 +62,6 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @deprecated Use DependencyProvider instead
-     *
-     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function getClient()
@@ -91,33 +82,11 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @deprecated Use `createClientResolver()` instead
-     *
-     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
-     */
-    protected function getClientResolver()
-    {
-        return $this->createClientResolver();
-    }
-
-    /**
      * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
     protected function createClientResolver()
     {
         return new ClientResolver();
-    }
-
-    /**
-     * @deprecated Use `$this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)` to get the form factory.
-     *
-     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
-     *
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected function getFormFactory()
-    {
-        return (new Pimple())->getApplication()['form.factory'];
     }
 
     /**
@@ -138,16 +107,6 @@ abstract class AbstractFactory implements FactoryInterface
         }
 
         return $this->container[$key];
-    }
-
-    /**
-     * @deprecated Use `createContainerWithProvidedDependencies()` instead
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function getContainerWithProvidedDependencies()
-    {
-        return $this->createContainerWithProvidedDependencies();
     }
 
     /**
@@ -186,18 +145,6 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @deprecated Use `createDependencyInjector()` instead
-     *
-     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
-     *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
-     */
-    protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
-    {
-        return $this->createDependencyInjector($dependencyInjectorCollection);
-    }
-
-    /**
      * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
      * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
@@ -205,16 +152,6 @@ abstract class AbstractFactory implements FactoryInterface
     protected function createDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
         return new DependencyInjector($dependencyInjectorCollection);
-    }
-
-    /**
-     * @deprecated Use `createDependencyInjectorResolver()` instead
-     *
-     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
-     */
-    protected function getDependencyInjectorResolver()
-    {
-        return $this->createDependencyInjectorResolver();
     }
 
     /**
@@ -231,16 +168,6 @@ abstract class AbstractFactory implements FactoryInterface
     protected function resolveDependencyProvider()
     {
         return $this->createDependencyProviderResolver()->resolve($this);
-    }
-
-    /**
-     * @deprecated Use `createDependencyProviderResolver()` instead
-     *
-     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
-     */
-    protected function getDependencyProviderResolver()
-    {
-        return $this->createDependencyProviderResolver();
     }
 
     /**

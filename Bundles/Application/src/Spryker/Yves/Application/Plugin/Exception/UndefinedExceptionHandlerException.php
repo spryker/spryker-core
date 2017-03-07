@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Application\Plugin\Exception;
 
-class UndefinedExceptionHandlerException extends \Exception
+use Exception;
+
+class UndefinedExceptionHandlerException extends Exception
 {
 }

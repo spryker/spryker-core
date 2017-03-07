@@ -7,15 +7,19 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use CMS page creation from CmsGui bundle.
+ *
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
@@ -113,6 +117,8 @@ class PageController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
             $localeTransfer = $this->getLocaleTransfer($idPage);
 
+            $this->createTranslationsForLocale($idPage, $localeTransfer);
+
             $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
 
             if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
@@ -120,7 +126,7 @@ class PageController extends AbstractController
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getFactory()->getUrlFacade()->updateUrl($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -185,11 +191,15 @@ class PageController extends AbstractController
      */
     protected function createPageTransfer(array $data)
     {
-        $pageTransfer = new PageTransfer();
-        $pageTransfer->fromArray($data, true);
-
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($data, true);
+        unset($data[CmsPageForm::FIELD_URL]);
+
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->addLocalizedAttribute($this->createCmsPageLocalizedAttributesTransfer($data));
+        unset($data[CmsPageForm::FIELD_LOCALIZED_ATTRIBUTES]);
+
+        $pageTransfer->fromArray($data, true);
 
         $pageTransfer->setUrl($urlTransfer);
 
@@ -233,6 +243,7 @@ class PageController extends AbstractController
         $data[CmsPageForm::FIELD_IS_ACTIVE] = $isActive;
 
         $pageTransfer = $this->createPageTransfer($data);
+
         $localeTransfer = $this->getLocaleTransfer($idPage);
 
         $this->getFacade()->savePage($pageTransfer);
@@ -258,6 +269,46 @@ class PageController extends AbstractController
         }
 
         return $localeTransfer;
+    }
+
+    /**
+     * Finds all glossary keys and creates missing translations as empty to be able to touch the page.
+     *
+     * @param int $idPage
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function createTranslationsForLocale($idPage, LocaleTransfer $localeTransfer)
+    {
+        $glossaryKeyCollection = $this->getQueryContainer()->queryGlossaryKeyMappingsByPageId($idPage)
+            ->innerJoinGlossaryKey()
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'glossaryKey')
+            ->find();
+        foreach ($glossaryKeyCollection as $glossaryKeyEntity) {
+            $key = $glossaryKeyEntity->getGlossaryKey()->getKey();
+            $translation = $this->getQueryContainer()->queryKeyWithTranslationByKeyAndLocale($key, $localeTransfer->getIdLocale())->findOne();
+            if ($translation !== null) {
+                continue;
+            }
+
+            $this->getFactory()->getGlossaryFacade()->createAndTouchTranslation($key, $localeTransfer, '');
+        }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer
+     */
+    protected function createCmsPageLocalizedAttributesTransfer(array $data)
+    {
+        $cmsPageLocalizedAttributesTransfer = new CmsPageLocalizedAttributesTransfer();
+        $cmsPageLocalizedAttributesTransfer
+            ->fromArray($data[CmsPageForm::FIELD_LOCALIZED_ATTRIBUTES], true)
+            ->setFkLocale($data[CmsPageForm::FIELD_FK_LOCALE]);
+
+        return $cmsPageLocalizedAttributesTransfer;
     }
 
 }

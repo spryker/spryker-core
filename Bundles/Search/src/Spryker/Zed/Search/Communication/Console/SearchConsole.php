@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,8 +19,6 @@ class SearchConsole extends Console
 
     const COMMAND_NAME = 'setup:search';
     const DESCRIPTION = 'This command will run installer for search';
-    const EXIT_CODE_ERROR = 1;
-    const EXIT_CODE_SUCCESS = 0;
 
     /**
      * @return void

@@ -37,7 +37,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createInMemoryMessageTray()
     {
-        return new InMemoryMessageTray($this->getGlossaryFacade());
+        return new InMemoryMessageTray($this->getTranslationPlugin());
     }
 
     /**
@@ -45,7 +45,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createSessionMessageTray()
     {
-        return new SessionMessageTray($this->getSession(), $this->getGlossaryFacade());
+        return new SessionMessageTray($this->getSession(), $this->getTranslationPlugin());
     }
 
     /**
@@ -57,11 +57,11 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
+     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
-    public function getGlossaryFacade()
+    public function getTranslationPlugin()
     {
-        return $this->getProvidedDependency(MessengerDependencyProvider::FACADE_GLOSSARY);
+        return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_TRANSLATION);
     }
 
 }

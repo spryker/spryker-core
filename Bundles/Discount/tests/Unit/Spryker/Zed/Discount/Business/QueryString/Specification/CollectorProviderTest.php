@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
@@ -25,7 +26,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
  * @group Specification
  * @group CollectorProviderTest
  */
-class CollectorProviderTest extends \PHPUnit_Framework_TestCase
+class CollectorProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -115,7 +116,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCollectorPluginMock()
     {
-        return $this->getMock(CollectorPluginInterface::class);
+        return $this->getMockBuilder(CollectorPluginInterface::class)->getMock();
     }
 
     /**
@@ -123,7 +124,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCollectorSpecificationMock()
     {
-        return $this->getMock(CollectorSpecificationInterface::class);
+        return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
 
 }

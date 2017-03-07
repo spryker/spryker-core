@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Oms;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\OmsConfig;
@@ -18,7 +20,7 @@ use Spryker\Zed\Oms\OmsConfig;
  * @group Oms
  * @group OmsConfigTest
  */
-class OmsConfigTest extends \PHPUnit_Framework_TestCase
+class OmsConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -31,7 +33,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $this->configCache = $reflectionProperty->getValue();
@@ -42,7 +44,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->configCache);
@@ -54,7 +56,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetProcessDefinitionLocationReturnDefault()
     {
         $omsConfig = new OmsConfig();
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(['foo' => 'bar']);
@@ -68,7 +70,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetProcessDefinitionLocationReturnConfiguredPath()
     {
         $omsConfig = new OmsConfig();
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue([OmsConstants::PROCESS_LOCATION => APPLICATION_ROOT_DIR . '/configuredPaths']);
@@ -82,7 +84,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetProcessDefinitionLocationDefaultPathMustBeAbsolute()
     {
         $omsConfig = new OmsConfig();
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(['foo' => 'bar']);

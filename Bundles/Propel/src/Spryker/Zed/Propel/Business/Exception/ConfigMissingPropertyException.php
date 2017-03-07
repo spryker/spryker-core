@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class ConfigMissingPropertyException extends \Exception
+use Exception;
+
+class ConfigMissingPropertyException extends Exception
 {
 }

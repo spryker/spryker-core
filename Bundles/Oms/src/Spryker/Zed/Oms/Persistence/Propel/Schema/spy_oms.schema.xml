@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\Oms\Persistence" package="src.Orm.Zed.Oms.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Oms\Persistence" package="src.Orm.Zed.Oms.Persistence">
 
     <table name="spy_oms_transition_log" phpName="SpyOmsTransitionLog" identifierQuoting="true">
         <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -121,5 +121,18 @@
 
         <id-method-parameter value="spy_oms_event_timeout_pk_seq"/>
     </table>
+
+    <table name="spy_oms_product_reservation" phpName="SpyOmsProductReservation" identifierQuoting="true">
+        <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
+
+        <unique name="spy_oms_product_reservation-sku">
+            <unique-column name="sku"/>
+        </unique>
+
+        <id-method-parameter value="spy_oms_product_reservation_pk_seq"/>
+    </table>
+
 
 </database>

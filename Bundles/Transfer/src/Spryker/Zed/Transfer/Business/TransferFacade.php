@@ -17,6 +17,10 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Loads all *transfer.xml definitions
+     * - Generates transfer objects
+     *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
@@ -29,6 +33,9 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Deletes all generated transfer objects
+     *
      * @api
      *
      * @return void
@@ -39,6 +46,9 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Validates all generated transfer objects
+     *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
@@ -46,7 +56,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
      *
      * @return bool
      */
-    public function validateTransferObjects($messenger, array $options)
+    public function validateTransferObjects(LoggerInterface $messenger, array $options)
     {
         return $this->getFactory()->createValidator($messenger)->validate($options);
     }

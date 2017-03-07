@@ -7,15 +7,27 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
+use Generated\Shared\Transfer\DiscountTransfer;
+
 interface CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $value
+     * @deprecated use calculateDiscount instead
      *
-     * @return float
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param int $value
+     *
+     * @return int
      */
-    public function calculate(array $discountableObjects, $value);
+    public function calculate(array $discountableItems, $value);
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
+     */
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
 
 }

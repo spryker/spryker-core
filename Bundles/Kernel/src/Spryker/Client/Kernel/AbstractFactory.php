@@ -14,6 +14,8 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 abstract class AbstractFactory
 {
 
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Client\Kernel\Container
      */
@@ -64,16 +66,6 @@ abstract class AbstractFactory
     }
 
     /**
-     * @deprecated Use `createContainer()` instead
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function getContainer()
-    {
-        return $this->createContainer();
-    }
-
-    /**
      * @return \Spryker\Client\Kernel\Container
      */
     protected function createContainer()
@@ -97,17 +89,7 @@ abstract class AbstractFactory
      */
     protected function resolveDependencyProvider()
     {
-        return $this->getDependencyProviderResolver()->resolve($this);
-    }
-
-    /**
-     * @deprecated Use `createDependencyProviderResolver` instead
-     *
-     * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
-     */
-    protected function getDependencyProviderResolver()
-    {
-        return $this->createDependencyProviderResolver();
+        return $this->createDependencyProviderResolver()->resolve($this);
     }
 
     /**
@@ -127,70 +109,6 @@ abstract class AbstractFactory
     protected function provideExternalDependencies(AbstractDependencyProvider $dependencyProvider, Container $container)
     {
         $dependencyProvider->provideServiceLayerDependencies($container);
-    }
-
-    /**
-     * @deprecated Use getSessionClient() instead.
-     *
-     * @return \Spryker\Client\Session\SessionClient
-     */
-    protected function createSessionClient()
-    {
-        return $this->getSessionClient();
-    }
-
-    /**
-     * @return \Spryker\Client\Session\SessionClient
-     */
-    public function getSessionClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
-     * @deprecated Use getZedRequestClient() instead.
-     *
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
-     */
-    protected function createZedRequestClient()
-    {
-        return $this->getZedRequestClient();
-    }
-
-    /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
-     */
-    public function getZedRequestClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @deprecated Use getStorageClient() instead.
-     *
-     * @return \Spryker\Client\Storage\StorageClient
-     */
-    protected function createStorageClient()
-    {
-        return $this->getStorageClient();
-    }
-
-    /**
-     * @return \Spryker\Client\Storage\StorageClient
-     */
-    public function getStorageClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_KV_STORAGE);
-    }
-
-    /**
-     * @deprecated This method will be removed.
-     *
-     * @return \Spryker\Client\Search\SearchClient
-     */
-    protected function createSearchClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SEARCH);
     }
 
 }

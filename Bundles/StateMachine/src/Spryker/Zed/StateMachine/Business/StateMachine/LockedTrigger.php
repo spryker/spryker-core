@@ -90,7 +90,6 @@ class LockedTrigger implements TriggerInterface
         return $this->stateMachineTrigger->triggerConditionsWithoutEvent($stateMachineName);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *

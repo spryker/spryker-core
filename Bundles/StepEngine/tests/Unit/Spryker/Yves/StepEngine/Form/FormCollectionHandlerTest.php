@@ -7,7 +7,8 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Form;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Form
  * @group FormCollectionHandlerTest
  */
-class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
+class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -111,7 +112,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->setExpectedException(InvalidFormHandleRequest::class);
+        $this->expectException(InvalidFormHandleRequest::class);
 
         $formCollectionHandler->handleRequest(Request::createFromGlobals(), $this->getDataTransferMock());
     }
@@ -134,6 +135,9 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FormInterface::class, $formCollectionHandlerMock->handleRequest($request, $this->getDataTransferMock()));
     }
 
+    /**
+     * @return void
+     */
     public function testProvideDefaultFormData()
     {
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock(['getForms']);
@@ -207,7 +211,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 
-        $formCollectionHandlerMock = $this->getMock(FormCollectionHandler::class, $formCollectionHandlerMethods, $arguments);
+        $formCollectionHandlerMock = $this->getMockBuilder(FormCollectionHandler::class)->setMethods($formCollectionHandlerMethods)->setConstructorArgs($arguments)->getMock();
 
         return $formCollectionHandlerMock;
     }
@@ -227,14 +231,14 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getDataProviderMock()
     {
-        $dataProviderMock = $this->getMock(StepEngineFormDataProviderInterface::class);
+        $dataProviderMock = $this->getMockBuilder(StepEngineFormDataProviderInterface::class)->getMock();
         $dataProviderMock->method('getData')->willReturnArgument(0);
 
         return $dataProviderMock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     private function getDataTransferMock()
     {

@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Payment\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use DateTime;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class SalesController extends AbstractController
@@ -29,9 +30,9 @@ class SalesController extends AbstractController
                     'TransactionId' => uniqid(),
                     'Request' => 'request',
                     'Status' => 'active',
-                    'CreatedAt' => new \DateTime('now'),
-                ]
-            ]
+                    'CreatedAt' => new DateTime('now'),
+                ],
+            ],
         ];
     }
 

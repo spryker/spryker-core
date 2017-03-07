@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -30,13 +31,6 @@ interface CartClientInterface
     /**
      * @api
      *
-     * @return int
-     */
-    public function getItemCount();
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -52,6 +46,25 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem($sku, $groupKey = null);
+
+    /**
+     * Specification:
+     * - Returns the calculated number of items in cart
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getItemCount();
+
+    /**
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItems(ArrayObject $items);
 
     /**
      * @api

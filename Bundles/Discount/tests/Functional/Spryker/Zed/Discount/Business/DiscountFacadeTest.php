@@ -6,7 +6,9 @@
 
 namespace Functional\Spryker\Zed\Discount\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
@@ -397,8 +399,8 @@ class DiscountFacadeTest extends Test
         $discountGeneralTransfer->setDescription('Updated description');
         $discountGeneralTransfer->setIsActive(false);
         $discountGeneralTransfer->setIsExclusive(false);
-        $discountGeneralTransfer->setValidFrom(new \DateTime());
-        $discountGeneralTransfer->setValidTo(new \DateTime());
+        $discountGeneralTransfer->setValidFrom(new DateTime());
+        $discountGeneralTransfer->setValidTo(new DateTime());
 
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
@@ -521,7 +523,7 @@ class DiscountFacadeTest extends Test
         $discountableItems = [];
 
         $itemTransfer = new ItemTransfer();
-        $calculatedDiscounts = new \ArrayObject();
+        $calculatedDiscounts = new ArrayObject();
         $itemTransfer->setCalculatedDiscounts($calculatedDiscounts);
 
         $discountableItemTransfer = new DiscountableItemTransfer();
@@ -560,11 +562,11 @@ class DiscountFacadeTest extends Test
         $discountTransfer->setAmount($totalDiscountAmount);
         $collectedDiscountTransfer->setDiscount($discountTransfer);
 
-        $discountableItems = new \ArrayObject();
+        $discountableItems = new ArrayObject();
 
         foreach ([100, 600] as $price) {
             $itemTransfer = new ItemTransfer();
-            $calculatedDiscounts = new \ArrayObject();
+            $calculatedDiscounts = new ArrayObject();
             $itemTransfer->setCalculatedDiscounts($calculatedDiscounts);
 
             $discountableItemTransfer = new DiscountableItemTransfer();
@@ -622,7 +624,6 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, $released);
     }
 
-
     /**
      * @return void
      */
@@ -660,7 +661,6 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, $voucherCodeEntity->getNumberOfUses());
     }
 
-
     /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacade
      */
@@ -684,8 +684,8 @@ class DiscountFacadeTest extends Test
         $discountGeneralTransfer->setIsActive(true);
         $discountGeneralTransfer->setIsExclusive(true);
         $discountGeneralTransfer->setDescription('Description');
-        $discountGeneralTransfer->setValidFrom(new \DateTime());
-        $discountGeneralTransfer->setValidTo(new \DateTime());
+        $discountGeneralTransfer->setValidFrom(new DateTime());
+        $discountGeneralTransfer->setValidTo(new DateTime());
         $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
 
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();

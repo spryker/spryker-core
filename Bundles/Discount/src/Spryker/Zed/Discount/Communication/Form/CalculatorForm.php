@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
@@ -63,10 +63,9 @@ class CalculatorForm extends AbstractType
         $this->calculatorAmountTransformer = $calculatorAmountTransformer;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|string[] $options
+     * @param string[] $options
      *
      * @return void
      */
@@ -82,9 +81,22 @@ class CalculatorForm extends AbstractType
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) {
+                    $this->normalizeAmount($event);
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    protected function normalizeAmount(FormEvent $event)
+    {
+        $data = $event->getData();
+        $data[self::FIELD_AMOUNT] = str_replace(',', '.', $data[self::FIELD_AMOUNT]);
+        $event->setData($data);
     }
 
     /**
@@ -122,7 +134,7 @@ class CalculatorForm extends AbstractType
         $defaultOptions = [
             'label' => 'Amount*',
             'attr' => [
-                'class' => 'input-group'
+                'class' => 'input-group',
             ],
             'constraints' => [
                 new NotBlank(),
@@ -181,7 +193,7 @@ class CalculatorForm extends AbstractType
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [
-                        'type' => MetaProviderFactory::TYPE_COLLECTOR
+                        'type' => MetaProviderFactory::TYPE_COLLECTOR,
                     ]
                 )->build(),
             ],

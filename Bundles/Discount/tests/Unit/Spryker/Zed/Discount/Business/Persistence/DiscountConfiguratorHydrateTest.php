@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Persistence
  * @group DiscountConfiguratorHydrateTest
  */
-class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
+class DiscountConfiguratorHydrateTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -46,7 +47,7 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
             $hydratedDiscountConfiguration->getDiscountCondition()->getDecisionRuleQueryString()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getAmount(),
             $hydratedDiscountConfiguration->getDiscountCalculator()->getAmount()
         );
@@ -140,7 +141,7 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -148,7 +149,7 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMock(SpyDiscountQuery::class, ['findOneByIdDiscount']);
+        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
     }
 
 }

@@ -7,22 +7,22 @@
 
 namespace Generated\Shared\Transfer;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
-{% for use in uses %}
-use {{ use }};
-{% endfor %}
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ {% if deprecationDescription is not null -%}
+ *
+ * @deprecated {{ deprecationDescription }}
+ {% endif -%}
  */
 class {{ className }} extends AbstractTransfer
 {
 
 {% for constant in constants %}
-{{ macro.addConstant(constant) }}
-{% endfor -%}
-
+{{ macro.addConstant(constant) -}}
+{% endfor %}
 {% for property in properties %}
 {{ macro.addProperty(property) }}
 {% endfor -%}

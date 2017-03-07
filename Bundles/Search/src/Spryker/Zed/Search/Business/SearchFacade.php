@@ -8,9 +8,8 @@
 namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\SearchConfigCacheTransfer;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 /**
@@ -20,22 +19,15 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Loads index definition json files from the folders
-     * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they not exists already
-     * - For each configured store a separated index will be created
-     * - The name of the index is automatically prefixed with the store name + underscore
-     * - Generates IndexMap class for each mapping type
-     * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
-     * - The generated files will be removed and re-created always when install runs
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger)
+    public function install(LoggerInterface $messenger)
     {
         $this
             ->getFactory()
@@ -44,8 +36,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the total number of documents in the current index
+     * {@inheritdoc}
      *
      * @api
      *
@@ -60,9 +51,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the metadata information from the current index
-     * - Returns empty array if the index is not installed
+     * {@inheritdoc}
      *
      * @api
      *
@@ -93,8 +82,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns a document from the current index with the given key in the given mapping type
+     * {@inheritdoc}
      *
      * @api
      *
@@ -112,9 +100,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Runs a simple full text search for the given search string
-     * - Returns the raw result set ordered by relevance
+     * {@inheritdoc}
      *
      * @api
      *
@@ -133,15 +119,15 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Transforms a raw data array into an Elasticsearch "page" mapping type document
-     * - The transformation is based on the given page map what configures which data goes into which field
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
      *
      * @return array
      */
@@ -153,20 +139,20 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Stores the given search cache configuration into the storage (Redis by default)
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function saveSearchConfigCache(SearchConfigCacheTransfer $searchConfigCacheTransfer)
+    public function generatePageIndexMap(LoggerInterface $messenger)
     {
-        $this->getFactory()
-            ->createSearchConfigCacheSaver()
-            ->save($searchConfigCacheTransfer);
+        $this
+            ->getFactory()
+            ->createIndexMapInstaller($messenger)
+            ->install();
     }
 
 }

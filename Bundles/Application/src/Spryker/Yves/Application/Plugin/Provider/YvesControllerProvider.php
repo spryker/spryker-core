@@ -52,7 +52,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     /**
      * @param \Silex\Application $app
      *
-     * @return mixed|\Silex\ControllerCollection
+     * @return \Silex\ControllerCollection
      */
     public function connect(Application $app)
     {

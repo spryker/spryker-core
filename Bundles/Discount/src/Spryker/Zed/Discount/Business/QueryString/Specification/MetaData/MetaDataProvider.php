@@ -45,7 +45,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableFields()
     {
@@ -69,15 +69,15 @@ class MetaDataProvider implements MetaDataProviderInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {
-        foreach ($this->specificationPlugins as $specificationPlugin) {
-            if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
-                list($fieldName, $attribute) = explode('.', $fieldName);
-            }
+        if (strpos($fieldName, '.') !== false) {
+            list($fieldName, $attribute) = explode('.', $fieldName);
+        }
 
+        foreach ($this->specificationPlugins as $specificationPlugin) {
             if ($fieldName === $specificationPlugin->getFieldName()) {
                 return $specificationPlugin->acceptedDataTypes();
             }
@@ -92,7 +92,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     /**
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableOperatorExpressionsForField($fieldName)
     {
@@ -102,7 +102,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableComparatorExpressions()
     {
@@ -110,7 +110,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getLogicalComparators()
     {
@@ -118,7 +118,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getCompoundExpressions()
     {

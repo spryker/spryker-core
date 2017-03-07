@@ -18,6 +18,9 @@ use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
+/**
+ * @deprecated Use business classes from Spryker\Zed\Url\Business\Url namespace.
+ */
 class UrlManager implements UrlManagerInterface
 {
 
@@ -44,6 +47,8 @@ class UrlManager implements UrlManagerInterface
     protected $connection;
 
     /**
+     * @deprecated Use business classes from Spryker\Zed\Url\Business\Url namespace.
+     *
      * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
      * @param \Spryker\Zed\Url\Dependency\UrlToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Url\Dependency\UrlToTouchInterface $touchFacade
@@ -402,6 +407,9 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
+     * @deprecated This method will be removed with next major release because of invalid dependency direction.
+     * Use ProductFacade::getProductUrl() instead.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *

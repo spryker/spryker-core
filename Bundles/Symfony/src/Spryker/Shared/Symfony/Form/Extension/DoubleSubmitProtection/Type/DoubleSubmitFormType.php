@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -116,18 +117,30 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
+                static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME,
+            ]
+        );
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            [
-                static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
-                static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME
-            ]
-        );
+        $this->configureOptions($resolver);
     }
 
     /**

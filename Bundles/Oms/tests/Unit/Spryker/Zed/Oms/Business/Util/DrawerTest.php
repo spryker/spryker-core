@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\Oms\Business\Util;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
@@ -16,6 +17,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 /**
  * @group Unit
@@ -26,7 +28,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
  * @group Util
  * @group DrawerTest
  */
-class DrawerTest extends \PHPUnit_Framework_TestCase
+class DrawerTest extends PHPUnit_Framework_TestCase
 {
 
     const CONDITION_NAME = 'conditionName';
@@ -40,9 +42,10 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
         $drawer = new Drawer(
             [],
             [self::CONDITION_NAME => $this->getConditionMock()],
-            $this->getGraphMock()
+            $this->getGraphMock(),
+            $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($drawer);
@@ -62,9 +65,10 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
         $drawer = new Drawer(
             [],
             $conditionCollection,
-            $this->getGraphMock()
+            $this->getGraphMock(),
+            $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($drawer);
@@ -81,9 +85,10 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
         $drawer = new Drawer(
             [self::COMMAND_NAME => $this->getCommandMock()],
             [],
-            $this->getGraphMock()
+            $this->getGraphMock(),
+            $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($drawer);
@@ -103,9 +108,10 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
         $drawer = new Drawer(
             $commandCollection,
             [],
-            $this->getGraphMock()
+            $this->getGraphMock(),
+            $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($drawer);
@@ -119,7 +125,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
     /**
@@ -127,7 +133,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommandMock()
     {
-        return $this->getMock(CommandInterface::class);
+        return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
 
     /**
@@ -135,7 +141,15 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getGraphMock()
     {
-        return $this->getMock(GraphInterface::class);
+        return $this->getMockBuilder(GraphInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
+     */
+    private function getOmsToUtilTextServiceMock()
+    {
+        return $this->getMockBuilder(OmsToUtilTextInterface::class)->getMock();
     }
 
 }

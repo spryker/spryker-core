@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Subtotal;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Subtotal;
  * @group OrderAmountAggregator
  * @group SubtotalTest
  */
-class SubtotalTest extends \PHPUnit_Framework_TestCase
+class SubtotalTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,9 +7,11 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use PHPUnit_Framework_TestCase;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
@@ -21,7 +23,7 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
  * @group Model
  * @group TransferBusinessFactoryTest
  */
-class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class TransferBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,11 +35,11 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     /**
@@ -60,6 +62,16 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
         $transferCleaner = $this->getFactory()->createTransferCleaner();
 
         $this->assertInstanceOf(TransferCleaner::class, $transferCleaner);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateTransferValidatorShouldReturnFullyConfiguredInstance()
+    {
+        $transferCleaner = $this->getFactory()->createValidator($this->getMessenger());
+
+        $this->assertInstanceOf(TransferValidatorInterface::class, $transferCleaner);
     }
 
 }

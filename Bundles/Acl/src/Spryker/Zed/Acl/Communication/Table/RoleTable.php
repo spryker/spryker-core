@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -29,18 +29,18 @@ class RoleTable extends AbstractTable
     protected $aclQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(AclQueryContainerInterface $aclQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->aclQueryContainer = $aclQueryContainer;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -73,7 +73,7 @@ class RoleTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -83,7 +83,7 @@ class RoleTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $rule) {
             $results[] = [
-                SpyAclRoleTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($rule[SpyAclRoleTableMap::COL_CREATED_AT]),
+                SpyAclRoleTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($rule[SpyAclRoleTableMap::COL_CREATED_AT]),
                 SpyAclRoleTableMap::COL_NAME => $rule[SpyAclRoleTableMap::COL_NAME],
                 self::ACTION => implode(' ', $this->createTableActions($rule)),
             ];
@@ -108,7 +108,7 @@ class RoleTable extends AbstractTable
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {
             $buttons[] = $this->generateRemoveButton(self::DELETE_ROLE_URL, 'Delete', [
-                self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
+                self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE],
             ]);
         }
 

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Checkout\CheckoutClientInterface;
 use Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Steps
  * @group AbstractPlaceOrderStepTest
  */
-class AbstractPlaceOrderStepTest extends \PHPUnit_Framework_TestCase
+class AbstractPlaceOrderStepTest extends PHPUnit_Framework_TestCase
 {
 
     const ORDER_REFERENCE = 'order reference';
@@ -200,7 +201,7 @@ class AbstractPlaceOrderStepTest extends \PHPUnit_Framework_TestCase
      */
     private function getCheckoutClientMock()
     {
-        return $this->getMock(CheckoutClientInterface::class);
+        return $this->getMockBuilder(CheckoutClientInterface::class)->getMock();
     }
 
     /**

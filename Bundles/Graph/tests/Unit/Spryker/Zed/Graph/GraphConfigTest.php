@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Graph;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Graph\GraphConfig;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Graph\GraphConfig;
  * @group Graph
  * @group GraphConfigTest
  */
-class GraphConfigTest extends \PHPUnit_Framework_TestCase
+class GraphConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

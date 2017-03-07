@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class TriggerException extends \Exception
+use Exception;
+
+class TriggerException extends Exception
 {
 }

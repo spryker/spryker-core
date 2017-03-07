@@ -12,9 +12,8 @@ use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -24,27 +23,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 {
 
     const COL_CATEGORY_NAME = 'category_name';
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param bool $excludeDirectParent
-     * @param bool $excludeRoot
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function expandProductCategoryPathQuery(
-        ModelCriteria $query,
-        LocaleTransfer $locale,
-        $excludeDirectParent = true,
-        $excludeRoot = true
-    ) {
-        return $this->getFactory()
-            ->createProductCategoryPathQueryExpander($locale)
-            ->expandQuery($query, $excludeDirectParent, $excludeRoot);
-    }
 
     /**
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -82,32 +60,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query
             ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkCategory($idCategory);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale)
-    {
-        $query = $this->queryProductCategoryMappings();
-        $query
-            ->useSpyProductAbstractQuery()
-                ->filterBySku($sku)
-            ->endUse()
-            ->useSpyCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($locale->getIdLocale())
-                    ->filterByName($categoryName)
-                ->endUse()
-            ->endUse();
 
         return $query;
     }
@@ -242,31 +194,12 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         if (trim($term) !== '') {
             $term = '%' . mb_strtoupper($term) . '%';
 
-            $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
+            $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, PDO::PARAM_STR)
                 ->_or()
-                ->where('UPPER(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR);
+                ->where('UPPER(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') LIKE ?', $term, PDO::PARAM_STR);
         }
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCategory
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProductCategoryPreconfig($idCategory, $idProductAbstract)
-    {
-        return $this->getFactory()->createProductQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->addAnd(
-                SpyProductTableMap::COL_IS_ACTIVE,
-                true,
-                Criteria::EQUAL
-            );
     }
 
 }

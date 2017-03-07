@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
@@ -25,7 +26,7 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
  * @group OrderStateMachine
  * @group BuilderTest
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -96,7 +97,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $processACopyTarget = $this->getProcessLocationB() . DIRECTORY_SEPARATOR . 'process-a.xml';
         copy($this->getProcessLocationA() . DIRECTORY_SEPARATOR . 'process-a.xml', $processACopyTarget);
-        $this->setExpectedException(StatemachineException::class, '"process-a.xml" found in more then one location. Could not determine which one to choose. Please check your process definition location');
+        $this->expectException(StatemachineException::class);
+        $this->expectExceptionMessage('"process-a.xml" found in more then one location. Could not determine which one to choose. Please check your process definition location');
         $builder->createProcess('process-a');
     }
 
@@ -111,7 +113,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $process = $this->getProcess();
         $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, [$this->getProcessLocationB()]);
 
-        $this->setExpectedException(StatemachineException::class, 'Could not find "process-a.xml". Please check your process definition location');
+        $this->expectException(StatemachineException::class);
+        $this->expectExceptionMessage('Could not find "process-a.xml". Please check your process definition location');
         $builder->createProcess('process-a');
     }
 
@@ -136,7 +139,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getEventMock()
     {
-        return $this->getMock(EventInterface::class);
+        return $this->getMockBuilder(EventInterface::class)->getMock();
     }
 
     /**
@@ -144,7 +147,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getStateMock()
     {
-        return $this->getMock(StateInterface::class);
+        return $this->getMockBuilder(StateInterface::class)->getMock();
     }
 
     /**
@@ -152,7 +155,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransitionMock()
     {
-        return $this->getMock(TransitionInterface::class);
+        return $this->getMockBuilder(TransitionInterface::class)->getMock();
     }
 
     /**
@@ -170,7 +173,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getDrawerMock()
     {
-        return $this->getMock(DrawerInterface::class);
+        return $this->getMockBuilder(DrawerInterface::class)->getMock();
     }
 
     /**

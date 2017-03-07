@@ -47,7 +47,7 @@ class TaxRateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|string[] $options
+     * @param string[] $options
      *
      * @return void
      */
@@ -98,7 +98,7 @@ class TaxRateForm extends AbstractType
                     'message' => 'Select country.',
                 ]),
             ],
-            'attr' => []
+            'attr' => [],
         ]);
 
         return $this;
@@ -120,9 +120,9 @@ class TaxRateForm extends AbstractType
                 'constraints' => [
                     new Range([
                         'min' => 0,
-                        'max' => 100
+                        'max' => 100,
                     ]),
-                ]
+                ],
             ]
         );
 
@@ -131,7 +131,6 @@ class TaxRateForm extends AbstractType
 
         return $this;
     }
-
 
     /**
      * Returns the name of this type.

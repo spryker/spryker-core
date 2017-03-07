@@ -11,7 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -36,18 +36,18 @@ class CustomerTable extends AbstractTable
     protected $customerQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->customerQueryContainer = $customerQueryContainer;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -68,8 +68,6 @@ class CustomerTable extends AbstractTable
             self::COL_FK_COUNTRY => 'Country',
             self::ACTIONS => self::ACTIONS,
         ]);
-
-        $config->addRawColumn(self::ACTIONS);
 
         $config->addRawColumn(self::ACTIONS);
 
@@ -101,7 +99,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -161,7 +159,7 @@ class CustomerTable extends AbstractTable
         $customerRow = $customer->toArray();
 
         $customerRow[self::COL_FK_COUNTRY] = $this->getCountryNameByCustomer($customer);
-        $customerRow[self::COL_CREATED_AT] = $this->dateFormatter->dateTime($customer->getCreatedAt());
+        $customerRow[self::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($customer->getCreatedAt());
         $customerRow[self::ACTIONS] = $this->buildLinks($customer);
 
         return $customerRow;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -52,6 +52,8 @@ class InstallConsole extends Console
                 return $this->getLastExitCode();
             }
         }
+
+        return static::CODE_SUCCESS;
     }
 
 }

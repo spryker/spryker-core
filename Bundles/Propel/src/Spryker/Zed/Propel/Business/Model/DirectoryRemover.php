@@ -30,8 +30,10 @@ class DirectoryRemover implements DirectoryRemoverInterface
      */
     public function execute()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->directoryToRemove);
+        if (is_dir($this->directoryToRemove)) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->directoryToRemove);
+        }
     }
 
 }

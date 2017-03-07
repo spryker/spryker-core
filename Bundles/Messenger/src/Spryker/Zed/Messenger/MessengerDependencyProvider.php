@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Messenger;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryBridge;
+use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const SESSION = 'session';
-    const FACADE_GLOSSARY = 'glossary facade';
+    const PLUGIN_TRANSLATION = 'translation plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,12 +25,35 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SESSION] = function (Container $container) {
+        $container = $this->addSession($container);
+        $container = $this->addTranslationPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSession(Container $container)
+    {
+        $container[static::SESSION] = function (Container $container) {
             return (new Pimple())->getApplication()['request']->getSession();
         };
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new MessengerToGlossaryBridge($container->getLocator()->glossary()->facade());
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslationPlugin(Container $container)
+    {
+        $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
+            return new TranslationPlugin();
         };
 
         return $container;

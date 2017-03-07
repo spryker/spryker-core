@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Yves\Application\Plugin\Provider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Silex\Controller;
 use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock;
@@ -19,7 +20,7 @@ use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMoc
  * @group Provider
  * @group YvesControllerProviderTest
  */
-class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
+class YvesControllerProviderTest extends PHPUnit_Framework_TestCase
 {
 
     const METHOD_REQUIRE_HTTP = 'requireHttp';
@@ -89,7 +90,7 @@ class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createControllerProviderMock($ssl, $controller, array $urls = [])
     {
-        $controllerProviderMock = $this->getMock(ControllerProviderMock::class, ['getService', 'getController', 'getExcludedUrls'], [$ssl]);
+        $controllerProviderMock = $this->getMockBuilder(ControllerProviderMock::class)->setMethods(['getService', 'getController', 'getExcludedUrls'])->setConstructorArgs([$ssl])->getMock();
         $controllerProviderMock->method('getService')->willReturn('');
         $controllerProviderMock->method('getController')->willReturn($controller);
         $controllerProviderMock->method('getExcludedUrls')->willReturn($urls);
@@ -105,7 +106,7 @@ class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getControllerMock($methodName, $callTimes)
     {
-        $controllerMock = $this->getMock(Controller::class, [], [], '', false);
+        $controllerMock = $this->getMockBuilder(Controller::class)->disableOriginalConstructor()->getMock();
         $controllerMock
             ->expects($callTimes)
             ->method('__call')

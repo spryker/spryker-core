@@ -7,37 +7,51 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 interface ProductToUrlInterface
 {
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
+    public function createUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updateUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlActive($idUrl);
+    public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+    public function activateUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer);
 
 }

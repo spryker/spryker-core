@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Graph\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException;
 use Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException;
@@ -22,7 +23,7 @@ use Spryker\Zed\Graph\GraphConfig;
  * @group Communication
  * @group GraphCommunicationFactoryTest
  */
-class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
+class GraphCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const GRAPH_NAME = 'graph name';
@@ -32,7 +33,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithObjectFromConfigMustThrowException()
     {
-        $this->setExpectedException(GraphAdapterNameIsAnObjectException::class);
+        $this->expectException(GraphAdapterNameIsAnObjectException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock($factory);
@@ -46,7 +47,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithInvalidAdapterNameFromConfigMustThrowException()
     {
-        $this->setExpectedException(InvalidGraphAdapterNameException::class);
+        $this->expectException(InvalidGraphAdapterNameException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock('not a class name');
@@ -60,7 +61,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithInvalidAdapterInstanceMustThrowException()
     {
-        $this->setExpectedException(InvalidGraphAdapterException::class);
+        $this->expectException(InvalidGraphAdapterException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock(get_class($factory));
@@ -87,7 +88,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConfigMock($return)
     {
-        $configMock = $this->getMock(GraphConfig::class, ['getGraphAdapterName']);
+        $configMock = $this->getMockBuilder(GraphConfig::class)->setMethods(['getGraphAdapterName'])->getMock();
         $configMock->method('getGraphAdapterName')->willReturn($return);
 
         return $configMock;

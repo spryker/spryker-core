@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,16 +29,6 @@ class MaintenanceController extends AbstractController
             'totalCount' => $this->getFacade()->getTotalCount(),
             'metaData' => $this->getFacade()->getMetaData(),
         ]);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function dropTimestampsAction()
-    {
-        $this->getFactory()->getCollectorFacade()->deleteSearchTimestamps();
-
-        return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }
 
     /**

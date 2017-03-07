@@ -10,7 +10,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -54,7 +54,7 @@ class EditController extends AbstractController
             }
 
             return $this->redirectResponse(
-                sprintf('/customer/view/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
         }
 

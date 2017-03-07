@@ -1,0 +1,25 @@
+{% if readOnly is not defined %}
+    {% set readOnly = false %}
+{% endif %}
+
+{% if not readOnly %}
+    <p>{{ 'Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.' }}</p>
+{% endif %}
+
+{{ form_row(form.key) }}
+
+{{ form_row(form.input_type) }}
+
+{{ form_row(form.is_super) }}
+
+<hr />
+
+<div class='form-group {% if form.values.vars.errors|length %}has-error{% endif %}'>
+    <h4>{{ form_label(form.values) }}</h4>
+    {{ form_widget(form.values) }}
+    {% if not readOnly %}
+        <span class="help-block">{{ 'You can add new values by pressing "Enter" after each element' | trans }}</span>
+    {% endif %}
+</div>
+
+{{ form_row(form.allow_input) }}

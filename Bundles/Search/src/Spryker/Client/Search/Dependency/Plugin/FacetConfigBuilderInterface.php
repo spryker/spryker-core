@@ -12,6 +12,8 @@ interface FacetConfigBuilderInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return $this
@@ -19,6 +21,8 @@ interface FacetConfigBuilderInterface
     public function addFacet(FacetConfigTransfer $facetConfigTransfer);
 
     /**
+     * @api
+     *
      * @param string $paramName
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
@@ -26,16 +30,22 @@ interface FacetConfigBuilderInterface
     public function get($paramName);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
     public function getAll();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getParamNames();
 
     /**
+     * @api
+     *
      * @param array $requestParameters
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
@@ -43,6 +53,8 @@ interface FacetConfigBuilderInterface
     public function getActive(array $requestParameters);
 
     /**
+     * @api
+     *
      * @param array $requestParameters
      *
      * @return array

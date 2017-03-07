@@ -25,7 +25,6 @@ class Customer extends AbstractBuilder implements BuilderInterface
         $customerData = [
             'first-name' => $this->requestTransfer->getCustomer()->getFirstName(),
             'last-name' => $this->requestTransfer->getCustomer()->getLastName(),
-            'company-name' => '',
             'gender' => $this->requestTransfer->getCustomer()->getGender(),
             'date-of-birth' => $this->requestTransfer->getCustomer()->getDob(),
             'ip-address' => $this->requestTransfer->getCustomer()->getIpAddress(),
@@ -33,14 +32,17 @@ class Customer extends AbstractBuilder implements BuilderInterface
                 'email' => $this->requestTransfer->getCustomer()->getEmail(),
                 'phone' => [
                     'direct-dial' => $this->requestTransfer->getCustomer()->getPhone(),
-                ]
+                ],
             ],
             'addresses' => [
                 (new Address($this->requestTransfer, Constants::REQUEST_MODEL_ADDRESS_TYPE_BILLING)),
                 (new Address($this->requestTransfer, Constants::REQUEST_MODEL_ADDRESS_TYPE_DELIVERY)),
             ],
-            'customer-allow-credit-inquiry' => $this->requestTransfer->getCustomer()->getAllowCreditInquiry()
+            'customer-allow-credit-inquiry' => $this->requestTransfer->getCustomer()->getAllowCreditInquiry(),
         ];
+        if (strlen($this->requestTransfer->getCustomer()->getCompany())) {
+            $customerData['company-name'] = $this->requestTransfer->getCustomer()->getCompany();
+        }
 
         if ($this->requestTransfer->getBankAccount() !== null) {
             $bankAccountBuilder = new BankAccount($this->requestTransfer);

@@ -47,7 +47,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getLocaleQueryContainer(),
+            $this->getStore()
         );
     }
 
@@ -146,6 +148,22 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getSalesAggregator()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     */
+    public function getLocaleQueryContainer()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::QUERY_CONTAINER_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::STORE);
     }
 
 }

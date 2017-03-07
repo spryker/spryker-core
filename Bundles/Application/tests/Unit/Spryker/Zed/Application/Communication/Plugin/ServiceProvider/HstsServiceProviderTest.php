@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHstsServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
  * @group ServiceProvider
  * @group HstsServiceProviderTest
  */
-class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
+class HstsServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -30,8 +31,8 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testDisabledHstsServiceProviderMustNotReturnHeader()
     {
-        $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
+        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
+        $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
 
         $eventMock->expects($this->once())
             ->method('isMasterRequest')
@@ -52,17 +53,17 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testHstsServiceProviderGeneratesHeader()
     {
-        $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
-        $responseMock = $this->getMock(Response::class);
-        $headersMock = $this->getMock(ResponseHeaderBag::class, ['set']);
+        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
+        $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
+        $responseMock = $this->getMockBuilder(Response::class)->getMock();
+        $headersMock = $this->getMockBuilder(ResponseHeaderBag::class)->setMethods(['set'])->getMock();
 
         $responseMock->headers = $headersMock;
 
         $hstsConfig = [
             'max_age' => 31536000,
             'include_sub_domains' => true,
-            'preload' => true
+            'preload' => true,
         ];
         $hstsString = 'max-age=31536000; includeSubDomains; preload';
 

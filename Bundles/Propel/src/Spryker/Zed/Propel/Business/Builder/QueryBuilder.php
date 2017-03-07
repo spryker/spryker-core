@@ -1,8 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Propel package - modified by Spryker Systems GmbH.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with the source code of the extended class.
+ *
+ * @license MIT License
  */
 
 namespace Spryker\Zed\Propel\Business\Builder;
@@ -48,6 +51,11 @@ SCRIPT;
         return $script;
     }
 
+    /**
+     * @param \Propel\Generator\Model\Column $col
+     *
+     * @return string
+     */
     protected function addFilterByColBetween(Column $col)
     {
         $script = '';
@@ -67,7 +75,7 @@ SCRIPT;
      *    'min' => 3, 'max' => 5
      * ]
      *
-     * 'min' and 'max' are optional, when neither is specified, thwows \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
+     * 'min' and 'max' are optional, when neither is specified, throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
      *
      * @return \$this|$queryClassName The current query, for fluid interface
      */
@@ -116,19 +124,32 @@ SCRIPT;
         return $script;
     }
 
+    /**
+     * @return array
+     */
+    protected function getAllowedArrayFilters()
+    {
+        return [
+            'Criteria::IN',
+            'Criteria::NOT_IN',
+        ];
+    }
 
     /**
      * Adds the filterByCol method for this object.
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string &$script
      * @param \Propel\Generator\Model\Column $col
      *
      * @return void
      */
     protected function addFilterByCol(&$script, Column $col)
     {
+        $allowedArrayFilters = $this->getAllowedArrayFilters();
+        $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
+
         $this->declareClass('Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException');
-        $this->declareClass('Spryker\\Zed\\Propel\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
+        $this->declareClass('Spryker\\Zed\\PropelOrm\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
 
         $colPhpName = $col->getPhpName();
         $colName = $col->getName();
@@ -224,15 +245,15 @@ SCRIPT;
         if (is_array(\$$variableName)) {
             \$useMinMax = false;
             if (isset(\${$variableName}['min'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::GREATER_EQUAL) {
-                    throw new AmbiguousComparisonException('\\'min\\' requires explicit Criteria::GREATER_EQUAL or SprykerCriteria::BETWEEN when \\'max\\' is also needed as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::GREATER_EQUAL && \$comparison != Criteria::GREATER_THAN) {
+                    throw new AmbiguousComparisonException('\\'min\\' requires explicit Criteria::GREATER_EQUAL, Criteria::GREATER_THAN or SprykerCriteria::BETWEEN when \\'max\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['min'], Criteria::GREATER_EQUAL);
                 \$useMinMax = true;
             }
             if (isset(\${$variableName}['max'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::LESS_EQUAL) {
-                    throw new AmbiguousComparisonException('\\'max\\' requires explicit Criteria::LESS_EQUAL or SprykerCriteria::BETWEEN when \\'min\\' is also needed as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::LESS_EQUAL && \$comparison != Criteria::LESS_THAN) {
+                    throw new AmbiguousComparisonException('\\'max\\' requires explicit Criteria::LESS_EQUAL, Criteria::LESS_THAN or SprykerCriteria::BETWEEN when \\'min\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['max'], Criteria::LESS_EQUAL);
                 \$useMinMax = true;
@@ -241,8 +262,8 @@ SCRIPT;
                 return \$this;
             }
 
-            if (\$comparison != Criteria::IN) {
-                throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+            if (!in_array(\$comparison, [$implodedArrayComparisons])) {
+                throw new AmbiguousComparisonException('\$$variableName of type array requires one of [$implodedArrayComparisons] as comparison criteria.');
             }
         }";
         } elseif ($col->getType() == PropelTypes::OBJECT) {
@@ -288,6 +309,37 @@ SCRIPT;
 
             return \$this;
         }";
+        } elseif ($col->isSetType()) {
+            $this->declareClasses(
+                'Propel\Common\Util\SetColumnConverter',
+                'Propel\Common\Exception\SetColumnConverterException'
+            );
+            $script .= "
+        \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
+        try {
+            \${$variableName} = SetColumnConverter::convertToInt(\${$variableName}, \$valueSet);
+        } catch (SetColumnConverterException \$e) {
+            throw new PropelException(sprintf('Value \"%s\" is not accepted in this set column', \$e->getValue()), \$e->getCode(), \$e);
+        }
+        if (null === \$comparison || \$comparison == Criteria::CONTAINS_ALL) {
+            if (\${$variableName} === '0') {
+                return \$this;
+            }
+            \$comparison = Criteria::BINARY_ALL;
+        } elseif (\$comparison == Criteria::CONTAINS_SOME || \$comparison == Criteria::IN) {
+            if (\${$variableName} === '0') {
+                return \$this;
+            }
+            \$comparison = Criteria::BINARY_AND;
+        } elseif (\$comparison == Criteria::CONTAINS_NONE) {
+            \$key = \$this->getAliasedColName($qualifiedName);
+            if (\${$variableName} !== '0') {
+                \$this->add(\$key, \${$variableName}, Criteria::BINARY_NONE);
+            }
+            \$this->addOr(\$key, null, Criteria::ISNULL);
+
+            return \$this;
+        }";
         } elseif ($col->getType() == PropelTypes::ENUM) {
             $script .= "
         \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
@@ -297,8 +349,8 @@ SCRIPT;
             }
             \$$variableName = array_search(\$$variableName, \$valueSet);
         } elseif (is_array(\$$variableName)) {
-            if (\$comparison != Criteria::IN) {
-                throw new AmbiguousComparisonException('array requires explicit Criteria::IN as comparison criteria.');
+            if (!in_array(\$comparison, [$implodedArrayComparisons])) {
+                throw new AmbiguousComparisonException('array requires one of [$implodedArrayComparisons] as comparison criteria.');
             }
             \$convertedValues = array();
             foreach (\$$variableName as \$value) {
@@ -311,12 +363,12 @@ SCRIPT;
         }";
         } elseif ($col->isTextType()) {
             $script .= "
-        if (\$comparison == Criteria::LIKE) {
+        if (\$comparison == Criteria::LIKE || \$comparison == Criteria::ILIKE) {
             \$$variableName = str_replace('*', '%', \$$variableName);
         }
 
-        if (\$comparison !== Criteria::IN && is_array(\$$variableName)) {
-            throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+        if (is_array(\$$variableName) && !in_array(\$comparison, [$implodedArrayComparisons])) {
+            throw new AmbiguousComparisonException('\$$variableName of type array requires one of [$implodedArrayComparisons] as comparison criteria.');
         }";
         } elseif ($col->isBooleanType()) {
             $script .= "

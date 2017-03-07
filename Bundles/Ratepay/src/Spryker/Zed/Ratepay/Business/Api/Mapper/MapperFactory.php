@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,10 +11,13 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
@@ -35,7 +39,15 @@ class MapperFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\QuoteHeadMapper
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\HeadMapper
      */
     public function getHeadMapper()
     {
@@ -46,8 +58,38 @@ class MapperFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PaymentInitHeadMapper
+     */
+    public function getPaymentInitHeadMapper(
+        RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
+    ) {
+        return new PaymentInitHeadMapper(
+            $ratepayPaymentInitTransfer,
+            $this->getConfig(),
+            $this->requestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PaymentRequestHeadMapper
+     */
+    public function getPaymentRequestHeadMapper(
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
+    ) {
+        return new PaymentRequestHeadMapper(
+            $ratepayPaymentRequestTransfer,
+            $this->getConfig(),
+            $this->requestTransfer
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentData
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\QuoteHeadMapper
      */
@@ -99,18 +141,15 @@ class MapperFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\BankAccountMapper
      */
     public function getBankAccountMapper(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new BankAccountMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
+            $ratepayPaymentRequestTransfer,
             $this->requestTransfer
         );
     }
@@ -125,84 +164,85 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new BasketItemMapper(
             $itemTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\BasketMapper
      */
     public function getBasketMapper(
-        $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new BasketMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $ratepayPaymentRequestTransfer,
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param bool $needToSendShipping
+     * @param float|int $discountTaxRate
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PartialBasketMapper
      */
     public function getPartialBasketMapper(
-        $quoteTransfer,
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
         $ratepayPaymentTransfer,
-        array $orderItems
+        $needToSendShipping = false,
+        $discountTaxRate = 0
     ) {
         return new PartialBasketMapper(
-            $quoteTransfer,
+            $orderTransfer,
+            $partialOrderTransfer,
             $ratepayPaymentTransfer,
-            $orderItems,
-            $this->requestTransfer
+            $needToSendShipping,
+            $discountTaxRate,
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\CustomerMapper
      */
     public function getCustomerMapper(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new CustomerMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
+            $ratepayPaymentRequestTransfer,
             $this->requestTransfer
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PaymentMapper
      */
     public function getPaymentMapper(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new PaymentMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $ratepayPaymentRequestTransfer,
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\InstallmentCalculationMapper
      */
@@ -213,41 +253,38 @@ class MapperFactory extends AbstractBusinessFactory
         return new InstallmentCalculationMapper(
             $quoteTransfer,
             $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\InstallmentDetailMapper
      */
     public function getInstallmentDetailMapper(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new InstallmentDetailMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $ratepayPaymentRequestTransfer,
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\InstallmentPaymentMapper
      */
     public function getInstallmentPaymentMapper(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
     ) {
         return new InstallmentPaymentMapper(
-            $quoteTransfer,
-            $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $ratepayPaymentRequestTransfer,
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 

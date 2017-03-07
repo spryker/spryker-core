@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\PersonalDataTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()

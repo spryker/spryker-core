@@ -8,20 +8,18 @@
 namespace Spryker\Shared\Collector\Code\Reader\KeyValue;
 
 use Spryker\Shared\Collector\Code\Reader\ReaderInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
+use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface;
 
 class RedisReader implements ReaderInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
+     * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface
      */
     protected $redis;
 
     /**
-     * Constructor
-     *
-     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
+     * @param \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
      */
     public function __construct(ReadWriteInterface $kvAdapter)
     {

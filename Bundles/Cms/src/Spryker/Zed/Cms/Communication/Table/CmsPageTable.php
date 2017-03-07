@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -44,7 +44,7 @@ class CmsPageTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            CmsQueryContainer::URL => 'url',
+            CmsQueryContainer::URL => 'URL',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             CmsQueryContainer::IS_ACTIVE => 'Active',
             self::ACTIONS => self::ACTIONS,
@@ -82,6 +82,7 @@ class CmsPageTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
+
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],

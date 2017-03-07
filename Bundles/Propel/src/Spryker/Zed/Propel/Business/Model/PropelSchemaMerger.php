@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Propel\Business\Model;
 
-use Spryker\Zed\Library\Generator\StringGenerator;
+use ArrayObject;
+use DOMDocument;
+use SimpleXMLElement;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -63,7 +66,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createXmlElement(SplFileInfo $schemaFile)
     {
-        $xml = new \SimpleXMLElement($schemaFile->getContents());
+        $xml = new SimpleXMLElement($schemaFile->getContents());
 
         return $xml;
     }
@@ -103,11 +106,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement(sprintf(
+        return new SimpleXMLElement(sprintf(
             '<database
             name="%s"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+            xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
             namespace="%s"
             package="%s"
             ></database>',
@@ -124,7 +127,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createSchemaXmlElements(array $schemaFiles)
     {
-        $mergeSourceXmlElements = new \ArrayObject();
+        $mergeSourceXmlElements = new ArrayObject();
         foreach ($schemaFiles as $schemaFile) {
             $mergeSourceXmlElements[] = $this->createXmlElement($schemaFile);
         }
@@ -138,7 +141,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return string
      */
-    private function mergeSchema(\SimpleXMLElement $mergeTargetXmlElement, $schemaXmlElements)
+    private function mergeSchema(SimpleXMLElement $mergeTargetXmlElement, $schemaXmlElements)
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
@@ -152,12 +155,18 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return string
      */
-    private function prettyPrint(\SimpleXMLElement $xml)
+    private function prettyPrint(SimpleXMLElement $xml)
     {
-        $dom = new \DOMDocument('1.0');
+        $dom = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
+
+        foreach (['unique', 'foreign-key'] as $tagName) {
+            foreach ($dom->getElementsByTagName($tagName) as $item) {
+                $item->parentNode->appendChild($item->parentNode->removeChild($item));
+            }
+        }
 
         $callback = function ($a) {
             $multiplier = (strlen($a[1]) / 2) * 4;
@@ -174,7 +183,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return \SimpleXMLElement
      */
-    private function mergeSchemasRecursive(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
+    private function mergeSchemasRecursive(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement)
     {
         $toXmlElements = $this->retrieveToXmlElements($toXmlElement);
 
@@ -197,9 +206,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return \ArrayObject
      */
-    private function retrieveToXmlElements(\SimpleXMLElement $toXmlElement)
+    private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {
-        $toXmlElementNames = new \ArrayObject();
+        $toXmlElementNames = new ArrayObject();
         $toXmlElementChildren = $toXmlElement->children();
 
         foreach ($toXmlElementChildren as $toXmlChildTagName => $toXmlChildElement) {
@@ -216,7 +225,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return string
      */
-    private function getElementName(\SimpleXMLElement $fromXmlChildElement, $tagName)
+    private function getElementName(SimpleXMLElement $fromXmlChildElement, $tagName)
     {
         $elementName = (array)$fromXmlChildElement->attributes();
         $elementName = current($elementName);
@@ -225,8 +234,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $generator = new StringGenerator();
-            $elementName = 'anonymous_' . $generator->generateRandomString();
+            $utilTextService = new UtilTextService();
+            $elementName = 'anonymous_' . $utilTextService->generateRandomString(32);
         }
 
         return $elementName;
@@ -240,7 +249,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return \SimpleXMLElement
      */
-    private function mergeAttributes(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
+    private function mergeAttributes(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement)
     {
         $toXmlAttributes = (array)$toXmlElement->attributes();
         if (count($toXmlAttributes) > 0) {

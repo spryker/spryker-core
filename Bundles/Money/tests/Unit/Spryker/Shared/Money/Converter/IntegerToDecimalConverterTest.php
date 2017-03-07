@@ -30,7 +30,7 @@ class IntegerToDecimalConverterTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testConvertShouldReturnInteger($input, $expected)
+    public function testConvertValidInput($input, $expected)
     {
         $integerToDecimalConverter = new IntegerToDecimalConverter();
 
@@ -49,14 +49,15 @@ class IntegerToDecimalConverterTest extends PHPUnit_Framework_TestCase
             [1000, 10.00],
             [100, 1.00],
             [10, 0.10],
-            [1, 0.01]
+            [1, 0.01],
+            [1799, 17.99],
         ];
     }
 
     /**
      * @return void
      */
-    public function testConvertShouldThrowExceptionIfValueNotInt()
+    public function testConvertInvalidInput()
     {
         $this->expectException(InvalidConverterArgumentException::class);
 

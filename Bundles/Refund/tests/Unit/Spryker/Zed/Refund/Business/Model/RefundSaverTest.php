@@ -15,6 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -28,7 +29,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group Model
  * @group RefundSaverTest
  */
-class RefundSaverTest extends \PHPUnit_Framework_TestCase
+class RefundSaverTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -73,7 +74,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
     {
         $salesOrderItemEntityMock = $this->getSalesOrderItemEntityMock();
 
-        $salesOrderItemQueryMock = $this->getMock(SpySalesOrderItemQuery::class, ['findOneByIdSalesOrderItem']);
+        $salesOrderItemQueryMock = $this->getMockBuilder(SpySalesOrderItemQuery::class)->setMethods(['findOneByIdSalesOrderItem'])->getMock();
         $salesOrderItemQueryMock->method('findOneByIdSalesOrderItem')->willReturn($salesOrderItemEntityMock);
 
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
@@ -99,7 +100,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
     {
         $salesExpenseEntityMock = $this->getSalesExpenseEntityMock();
 
-        $salesExpenseQueryMock = $this->getMock(SpySalesExpenseQuery::class, ['findOneByIdSalesExpense']);
+        $salesExpenseQueryMock = $this->getMockBuilder(SpySalesExpenseQuery::class)->setMethods(['findOneByIdSalesExpense'])->getMock();
         $salesExpenseQueryMock->method('findOneByIdSalesExpense')->willReturn($salesExpenseEntityMock);
 
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
@@ -138,10 +139,13 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
     protected function getRefundSaverMock($refundEntity, $salesQueryContainerMock)
     {
         if ($refundEntity) {
-            $refundSaverMock = $this->getMock(RefundSaver::class, ['buildRefundEntity', 'findOneByIdSalesOrderItem'], [$salesQueryContainerMock]);
+            $refundSaverMock = $this->getMockBuilder(RefundSaver::class)->setMethods(['buildRefundEntity'])->setConstructorArgs([$salesQueryContainerMock])->getMock();
             $refundSaverMock->expects($this->once())->method('buildRefundEntity')->willReturn($refundEntity);
         } else {
-            $refundSaverMock = $this->getMock(RefundSaver::class, ['saveRefundEntity', 'updateOrderItems', 'updateExpenses'], [$this->getSalesQueryContainerMock()]);
+            $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
+                ->setMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
+                ->setConstructorArgs([$this->getSalesQueryContainerMock()])
+                ->getMock();
             $refundSaverMock->expects($this->once())->method('saveRefundEntity');
         }
 
@@ -155,7 +159,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRefundEntity($affectedColumns)
     {
-        $refundEntityMock = $this->getMock(SpyRefund::class);
+        $refundEntityMock = $this->getMockBuilder(SpyRefund::class)->getMock();
         $refundEntityMock->method('save')->willReturn($affectedColumns);
 
         return $refundEntityMock;
@@ -166,7 +170,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesQueryContainerMock()
     {
-        $salesQueryContainerMock = $this->getMock(SalesQueryContainerInterface::class);
+        $salesQueryContainerMock = $this->getMockBuilder(SalesQueryContainerInterface::class)->getMock();
         $salesQueryContainerMock->method('getConnection')->willReturn($this->getPropelConnectionMock());
 
         return $salesQueryContainerMock;
@@ -177,7 +181,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesOrderItemEntityMock()
     {
-        $salesOrderItemEntityMock = $this->getMock(SpySalesOrderItem::class, ['save', 'setCanceledAmount'], [], '', false);
+        $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesOrderItemEntityMock->method('save')->willReturn(1);
         $salesOrderItemEntityMock->expects($this->once())->method('setCanceledAmount');
 
@@ -189,7 +193,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesExpenseEntityMock()
     {
-        $salesExpenseEntityMock = $this->getMock(SpySalesExpense::class, ['save', 'setCanceledAmount'], [], '', false);
+        $salesExpenseEntityMock = $this->getMockBuilder(SpySalesExpense::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesExpenseEntityMock->method('save')->willReturn(1);
         $salesExpenseEntityMock->expects($this->once())->method('setCanceledAmount');
 
@@ -201,7 +205,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPropelConnectionMock()
     {
-        $propelConnectionMock = $this->getMock(ConnectionInterface::class);
+        $propelConnectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
         $propelConnectionMock->method('commit')->willReturnCallback([$this, 'commit']);
 
         return $propelConnectionMock;

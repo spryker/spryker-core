@@ -9,8 +9,10 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Request\Service;
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\ProfileAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\AbstractFacadeTest;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ProfileResponse;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 
 /**
  * @group Functional
@@ -32,7 +34,8 @@ class ProfileTest extends AbstractFacadeTest
     {
         Test::setUp();
 
-        $this->converterFactory = new ConverterFactory();
+        $ratepayToMoneyBridge = new RatepayToMoneyBridge(new MoneyFacade());
+        $this->converterFactory = new ConverterFactory($ratepayToMoneyBridge);
     }
 
     /**
@@ -116,6 +119,9 @@ class ProfileTest extends AbstractFacadeTest
         return new ProfileResponse($adapterMock->sendRequest($request));
     }
 
+    /**
+     * @return void
+     */
     protected function testResponseInstance()
     {
         $this->assertInstanceOf('Generated\Shared\Transfer\RatepayProfileResponseTransfer', $this->responseTransfer);
@@ -158,7 +164,7 @@ class ProfileTest extends AbstractFacadeTest
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */
@@ -167,7 +173,7 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function getRatepayPaymentMethodTransfer()
     {

@@ -4,10 +4,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Functional\Spryker\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -50,7 +50,7 @@ class DiscountFacadeCalculateTest extends Test
      */
     public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts()
     {
-        $discountEntity = $this->createDiscountFixtures(
+        $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
             'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
@@ -73,7 +73,7 @@ class DiscountFacadeCalculateTest extends Test
      */
     public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount()
     {
-        $discountEntity = $this->createDiscountFixtures(
+        $discountEntity = $this->createDiscountEntity(
             '',
             'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
@@ -96,7 +96,7 @@ class DiscountFacadeCalculateTest extends Test
      */
     public function testCalculateWithIncorrectDecisionRuleShouldSkipDiscount()
     {
-        $this->createDiscountFixtures(
+        $this->createDiscountEntity(
             'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
             'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
@@ -116,19 +116,17 @@ class DiscountFacadeCalculateTest extends Test
      */
     public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce()
     {
-         $discountEntity = $this->createDiscountFixtures(
-             '',
-             'sku = "*"',
-             DiscountConstants::TYPE_VOUCHER
-         );
+        $discountEntity = $this->createDiscountEntity(
+            '',
+            'sku = "*"',
+            DiscountConstants::TYPE_VOUCHER
+        );
 
         $code1 = 'code1';
         $code2 = 'code2';
-        $code3 = 'code3';
 
         $this->createVoucherCode($code1, $discountEntity);
         $this->createVoucherCode($code2, $discountEntity);
-        $this->createVoucherCode($code3, $discountEntity);
 
         $quoteTransfer = $this->createQuoteTransfer();
 
@@ -180,12 +178,11 @@ class DiscountFacadeCalculateTest extends Test
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
-    protected function createDiscountFixtures(
+    protected function createDiscountEntity(
         $decisionRuleQueryString,
         $collectorQueryString,
         $discountType = DiscountConstants::TYPE_CART_RULE
     ) {
-
         $discountVoucherPool = new SpyDiscountVoucherPool();
         $discountVoucherPool->setIsActive(true);
         $discountVoucherPool->setName('test');
@@ -201,8 +198,8 @@ class DiscountFacadeCalculateTest extends Test
         $discountEntity->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountEntity->setDiscountType($discountType);
         $discountEntity->setIsActive(1);
-        $discountEntity->setValidFrom(new \DateTime('yesterday'));
-        $discountEntity->setValidTo(new \DateTime('tomorrow'));
+        $discountEntity->setValidFrom(new DateTime('yesterday'));
+        $discountEntity->setValidTo(new DateTime('tomorrow'));
         $discountEntity->save();
 
         return $discountEntity;

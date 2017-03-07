@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -34,6 +33,7 @@ class MethodForm extends AbstractType
     const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     const OPTION_TAX_SETS = 'option_tax_sets';
+    const OPTION_MONEY_FACADE = 'money facade';
 
     /**
      * @return string
@@ -53,7 +53,7 @@ class MethodForm extends AbstractType
     {
         $this->addCarrierField($builder, $options)
             ->addNameField($builder)
-            ->addDefaultPriceField($builder)
+            ->addDefaultPriceField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -63,24 +63,35 @@ class MethodForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         $resolver->setRequired(self::OPTION_CARRIER_CHOICES);
         $resolver->setRequired(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_PRICE_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_TAX_SETS);
+        $resolver->setRequired(self::OPTION_MONEY_FACADE);
 
-        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, ChoiceList::class);
+        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, 'array');
+        $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, 'array');
+        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, 'array');
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -106,25 +117,46 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addDefaultPriceField(FormBuilderInterface $builder)
+    protected function addDefaultPriceField(FormBuilderInterface $builder, $options)
     {
         $builder->add(self::FIELD_DEFAULT_PRICE, 'money', [
             'label' => 'Default price',
+            'required' => false,
         ]);
 
+        $moneyFacade = $this->getMoneyFacade($options);
+
         $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
-            function ($originalPrice) {
-                return CurrencyManager::getInstance()->convertCentToDecimal($originalPrice);
+            function ($originalPrice) use ($moneyFacade) {
+                if ($originalPrice === null) {
+                    return $originalPrice;
+                }
+
+                return $moneyFacade->convertIntegerToDecimal($originalPrice);
             },
-            function ($submittedPrice) {
-                return CurrencyManager::getInstance()->convertDecimalToCent($submittedPrice);
+            function ($submittedPrice) use ($moneyFacade) {
+                if ($submittedPrice === null) {
+                    return $submittedPrice;
+                }
+                return $moneyFacade->convertDecimalToInteger($submittedPrice);
             }
         ));
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected function getMoneyFacade(array $options)
+    {
+        return $options[static::OPTION_MONEY_FACADE];
     }
 
     /**
@@ -156,7 +188,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 
@@ -174,7 +206,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, 'choice', [
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 
@@ -192,7 +224,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 

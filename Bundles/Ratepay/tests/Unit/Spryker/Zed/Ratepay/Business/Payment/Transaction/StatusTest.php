@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Payment\Transaction;
 
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use \Generated\Shared\Transfer\OrderTransfer;
@@ -24,7 +25,7 @@ use \Spryker\Zed\Ratepay\Business\Status\TransactionStatus;
  * @group Transaction
  * @group StatusTest
  */
-class StatusTest extends \PHPUnit_Framework_TestCase
+class StatusTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -143,8 +144,8 @@ class StatusTest extends \PHPUnit_Framework_TestCase
      */
     protected function getQueryContainerMock($paymentResultCode)
     {
-        $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst']);
+        $queryContainer = $this->getMockBuilder(RatepayQueryContainerInterface::class)->getMock();
+        $queryPaymentsMock = $this->getMockBuilder(SpyPaymentRatepayQuery::class)->setMethods(['findByFkSalesOrder', 'getFirst'])->getMock();
 
         $ratepayPaymentEntity = new SpyPaymentRatepay();
 

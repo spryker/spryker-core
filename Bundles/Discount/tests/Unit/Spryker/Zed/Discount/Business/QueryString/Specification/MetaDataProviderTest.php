@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
@@ -21,7 +22,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  * @group Specification
  * @group MetaDataProviderTest
  */
-class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
+class MetaDataProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -116,7 +117,6 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $logicalOperators);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators|null $comparatorOperators
@@ -152,7 +152,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRulePluginMock()
     {
-        return $this->getMock(DecisionRulePluginInterface::class);
+        return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
 
     /**
@@ -170,7 +170,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createLogicalComparatorsMock()
     {
-        return $this->getMock(LogicalComparators::class);
+        return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
 
 }

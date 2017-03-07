@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -172,18 +175,6 @@ interface CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createPageUrl(PageTransfer $pageTransfer, $url);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
@@ -298,5 +289,117 @@ interface CmsFacadeInterface
      * @return void
      */
     public function deleteBlockById($idCmsBlock);
+
+    /**
+     * Specification:
+     * - Reads cms page placeholders with translations.
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
+     */
+    public function findPageGlossaryAttributes($idCmsPage);
+
+    /**
+     * Specification:
+     * - Saves cms glossary placeholders
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
+
+    /**
+     * Specification:
+     * - Creates new Cms page
+     * - Touches cms collector
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return int
+     */
+    public function createPage(CmsPageTransfer $cmsPageTransfer);
+
+    /**
+     * Specification:
+     * - Reads cms page by given id
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer|null
+     */
+    public function findCmsPageById($idCmsPage);
+
+    /**
+     * Specification:
+     * - Updates existing cms page with new data
+     * - Touches cms collector
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    public function updatePage(CmsPageTransfer $cmsPageTransfer);
+
+    /**
+     * Specification:
+     * - Activates page, set active flat to 1 in database
+     * - Touches cms collector
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function activatePage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Deactivates page, set active flat to 0 in database
+     * - Touches cms collector
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deactivatePage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Creates prefix to be appended in front of url
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+
+    /**
+     * Specification:
+     * - Creates page url for persistence, from give localized data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     *
+     * @return string
+     */
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
 }

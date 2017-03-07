@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\{bundle}\Dependency\Facade;
@@ -15,7 +16,7 @@ class {bundle}To{toBundle}Bridge implements {bundle}To{toBundle}Interface
     protected ${toBundleVariable}Facade;
 
     /**
-     * @param \Spryker\Zed\{toBundle}\Business\{toBundle}Facade ${toBundleVariable}FacadeInterface
+     * @param \Spryker\Zed\{toBundle}\Business\{toBundle}FacadeInterface ${toBundleVariable}Facade
      */
     public function __construct(${toBundleVariable}Facade)
     {

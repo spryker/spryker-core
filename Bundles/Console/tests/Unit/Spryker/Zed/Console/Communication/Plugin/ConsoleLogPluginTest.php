@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Console\Communication\Plugin;
 
+use Exception;
+use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin;
 use Symfony\Component\Console\Command\Command;
@@ -25,7 +27,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  * @group Plugin
  * @group ConsoleLogPluginTest
  */
-class ConsoleLogPluginTest extends \PHPUnit_Framework_TestCase
+class ConsoleLogPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -75,7 +77,7 @@ class ConsoleLogPluginTest extends \PHPUnit_Framework_TestCase
         $loggerMock->expects($this->once())->method('error');
 
         $consoleLogPlugin = $this->getConsoleLogPluginMock($loggerMock);
-        $event = new ConsoleExceptionEvent(new Command('test-command'), new ArrayInput([]), new ConsoleOutput(), new \Exception(), 0);
+        $event = new ConsoleExceptionEvent(new Command('test-command'), new ArrayInput([]), new ConsoleOutput(), new Exception(), 0);
 
         $consoleLogPlugin->onConsoleException($event);
     }

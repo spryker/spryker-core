@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
+use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
@@ -28,7 +29,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
      */
     public function testDecisionRuleShouldReturnTrueIfGivenDateMatchesClause()
     {
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $currentMonth) {
@@ -53,14 +54,9 @@ class MonthDecisionRuleTest extends BaseRuleTester
      */
     protected function createMonthDecisionRule(
         ComparatorOperatorsInterface $comparatorMock,
-        \DateTime $currentDateTime
+        DateTime $currentDateTime
     ) {
-
-        $calendarWeekDecisionRule = $this->getMock(
-            MonthDecisionRule::class,
-            ['getCurrentDateTime'],
-            [$comparatorMock]
-        );
+        $calendarWeekDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
 
         $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
 

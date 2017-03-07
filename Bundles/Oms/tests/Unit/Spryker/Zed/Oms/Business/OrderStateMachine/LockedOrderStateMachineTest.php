@@ -7,10 +7,14 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Oms\Persistence\Base\SpyOmsStateMachineLockQuery;
+use DateTime;
+use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Exception\PropelException;
+use ReflectionMethod;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
@@ -26,7 +30,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  * @group OrderStateMachine
  * @group LockedOrderStateMachineTest
  */
-class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
+class LockedOrderStateMachineTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -140,7 +144,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $this->stateMachineMock->expects($this->once())
             ->method($methodToTest)
-            ->willThrowException(new \Exception('Something bad happened'));
+            ->willThrowException(new Exception('Something bad happened'));
 
         $this->expectTriggerRelease($expectedIdentifier);
 
@@ -174,7 +178,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $lockedStateMachine = $this->createLockedStateMachine();
 
-        $generateIdentifierMethod = new \ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
+        $generateIdentifierMethod = new ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
         $generateIdentifierMethod->setAccessible(true);
 
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
@@ -198,7 +202,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -206,7 +210,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $stateMachineLock->expects($this->once())
             ->method('setExpires')
-            ->with($this->isInstanceOf(\DateTime::class));
+            ->with($this->isInstanceOf(DateTime::class));
 
         $stateMachineLock->expects($this->once())
             ->method('save')
@@ -224,7 +228,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveFails($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -232,7 +236,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $stateMachineLock->expects($this->once())
             ->method('setExpires')
-            ->with($this->isInstanceOf(\DateTime::class));
+            ->with($this->isInstanceOf(DateTime::class));
 
         $stateMachineLock->expects($this->once())
             ->method('save')
@@ -260,7 +264,6 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
             ->willReturn($queryMock);
     }
 
-
     /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
      */
@@ -273,7 +276,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createStateMachineMock()
     {
@@ -294,11 +297,11 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTriggerLockerMock()
     {
-        $this->triggerLockerMock = $this->getMock(
-            TriggerLocker::class,
-            ['createStateMachineLockEntity'],
-            [$this->createOmsQueryContainerMock(), $this->createOmsConfig()]
-        );
+        $this->triggerLockerMock = $this->getMockBuilder(TriggerLocker::class)
+            ->setMethods(['createStateMachineLockEntity'])
+            ->setConstructorArgs([$this->createOmsQueryContainerMock(), $this->createOmsConfig()])
+            ->getMock();
+
         return $this->triggerLockerMock;
     }
 
@@ -307,12 +310,10 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createOmsQueryContainerMock()
     {
-        $this->omsQueryContainerMock = $this->getMock(
-            OmsQueryContainer::class,
-            [
-                'queryLockItemsByIdentifier'
-            ]
-        );
+        $this->omsQueryContainerMock = $this->getMockBuilder(OmsQueryContainer::class)
+            ->setMethods(['queryLockItemsByIdentifier'])
+            ->getMock();
+
         return $this->omsQueryContainerMock;
     }
 
@@ -321,19 +322,18 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createOmsQueryMock()
     {
-        $this->omsQueryMock = $this->getMock(SpyOmsStateMachineLockQuery::class, ['count', 'delete']);
+        $this->omsQueryMock = $this->getMockBuilder(SpyOmsStateMachineLockQuery::class)->setMethods(['count', 'delete'])->getMock();
         return $this->omsQueryMock;
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createSpyOmsStateMachineLockMock()
+    protected function createOmsStateMachineLockEntityMock()
     {
-        $this->omsStateMachineLockMock = $this->getMock(
-            SpyOmsStateMachineLock::class,
-            ['setIdentifier', 'setExpires', 'save']
-        );
+        $this->omsStateMachineLockMock = $this->getMockBuilder(SpyOmsStateMachineLock::class)
+            ->setMethods(['setIdentifier', 'setExpires', 'save'])
+            ->getMock();
 
         return $this->omsStateMachineLockMock;
     }

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Yves\Kernel\Container;
@@ -20,7 +21,7 @@ use Unit\Spryker\Yves\Kernel\Fixtures\ConcreteFactory;
  * @group Kernel
  * @group AbstractFactoryTest
  */
-class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_KEY = 'test';
@@ -91,7 +92,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $factory = new ConcreteFactory();
         $factory->setContainer($container);
-        $this->setExpectedException(ContainerKeyNotFoundException::class);
+        $this->expectException(ContainerKeyNotFoundException::class);
 
         $factory->getProvidedDependency(self::TEST_KEY);
     }

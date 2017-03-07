@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Tax\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
  * @group Model
  * @group TaxCalculatorHelperTest
  */
-class TaxCalculatorHelperTest extends \PHPUnit_Framework_TestCase
+class TaxCalculatorHelperTest extends PHPUnit_Framework_TestCase
 {
 
     /**

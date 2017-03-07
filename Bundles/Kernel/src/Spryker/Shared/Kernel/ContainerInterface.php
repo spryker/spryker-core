@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Kernel;
 
-interface ContainerInterface extends \ArrayAccess
+use ArrayAccess;
+
+interface ContainerInterface extends ArrayAccess
 {
 
     /**

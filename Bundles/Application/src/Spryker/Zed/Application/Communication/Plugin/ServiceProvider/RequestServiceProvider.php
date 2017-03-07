@@ -45,7 +45,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function boot(Application $app)
     {
         $app->before(function (Request $request) {
-            if ($request->server->get('argv', false)) {
+            if ($this->isCli() && $request->server->get('argv', false)) {
                 $this->parseCliRequestData($request);
             } else {
                 $this->parseRequestData($request);
@@ -112,6 +112,14 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
         } else {
             $request->attributes->set(self::BUNDLE, $requestUriParts[0]);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCli()
+    {
+        return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
     }
 
 }

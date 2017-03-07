@@ -10,6 +10,7 @@ class PathFinder implements PathFinderInterface
 {
 
     const SAPI_CLI = 'cli';
+    const SAPI_PHPDBG = 'phpdbg';
     const DOCUMENT_URI = 'DOCUMENT_URI';
     const ARGV = 'argv';
 
@@ -18,7 +19,7 @@ class PathFinder implements PathFinderInterface
      */
     public function getCurrentExecutionPath()
     {
-        if (PHP_SAPI !== self::SAPI_CLI) {
+        if (PHP_SAPI !== self::SAPI_CLI && PHP_SAPI !== self::SAPI_PHPDBG) {
             return $_SERVER[self::DOCUMENT_URI];
         }
 

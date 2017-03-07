@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeTest;
 
+use ErrorException;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -18,6 +19,8 @@ class CodeTester
     const OPTION_INITIALIZE = 'initialize';
 
     const OPTION_GROUP = 'group';
+
+    const OPTION_TYPE_EXCLUDE = 'exclude';
 
     /**
      * @var string
@@ -57,7 +60,7 @@ class CodeTester
                 $message = 'This bundle does not exist';
             }
 
-            throw new \ErrorException($message);
+            throw new ErrorException($message);
         }
 
         $this->runTestCommand($path, $options);
@@ -116,19 +119,23 @@ class CodeTester
             $config .= ' -c ' . $pathToFiles;
         }
 
-        if ($options[self::OPTION_GROUP]) {
-            $config .= ' -g ' . $options[self::OPTION_GROUP];
+        if ($options[static::OPTION_GROUP]) {
+            $config .= ' -g ' . $options[static::OPTION_GROUP];
         }
 
-        if ($options[self::OPTION_VERBOSE]) {
+        if ($options[static::OPTION_TYPE_EXCLUDE]) {
+            $config .= ' -x ' . $options[static::OPTION_TYPE_EXCLUDE];
+        }
+
+        if ($options[static::OPTION_VERBOSE]) {
             $config .= ' -v';
         }
 
-        if ($options[self::OPTION_INITIALIZE]) {
+        if ($options[static::OPTION_INITIALIZE]) {
             $command = 'vendor/bin/codecept build';
             $process = new Process($command, $this->applicationRoot, null, null, 4800);
             $process->run(function ($type, $buffer) use ($options) {
-                if ($options[self::OPTION_VERBOSE]) {
+                if ($options[static::OPTION_VERBOSE]) {
                     echo $buffer;
                 }
 

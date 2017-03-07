@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use DateTime;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Auth\AuthConstants;
@@ -82,7 +83,7 @@ class Auth implements AuthInterface
             return false;
         }
 
-        $userTransfer->setLastLogin((new \DateTime())->format(\DateTime::ATOM));
+        $userTransfer->setLastLogin((new DateTime())->format(DateTime::ATOM));
 
         $token = $this->generateToken($userTransfer);
 

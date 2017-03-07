@@ -20,7 +20,7 @@ class Environment extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param array|null $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config)
     {
@@ -35,16 +35,14 @@ class Environment extends Module
     private function initEnvironment()
     {
         $path = self::MODE_DEFAULT_ROOT;
-        $sprykerRoot = '/vendor/spryker/spryker/Bundles';
 
         if (isset($this->config['mode']) && $this->config['mode'] === self::MODE_ISOLATED) {
             $path = self::MODE_ISOLATED_ROOT;
-            $sprykerRoot = '/../';
         }
 
         $applicationRoot = Configuration::projectDir() . $path;
 
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'test');
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', 'DE');
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 

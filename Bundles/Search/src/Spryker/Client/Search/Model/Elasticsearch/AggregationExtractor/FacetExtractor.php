@@ -33,7 +33,7 @@ class FacetExtractor implements AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
@@ -45,7 +45,8 @@ class FacetExtractor implements AggregationExtractorInterface
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
             ->setName($parameterName)
-            ->setValues($facetResultValueTransfers);
+            ->setValues($facetResultValueTransfers)
+            ->setConfig(clone $this->facetConfigTransfer);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);

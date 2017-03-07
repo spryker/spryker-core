@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Setup\Business\Model;
 
-use Spryker\Shared\Library\Environment;
+use ErrorException;
+use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -18,6 +19,7 @@ class Cronjobs
     const ROLE_EMPTY = 'empty';
     const DEFAULT_ROLE = self::ROLE_ADMIN;
     const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
     /**
      * @var array
@@ -96,7 +98,7 @@ class Cronjobs
     {
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
-                throw new \ErrorException(
+                throw new ErrorException(
                     $role . ' is not in the list of allowed job roles! Cannot continue configuration of jenkins!'
                 );
             }
@@ -128,7 +130,6 @@ class Cronjobs
                     }
                 }
 
-                $name = $requestParts['module'] . ' ' . $requestParts['controller'] . ' ' . $requestParts['action'];
                 $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
                     . '/' . $requestParts['action'];
 
@@ -147,7 +148,7 @@ class Cronjobs
      */
     protected function indexJobsByName(array $jobs, array $roles)
     {
-        $job_by_name = [];
+        $jobsByName = [];
 
         foreach ($jobs as $v) {
             if (array_key_exists('role', $v) && in_array($v['role'], $this->allowedRoles)) {
@@ -163,15 +164,15 @@ class Cronjobs
 
             foreach ($v['stores'] as $store) {
                 $name = $store . '__' . $v['name'];
-                $job_by_name[$name] = $v;
-                $job_by_name[$name]['name'] = $name;
-                $job_by_name[$name]['store'] = $store;
-                $job_by_name[$name]['role'] = $jobRole;
-                unset($job_by_name[$name]['stores']);
+                $jobsByName[$name] = $v;
+                $jobsByName[$name]['name'] = $name;
+                $jobsByName[$name]['store'] = $store;
+                $jobsByName[$name]['role'] = $jobRole;
+                unset($jobsByName[$name]['stores']);
             }
         }
 
-        return $job_by_name;
+        return $jobsByName;
     }
 
     /**
@@ -179,7 +180,18 @@ class Cronjobs
      */
     protected function getExistingJobs()
     {
-        return glob($this->getJobsDir() . '/*/config.xml');
+        $jobsNames = [];
+
+        $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
+        $jobs = json_decode($jobs, true);
+
+        if (!empty($jobs['jobs'])) {
+            foreach ($jobs['jobs'] as $job) {
+                $jobsNames[] = $job['name'];
+            }
+        }
+
+        return $jobsNames;
     }
 
     /**
@@ -191,39 +203,36 @@ class Cronjobs
      */
     protected function updateOrDelete(array $jobsByName)
     {
-        $console_output = '';
-        $existing_jobs = $this->getExistingJobs();
+        $output = '';
+        $existingJobs = $this->getExistingJobs();
 
-        if (!empty($existing_jobs)) {
-            foreach ($existing_jobs as $v) {
-                $name = basename(dirname($v));
+        if (empty($existingJobs)) {
+            return $output;
+        }
 
-                if (in_array($name, array_keys($jobsByName)) === false) {
-                    // Job does not exist anymore - we have to delete it.
-                    $url = 'job/' . $name . '/doDelete';
-                    $code = $this->callJenkins($url);
-                    $console_output .= "DELETE  jenkins job: $url (http_response: $code)" . PHP_EOL;
-                } else {
-                    // Job exists - let's update config.xml and remove it from array of jobs
-                    $xml = $this->prepareJobXml($jobsByName[$name]);
-                    $url = 'job/' . $name . '/config.xml';
-                    $code = $this->callJenkins($url, $xml);
-                    unset($jobsByName[$name]);
+        foreach ($existingJobs as $name) {
+            if (!in_array($name, array_keys($jobsByName))) {
+                // Job does not exist anymore - we have to delete it.
+                $url = 'job/' . $name . '/doDelete';
+                $code = $this->callJenkins($url);
+                $output .= "DELETE  jenkins job: $url (http_response: $code)" . PHP_EOL;
+            } else {
+                // Job exists - let's update config.xml and remove it from array of jobs
+                $xml = $this->prepareJobXml($jobsByName[$name]);
+                $url = 'job/' . $name . '/config.xml';
+                $code = $this->callJenkins($url, $xml);
 
-                    if ($code !== '200') {
-                        $console_output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
-                    }
+                if ($code !== 200) {
+                    $output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
                 }
             }
         }
 
-        return $console_output;
+        return $output;
     }
 
     /**
      * Create Jenkins jobs for provided list of jobs
-     *
-     * @todo Skip existing jobs
      *
      * @param array $jobsByName
      *
@@ -231,21 +240,29 @@ class Cronjobs
      */
     protected function createJobDefinitions(array $jobsByName)
     {
-        $console_output = '';
-        $existing_jobs = $this->getExistingJobs();
+        $output = '';
+
+        $existingJobs = $this->getExistingJobs();
 
         foreach ($jobsByName as $k => $v) {
             // skip if job is in existingjobs
-            $xml = $this->prepareJobXml($v);
+            if (in_array($k, $existingJobs)) {
+                $output .= "SKIPPED jenkins job: $k (already exists)" . PHP_EOL;
+                continue;
+            }
+
             $url = 'createItem?name=' . $v['name'];
+
+            $xml = $this->prepareJobXml($v);
             $code = $this->callJenkins($url, $xml);
-            if ($code === '400') {
+
+            if ($code === 400) {
                 $code = '400: already exists';
             }
-            $console_output .= "CREATE  jenkins job: $url (http_response: $code)" . PHP_EOL;
+            $output .= "CREATE jenkins job: $url (http_response: $code)" . PHP_EOL;
         }
 
-        return $console_output;
+        return $output;
     }
 
     /**
@@ -254,9 +271,9 @@ class Cronjobs
      *
      * @throws \ErrorException
      *
-     * @return mixed
+     * @return int
      */
-    private function callJenkins($url, $body = '')
+    protected function callJenkins($url, $body = '')
     {
         $postUrl = $this->getJenkinsUrl($url);
 
@@ -271,15 +288,40 @@ class Cronjobs
         $curl_response = curl_exec($ch);
 
         if ($curl_response === false) {
-            throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
-        } else {
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $return_value = $httpCode;
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         }
 
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        return $return_value;
+        return (int)$httpCode;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @throws \ErrorException
+     *
+     * @return string
+     */
+    protected function getJenkinsApiResponse($url)
+    {
+        $getUrl = $this->getJenkinsUrl($url);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+
+        $curlResponse = curl_exec($ch);
+
+        if ($curlResponse === false) {
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $getUrl);
+        }
+        curl_close($ch);
+
+        return $curlResponse;
     }
 
     /**
@@ -291,7 +333,7 @@ class Cronjobs
      *
      * @return string
      */
-    private function prepareJobXml(array $job)
+    protected function prepareJobXml(array $job)
     {
         $disabled = ($job['enable'] === true) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
@@ -342,19 +384,19 @@ class Cronjobs
     */
     protected function getPublisherString(array $job)
     {
-        if (array_key_exists('notifications', $job) && is_array($job['notifications']) && !empty($job['notifications'])) {
-            $recipients = implode(' ', $job['notifications']);
-
-            return "<publishers>
-                        <hudson.tasks.Mailer>
-                          <recipients>$recipients</recipients>
-                          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-                          <sendToIndividuals>false</sendToIndividuals>
-                        </hudson.tasks.Mailer>
-                    </publishers>";
-        } else {
+        if (empty($job['notifications']) || !is_array($job['notifications'])) {
             return '<publishers/>';
         }
+
+        $recipients = implode(' ', $job['notifications']);
+
+        return "<publishers>
+    <hudson.tasks.Mailer>
+      <recipients>$recipients</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+</publishers>";
     }
 
     /**
@@ -378,9 +420,9 @@ class Cronjobs
         if (Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
-        } else {
-            return $schedule;
         }
+
+        return $schedule;
     }
 
     /**
@@ -394,9 +436,9 @@ class Cronjobs
     {
         if (array_key_exists('logrotate_days', $job) && is_int($job['logrotate_days'])) {
             return $job['logrotate_days'];
-        } else {
-            return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
         }
+
+        return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
     }
 
     /**
@@ -410,22 +452,20 @@ class Cronjobs
         $environment = Environment::getInstance();
         $environment_name = $environment->getEnvironment();
         if ($environment->isNotDevelopment()) {
-            return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
-[ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
-[ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
+            return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
 cd \$destination_release_dir
 . ./config/Zed/cronjobs/cron.conf
 $command</command>";
-        } else {
-            return "<command>
+        }
+
+        return "<command>
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
 cd /data/shop/development/current
 . ./config/Zed/cronjobs/cron.conf
 $command</command>";
-        }
     }
 
     /**

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
@@ -18,6 +19,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
@@ -29,7 +31,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
  * @group Calculator
  * @group CalculatorTest
  */
-class CalculatorTest extends \PHPUnit_Framework_TestCase
+class CalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -87,7 +89,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscounts = $calculator->calculate($discounts, $quoteTransfer);
 
         $this->assertCount(1, $collectedDiscounts);
-        $this->assertEquals(30, $collectedDiscounts[0]->getDiscount()->getAmount());
+        $this->assertSame(30, $collectedDiscounts[0]->getDiscount()->getAmount());
     }
 
     /**
@@ -138,6 +140,48 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($collectedDiscounts);
     }
 
+    /**
+     * @return void
+     */
+    public function testCalculateWhenDiscountableAmountPluginUsed()
+    {
+        $discountAmount = 100;
+        $discountTransfer = $this->createDiscountTransfer($discountAmount);
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->once())
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $calculatorMock = $this->createCalculatorDiscountAmountPluginMock();
+
+        $calculatorMock
+            ->method('calculateDiscount')
+            ->willReturnCallback(function ($discountableItems, DiscountTransfer $discountTransfer) {
+                return $discountTransfer->getAmount();
+            });
+
+        $calculator = $this->createCalculator(
+            $specificationBuilderMock,
+            $this->createMessengerFacadeBridgeMock(),
+            $this->createDistributorMock(),
+            $calculatorMock
+        );
+
+        $collectedDiscounts = $calculator->calculate([$discountTransfer], $quoteTransfer);
+        $calculatedDiscountTranser = $collectedDiscounts[0];
+
+        $this->assertSame($calculatedDiscountTranser->getDiscount()->getAmount(), $discountTransfer->getAmount());
+        $this->assertNotEmpty($collectedDiscounts);
+    }
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -166,7 +210,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         SpecificationBuilderInterface $specificationBuilderMock = null,
         DiscountToMessengerInterface $messengerFacadeMock = null,
         DistributorInterface $distributorMock = null,
-        DiscountCalculatorPluginInterface $calculatorPluginMock = null
+        $calculatorPluginMock = null
     ) {
 
         if (!$specificationBuilderMock) {
@@ -205,7 +249,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSpecificationBuilderMock()
     {
-        return $this->getMock(SpecificationBuilderInterface::class);
+        return $this->getMockBuilder(SpecificationBuilderInterface::class)->getMock();
     }
 
     /**
@@ -213,10 +257,10 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    protected function createCalculatorPlugins(DiscountCalculatorPluginInterface $calculatorPluginMock)
+    protected function createCalculatorPlugins($calculatorPluginMock)
     {
         return [
-            'test' => $calculatorPluginMock
+            'test' => $calculatorPluginMock,
         ];
     }
 
@@ -225,7 +269,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMessengerFacadeBridgeMock()
     {
-        return $this->getMock(DiscountToMessengerInterface::class);
+        return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
 
     /**
@@ -233,7 +277,15 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCalculatorPluginMock()
     {
-        return $this->getMock(DiscountCalculatorPluginInterface::class);
+        return $this->getMockBuilder(DiscountCalculatorPluginInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface
+     */
+    protected function createCalculatorDiscountAmountPluginMock()
+    {
+        return $this->getMockBuilder(DiscountAmountCalculatorPluginInterface::class)->getMock();
     }
 
     /**
@@ -241,7 +293,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDistributorMock()
     {
-        return $this->getMock(DistributorInterface::class);
+        return $this->getMockBuilder(DistributorInterface::class)->getMock();
     }
 
     /**
@@ -249,7 +301,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function collectorSpecificationMock()
     {
-        return $this->getMock(CollectorSpecificationInterface::class);
+        return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
 
     /**

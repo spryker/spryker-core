@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -13,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -27,7 +27,7 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
  * @group Checkout
  * @group PayolutionPostCheckPluginTest
  */
-class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
+class PayolutionPostCheckPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const PROCESSING_SUCCESS_CODE = 'VA.PA.90.00';
@@ -87,7 +87,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $queryContainerMock = $this->getMock(PayolutionQueryContainer::class);
+        $queryContainerMock = $this->getMockBuilder(PayolutionQueryContainer::class)->getMock();
         $transactionStatusLogQueryMock = $this->getTransactionStatusLogQueryMock($transactionStatusLogEntity);
         $queryContainerMock->expects($this->once())->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
 
@@ -101,7 +101,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransactionStatusLogQueryMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $transactionStatusLogQueryMock = $this->getMock(SpyPaymentPayolutionTransactionStatusLogQuery::class);
+        $transactionStatusLogQueryMock = $this->getMockBuilder(SpyPaymentPayolutionTransactionStatusLogQuery::class)->getMock();
         $transactionStatusLogQueryMock->method('findOne')->willReturn($transactionStatusLogEntity);
 
         return $transactionStatusLogQueryMock;

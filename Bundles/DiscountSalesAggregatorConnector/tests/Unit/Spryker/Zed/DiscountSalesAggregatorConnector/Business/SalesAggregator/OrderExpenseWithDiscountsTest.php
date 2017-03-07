@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggreg
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpensesWithDiscounts;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group SalesAggregator
  * @group OrderExpenseWithDiscountsTest
  */
-class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
+class OrderExpenseWithDiscountsTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -76,11 +77,10 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
-        $orderExpensesWithDiscountsMock = $this->getMock(
-            OrderExpensesWithDiscounts::class,
-            ['getSalesOrderDiscounts'],
-            [$discountQueryContainerMock]
-        );
+        $orderExpensesWithDiscountsMock = $this->getMockBuilder(OrderExpensesWithDiscounts::class)
+            ->setMethods(['getSalesOrderDiscounts'])
+            ->setConstructorArgs([$discountQueryContainerMock])
+            ->getMock();
 
         $objectCollection = new ObjectCollection($salesDiscounts);
 
@@ -95,7 +95,7 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
 }

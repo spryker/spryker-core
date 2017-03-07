@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Request
  * @group SubRequestHandlerTest
  */
-class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
+class SubRequestHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     const GET_PARAMS = ['banana', 'mango'];
@@ -41,7 +42,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $mainRequest->request->add(self::POST_PARAMS);
         $subRequest = new Request();
 
-        $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
+        $httpKernelMock = $this->getMockBuilder(HttpKernelInterface::class)->setMethods(['handle'])->getMock();
         $httpKernelMock
             ->expects($this->once())
             ->method('handle')
@@ -69,7 +70,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $mainRequest = new Request();
         $subRequest = new Request();
 
-        $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
+        $httpKernelMock = $this->getMockBuilder(HttpKernelInterface::class)->setMethods(['handle'])->getMock();
 
         $subRequestHandlerPartialMock = $this->getRequestHandlerPartialMock($httpKernelMock);
         $subRequestHandlerPartialMock
@@ -88,7 +89,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getRequestHandlerPartialMock(PHPUnit_Framework_MockObject_MockObject $kernelMock)
     {
-        return $this->getMock(SubRequestHandler::class, ['createRequestObject'], [$kernelMock]);
+        return $this->getMockBuilder(SubRequestHandler::class)->setMethods(['createRequestObject'])->setConstructorArgs([$kernelMock])->getMock();
     }
 
 }

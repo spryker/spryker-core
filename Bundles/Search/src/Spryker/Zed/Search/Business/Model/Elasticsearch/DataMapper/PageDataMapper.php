@@ -160,7 +160,7 @@ class PageDataMapper implements PageDataMapperInterface
                 ->requireName()
                 ->requireValue();
 
-            $result[PageIndexMap::STRING_FACET] = [
+            $result[PageIndexMap::STRING_FACET][] = [
                 self::FACET_NAME => $stringFacetMapTransfer->getName(),
                 self::FACET_VALUE => $stringFacetMapTransfer->getValue(),
             ];
@@ -182,7 +182,7 @@ class PageDataMapper implements PageDataMapperInterface
                 ->requireName()
                 ->requireValue();
 
-            $result[PageIndexMap::INTEGER_FACET] = [
+            $result[PageIndexMap::INTEGER_FACET][] = [
                 self::FACET_NAME => $integerFacetMapTransfer->getName(),
                 self::FACET_VALUE => $integerFacetMapTransfer->getValue(),
             ];

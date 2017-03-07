@@ -14,12 +14,6 @@ use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
 
-    const TYPE_ENUMERATION = 'enumeration';
-    const TYPE_BOOL = 'bool';
-    const TYPE_RANGE = 'range';
-    const TYPE_PRICE_RANGE = 'price_range';
-    const TYPE_CATEGORY = 'category';
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
      */

@@ -7,15 +7,15 @@
 
 namespace Spryker\Shared\Testify;
 
-// This is the only place where Project namespace is allowed
 use Exception;
+use InvalidArgumentException;
 use Propel\Runtime\Propel;
-use Pyz\Yves\Application\YvesBootstrap;
-use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
 use Silex\Application;
+use Spryker\Shared\Config\Application\Environment;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Shared\Library\Application\Environment;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -27,7 +27,7 @@ class SystemUnderTestBootstrap
     const APPLICATION_YVES = 'Yves';
     const APPLICATION_SHARED = 'Shared';
     const APPLICATION_CLIENT = 'Client';
-    const TEST_ENVIRONMENT = 'test';
+    const TEST_ENVIRONMENT = 'devtest';
 
     /**
      * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap
@@ -69,6 +69,8 @@ class SystemUnderTestBootstrap
         error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 1);
 
+        putenv("SESSION_IS_TEST=true");
+
         defined('APPLICATION') || define('APPLICATION', strtoupper($application));
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 
@@ -77,6 +79,9 @@ class SystemUnderTestBootstrap
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $path);
 
         Environment::initialize();
+
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
 
         if (self::APPLICATION_ZED === $application) {
             $this->bootstrapZed();
@@ -105,7 +110,7 @@ class SystemUnderTestBootstrap
      */
     protected function bootstrapZed()
     {
-        $application = new ZedBootstrap();
+        $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
         $application->boot();
@@ -115,18 +120,38 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @TODO do we need to bootstrap Yves in a test case?
-     *
      * @return void
      */
     protected function bootstrapYves()
     {
-        $application = new YvesBootstrap();
+        $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_YVES);
 
         $locator = Locator::getInstance();
         $this->resetLocator($locator);
 
         $application->boot();
+    }
+
+    /**
+     * @param string $configKey
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return object
+     */
+    private function getBootstrapClass($configKey)
+    {
+        if (!Config::hasKey($configKey)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Could not find a configured bootstrap class for config key "%s". You need to add the class name of your bootstrap class in your test configuration.',
+                    $configKey
+                )
+            );
+        }
+        $bootstrapClassName = Config::get($configKey);
+
+        return new $bootstrapClassName();
     }
 
     /**

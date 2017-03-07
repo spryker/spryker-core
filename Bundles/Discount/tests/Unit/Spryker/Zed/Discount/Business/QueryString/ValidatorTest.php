@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -23,7 +24,7 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
  * @group QueryString
  * @group ValidatorTest
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -59,7 +60,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(0, $messages);
     }
-
 
     /**
      * @return void
@@ -130,7 +130,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($queryStringException, $messages[0]);
     }
 
-
     /**
      * @return void
      */
@@ -183,7 +182,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
 }

@@ -38,4 +38,11 @@ interface AggregationBuilderInterface
      */
     public function createStatsAggregation($name);
 
+    /**
+     * @param string $name
+     *
+     * @return \Elastica\Aggregation\TopHits
+     */
+    public function createTopHitsAggregation($name);
+
 }

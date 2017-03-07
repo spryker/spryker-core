@@ -8,18 +8,38 @@
 namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
-use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
-use Spryker\Zed\Product\Business\Internal\Install;
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoder;
+use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
+use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
+use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
+use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterUpdateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractBeforeCreateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractBeforeUpdateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractReadObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteAfterCreateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteAfterUpdateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteBeforeCreateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteBeforeUpdateObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteReadObserverPluginManager;
+use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
+use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
+use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
+use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
+use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
+use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
+use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -30,136 +50,211 @@ class ProductBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManager
+     * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
-    protected $productManager;
-
-    /**
-     * @return string
-     */
-    public function getYvesUrl()
+    public function createProductManager()
     {
-        return $this->getConfig()->getHostYves();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\FileImporter
-     */
-    public function createProductImporter()
-    {
-        $importer = new FileImporter(
-            $this->createImportProductValidator(),
-            $this->createImportProductBuilder(),
-            $this->createProductWriter(),
-            $this->createProductBatchResult()
-        );
-
-        return $importer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator
-     */
-    protected function createImportProductValidator()
-    {
-        return new ImportProductValidator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
-     */
-    protected function createImportProductBuilder()
-    {
-        return new ProductBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface
-     */
-    protected function createProductWriter()
-    {
-        return new ProductWriter(
-            $this->createProductAbstractWriter(),
-            $this->createProductConcreteWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface
-     */
-    protected function createProductAbstractWriter()
-    {
-        return new ProductAbstractWriter(
-            $this->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface
-     */
-    protected function createProductConcreteWriter()
-    {
-        return new ProductConcreteWriter(
-            $this->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface
-     */
-    protected function createProductBatchResult()
-    {
-        return new ProductBatchResult();
-    }
-
-    /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return \Spryker\Zed\Product\Business\Internal\Install
-     */
-    public function createInstaller(MessengerInterface $messenger)
-    {
-        $installer = new Install(
-            $this->createAttributeManager()
-        );
-        $installer->setMessenger($messenger);
-
-        return $installer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    public function createAttributeManager()
-    {
-        return new AttributeManager(
+        return new ProductManager(
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager(),
             $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
      */
-    public function createProductManager()
+    public function createProductAbstractManager()
     {
-        if ($this->productManager === null) {
-            $this->productManager = new ProductManager(
-                $this->getQueryContainer(),
-                $this->getTouchFacade(),
-                $this->getUrlFacade(),
-                $this->getLocaleFacade()
-            );
-        }
+        $productAbstractManager = new ProductAbstractManager(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getLocaleFacade(),
+            $this->createProductAbstractAssertion(),
+            $this->createSkuGenerator(),
+            $this->createAttributeEncoder(),
+            $this->createProductTransferMapper()
+        );
 
-        return $this->productManager;
+        return $this->attachProductAbstractManagerObservers($productAbstractManager);
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
      */
-    public function createProductVariantBuilder()
+    public function createProductConcreteManager()
     {
-         return new ProductVariantBuilder($this->getQueryContainer());
+        $productConcreteManager = new ProductConcreteManager(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getLocaleFacade(),
+            $this->createProductAbstractAssertion(),
+            $this->createProductConcreteAssertion(),
+            $this->createAttributeEncoder(),
+            $this->createProductTransferMapper()
+        );
+
+        return $this->attachProductConcreteManagerObservers($productConcreteManager);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
+     */
+    public function createProductConcreteActivator()
+    {
+        return new ProductConcreteActivator(
+            $this->createProductAbstractStatusChecker(),
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager(),
+            $this->createProductUrlManager(),
+            $this->createProductConcreteTouch(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface
+     */
+    public function createProductUrlManager()
+    {
+        return new ProductUrlManager(
+            $this->getUrlFacade(),
+            $this->getTouchFacade(),
+            $this->getLocaleFacade(),
+            $this->getQueryContainer(),
+            $this->createProductUrlGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface
+     */
+    public function createProductUrlGenerator()
+    {
+        return new ProductUrlGenerator(
+            $this->createProductAbstractNameGenerator(),
+            $this->getLocaleFacade(),
+            $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Variant\VariantGeneratorInterface
+     */
+    public function createProductVariantGenerator()
+    {
+        return new VariantGenerator(
+            $this->getUrlFacade(),
+            $this->createSkuGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
+     */
+    public function createProductAbstractStatusChecker()
+    {
+        return new ProductAbstractStatusChecker($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
+     */
+    protected function createSkuGenerator()
+    {
+        return new SkuGenerator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGeneratorInterface
+     */
+    public function createAttributePermutationGenerator()
+    {
+        return new AttributePermutationGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeKeyManagerInterface
+     */
+    public function createAttributeKeyManager()
+    {
+        return new AttributeKeyManager($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
+     */
+    public function createAttributeEncoder()
+    {
+        return new AttributeEncoder($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
+     */
+    public function createProductTransferMapper()
+    {
+        return new ProductTransferMapper($this->createAttributeEncoder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeMergerInterface
+     */
+    public function createAttributeMerger()
+    {
+        return new AttributeMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeLoaderInterface
+     */
+    public function createAttributeLoader()
+    {
+        return new AttributeLoader(
+            $this->getQueryContainer(),
+            $this->createAttributeMerger(),
+            $this->createAttributeEncoder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouchInterface
+     */
+    public function createProductAbstractTouch()
+    {
+        return new ProductAbstractTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductAbstractStatusChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
+     */
+    public function createProductConcreteTouch()
+    {
+        return new ProductConcreteTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductAbstractStatusChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface
+     */
+    public function createProductAbstractNameGenerator()
+    {
+        return new ProductAbstractNameGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGeneratorInterface
+     */
+    public function createProductConcreteNameGenerator()
+    {
+        return new ProductConcreteNameGenerator();
     }
 
     /**
@@ -187,11 +282,240 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
-    protected function getCurrentLocale()
+    protected function getUtilTextService()
     {
-        return $this->getLocaleFacade()->getCurrentLocale();
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface
+     */
+    protected function createProductAbstractAssertion()
+    {
+        return new ProductAbstractAssertion(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface
+     */
+    protected function createProductConcreteAssertion()
+    {
+        return new ProductConcreteAssertion(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
+     */
+    protected function getProductAbstractBeforeCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
+     */
+    protected function getProductAbstractAfterCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
+     */
+    protected function getProductAbstractReadPlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
+     */
+    protected function getProductAbstractBeforeUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
+     */
+    protected function getProductAbstractAfterUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
+     */
+    protected function getProductConcreteBeforeCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
+     */
+    protected function getProductConcreteAfterCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
+     */
+    protected function getProductConcreteReadPlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
+     */
+    protected function getProductConcreteBeforeUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
+     */
+    protected function getProductConcreteAfterUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE);
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManager $productAbstractManager
+     *
+     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractManager
+     */
+    protected function attachProductAbstractManagerObservers(ProductAbstractManager $productAbstractManager)
+    {
+        $productAbstractManager->attachBeforeCreateObserver($this->createProductAbstractBeforeCreateObserverPluginManager());
+        $productAbstractManager->attachAfterCreateObserver($this->createProductAbstractAfterCreateObserverPluginManager());
+        $productAbstractManager->attachBeforeUpdateObserver($this->createProductAbstractBeforeUpdateObserverPluginManager());
+        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateObserverPluginManager());
+        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateUrlObserver());
+        $productAbstractManager->attachReadObserver($this->createProductAbstractReadObserverPluginManager());
+
+        return $productAbstractManager;
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface
+     */
+    protected function createProductAbstractBeforeCreateObserverPluginManager()
+    {
+        return new ProductAbstractBeforeCreateObserverPluginManager($this->getProductAbstractBeforeCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface
+     */
+    protected function createProductAbstractAfterCreateObserverPluginManager()
+    {
+        return new ProductAbstractAfterCreateObserverPluginManager($this->getProductAbstractAfterCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface
+     */
+    protected function createProductAbstractBeforeUpdateObserverPluginManager()
+    {
+        return new ProductAbstractBeforeUpdateObserverPluginManager($this->getProductAbstractBeforeUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface
+     */
+    protected function createProductAbstractAfterUpdateObserverPluginManager()
+    {
+        return new ProductAbstractAfterUpdateObserverPluginManager($this->getProductAbstractAfterUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractUpdateObserverInterface
+     */
+    protected function createProductAbstractAfterUpdateUrlObserver()
+    {
+        return new ProductAbstractAfterUpdateUrlObserver($this->createProductAbstractStatusChecker(), $this->createProductUrlManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInterface
+     */
+    protected function createProductAbstractReadObserverPluginManager()
+    {
+        return new ProductAbstractReadObserverPluginManager($this->getProductAbstractReadPlugins());
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManager $productConcreteManager
+     *
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteManager
+     */
+    protected function attachProductConcreteManagerObservers(ProductConcreteManager $productConcreteManager)
+    {
+        $productConcreteManager->attachBeforeCreateObserver($this->createProductConcreteBeforeCreateObserverPluginManager());
+        $productConcreteManager->attachAfterCreateObserver($this->createProductConcreteAfterCreateObserverPluginManager());
+        $productConcreteManager->attachBeforeUpdateObserver($this->createProductConcreteBeforeUpdateObserverPluginManager());
+        $productConcreteManager->attachAfterUpdateObserver($this->createProductConcreteAfterUpdateObserverPluginManager());
+        $productConcreteManager->attachReadObserver($this->createProductConcreteReadObserverPluginManager());
+
+        return $productConcreteManager;
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverInterface
+     */
+    protected function createProductConcreteBeforeCreateObserverPluginManager()
+    {
+        return new ProductConcreteBeforeCreateObserverPluginManager($this->getProductConcreteBeforeCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverInterface
+     */
+    protected function createProductConcreteAfterCreateObserverPluginManager()
+    {
+        return new ProductConcreteAfterCreateObserverPluginManager($this->getProductConcreteAfterCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteUpdateObserverInterface
+     */
+    protected function createProductConcreteBeforeUpdateObserverPluginManager()
+    {
+        return new ProductConcreteBeforeUpdateObserverPluginManager($this->getProductConcreteBeforeUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteUpdateObserverInterface
+     */
+    protected function createProductConcreteAfterUpdateObserverPluginManager()
+    {
+        return new ProductConcreteAfterUpdateObserverPluginManager($this->getProductConcreteAfterUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteReadObserverInterface
+     */
+    protected function createProductConcreteReadObserverPluginManager()
+    {
+        return new ProductConcreteReadObserverPluginManager($this->getProductConcreteReadPlugins());
     }
 
 }

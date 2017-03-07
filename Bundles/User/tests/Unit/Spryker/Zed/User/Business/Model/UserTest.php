@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\User\UserConfig;
  * @group Model
  * @group UserTest
  */
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -129,10 +130,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMock(
-            SessionClient::class,
-            ['get', 'set']
-        );
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set'])->getMock();
 
         return $sessionClient;
     }
@@ -142,7 +140,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function createQueryContainer()
     {
-        $queryContainer = $this->getMock(UserQueryContainerInterface::class);
+        $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
 
         return $queryContainer;
     }

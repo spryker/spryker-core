@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Twig;
 
-abstract class TwigExtension extends \Twig_Extension
+use Twig_Extension;
+
+abstract class TwigExtension extends Twig_Extension
 {
 }

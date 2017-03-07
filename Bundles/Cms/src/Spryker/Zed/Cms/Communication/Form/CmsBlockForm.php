@@ -11,7 +11,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -62,14 +62,12 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
 
         $resolver->setDefaults([
@@ -92,7 +90,7 @@ class CmsBlockForm extends AbstractType
                 }
 
                 return [Constraint::DEFAULT_GROUP];
-            }
+            },
         ]);
     }
 
@@ -152,7 +150,7 @@ class CmsBlockForm extends AbstractType
                     }
                 },
             ],
-            'groups' => [self::GROUP_UNIQUE_BLOCK_CHECK]
+            'groups' => [self::GROUP_UNIQUE_BLOCK_CHECK],
         ]);
 
         return $blockConstraints;

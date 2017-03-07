@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\ZedRequest\Client;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractRequest;
 
 /**
@@ -17,7 +18,7 @@ use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractRequest;
  * @group Client
  * @group AbstractRequestTest
  */
-class AbstractRequestTest extends \PHPUnit_Framework_TestCase
+class AbstractRequestTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -42,7 +43,7 @@ class AbstractRequestTest extends \PHPUnit_Framework_TestCase
         ];
         $abstractRequest = new AbstractRequest($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
+        $this->assertInstanceOf('Spryker\Shared\Kernel\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
     }
 
     /**
@@ -55,7 +56,7 @@ class AbstractRequestTest extends \PHPUnit_Framework_TestCase
         ];
         $abstractRequest = new AbstractRequest($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
+        $this->assertInstanceOf('Spryker\Shared\Kernel\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
     }
 
 }

@@ -39,15 +39,15 @@ class StepFactory extends AbstractFactory
      */
     protected function createDataContainer()
     {
-        return new DataContainer($this->getCartClient());
+        return new DataContainer($this->getQuoteClient());
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClientInterface
+     * @return \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
-    protected function getCartClient()
+    protected function getQuoteClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_QUOTE);
     }
 
 }

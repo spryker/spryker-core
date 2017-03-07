@@ -69,8 +69,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionLoader(
             $this->createFinder(),
-            $this->createDefinitionNormalizer(),
-            $this->getConfig()->getSourceDirectories()
+            $this->createDefinitionNormalizer()
         );
     }
 

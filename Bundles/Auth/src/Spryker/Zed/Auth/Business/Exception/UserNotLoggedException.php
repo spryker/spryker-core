@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Auth\Business\Exception;
 
-class UserNotLoggedException extends \Exception
+use Exception;
+
+class UserNotLoggedException extends Exception
 {
 }

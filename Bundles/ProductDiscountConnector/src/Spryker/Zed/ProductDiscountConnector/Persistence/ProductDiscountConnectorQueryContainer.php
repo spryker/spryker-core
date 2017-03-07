@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributesMetadataTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -19,13 +19,13 @@ class ProductDiscountConnectorQueryContainer extends AbstractQueryContainer impl
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKeys()
     {
         return $this->getFactory()
-            ->createProductAttributesMetadataQuery()
-            ->select(SpyProductAttributesMetadataTableMap::COL_KEY);
+            ->createProductAttributesKeyQuery()
+            ->select(SpyProductAttributeKeyTableMap::COL_KEY);
     }
 
 }

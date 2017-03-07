@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Pimple;
 use Spryker\Shared\Kernel\ContainerInterface;
 
-class Container extends \Pimple implements ContainerInterface
+class Container extends Pimple implements ContainerInterface
 {
 
     /**

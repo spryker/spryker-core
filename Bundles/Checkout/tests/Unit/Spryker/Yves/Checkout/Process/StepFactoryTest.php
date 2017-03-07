@@ -7,10 +7,10 @@
 
 namespace Unit\Spryker\Yves\Checkout\Process;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Process\StepFactory;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepEngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @group Process
  * @group StepFactoryTest
  */
-class StepFactoryTest extends \PHPUnit_Framework_TestCase
+class StepFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const METHOD_HANDLER = 'method handler';
@@ -60,15 +60,7 @@ class StepFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function getUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClientInterface
-     */
-    private function getDataContainerMock()
-    {
-        return $this->getMock(DataContainerInterface::class);
+        return $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
     }
 
 }

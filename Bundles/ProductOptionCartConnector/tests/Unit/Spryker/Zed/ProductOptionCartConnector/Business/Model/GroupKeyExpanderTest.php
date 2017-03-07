@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
  * @group Model
  * @group GroupKeyExpanderTest
  */
-class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
+class GroupKeyExpanderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,8 +33,8 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
             ]
         );
@@ -53,8 +54,8 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
             ]
         );
@@ -76,16 +77,16 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(3),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage('A'),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(3),
+                   (new ProductOptionTransfer())->setIdProductOptionValue('A'),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
                 ],
                 'cartItem2' => [
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(3),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage('A'),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(1),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(3),
+                    (new ProductOptionTransfer())->setIdProductOptionValue('A'),
                 ],
             ]
         );

@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 
@@ -21,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
  * @group Comparator
  * @group ContainsTest
  */
-class ContainsTest extends \PHPUnit_Framework_TestCase
+class ContainsTest extends PHPUnit_Framework_TestCase
 {
 
     /**

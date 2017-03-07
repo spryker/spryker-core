@@ -9,7 +9,8 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 
 /**
@@ -22,7 +23,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
  * @group Calculator
  * @group GrandTotalTotalsCalculatorTest
  */
-class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class GrandTotalTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const SUB_TOTAL = 100;
@@ -45,7 +46,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCalculatorWhenTotalsNotPresetShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $grandTotalTotalsCalculator = $this->createGrandTotalTotalsCalculator();
         $quoteTransfer = $this->createQuoteTransfer();
@@ -57,7 +58,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCalculatorWhenSubtTotalNotPresetShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $grandTotalTotalsCalculator = $this->createGrandTotalTotalsCalculator();
         $quoteTransfer = $this->createQuoteTransferWithFixtureData(null, self::EXPENSES_TOTAL);

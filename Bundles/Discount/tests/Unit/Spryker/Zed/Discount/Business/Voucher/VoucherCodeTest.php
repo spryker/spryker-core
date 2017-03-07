@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Voucher;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -21,7 +22,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Voucher
  * @group VoucherCodeTest
  */
-class VoucherCodeTest extends \PHPUnit_Framework_TestCase
+class VoucherCodeTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -63,7 +64,6 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1,  $updated);
     }
-
 
     /**
      * @return void
@@ -234,7 +234,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -242,7 +242,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMock(SpyDiscountQuery::class);
+        return $this->getMockBuilder(SpyDiscountQuery::class)->getMock();
     }
 
     /**
@@ -250,7 +250,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherMock()
     {
-        $discountVoucherEntity = $this->getMock(SpyDiscountVoucher::class);
+        $discountVoucherEntity = $this->getMockBuilder(SpyDiscountVoucher::class)->getMock();
 
         return $discountVoucherEntity;
     }

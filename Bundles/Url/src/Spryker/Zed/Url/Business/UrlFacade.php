@@ -9,8 +9,10 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
@@ -19,16 +21,39 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $idResource
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
+    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
+    {
+        if (func_num_args() === 4) {
+            return $this->legacyCreateUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
+        }
+
+        return $this->getFactory()
+            ->createUrlCreator()
+            ->createUrl($urlTransfer);
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string|null $resourceType
+     * @param int|null $idResource
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function legacyCreateUrl($url, LocaleTransfer $locale, $resourceType = null, $idResource = null)
     {
         $urlManager = $this->getFactory()->createUrlManager();
         $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
@@ -37,7 +62,284 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->findUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
+     *
+     * @return bool
+     */
+    public function hasUrl($urlTransfer)
+    {
+        if (is_string($urlTransfer)) {
+            return $this->legacyHasUrl($urlTransfer);
+        }
+
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer String format is only for BC reasons.
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function legacyHasUrl($url)
+    {
+        $urlManager = $this->getFactory()->createUrlManager();
+
+        return $urlManager->hasUrl($url);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updateUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlUpdater()
+            ->updateUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        $this->getFactory()
+            ->createUrlDeleter()
+            ->deleteUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function activateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->getFactory()
+            ->createUrlActivator()
+            ->activateUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->getFactory()
+            ->createUrlActivator()
+            ->deactivateUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectCreator()
+            ->createUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer|null
+     */
+    public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectReader()
+            ->findUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectReader()
+            ->hasUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectUpdater()
+            ->updateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect($urlRedirectTransfer)
+    {
+        if ($urlRedirectTransfer instanceof RedirectTransfer) {
+            $this->legacyDeleteUrlRedirect($urlRedirectTransfer);
+            return;
+        }
+
+        $this->getFactory()
+            ->createUrlDeleter()
+            ->deleteUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param \Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    protected function legacyDeleteUrlRedirect(RedirectTransfer $urlRedirectTransfer)
+    {
+        $this->getFactory()->createRedirectManager()->deleteUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        $this->getFactory()
+            ->createUrlRedirectActivator()
+            ->activateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        $this->getFactory()
+            ->createUrlRedirectActivator()
+            ->deactivateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
+     */
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->getFactory()
+            ->createUrlRedirectValidator()
+            ->validateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use createUrl() instead.
      *
      * @param string $url
      * @param string $resourceType
@@ -56,6 +358,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrl/updateUrl instead.
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -70,19 +374,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param string $url
-     *
-     * @return bool
-     */
-    public function hasUrl($url)
-    {
-        $urlManager = $this->getFactory()->createUrlManager();
-
-        return $urlManager->hasUrl($url);
-    }
-
-    /**
-     * @api
+     * @deprecated Use hasUrl() instead.
      *
      * @param int $idUrl
      *
@@ -97,6 +389,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use findUrl() instead.
      *
      * @param string $urlString
      *
@@ -113,6 +407,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated use findUrl() instead.
+     *
      * @param int $idUrl
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -126,10 +422,11 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * Specification:
-     * - check if a ResourceUrl by CategoryNode and Locale exist
+     * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -146,6 +443,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -161,6 +460,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release. Category bundle handles logic internally.
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
@@ -175,6 +476,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use activateUrl() instead.
+     *
      * @param int $idUrl
      *
      * @return void
@@ -186,6 +489,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use deactivateUrl() instead.
      *
      * @param int $idUrl
      *
@@ -199,12 +504,14 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrlRedirect() instead.
+     *
      * @param string $toUrl
      * @param int $status
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirect($toUrl, $status = 303)
+    public function createRedirect($toUrl, $status = Response::HTTP_SEE_OTHER)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
         $redirect = $redirectManager->createRedirect($toUrl, $status);
@@ -215,12 +522,14 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrlRedirect() instead.
+     *
      * @param string $toUrl
      * @param int $status
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function createRedirectAndTouch($toUrl, $status = 303)
+    public function createRedirectAndTouch($toUrl, $status = Response::HTTP_SEE_OTHER)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
         $redirectTransfer = $redirectManager->createRedirectAndTouch($toUrl, $status);
@@ -230,6 +539,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use createUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -247,17 +558,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
-     *
-     * @return void
-     */
-    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
-    {
-        $this->getFactory()->createRedirectManager()->deleteUrlRedirect($redirectTransfer);
-    }
-
-    /**
-     * @api
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -275,6 +576,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -288,6 +591,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use activateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -303,6 +608,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrl()/updateUrl() instead.
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -317,19 +624,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
-    public function deleteUrl(UrlTransfer $urlTransfer)
-    {
-        $urlManager = $this->getFactory()->createUrlManager();
-
-        $urlManager->deleteUrl($urlTransfer);
-    }
-
-    /**
-     * @api
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -344,6 +639,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated This method will be removed with next major release because of invalid dependency direction.
+     * Use ProductFacade::getProductUrl() instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale

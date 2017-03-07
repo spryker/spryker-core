@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\NewRelic\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
  */
 class RecordDeploymentConsole extends Console
@@ -93,8 +94,7 @@ class RecordDeploymentConsole extends Console
         $arguments = $input->getArguments();
         unset($arguments['command']);
 
-        $newRelicApi = $this->getFactory()->getNewRelicApi();
-        $newRelicApi->recordDeployment($arguments);
+        $this->getFacade()->recordDeployment($arguments);
 
         return 0;
     }

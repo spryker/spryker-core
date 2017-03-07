@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Refund\Business\Model;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
@@ -23,7 +24,7 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
  * @group Model
  * @group RefundCalculatorTest
  */
-class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
+class RefundCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -69,7 +70,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesAggregatorMock()
     {
-        $salesAggregatorFacadeMock = $this->getMock(RefundToSalesAggregatorInterface::class);
+        $salesAggregatorFacadeMock = $this->getMockBuilder(RefundToSalesAggregatorInterface::class)->getMock();
         $salesAggregatorFacadeMock->method('getOrderTotalsByIdSalesOrder')->willReturn(new OrderTransfer());
 
         return $salesAggregatorFacadeMock;
@@ -80,7 +81,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRefundCalculationPlugin()
     {
-        $refundCalculatorPluginMock = $this->getMock(RefundCalculatorPluginInterface::class);
+        $refundCalculatorPluginMock = $this->getMockBuilder(RefundCalculatorPluginInterface::class)->getMock();
         $refundCalculatorPluginMock->expects($this->once())->method('calculateRefund')->willReturnArgument(0);
 
         return $refundCalculatorPluginMock;

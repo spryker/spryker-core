@@ -9,15 +9,14 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use LogicException;
+use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Service\UtilSanitize\UtilSanitizeService;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
-use Spryker\Zed\Library\Generator\StringGenerator;
-use Spryker\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -39,11 +38,6 @@ abstract class AbstractTable
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
-
-    /**
-     * @var \Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var array
@@ -103,14 +97,14 @@ abstract class AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     abstract protected function configure(TableConfiguration $config);
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     abstract protected function prepareData(TableConfiguration $config);
 
@@ -167,8 +161,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 find a better solution (remove it)
-     *
      * @deprecated this method should not be needed.
      *
      * @param string $name
@@ -316,8 +308,8 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $generator = new StringGenerator();
-        $this->tableIdentifier = $prefix . $generator->generateRandomString();
+        $utilTextService = new UtilTextService();
+        $this->tableIdentifier = $prefix . $utilTextService->generateRandomString(32);
 
         return $this;
     }
@@ -369,12 +361,7 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        $defaultSorting = [
-            [
-                self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
-                self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
-            ],
-        ];
+        $defaultSorting = [$this->getDefaultSorting($config)];
 
         $orderParameter = $this->request->query->get('order');
 
@@ -389,6 +376,41 @@ abstract class AbstractTable
         }
 
         return $sorting;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return array
+     */
+    protected function getDefaultSorting(TableConfiguration $config)
+    {
+        $sort = [
+            self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+            self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
+        ];
+
+        $defaultSortField = $config->getDefaultSortField();
+        if (!$defaultSortField) {
+            return $sort;
+        }
+
+        $field = key($defaultSortField);
+        $direction = $defaultSortField[$field];
+        $index = null;
+
+        $availableFields = array_keys($config->getHeader());
+        $index = array_search($field, $availableFields, true);
+        if ($index === null) {
+            return $sort;
+        }
+
+        $sort = [
+            self::SORT_BY_COLUMN => $index,
+            self::SORT_BY_DIRECTION => $direction,
+        ];
+
+        return $sort;
     }
 
     /**
@@ -557,7 +579,6 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 to be rafactored, does to many things and is hard to understand
      * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -591,9 +612,9 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
+                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
                 // @todo fix this in CD-412
-                if ($sqlDriver === 'pgsql') {
+                if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }
 
@@ -772,7 +793,7 @@ abstract class AbstractTable
 
         $options = [
             'fields' => $options,
-            'action' => $url
+            'action' => $url,
         ];
 
         $form = $formFactory->create($deleteForm, [], $options);
@@ -792,7 +813,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Shared\Url\Url $url
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -807,7 +828,8 @@ abstract class AbstractTable
         $parameters = $this->getButtonParameters($buttonOptions);
 
         if (is_string($url)) {
-            $url = Html::escape($url);
+            $utilSanitizeService = new UtilSanitizeService();
+            $url = $utilSanitizeService->escapeHtml($url);
         } else {
             $url = $url->buildEscaped();
         }

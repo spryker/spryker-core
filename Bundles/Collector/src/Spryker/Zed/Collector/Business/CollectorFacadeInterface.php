@@ -20,6 +20,9 @@ interface CollectorFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Runs storage exporter collectors for all available stores, locales and collector types.
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -30,17 +33,8 @@ interface CollectorFacadeInterface
 
     /**
      * Specification:
-     * - Initiates export into a file
+     * - Runs storage exporter collectors for the given locale and all available collector types.
      *
-     * @api
-     *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
-     */
-    public function exportFile(OutputInterface $output);
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -51,6 +45,21 @@ interface CollectorFacadeInterface
     public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output);
 
     /**
+     * Specification:
+     * - Runs search exporter collectors for all available stores, locales and collector types.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportSearch(OutputInterface $output);
+
+    /**
+     * Specification:
+     * - Runs search exporter collectors for the given locale and all available collector types.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -61,30 +70,9 @@ interface CollectorFacadeInterface
     public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
 
     /**
-     * @api
+     * Specification:
+     * - Deletes all metadata information from the current search index mapping.
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
-     */
-    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getSearchIndexName();
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getSearchDocumentType();
-
-    /**
      * @api
      *
      * @param array $keys
@@ -94,6 +82,9 @@ interface CollectorFacadeInterface
     public function deleteSearchTimestamps(array $keys = []);
 
     /**
+     * Specification:
+     * - Deletes all the provided keys from storage.
+     *
      * @api
      *
      * @param array $keys
@@ -101,6 +92,26 @@ interface CollectorFacadeInterface
      * @return bool
      */
     public function deleteStorageTimestamps(array $keys = []);
+
+    /**
+     * Specification:
+     * - Returns all persisted collector types from database.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllCollectorTypes();
+
+    /**
+     * Specification:
+     * - Returns the types of all collector plugins that has been registered in the StorageExporter.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getEnabledCollectorTypes();
 
     /**
      * Specification:
@@ -129,19 +140,5 @@ interface CollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getAllCollectorTypes();
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getEnabledCollectorTypes();
 
 }

@@ -35,7 +35,7 @@ class LicenseUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $composerJson[self::KEY_LICENSE] = $this->license;
+        $composerJson[static::KEY_LICENSE] = $this->license;
 
         return $composerJson;
     }

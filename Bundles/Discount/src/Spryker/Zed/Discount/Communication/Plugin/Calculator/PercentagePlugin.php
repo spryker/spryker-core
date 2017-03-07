@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -16,41 +15,49 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface
+class PercentagePlugin extends AbstractCalculatorPlugin
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param float $percentage
+     * @api
      *
-     * @return float
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
      */
-    public function calculate(array $discountableItems, $percentage)
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
-        return $this->getFacade()->calculatePercentage($discountableItems, $percentage);
+        return $this->getFacade()->calculatePercentageDiscount($discountableItems, $discountTransfer);
     }
 
     /**
-     * @param int $value
+     * @api
+     *
+     * @param float $value
      *
      * @return int
      */
     public function transformForPersistence($value)
     {
-        return $value * 100;
+        return (int)round($value * 100);
     }
 
     /**
+     * @api
+     *
      * @param int $value
      *
      * @return int
      */
     public function transformFromPersistence($value)
     {
-        return $value / 100;
+        return (int)round($value / 100);
     }
 
     /**
+     * @api
+     *
      * @param int $amount
      *
      * @return string
@@ -61,18 +68,20 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAmountValidators()
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.\,]+/'
+                'pattern' => '/[0-9\.\,]+/',
             ]),
             new Range([
                 'min' => 1,
-                'max' => 100
-            ])
+                'max' => 100,
+            ]),
         ];
     }
 

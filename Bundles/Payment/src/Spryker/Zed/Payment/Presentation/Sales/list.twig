@@ -24,9 +24,9 @@
                                 <td>{{ log.TransactionId }}</td>
                                 <td><i>{{ 'Response' | trans }}</i></td>
                                 <td>{{ log.Status }}</td>
-                                <td>{{ log.Receivable | currency }}</td>
-                                <td>{{ log.Balance | currency }}</td>
-                                <td>{{ log.Price | currency }}</td>
+                                <td>{{ log.Receivable | money }}</td>
+                                <td>{{ log.Balance | money }}</td>
+                                <td>{{ log.Price | money }}</td>
                                 <td>{{ log.CreatedAt | date }}</td>
                             {% else %}
                                 <td>{{ log.TransactionId }}</td>

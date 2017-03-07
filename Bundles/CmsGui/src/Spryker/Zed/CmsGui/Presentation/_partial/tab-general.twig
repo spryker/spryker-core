@@ -1,0 +1,55 @@
+
+<h4>{{ 'Fill in general page information' | trans }}</h4>
+
+{{ form_row(pageForm.isSearchable) }}
+
+{{ form_row(pageForm.fkTemplate) }}
+
+<div class="form-group {% if pageForm.validFrom.vars.errors|length > 0 %}has-error{% endif %}" >
+    {{ form_label(pageForm.validFrom) }}
+    {{ form_widget(pageForm.validFrom) }}
+    {{ form_errors(pageForm.validFrom) }}
+</div>
+
+<div class="form-group {% if pageForm.validTo.vars.errors|length > 0 %}has-error{% endif %}" >
+    {{ form_label(pageForm.validTo) }}
+    {{ form_widget(pageForm.validTo) }}
+    {{ form_errors(pageForm.validTo) }}
+</div>
+
+{{ form_row(pageForm.fkPage) }}
+
+<br />
+
+{% for locale in availableLocales %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true), 'hasError': false} %}
+         {% block content %}
+            {% for cmsPageAttributesForm in pageForm.pageAttributes %}
+                {% if cmsPageAttributesForm.vars.data.localeName == locale.localeName %}
+                    {{ form_row(cmsPageAttributesForm.name) }}
+
+                    <div class="form-group {% if cmsPageAttributesForm.url.vars.errors|length > 0 %}has-error{% endif %}" >
+                        {{ form_label(cmsPageAttributesForm.url) }}
+                            {% if cmsPageAttributesForm.vars.data.urlPrefix %}
+                            <div class="input-group m-b">
+                                <span class="input-group-addon">
+                                    {{ cmsPageAttributesForm.vars.data.urlPrefix }}
+                                </span>
+                                {{ form_widget(cmsPageAttributesForm.url) }}
+                            </div>
+                            {% else %}
+                                {{ form_widget(cmsPageAttributesForm.url) }}
+                            {% endif %}
+                        {{ form_errors(cmsPageAttributesForm.url) }}
+                    </div>
+
+                    {{ form_row(cmsPageAttributesForm.url) }}
+                    {{ form_row(cmsPageAttributesForm.localeName) }}
+                    {{ form_row(cmsPageAttributesForm.idCmsPageLocalizedAttributes) }}
+                {% endif %}
+            {% endfor %}
+         {% endblock %}
+    {% endembed %}
+{% endfor %}
+
+{% do pageForm.pageAttributes.setRendered %}

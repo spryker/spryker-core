@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -39,14 +39,14 @@ class CmsGlossaryForm extends AbstractType
     const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
-     * @var \Spryker\Zed\Cms\Business\CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
+     * @param \Spryker\Zed\Cms\Business\CmsFacadeInterface $cmsFacade
      */
-    public function __construct(CmsFacade $cmsFacade)
+    public function __construct(CmsFacadeInterface $cmsFacade)
     {
         $this->cmsFacade = $cmsFacade;
     }
@@ -60,14 +60,12 @@ class CmsGlossaryForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
@@ -77,7 +75,7 @@ class CmsGlossaryForm extends AbstractType
                 }
 
                 return [Constraint::DEFAULT_GROUP];
-            }
+            },
         ]);
     }
 

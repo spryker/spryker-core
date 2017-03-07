@@ -8,11 +8,14 @@
 namespace Unit\Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
@@ -24,7 +27,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Model
  * @group AuthTest
  */
-class AuthTest extends \PHPUnit_Framework_TestCase
+class AuthTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -161,11 +164,11 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMock(
-            AuthToUserBridge::class,
-            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser'],
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(
+            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser']
+        )->setConstructorArgs(
             [new UserFacade()]
-        );
+        )->getMock();
 
         return $userFacade;
     }
@@ -175,10 +178,11 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMock(
-            SessionClient::class,
-            ['get', 'set', 'migrate']
-        );
+        $pimple = new Pimple();
+        $sessionContainer = $pimple->getApplication()['session'];
+
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
+        $sessionClient->setContainer($sessionContainer);
 
         return $sessionClient;
     }
@@ -188,9 +192,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStaticTokenClient()
     {
-        $staticTokenClient = $this->getMock(
-            StaticToken::class
-        );
+        $staticTokenClient = $this->getMockBuilder(StaticToken::class)->getMock();
 
         return $staticTokenClient;
     }
@@ -220,7 +222,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    protected function checkMigrateIsCalled(\PHPUnit_Framework_MockObject_MockObject $sessionClient)
+    protected function checkMigrateIsCalled(PHPUnit_Framework_MockObject_MockObject $sessionClient)
     {
         $sessionClient->expects($this->once())
             ->method('migrate')

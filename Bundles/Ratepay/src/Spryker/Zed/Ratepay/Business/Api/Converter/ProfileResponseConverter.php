@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\RatepayProfileResponseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class ProfileResponseConverter extends BaseConverter
 {
@@ -21,15 +21,15 @@ class ProfileResponseConverter extends BaseConverter
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Ratepay\Business\Api\Converter\TransferObjectConverter $responseTransfer
      */
     public function __construct(
         ResponseInterface $response,
-        CurrencyManager $currencyManager,
+        RatepayToMoneyInterface $moneyFacade,
         TransferObjectConverter $responseTransfer
     ) {
-        parent::__construct($response, $currencyManager);
+        parent::__construct($response, $moneyFacade);
 
         $this->responseTransfer = $responseTransfer;
     }

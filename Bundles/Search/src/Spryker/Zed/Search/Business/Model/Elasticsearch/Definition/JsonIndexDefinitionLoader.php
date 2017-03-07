@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use Spryker\Shared\Library\Json;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Search\SearchConstants;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -33,15 +35,26 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $storePrefixes;
 
     /**
+     * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
+     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
      * @param array $stores
      */
-    public function __construct(array $sourceDirectories, IndexDefinitionMergerInterface $definitionMerger, array $stores)
-    {
+    public function __construct(
+        array $sourceDirectories,
+        IndexDefinitionMergerInterface $definitionMerger,
+        SearchToUtilEncodingInterface $utilEncodingService,
+        array $stores
+    ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
         $this->storePrefixes = $this->getStorePrefixes($stores);
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -53,7 +66,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 
         $jsonFiles = $this->getJsonFiles();
         foreach ($jsonFiles as $jsonFile) {
-            $definitionData = Json::decode($jsonFile->getContents(), true);
+            $definitionData = $this->decodeJson($jsonFile->getContents());
             $indexDefinitions = $this->getDefinitionByStores($jsonFile, $indexDefinitions, $definitionData);
         }
 
@@ -133,7 +146,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
      * @param string $storePrefix
      *
-     * @return mixed
+     * @return string
      */
     protected function getIndexName(SplFileInfo $jsonFile, $storePrefix)
     {
@@ -144,6 +157,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         if ($this->isPrefixable($storePrefix, $fileStorePrefix)) {
             $indexName = $storePrefix . $indexName;
         }
+
+        $indexName = $this->addSearchIndexNameSuffix($indexName);
 
         return $indexName;
     }
@@ -183,6 +198,37 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return string
+     */
+    protected function addSearchIndexNameSuffix($indexName)
+    {
+        $indexName .= $this->getIndexNameSuffix();
+
+        return $indexName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIndexNameSuffix()
+    {
+        return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
+    }
+
+    /**
+     * @param string $jsonValue
+     *
+     * @return array
+     */
+    protected function decodeJson($jsonValue)
+    {
+        return $this->utilEncodingService
+            ->decodeJson($jsonValue, true);
     }
 
 }

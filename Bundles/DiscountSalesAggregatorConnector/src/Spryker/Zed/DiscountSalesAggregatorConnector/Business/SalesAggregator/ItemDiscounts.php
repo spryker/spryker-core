@@ -113,6 +113,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
             $totalUnitDiscountAmount = $itemTransfer->getUnitGrossPrice();
         }
         $itemTransfer->setUnitTotalDiscountAmount($totalUnitDiscountAmount);
+        $itemTransfer->setFinalUnitDiscountAmount($totalUnitDiscountAmount);
 
         $totalSumDiscountAmount = $itemTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount();
         if ($totalSumDiscountAmount > $itemTransfer->getSumGrossPrice()) {
@@ -122,6 +123,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         $this->updateItemRefundableAmountWithDiscounts($itemTransfer, $calculatedDiscountTransfer);
 
         $itemTransfer->setSumTotalDiscountAmount($totalSumDiscountAmount);
+        $itemTransfer->setFinalSumDiscountAmount($totalSumDiscountAmount);
+
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
     }
 
@@ -137,9 +140,13 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
                 $itemTransfer->getUnitGrossPrice() - $itemTransfer->getUnitTotalDiscountAmount()
             );
 
+            $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithProductOptions());
+
             $itemTransfer->setSumGrossPriceWithDiscounts(
                 $itemTransfer->getSumGrossPrice() - $itemTransfer->getSumTotalDiscountAmount()
             );
+
+            $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithDiscounts());
         }
     }
 
@@ -156,8 +163,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setQuantity($quantity);
-        $calculatedDiscountTransfer->setUnitGrossAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setSumGrossAmount($salesOrderDiscountEntity->getAmount() * $quantity);
+        $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setSumGrossAmount((int)$salesOrderDiscountEntity->getAmount() * $quantity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());

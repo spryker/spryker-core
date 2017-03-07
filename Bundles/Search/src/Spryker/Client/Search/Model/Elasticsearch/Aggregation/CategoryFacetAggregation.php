@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-class CategoryFacetAggregation extends AbstractFacetAggregation
+class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 {
 
     /**
@@ -39,10 +39,14 @@ class CategoryFacetAggregation extends AbstractFacetAggregation
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        return $this
+        $aggregation = $this
             ->aggregationBuilder
             ->createTermsAggregation($fieldName)
             ->setField($fieldName);
+
+        $this->setTermsAggregationSize($aggregation, $this->facetConfigTransfer->getSize());
+
+        return $aggregation;
     }
 
 }

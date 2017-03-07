@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -26,7 +26,7 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
  * @group StateMachine
  * @group BuilderTest
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -135,6 +135,9 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
          );
     }
 
+    /**
+     * @return \Spryker\Zed\StateMachine\Business\Process\Event
+     */
     protected function createEvent()
     {
         return new Event();
@@ -169,7 +172,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachineConfig()
     {
-        $stateMachineConfigMock = $this->getMock(StateMachineConfig::class);
+        $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
 
         $pathToStateMachineFixtures = realpath(__DIR__ . '/../../../../../../Fixtures/StateMachine');
         $stateMachineConfigMock->method('getPathToStateMachineXmlFiles')->willReturn($pathToStateMachineFixtures);

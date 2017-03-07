@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class MappingAmbiguousException extends \Exception
+use Exception;
+
+class MappingAmbiguousException extends Exception
 {
 }

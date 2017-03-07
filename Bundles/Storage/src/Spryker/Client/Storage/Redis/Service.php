@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Storage\Redis;
 
+use Exception;
 use Predis\ClientInterface;
 
 class Service implements ServiceInterface
@@ -199,7 +200,7 @@ class Service implements ServiceInterface
 
         $result = json_decode($value, true);
 
-        if (json_last_error() === \JSON_ERROR_SYNTAX) {
+        if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $value;
         }
 
@@ -305,7 +306,7 @@ class Service implements ServiceInterface
 
         $this->addWriteAccessStats($key);
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
@@ -342,7 +343,7 @@ class Service implements ServiceInterface
         $this->addMultiWriteAccessStats($data);
 
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKeys for items: "[' . implode(',', array_keys($items))
                 . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );

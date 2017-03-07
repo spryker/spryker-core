@@ -12,7 +12,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -132,7 +132,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    private function buildLinks(array $item)
+    protected function buildLinks(array $item)
     {
         $buttons = [];
 
@@ -156,9 +156,13 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return string
      */
-    private function buildPlaceholderLinks($placeholder)
+    protected function buildPlaceholderLinks($placeholder)
     {
-        return '<a href="/cms/glossary/add/?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage . '&placeholder=' . $placeholder . '" class="btn btn-xs btn-white">Add Glossary</a>';
+        $url = Url::generate('/cms/glossary/add', [
+            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            'placeholder' => $placeholder,
+        ]);
+        return '<a href="' . $url . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }
 
     /**
@@ -189,7 +193,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    private function findPlaceholders(array $searchItems)
+    protected function findPlaceholders(array $searchItems)
     {
         $foundPlaceholders = [];
         foreach ($this->placeholders as $place) {

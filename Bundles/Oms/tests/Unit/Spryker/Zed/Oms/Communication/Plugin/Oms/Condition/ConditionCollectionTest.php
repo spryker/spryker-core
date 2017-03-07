@@ -7,9 +7,10 @@
 
 namespace Unit\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 /**
@@ -23,7 +24,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
  * @group Condition
  * @group ConditionCollectionTest
  */
-class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
+class ConditionCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const CONDITION_NAME = 'conditionName';
@@ -80,7 +81,7 @@ class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $conditionCollection = new ConditionCollection();
 
-        $this->setExpectedException(ConditionNotFoundException::class);
+        $this->expectException(ConditionNotFoundException::class);
 
         $conditionCollection->get(self::CONDITION_NAME);
     }
@@ -108,7 +109,7 @@ class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
 }

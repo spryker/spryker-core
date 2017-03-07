@@ -9,6 +9,9 @@ namespace Spryker\Zed\Session\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ */
 class SessionBusinessFactory extends AbstractBusinessFactory
 {
 }

@@ -7,11 +7,12 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Controller;
 
+use Exception;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 
-class ControllerNotFoundException extends \Exception implements ExceptionInterface
+class ControllerNotFoundException extends Exception implements ExceptionInterface
 {
 
     /**

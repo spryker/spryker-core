@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Locale\Business\Exception;
 
-class MissingLocaleException extends \Exception
+use Exception;
+
+class MissingLocaleException extends Exception
 {
 }

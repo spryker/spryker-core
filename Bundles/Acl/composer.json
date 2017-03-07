@@ -6,21 +6,24 @@
     }
   },
   "require": {
-    "spryker/application": "^2.4.4",
-    "spryker/config": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/installer": "^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/url": "^2.0.0",
-    "spryker/user": "^2.0.0"
+    "spryker/config": "^3.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/user": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
   "description": "Acl bundle",
   "license": "proprietary",
@@ -28,7 +31,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

@@ -9,8 +9,8 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,7 +48,7 @@ class EditController extends AbstractController
                 Url::generate(
                     '/sales/detail',
                     [
-                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
                     ]
                 )->build()
             );
@@ -90,7 +90,7 @@ class EditController extends AbstractController
                 Url::generate(
                     '/sales/detail',
                     [
-                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
                     ]
                 )->build()
             );

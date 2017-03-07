@@ -7,7 +7,10 @@
 
 namespace Functional\Spryker\Zed\Payolution\Business;
 
+use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
@@ -19,7 +22,7 @@ class PayolutionFacadeMockBuilder
      *
      * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
-    public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
+    public static function build(AdapterInterface $adapter, PHPUnit_Framework_TestCase $testCase)
     {
         // Mock business factory to override return value of createExecutionAdapter to
         // place a mocked adapter that doesn't establish an actual connection.
@@ -53,12 +56,15 @@ class PayolutionFacadeMockBuilder
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
-    protected static function getBusinessFactoryMock(\PHPUnit_Framework_TestCase $testCase)
+    protected static function getBusinessFactoryMock(PHPUnit_Framework_TestCase $testCase)
     {
         $businessFactoryMock = $testCase->getMock(
             'Spryker\Zed\Payolution\Business\PayolutionBusinessFactory',
-            ['createAdapter']
+            ['createAdapter', 'getMoneyFacade']
         );
+
+        $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
+        $businessFactoryMock->method('getMoneyFacade')->willReturn($payolutionToMoneyBridge);
 
         return $businessFactoryMock;
     }

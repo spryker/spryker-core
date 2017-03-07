@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
+use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
-class BundleConfigNotFoundException extends \Exception
+class BundleConfigNotFoundException extends Exception
 {
 
     /**
@@ -42,7 +43,7 @@ class BundleConfigNotFoundException extends \Exception
             'E.g. %s\\Zed\\%2$s\\%2$sConfig',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
-        );
+        ) . PHP_EOL;
 
         $message .= new Backtrace();
 

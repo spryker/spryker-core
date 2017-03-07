@@ -104,7 +104,7 @@ interface CustomerClientInterface
     /**
      * @api
      *
-     * @return mixed
+     * @return void
      */
     public function logout();
 

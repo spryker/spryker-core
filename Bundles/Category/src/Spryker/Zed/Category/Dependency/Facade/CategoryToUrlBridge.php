@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 class CategoryToUrlBridge implements CategoryToUrlInterface
@@ -27,36 +26,13 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
+    public function createUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->createUrl($url, $locale, $resourceType, $resourceId);
-    }
-
-    /**
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlActive($idUrl)
-    {
-        $this->urlFacade->touchUrlActive($idUrl);
-    }
-
-    /**
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlDeleted($idUrl)
-    {
-        $this->urlFacade->touchUrlDeleted($idUrl);
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -64,61 +40,39 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
+    public function updateUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        return $this->urlFacade->updateUrl($urlTransfer);
     }
 
     /**
-     * @param string $url
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function activateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->activateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->deactivateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($url)
+    public function hasUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->hasUrl($url);
-    }
-
-    /**
-     * @param string $urlString
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByPath($urlString)
-    {
-        return $this->urlFacade->getUrlByPath($urlString);
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
-    {
-        return $this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $locale);
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
-    {
-        return $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $locale);
-    }
-
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
-    {
-        return $this->urlFacade->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+        return $this->urlFacade->hasUrl($urlTransfer);
     }
 
     /**

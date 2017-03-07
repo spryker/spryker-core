@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Braintree\Communication\Plugin\Oms\Command;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\TransactionMetaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -29,47 +29,12 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $orderTransfer = $this->getOrderTransfer($orderEntity);
-        $paymentEntity = $this->getPaymentEntity($orderEntity);
+        $transactionMetaTransfer = new TransactionMetaTransfer();
+        $transactionMetaTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
 
-        $customerEntity = $orderEntity->getCustomer();
-        if ($customerEntity) {
-            $customerTransfer = new CustomerTransfer();
-            $customerTransfer->fromArray($customerEntity->toArray(), true);
-            $orderTransfer->setCustomer($customerTransfer);
-        }
-
-        $this->getFacade()->authorizePayment(
-            $orderTransfer,
-            $paymentEntity->getIdPaymentBraintree()
-        );
+        $this->getFacade()->authorizePayment($transactionMetaTransfer);
 
         return [];
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function getOrderTransfer(SpySalesOrder $orderEntity)
-    {
-        return $this
-            ->getFactory()
-            ->getSalesAggregator()
-            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree
-     */
-    protected function getPaymentEntity(SpySalesOrder $orderEntity)
-    {
-        $paymentEntity = $orderEntity->getSpyPaymentBraintrees()->getFirst();
-
-        return $paymentEntity;
     }
 
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator;
 use Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator;
 use Spryker\Zed\Tax\Business\Model\ItemTaxCalculator;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
@@ -64,7 +63,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
+     * @return \Spryker\Zed\Tax\Business\Model\ItemTaxCalculator
      */
     public function createTaxItemAmountCalculator()
     {
@@ -77,14 +76,6 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createExpenseTaxCalculator()
     {
         return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator
-     */
-    public function createProductItemTaxRateCalculator()
-    {
-        return new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->createTaxDefault());
     }
 
     /**

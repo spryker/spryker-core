@@ -79,7 +79,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserFormDataProvider()
     {
-        return new UserFormDataProvider($this->getAclFacade(), $this->getFacade());
+        return new UserFormDataProvider($this->getGroupPlugin(), $this->getFacade());
     }
 
     /**
@@ -87,15 +87,15 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserUpdateFormDataProvider()
     {
-        return new UserUpdateFormDataProvider($this->getAclFacade(), $this->getFacade());
+        return new UserUpdateFormDataProvider($this->getGroupPlugin(), $this->getFacade());
     }
 
     /**
-     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
+     * @return \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface
      */
-    public function getAclFacade()
+    public function getGroupPlugin()
     {
-        return $this->getProvidedDependency(UserDependencyProvider::FACADE_ACL);
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGIN_GROUP);
     }
 
 }

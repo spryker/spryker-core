@@ -8,8 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Search\SearchConfig;
 
 class QueryFactory implements QueryFactoryInterface
 {
@@ -20,11 +20,18 @@ class QueryFactory implements QueryFactoryInterface
     protected $queryBuilder;
 
     /**
-     * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    public function __construct(QueryBuilderInterface $queryBuilder)
+    protected $moneyPlugin;
+
+    /**
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     */
+    public function __construct(QueryBuilderInterface $queryBuilder, MoneyPluginInterface $moneyPlugin)
     {
         $this->queryBuilder = $queryBuilder;
+        $this->moneyPlugin = $moneyPlugin;
     }
 
     /**
@@ -55,13 +62,13 @@ class QueryFactory implements QueryFactoryInterface
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         switch ($facetConfigTransfer->getType()) {
-            case FacetConfigBuilder::TYPE_RANGE:
+            case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_PRICE_RANGE:
+            case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_CATEGORY:
+            case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createTermQuery($facetConfigTransfer, $filterValue);
 
             default:
@@ -103,7 +110,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createCurrencyManager());
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->moneyPlugin);
     }
 
     /**
@@ -139,14 +146,6 @@ class QueryFactory implements QueryFactoryInterface
         return $this
             ->queryBuilder
             ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
-     */
-    protected function createCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
     }
 
 }

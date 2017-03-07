@@ -5,20 +5,32 @@
       "Spryker": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Category\\Module\\": "tests/",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
+    }
+  },
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/graph": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/locale": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/touch": "^2.0.0",
-    "spryker/url": "^2.0.0"
+    "spryker/graph": "^3.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/touch": "^3.0.0",
+    "spryker/url": "^3.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "Category bundle",
@@ -27,16 +39,10 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

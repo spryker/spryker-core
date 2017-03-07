@@ -6,24 +6,8 @@
  */
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
-interface ConditionCollectionInterface
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface AS DependencyConditionCollectionInterface;
+
+interface ConditionCollectionInterface extends DependencyConditionCollectionInterface
 {
-
-    /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function add(ConditionInterface $condition, $name);
-
-    /**
-     * @param string $name
-     *
-     * @throws \Spryker\Zed\Oms\Exception\ConditionNotFoundException
-     *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
-     */
-    public function get($name);
-
 }

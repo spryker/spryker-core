@@ -8,4 +8,4 @@ composer require spryker/mail
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Spryker Documentation](http://spryker.github.io)

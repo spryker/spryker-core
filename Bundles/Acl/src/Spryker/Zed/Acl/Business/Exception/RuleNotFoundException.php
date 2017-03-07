@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class RuleNotFoundException extends \Exception
+use Exception;
+
+class RuleNotFoundException extends Exception
 {
 }

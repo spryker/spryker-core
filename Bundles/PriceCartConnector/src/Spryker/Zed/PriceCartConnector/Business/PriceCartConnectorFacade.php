@@ -20,7 +20,7 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $change
-     * @param null $grossPriceType
+     * @param string|null $grossPriceType
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

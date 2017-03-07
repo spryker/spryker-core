@@ -10,9 +10,13 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeTypeTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
@@ -84,7 +88,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         $productSearchAttributeMapQuery = $this
             ->getFactory()
             ->createProductSearchAttributeMapQuery()
-            ->joinWith('SpyProductAttributesMetadata');
+            ->joinWith('SpyProductAttributeKey');
 
         return $productSearchAttributeMapQuery;
     }
@@ -92,16 +96,16 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int $fkProductAttributesMetadata
+     * @param int $fkProductAttributeKey
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
      */
-    public function queryProductSearchAttributeMapByFkProductAttributesMetadata($fkProductAttributesMetadata)
+    public function queryProductSearchAttributeMapByFkProductAttributeKey($fkProductAttributeKey)
     {
         $productSearchAttributeMapQuery = $this
             ->getFactory()
             ->createProductSearchAttributeMapQuery()
-            ->filterByFkProductAttributesMetadata($fkProductAttributesMetadata);
+            ->filterByFkProductAttributeKey($fkProductAttributeKey);
 
         return $productSearchAttributeMapQuery;
     }
@@ -109,15 +113,13 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function querySearchPreferencesTable()
     {
         $query = $this
             ->getFactory()
-            ->createProductAttributesMetadataQuery()
-            ->joinSpyProductAttributeType()
-            ->withColumn(SpyProductAttributeTypeTableMap::COL_NAME, SearchPreferencesTable::COL_PROPERTY_TYPE);
+            ->createProductAttributeKeyQuery();
 
         $query->setIdentifierQuoting(true);
 
@@ -131,22 +133,180 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery $query
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryFilterPreferencesTable()
+    {
+        $query = $this
+            ->getFactory()
+            ->createProductSearchAttributeQuery()
+            ->joinWith('SpyProductAttributeKey');
+
+        return $query;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query
      * @param string $alias
      * @param string $targetField
      *
      * @return $this
      */
-    protected function leftJoinProductSearchAttributeMap($query, $alias, $targetField)
+    protected function leftJoinProductSearchAttributeMap(SpyProductAttributeKeyQuery $query, $alias, $targetField)
     {
         $quotedAlias = $query->quoteIdentifier($alias);
 
         $query
             ->joinSpyProductSearchAttributeMap($quotedAlias, Criteria::LEFT_JOIN)
-            ->addJoinCondition($quotedAlias, $alias . '.target_field = ?', $targetField, null, \PDO::PARAM_STR)
+            ->addJoinCondition($quotedAlias, $alias . '.target_field = ?', $targetField, null, PDO::PARAM_STR)
             ->withColumn($alias . '.target_field IS NOT NULL', $alias);
 
         return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey()
+    {
+        return $this->getFactory()->createProductAttributeKeyQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryProductSearchAttribute()
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys()
+    {
+        return $this
+            ->queryProductAttributeKey()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->useSpyProductSearchAttributeQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIdProductSearchAttribute(null)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param bool $synced
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryProductSearchAttributeBySynced($synced)
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeQuery()
+            ->filterBySynced($synced);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
+     */
+    public function queryProductSearchAttributeArchive()
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeArchiveQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param bool $synced
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
+     */
+    public function queryProductSearchAttributeMapBySynced($synced)
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeMapQuery()
+            ->filterBySynced($synced);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
+     */
+    public function queryProductSearchAttributeMapArchive()
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeMapArchiveQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param array $attributeNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByAttributeName(array $attributeNames)
+    {
+        $query = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinSpyProductLocalizedAttributes()
+            ->endUse();
+
+        $query->setDistinct();
+
+        foreach ($attributeNames as $attributeName) {
+            $this->addAttributeOrConditions($query, $attributeName);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryProductSearch()
+    {
+        return $this->getFactory()->createProductSearchQuery();
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
+     * @param string $attributeName
+     *
+     * @return void
+     */
+    protected function addAttributeOrConditions(SpyProductAbstractQuery $query, $attributeName)
+    {
+        $condition = '%"' . str_replace('_', '\_', $attributeName) . '":%';
+
+        $query
+            ->addOr(SpyProductAbstractTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE)
+            ->addOr(SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE)
+            ->addOr(SpyProductTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE)
+            ->addOr(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE);
     }
 
 }

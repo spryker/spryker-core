@@ -57,16 +57,6 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int[] $allIdProductAbstracts
-     * @param string $countryIso2Code
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code);
-
-    /**
-     * @api
-     *
      * @param string $name
      * @param int $idCountry
      * @param float $rate

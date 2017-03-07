@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\Setup;
 
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Application\Communication\Console\BuildNavigationConsole;
+use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
+use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {
@@ -40,7 +39,7 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function getJenkinsUrl()
     {
-        return $this->get(ApplicationConstants::JENKINS_BASE_URL);
+        return $this->get(SetupConstants::JENKINS_BASE_URL);
     }
 
     /**
@@ -48,7 +47,7 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function getJenkinsDirectory()
     {
-        return $this->get(ApplicationConstants::JENKINS_DIRECTORY);
+        return $this->get(SetupConstants::JENKINS_DIRECTORY);
     }
 
     /**
@@ -78,7 +77,6 @@ class SetupConfig extends AbstractBundleConfig
             PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
-            GenerateIdeAutoCompletionConsole::COMMAND_NAME,
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];

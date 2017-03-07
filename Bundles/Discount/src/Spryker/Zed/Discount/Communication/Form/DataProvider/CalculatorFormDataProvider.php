@@ -26,12 +26,12 @@ class CalculatorFormDataProvider
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getData()
     {
         return [
-            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins()
+            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins(),
         ];
     }
 

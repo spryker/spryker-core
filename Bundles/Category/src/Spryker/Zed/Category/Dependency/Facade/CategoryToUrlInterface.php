@@ -7,89 +7,48 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 interface CategoryToUrlInterface
 {
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
-
-    /**
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlActive($idUrl);
-
-    /**
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlDeleted($idUrl);
+    public function createUrl(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    public function hasUrl($url);
-
-    /**
-     * @param string $urlString
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingUrlException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByPath($urlString);
-
-    /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
-
-    /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
-
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+    public function updateUrl(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingUrlException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
+     */
+    public function activateUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */

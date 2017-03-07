@@ -7,7 +7,10 @@
 
 namespace Unit\Spryker\Zed\Payolution\Business\Api\Response;
 
+use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 
 /**
  * @group Unit
@@ -19,7 +22,7 @@ use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
  * @group Response
  * @group ConverterTest
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -27,13 +30,23 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromArray()
     {
-        $exporter = new Converter();
+        $exporter = new Converter($this->getMoneyFacade());
         $responseTransfer = $exporter->toTransactionResponseTransfer($this->getTestResponseData());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $responseTransfer);
         $this->assertEquals('DE', $responseTransfer->getAddressCountry());
         $this->assertEquals('Berlin', $responseTransfer->getAddressCity());
         $this->assertEquals('10623', $responseTransfer->getAddressZip());
         $this->assertEquals('Straße des 17. Juni 135', $responseTransfer->getAddressStreet());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
+
+        return $payolutionToMoneyBridge;
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
@@ -26,37 +26,63 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
+    public function createUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->createUrl($url, $locale, $resourceType, $resourceId);
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updateUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->updateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function touchUrlActive($idUrl)
+    public function deleteUrl(UrlTransfer $urlTransfer)
     {
-        $this->urlFacade->touchUrlActive($idUrl);
+        $this->urlFacade->deleteUrl($urlTransfer);
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return bool
      */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
+    public function hasUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+        return $this->urlFacade->hasUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function activateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->activateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->deactivateUrl($urlTransfer);
     }
 
 }

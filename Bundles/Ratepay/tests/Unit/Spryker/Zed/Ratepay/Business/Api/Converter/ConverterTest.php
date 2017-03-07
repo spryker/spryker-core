@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
 use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
+use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
@@ -18,6 +20,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\BaseResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
 /**
@@ -30,7 +33,7 @@ use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
  * @group Converter
  * @group ConverterTest
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -43,14 +46,22 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
      */
     protected $requestTransfer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
 
         $this->requestTransfer = new RatepayRequestTransfer();
-        $this->converterFactory = new ConverterFactory();
+
+        $ratepayToMoneyBridge = new RatepayToMoneyBridge(new MoneyFacade());
+        $this->converterFactory = new ConverterFactory($ratepayToMoneyBridge);
     }
 
+    /**
+     * @return void
+     */
     public function testConverterData()
     {
         $responseTransfer = $this->getResponseTransferObject((new Response)->getTestPaymentConfirmResponseData());
@@ -67,7 +78,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
      * @param string $className
      *
      * @return void
@@ -78,7 +89,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
      *
      * @return void
      */
@@ -90,6 +101,9 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $responseTransfer->getSuccessful());
     }
 
+    /**
+     * @return void
+     */
     public function testResponseSuccessState()
     {
         $response = new Response;
@@ -103,7 +117,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseTransferObject($responseXml)
     {
@@ -117,7 +131,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseInstallmentConfigurationObject($responseXml)
     {
@@ -131,7 +145,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $responseXml
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getResponseInstallmentCalculationObject($responseXml)
     {

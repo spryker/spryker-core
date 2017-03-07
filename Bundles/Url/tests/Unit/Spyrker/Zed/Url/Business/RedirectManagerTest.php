@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Business\RedirectManager;
@@ -23,7 +24,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
  * @group Url
  * @group Business
  */
-class RedirectManagerTest extends \PHPUnit_Framework_TestCase
+class RedirectManagerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -31,16 +32,16 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteUrlRedirectMustThrowExceptionIfUrlRedirectNotFound()
     {
-        $this->setExpectedException(MissingRedirectException::class);
+        $this->expectException(MissingRedirectException::class);
 
         $queryContainer = new UrlQueryContainer();
         $queryContainer->setFactory(new UrlPersistenceFactory());
 
         $redirectedManager = new RedirectManager(
             $queryContainer,
-            $this->getMock(UrlManagerInterface::class),
-            $this->getMock(UrlToTouchInterface::class),
-            $this->getMock(ConnectionInterface::class)
+            $this->getMockBuilder(UrlManagerInterface::class)->getMock(),
+            $this->getMockBuilder(UrlToTouchInterface::class)->getMock(),
+            $this->getMockBuilder(ConnectionInterface::class)->getMock()
         );
 
         $redirectedManager->deleteUrlRedirect(new RedirectTransfer());
@@ -51,10 +52,10 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteUrlRedirect()
     {
-        $entityMock = $this->getMock(SpyUrlRedirect::class, ['delete']);
+        $entityMock = $this->getMockBuilder(SpyUrlRedirect::class)->setMethods(['delete'])->getMock();
         $entityMock->expects($this->once())->method('delete');
 
-        $redirectedManager = $this->getMock(RedirectManager::class, ['getRedirectById', 'touchDeleted'], [], '', false);
+        $redirectedManager = $this->getMockBuilder(RedirectManager::class)->setMethods(['getRedirectById', 'touchDeleted'])->disableOriginalConstructor()->getMock();
         $redirectedManager->method('getRedirectById')->willReturn($entityMock);
         $redirectedManager->expects($this->once())->method('touchDeleted');
 

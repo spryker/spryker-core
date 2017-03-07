@@ -1,0 +1,32 @@
+{% extends '@Cms/Layout/layout.twig' %}
+
+{% set widget_title = 'Add a Cms page' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+{{ form_start(pageForm) }}
+
+{{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
+
+{{ form_end(pageForm) }}
+
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+{% endblock %}
+

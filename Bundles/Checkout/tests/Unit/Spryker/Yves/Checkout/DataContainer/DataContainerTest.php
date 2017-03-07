@@ -8,8 +8,9 @@
 namespace Unit\Spryker\Yves\Checkout\DataContainer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
+use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
 
 /**
  * @group Unit
@@ -19,7 +20,7 @@ use Spryker\Yves\Checkout\DataContainer\DataContainer;
  * @group DataContainer
  * @group DataContainerTest
  */
-class DataContainerTest extends \PHPUnit_Framework_TestCase
+class DataContainerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -27,10 +28,10 @@ class DataContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetShouldCallClientToGetQuoteTransferIfNotSet()
     {
-        $cartClientMock = $this->getCartClientMock();
-        $cartClientMock->expects($this->once())->method('getQuote')->willReturn(new QuoteTransfer());
+        $quoteClientMock = $this->getQuoteClientMock();
+        $quoteClientMock->expects($this->once())->method('getQuote')->willReturn(new QuoteTransfer());
 
-        $dataContainer = new DataContainer($cartClientMock);
+        $dataContainer = new DataContainer($quoteClientMock);
 
         $this->assertInstanceOf(QuoteTransfer::class, $dataContainer->get());
     }
@@ -40,7 +41,7 @@ class DataContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetShouldNotCallClientToGetQuoteTransferIfSet()
     {
-        $cartClientMock = $this->getCartClientMock();
+        $cartClientMock = $this->getQuoteClientMock();
         $cartClientMock->expects($this->once())->method('getQuote')->willReturn(new QuoteTransfer());
         $dataContainer = new DataContainer($cartClientMock);
         $dataContainer->get();
@@ -54,18 +55,18 @@ class DataContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetShouldCallClientToStoreQuoteTransfer()
     {
-        $cartClientMock = $this->getCartClientMock();
-        $cartClientMock->expects($this->once())->method('storeQuote');
+        $cartClientMock = $this->getQuoteClientMock();
+        $cartClientMock->expects($this->once())->method('setQuote');
         $dataContainer = new DataContainer($cartClientMock);
         $dataContainer->set(new QuoteTransfer());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClientInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
-    private function getCartClientMock()
+    private function getQuoteClientMock()
     {
-        return $this->getMock(CartClientInterface::class);
+        return $this->getMockBuilder(CheckoutToQuoteInterface::class)->getMock();
     }
 
 }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-
 class IdFilterInsert extends AbstractIdFilter
 {
 
@@ -25,9 +23,9 @@ class IdFilterInsert extends AbstractIdFilter
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
-            $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
-            $idCollection = $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
-            $filteredIds += array_diff($itemIdChunk, $idCollection);
+            $idCollection = $this->getIdCollection($itemType, $itemIdChunk);
+
+            $filteredIds = array_merge($filteredIds, array_diff($itemIdChunk, $idCollection));
         }
 
         return $filteredIds;

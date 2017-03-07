@@ -1,24 +1,19 @@
 {
   "name": "spryker/dummy-payment",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
-    "spryker/checkout": "^2.1.0",
-    "spryker/kernel": "^2.4.3",
-    "spryker/library": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/payment": "^2.0.0",
-    "spryker/refund": "^3.0.0",
-    "spryker/sales": "^2.2.5",
-    "spryker/step-engine": "^1.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.0.0"
+    "spryker/checkout": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/oms": "^6.0.0",
+    "spryker/payment": "^3.0.0",
+    "spryker/refund": "^4.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/step-engine": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "description": "DummyPayment bundle",
@@ -27,16 +22,33 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
   },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

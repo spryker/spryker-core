@@ -178,4 +178,76 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryLocaleById($idLocale);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes();
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $fkLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage, $fkLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage);
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryKey($key);
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key);
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale);
+
+    /**
+     * @api
+     *
+     * @param string $value
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationWithKeyByValue($value);
+
+    /**
+     * @api
+     *
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
+
 }

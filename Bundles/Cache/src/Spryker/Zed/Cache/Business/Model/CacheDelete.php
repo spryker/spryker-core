@@ -35,14 +35,17 @@ class CacheDelete
     {
         $rootDirectory = $this->config->getCachePath();
         $stores = $this->config->getAllowedStores();
-        $dirs = [];
+        $directories = [];
         foreach ($stores as $store) {
-            $dirs[] = str_replace('{STORE}', $store, $rootDirectory);
+            $directory = str_replace('{STORE}', $store, $rootDirectory);
+            if (is_dir($directory)) {
+                $directories[] = $directory;
+            }
         }
         $filesystem = new Filesystem();
-        $filesystem->remove($dirs);
+        $filesystem->remove($directories);
 
-        return $dirs;
+        return $directories;
     }
 
 }

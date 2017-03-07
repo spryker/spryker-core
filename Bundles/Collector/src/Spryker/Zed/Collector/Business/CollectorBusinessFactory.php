@@ -7,23 +7,15 @@
 
 namespace Spryker\Zed\Collector\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
-use Spryker\Zed\Collector\Business\Exporter\FileExporter;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
-use Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGenerator;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGeneratorBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -35,6 +27,7 @@ use Spryker\Zed\Collector\Business\Manager\CollectorManager;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
+use Spryker\Zed\Collector\Business\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -52,21 +45,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createStorageExporter(),
-            $this->getConfig()->getAvailableCollectorTypes()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
-     */
-    public function createYvesFileExporter()
-    {
-        return new CollectorExporter(
-            $this->getTouchQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createFileExporter(),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createStorageExporter()
         );
     }
 
@@ -98,95 +77,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater(),
-            $this->getCollectorStorageExporterPlugins()
+            $this->createExporterWriterStorageTouchUpdater()
         );
+
+        foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
+            $storageExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
+        }
 
         return $storageExporter;
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
-     */
-    protected function getCollectorStorageExporterPlugins()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
-     */
-    protected function createFileExporter()
-    {
-        $fileExporter = new FileExporter(
-            $this->getTouchQueryContainer(),
-            $this->createFileReader(),
-            $this->createFileWriter(),
-            $this->createStorageMarker(),
-            $this->createFailedResultModel(),
-            $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater(),
-            $this->getCollectorFileExporterPlugins(),
-            $this->createCsvNameGeneratorBuilder()
-        );
-
-        return $fileExporter;
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter
-     */
-    public function createFileWriter()
-    {
-        $csvFileWriterAdapter = $this->createCsvFileWriterAdapter();
-        $fileWriter = new FileWriter($csvFileWriterAdapter);
-
-        return $fileWriter;
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader
-     */
-    public function createFileReader()
-    {
-        $fileReader = new FileReader();
-
-        return $fileReader;
-    }
-
-    /**
-     * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGenerator
-     */
-    public function createCsvNameGenerator($type, LocaleTransfer $localeTransfer)
-    {
-        return new CsvNameGenerator($type, $localeTransfer);
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGeneratorBuilder
-     */
-    public function createCsvNameGeneratorBuilder()
-    {
-        return new CsvNameGeneratorBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter
-     */
-    protected function createCsvFileWriterAdapter()
-    {
-        return new CsvAdapter($this->getConfig()->getFileExporterOutputDir());
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
-     */
-    protected function getCollectorFileExporterPlugins()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS);
     }
 
     /**
@@ -277,21 +175,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($searchWriter),
-            $this->getConfig()->getAvailableCollectorTypes()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
-     */
-    public function createYvesSearchUpdateExporter()
-    {
-        return new CollectorExporter(
-            $this->getTouchQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($this->createSearchUpdateWriter()),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createElasticsearchExporter($searchWriter)
         );
     }
 
@@ -309,19 +193,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterSearchTouchUpdater(),
-            $this->getCollectorSearchExporterPlugins()
+            $this->createExporterWriterSearchTouchUpdater()
         );
 
-        return $searchExporter;
-    }
+        foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
+            $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
+        }
 
-    /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
-     */
-    protected function getCollectorSearchExporterPlugins()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS);
+        return $searchExporter;
     }
 
     /**

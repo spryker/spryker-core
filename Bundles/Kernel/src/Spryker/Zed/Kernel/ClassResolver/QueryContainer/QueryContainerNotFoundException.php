@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
 
+use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
-class QueryContainerNotFoundException extends \Exception
+class QueryContainerNotFoundException extends Exception
 {
 
     /**

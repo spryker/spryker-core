@@ -40,7 +40,7 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
      */
     protected function getPaymentTransferFromQuote()
     {
@@ -49,7 +49,7 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,7 +11,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
 use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
@@ -20,6 +20,7 @@ use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
 use Spryker\Zed\Ratepay\Business\Internal\Install;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapperFactory;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
+use Spryker\Zed\Ratepay\Business\Payment\PaymentSaver;
 use Spryker\Zed\Ratepay\Business\Payment\PostSaveHook;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\CancelPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\ConfirmDeliveryTransaction;
@@ -54,7 +55,6 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     {
         return new Guzzle($gatewayUrl);
     }
-
 
     /**
      * @return \Spryker\Zed\Ratepay\Business\Request\Service\Handler\Transaction\ProfileTransaction
@@ -102,6 +102,18 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         $this->registerAllMethodMappers($transactionHandler);
 
         return $transactionHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface
+     */
+    public function createPaymentMethodSaver()
+    {
+        $paymentSaver = new PaymentSaver(
+            $this->getQueryContainer()
+        );
+
+        return $paymentSaver;
     }
 
     /**
@@ -201,7 +213,7 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface $transactionHandler
+     * @param \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\PaymentInitTransactionInterface $transactionHandler
      *
      * @return void
      */
@@ -274,7 +286,17 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
      */
     protected function createConverterFactory()
     {
-        return new ConverterFactory();
+        return new ConverterFactory(
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_MONEY);
     }
 
     /**
@@ -357,6 +379,11 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Request\Service\Method\Service
+     */
     public function createProfile(RatepayRequestTransfer $requestTransfer)
     {
         return new Service(
@@ -372,22 +399,27 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     public function createProductExpander()
     {
         return new ProductExpander(
-            $this->getProvidedDependency(RatepayDependencyProvider::FACADE_PRODUCT)
+            $this->getProductFacade()
         );
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Zed\Ratepay\Business\Internal\Install
      */
-    public function createInstaller(MessengerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new Install(
             $this->getGlossaryFacade(),
             $this->getConfig()
         );
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

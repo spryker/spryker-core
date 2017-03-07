@@ -8,19 +8,57 @@
 namespace Application\Module;
 
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
-use Codeception\Module;
+use Codeception\TestCase;
+use Exception;
+use Propel\Runtime\Propel;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 
-class Zed extends Module
+class Zed extends Infrastructure
 {
 
-    const I_WAS_HERE = 'I_WAS_HERE';
+    /**
+     * @var bool
+     */
+    private static $alreadyLoggedIn = false;
+
+    /**
+     * @param \Codeception\TestCase $test
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function _before(TestCase $test)
+    {
+        parent::_before($test);
+
+        $process = $this->runTestSetup('--restore');
+
+        if ($process->getExitCode() != 0) {
+            throw new Exception('An error in data restore occured: ' . $process->getErrorOutput());
+        }
+    }
+
+    /**
+     * @param \Codeception\TestCase $test
+     *
+     * @return void
+     */
+    public function _after(TestCase $test)
+    {
+         Propel::closeConnections();
+         static::$alreadyLoggedIn = false;
+    }
 
     /**
      * @return $this
      */
     public function amZed()
     {
-        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.dev']);
+        $url = Config::get(ApplicationConstants::HOST_ZED_GUI);
+
+        $this->getWebDriver()->_reconfigure(['url' => $url]);
 
         return $this;
     }
@@ -38,10 +76,9 @@ class Zed extends Module
     {
         $i = $this->getWebDriver();
 
-//        $cookie = $i->grabCookie(self::I_WAS_HERE);
-//        if ($cookie) {
-//            return;
-//        }
+        if (static::$alreadyLoggedIn) {
+            return;
+        }
 
         $i->amOnPage(LoginPage::URL);
 
@@ -49,8 +86,7 @@ class Zed extends Module
         $i->fillField(LoginPage::SELECTOR_PASSWORD_FIELD, $password);
         $i->click(LoginPage::SELECTOR_SUBMIT_BUTTON);
 
-//        $i->setCookie(self::I_WAS_HERE, true);
-//        $i->saveSessionSnapshot('LoginZed');
+        static::$alreadyLoggedIn = true;
     }
 
     /**

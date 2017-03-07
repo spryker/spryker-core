@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -18,27 +17,31 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
+     * @return void
      */
-    public function sendMail(MailTransfer $mailTransfer)
+    public function handleMail(MailTransfer $mailTransfer)
     {
-        return $this->getFactory()->createMailSender()->sendMail($mailTransfer);
+        $this->getFactory()->createMailHandler()->handleMail($mailTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function isMailSent(SendMailResponsesTransfer $mailResponses)
+    public function sendMail(MailTransfer $mailTransfer)
     {
-        return $this->getFactory()->createMailSender()->isMailSent($mailResponses);
+        $this->getFactory()->createMailer()->sendMail($mailTransfer);
     }
 
 }

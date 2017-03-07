@@ -8,6 +8,7 @@
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use SimpleXMLElement;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
@@ -209,7 +210,7 @@ class Builder implements BuilderInterface
      */
     protected function loadXml($xml)
     {
-        return new \SimpleXMLElement($xml);
+        return new SimpleXMLElement($xml);
     }
 
     /**
@@ -242,7 +243,7 @@ class Builder implements BuilderInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
-    protected function createEvent(\SimpleXMLElement $xmlEvent)
+    protected function createEvent(SimpleXMLElement $xmlEvent)
     {
         $eventName = $this->getAttributeString($xmlEvent, self::STATE_NAME_ATTRIBUTE);
         if ($eventName === null) {
@@ -353,7 +354,7 @@ class Builder implements BuilderInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    protected function createState(\SimpleXMLElement $xmlState, ProcessInterface $process)
+    protected function createState(SimpleXMLElement $xmlState, ProcessInterface $process)
     {
         $state = clone $this->state;
         $state->setName($this->getAttributeString($xmlState, self::STATE_NAME_ATTRIBUTE));
@@ -370,7 +371,7 @@ class Builder implements BuilderInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    protected function addFlags(\SimpleXMLElement $xmlState, StateInterface $state)
+    protected function addFlags(SimpleXMLElement $xmlState, StateInterface $state)
     {
         if ($xmlState->flag) {
             $flags = $xmlState->children();
@@ -412,7 +413,7 @@ class Builder implements BuilderInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface
      */
-    protected function createTransition(array $stateToProcessMap, array $eventMap, \SimpleXMLElement $xmlTransition)
+    protected function createTransition(array $stateToProcessMap, array $eventMap, SimpleXMLElement $xmlTransition)
     {
         $transition = clone $this->transition;
 
@@ -470,7 +471,7 @@ class Builder implements BuilderInterface
      */
     protected function setTransitionTarget(
         array $stateToProcessMap,
-        \SimpleXMLElement $xmlTransition,
+        SimpleXMLElement $xmlTransition,
         $sourceName,
         $transition
     ) {
@@ -499,7 +500,7 @@ class Builder implements BuilderInterface
      *
      * @return void
      */
-    protected function setTransitionEvent(array $eventMap, \SimpleXMLElement $xmlTransition, $sourceState, $transition)
+    protected function setTransitionEvent(array $eventMap, SimpleXMLElement $xmlTransition, $sourceState, $transition)
     {
         if (isset($xmlTransition->event)) {
             $eventName = (string)$xmlTransition->event;
@@ -518,7 +519,7 @@ class Builder implements BuilderInterface
      *
      * @return string
      */
-    protected function getAttributeString(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {
         $string = (string)$xmlElement->attributes()[$attributeName];
         $string = ($string === '') ? null : $string;
@@ -532,7 +533,7 @@ class Builder implements BuilderInterface
      *
      * @return bool
      */
-    protected function getAttributeBoolean(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
         return (string)$xmlElement->attributes()[$attributeName] === 'true';
     }

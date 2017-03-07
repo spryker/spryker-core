@@ -7,9 +7,10 @@
 
 namespace Unit\Spryker\Zed\Refund;
 
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
-use Spryker\Shared\Library\DateFormatterInterface;
+use PHPUnit_Framework_TestCase;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
@@ -22,7 +23,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group Refund
  * @group RefundDependencyProviderTest
  */
-class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class RefundDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -80,14 +81,14 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testProvideCommunicationLayerDependenciesShouldAddCurrencyManager()
+    public function testProvideCommunicationLayerDependenciesShouldAddRefundToMoneyBridge()
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
         $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::CURRENCY_MANAGER, $container);
-        $this->assertInstanceOf(CurrencyManagerInterface::class, $container[RefundDependencyProvider::CURRENCY_MANAGER]);
+        $this->assertArrayHasKey(RefundDependencyProvider::FACADE_MONEY, $container);
+        $this->assertInstanceOf(RefundToMoneyBridge::class, $container[RefundDependencyProvider::FACADE_MONEY]);
     }
 
     /**
@@ -99,8 +100,8 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::DATE_FORMATTER, $container);
-        $this->assertInstanceOf(DateFormatterInterface::class, $container[RefundDependencyProvider::DATE_FORMATTER]);
+        $this->assertArrayHasKey(RefundDependencyProvider::SERVICE_DATE_TIME, $container);
+        $this->assertInstanceOf(UtilDateTimeServiceInterface::class, $container[RefundDependencyProvider::SERVICE_DATE_TIME]);
     }
 
 }

@@ -68,7 +68,7 @@ class ResetPasswordForm extends AbstractType
                     'userFacade' => $this->userFacade,
                 ]),
             ],
-            'attr' => ['autocomplete' => 'off']
+            'attr' => ['autocomplete' => 'off'],
         ]);
 
         return $this;

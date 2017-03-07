@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Sales\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -23,8 +24,10 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -59,15 +62,14 @@ class SalesFacadeSaveOrderTest extends Test
     {
         parent::setUp();
 
-        $countryFacadeMock = $this->getMock(SalesToCountryInterface::class, ['getIdCountryByIso2Code', 'getAvailableCountries']);
+        $countryFacadeMock = $this->getMockBuilder(SalesToCountryInterface::class)->setMethods(['getIdCountryByIso2Code', 'getAvailableCountries'])->getMock();
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock(
-            SalesToOmsInterface::class,
-            [
+        $omsFacadeMock = $this->getMockBuilder(SalesToOmsInterface::class)
+            ->setMethods([
                 'selectProcess',
                 'getInitialStateEntity',
                 'getProcessEntity',
@@ -75,9 +77,9 @@ class SalesFacadeSaveOrderTest extends Test
                 'getItemsWithFlag',
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
-                'getOrderItemMatrix'
-            ]
-        );
+                'getOrderItemMatrix',
+            ])
+            ->getMock();
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
@@ -98,10 +100,12 @@ class SalesFacadeSaveOrderTest extends Test
         $container[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
         $container[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
+        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
+        $container[SalesDependencyProvider::STORE] = Store::getInstance();
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
-        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
         $businessFactory->setConfig($salesConfigMock);
         $businessFactory->setContainer($container);
@@ -261,7 +265,7 @@ class SalesFacadeSaveOrderTest extends Test
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $customerCreatedAt = new \DateTime('Yesterday');
+        $customerCreatedAt = new DateTime('Yesterday');
         $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();

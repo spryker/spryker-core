@@ -10,7 +10,6 @@ namespace Spryker\Zed\Glossary\Business;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface GlossaryFacadeInterface
 {
@@ -212,12 +211,13 @@ interface GlossaryFacadeInterface
      *
      * @param string $keyName
      * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
-    public function translate($keyName, array $data = []);
+    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
 
     /**
      * @api
@@ -262,11 +262,9 @@ interface GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null);
+    public function install();
 
     /**
      * @api

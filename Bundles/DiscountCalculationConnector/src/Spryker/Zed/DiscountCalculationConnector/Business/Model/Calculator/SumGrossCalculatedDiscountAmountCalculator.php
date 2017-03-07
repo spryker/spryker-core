@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -47,6 +48,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setUnitTotalDiscountAmount($totalDiscountUnitGrossAmount);
         $itemTransfer->setSumTotalDiscountAmount($totalDiscountSumGrossAmount);
 
+        $itemTransfer->setFinalUnitDiscountAmount($totalDiscountUnitGrossAmount);
+        $itemTransfer->setFinalSumDiscountAmount($totalDiscountSumGrossAmount);
+
         $itemTransfer->setUnitGrossPriceWithDiscounts(
             $itemTransfer->getUnitGrossPrice() - $totalDiscountUnitGrossAmount
         );
@@ -54,6 +58,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setSumGrossPriceWithDiscounts(
             $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
         );
+
+        $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithDiscounts());
+        $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithDiscounts());
     }
 
     /**
@@ -61,7 +68,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function getCalculatedDiscountsSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountsSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalDiscountSumGrossAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
@@ -76,7 +83,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function getCalculatedDiscountsUnitGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountsUnitGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalDiscountUnitGrossAmount = 0;
         $appliedDiscounts = [];
@@ -97,12 +104,12 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function setCalculatedDiscountsSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function setCalculatedDiscountsSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $this->assertCalculatedDiscountRequirements($calculatedDiscountTransfer);
             $calculatedDiscountTransfer->setSumGrossAmount(
-                $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+                (int)$calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
             );
         }
     }
@@ -122,13 +129,20 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $expenseTransfer->setUnitTotalDiscountAmount($unitAmount);
             $expenseTransfer->setSumTotalDiscountAmount($sumAmount);
 
+            $expenseTransfer->setFinalUnitDiscountAmount($expenseTransfer->getUnitTotalDiscountAmount());
+            $expenseTransfer->setFinalUnitDiscountAmount($expenseTransfer->getSumTotalDiscountAmount());
+
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
-                $expenseTransfer->getUnitGrossPrice() - $unitAmount
+                (int)$expenseTransfer->getUnitGrossPrice() - $unitAmount
             );
 
             $expenseTransfer->setSumGrossPriceWithDiscounts(
-                $expenseTransfer->getSumGrossPrice() - $sumAmount
+                (int)$expenseTransfer->getSumGrossPrice() - $sumAmount
             );
+
+            $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPriceWithDiscounts());
+            $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPriceWithDiscounts());
+
         }
     }
 

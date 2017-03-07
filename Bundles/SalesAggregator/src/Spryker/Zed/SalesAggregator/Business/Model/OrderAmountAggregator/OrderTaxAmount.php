@@ -28,12 +28,11 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
         }
 
         $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount($totalTaxAmount);
+        $taxTotalTransfer->setAmount((int)round($totalTaxAmount));
 
         $totalsTransfer = $orderTransfer->getTotals();
         $totalsTransfer->setTaxTotal($taxTotalTransfer);
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

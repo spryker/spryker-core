@@ -7,6 +7,10 @@
 
 namespace Unit\Spryker\Zed\Console\Business\Model;
 
+use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
 /**
@@ -18,7 +22,7 @@ use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
  * @group Model
  * @group ConsoleTest
  */
-class ConsoleTest extends \PHPUnit_Framework_TestCase
+class ConsoleTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -65,7 +69,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console->setQueryContainer($this->getQueryContainerMock());
 
         $this->assertInstanceOf(
-            'Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
+            AbstractQueryContainer::class,
             $console->getQueryContainer()
         );
     }
@@ -75,13 +79,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommunicationFactoryMock()
     {
-        return $this->getMock(
-            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
-            [],
-            [],
-            '',
-            false
-        );
+        return $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -89,7 +87,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacadeMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Business\AbstractFacade', [], [], '', false);
+        return $this->getMockBuilder(AbstractFacade::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -97,7 +95,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
+        return $this->getMockBuilder(AbstractQueryContainer::class)->disableOriginalConstructor()->getMock();
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -83,8 +84,8 @@ class Discount implements DiscountInterface
      */
     protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $collectedDiscounts)
     {
-        $quoteTransfer->setVoucherDiscounts(new \ArrayObject());
-        $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
+        $quoteTransfer->setVoucherDiscounts(new ArrayObject());
+        $quoteTransfer->setCartRuleDiscounts(new ArrayObject());
 
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
@@ -160,7 +161,7 @@ class Discount implements DiscountInterface
 
         $applicableDiscounts = [];
         foreach ($discounts as $discountEntity) {
-            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity) === false) {
+            if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
                 continue;
             }
 
@@ -173,7 +174,7 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherCodes(QuoteTransfer $quoteTransfer)
     {

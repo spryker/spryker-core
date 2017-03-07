@@ -24,11 +24,6 @@ abstract class AbstractOptInHandler
     protected $subscriberKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface[]
-     */
-    protected $subscriberOptInSenders;
-
-    /**
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
@@ -41,7 +36,7 @@ abstract class AbstractOptInHandler
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
-     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber|null
      */
     protected function findSubscriberEntity(NewsletterSubscriberTransfer $subscriberTransfer)
     {

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Assertion\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Assertion\Business\AssertionBusinessFactory;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
  * @group Business
  * @group AssertionBusinessFactoryTest
  */
-class AssertionBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class AssertionBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

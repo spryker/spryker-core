@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -40,6 +41,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const LABEL = 'label';
     const VALUE = 'value';
     const IS_ACTIVE = 'is_active';
+    const CMS_URLS = 'cmsUrls';
 
     /**
      * @api
@@ -123,6 +125,33 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocale($idLocale)
+    {
+        return $this->queryPages()
+            ->useSpyCmsPageLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
+            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::CMS_URLS)
+            ->innerJoinCmsTemplate()
+            ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
+            ->groupBy(static::TEMPLATE_NAME)
+            ->groupBy('name');
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageWithTemplatesAndUrls()
@@ -131,8 +160,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::URL)
-            ->withColumn(self::IS_ACTIVE);
+            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::URL)
+            ->withColumn(self::IS_ACTIVE)
+            ->groupByIdCmsPage();
     }
 
     /**
@@ -326,7 +356,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlByIdWithRedirect($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
+        return $this->getUrlQueryContainer()
             ->queryUrlByIdWithRedirect($idUrl);
     }
 
@@ -339,7 +369,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryRedirectById($idUrlRedirect)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
+        return $this->getUrlQueryContainer()
             ->queryRedirectById($idUrlRedirect);
     }
 
@@ -350,7 +380,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlsWithRedirect()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
+        return $this->getUrlQueryContainer()
             ->queryUrlsWithRedirect();
     }
 
@@ -363,7 +393,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryKey($key)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
+        return $this->getGlossaryQueryContainer()
             ->queryKey($key);
     }
 
@@ -382,11 +412,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->useSpyUrlQuery()
                 ->leftJoinSpyLocale()
             ->endUse()
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::URL)
             ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'idLocale')
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH);
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, static::TEMPLATE_PATH);
     }
 
     /**
@@ -398,7 +428,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlById($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
+        return $this->getUrlQueryContainer()
             ->queryUrlById($idUrl);
     }
 
@@ -411,7 +441,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryTranslationWithKeyByValue($value)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
+        return $this->getGlossaryQueryContainer()
             ->queryTranslationByValue($value)
             ->innerJoinGlossaryKey()
             ->filterByIsActive(true)
@@ -429,13 +459,29 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryKeyWithTranslationByKeyAndLocale($key, $localeId)
     {
-        $query = $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
+        $query = $this->getGlossaryQueryContainer()
             ->queryByKey($key)
             ->useSpyGlossaryTranslationQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale($localeId)
             ->endUse()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKey($key)
+    {
+        $query = $this->getGlossaryQueryContainer()
+            ->queryByKey($key)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL);
 
         return $query;
     }
@@ -541,6 +587,62 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryLocaleById($idLocale)
     {
         return $this->getFactory()->createLocaleQuery()->queryLocales()->filterByIdLocale($idLocale);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
+     */
+    protected function getUrlQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
+     */
+    protected function getGlossaryQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes()
+    {
+        return $this->getFactory()->createCmsPageLocalizedAttributesQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage)
+    {
+        return $this->getFactory()
+            ->createCmsPageLocalizedAttributesQuery()
+            ->filterByFkCmsPage($idPage);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $placeholders
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage)
+    {
+        return $this->queryGlossaryKeyMappings()
+            ->leftJoinGlossaryKey()
+            ->filterByPlaceholder($placeholders, Criteria::IN)
+            ->filterByFkPage($idCmsPage);
     }
 
 }

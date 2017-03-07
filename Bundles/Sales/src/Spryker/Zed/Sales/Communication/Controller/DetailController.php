@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +47,7 @@ class DetailController extends AbstractController
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
         ], $blockResponseData);
     }
 
@@ -95,7 +95,7 @@ class DetailController extends AbstractController
         $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
-        /**
+        /*
          * @var string $blockName
          * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */
@@ -104,6 +104,30 @@ class DetailController extends AbstractController
         }
 
         return $responseData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $blockUrl
+     *
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubRequest(Request $request, $blockUrl)
+    {
+        $blockResponse = $this->getSubRequestHandler()->handleSubRequest($request, $blockUrl);
+        if ($blockResponse instanceof RedirectResponse) {
+            return $blockResponse;
+        }
+
+        return $blockResponse->getContent();
+    }
+
+    /**
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
+     */
+    protected function getSubRequestHandler()
+    {
+        return $this->getApplication()['sub_request'];
     }
 
 }

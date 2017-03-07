@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Graph;
 
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\StateMachine\Business\Exception\DrawerException;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
@@ -35,7 +35,7 @@ class Drawer implements DrawerInterface
         'style' => 'filled',
         'color' => '#ffffff',
         'fontsize' => 12,
-        'fontcolor' => 'black'
+        'fontcolor' => 'black',
     ];
 
     /**
@@ -45,7 +45,7 @@ class Drawer implements DrawerInterface
         'fontname' => 'Verdana',
         'fontsize' => 14,
         'style' => 'filled',
-        'fillcolor' => '#f9f9f9'
+        'fillcolor' => '#f9f9f9',
     ];
 
     /**
@@ -58,7 +58,7 @@ class Drawer implements DrawerInterface
         'fontcolor' => 'white',
         'fontsize' => '1',
         'style' => 'filled',
-        'fillcolor' => '#f9f9f9'
+        'fillcolor' => '#f9f9f9',
     ];
 
     /**
@@ -66,7 +66,7 @@ class Drawer implements DrawerInterface
      */
     protected $attributesTransition = [
         'fontname' => 'Verdana',
-        'fontsize' => 12
+        'fontsize' => 12,
     ];
 
     /**
@@ -172,9 +172,9 @@ class Drawer implements DrawerInterface
      */
     protected function getDiamondId()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**

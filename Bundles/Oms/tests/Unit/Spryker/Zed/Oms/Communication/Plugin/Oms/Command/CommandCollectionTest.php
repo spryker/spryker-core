@@ -7,9 +7,10 @@
 
 namespace Unit\Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
 /**
@@ -23,7 +24,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
  * @group Command
  * @group CommandCollectionTest
  */
-class CommandCollectionTest extends \PHPUnit_Framework_TestCase
+class CommandCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const COMMAND_NAME = 'commandName';
@@ -80,7 +81,7 @@ class CommandCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $commandCollection = new CommandCollection();
 
-        $this->setExpectedException(CommandNotFoundException::class);
+        $this->expectException(CommandNotFoundException::class);
 
         $commandCollection->get(self::COMMAND_NAME);
     }
@@ -108,7 +109,7 @@ class CommandCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommandMock()
     {
-        return $this->getMock(CommandInterface::class);
+        return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
 
 }

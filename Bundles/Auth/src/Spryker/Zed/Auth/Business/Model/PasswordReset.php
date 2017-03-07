@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use DateInterval;
+use DateTime;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPassword;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class PasswordReset
@@ -134,9 +136,9 @@ class PasswordReset
 
         $expiresInSeconds = $this->authConfig->getPasswordTokenExpirationInSeconds();
         $expiresAt = $resetPasswordEntity->getCreatedAt();
-        $expiresAt->add(new \DateInterval('PT' . $expiresInSeconds . 'S'));
+        $expiresAt->add(new DateInterval('PT' . $expiresInSeconds . 'S'));
 
-        $currentDateTime = new \DateTime();
+        $currentDateTime = new DateTime();
 
         if ($currentDateTime > $expiresAt) {
             $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_EXPIRED);
@@ -153,11 +155,9 @@ class PasswordReset
      */
     protected function generateToken()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator
-            ->setLength(self::LENGTH)
-            ->generateRandomString();
+        return $utilTextService->generateRandomString(8);
     }
 
     /**

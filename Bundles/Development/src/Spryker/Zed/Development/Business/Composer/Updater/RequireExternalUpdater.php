@@ -48,7 +48,6 @@ class RequireExternalUpdater implements UpdaterInterface
         $this->ignorableDependencies = $ignorableDependencies;
     }
 
-
     /**
      * @param array $composerJson
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
@@ -67,17 +66,17 @@ class RequireExternalUpdater implements UpdaterInterface
         $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL);
 
         if (preg_match('/^[0-9]/', $composerRequireVersion)) {
-            $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;
+            $composerRequireVersion = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
         foreach ($dependentBundles as $dependentBundle) {
-            if (empty($dependentBundle) || $dependentBundle === $composerJson[self::KEY_NAME]) {
+            if (empty($dependentBundle) || $dependentBundle === $composerJson[static::KEY_NAME]) {
                 continue;
             }
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . $composerRequireVersion;
+            $composerJson[static::KEY_REQUIRE][$dependentBundle] = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
         return $composerJson;
@@ -90,7 +89,7 @@ class RequireExternalUpdater implements UpdaterInterface
      */
     protected function getBundleName(array $composerJsonData)
     {
-        $nameParts = explode('/', $composerJsonData[self::KEY_NAME]);
+        $nameParts = explode('/', $composerJsonData[static::KEY_NAME]);
         $bundleName = array_pop($nameParts);
         $filter = new DashToCamelCase();
 

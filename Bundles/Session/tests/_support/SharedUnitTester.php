@@ -1,6 +1,8 @@
 <?php
 namespace Session;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Session;
  *
  * @SuppressWarnings(PHPMD)
  */
-class SharedUnitTester extends \Codeception\Actor
+class SharedUnitTester extends Actor
 {
 
     use _generated\SharedUnitTesterActions;

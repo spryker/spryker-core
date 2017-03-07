@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
@@ -157,7 +157,7 @@ class StepEngineTest extends AbstractStepEngineTest
      */
     protected function getFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->getMockBuilder(FormInterface::class)->getMock();
     }
 
     /**
@@ -165,11 +165,11 @@ class StepEngineTest extends AbstractStepEngineTest
      */
     protected function getFormCollectionHandlerMock()
     {
-        return $this->getMock(FormCollectionHandlerInterface::class);
+        return $this->getMockBuilder(FormCollectionHandlerInterface::class)->getMock();
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */

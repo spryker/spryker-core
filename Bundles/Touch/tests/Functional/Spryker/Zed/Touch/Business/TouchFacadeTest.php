@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Touch\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -44,8 +45,6 @@ class TouchFacadeTest extends Test
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
-
-        sleep(1);
     }
 
     /**
@@ -142,7 +141,7 @@ class TouchFacadeTest extends Test
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
             ->setItemType(self::ITEM_TYPE)
-            ->setTouched(new \DateTime());
+            ->setTouched(new DateTime());
 
         $touchEntity->save();
 

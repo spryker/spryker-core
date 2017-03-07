@@ -8,9 +8,10 @@
 namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use SessionHandlerInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
-class SessionHandlerRedis implements \SessionHandlerInterface
+class SessionHandlerRedis implements SessionHandlerInterface
 {
 
     const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
@@ -38,14 +39,14 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
      * @param string $savePath
      * @param int $lifetime
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      */
     public function __construct($savePath, $lifetime, NewRelicApiInterface $newRelicApi)
     {
@@ -89,7 +90,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $result = $this->connection->get($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result, true) : null;
+        return $result ? json_decode($result, true) : '';
     }
 
     /**
@@ -102,8 +103,8 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     {
         $key = $this->keyPrefix . $sessionId;
 
-        if (empty($sessionData)) {
-            return false;
+        if (strlen($sessionData) < 1) {
+            return true;
         }
 
         $startTime = microtime(true);
@@ -123,10 +124,10 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $result = $this->connection->del($key);
+        $this->connection->del($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : false;
+        return true;
     }
 
     /**

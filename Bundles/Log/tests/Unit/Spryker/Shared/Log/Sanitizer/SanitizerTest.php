@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Log\Sanitizer;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
@@ -18,7 +19,7 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
  * @group Sanitizer
  * @group SanitizerTest
  */
-class SanitizerTest extends \PHPUnit_Framework_TestCase
+class SanitizerTest extends PHPUnit_Framework_TestCase
 {
 
     const SANITIZED_VALUE = '***';
@@ -89,12 +90,12 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
         $input = [
             'foo' => 'bar',
             'bar' => [
-                'sanitize' => 'sanitize me'
+                'sanitize' => 'sanitize me',
             ],
             'password' => [
                 'pass' => 'my secret password',
                 'confirm' => 'my secret password',
-            ]
+            ],
         ];
         $expected = $input;
         $expected['bar']['sanitize'] = static::SANITIZED_VALUE;

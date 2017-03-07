@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
@@ -26,7 +27,7 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  * @group Checkout
  * @group PaymentPluginExecutorTest
  */
-class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
+class PaymentPluginExecutorTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_PROVIDER = 'Test';
@@ -77,9 +78,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param null $preCheckPluginMock
-     * @param null $orderSavePluginMock
-     * @param null $postCheckPluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface|null $preCheckPluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface|null $orderSavePluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface|null $postCheckPluginMock
      *
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
@@ -100,9 +101,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param null $preCheckPluginMock
-     * @param null $orderSavePluginMock
-     * @param null $postCheckPluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface|null $preCheckPluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface|null $orderSavePluginMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface|null $postCheckPluginMock
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */

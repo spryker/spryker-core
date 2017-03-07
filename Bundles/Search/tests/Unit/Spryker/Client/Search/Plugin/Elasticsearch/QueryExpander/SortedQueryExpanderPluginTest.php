@@ -37,7 +37,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testPaginationExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = [])
+    public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = [])
     {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
@@ -87,7 +87,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
-            ->setSort(
+            ->addSort(
                 [
                     PageIndexMap::STRING_SORT . '.foo' => [
                         'order' => SortConfigBuilder::DIRECTION_ASC,

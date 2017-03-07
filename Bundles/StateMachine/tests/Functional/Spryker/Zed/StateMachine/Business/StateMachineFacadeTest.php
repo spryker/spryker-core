@@ -8,15 +8,17 @@
 namespace Functional\Spryker\Zed\StateMachine\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandler;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateQuery;
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
@@ -130,7 +132,7 @@ class StateMachineFacadeTest extends Test
 
         $this->assertCount(1, $processList);
 
-        /* @var $process StateMachineProcessTransfer  */
+        /** @var \Generated\Shared\Transfer\StateMachineProcessTransfer $process */
         $process = array_pop($processList);
         $this->assertEquals($processName, $process->getProcessName());
     }
@@ -248,6 +250,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
+        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems */
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -258,7 +261,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /* @var $updatedStateMachineItems StateMachineItemTransfer[]  */
+        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $updatedStateMachineItems */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);
@@ -557,7 +560,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineLockEntity = new SpyStateMachineLock();
         $stateMachineLockEntity->setIdentifier($identifier);
-        $stateMachineLockEntity->setExpires(new \DateTime('Yesterday'));
+        $stateMachineLockEntity->setExpires(new DateTime('Yesterday'));
         $stateMachineLockEntity->save();
 
         $stateMachineFacade->clearLocks();
@@ -587,6 +590,9 @@ class StateMachineFacadeTest extends Test
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
              return new GraphPlugin();
+        };
+        $container[StateMachineDependencyProvider::SERVICE_NETWORK] = function () {
+             return new UtilNetworkService();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

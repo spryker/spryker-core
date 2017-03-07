@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Collector\Code\KeyBuilder;
 
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
+
 class UrlKeyBuilder implements KeyBuilderInterface
 {
 

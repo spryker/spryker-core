@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Price\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Price\Business\Model\BulkWriter;
 use Spryker\Zed\Price\Business\Model\Reader;
@@ -21,21 +20,6 @@ use Spryker\Zed\Price\PriceDependencyProvider;
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
-     */
-    private $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
-     */
-    protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
-     */
-    protected $productFacade;
 
     /**
      * @return \Spryker\Zed\Price\Business\Model\ReaderInterface
@@ -88,25 +72,18 @@ class PriceBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        if ($this->touchFacade === null) {
-            $this->touchFacade = $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
-        }
-
-        return $this->touchFacade;
+        return $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return \Spryker\Zed\Price\Business\Internal\Install
+     * @return \Spryker\Zed\Price\Business\Internal\InstallInterface
      */
-    public function createInstaller(MessengerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new Install(
             $this->createWriterModel(),
             $this->getConfig()
         );
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

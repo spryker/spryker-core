@@ -12,7 +12,7 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class IndexMapGenerator
+class IndexMapGenerator implements IndexMapGeneratorInterface
 {
 
     const TWIG_TEMPLATES_LOCATION = '/Templates/';

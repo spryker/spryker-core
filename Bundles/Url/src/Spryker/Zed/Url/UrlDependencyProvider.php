@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Url;
 
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Url\Dependency\UrlToLocaleBridge;
 use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 
@@ -18,6 +18,10 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
+
+    /**
+     * @deprecated Use `getConnection()` method from query container instead.
+     */
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
@@ -36,7 +40,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
-            return (new Connection())->get();
+            return Propel::getConnection();
         };
 
         return $container;

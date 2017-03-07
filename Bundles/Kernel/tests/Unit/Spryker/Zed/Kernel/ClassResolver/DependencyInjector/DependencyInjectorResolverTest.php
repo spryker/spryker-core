@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver\DependencyInjector;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
@@ -22,7 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group DependencyInjector
  * @group DependencyInjectorResolverTest
  */
-class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
+class DependencyInjectorResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -47,12 +48,12 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
 
     /**
      * @var string
@@ -81,7 +82,7 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getResolverMock(array $methods)
     {
-        $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, $methods);
+        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
 
         return $dependencyInjectorResolverMock;
     }
@@ -138,9 +139,9 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
         $this->createClass($this->coreClass);
         $this->createClass($this->projectClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolverMock->method('getDependencyInjectorConfiguration')
             ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);
@@ -164,9 +165,9 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolverMock->method('getDependencyInjectorConfiguration')
             ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);

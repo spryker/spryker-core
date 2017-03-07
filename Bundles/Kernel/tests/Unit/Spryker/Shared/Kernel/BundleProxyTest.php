@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\BundleProxy;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithMatcher;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
@@ -18,7 +19,7 @@ use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
  * @group Kernel
  * @group BundleProxyTest
  */
-class BundleProxyTest extends \PHPUnit_Framework_TestCase
+class BundleProxyTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -39,7 +40,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated()
     {
-        $this->setExpectedException('\LogicException');
+        $this->expectException('\LogicException');
 
         $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithoutMatcher());
@@ -72,7 +73,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod()
     {
-        $this->setExpectedException('\LogicException');
+        $this->expectException('\LogicException');
 
         $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithMatcher('Foo'));

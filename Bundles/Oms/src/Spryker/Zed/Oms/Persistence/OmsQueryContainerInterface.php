@@ -64,6 +64,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest) instead.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -71,6 +73,17 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param string $sku
+     * @param bool $returnTest
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true);
 
     /**
      * @api
@@ -157,7 +170,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
 
     /**
      * @api
@@ -166,7 +179,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
-    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate);
+    public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
 
     /**
      * @api
@@ -176,5 +189,14 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function queryLockItemsByIdentifier($identifier);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function createOmsProductReservationQuery($sku);
 
 }

@@ -7,7 +7,8 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMock;
  * @group Process
  * @group AbstractStepEngineTest
  */
-abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractStepEngineTest extends PHPUnit_Framework_TestCase
 {
 
     const ERROR_ROUTE = 'error-route';
@@ -107,7 +108,7 @@ abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getDataTransferMock()
     {
@@ -119,7 +120,7 @@ abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function getStepWithExternalRedirectUrl()
     {
-        $stepMock = $this->getMock(StepWithExternalRedirectInterface::class);
+        $stepMock = $this->getMockBuilder(StepWithExternalRedirectInterface::class)->getMock();
         $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);
 
         return $stepMock;

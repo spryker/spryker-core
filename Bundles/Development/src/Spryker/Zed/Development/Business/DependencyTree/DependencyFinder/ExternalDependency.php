@@ -7,11 +7,27 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
+use PHP_CodeSniffer;
+use PHP_CodeSniffer_File;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
+use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ExternalDependency extends AbstractDependencyFinder
 {
+
+    /**
+     * @var array
+     */
+    protected $externalToInternalNamespaceMap;
+
+    /**
+     * @param array $externalToInternalNamespaceMap
+     */
+    public function __construct(array $externalToInternalNamespaceMap)
+    {
+        $this->externalToInternalNamespaceMap = $externalToInternalNamespaceMap;
+    }
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
@@ -25,7 +41,7 @@ class ExternalDependency extends AbstractDependencyFinder
         if (!defined('STDIN')) {
             define('STDIN', fopen(__FILE__, 'r'));
         }
-        $file = new \PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new \PHP_CodeSniffer());
+        $file = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new PHP_CodeSniffer());
         $file->start($content);
         $tokens = $file->getTokens();
         $pointer = 0;
@@ -72,10 +88,31 @@ class ExternalDependency extends AbstractDependencyFinder
             $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
             $dependencyInformation[DependencyTree::META_FOREIGN_IS_EXTERNAL] = true;
 
-            $this->addDependency($fileInfo, 'external', $dependencyInformation);
+            $to = $this->getInternalBundleNameForExternalDependency($className);
+
+            $this->addDependency($fileInfo, $to, $dependencyInformation);
         }
 
         $this->cleanAutoloader();
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return string
+     */
+    protected function getInternalBundleNameForExternalDependency($className)
+    {
+        foreach ($this->externalToInternalNamespaceMap as $namespace => $internalComposerBundleName) {
+            if (strpos($className, $namespace) !== false) {
+                $foreignBundle = substr($internalComposerBundleName, 8);
+                $filter = new SeparatorToCamelCase('-');
+
+                return ucfirst($filter->filter($foreignBundle));
+            }
+        }
+
+        return 'external';
     }
 
     /**

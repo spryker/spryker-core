@@ -35,12 +35,4 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Zed\Storage\Dependency\Facade\StorageToCollectorInterface
-     */
-    public function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(StorageDependencyProvider::FACADE_COLLECTOR);
-    }
-
 }

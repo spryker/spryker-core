@@ -106,7 +106,7 @@ class GroupUsersTable extends AbstractTable
     {
         return $this->generateRemoveButton('/acl/group/delete-user-from-group', 'Delete', [
             'id-user' => $user->getIdUser(),
-            'id-group' => $this->idGroup
+            'id-group' => $this->idGroup,
         ]);
     }
 

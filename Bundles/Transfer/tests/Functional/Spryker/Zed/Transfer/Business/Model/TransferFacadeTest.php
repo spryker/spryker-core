@@ -7,7 +7,8 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use PHPUnit_Framework_TestCase;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
@@ -21,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @group Model
  * @group TransferFacadeTest
  */
-class TransferFacadeTest extends \PHPUnit_Framework_TestCase
+class TransferFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,11 +34,11 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     /**
@@ -47,7 +48,10 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     {
         $this->getFacade()->deleteGeneratedTransferObjects();
 
-        $this->assertFalse(is_dir($this->getConfig()->getClassTargetDirectory()));
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php')->files();
+
+        $this->assertCount(0, $finder, 'Directory containing generated transfer object files is not empty');
     }
 
     /**
@@ -63,6 +67,18 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
         $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php');
 
         $this->assertTrue($finder->count() > 0);
+    }
+
+    /**
+     * @depends testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects
+     *
+     * @return void
+     */
+    public function testValidateTransferObjectsShouldValidateTransferObjects()
+    {
+        $result = $this->getFacade()->validateTransferObjects($this->getMessenger(), ['bundle' => false, 'verbose' => false]);
+
+        $this->assertTrue($result);
     }
 
     /**

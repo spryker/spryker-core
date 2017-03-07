@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\DummyPayment\Business;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentFacade;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
@@ -20,7 +21,7 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  * @group Business
  * @group DummyPaymentFacadeTest
  */
-class DummyPaymentFacadeTest extends \PHPUnit_Framework_TestCase
+class DummyPaymentFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -41,10 +42,10 @@ class DummyPaymentFacadeTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFactoryMock()
     {
-        $refundMock = $this->getMock(RefundInterface::class);
+        $refundMock = $this->getMockBuilder(RefundInterface::class)->getMock();
         $refundMock->expects($this->once())->method('refund');
 
-        $dummyPaymentFactoryMock = $this->getMock(DummyPaymentBusinessFactory::class);
+        $dummyPaymentFactoryMock = $this->getMockBuilder(DummyPaymentBusinessFactory::class)->getMock();
         $dummyPaymentFactoryMock->method('createRefund')->willReturn($refundMock);
 
         return $dummyPaymentFactoryMock;

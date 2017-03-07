@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\StateMachine\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineEventTimeoutTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -60,14 +62,14 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
      */
-    public function queryItemsWithExpiredTimeout(\DateTime $expirationDate, $stateMachineName)
+    public function queryItemsWithExpiredTimeout(DateTime $expirationDate, $stateMachineName)
     {
         return $this->getFactory()
             ->createStateMachineEventTimeoutQuery()
             ->innerJoinState()
             ->innerJoinProcess()
-            ->where(SpyStateMachineEventTimeoutTableMap::COL_TIMEOUT . ' < ? ', $expirationDate->format('Y-m-d H:i:s'), \PDO::PARAM_STR)
-            ->where(SpyStateMachineProcessTableMap::COL_STATE_MACHINE_NAME . ' = ? ', $stateMachineName, \PDO::PARAM_STR)
+            ->where(SpyStateMachineEventTimeoutTableMap::COL_TIMEOUT . ' < ? ', $expirationDate->format('Y-m-d H:i:s'), PDO::PARAM_STR)
+            ->where(SpyStateMachineProcessTableMap::COL_STATE_MACHINE_NAME . ' = ? ', $stateMachineName, PDO::PARAM_STR)
             ->withColumn(SpyStateMachineEventTimeoutTableMap::COL_EVENT, 'event');
     }
 
@@ -113,7 +115,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param array|string[] $states
+     * @param string[] $states
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
@@ -159,7 +161,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate)
     {
         return $this->getFactory()
             ->createStateMachineLockQuery()
@@ -174,7 +176,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate)
+    public function queryLockedItemsByExpirationDate(DateTime $expirationDate)
     {
         return $this->getFactory()
             ->createStateMachineLockQuery()

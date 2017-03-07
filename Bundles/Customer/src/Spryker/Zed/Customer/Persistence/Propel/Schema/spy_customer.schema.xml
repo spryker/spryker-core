@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
 
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_locale" type="INTEGER"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="email" required="true" size="255" type="VARCHAR"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
@@ -30,6 +31,9 @@
         </foreign-key>
         <foreign-key name="spy_customer-default_shipping_address" foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress" onDelete="SETNULL">
             <reference foreign="id_customer_address" local="default_shipping_address"/>
+        </foreign-key>
+        <foreign-key name="spy_customer-fk_locale" foreignTable="spy_locale" phpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
         <id-method-parameter value="spy_customer_pk_seq"/>
     </table>

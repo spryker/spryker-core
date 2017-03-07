@@ -28,25 +28,15 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createCustomer()
     {
         $config = $this->getConfig();
-        $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
 
         $customer = new Customer(
             $this->getQueryContainer(),
             $this->createCustomerReferenceGenerator(),
-            $config
+            $config,
+            $this->getMailFacade(),
+            $this->getLocaleQueryContainer(),
+            $this->getStore()
         );
-
-        foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {
-            $customer->addRegistrationTokenSender($sender);
-        }
-
-        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] as $sender) {
-            $customer->addPasswordRestoreTokenSender($sender);
-        }
-
-        foreach ($senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] as $sender) {
-            $customer->addPasswordRestoredConfirmationSender($sender);
-        }
 
         return $customer;
     }
@@ -65,6 +55,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getCountryFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
+     */
+    protected function getMailFacade()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_MAIL);
     }
 
     /**
@@ -108,6 +106,22 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createPreConditionChecker()
     {
         return new PreConditionChecker($this->createCustomer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     */
+    protected function getLocaleQueryContainer()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::QUERY_CONTAINER_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
     }
 
 }

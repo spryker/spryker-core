@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
  * @group ErrorRenderer
  * @group WebErrorRendererTest
  */
-class WebErrorRendererTest extends \PHPUnit_Framework_TestCase
+class WebErrorRendererTest extends PHPUnit_Framework_TestCase
 {
 
     /**

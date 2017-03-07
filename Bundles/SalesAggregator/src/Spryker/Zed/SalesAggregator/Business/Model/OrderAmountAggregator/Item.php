@@ -44,6 +44,10 @@ class Item implements OrderAmountAggregatorInterface
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
             $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+
+            $itemTransfer->setUnitItemTotal($itemTransfer->getUnitItemTotal());
+            $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPrice());
+
             $itemTransfer->setRefundableAmount($itemTransfer->getSumGrossPrice() - $itemTransfer->getCanceledAmount());
         }
     }

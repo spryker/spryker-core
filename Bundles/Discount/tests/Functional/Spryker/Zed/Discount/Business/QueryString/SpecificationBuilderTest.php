@@ -100,7 +100,6 @@ class SpecificationBuilderTest extends Test
         $decisionRuleSpecificationBuilder->buildFromQueryString('skus = "123"');
     }
 
-
     /**
      * @return void
      */

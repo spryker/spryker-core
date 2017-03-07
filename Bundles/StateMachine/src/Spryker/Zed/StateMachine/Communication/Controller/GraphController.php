@@ -7,8 +7,8 @@
 namespace Spryker\Zed\StateMachine\Communication\Controller;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -64,7 +64,7 @@ class GraphController extends AbstractController
                         self::URL_PARAM_FORMAT => $format,
                         self::URL_PARAM_FONT_SIZE => $fontSize,
                         self::URL_PARAM_HIGHLIGHT_STATE => $highlightState,
-                        self::URL_PARAM_STATE_MACHINE => $stateMachine
+                        self::URL_PARAM_STATE_MACHINE => $stateMachine,
                     ]
                 )->build()
             );

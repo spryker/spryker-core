@@ -6,18 +6,16 @@
     }
   },
   "require": {
-    "spryker/collector": "^2.0.0 || ^3.0.0",
-    "spryker/config": "^2.0.0",
-    "spryker/elastica": "^3.0.0",
-    "spryker/kernel": "^2.4.0",
-    "spryker/library": "^2.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0",
-    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/storage": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/search": "^6.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/elastica": "If you want to use Elastica plugins you need to install spryker/elastica.",
+    "spryker/config": "If you want to use Elastica plugins you need to install spryker/config."
   },
   "description": "Catalog bundle",
   "license": "proprietary",
@@ -25,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "5.0.x-dev"
     }
   },
   "config": {

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -19,7 +20,7 @@ use Unit\Spryker\Client\Kernel\Fixtures\Plugin\FooPlugin;
  * @group Kernel
  * @group AbstractPluginTest
  */
-class AbstractPluginTest extends \PHPUnit_Framework_TestCase
+class AbstractPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,7 +33,8 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractFactory::class, null, [], '', false));
+        $abstractFactoryMock = $this->getMockBuilder(AbstractFactory::class)->disableOriginalConstructor()->getMock();
+        $communicationFactoryProperty->setValue($plugin, $abstractFactoryMock);
 
         $factory = $plugin->getFactory();
 
@@ -49,7 +51,8 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('client');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractClient::class, null, [], '', false));
+        $abstractFactoryMock = $this->getMockBuilder(AbstractClient::class)->disableOriginalConstructor()->getMock();
+        $communicationFactoryProperty->setValue($plugin, $abstractFactoryMock);
 
         $client = $plugin->getClient();
 

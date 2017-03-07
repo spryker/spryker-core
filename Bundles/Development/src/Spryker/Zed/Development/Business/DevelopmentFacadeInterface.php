@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+
 interface DevelopmentFacadeInterface
 {
 
@@ -52,6 +54,16 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @param string $bundle
+     * @param array $options
+     *
+     * @return void
+     */
+    public function createBundle($bundle, $options);
+
+    /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -84,6 +96,27 @@ interface DevelopmentFacadeInterface
      * @return void
      */
     public function buildDependencyTree($application, $bundle, $layer);
+
+    /**
+     * Specification:
+     * - Calculates the stability of each bundle.
+
+     * @api
+     *
+     * @return array
+     */
+    public function calculateStability();
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     * @param array $excludedBundles
+     * @param bool $showIncomingDependencies
+     *
+     * @return string
+     */
+    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false);
 
     /**
      * @api
@@ -133,5 +166,58 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function getEngineBundleList();
+
+    /**
+     * @api
+     *
+     * @param array $bundles
+     *
+     * @return void
+     */
+    public function updateComposerJsonInBundles(array $bundles);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getExternalDependencyTree();
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     *
+     * @return array
+     */
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer);
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateYvesIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateZedIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateClientIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateServiceIdeAutoCompletion();
 
 }

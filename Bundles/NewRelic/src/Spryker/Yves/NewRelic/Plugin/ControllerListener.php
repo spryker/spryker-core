@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\NewRelic\Plugin;
 
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -23,14 +23,14 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     const PRIORITY = -255;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @var \Spryker\Shared\Library\System
+     * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
-    protected $system;
+    protected $utilNetworkService;
 
     /**
      * @var array
@@ -38,14 +38,14 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $ignorableTransactions;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
-     * @param \Spryker\Shared\Library\System $system
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
-    public function __construct(NewRelicApiInterface $newRelicApi, System $system, array $ignorableTransactions = [])
+    public function __construct(NewRelicApiInterface $newRelicApi, UtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
     {
         $this->newRelicApi = $newRelicApi;
-        $this->system = $system;
+        $this->utilNetworkService = $utilNetworkService;
         $this->ignorableTransactions = $ignorableTransactions;
     }
 
@@ -63,7 +63,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $request = $event->getRequest();
         $transactionName = $request->attributes->get('_route');
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
-        $host = $request->server->get('COMPUTERNAME', $this->system->getHostname());
+        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostname());
 
         $this->newRelicApi->setNameOfTransaction($transactionName);
         $this->newRelicApi->addCustomParameter('request_uri', $requestUri);

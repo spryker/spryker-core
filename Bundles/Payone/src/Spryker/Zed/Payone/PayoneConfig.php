@@ -10,7 +10,6 @@ namespace Spryker\Zed\Payone;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -92,7 +91,7 @@ class PayoneConfig extends AbstractBundleConfig
      */
     protected function getYvesBaseUrl()
     {
-        return $this->get(ApplicationConstants::HOST_YVES);
+        return $this->get(PayoneConstants::HOST_YVES);
     }
 
 }

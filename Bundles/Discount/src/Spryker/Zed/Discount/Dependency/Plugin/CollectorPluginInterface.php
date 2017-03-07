@@ -13,6 +13,13 @@ interface CollectorPluginInterface
 {
 
     /**
+     * Specification:
+     *  - Collect items to which discount have to be applied, ClauseTransfer holds query string parameters,
+     *  - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
+     *  - Returns array of discountable items with reference to original CalculatedDiscountTransfer, which is modified by reference by distributor.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -23,6 +30,8 @@ interface CollectorPluginInterface
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName();
@@ -30,7 +39,9 @@ interface CollectorPluginInterface
     /**
      * Data types used by this field. (string, integer, list)
      *
-     * @return array|string[]
+     * @api
+     *
+     * @return string[]
      */
     public function acceptedDataTypes();
 

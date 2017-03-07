@@ -9,11 +9,13 @@ namespace Spryker\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\ReSortController
+ *
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
@@ -85,9 +87,9 @@ class NodeController extends AbstractController
         }
 
         return $this->jsonResponse([
-                'code' => Response::HTTP_OK,
-                'message' => 'Category nodes successfully reordered',
-            ]);
+            'code' => Response::HTTP_OK,
+            'message' => 'Category nodes successfully reordered.',
+        ]);
     }
 
 }

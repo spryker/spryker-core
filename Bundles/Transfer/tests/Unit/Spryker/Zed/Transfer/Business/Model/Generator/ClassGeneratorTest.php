@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,7 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Generator
  * @group ClassGeneratorTest
  */
-class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
+class ClassGeneratorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

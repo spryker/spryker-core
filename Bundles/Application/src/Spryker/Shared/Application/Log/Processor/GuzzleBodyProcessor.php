@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Application\Log\Processor;
 
-use Spryker\Shared\Library\Json;
+use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class GuzzleBodyProcessor
@@ -55,7 +55,8 @@ class GuzzleBodyProcessor
     protected function prepareBody($body)
     {
         if ($this->isJson($body)) {
-            $body = Json::decode($body, true);
+            $jsonUtil = new Json();
+            $body = $jsonUtil->decode($body, true);
         }
 
         if (is_array($body)) {

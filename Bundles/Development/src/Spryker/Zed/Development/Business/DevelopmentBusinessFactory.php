@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
+use Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -36,10 +37,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDep
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\PackageNameHydrator;
@@ -57,7 +60,19 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignEx
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
 use Spryker\Zed\Development\Business\Dependency\BundleParser;
 use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder as IdeAutoCompletionBundleBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
@@ -114,6 +129,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder
+     */
+    public function createBundleBuilder()
+    {
+        return new BundleBuilder(
+            $this->getConfig()->getBundleDirectory()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraph()
@@ -128,7 +153,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $config = $this->getConfig();
 
-        return new BundleParser($this->createFinder(), $config);
+        return new BundleParser($config);
     }
 
     /**
@@ -139,6 +164,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
 
         return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Stability\StabilityCalculatorInterface
+     */
+    public function createStabilityCalculator()
+    {
+        return new StabilityCalculator();
     }
 
     /**
@@ -224,6 +257,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createLocatorFacadeChecker(),
             $this->createLocatorQueryContainerChecker(),
             $this->createLocatorClientChecker(),
+            $this->createLocatorServiceChecker(),
             $this->createExternalDependencyChecker(),
         ];
     }
@@ -261,11 +295,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     */
+    protected function createLocatorServiceChecker()
+    {
+        return new LocatorService();
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency
      */
     protected function createExternalDependencyChecker()
     {
-        return new ExternalDependency();
+        return new ExternalDependency($this->getConfig()->getExternalToInternalNamespaceMap());
     }
 
     /**
@@ -314,6 +356,33 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $bundleToView
+     * @param array $excludedBundles
+     *
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder
+     */
+    public function createOutgoingDependencyGraphBuilder($bundleToView, array $excludedBundles = [])
+    {
+        $outgoingDependencyGraphBuilder = new OutgoingGraphBuilder(
+            $bundleToView,
+            $this->getGraph(),
+            $this->createDependencyBundleParser(),
+            $this->createDependencyManager(),
+            $excludedBundles
+        );
+
+        return $outgoingDependencyGraphBuilder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     */
+    protected function createOutgoingGraphBuilder()
+    {
+        return new DetailedGraphBuilder($this->getGraph()->init('Dependency Tree'));
+    }
+
+    /**
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
@@ -333,7 +402,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder
      */
     protected function createSimpleGraphBuilder()
     {
@@ -411,7 +480,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder
      */
     protected function createExternalGraphBuilder()
     {
@@ -731,6 +800,261 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerDependencyParser()
     {
         return new ComposerDependencyParser($this->createComposerJsonFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createYvesIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createYvesIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createYvesIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->getYvesIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createZedIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createZedIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getZedIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createZedIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->getZedIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getZedIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createClientIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createClientIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getClientIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createClientIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->getClientIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getClientIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createServiceIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createServiceIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createServiceIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->getServiceIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getYvesIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getZedIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionFacadeMethodBuilder(),
+            $this->createIdeAutoCompletionQueryContainerMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getClientIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getServiceIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionFacadeMethodBuilder()
+    {
+        return new FacadeMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionQueryContainerMethodBuilder()
+    {
+        return new QueryContainerMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionClientMethodBuilder()
+    {
+        return new ClientMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionServiceMethodBuilder()
+    {
+        return new ServiceMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter
+     */
+    protected function createIdeAutoCompletionWriter(BundleBuilderInterface $bundleBuilder, array $options)
+    {
+        return new IdeAutoCompletionWriter(
+            $this->getIdeAutoCompletionGeneratorStack($options),
+            $this->createIdeAutoCompletionBundleFinder($bundleBuilder),
+            $options
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface
+     */
+    protected function createIdeAutoCompletionBundleFinder(BundleBuilderInterface $bundleBuilder)
+    {
+        return new BundleFinder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $bundleBuilder,
+            $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns()
+        );
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
+     */
+    protected function getIdeAutoCompletionGeneratorStack(array $options)
+    {
+        return [
+            $this->createIdeAutoCompletionBundleGenerator($options),
+            $this->createIdeAutoCompletionBundleMethodGenerator($options),
+        ];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
+     */
+    protected function createIdeAutoCompletionBundleGenerator(array $options)
+    {
+        return new BundleGenerator($this->getTwigEnvironment(), $options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
+     */
+    protected function createIdeAutoCompletionBundleMethodGenerator(array $options)
+    {
+        return new BundleMethodGenerator($this->getTwigEnvironment(), $options);
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        $twigEnvironment = $this->getProvidedDependency(DevelopmentDependencyProvider::TWIG_ENVIRONMENT);
+        $twigEnvironment->setLoader($this->getTwigFilesystemLoader());
+
+        return $twigEnvironment;
+    }
+
+    /**
+     * @return \Twig_LoaderInterface
+     */
+    protected function getTwigFilesystemLoader()
+    {
+        $filesystemLoader = $this->getProvidedDependency(DevelopmentDependencyProvider::TWIG_LOADER_FILESYSTEM);
+        $filesystemLoader->setPaths($this->getConfig()->getIdeAutoCompletionGeneratorTemplatePaths());
+
+        return $filesystemLoader;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
+     */
+    protected function createIdeAutoCompletionNamespaceExtractor()
+    {
+        return new NamespaceExtractor();
     }
 
 }

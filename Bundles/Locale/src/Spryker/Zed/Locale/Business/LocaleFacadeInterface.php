@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-
 interface LocaleFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Checks if the given $localeName exists in database or not.
+     * - Returns true if it exists, false otherwise.
+     *
      * @api
      *
      * @param string $localeName
@@ -22,6 +24,10 @@ interface LocaleFacadeInterface
     public function hasLocale($localeName);
 
     /**
+     * Specification:
+     * - Reads persisted locale by given locale name.
+     * - Returns a LocaleTransfer if it's found, throws exception otherwise.
+     *
      * @api
      *
      * @param string $localeName
@@ -33,6 +39,9 @@ interface LocaleFacadeInterface
     public function getLocale($localeName);
 
     /**
+     * Specification:
+     * - Returns a LocaleTransfer with the data of the currently used locale.
+     *
      * @api
      *
      * @param string $localeCode
@@ -44,6 +53,24 @@ interface LocaleFacadeInterface
     public function getLocaleByCode($localeCode);
 
     /**
+     * Specification:
+     * - Reads persisted locale by given locale id
+     * - Returns a LocaleTransfer if it's found, throws exception otherwise.
+     *
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
+
+    /**
+     * Specification:
+     * - Returns the name of the currently used locale.
+     *
      * @api
      *
      * @return string
@@ -51,6 +78,10 @@ interface LocaleFacadeInterface
     public function getCurrentLocaleName();
 
     /**
+     * Specification:
+     * - Returns an associative array of [id_locale => locale_name] pairs.
+     * - The locales returned are read from the store configuration and their data is read from database.
+     *
      * @api
      *
      * @return array
@@ -58,6 +89,9 @@ interface LocaleFacadeInterface
     public function getAvailableLocales();
 
     /**
+     * Specification:
+     * - Returns a LocaleTransfer with the data of the currently used locale.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
@@ -65,6 +99,11 @@ interface LocaleFacadeInterface
     public function getCurrentLocale();
 
     /**
+     * Specification:
+     * - Persists a new locale entity to database.
+     * - The locale name must be unique otherwise exception is thrown.
+     * - Returns a LocaleTransfer with the data of the persisted locale.
+     *
      * @api
      *
      * @param string $localeName
@@ -76,6 +115,9 @@ interface LocaleFacadeInterface
     public function createLocale($localeName);
 
     /**
+     * Specification:
+     * - "Soft delete" the locale entity by setting it inactive.
+     *
      * @api
      *
      * @param string $localeName
@@ -85,15 +127,21 @@ interface LocaleFacadeInterface
     public function deleteLocale($localeName);
 
     /**
-     * @api
+     * Specification:
+     * - Reads a list of predefined locales from a file, specified in the LocaleConfig.
+     * - Persists new locale entities from the list to database.
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @api
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger);
+    public function install();
 
     /**
+     * Specification:
+     * - Returns an associative array of [locale_name => LocaleTransfer] pairs.
+     * - The locales returned are read from the store configuration and their data is read from database.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]

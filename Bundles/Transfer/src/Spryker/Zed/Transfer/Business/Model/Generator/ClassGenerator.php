@@ -67,12 +67,12 @@ class ClassGenerator implements GeneratorInterface
     {
         return [
             'className' => $classDefinition->getName(),
-            'uses' => $classDefinition->getUses(),
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
             'constants' => $classDefinition->getConstants(),
             'properties' => $classDefinition->getProperties(),
             'methods' => $classDefinition->getMethods(),
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
+            'deprecationDescription' => $classDefinition->getDeprecationDescription(),
         ];
     }
 

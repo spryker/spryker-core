@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Business\Model\Exception;
 
-class MissingTaxRateException extends \RuntimeException
+use RuntimeException;
+
+class MissingTaxRateException extends RuntimeException
 {
 }

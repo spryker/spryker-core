@@ -9,27 +9,32 @@
     }
   },
   "require": {
-    "spryker/application": "^2.4.4",
-    "spryker/checkout": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/locale": "^2.0.0",
-    "spryker/mail": "^2.0.0",
-    "spryker/propel": "^2.1.0",
-    "spryker/sequence-number": "^2.0.0",
-    "spryker/session": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/country": "^3.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/mail": "^4.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sequence-number": "^3.0.0",
+    "spryker/session": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/assertion": "^2.0.0",
+    "spryker/application": "*",
+    "spryker/assertion": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "^2.1.0",
-    "spryker/console": "^2.0.1",
-    "spryker/testify": "*"
+    "spryker/config": "*",
+    "spryker/console": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
   "description": "Customer bundle",
   "license": "proprietary",
@@ -37,7 +42,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "repositories": [

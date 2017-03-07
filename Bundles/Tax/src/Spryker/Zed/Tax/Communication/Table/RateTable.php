@@ -11,8 +11,8 @@ use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -29,25 +29,24 @@ class RateTable extends AbstractTable
     protected $taxRateQuery;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxRateQuery $taxRateQuery
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(SpyTaxRateQuery $taxRateQuery, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyTaxRateQuery $taxRateQuery, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->taxRateQuery = $taxRateQuery;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
-
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -60,7 +59,7 @@ class RateTable extends AbstractTable
             SpyTaxRateTableMap::COL_CREATED_AT => 'Created at',
             SpyCountryTableMap::COL_NAME => 'Country',
             SpyTaxRateTableMap::COL_RATE => 'Percentage',
-            self::TABLE_COL_ACTIONS => 'Actions'
+            self::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -86,7 +85,7 @@ class RateTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -100,7 +99,7 @@ class RateTable extends AbstractTable
         foreach ($queryResult as $taxRateEntity) {
             $result[] = [
                 SpyTaxRateTableMap::COL_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
-                SpyTaxRateTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($taxRateEntity->getCreatedAt()),
+                SpyTaxRateTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($taxRateEntity->getCreatedAt()),
                 SpyTaxRateTableMap::COL_NAME => $taxRateEntity->getName(),
                 SpyCountryTableMap::COL_NAME => $this->getCountryName($taxRateEntity),
                 SpyTaxRateTableMap::COL_RATE => $taxRateEntity->getRate(),
@@ -135,7 +134,7 @@ class RateTable extends AbstractTable
         $editTaxRateUrl = Url::generate(
             '/tax/rate/edit',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
         return $this->generateEditButton($editTaxRateUrl, 'Edit');
@@ -151,7 +150,7 @@ class RateTable extends AbstractTable
         $viewTaxRateUrl = Url::generate(
             '/tax/rate/view',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
         return $this->generateViewButton($viewTaxRateUrl, 'View');
@@ -167,7 +166,7 @@ class RateTable extends AbstractTable
         $deleteTaxRateUrl = Url::generate(
             '/tax/rate/delete',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
 

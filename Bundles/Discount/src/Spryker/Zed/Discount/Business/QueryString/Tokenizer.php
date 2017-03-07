@@ -19,7 +19,7 @@ class Tokenizer implements TokenizerInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function tokenizeQueryString($queryString)
     {

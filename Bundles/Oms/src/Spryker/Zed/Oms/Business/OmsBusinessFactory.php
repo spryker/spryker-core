@@ -9,8 +9,8 @@ namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
+use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
@@ -23,6 +23,7 @@ use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
@@ -59,7 +60,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createOrderStateMachineTimeout(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
+            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+            $this->createUtilReservation()
         );
     }
 
@@ -108,16 +110,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface
-     */
-    public function createModelDummy()
-    {
-        return new Dummy(
-            $this->createOrderStateMachineBuilder()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
     public function createOrderStateMachineFinder()
@@ -150,7 +142,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $queryContainer = $this->getQueryContainer();
 
-        return new TransitionLog($queryContainer, $logContext);
+        return new TransitionLog($queryContainer, $logContext, $this->getUtilNetworkService());
     }
 
     /**
@@ -201,7 +193,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Drawer(
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false)
+            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
+            $this->getUtilTextService()
         );
     }
 
@@ -218,7 +211,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createUtilOrderItemMatrix()
     {
-        return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
+        return new OrderItemMatrix(
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $this->getUtilSanitizeService()
+        );
     }
 
     /**
@@ -230,6 +227,80 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Util\ReservationInterface
+     */
+    public function createUtilReservation()
+    {
+        return new Reservation(
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->createOrderStateMachineBuilder(),
+            $this->getQueryContainer(),
+            $this->getReservationHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
+     */
+    protected function getReservationHandlerPlugins()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface
+     */
+    protected function getSalesAggregatorFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
+     */
+    protected function getUtilTextService()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface
+     */
+    protected function getUtilNetworkService()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_NETWORK);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeService()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Mail\MailHandler
+     */
+    public function createMailHandler()
+    {
+        $mailHandler = new MailHandler(
+            $this->getSalesAggregatorFacade(),
+            $this->getMailFacade()
+        );
+
+        return $mailHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
+     */
+    protected function getMailFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
 
 }

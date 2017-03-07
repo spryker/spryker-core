@@ -10,10 +10,10 @@ $config[PropelConstants::ZED_DB_ENGINE_MYSQL] = PropelConfig::DB_ENGINE_MYSQL;
 $config[PropelConstants::ZED_DB_ENGINE_PGSQL] = PropelConfig::DB_ENGINE_PGSQL;
 $config[PropelConstants::ZED_DB_SUPPORTED_ENGINES] = [
     PropelConfig::DB_ENGINE_MYSQL => 'MySql',
-    PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql'
+    PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql',
 ];
 
-$config[PropelConstants::ZED_DB_USERNAME] = (getenv(PropelConstants::ZED_DB_USERNAME)) ?: 'postgres';
+$config[PropelConstants::ZED_DB_USERNAME] = (getenv(PropelConstants::ZED_DB_USERNAME)) ?: 'development';
 $config[PropelConstants::ZED_DB_PASSWORD] = (getenv(PropelConstants::ZED_DB_PASSWORD)) ?: 'mate20mg';
 $config[PropelConstants::ZED_DB_DATABASE] = (getenv(PropelConstants::ZED_DB_DATABASE)) ?: 'DE_test_zed';
 $config[PropelConstants::ZED_DB_HOST] = (getenv(PropelConstants::ZED_DB_HOST)) ?: '127.0.0.1';
@@ -48,7 +48,8 @@ $connections = [
         'settings' => [
             'charset' => 'utf8',
             'queries' => [
-                'utf8' => 'SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci',
+                'utf8' => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci, COLLATION_CONNECTION = utf8mb4_unicode_ci, COLLATION_DATABASE = utf8mb4_unicode_ci, COLLATION_SERVER = utf8mb4_unicode_ci',
+                'mode' => "set sql_mode = ''",
             ],
         ],
     ],

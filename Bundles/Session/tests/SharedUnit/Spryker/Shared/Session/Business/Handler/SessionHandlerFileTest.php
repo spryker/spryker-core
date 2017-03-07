@@ -7,19 +7,22 @@
 
 namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
-use Spryker\Shared\NewRelic\NewRelicApi;
+use PHPUnit_Framework_TestCase;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
- * @group SessionHandlerFile
+ * @group Handler
+ * @group SessionHandlerFileTest
  */
-class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
+class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
 {
 
     const LIFETIME = 20;
@@ -118,6 +121,18 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testWriteMustAllowZeroValue()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $result = $sessionHandlerFile->write(self::SESSION_ID, '0');
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testCallReadMustReturnContentOfSessionForGivenSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -132,14 +147,14 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCallDestroyMustReturnFalseIfNoFileExistsForSessionId()
+    public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
 
         $result = $sessionHandlerFile->destroy(self::SESSION_ID);
 
-        $this->assertFalse($result);
+        $this->assertTrue($result);
     }
 
     /**
@@ -197,7 +212,7 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function createNewRelicApiMock()
     {

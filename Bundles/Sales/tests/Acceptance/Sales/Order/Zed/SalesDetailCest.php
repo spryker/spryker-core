@@ -29,8 +29,7 @@ class SalesDetailCest
      */
     public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesDetailPageTester $i, SalesListTester $salesListTester)
     {
-        $idSalesOrder = $i->createOrder();
-        $i->createSalesOrderItemForOrder($idSalesOrder, []);
+        $i->createOrderWithOneItem();
 
         $idSalesOrder = $salesListTester->grabLatestOrderId();
         $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));

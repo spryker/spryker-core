@@ -1,0 +1,41 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price & Stock' } %}
+    {% block widget_content %}
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Price' | trans }}</b></div>
+            <div class="col-xs-10">{{ currentProduct.price.price | money }}</div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                <b>{{ 'Stock Type' | trans }}</b>
+            </div>
+            <div class="col-xs-4">
+                <b>{{ 'Quantity' | trans }}</b>
+            </div>
+            <div class="col-xs-4">
+                <b>{{ 'Never out of stock' | trans }}</b>
+            </div>
+
+            {% for stock in currentProduct.stocks %}
+                {% set is_never_out_of_stock = 'No' %}
+                {%  if stock.is_never_out_of_stock %}
+                    {% set is_never_out_of_stock = 'Yes' %}
+                {%  endif %}
+
+                <div class="col-xs-4">
+                    {{ stock.stock_type }}
+                </div>
+                <div class="col-xs-4">
+                    {{ stock.quantity }}
+                </div>
+                <div class="col-xs-4">
+                    {{ is_never_out_of_stock | trans }}
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endblock %}
+{% endembed %}

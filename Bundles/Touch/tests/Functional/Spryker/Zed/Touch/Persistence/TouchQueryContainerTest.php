@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Touch\Persistence;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Propel\Runtime\Exception\PropelException;
@@ -32,6 +33,9 @@ class TouchQueryContainerTest extends Test
     const ITEM_ID_5 = 5;
     const ITEM_ID_6 = 6;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -90,7 +94,7 @@ class TouchQueryContainerTest extends Test
         $touchQueryContainer = new TouchQueryContainer();
         $touchQueryContainer->queryTouchEntries(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, [self::ITEM_ID_1, self::ITEM_ID_2])->find();
 
-        $this->setExpectedException(PropelException::class);
+        $this->expectException(PropelException::class);
         $touchQueryContainer->queryTouchEntries(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, [self::ITEM_ID_1])->find();
     }
 
@@ -137,7 +141,7 @@ class TouchQueryContainerTest extends Test
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
             ->setItemType(self::ITEM_TYPE)
-            ->setTouched(new \DateTime());
+            ->setTouched(new DateTime());
 
         $touchEntity->save();
 

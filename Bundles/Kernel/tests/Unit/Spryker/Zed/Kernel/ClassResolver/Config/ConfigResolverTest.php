@@ -31,12 +31,12 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class ConfigResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(BundleConfigResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(BundleConfigResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }

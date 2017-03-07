@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Storage\Provider;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Storage\Provider\AbstractKvProvider;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
  * @group Provider
  * @group AbstractKvProviderTest
  */
-class AbstractKvProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractKvProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

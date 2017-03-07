@@ -10,6 +10,7 @@ namespace Functional\Spryker\Client;
 use Elastica\Client;
 use Elastica\ResultSet;
 use Elastica\Status;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
@@ -25,7 +26,7 @@ use Spryker\Client\Search\SearchFactory;
  * @group Client
  * @group SearchClientTest
  */
-class SearchClientTest extends \PHPUnit_Framework_TestCase
+class SearchClientTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -99,7 +100,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
         $this->prepareSearchClientForSearchTest();
 
         /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
-        $queryMock = $this->getMock(QueryInterface::class);
+        $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $result = $this->searchClient->search($queryMock);
         $this->assertEmpty($result);
@@ -122,7 +123,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
             ->willReturn('fooResultFormatter');
 
         /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
-        $queryMock = $this->getMock(QueryInterface::class);
+        $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
         $resultFormatters = [
             $resultFormatterMock,
         ];
@@ -142,7 +143,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
     public function testExpandQuery()
     {
         /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
-        $queryMock = $this->getMock(QueryInterface::class);
+        $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $queryExpanderMock = $this->getMockBuilder(QueryExpanderPluginInterface::class)
             ->setMethods(['expandQuery'])
@@ -150,7 +151,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
         $queryExpanderMock
             ->expects($this->once())
             ->method('expandQuery')
-            ->willReturn($this->getMock(QueryInterface::class));
+            ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
             $queryExpanderMock

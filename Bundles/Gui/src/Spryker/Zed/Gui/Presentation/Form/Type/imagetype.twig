@@ -1,0 +1,48 @@
+{% block image_widget %}
+    {% set css = 'spryker-form-image' %}
+    {% set image_width = '' %}
+    {% set image_height = '' %}
+    {% set image_title = '' %}
+    {% set image_url = '' %}
+
+    {% if form.vars.image_width is defined and form.vars.image_width %}
+        {% set image_width = 'width="' ~ form.vars.image_width ~ '"' %}
+    {% endif %}
+
+    {% if form.vars.image_height is defined and form.vars.image_height %}
+        {% set image_height = 'height="' ~ form.vars.image_height  ~ '"' %}
+    {% endif %}
+
+    {% if form.vars.image_title is defined and form.vars.image_title %}
+        {% set image_title = 'title="' ~ form.vars.image_title  ~ '" alt="' ~ form.vars.image_title  ~ '"' %}
+    {% endif %}
+
+    {% if form.vars.image_url is defined and form.vars.image_url %}
+        {% set image_url = form.vars.image_url %}
+    {% endif %}
+
+    {% set form_group_errors_css = '' %}
+    {% if form.vars.attr.class is defined %}
+        {% set css = form.vars.attr.class ~ ' ' ~ css %}
+    {% endif %}
+
+    {% if form.vars.errors|length %}
+        {% set form_group_errors_css = 'has-error' %}
+    {% endif %}
+
+    {% set value = form.vars.value %}
+    {% if value is iterable %}
+        {% set value = form.vars.value|first %}
+    {% endif %}
+
+    {{ form_label(form) }}
+    {% if value != "" %}
+        <a href="{{ image_url }}">
+            <img src="{{ value }}" {{ image_width|raw }} {{ image_height|raw }} class="{{ css|raw }}" {{ image_title|raw }} />
+        </a>
+    {% else %}
+        <i class="fa fa-file-image-o"></i> {{ 'No preview available!' | trans }}
+    {% endif %}
+    {{ form_errors(form) }}
+
+{% endblock image_widget %}

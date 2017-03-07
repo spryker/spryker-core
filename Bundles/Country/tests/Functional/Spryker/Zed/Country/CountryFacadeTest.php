@@ -9,9 +9,9 @@ namespace Functional\Spryker\Zed\Country;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @group Functional
@@ -47,11 +47,11 @@ class CountryFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \Psr\Log\LoggerInterface
      */
     protected function getMockLogger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     /**

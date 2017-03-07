@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -34,10 +35,9 @@ class CustomerFacadeTest extends Test
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
 
-    /** @var \Generated\Zed\Ide\AutoCompletion */
-    protected $locator;
-
-    /** @var \Spryker\Zed\Customer\Business\CustomerFacade */
+    /**
+     * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     */
     protected $customerFacade;
 
     /**
@@ -70,23 +70,10 @@ class CustomerFacadeTest extends Test
         $container = new Container();
 
         $dependencyProvider->provideBusinessLayerDependencies($container);
-        $container[CustomerDependencyProvider::SENDER_PLUGINS] = $this->getSenderPlugins();
+
+        $container[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
 
         return $container;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSenderPlugins()
-    {
-        $senderPlugins = [];
-
-        $senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] = [];
-        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] = [];
-        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] = [];
-
-        return $senderPlugins;
     }
 
     /**

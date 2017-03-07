@@ -6,15 +6,24 @@
     }
   },
   "require": {
-    "spryker/checkout": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0",
-    "spryker/stock": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/oms": "^6.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/stock": "^4.0.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/touch": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
   "description": "Availability bundle",
   "license": "proprietary",
@@ -22,7 +31,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "5.0.x-dev"
     }
   },
   "config": {
@@ -30,7 +39,9 @@
   },
   "autoload-dev": {
     "psr-0": {
-      "Functional": "tests/"
+      "Functional": "tests/",
+      "Acceptance": "tests/",
+      "Unit": "tests/"
     }
   }
 }

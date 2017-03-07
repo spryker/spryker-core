@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Business\Exception;
 
-class InvalidSalesOrderException extends \Exception
+use Exception;
+
+class InvalidSalesOrderException extends Exception
 {
 }

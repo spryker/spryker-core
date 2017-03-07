@@ -14,6 +14,7 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
@@ -130,7 +131,15 @@ class SearchFactory extends AbstractFactory
      */
     public function createQueryFactory()
     {
-        return new QueryFactory($this->createQueryBuilder());
+        return new QueryFactory($this->createQueryBuilder(), $this->getMoneyPlugin());
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     */
+    protected function getMoneyPlugin()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_MONEY);
     }
 
     /**
@@ -150,7 +159,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder()
     {
@@ -166,6 +175,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilderInterface
+     */
+    public function createSuggestBuilder()
+    {
+        return new SuggestBuilder();
+    }
+
+    /**
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -175,6 +192,22 @@ class SearchFactory extends AbstractFactory
     public function createSearchKeysQuery($searchString, $limit = null, $offset = null)
     {
         return new SearchKeysQuery($searchString, $limit, $offset);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     */
+    public function getSearchConfigExpanderPlugins()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_CONFIG_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::STORE);
     }
 
 }

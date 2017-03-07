@@ -17,7 +17,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
@@ -27,6 +27,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idLocale
      *
@@ -104,6 +106,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param int $idParentNode
@@ -260,7 +264,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param int $idNode
      *
-     * @return $this|\Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNode($idNode)
     {
@@ -273,7 +277,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param int $idNodeDescendant
      *
-     * @return $this|\Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant)
     {
@@ -376,6 +380,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
@@ -397,6 +403,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idChildNode
      * @param int $idLocale
@@ -441,6 +449,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      *
@@ -595,6 +605,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param int $idLocale
      *
@@ -611,6 +623,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $name
      * @param int $idLocale
@@ -649,6 +663,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $rightTableAlias
      * @param string $fieldIdentifier
@@ -681,6 +697,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
@@ -752,6 +770,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $leftAlias
      *
@@ -787,6 +807,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
@@ -825,6 +847,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
@@ -862,6 +886,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $tableAlias
      *
@@ -897,6 +923,23 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryCategoryAttributes($idCategory)
+    {
+        return $this->getFactory()->createCategoryAttributeQuery()
+            ->filterByFkCategory($idCategory);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryName
      * @param int $idLocale
@@ -936,6 +979,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryKey
      * @param int $idLocale
@@ -993,6 +1038,38 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+        $query->filterByFkLocale($idLocale);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+
+        return $query;
     }
 
 }

@@ -14,6 +14,8 @@ class DependencyTree extends AbstractDependencyTree
 
     const META_FINDER = 'finder';
     const META_FILE = 'file';
+    const META_IN_TEST = 'in test';
+    const META_IS_OPTIONAL = 'is optional';
     const META_CLASS_NAME = 'class name';
     const META_FOREIGN_BUNDLE = 'foreign bundle';
     const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
@@ -66,14 +68,14 @@ class DependencyTree extends AbstractDependencyTree
         }
 
         $dependency = $dependency + [
-            self::META_FILE => $fileInfo->getFilename(),
-            self::META_CLASS_NAME => $className,
-            self::META_FOREIGN_BUNDLE => $to,
-            self::META_FOREIGN_BUNDLE_IS_ENGINE => $this->isEngineBundle($to),
-            self::META_APPLICATION => $application,
-            self::META_BUNDLE => $bundle,
-            self::META_BUNDLE_IS_ENGINE => $this->isEngineBundle($bundle),
-            self::META_LAYER => $layer,
+            static::META_FILE => $fileInfo->getFilename(),
+            static::META_CLASS_NAME => $className,
+            static::META_FOREIGN_BUNDLE => $to,
+            static::META_FOREIGN_BUNDLE_IS_ENGINE => $this->isEngineBundle($to),
+            static::META_APPLICATION => $application,
+            static::META_BUNDLE => $bundle,
+            static::META_BUNDLE_IS_ENGINE => $this->isEngineBundle($bundle),
+            static::META_LAYER => $layer,
         ];
 
         $this->dependencyTree[] = $dependency;

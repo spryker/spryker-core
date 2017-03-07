@@ -7,20 +7,20 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EmbeddedTransferInterface
 {
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer();
 

@@ -11,6 +11,7 @@ use Spryker\Zed\User\Business\UserFacadeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -54,14 +55,12 @@ class UserForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setRequired(self::OPTION_GROUP_CHOICES);
 
         $resolver->setDefaults([
@@ -81,6 +80,18 @@ class UserForm extends AbstractType
     }
 
     /**
+     * @deprecated Use `configureOptions()` instead.
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -92,8 +103,12 @@ class UserForm extends AbstractType
             ->addEmailField($builder)
             ->addPasswordField($builder)
             ->addFirstNameField($builder)
-            ->addLastNameField($builder)
-            ->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+            ->addLastNameField($builder);
+
+        $groupChoices = $options[self::OPTION_GROUP_CHOICES];
+        if ($groupChoices) {
+            $this->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+        }
     }
 
     /**
@@ -186,7 +201,6 @@ class UserForm extends AbstractType
                     new Choice([
                         'choices' => array_keys($choices),
                         'multiple' => true,
-                        'min' => 1,
                     ]),
                 ],
                 'label' => 'Assigned groups',

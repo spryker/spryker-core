@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Persistence;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
  * @group Persistence
  * @group QueryContainerLocatorMatcherTest
  */
-class QueryContainerLocatorMatcherTest extends \PHPUnit_Framework_TestCase
+class QueryContainerLocatorMatcherTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -42,14 +43,6 @@ class QueryContainerLocatorMatcherTest extends \PHPUnit_Framework_TestCase
     public function testMatchShouldReturnFalseIfMethodNotStartsWithQueryContainerButQueryContainerInString()
     {
         $this->assertFalse((new QueryContainerLocatorMatcher())->match('locatorQueryContainer'));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnEmptyString()
-    {
-        $this->assertSame('', (new QueryContainerLocatorMatcher())->filter('queryContainer'));
     }
 
 }

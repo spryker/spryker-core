@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -18,7 +18,7 @@ class JenkinsDisableConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:disable';
-    const DESCRIPTION = 'Disable jenkins';
+    const DESCRIPTION = 'Disable Jenkins';
 
     /**
      * @return void

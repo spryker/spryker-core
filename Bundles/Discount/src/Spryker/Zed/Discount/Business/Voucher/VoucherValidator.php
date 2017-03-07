@@ -66,7 +66,7 @@ class VoucherValidator implements VoucherValidatorInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function validateDiscountVoucher(SpyDiscountVoucher $discountVoucherEntity)
     {
@@ -106,7 +106,6 @@ class VoucherValidator implements VoucherValidatorInterface
 
         $this->messengerFacade->addErrorMessage($messageTransfer);
     }
-
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity

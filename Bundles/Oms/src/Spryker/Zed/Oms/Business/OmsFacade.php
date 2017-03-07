@@ -19,6 +19,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idOrderItem
@@ -33,6 +35,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -48,6 +52,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -63,6 +69,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $eventId
@@ -79,6 +87,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $orderItemIds
@@ -94,6 +104,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $eventId
@@ -110,6 +122,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Spryker\Zed\Oms\Business\Process\Process[]
@@ -122,6 +136,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
@@ -134,6 +150,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $logContext
@@ -148,6 +166,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $logContext
@@ -165,6 +185,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $processName
@@ -172,7 +194,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null)
     {
@@ -184,6 +206,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -198,6 +222,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -213,6 +239,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -228,6 +256,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -237,13 +267,14 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {
-        // FIXME Ticket core-119
         return $this->getFactory()
             ->createUtilTransitionLog($logContext)
             ->getLogForOrder($order);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -258,20 +289,24 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return int
      */
-    public function countReservedOrderItemsForSku($sku)
+    public function sumReservedProductQuantitiesForSku($sku)
     {
         return $this->getFactory()
-            ->createOrderStateMachineFinder()
-            ->countReservedOrderItemsForSku($sku);
+            ->createUtilReservation()
+            ->sumReservedProductQuantitiesForSku($sku);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $stateName
@@ -286,6 +321,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $processName
@@ -300,6 +337,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -312,6 +351,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
@@ -326,6 +367,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $eventId
@@ -345,6 +388,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
@@ -363,6 +408,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $eventId
@@ -382,6 +429,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
@@ -392,6 +441,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -406,6 +457,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -420,6 +473,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -427,6 +482,30 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function clearLocks()
     {
         $this->getFactory()->createTriggerLocker()->clearLocks();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderConfirmationMail(SpySalesOrder $salesOrderEntity)
+    {
+        $this->getFactory()->createMailHandler()->sendOrderConfirmationMail($salesOrderEntity);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity)
+    {
+        $this->getFactory()->createMailHandler()->sendOrderShippedMail($salesOrderEntity);
     }
 
 }

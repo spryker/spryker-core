@@ -8,25 +8,25 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface;
 
 class MoneyValueConverter implements MoneyValueConverterInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManger
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface $moneyFacade
      */
-    public function __construct(CurrencyManagerInterface $currencyManger)
+    public function __construct(DiscountToMoneyInterface $moneyFacade)
     {
-        $this->currencyManager = $currencyManger;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -58,7 +58,7 @@ class MoneyValueConverter implements MoneyValueConverterInterface
                 $amountInCentsList .= ComparatorOperators::LIST_DELIMITER;
             }
 
-            $amountInCents = $this->currencyManager->convertDecimalToCent($this->formatValue($price));
+            $amountInCents = $this->moneyFacade->convertDecimalToInteger($this->formatValue($price));
             $amountInCentsList .= $amountInCents;
         }
 
@@ -72,21 +72,20 @@ class MoneyValueConverter implements MoneyValueConverterInterface
      */
     protected function convertSinglePrice(ClauseTransfer $clauseTransfer)
     {
-        $amountInCents = $this->currencyManager->convertDecimalToCent(
+        $amountInCents = $this->moneyFacade->convertDecimalToInteger(
             $this->formatValue($clauseTransfer->getValue())
         );
         $clauseTransfer->setValue($amountInCents);
     }
 
-
     /**
      * @param string $value
      *
-     * @return string
+     * @return float
      */
     protected function formatValue($value)
     {
-        return str_replace(',', '.', trim($value));
+        return (float)str_replace(',', '.', trim($value));
     }
 
 }

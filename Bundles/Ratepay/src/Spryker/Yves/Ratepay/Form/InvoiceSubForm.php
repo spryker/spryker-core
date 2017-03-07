@@ -10,6 +10,7 @@ namespace Spryker\Yves\Ratepay\Form;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends SubFormAbstract
@@ -18,20 +19,29 @@ class InvoiceSubForm extends SubFormAbstract
     const PAYMENT_METHOD = 'invoice';
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefaults([
             'data_class' => RatepayPaymentInvoiceTransfer::class,
             SubFormInterface::OPTIONS_FIELD_NAME => [],
         ]);
     }
 
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
 
     /**
      * @return string

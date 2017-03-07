@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class GenerateIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-ide-auto-completion';
+    const COMMAND_NAME = 'dev:ide:generate-auto-completion';
 
     /**
      * @return void
@@ -22,7 +25,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate ide auto completion files.');
+        $this->setDescription('Generate IDE auto completion files.');
     }
 
     /**
@@ -36,6 +39,7 @@ class GenerateIdeAutoCompletionConsole extends Console
         $dependingCommands = [
             GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
+            GenerateServiceIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 
         foreach ($dependingCommands as $commandName) {

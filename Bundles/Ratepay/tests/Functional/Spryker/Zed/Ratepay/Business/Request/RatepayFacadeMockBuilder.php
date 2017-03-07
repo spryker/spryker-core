@@ -8,9 +8,12 @@
 namespace Functional\Spryker\Zed\Ratepay\Business\Request;
 
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainer;
 use Spryker\Zed\Ratepay\RatepayConfig;
+use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
 class RatepayFacadeMockBuilder
 {
@@ -21,7 +24,7 @@ class RatepayFacadeMockBuilder
      *
      * @return \Spryker\Zed\Ratepay\Business\RatepayFacade
      */
-    public function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
+    public function build(AdapterInterface $adapter, PHPUnit_Framework_TestCase $testCase)
     {
         // Mock business factory to override return value of createExecutionAdapter to
         // place a mocked adapter that doesn't establish an actual connection.
@@ -31,6 +34,12 @@ class RatepayFacadeMockBuilder
         // functional/integration tests there's no need to mock the database layer.
         $queryContainer = new RatepayQueryContainer();
         $businessFactoryMock->setQueryContainer($queryContainer);
+
+        $container = new Container();
+        $ratepayDependencyProvider = new RatepayDependencyProvider();
+        $ratepayDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $businessFactoryMock->setContainer($container);
 
         // Mock the facade to override getFactory() and have it return out
         // previously created mock.
@@ -51,7 +60,7 @@ class RatepayFacadeMockBuilder
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Business\RatepayBusinessFactory
      */
-    protected function getBusinessFactoryMock(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
+    protected function getBusinessFactoryMock(AdapterInterface $adapter, PHPUnit_Framework_TestCase $testCase)
     {
         $businessFactoryMock = $testCase->getMock(
             'Spryker\Zed\Ratepay\Business\RatepayBusinessFactory',

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\StateMachine\Business\Process;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
 use Spryker\Zed\StateMachine\Business\Process\Transition;
@@ -21,7 +21,7 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
  * @group Process
  * @group ProcessTest
  */
-class ProcessTest extends \PHPUnit_Framework_TestCase
+class ProcessTest extends PHPUnit_Framework_TestCase
 {
 
     /**

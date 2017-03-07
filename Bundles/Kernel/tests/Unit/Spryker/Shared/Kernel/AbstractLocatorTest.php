@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Shared\Kernel\Fixtures\MissingPropertyLocator;
 
 /**
@@ -16,7 +17,7 @@ use Unit\Spryker\Shared\Kernel\Fixtures\MissingPropertyLocator;
  * @group Kernel
  * @group AbstractLocatorTest
  */
-class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
+class AbstractLocatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -24,7 +25,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined()
     {
-        $this->setExpectedException('\Exception');
+        $this->expectException('\Exception');
 
         new MissingPropertyLocator();
     }
@@ -34,7 +35,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanCreateShouldThrowException()
     {
-        $this->setExpectedException('\Exception');
+        $this->expectException('\Exception');
 
         new MissingPropertyLocator();
     }

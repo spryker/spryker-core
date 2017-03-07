@@ -8,12 +8,13 @@
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class SearchPreferencesController extends AbstractController
 {
@@ -49,9 +50,43 @@ class SearchPreferencesController extends AbstractController
      *
      * @return array
      */
+    public function createAction(Request $request)
+    {
+        $dataProvider = $this
+            ->getFactory()
+            ->createSearchPreferencesDataProvider();
+
+        $form = $this->getFactory()
+            ->createSearchPreferencesForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
+        if ($form->isValid()) {
+            $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
+            $productSearchPreferencesTransfer->fromArray($form->getData(), true);
+
+            $this->getFacade()->createProductSearchPreferences($productSearchPreferencesTransfer);
+
+            $this->addSuccessMessage('Attribute to search was added successfully.');
+
+            return $this->redirectResponse('/product-search/search-preferences');
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
     public function editAction(Request $request)
     {
-        $idAttributesMetadata = $this->castId($request->query->get(self::PARAM_ID));
+        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -59,25 +94,56 @@ class SearchPreferencesController extends AbstractController
 
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
-                $dataProvider->getData($idAttributesMetadata),
-                $dataProvider->getOptions()
+                $dataProvider->getData($idAttributeKey),
+                $dataProvider->getOptions($idAttributeKey)
             )
             ->handleRequest($request);
 
         if ($form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
-            $productSearchPreferencesTransfer
-                ->setIdProductAttributesMetadata($idAttributesMetadata)
-                ->fromArray($form->getData(), true);
+            $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->saveProductSearchPreferences($productSearchPreferencesTransfer);
+            $this->getFacade()->updateProductSearchPreferences($productSearchPreferencesTransfer);
 
-            $this->addSuccessMessage('Search Preferences has been saved successfully');
+            $this->addSuccessMessage('Attribute to search was successfully updated.');
+
+            return $this->redirectResponse('/product-search/search-preferences');
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cleanAction(Request $request)
+    {
+        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
+
+        $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
+        $productSearchPreferencesTransfer->setIdProductAttributeKey($idAttributeKey);
+
+        $this->getFacade()->cleanProductSearchPreferences($productSearchPreferencesTransfer);
+
+        $this->addSuccessMessage('Attribute to search was successfully deactivated.');
+
+        return $this->redirectResponse('/product-search/search-preferences');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function syncAction()
+    {
+        $this->getFacade()->touchProductAbstractByAsynchronousAttributeMap();
+
+        $this->addSuccessMessage('Search preferences synchronization was successful.');
+
+        return $this->redirectResponse('/product-search/search-preferences');
     }
 
 }

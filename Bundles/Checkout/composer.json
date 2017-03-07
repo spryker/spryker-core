@@ -6,25 +6,26 @@
     }
   },
   "require": {
-    "spryker/availability": "^2.0.0",
-    "spryker/cart": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/customer": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/sales": "^2.0.0",
-    "spryker/step-engine": "^1.1.0",
-    "spryker/stock": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/quote": "^1.0.0",
+    "spryker/step-engine": "^2.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/availability": "*",
     "spryker/code-sniffer": "*",
-    "spryker/library": "^2.0.0",
-    "spryker/sequence-number": "^2.0.0",
+    "spryker/country": "*",
+    "spryker/customer": "*",
+    "spryker/locale": "*",
+    "spryker/oms": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/sales": "*",
+    "spryker/sequence-number": "*",
+    "spryker/stock": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "description": "Checkout bundle",
@@ -33,7 +34,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -78,7 +78,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             [
                 'id-pool' => $this->idPool,
                 'id-discount' => $this->idDiscount,
-                'batch' => $this->batchValue
+                'batch' => $this->batchValue,
             ]
         );
 
@@ -92,7 +92,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES => 'Max nr. of uses',
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => 'Batch Value',
-            self::HEADER_COL_ACTIONS => self::HEADER_COL_ACTIONS
+            self::HEADER_COL_ACTIONS => self::HEADER_COL_ACTIONS,
         ]);
 
         $config->setSortable([
@@ -166,7 +166,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             '/discount/voucher/delete-voucher-code',
             [
                 'id-discount' => $this->idDiscount,
-                'id-voucher' => $discountVoucherEntity->getIdDiscountVoucher()
+                'id-voucher' => $discountVoucherEntity->getIdDiscountVoucher(),
             ]
         )->build();
 

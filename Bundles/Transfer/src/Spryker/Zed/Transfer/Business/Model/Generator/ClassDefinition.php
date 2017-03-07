@@ -14,15 +14,12 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class ClassDefinition implements ClassDefinitionInterface
 {
 
+    const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+
     /**
      * @var string
      */
     private $name;
-
-    /**
-     * @var array
-     */
-    private $uses = [];
 
     /**
      * @var array
@@ -50,6 +47,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $constructorDefinition = [];
 
     /**
+     * @var string|null
+     */
+    private $deprecationDescription;
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -57,6 +59,10 @@ class ClassDefinition implements ClassDefinitionInterface
     public function setDefinition(array $definition)
     {
         $this->setName($definition['name']);
+
+        if (isset($definition['deprecated'])) {
+            $this->deprecationDescription = $definition['deprecated'];
+        }
 
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
@@ -92,14 +98,6 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return array
-     */
-    public function getUses()
-    {
-        return $this->uses;
-    }
-
-    /**
      * @param array $properties
      *
      * @return void
@@ -122,6 +120,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $this->getPropertyConstantName($property),
             'value' => $property['name'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
 
         $this->constants[$property['name']] = $propertyInfo;
@@ -154,23 +153,6 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
-        $this->addUseForType($property);
-    }
-
-    /**
-     * @param array $property
-     *
-     * @return void
-     */
-    private function addUseForType(array $property)
-    {
-        if ($this->isCollection($property) && !$this->isArray($property)) {
-            $transferName = ucfirst(str_replace('[]', '', $property['type']));
-            if ($transferName !== $this->getName()) {
-                $use = 'Generated\\Shared\\Transfer\\' . $transferName;
-                $this->uses[$use] = $use;
-            }
-        }
     }
 
     /**
@@ -186,7 +168,7 @@ class ClassDefinition implements ClassDefinitionInterface
         foreach ($properties as $property) {
             $this->assertProperty($property);
 
-            $property['type_fully_qualified'] = $property['type'];
+            $property[self::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
             $property['propertyConst'] = $this->getPropertyConstantName($property);
@@ -194,14 +176,14 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
                 $property['is_transfer'] = true;
-                $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
+                $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    $property['type_fully_qualified'] .= str_replace('[]', '', $property['type']);
+                    $property[self::TYPE_FULLY_QUALIFIED] .= str_replace('[]', '', $property['type']);
                     $property['is_collection'] = true;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
-                    $property['type_fully_qualified'] .= $property['type'];
+                    $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
                 }
             }
 
@@ -225,10 +207,24 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|' . $property['type'];
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    private function isTypeTransferObject(array $property)
+    {
+        return ($property['is_transfer']);
     }
 
     /**
@@ -243,7 +239,11 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|' . $property['type'];
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
@@ -257,7 +257,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isArray($property)) {
-            return 'mixed';
+            return 'array';
+        }
+
+        if ($this->isCollection($property)) {
+            return '\Generated\Shared\Transfer\\' . str_replace('[]', '', $property['type']);
         }
 
         return str_replace('[]', '', $property['type']);
@@ -331,6 +335,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getDeprecationDescription()
+    {
+        return $this->deprecationDescription;
+    }
+
+    /**
      * @param array $property
      *
      * @return void
@@ -388,7 +400,11 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\\ArrayObject|' . $property['type'];
+            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
@@ -465,6 +481,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'return' => $this->getReturnType($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -485,7 +502,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'var' => $this->getSetVar($property),
             'bundles' => $property['bundles'],
             'typeHint' => null,
-            'hasDefaultNull' => null,
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method['typeHint'], $property, $method);
@@ -514,6 +531,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'parent' => $parent,
             'var' => $this->getAddVar($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
 
         $typeHint = $this->getAddTypeHint($property);
@@ -573,6 +591,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => $this->isCollection($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -603,6 +622,16 @@ class ClassDefinition implements ClassDefinitionInterface
                 $this->name
             ));
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    private function getPropertyDeprecationDescription(array $property)
+    {
+        return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
 
 }

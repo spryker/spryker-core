@@ -6,15 +6,28 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class ConverterFactory
 {
+
+    /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
+     */
+    public function __construct(RatepayToMoneyInterface $moneyFacade)
+    {
+        $this->moneyFacade = $moneyFacade;
+    }
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
@@ -26,7 +39,7 @@ class ConverterFactory
     ) {
         return new TransferObjectConverter(
             $response,
-            $this->createCurrencyManager()
+            $this->moneyFacade
         );
     }
 
@@ -42,7 +55,7 @@ class ConverterFactory
     ) {
         return new InstallmentCalculationResponseConverter(
             $response,
-            $this->createCurrencyManager(),
+            $this->moneyFacade,
             $this->getTransferObjectConverter($response),
             $request
         );
@@ -60,7 +73,7 @@ class ConverterFactory
     ) {
         return new InstallmentConfigurationResponseConverter(
             $response,
-            $this->createCurrencyManager(),
+            $this->moneyFacade,
             $this->getTransferObjectConverter($response),
             $request
         );
@@ -76,17 +89,9 @@ class ConverterFactory
     ) {
         return new ProfileResponseConverter(
             $response,
-            $this->createCurrencyManager(),
+            $this->moneyFacade,
             $this->getTransferObjectConverter($response)
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
-     */
-    protected function createCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
     }
 
 }

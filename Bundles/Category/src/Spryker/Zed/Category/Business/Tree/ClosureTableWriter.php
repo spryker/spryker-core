@@ -32,19 +32,19 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function create(NodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNodeTransfer)
     {
-        $nodeId = $categoryNode->getIdCategoryNode();
-        $parentId = $categoryNode->getFkParentCategoryNode();
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $parentId = $categoryNodeTransfer->getFkParentCategoryNode();
 
         if ($parentId === null) {
-            $this->createRootNode($categoryNode);
+            $this->createRootNode($categoryNodeTransfer);
         } else {
-            $this->persistNode($nodeId, $parentId);
+            $this->persistNode($idCategoryNode, $parentId);
         }
     }
 
@@ -61,14 +61,14 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function moveNode(NodeTransfer $categoryNode)
+    public function moveNode(NodeTransfer $categoryNodeTransfer)
     {
         $obsoleteEntities = $this->queryContainer
-            ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
+            ->queryClosureTableParentEntries($categoryNodeTransfer->getIdCategoryNode())
             ->find();
 
         foreach ($obsoleteEntities as $obsoleteEntity) {
@@ -76,11 +76,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         }
 
         $nodeEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
+            ->queryClosureTableFilterByIdNode($categoryNodeTransfer->getIdCategoryNode())
             ->find();
 
         $parentEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNodeDescendant($categoryNode->getFkParentCategoryNode())
+            ->queryClosureTableFilterByIdNodeDescendant($categoryNodeTransfer->getFkParentCategoryNode())
             ->find();
 
         foreach ($nodeEntities as $nodeEntity) {
@@ -122,14 +122,15 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function persistNode($nodeId, $parentId)
     {
-        $closureQuery = new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
+        $categoryClosureQuery = new SpyCategoryClosureTableQuery();
+        $categoryClosureEntityCollection = $categoryClosureQuery->findByFkCategoryNodeDescendant($parentId);
 
-        foreach ($nodes as $node) {
+        foreach ($categoryClosureEntityCollection as $categoryClosureEntity) {
             $entity = new SpyCategoryClosureTable();
-            $entity->setFkCategoryNode($node->getFkCategoryNode());
+            $entity->setFkCategoryNode($categoryClosureEntity->getFkCategoryNode());
             $entity->setFkCategoryNodeDescendant($nodeId);
-            $entity->setDepth($node->getDepth() + 1);
+
+            $entity->setDepth($categoryClosureEntity->getDepth() + 1);
             $entity->save();
         }
 

@@ -1,8 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Propel package - modified by Spryker Systems GmbH.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with the source code of the extended class.
+ *
+ * @license MIT License
  */
 
 namespace Spryker\Zed\Propel\Business\Builder;
@@ -12,8 +15,10 @@ use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
+use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\Application\Environment;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilder extends PropelObjectBuilder
@@ -27,6 +32,9 @@ class ObjectBuilder extends PropelObjectBuilder
         parent::__construct($table);
 
         Environment::initialize();
+
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
     }
 
     /**
@@ -68,14 +76,16 @@ class ObjectBuilder extends PropelObjectBuilder
 
         if (\$this->$clo !== \$v) {
             \$this->$clo = \$v;
-            \$this->modifiedColumns[" . $this->getColumnConstant($col) . '] = true;
+            \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
         }
-';
+";
         $this->addMutatorClose($script, $col);
     }
 
     /**
      * Boosts ActiveRecord::doInsert() by doing more calculations at build-time.
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return string
      */
@@ -128,6 +138,9 @@ class ObjectBuilder extends PropelObjectBuilder
         // if non auto-increment but using sequence, get the id first
         if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
             $column = $table->getFirstPrimaryKeyColumn();
+            if (!$column) {
+                throw new PropelException('Cannot find primary key column in table `' . $table->getName() . '`.');
+            }
             $columnProperty = $column->getLowercasedName();
             $script .= "
         if (null === \$this->{$columnProperty}) {
@@ -186,11 +199,9 @@ class ObjectBuilder extends PropelObjectBuilder
                 . \$stmt->getExecutedQueryString()
             ;
             throw new PropelException(\$message);
-       }
-";
         }
-
-        if (!Config::get(PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+";
+        } else {
             $script .= "
                 }
             }

@@ -8,15 +8,9 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
-use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\SuggestionQueryPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\PaginatedResultFormatterPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultFormatterPlugin;
 
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
@@ -25,6 +19,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     const CATALOG_SEARCH_QUERY_PLUGIN = 'catalog search query plugin';
     const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
     const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
+    const SUGGESTION_QUERY_PLUGIN = 'suggestion query plugin';
+    const SUGGESTION_QUERY_EXPANDER_PLUGINS = 'suggestion query expander plugins';
+    const SUGGESTION_RESULT_FORMATTER_PLUGINS = 'suggestion result formatter plugins';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -51,6 +48,18 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
             return $this->createCatalogSearchResultFormatterPlugins();
         };
 
+        $container[self::SUGGESTION_QUERY_PLUGIN] = function () {
+            return $this->createSuggestionQueryPlugin();
+        };
+
+        $container[self::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
+            return $this->createSuggestionQueryExpanderPlugins();
+        };
+
+        $container[self::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
+            return $this->createSuggestionResultFormatterPlugins();
+        };
+
         return $container;
     }
 
@@ -67,22 +76,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
-        // TODO: Return empty array after deprecated method is removed.
-        return $this->createDefaultCatalogSearchQueryExpanderPlugins();
-    }
-
-    /**
-     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    private function createDefaultCatalogSearchQueryExpanderPlugins()
-    {
-        return [
-            new FacetQueryExpanderPlugin(),
-            new SortedQueryExpanderPlugin(),
-            new PaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -90,23 +84,31 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
-        // TODO: Return empty array after deprecated method is removed.
-        return $this->createDefaultCatalogSearchResultFormatterPlugins();
+        return [];
     }
 
     /**
-     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
-     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createSuggestionQueryPlugin()
+    {
+        return new SuggestionQueryPlugin();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function createSuggestionQueryExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
-    private function createDefaultCatalogSearchResultFormatterPlugins()
+    protected function createSuggestionResultFormatterPlugins()
     {
-        return [
-            new FacetResultFormatterPlugin(),
-            new SortedResultFormatterPlugin(),
-            new PaginatedResultFormatterPlugin(),
-            new CatalogSearchResultFormatterPlugin(),
-        ];
+        return [];
     }
 
 }

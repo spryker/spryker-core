@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 
 /**
@@ -24,7 +25,7 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountT
  * @group Calculator
  * @group DiscountTotalsCalculatorTest
  */
-class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class DiscountTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const ITEM_QUANTITY = 2;
@@ -93,7 +94,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
             $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
             $calculatedDiscountTransfer->setSumGrossAmount(
-                $calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
+                (int)$calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
             );
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 

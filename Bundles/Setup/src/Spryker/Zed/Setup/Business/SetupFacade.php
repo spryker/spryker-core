@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupBusinessFactory getFactory()
@@ -22,7 +20,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
      *
      * @param array $roles
      *
-     * @return mixed
+     * @return string
      */
     public function generateCronjobs(array $roles)
     {
@@ -62,36 +60,13 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    public function getRepeatData(Request $request)
-    {
-        return $this->getFactory()->getTransferObjectRepeater()
-            ->getRepeatData($request->query->get('mvc', null));
-    }
-
-    /**
-     * @api
+     * @deprecated Hook in commands manually on project level
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {
         return $this->getFactory()->getConsoleCommands();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
-     * @return void
-     */
-    public function installTestData(MessengerInterface $messenger)
-    {
-        $this->getFactory()->createTestDataInstaller($messenger)->install();
     }
 
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
@@ -28,19 +29,20 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $methodQuery = $this->getQueryContainer()->queryMethods();
 
-        return new MethodTable($methodQuery);
+        return new MethodTable($methodQuery, $this->getMoneyFacade());
     }
 
     /**
+     * @param array $formData
+     * @param array $formOptions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCarrierForm()
+    public function createCarrierForm(array $formData, array $formOptions = [])
     {
-        $carrierQuery = $this->getQueryContainer()->queryCarriers();
+        $form = new CarrierForm();
 
-        $form = new CarrierForm($carrierQuery);
-
-        return $this->getFormFactory()->create($form);
+        return $this->getFormFactory()->create($form, $formData, $formOptions);
     }
 
     /**
@@ -51,8 +53,25 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            $this->getPlugins(),
+            $this->getMoneyFacade()
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_MONEY);
     }
 
     /**
@@ -74,6 +93,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider
+     */
+    public function createCarrierFormDataProvider()
+    {
+        return new CarrierFormDataProvider($this->getQueryContainer());
     }
 
 }

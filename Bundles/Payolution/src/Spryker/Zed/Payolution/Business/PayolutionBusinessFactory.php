@@ -17,6 +17,7 @@ use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use Spryker\Zed\Payolution\PayolutionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
@@ -89,7 +90,15 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
      */
     public function createConverter()
     {
-        return new Converter();
+        return new Converter($this->getMoneyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_MONEY);
     }
 
     /**
@@ -105,7 +114,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createInvoice()
     {
-        return new Invoice($this->getConfig());
+        return new Invoice($this->getConfig(), $this->getMoneyFacade());
     }
 
     /**
@@ -113,7 +122,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createInstallment()
     {
-        return new Installment($this->getConfig());
+        return new Installment($this->getConfig(), $this->getMoneyFacade());
     }
 
 }

@@ -41,7 +41,7 @@ class GeneralForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|string[] $options
+     * @param string[] $options
      *
      * @return void
      */
@@ -75,13 +75,13 @@ class GeneralForm extends AbstractType
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherChoices()
     {
         return [
             DiscountConstants::TYPE_CART_RULE => 'Cart rule',
-            DiscountConstants::TYPE_VOUCHER => 'Voucher codes'
+            DiscountConstants::TYPE_VOUCHER => 'Voucher codes',
         ];
     }
 
@@ -97,8 +97,8 @@ class GeneralForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueDiscountName([
-                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->discountQueryContainer
-                ])
+                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->discountQueryContainer,
+                ]),
             ],
         ]);
 
@@ -137,8 +137,8 @@ class GeneralForm extends AbstractType
                 new NotBlank(),
             ],
             'attr' => [
-                'class' => 'inline-radio'
-            ]
+                'class' => 'inline-radio',
+            ],
         ]);
 
         return $this;

@@ -8,8 +8,12 @@
 namespace Spryker\Client\Product;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
-use Spryker\Client\Product\Storage\ProductStorage;
+use Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder;
+use Spryker\Client\Product\KeyBuilder\ProductAbstractResourceKeyBuilder;
+use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
+use Spryker\Client\Product\Storage\AttributeMapStorage;
+use Spryker\Client\Product\Storage\ProductAbstractStorage;
+use Spryker\Client\Product\Storage\ProductConcreteStorage;
 
 class ProductFactory extends AbstractFactory
 {
@@ -17,11 +21,11 @@ class ProductFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return \Spryker\Client\Product\Storage\ProductStorageInterface
+     * @return \Spryker\Client\Product\Storage\ProductAbstractStorageInterface
      */
-    public function createProductStorage($locale)
+    public function createProductAbstractStorage($locale)
     {
-        return new ProductStorage(
+        return new ProductAbstractStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
             $locale
@@ -29,7 +33,52 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @param string $locale
+     *
+     * @return \Spryker\Client\Product\Storage\AttributeMapStorageInterface
+     */
+    public function createAttributeMapStorage($locale)
+    {
+        return new AttributeMapStorage(
+            $this->getStorage(),
+            $this->createAttributeMapKeyBuilder(),
+            $locale
+        );
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return \Spryker\Client\Product\Storage\ProductConcreteStorageInterface
+     */
+    public function createProductConcreteStorage($locale)
+    {
+        return new ProductConcreteStorage(
+            $this->getStorage(),
+            $this->createProductConcreteKeyBuilder(),
+            $this->getUtilEncodingService(),
+            $locale
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createAttributeMapKeyBuilder()
+    {
+        return new AttributeMapResourceKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createProductConcreteKeyBuilder()
+    {
+        return new ProductConcreteResourceKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
     protected function getStorage()
     {
@@ -37,15 +86,23 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
-    protected function createKeyBuilder()
+    protected function getUtilEncodingService()
     {
-        return new ProductResourceKeyBuilder();
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_ENCODING);
     }
 
     /**
-     * @return \Spryker\Client\Locale\LocaleClient
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createKeyBuilder()
+    {
+        return new ProductAbstractResourceKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Product\Dependency\Client\ProductToLocaleInterface
      */
     public function getLocaleClient()
     {

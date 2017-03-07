@@ -14,6 +14,14 @@ interface DecisionRulePluginInterface
 {
 
     /**
+     * Specification:
+     *
+     * - Make decision on given Quote or Item transfer.
+     * - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
+     * - Returns false when not matching.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -29,12 +37,16 @@ interface DecisionRulePluginInterface
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName();
 
     /**
      * Data types used by this field. (string, integer, list)
+     *
+     * @api
      *
      * @return array
      */

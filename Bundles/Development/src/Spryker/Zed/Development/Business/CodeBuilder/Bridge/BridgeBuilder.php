@@ -73,7 +73,7 @@ class BridgeBuilder
      */
     protected function getInterfaceTemplateContent()
     {
-        return $this->getTemplateContent(self::TEMPLATE_INTERFACE);
+        return $this->getTemplateContent(static::TEMPLATE_INTERFACE);
     }
 
     /**
@@ -81,7 +81,7 @@ class BridgeBuilder
      */
     protected function getBridgeTemplateContent()
     {
-        return $this->getTemplateContent(self::TEMPLATE_BRIDGE);
+        return $this->getTemplateContent(static::TEMPLATE_BRIDGE);
     }
 
     /**
@@ -101,7 +101,7 @@ class BridgeBuilder
      * @param string $toBundle
      * @param string $templateContent
      *
-     * @return mixed
+     * @return string
      */
     protected function replacePlaceHolder($bundle, $toBundle, $templateContent)
     {

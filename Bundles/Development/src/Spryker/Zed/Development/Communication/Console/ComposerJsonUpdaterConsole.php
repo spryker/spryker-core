@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ComposerJsonUpdaterConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:composer-json:update';
+    const COMMAND_NAME = 'dev:dependency:update-composer-files';
     const OPTION_BUNDLE = 'bundle';
     const VERBOSE = 'verbose';
 
@@ -30,11 +30,11 @@ class ComposerJsonUpdaterConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Update composer.json of core bundles');
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
+            ->setDescription('Update composer.json of core bundles (Spryker core dev only).');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
     }
 
     /**
@@ -48,18 +48,18 @@ class ComposerJsonUpdaterConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $bundles = [];
-        $bundleList = $this->input->getOption(self::OPTION_BUNDLE);
+        $bundleList = $this->input->getOption(static::OPTION_BUNDLE);
         if ($bundleList) {
-            $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+            $bundles = explode(',', $this->input->getOption(static::OPTION_BUNDLE));
         }
 
-        if ($this->input->getOption(self::VERBOSE)) {
-            foreach ($bundles as $bundle) {
-                $this->output->write('- '. $bundle);
+        $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
+        if ($this->input->getOption(static::VERBOSE)) {
+            $this->output->writeln(count($processedBundles) . ' bundles updated:');
+            foreach ($processedBundles as $processedBundle) {
+                $this->output->writeln('- '. $processedBundle);
             }
         }
-
-        $this->getFacade()->updateComposerJsonInBundles($bundles);
     }
 
 }

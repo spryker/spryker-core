@@ -1,12 +1,16 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Propel package - modified by Spryker Systems GmbH.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with the source code of the extended class.
+ *
+ * @license MIT License
  */
 
 namespace Spryker\Zed\Propel\Business\Builder;
 
+use Exception;
 use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
 
 class TableMapBuilder extends PropelTableMapBuilder
@@ -36,7 +40,7 @@ class TableMapBuilder extends PropelTableMapBuilder
     /**
      * @throws \Exception
      *
-     * @return mixed
+     * @return string
      */
     protected function getBundleName()
     {
@@ -44,7 +48,7 @@ class TableMapBuilder extends PropelTableMapBuilder
             return $matches[1];
         }
 
-        throw new \Exception('Could not extract bundle name!');
+        throw new Exception('Could not extract bundle name!');
     }
 
     /**

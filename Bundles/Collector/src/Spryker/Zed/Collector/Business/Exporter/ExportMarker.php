@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
@@ -26,14 +27,14 @@ class ExportMarker implements MarkerInterface
     protected $reader;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(WriterInterface $writer, ReaderInterface $reader, KeyBuilderInterface $keyBuilder)
     {
@@ -57,7 +58,7 @@ class ExportMarker implements MarkerInterface
             $lastTimeStamp = '2000-01-01 00:00:00';
         }
 
-        return \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
+        return DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
     }
 
     /**
@@ -67,10 +68,10 @@ class ExportMarker implements MarkerInterface
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, \DateTime $timestamp)
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, DateTime $timestamp)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
-        $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')], $exportType);
+        $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')]);
     }
 
     /**

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodFormDataProvider
 {
@@ -32,18 +32,26 @@ class MethodFormDataProvider
     protected $taxFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param array $plugins
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
         ShipmentToTaxInterface $taxFacade,
-        array $plugins
+        array $plugins,
+        ShipmentToMoneyInterface $moneyFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
-        $this->plugins = $plugins;
         $this->taxFacade = $taxFacade;
+        $this->plugins = $plugins;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -81,20 +89,13 @@ class MethodFormDataProvider
     {
         $options = [
             MethodForm::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
-            ),
-            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS])
-            ),
-            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
-            ),
+            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::AVAILABILITY_PLUGINS),
+            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::PRICE_PLUGINS),
+            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS),
             MethodForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
+
+        $options[MethodForm::OPTION_MONEY_FACADE] = $this->moneyFacade;
 
         return $options;
     }
@@ -130,6 +131,18 @@ class MethodFormDataProvider
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $pluginsType
+     *
+     * @return array
+     */
+    private function getPluginOptions($pluginsType)
+    {
+        $plugins = array_keys($this->plugins[$pluginsType]);
+
+        return array_combine($plugins, $plugins);
     }
 
 }
