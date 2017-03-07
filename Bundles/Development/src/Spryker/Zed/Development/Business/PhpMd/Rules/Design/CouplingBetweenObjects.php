@@ -29,7 +29,8 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
     {
         $couplingBetweenObjects = $node->getMetric(static::COUPLING_BETWEEN_OBJECTS);
 
-        if ($couplingBetweenObjects >= ($threshold = $this->getIntProperty(static::THRESHOLD)) && !$this->ignorable($node)) {
+        $threshold = $this->getIntProperty(static::THRESHOLD);
+        if ($couplingBetweenObjects >= $threshold && !$this->ignorable($node)) {
             $this->addViolation($node, [$node->getName(), $couplingBetweenObjects, $threshold]);
         }
     }
