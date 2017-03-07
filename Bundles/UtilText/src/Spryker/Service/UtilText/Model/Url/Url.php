@@ -376,6 +376,8 @@ class Url
     }
 
     /**
+     * @deprecated We are using `http_build_query()` internally instead.
+     *
      * @param string $value
      *
      * @return string
@@ -452,11 +454,7 @@ class Url
     protected function addQueryComponent($url, array $parts)
     {
         if (!empty($parts[self::QUERY])) {
-            $q = [];
-            foreach ($parts[self::QUERY] as $k => $v) {
-                $q[] = $this->encodeQuery($k) . '=' . $this->encodeQuery($v);
-            }
-            $url .= '?' . implode('&', $q);
+            $url .= '?' . http_build_query($parts[self::QUERY]);
         }
 
         return $url;
