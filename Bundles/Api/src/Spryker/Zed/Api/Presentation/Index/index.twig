@@ -1,1 +1,17 @@
-<h1>Access denied</h1>
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Api' %}
+
+{% block head_title widget_title | trans %}
+
+{% block action %}
+    {{ createActionButton('/api/', 'Nothing yet' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    <h2>API</h2>
+    <p>This is a demo showcasing of the Zed REST API.</p>
+
+{% endblock %}
+

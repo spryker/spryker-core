@@ -1,32 +1,16 @@
 <?xml version="1.0"?>
 <config>
-    <api>
-        <label>Api</label>
-        <title>Api</title>
-        <bundle>api</bundle>
-        <controller>index</controller>
-        <action>index</action>
-        <uri>/api</uri>
-        <icon>fa-users</icon>
+    <maintenance>
         <pages>
             <api>
-                <label>Roles</label>
-                <title>Roles</title>
+                <label>Api</label>
+                <title>Api</title>
                 <bundle>api</bundle>
-                <controller>role</controller>
+                <controller>index</controller>
                 <action>index</action>
-                <icon>fa-user-secret</icon>
-                <pages>
-                    <index>
-                        <label>Index</label>
-                        <title>Index</title>
-                        <bundle>api</bundle>
-                        <controller>index</controller>
-                        <action>index</action>
-                        <visible>0</visible>
-                    </index>
-                </pages>
+                <uri>/api</uri>
+                <icon>fa-object-group</icon>
             </api>
         </pages>
-    </api>
+    </maintenance>
 </config>
