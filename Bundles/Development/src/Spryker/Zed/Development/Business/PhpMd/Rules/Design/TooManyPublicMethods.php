@@ -43,7 +43,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
         }
 
         $nom = $this->countMethods($node);
-        if ($nom <= $threshold || $this->ignorable($node)) {
+        if ($nom <= $threshold || $this->isIgnorable($node)) {
             return;
         }
 
@@ -79,7 +79,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      *
      * @return bool
      */
-    private function ignorable(AbstractNode $node)
+    private function isIgnorable(AbstractNode $node)
     {
         return (preg_match('/(Client|Yves|Zed)\\\\(.*?)\\\\(.*?)Facade/', $node->getFullQualifiedName()) || preg_match('/(Factory)/', $node->getName()));
     }

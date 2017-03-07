@@ -63,7 +63,7 @@ class TooManyPublicMethodsTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testApplyAddsViolationWhenClassNotIgnorable()
+    public function testApplyAddsViolationWhenClassIsNotIgnorable()
     {
         $nodeMock = $this->getNodeMock('Foo', 'Bar');
         $nodeMock->method('getMethods')->willReturn([]);

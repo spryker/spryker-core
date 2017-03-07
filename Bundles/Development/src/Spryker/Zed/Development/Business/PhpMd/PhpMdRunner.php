@@ -137,7 +137,7 @@ class PhpMdRunner
         $config = $this->architectureStandard;
 
         if ($options['ignore']) {
-            $config .= ' --exclude=' . $options['ignore'];
+            $config .= ' --exclude ' . $options['ignore'];
         }
 
         $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format . ' ' . $config;

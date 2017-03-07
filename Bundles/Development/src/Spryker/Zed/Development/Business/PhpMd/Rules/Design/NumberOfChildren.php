@@ -29,7 +29,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
     {
         $numberOfChildren = $node->getMetric(static::NUMBER_OF_CHILDREN);
         $threshold = $this->getIntProperty(static::THRESHOLD);
-        if ($numberOfChildren >= $threshold && !$this->ignorable($node)) {
+        if ($numberOfChildren >= $threshold && !$this->isIgnorable($node)) {
             $this->addViolation($node, [
                 $node->getType(),
                 $node->getName(),
@@ -44,7 +44,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
      *
      * @return int
      */
-    private function ignorable(AbstractNode $node)
+    private function isIgnorable(AbstractNode $node)
     {
         $fullyQualifiedClassName = $node->getFullQualifiedName();
 

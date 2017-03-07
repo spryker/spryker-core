@@ -30,7 +30,7 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
         $couplingBetweenObjects = $node->getMetric(static::COUPLING_BETWEEN_OBJECTS);
 
         $threshold = $this->getIntProperty(static::THRESHOLD);
-        if ($couplingBetweenObjects >= $threshold && !$this->ignorable($node)) {
+        if ($couplingBetweenObjects >= $threshold && !$this->isIgnorable($node)) {
             $this->addViolation($node, [$node->getName(), $couplingBetweenObjects, $threshold]);
         }
     }
@@ -40,7 +40,7 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
      *
      * @return bool
      */
-    private function ignorable(AbstractNode $node)
+    private function isIgnorable(AbstractNode $node)
     {
         return (
             preg_match('/(Client|Yves|Zed)\\\\(.*?)\\\\(.*?)(DependencyProvider|Factory|ServiceProvider)/', $node->getFullQualifiedName())
