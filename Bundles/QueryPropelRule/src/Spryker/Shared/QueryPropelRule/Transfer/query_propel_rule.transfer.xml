@@ -16,7 +16,12 @@
 
     <transfer name="RuleQuery">
         <property name="ruleSet" type="RuleQuerySet" />
-        <property name="mappings" type="array"/>
+        <property name="mappings" type="RuleQueryMapping[]" singular="mapping"/>
+    </transfer>
+
+    <transfer name="RuleQueryMapping">
+        <property name="alias" type="string" />
+        <property name="columns" type="array"/>
     </transfer>
 
     <transfer name="RuleQueryDataProvider">

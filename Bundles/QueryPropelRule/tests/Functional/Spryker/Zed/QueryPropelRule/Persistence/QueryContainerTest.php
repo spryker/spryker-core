@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\QueryPropelRule\Persistence;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\RuleQueryMappingTransfer;
 use Generated\Shared\Transfer\RuleQuerySetTransfer;
 use Generated\Shared\Transfer\RuleQueryTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
@@ -95,12 +96,14 @@ class QueryContainerTest extends Test
         $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
         $ruleQueryTransfer = new RuleQueryTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
-        $ruleQueryTransfer->setMappings([
-            'product_sku' => [
-                SpyProductAbstractTableMap::COL_SKU,
-                SpyProductTableMap::COL_SKU,
-            ],
+
+        $skuMapping = new RuleQueryMappingTransfer();
+        $skuMapping->setAlias('product_sku');
+        $skuMapping->setColumns([
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductTableMap::COL_SKU,
         ]);
+        $ruleQueryTransfer->addMapping($skuMapping);
 
         $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
         $results = $query->find();
@@ -121,12 +124,6 @@ class QueryContainerTest extends Test
         $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
         $ruleQueryTransfer = new RuleQueryTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
-        $ruleQueryTransfer->setMappings([
-            'product_sku' => [
-                SpyProductAbstractTableMap::COL_SKU,
-                SpyProductTableMap::COL_SKU,
-            ],
-        ]);
 
         $ruleQuerySetTransfer = $this->queryContainer->createRuleSetFromJson($this->jsonDataWithMappings);
 

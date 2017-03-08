@@ -46,12 +46,13 @@ class CriteriaMapper implements CriteriaMapperInterface
     public function toCriteria(RuleQueryTransfer $ruleQueryTransfer)
     {
         $criteria = $this->createCriteria();
+        $mappings = $this->remapFieldAliases($ruleQueryTransfer);
 
         return $this->appendCriteria(
             $criteria,
             $ruleQueryTransfer->getRuleSet(),
             $ruleQueryTransfer->getRuleSet()->getCondition(),
-            $ruleQueryTransfer->getMappings()
+            $mappings
         );
     }
 
@@ -102,9 +103,9 @@ class CriteriaMapper implements CriteriaMapperInterface
     protected function buildCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $ruleQuerySetTransfer, array $mappings = [])
     {
         $operator = $this->operatorToPropelOperator($ruleQuerySetTransfer->getOperator());
-        $fields = $this->getMappedFields($ruleQuerySetTransfer->getId(), $mappings);
+        $mappedFields = $this->getMappedFields($ruleQuerySetTransfer->getId(), $mappings);
 
-        if (count($fields) >= 1) {
+        if (count($mappedFields) >= 1) {
             $combinedCriterion = $this->createCombinedCriterion($criteria, $ruleQuerySetTransfer, $operator, $mappings);
 
             if ($combinedCriterion) {
@@ -248,6 +249,21 @@ class CriteriaMapper implements CriteriaMapperInterface
         }
 
         return $mappings[$key];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     *
+     * @return array
+     */
+    protected function remapFieldAliases(RuleQueryTransfer $ruleQueryTransfer)
+    {
+        $result = [];
+        foreach ($ruleQueryTransfer->getMappings() as $mappingTransfer) {
+            $result[$mappingTransfer->getAlias()] = $mappingTransfer->getColumns();
+        }
+
+        return $result;
     }
 
     /**
