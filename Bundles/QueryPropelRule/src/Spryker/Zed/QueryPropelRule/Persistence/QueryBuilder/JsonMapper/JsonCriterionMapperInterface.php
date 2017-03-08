@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\JsonMapper;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface;
 
@@ -15,28 +15,28 @@ interface JsonCriterionMapperInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      *
      * @return string|null
      */
-    public function getAttributeName(RuleQuerySetTransfer $rule);
+    public function getAttributeName(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      *
      * @return bool
      */
-    public function isJsonAttribute(RuleQuerySetTransfer $rule);
+    public function isJsonAttribute(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer);
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      *
      * @throws \Spryker\Zed\QueryPropelRule\Persistence\Exception\QueryBuilderException
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
-    public function createJsonCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $rule, OperatorInterface $operator);
+    public function createJsonCriterion(ModelCriteria $criteria, PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator);
 
 }

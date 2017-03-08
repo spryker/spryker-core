@@ -7,37 +7,37 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\JsonMapper;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface;
 
 interface JsonMapperInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      * @param string $attributeName
      *
      * @return string
      */
-    public function getField(RuleQuerySetTransfer $rule, OperatorInterface $operator, $attributeName);
+    public function getField(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator, $attributeName);
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      * @param string $attributeName
      *
      * @return mixed
      */
-    public function getValue(RuleQuerySetTransfer $rule, OperatorInterface $operator, $attributeName);
+    public function getValue(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator, $attributeName);
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      * @param string $attributeName
      *
      * @return string
      */
-    public function getOperator(RuleQuerySetTransfer $rule, OperatorInterface $operator, $attributeName);
+    public function getOperator(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator, $attributeName);
 
 }

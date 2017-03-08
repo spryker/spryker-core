@@ -13,7 +13,7 @@ interface RuleTransferMapperInterface
     /**
      * @param string $json
      *
-     * @return \Generated\Shared\Transfer\RuleQuerySetTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createRuleQuerySetFromJson($json);
 

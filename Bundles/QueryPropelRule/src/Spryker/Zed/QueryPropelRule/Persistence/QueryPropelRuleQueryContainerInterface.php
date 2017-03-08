@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence;
 
-use Generated\Shared\Transfer\RuleQueryTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -16,30 +16,30 @@ interface QueryPropelRuleQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - Converts RuleQuerySet of RuleQueryTransfer into Propel criteria
+     * - Converts RuleQuerySet of PropelQueryBuilderCriteriaTransfer into Propel criteria
      * - Combines criteria with Propel query
      * - Returns combined Propel query
      *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function createQuery(ModelCriteria $query, RuleQueryTransfer $ruleQueryTransfer);
+    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer);
 
     /**
      * Specification:
      * - Converts json string into an array
-     * - Creates RuleQuerySetTransfer using the array as parameter
+     * - Creates PropelQueryBuilderRuleSetTransfer using the array as parameter
      *
      * @api
      *
      * @param string $json
      *
-     * @return \Generated\Shared\Transfer\RuleQuerySetTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
-    public function createRuleSetFromJson($json);
+    public function createPropelQueryBuilderCriteriaFromJson($json);
 
 }

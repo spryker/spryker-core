@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence;
 
-use Generated\Shared\Transfer\RuleQueryTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -23,15 +23,15 @@ class QueryPropelRuleQueryContainer extends AbstractQueryContainer implements Qu
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function createQuery(ModelCriteria $query, RuleQueryTransfer $ruleQueryTransfer)
+    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
     {
         return $this->getFactory()
             ->createQueryBuilder()
-            ->buildQuery($query, $ruleQueryTransfer);
+            ->buildQuery($query, $criteriaTransfer);
     }
 
     /**
@@ -41,9 +41,9 @@ class QueryPropelRuleQueryContainer extends AbstractQueryContainer implements Qu
      *
      * @param string $json
      *
-     * @return \Generated\Shared\Transfer\RuleQuerySetTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
-    public function createRuleSetFromJson($json)
+    public function createPropelQueryBuilderCriteriaFromJson($json)
     {
         return $this->getFactory()
             ->createRuleTransferMapper()

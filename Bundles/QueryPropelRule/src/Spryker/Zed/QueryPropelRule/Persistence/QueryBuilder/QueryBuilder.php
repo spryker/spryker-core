@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder;
 
-use Generated\Shared\Transfer\RuleQueryTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class QueryBuilder implements QueryBuilderInterface
@@ -28,39 +28,40 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQuery(ModelCriteria $query, RuleQueryTransfer $ruleQueryTransfer)
+    public function buildQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
-        $query = $this->mergeQueryWithCriteria($query, $ruleQueryTransfer);
+        $propelQueryBuilderCriteriaTransfer->requireRuleSet();
+        $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mergeQueryWithCriteria(ModelCriteria $query, RuleQueryTransfer $ruleQueryTransfer)
+    protected function mergeQueryWithCriteria(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
-        $criteria = $this->toCriteria($ruleQueryTransfer);
-        $query->mergeWith($criteria, $ruleQueryTransfer->getRuleSet()->getCondition());
+        $criteria = $this->toCriteria($propelQueryBuilderCriteriaTransfer);
+        $query->mergeWith($criteria, $propelQueryBuilderCriteriaTransfer->getRuleSet()->getCondition());
 
         return $query;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function toCriteria(RuleQueryTransfer $ruleQueryTransfer)
+    protected function toCriteria(PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
-        return $this->criteriaMapper->toCriteria($ruleQueryTransfer);
+        return $this->criteriaMapper->toCriteria($propelQueryBuilderCriteriaTransfer);
     }
 
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\TransferMapper;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\QueryPropelRule\Dependency\Service\QueryPropelRuleToUtilEncodingInterface;
 
 class RuleTransferMapper implements RuleTransferMapperInterface
@@ -29,13 +29,13 @@ class RuleTransferMapper implements RuleTransferMapperInterface
     /**
      * @param string $json
      *
-     * @return \Generated\Shared\Transfer\RuleQuerySetTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createRuleQuerySetFromJson($json)
     {
         $json = trim($json);
 
-        $querySetTransfer = new RuleQuerySetTransfer();
+        $querySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $querySetTransfer->fromArray(
             $this->utilEncodingService->decodeJson($json, true)
         );

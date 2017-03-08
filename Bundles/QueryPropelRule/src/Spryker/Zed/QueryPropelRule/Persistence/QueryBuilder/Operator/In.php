@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class In extends AbstractOperator
@@ -24,11 +24,11 @@ class In extends AbstractOperator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $rule
      *
      * @return mixed
      */
-    public function getValue(RuleQuerySetTransfer $rule)
+    public function getValue(PropelQueryBuilderRuleSetTransfer $rule)
     {
         $value = trim($rule->getValue());
         if ($value) {

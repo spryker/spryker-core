@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder;
 
-use Generated\Shared\Transfer\RuleQueryTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 
 interface CriteriaMapperInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function toCriteria(RuleQueryTransfer $ruleQueryTransfer);
+    public function toCriteria(PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer);
 
 }

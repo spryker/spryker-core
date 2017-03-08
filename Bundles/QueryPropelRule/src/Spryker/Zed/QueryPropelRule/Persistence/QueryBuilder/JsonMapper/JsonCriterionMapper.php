@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\JsonMapper;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\QueryPropelRule\Persistence\Exception\QueryBuilderException;
 use Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface;
@@ -39,19 +39,19 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      *
      * @return string|null
      */
-    public function getAttributeName(RuleQuerySetTransfer $rule)
+    public function getAttributeName(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer)
     {
         $name = trim(preg_replace(
             $this->pattern,
             $this->replacement,
-            $rule->getId()
+            $ruleSetTransfer->getId()
         ));
 
-        if ($name === $rule->getId()) {
+        if ($name === $ruleSetTransfer->getId()) {
             return null;
         }
 
@@ -59,34 +59,37 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      *
      * @return bool
      */
-    public function isJsonAttribute(RuleQuerySetTransfer $rule)
+    public function isJsonAttribute(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer)
     {
-        return $this->getAttributeName($rule) !== null;
+        return $this->getAttributeName($ruleSetTransfer) !== null;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      *
      * @throws \Spryker\Zed\QueryPropelRule\Persistence\Exception\QueryBuilderException
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
-    public function createJsonCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $rule, OperatorInterface $operator)
-    {
-        if (!$this->isJsonAttribute($rule)) {
-            throw new QueryBuilderException('Expected json attribute for RuleQuerySet with id: ' . $rule->getId());
+    public function createJsonCriterion(
+        ModelCriteria $criteria,
+        PropelQueryBuilderRuleSetTransfer $ruleSetTransfer,
+        OperatorInterface $operator
+    ) {
+        if (!$this->isJsonAttribute($ruleSetTransfer)) {
+            throw new QueryBuilderException('Expected json attribute for PropelQueryBuilderRuleSet with id: ' . $ruleSetTransfer->getId());
         }
 
-        $attributeName = $this->getAttributeName($rule);
-        $field = $this->criterionMapper->getField($rule, $operator, $attributeName);
-        $value = $this->criterionMapper->getValue($rule, $operator, $attributeName);
-        $operatorExpression = $this->criterionMapper->getOperator($rule, $operator, $attributeName);
+        $attributeName = $this->getAttributeName($ruleSetTransfer);
+        $field = $this->criterionMapper->getField($ruleSetTransfer, $operator, $attributeName);
+        $value = $this->criterionMapper->getValue($ruleSetTransfer, $operator, $attributeName);
+        $operatorExpression = $this->criterionMapper->getOperator($ruleSetTransfer, $operator, $attributeName);
 
         return $criteria->getNewCriterion(
             $field,

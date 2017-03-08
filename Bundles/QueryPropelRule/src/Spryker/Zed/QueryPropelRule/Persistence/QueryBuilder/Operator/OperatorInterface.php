@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator;
 
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 
 interface OperatorInterface
 {
@@ -23,10 +23,10 @@ interface OperatorInterface
     public function getOperator();
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $rule
      *
      * @return mixed
      */
-    public function getValue(RuleQuerySetTransfer $rule);
+    public function getValue(PropelQueryBuilderRuleSetTransfer $rule);
 
 }

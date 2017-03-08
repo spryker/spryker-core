@@ -8,13 +8,14 @@
 namespace Functional\Spryker\Zed\QueryPropelRule\Persistence;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\RuleQueryMappingTransfer;
-use Generated\Shared\Transfer\RuleQuerySetTransfer;
-use Generated\Shared\Transfer\RuleQueryTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\QueryPropelRule\Persistence\QueryPropelRuleQueryContainer;
 
 /**
@@ -64,6 +65,22 @@ class QueryContainerTest extends Test
         $this->queryContainer = new QueryPropelRuleQueryContainer();
     }
 
+
+    /**
+     * @return void
+     */
+    public function testPropelCreateQueryWithEmptyRuleSetShouldThrowException()
+    {
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $query = SpyProductQuery::create();
+        $query->innerJoinSpyProductAbstract();
+
+        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
+
+        $this->queryContainer->createQuery($query, $ruleQueryTransfer);
+    }
+
     /**
      * @return void
      */
@@ -72,9 +89,9 @@ class QueryContainerTest extends Test
         $query = SpyProductQuery::create();
         $query->innerJoinSpyProductAbstract();
 
-        $ruleQuerySetTransfer = new RuleQuerySetTransfer();
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
-        $ruleQueryTransfer = new RuleQueryTransfer();
+        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
 
         $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
@@ -92,12 +109,12 @@ class QueryContainerTest extends Test
         $query = SpyProductQuery::create();
         $query->innerJoinSpyProductAbstract();
 
-        $ruleQuerySetTransfer = new RuleQuerySetTransfer();
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
-        $ruleQueryTransfer = new RuleQueryTransfer();
+        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
 
-        $skuMapping = new RuleQueryMappingTransfer();
+        $skuMapping = new PropelQueryBuilderCriteriaMappingTransfer();
         $skuMapping->setAlias('product_sku');
         $skuMapping->setColumns([
             SpyProductAbstractTableMap::COL_SKU,
@@ -120,15 +137,15 @@ class QueryContainerTest extends Test
         $query = SpyProductAbstractQuery::create();
         $query->innerJoinSpyProduct();
 
-        $ruleQuerySetTransfer = new RuleQuerySetTransfer();
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
-        $ruleQueryTransfer = new RuleQueryTransfer();
+        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
         $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
 
-        $ruleQuerySetTransfer = $this->queryContainer->createRuleSetFromJson($this->jsonDataWithMappings);
+        $ruleQuerySetTransfer = $this->queryContainer->createPropelQueryBuilderCriteriaFromJson($this->jsonDataWithMappings);
 
-        $this->assertInstanceOf(RuleQuerySetTransfer::class, $ruleQuerySetTransfer);
-        $this->assertInstanceOf(RuleQuerySetTransfer::class, current($ruleQuerySetTransfer->getRules()));
+        $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, $ruleQuerySetTransfer);
+        $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, current($ruleQuerySetTransfer->getRules()));
     }
 
     /**

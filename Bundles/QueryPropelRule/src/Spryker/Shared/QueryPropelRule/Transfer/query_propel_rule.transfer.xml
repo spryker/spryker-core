@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="RuleQuerySet">
+    <transfer name="PropelQueryBuilderRuleSet">
         <property name="condition" type="string" />
-        <property name="rules" type="RuleQuerySet[]" />
+        <property name="rules" type="PropelQueryBuilderRuleSet[]" />
         <property name="id" type="string" />
         <property name="field" type="string" />
         <property name="type" type="string" />
@@ -14,19 +14,14 @@
         <property name="value" type="string" />
     </transfer>
 
-    <transfer name="RuleQuery">
-        <property name="ruleSet" type="RuleQuerySet" />
-        <property name="mappings" type="RuleQueryMapping[]" singular="mapping"/>
+    <transfer name="PropelQueryBuilderCriteria">
+        <property name="ruleSet" type="PropelQueryBuilderRuleSet" />
+        <property name="mappings" type="PropelQueryBuilderCriteriaMapping[]" singular="mapping"/>
     </transfer>
 
-    <transfer name="RuleQueryMapping">
+    <transfer name="PropelQueryBuilderCriteriaMapping">
         <property name="alias" type="string" />
         <property name="columns" type="array"/>
     </transfer>
 
-    <transfer name="RuleQueryDataProvider">
-        <property name="data" type="array" singular="dataItem" />
-    </transfer>
-
 </transfers>
-
