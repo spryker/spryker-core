@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ZedNavigation;
 
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\ZedNavigation\ZedNavigationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -79,7 +78,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      */
     public function getBundlesDirectory()
     {
-        return $this->get(KernelConstants::SPRYKER_ROOT);
+        return APPLICATION_VENDOR_DIR . '/*';
     }
 
 }
