@@ -65,7 +65,7 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
      */
     public function isJsonAttribute(RuleQuerySetTransfer $rule)
     {
-        return trim($this->getAttributeName($rule)) !== '';
+        return $this->getAttributeName($rule) !== null;
     }
 
     /**
