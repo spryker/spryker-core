@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;

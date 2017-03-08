@@ -9,8 +9,8 @@ namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -64,7 +64,6 @@ class QueryContainerTest extends Test
     {
         $this->queryContainer = new PropelQueryBuilderQueryContainer();
     }
-
 
     /**
      * @return void
