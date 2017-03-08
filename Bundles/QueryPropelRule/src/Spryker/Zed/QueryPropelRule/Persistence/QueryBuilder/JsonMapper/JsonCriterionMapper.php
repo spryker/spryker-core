@@ -41,7 +41,7 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
      *
-     * @return string
+     * @return string|null
      */
     public function getAttributeName(RuleQuerySetTransfer $rule)
     {

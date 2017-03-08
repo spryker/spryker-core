@@ -92,7 +92,7 @@ class OperatorBuilder implements OperatorBuilderInterface
      *
      * @throws \Spryker\Zed\QueryPropelRule\Persistence\Exception\OperatorBuilderException
      *
-     * @return array
+     * @return \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface[]
      */
     protected function remapOperators(array $operatorCollection)
     {

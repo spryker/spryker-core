@@ -30,7 +30,7 @@ class BeginsWith extends AbstractOperator
      */
     public function getValue(RuleQuerySetTransfer $rule)
     {
-        return sprintf('%%%s%%', $rule->getValue());
+        return sprintf('%%%s', $rule->getValue());
     }
 
 }

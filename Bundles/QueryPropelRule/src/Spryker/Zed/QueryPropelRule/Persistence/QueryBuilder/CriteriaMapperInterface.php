@@ -13,10 +13,10 @@ interface CriteriaMapperInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQuery
+     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function toCriteria(RuleQueryTransfer $ruleQuery);
+    public function toCriteria(RuleQueryTransfer $ruleQueryTransfer);
 
 }

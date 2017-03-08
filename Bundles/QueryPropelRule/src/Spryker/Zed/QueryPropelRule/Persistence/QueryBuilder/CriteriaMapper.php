@@ -39,37 +39,25 @@ class CriteriaMapper implements CriteriaMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQuery
+     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQueryTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function toCriteria(RuleQueryTransfer $ruleQuery)
+    public function toCriteria(RuleQueryTransfer $ruleQueryTransfer)
     {
         $criteria = $this->createCriteria();
 
-        return $this->appendRuleCriteria($criteria, $ruleQuery, $ruleQuery->getMappings());
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQueryTransfer $ruleQuery
-     * @param array $mappings
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function appendRuleCriteria(ModelCriteria $criteria, RuleQueryTransfer $ruleQuery, $mappings = [])
-    {
         return $this->appendCriteria(
             $criteria,
-            $ruleQuery->getRuleSet(),
-            $ruleQuery->getRuleSet()->getCondition(),
-            $mappings
+            $ruleQueryTransfer->getRuleSet(),
+            $ruleQueryTransfer->getRuleSet()->getCondition(),
+            $ruleQueryTransfer->getMappings()
         );
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySet
+     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySetTransfer
      * @param string $condition
      * @param array $mappings
      *
@@ -77,26 +65,26 @@ class CriteriaMapper implements CriteriaMapperInterface
      */
     protected function appendCriteria(
         ModelCriteria $criteria,
-        RuleQuerySetTransfer $ruleQuerySet,
+        RuleQuerySetTransfer $ruleQuerySetTransfer,
         $condition,
         array $mappings = []
     ) {
         $criterionCollection = [];
-        foreach ($ruleQuerySet->getRules() as $ruleSet) {
-            if (count((array)$ruleSet->getRules()) > 0) {
+        foreach ($ruleQuerySetTransfer->getRules() as $ruleSetTransfer) {
+            if (count((array)$ruleSetTransfer->getRules()) > 0) {
                 $criteria = $this->appendCriteria(
                     $criteria,
-                    $ruleSet,
-                    $ruleQuerySet->getCondition(),
+                    $ruleSetTransfer,
+                    $ruleQuerySetTransfer->getCondition(),
                     $mappings
                 );
             } else {
-                $criterion = $this->buildCriterion($criteria, $ruleSet, $mappings);
+                $criterion = $this->buildCriterion($criteria, $ruleSetTransfer, $mappings);
                 $criterionCollection[] = $criterion;
             }
         }
 
-        $criterionSet = $this->combineCriterionSet($ruleQuerySet, $criterionCollection);
+        $criterionSet = $this->combineCriterionSet($ruleQuerySetTransfer, $criterionCollection);
         if ($criterionSet) {
             $criteria = $this->appendCriterionSet($criteria, $criterionSet, $condition);
         }
@@ -106,41 +94,41 @@ class CriteriaMapper implements CriteriaMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySetTransfer
      * @param array $mappings
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
-    protected function buildCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $rule, array $mappings = [])
+    protected function buildCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $ruleQuerySetTransfer, array $mappings = [])
     {
-        $operator = $this->operatorToPropelOperator($rule->getOperator());
-        $fields = $this->getMappedFields($rule->getId(), $mappings);
+        $operator = $this->operatorToPropelOperator($ruleQuerySetTransfer->getOperator());
+        $fields = $this->getMappedFields($ruleQuerySetTransfer->getId(), $mappings);
 
         if (count($fields) >= 1) {
-            $combinedCriterion = $this->createCombinedCriterion($criteria, $rule, $operator, $mappings);
+            $combinedCriterion = $this->createCombinedCriterion($criteria, $ruleQuerySetTransfer, $operator, $mappings);
 
             if ($combinedCriterion) {
                 return $combinedCriterion;
             }
         }
 
-        return $this->createCriterion($criteria, $rule, $operator);
+        return $this->createCriterion($criteria, $ruleQuerySetTransfer, $operator);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySet
+     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySetTransfer
      * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion[] $criterionCollection
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null
      */
-    protected function combineCriterionSet(RuleQuerySetTransfer $ruleQuerySet, array $criterionCollection)
+    protected function combineCriterionSet(RuleQuerySetTransfer $ruleQuerySetTransfer, array $criterionCollection)
     {
         $mainCriterion = array_shift($criterionCollection);
         if (!$mainCriterion) {
             return $mainCriterion;
         }
 
-        $isOrCondition = $this->isOrCondition($ruleQuerySet->getCondition());
+        $isOrCondition = $this->isOrCondition($ruleQuerySetTransfer->getCondition());
         foreach ($criterionCollection as $criterion) {
             if ($isOrCondition) {
                 $mainCriterion->addOr($criterion);
@@ -181,31 +169,31 @@ class CriteriaMapper implements CriteriaMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      *
      * @return null|\Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
-    protected function createCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $rule, OperatorInterface $operator)
+    protected function createCriterion(ModelCriteria $criteria, RuleQuerySetTransfer $ruleQuerySetTransfer, OperatorInterface $operator)
     {
-        if ($this->jsonCriterionMapper->isJsonAttribute($rule)) {
+        if ($this->jsonCriterionMapper->isJsonAttribute($ruleQuerySetTransfer)) {
             return $this->jsonCriterionMapper->createJsonCriterion(
                 $criteria,
-                $rule,
+                $ruleQuerySetTransfer,
                 $operator
             );
         }
 
         return $criteria->getNewCriterion(
-            $rule->getField(),
-            $operator->getValue($rule),
+            $ruleQuerySetTransfer->getField(),
+            $operator->getValue($ruleQuerySetTransfer),
             $operator->getOperator()
         );
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
-     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleQuerySetTransfer $ruleQuerySetTransfer
      * @param \Spryker\Zed\QueryPropelRule\Persistence\QueryBuilder\Operator\OperatorInterface $operator
      * @param array $mappings
      *
@@ -213,16 +201,16 @@ class CriteriaMapper implements CriteriaMapperInterface
      */
     protected function createCombinedCriterion(
         ModelCriteria $criteria,
-        RuleQuerySetTransfer $rule,
+        RuleQuerySetTransfer $ruleQuerySetTransfer,
         OperatorInterface $operator,
         array $mappings = []
     ) {
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $lastCriterion */
         $lastCriterion = null;
 
-        $mappedFields = $this->getMappedFields($rule->getId(), $mappings);
+        $mappedFields = $this->getMappedFields($ruleQuerySetTransfer->getId(), $mappings);
         foreach ($mappedFields as $field) {
-            $multiRule = clone $rule;
+            $multiRule = clone $ruleQuerySetTransfer;
             $multiRule->setField($field);
 
             $criterion = $this->createCriterion($criteria, $multiRule, $operator);
