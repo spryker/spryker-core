@@ -50,12 +50,12 @@ class RedisSpinLockLocker implements SessionLockerInterface
     protected $retryDelayMicroseconds;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $token;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $sessionId;
 
@@ -96,7 +96,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
             return (int)$timeoutMilliseconds;
         }
 
-        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS);
+        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS, 0.8);
     }
 
     /**
@@ -110,16 +110,16 @@ class RedisSpinLockLocker implements SessionLockerInterface
             return (int)$lockTtlMilliseconds;
         }
 
-        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_LOCK_TTL_MILLISECONDS, 0.75);
+        return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_LOCK_TTL_MILLISECONDS);
     }
 
     /**
      * @param int $defaultMilliseconds
-     * @param int $fraction
+     * @param float $fraction
      *
      * @return int
      */
-    protected function getMillisecondsFromMaxExecutionTime($defaultMilliseconds, $fraction = 1)
+    protected function getMillisecondsFromMaxExecutionTime($defaultMilliseconds, $fraction = 1.0)
     {
         $maxExecutionTime = (int)round((int)ini_get('max_execution_time') * $fraction);
         if ($maxExecutionTime) {
