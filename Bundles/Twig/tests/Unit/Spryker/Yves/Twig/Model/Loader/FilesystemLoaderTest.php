@@ -36,7 +36,7 @@ class FilesystemLoaderTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCanBeConstrictedWithTemplatePathsArray()
+    public function testCanBeConstructedWithTemplatePathsArray()
     {
         $templatePaths = [];
         $filesystemLoader = new FilesystemLoader($templatePaths);
