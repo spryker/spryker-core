@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Twig;
+namespace Spryker\Zed\Twig\Communication;
 
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Twig\Model\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\TwigFileSystem;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Yves\Twig\TwigConfig getConfig()
+ * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  */
-class TwigFactory extends AbstractFactory
+class TwigCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
@@ -21,7 +21,7 @@ class TwigFactory extends AbstractFactory
      */
     public function createFilesystemLoader()
     {
-        return new FilesystemLoader(
+        return new TwigFileSystem(
             $this->getConfig()->getTemplatePaths()
         );
     }

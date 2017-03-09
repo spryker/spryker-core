@@ -35,11 +35,11 @@ class TwigConfig extends AbstractBundleConfig
     protected function addProjectTemplatePaths(array $paths)
     {
         $namespaces = $this->get(KernelConstants::PROJECT_NAMESPACES);
-        $store = $this->getStoreName();
+        $storeName = $this->getStoreName();
         $themeName = $this->getThemeName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $store . '/Theme/' . $themeName;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
         }
 
@@ -54,11 +54,11 @@ class TwigConfig extends AbstractBundleConfig
     protected function addCoreTemplatePaths(array $paths)
     {
         $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
-        $store = $this->getStoreName();
+        $storeName = $this->getStoreName();
         $themeName = $this->getThemeName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s' . $store . '/Theme/' . $themeName;
+            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $themeName;
         }
 

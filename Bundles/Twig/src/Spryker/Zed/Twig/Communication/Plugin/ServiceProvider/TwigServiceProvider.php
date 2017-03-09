@@ -20,10 +20,12 @@ use Spryker\Zed\Twig\Business\Model\RouteResolver;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig_Environment;
 use Twig_Loader_Chain;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
+ * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -45,25 +47,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
-
-            $storeName = Store::getInstance()->getStoreName();
-            $paths = [];
-
-            $namespaces = Config::get(KernelConstants::PROJECT_NAMESPACES);
-            foreach ($namespaces as $namespace) {
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
-            }
-
-            $namespaces = Config::get(KernelConstants::CORE_NAMESPACES);
-            foreach ($namespaces as $namespace) {
-                $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
-                $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
-            }
-
-            $paths[] = $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/';
-
-            return new TwigFileSystem($paths);
+            return $this->getFactory()->createFilesystemLoader();
         });
 
         $app['twig.loader'] = $app->share(function ($app) {
@@ -84,7 +68,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
-                function (\Twig_Environment $twig) use ($app) {
+                function (Twig_Environment $twig) use ($app) {
                     foreach ($app['twig.global.variables'] as $name => $value) {
                         $twig->addGlobal($name, $value);
                     }

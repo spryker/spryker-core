@@ -35,4 +35,16 @@ class TwigServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('twig.loader.yves', $application);
     }
 
+    /**
+     * @return void
+     */
+    public function testBootDoesNothing()
+    {
+        $application = new Application();
+        $twigServiceProvider = new TwigServiceProvider();
+        $twigServiceProvider->boot($application);
+
+        $this->assertArrayNotHasKey('twig.loader.yves', $application);
+    }
+
 }
