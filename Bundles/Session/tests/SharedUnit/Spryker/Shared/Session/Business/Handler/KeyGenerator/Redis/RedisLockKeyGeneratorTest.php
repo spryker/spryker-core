@@ -11,17 +11,22 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGener
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
+ * @group Handler
  * @group KeyGenerator
  * @group Redis
- * @group RedisLockKeyGenerator
+ * @group RedisLockKeyGeneratorTest
  */
 class RedisLockKeyGeneratorTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testGenerateAddsSuffix()
     {
         $generator = new RedisLockKeyGenerator(new RedisSessionKeyGenerator());

@@ -10,17 +10,22 @@ use Codeception\TestCase\Test;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
+ * @group Handler
  * @group KeyGenerator
  * @group Redis
- * @group RedisSessionKeyGenerator
+ * @group RedisSessionKeyGeneratorTest
  */
 class RedisSessionKeyGeneratorTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testGenerateAddsPrefix()
     {
         $generator = new RedisSessionKeyGenerator();

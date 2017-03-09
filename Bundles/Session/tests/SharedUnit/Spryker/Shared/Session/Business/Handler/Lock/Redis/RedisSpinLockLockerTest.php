@@ -14,17 +14,22 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
 use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
+ * @group Handler
  * @group Lock
  * @group Redis
- * @group RedisSpinLockLocker
+ * @group RedisSpinLockLockerTest
  */
 class RedisSpinLockLockerTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testLockBlocksUntilLockIsAcquired()
     {
         $redisClientMock = $this->getRedisClientMock();
@@ -38,6 +43,9 @@ class RedisSpinLockLockerTest extends Test
         $locker->lock('session_id');
     }
 
+    /**
+     * @return void
+     */
     public function testUnlockUsesGeneratedKeyFromStoredSessionId()
     {
         $sessionId = 'test_session_id';
