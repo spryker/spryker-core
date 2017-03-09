@@ -11,7 +11,16 @@ interface QueueFacadeInterface
 {
 
     /**
+     * @param string $queueName
+     *
      * @return void
      */
-    public function runQueueReceiverTask();
+    public function startTask($queueName);
+
+    /**
+     * @param string $command
+     *
+     * @return void
+     */
+    public function startWorker($command);
 }

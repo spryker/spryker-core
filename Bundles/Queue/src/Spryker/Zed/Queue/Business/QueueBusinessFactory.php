@@ -8,7 +8,9 @@ namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Queue\Business\Model\Task\QueueRunnerTask;
 use Spryker\Zed\Queue\Business\Model\Task\Task;
+use Spryker\Zed\Queue\Business\Model\Worker\Worker;
 use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorInterface;
 use Spryker\Zed\Queue\QueueConfig;
 use Spryker\Zed\Queue\QueueDependencyProvider;
@@ -32,6 +34,25 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return Worker
+     */
+    public function createWorker()
+    {
+        return new Worker(
+            array_keys($this->getProcessorMessagePlugins()),
+            $this->getQueueWorkerConfig()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueueWorkerConfig()
+    {
+        return $this->getConfig()->getQueueWorkerConfig();
+    }
+
+    /**
      * @return QueueClientInterface
      */
     public function getQueueClient()
@@ -44,6 +65,6 @@ class QueueBusinessFactory extends AbstractBusinessFactory
      */
     public function getProcessorMessagePlugins()
     {
-        return $this->getProvidedDependency(QueueDependencyProvider::CLIENT_MESSAGE_PROCESSOR_PLUGIN);
+        return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
     }
 }

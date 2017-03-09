@@ -10,7 +10,8 @@ namespace Spryker\Zed\Queue\Business\Model\Task;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
-use Spryker\Zed\Queue\Business\Exception\MissingQueueOptionException;
+use Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException;
+use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
@@ -47,19 +48,72 @@ class Task implements TaskInterface
     }
 
     /**
+     * @param string $queueName
+     *
      * @return void
      */
-    public function run()
+    public function run($queueName)
     {
-        foreach ($this->messageProcessorPlugins as $queueName => $processorPlugin) {
-            $queueOptionTransfer = $this->getQueueReceiverOptionTransfer($queueName, $processorPlugin->getChunkSize());
-            $messages = $this->receiveMessages($queueOptionTransfer);
+        $processorPlugin = $this->getQueueProcessorPlugin($queueName);
+        $queueOptionTransfer = $this->getQueueReceiverConfigTransfer($queueName, $processorPlugin->getChunkSize());
+        $messages = $this->receiveMessages($queueOptionTransfer);
 
-            if ($messages !== null) {
-                $processedMessages = $processorPlugin->processMessages($messages);
-                $this->postProcessMessages($processedMessages);
-            }
+        if ($messages !== null) {
+            $processedMessages = $processorPlugin->processMessages($messages);
+            $this->postProcessMessages($processedMessages);
         }
+    }
+
+    /**
+     * @param string $queueName
+     *
+     * @throws MissingQueuePluginException
+     *
+     * @return QueueMessageProcessorInterface
+     */
+    protected function getQueueProcessorPlugin($queueName)
+    {
+        if (!array_key_exists($queueName, $this->messageProcessorPlugins)) {
+            throw new MissingQueuePluginException(
+                sprintf(
+                    'There is no message processor plugin registered for this queue: %s, ' .
+                    'you can fix this error by adding it in QueueDependencyProvider',
+                    $queueName
+                )
+            );
+        }
+
+        return $this->messageProcessorPlugins[$queueName];
+    }
+
+
+    /**
+     * @param string $queueName
+     * @param int $chunkSize
+     *
+     * @throws MissingQueueConfigException
+     *
+     * @return QueueOptionTransfer
+     */
+    protected function getQueueReceiverConfigTransfer($queueName, $chunkSize)
+    {
+        $queueOptionTransfer = $this->queueConfig->getQueueReceiverConfig($queueName);
+        if ($queueOptionTransfer === null) {
+            throw new MissingQueueConfigException(
+                sprintf(
+                    'No queue configuration was found for this queue: %s, ',
+                    'you can fix this error by adding it in QueueConfig',
+                    $queueName
+                )
+            );
+        }
+
+        $queueOptionTransfer->setChunkSize($chunkSize);
+        if ($queueOptionTransfer->getQueueName() === self::DEFAULT_CONSUMER_CONFIG_QUEUE_NAME) {
+            $queueOptionTransfer->setQueueName($queueName);
+        }
+
+        return $queueOptionTransfer;
     }
 
     /**
@@ -70,30 +124,6 @@ class Task implements TaskInterface
     protected function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
     {
         return $this->client->receiveMessages($queueOptionTransfer);
-    }
-
-    /**
-     * @param string $queueName
-     * @param int $chunkSize
-     *
-     * @throws MissingQueueOptionException
-     * @return QueueOptionTransfer
-     */
-    protected function getQueueReceiverOptionTransfer($queueName, $chunkSize)
-    {
-        $queueOptionTransfer = $this->queueConfig->getReceiverConfig($queueName);
-        if ($queueOptionTransfer === null) {
-            throw new MissingQueueOptionException(sprintf(
-                'No queue configuration was found for this queue: %s', $queueName
-            ));
-        }
-
-        $queueOptionTransfer->setChunkSize($chunkSize);
-        if ($queueOptionTransfer->getQueueName() === self::DEFAULT_CONSUMER_CONFIG_QUEUE_NAME) {
-            $queueOptionTransfer->setQueueName($queueName);
-        }
-
-        return $queueOptionTransfer;
     }
 
     /**

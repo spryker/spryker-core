@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Queue\Business\Exception;
 
-class MissingQueueOptionException extends \Exception
+class MissingQueueConfigException extends \Exception
 {
 
 }

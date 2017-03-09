@@ -15,7 +15,7 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_QUEUE = 'queue client';
-    const CLIENT_MESSAGE_PROCESSOR_PLUGIN = 'queue message processor plugin';
+    const QUEUE_MESSAGE_PROCESSOR_PLUGINS = 'queue message processor plugin';
 
     /**
      * @param Container $container
@@ -28,12 +28,18 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->queue()->client();
         };
 
-        $container[self::CLIENT_MESSAGE_PROCESSOR_PLUGIN] = function (Container $container) {
+        $container[self::QUEUE_MESSAGE_PROCESSOR_PLUGINS] = function (Container $container) {
             return $this->getProcessorMessagePlugins($container);
         };
     }
 
     /**
+     * For processing the received messages from the queue,
+     * plugins can be registered here by having queue name as
+     * a key.
+     *
+     *  e.g: 'mail' => new MailQueueMessageProcessorPlugin()
+     *
      * @param Container $container
      *
      * @return QueueMessageProcessorInterface[]

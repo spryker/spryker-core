@@ -16,10 +16,22 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
 
     /**
+     * @param string $queueName
+     *
      * @return void
      */
-    public function runQueueReceiverTask()
+    public function startTask($queueName)
     {
-        $this->getFactory()->createTask()->run();
+        $this->getFactory()->createTask()->run($queueName);
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return void
+     */
+    public function startWorker($command)
+    {
+        $this->getFactory()->createWorker()->start($command);
     }
 }

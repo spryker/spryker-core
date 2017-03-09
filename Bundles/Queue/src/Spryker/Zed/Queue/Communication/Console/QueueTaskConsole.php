@@ -9,17 +9,18 @@ namespace Spryker\Zed\Queue\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\Queue\Business\QueueFacade;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method QueueFacade getFacade()
  */
-class QueueReceiverConsole extends Console
+class QueueTaskConsole extends Console
 {
 
-    const COMMAND_NAME = 'queue:receiver:start';
-    const DESCRIPTION = 'Start receiving messages from queues';
+    const COMMAND_NAME = 'queue:task:start';
+    const DESCRIPTION = 'Start queue task for specific queue';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class QueueReceiverConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->addArgument('queue', InputArgument::REQUIRED, 'Name of the queue for receiving the messages');
 
         parent::configure();
     }
@@ -40,7 +42,11 @@ class QueueReceiverConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->runQueueReceiverTask();
+        $queueName = $input->getArgument('queue');
+
+        if ($queueName !== null) {
+            $this->getFacade()->startTask($queueName);
+        }
 
         return static::CODE_SUCCESS;
     }

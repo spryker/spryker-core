@@ -7,26 +7,21 @@
 
 namespace Spryker\Zed\Queue\Communication\Console;
 
-use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\Queue\Communication\QueueCommunicationFactory;
 use Spryker\Zed\Queue\Business\QueueFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * @method QueueFacade getFacade()
- * @method QueueCommunicationFactory getFactory()
  */
 class QueueWorkerConsole extends Console
 {
 
     const COMMAND_NAME = 'queue:worker:start';
-    const DESCRIPTION = 'Start queue receiver workers';
+    const DESCRIPTION = 'Start queue workers';
 
-    const QUEUE_RECEIVER_COMMAND = './vendor/bin/console queue:receiver:start';
-
+    const QUEUE_RUNNER_COMMAND = './vendor/bin/console queue:task:start';
 
     /**
      * @return void
@@ -47,60 +42,8 @@ class QueueWorkerConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $startTime = time();
-        $passedSeconds = 0;
-        $interval = $this->getConfig(QueueConstants::QUEUE_WORKER_INTERVAL_SECONDS);
-        $threshold = $this->getConfig(QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS);
-
-        while ($passedSeconds < $threshold) {
-            $this->startProcesses();
-
-            sleep($interval);
-            $passedSeconds = time() - $startTime;
-        }
+        $this->getFacade()->startWorker(self::QUEUE_RUNNER_COMMAND);
 
         return static::CODE_SUCCESS;
-    }
-
-    /**
-     * @return void
-     */
-    protected function startProcesses()
-    {
-        $command = $this->getQueueCommand();
-        $processors = $this->getConfig(QueueConstants::QUEUE_WORKER_PROCESSOR);
-        $allProcesses = [];
-
-        for ($i = 0; $i < $processors; $i++) {
-            $process = new Process($command);
-            $process->start();
-            $allProcesses[] = $process;
-        }
-
-        foreach ($allProcesses as $process) {
-            $process->wait();
-        }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getQueueCommand()
-    {
-        return sprintf(
-            '%s >> %s',
-            self::QUEUE_RECEIVER_COMMAND,
-            $this->getConfig(QueueConstants::QUEUE_WORKER_OUTPUT_FILE)
-        );
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string|int
-     */
-    protected function getConfig($name)
-    {
-        return $this->getFactory()->getQueueWorkerConfigs()[$name];
     }
 }
