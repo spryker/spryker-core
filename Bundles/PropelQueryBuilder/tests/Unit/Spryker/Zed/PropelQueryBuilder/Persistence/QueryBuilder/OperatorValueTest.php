@@ -60,7 +60,7 @@ class OperatorValueTest extends Test
         $operator = new BeginsWith();
         $value = $operator->getValue($this->rule);
 
-        $this->assertSame('%bar', $value);
+        $this->assertSame('bar%', $value);
     }
 
     /**
@@ -82,7 +82,7 @@ class OperatorValueTest extends Test
         $operator = new EndsWith();
         $value = $operator->getValue($this->rule);
 
-        $this->assertSame('bar%', $value);
+        $this->assertSame('%bar', $value);
     }
 
     /**
@@ -159,7 +159,7 @@ class OperatorValueTest extends Test
         $operator = new NotBeginsWith();
         $value = $operator->getValue($this->rule);
 
-        $this->assertSame('%bar', $value);
+        $this->assertSame('bar%', $value);
     }
 
     /**
@@ -181,7 +181,7 @@ class OperatorValueTest extends Test
         $operator = new NotEndsWith();
         $value = $operator->getValue($this->rule);
 
-        $this->assertSame('bar%', $value);
+        $this->assertSame('%bar', $value);
     }
 
     /**

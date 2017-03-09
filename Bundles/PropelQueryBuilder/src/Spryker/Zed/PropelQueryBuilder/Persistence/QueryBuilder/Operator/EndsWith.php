@@ -30,7 +30,7 @@ class EndsWith extends AbstractOperator
      */
     public function getValue(PropelQueryBuilderRuleSetTransfer $rule)
     {
-        return sprintf('%s%%', $rule->getValue());
+        return sprintf('%%%s', $rule->getValue());
     }
 
 }
