@@ -124,7 +124,9 @@ abstract class AbstractClassResolver
      */
     private function addCoreClassNames(array $classNames)
     {
+        $storeName = Store::getInstance()->getStoreName();
         foreach ($this->getCoreNamespaces() as $namespace) {
+            $classNames[] = $this->buildClassName($namespace, $storeName);
             $classNames[] = $this->buildClassName($namespace);
         }
 
