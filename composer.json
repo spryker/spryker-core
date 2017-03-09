@@ -547,6 +547,7 @@
       "Functional\\Spryker\\Zed\\Transfer\\": "Bundles/Transfer/tests",
 
       "Spryker\\Shared\\Twig\\": "Bundles/Twig/src",
+      "Spryker\\Yves\\Twig\\": "Bundles/Twig/src",
       "Spryker\\Zed\\Twig\\": "Bundles/Twig/src",
 
       "Spryker\\Shared\\Url\\": "Bundles/Url/src",

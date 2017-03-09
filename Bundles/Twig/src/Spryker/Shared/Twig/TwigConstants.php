@@ -12,6 +12,8 @@ interface TwigConstants
 
     // see http://twig.sensiolabs.org/doc/api.html#environment-options
     const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
+    const YVES_THEME = 'YVES_THEME';
+
     const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
 
 }
