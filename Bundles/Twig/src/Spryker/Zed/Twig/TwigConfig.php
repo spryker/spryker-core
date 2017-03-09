@@ -60,10 +60,8 @@ class TwigConfig extends AbstractBundleConfig
     protected function addCoreTemplatePaths(array $paths)
     {
         $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
-        $storeName = $this->getStoreName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
