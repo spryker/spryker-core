@@ -38,5 +38,4 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $twigConfig->getTemplatePaths());
     }
 
-
 }

@@ -22,6 +22,9 @@ use Twig_LoaderInterface;
 class TwigCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCreateFilesystemLoaderReturnsTwigLoader()
     {
         $twigCommunicationFactory = new TwigCommunicationFactory();
@@ -29,4 +32,5 @@ class TwigCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
     }
+
 }
