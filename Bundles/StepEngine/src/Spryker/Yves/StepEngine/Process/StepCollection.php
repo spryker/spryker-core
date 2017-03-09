@@ -245,4 +245,12 @@ class StepCollection implements StepCollectionInterface
         return $this->urlGenerator->generate($route);
     }
 
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    public function getAll()
+    {
+        return $this->steps;
+    }
+
 }

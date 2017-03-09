@@ -81,4 +81,9 @@ interface StepCollectionInterface
      */
     public function getEscapeUrl(StepInterface $currentStep);
 
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    public function getAll();
+
 }
