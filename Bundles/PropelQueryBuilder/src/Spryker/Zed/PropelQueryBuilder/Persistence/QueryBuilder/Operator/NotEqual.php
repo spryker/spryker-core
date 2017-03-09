@@ -9,7 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 
-class NotEqual extends AbstractOperator
+class NotEqual extends Equal
 {
 
     const TYPE = 'not_equal';

@@ -9,7 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 
-class NotIn extends AbstractOperator
+class NotIn extends In
 {
 
     const TYPE = 'not_in';

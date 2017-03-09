@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator;
 
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 
-class NotContains extends AbstractOperator
+class NotContains extends Contains
 {
 
     const TYPE = 'not_contains';
@@ -21,16 +20,6 @@ class NotContains extends AbstractOperator
     public function getOperator()
     {
         return Criteria::NOT_LIKE;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $rule
-     *
-     * @return mixed
-     */
-    public function getValue(PropelQueryBuilderRuleSetTransfer $rule)
-    {
-        return sprintf('%%%s%%', $rule->getValue());
     }
 
 }

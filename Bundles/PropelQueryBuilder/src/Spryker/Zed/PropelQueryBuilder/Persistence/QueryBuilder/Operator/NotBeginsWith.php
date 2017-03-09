@@ -9,7 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 
-class NotBeginsWith extends AbstractOperator
+class NotBeginsWith extends BeginsWith
 {
 
     const TYPE = 'not_begins_with';
