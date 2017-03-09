@@ -67,8 +67,6 @@ class TwigConfig extends AbstractBundleConfig
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
-        $paths[] = $this->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/';
-
         return $paths;
     }
 
