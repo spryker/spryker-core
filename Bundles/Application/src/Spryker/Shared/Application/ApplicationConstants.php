@@ -88,25 +88,56 @@ interface ApplicationConstants
     /**
      * Cloud
      */
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_ENABLED = 'CLOUD_ENABLED';
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_OBJECT_STORAGE_ENABLED = 'CLOUD_OBJECT_STORAGE_ENABLED';
-
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_ENABLED = 'CLOUD_CDN_ENABLED';
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_STATIC_MEDIA_PREFIX = 'CLOUD_CDN_STATIC_MEDIA_PREFIX';
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_STATIC_MEDIA_HTTP = 'CLOUD_CDN_STATIC_MEDIA_HTTP';
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_STATIC_MEDIA_HTTPS = 'CLOUD_CDN_STATIC_MEDIA_HTTPS';
+    /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME = 'CLOUD_CDN_PRODUCT_IMAGES';
 
     const HOST_YVES = 'HOST_YVES';
+    const HOST_ZED = 'HOST_ZED';
+
+    const PORT_YVES = 'PORT_YVES';
+    const PORT_ZED = 'PORT_ZED';
+    const PORT_SSL_YVES = 'PORT_SSL_YVES';
+    const PORT_SSL_ZED = 'PORT_SSL_ZED';
+
+    const BASE_URL_YVES = 'BASE_URL_YVES';
+    const BASE_URL_ZED = 'BASE_URL_ZED';
+    const BASE_URL_STATIC_ASSETS = 'BASE_URL_STATIC_ASSETS';
+    const BASE_URL_STATIC_MEDIA = 'BASE_URL_STATIC_MEDIA';
+    const BASE_URL_SSL_YVES = 'BASE_URL_SSL_YVES';
+    const BASE_URL_SSL_ZED = 'BASE_URL_SSL_ZED';
+    const BASE_URL_SSL_STATIC_ASSETS = 'BASE_URL_SSL_STATIC_ASSETS';
+    const BASE_URL_SSL_STATIC_MEDIA = 'BASE_URL_SSL_STATIC_MEDIA';
+
+    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead */
     const HOST_ZED_GUI = 'HOST_ZED_GUI';
+    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead */
     const HOST_ZED_API = 'HOST_ZED_API';
+    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead */
     const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
+    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead */
     const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead */
     const HOST_SSL_YVES = 'HOST_SSL_YVES';
+    /** @deprecated Unused, will be removed with next major release */
     const HOST_SSL_ZED_GUI = 'HOST_SSL_ZED_GUI';
+    /** @deprecated Unused, will be removed with next major release */
     const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead */
     const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
+    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead */
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     const FORM_FACTORY = 'FORM_FACTORY';

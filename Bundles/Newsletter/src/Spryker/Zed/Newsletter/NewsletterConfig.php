@@ -28,7 +28,10 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(NewsletterConstants::HOST_YVES);
+        return $this->getConfig()->hasKey(NewsletterConstants::BASE_URL_YVES)
+            ? $this->get(NewsletterConstants::BASE_URL_YVES)
+            // @deprecated this is just for backward compatibility
+            : $this->get(NewsletterConstants::HOST_YVES);
     }
 
     /**

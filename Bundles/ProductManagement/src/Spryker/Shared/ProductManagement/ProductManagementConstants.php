@@ -14,6 +14,9 @@ interface ProductManagementConstants
 
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
+    /** @deprecated Please use ProductManagementConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    const BASE_URL_YVES = 'PRODUCT_MANAGEMENT_BASE_URL_YVES';
 
 }

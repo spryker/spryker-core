@@ -29,6 +29,9 @@ interface PayoneConstants
     const PAYONE_MODE_TEST = 'test';
     const PAYONE_MODE_LIVE = 'live';
 
+    /** @deprecated Please use PayoneConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    const BASE_URL_YVES = 'PAYONE_BASE_URL_YVES';
 
 }

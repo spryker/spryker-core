@@ -13,7 +13,10 @@ interface CustomerConstants
     const CUSTOMER_ANONYMOUS_PATTERN = 'CUSTOMER_ANONYMOUS_PATTERN';
     const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
+    /** @deprecated Please use CustomerConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    const BASE_URL_YVES = 'CUSTOMER_BASE_URL_YVES';
 
     const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
 
