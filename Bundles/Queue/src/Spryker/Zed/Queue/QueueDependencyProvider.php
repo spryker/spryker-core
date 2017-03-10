@@ -9,7 +9,7 @@ namespace Spryker\Zed\Queue;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,15 +34,15 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * For processing the received messages from the queue,
-     * plugins can be registered here by having queue name as
-     * a key.
+     * For processing the received messages from the queue, plugins can be
+     * registered here by having queue name as a key. All plugins need to implement
+     * Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface
      *
      *  e.g: 'mail' => new MailQueueMessageProcessorPlugin()
      *
      * @param Container $container
      *
-     * @return QueueMessageProcessorInterface[]
+     * @return QueueMessageProcessorPluginInterface[]
      */
     protected function getProcessorMessagePlugins(Container $container)
     {

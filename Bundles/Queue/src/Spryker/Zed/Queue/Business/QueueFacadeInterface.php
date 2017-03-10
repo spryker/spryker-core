@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Queue\Business;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 interface QueueFacadeInterface
 {
 
@@ -19,8 +21,9 @@ interface QueueFacadeInterface
 
     /**
      * @param string $command
+     * @param OutputInterface $output
      *
      * @return void
      */
-    public function startWorker($command);
+    public function startWorker($command, OutputInterface $output);
 }

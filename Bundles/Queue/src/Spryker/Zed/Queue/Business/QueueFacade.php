@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method QueueBusinessFactory getFactory()
@@ -22,16 +23,21 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
      */
     public function startTask($queueName)
     {
-        $this->getFactory()->createTask()->run($queueName);
+        $this->getFactory()
+            ->createTask()
+            ->run($queueName);
     }
 
     /**
      * @param string $command
+     * @param OutputInterface $output
      *
      * @return void
      */
-    public function startWorker($command)
+    public function startWorker($command, OutputInterface $output)
     {
-        $this->getFactory()->createWorker()->start($command);
+        $this->getFactory()
+            ->createWorker($output)
+            ->start($command);
     }
 }

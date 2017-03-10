@@ -22,4 +22,12 @@
         <property name="reject" type="bool"/>
         <property name="hasError" type="bool"/>
     </transfer>
+
+    <transfer name="QueueProcess">
+        <property name="idQueueProcess" type="int" />
+        <property name="serverId" type="string" />
+        <property name="processPid" type="int" />
+        <property name="workerPid" type="int" />
+        <property name="queueName" type="string" />
+    </transfer>
 </transfers>

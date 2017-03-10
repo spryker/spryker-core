@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <maintenance>
+        <pages>
+            <queue>
+                <label>Queue Processes</label>
+                <title>Queue Processes</title>
+                <bundle>queue</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <icon>fa-cogs</icon>
+                <visible>1</visible>
+            </queue>
+        </pages>
+    </maintenance>
+</config>

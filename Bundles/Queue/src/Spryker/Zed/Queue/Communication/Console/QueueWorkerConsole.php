@@ -21,7 +21,7 @@ class QueueWorkerConsole extends Console
     const COMMAND_NAME = 'queue:worker:start';
     const DESCRIPTION = 'Start queue workers';
 
-    const QUEUE_RUNNER_COMMAND = './vendor/bin/console queue:task:start';
+    const QUEUE_RUNNER_COMMAND =  APPLICATION_VENDOR_DIR . '/bin/console queue:task:start';
 
     /**
      * @return void
@@ -42,7 +42,7 @@ class QueueWorkerConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->startWorker(self::QUEUE_RUNNER_COMMAND);
+        $this->getFacade()->startWorker(self::QUEUE_RUNNER_COMMAND, $output);
 
         return static::CODE_SUCCESS;
     }

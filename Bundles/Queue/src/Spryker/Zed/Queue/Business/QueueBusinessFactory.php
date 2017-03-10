@@ -8,18 +8,25 @@ namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Queue\Business\Model\Task\QueueRunnerTask;
+use Spryker\Zed\Queue\Business\Model\Process\ProcessManager;
+use Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface;
 use Spryker\Zed\Queue\Business\Model\Task\Task;
 use Spryker\Zed\Queue\Business\Model\Worker\Worker;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 use Spryker\Zed\Queue\QueueConfig;
 use Spryker\Zed\Queue\QueueDependencyProvider;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method QueueConfig getConfig()
  */
 class QueueBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @var string
+     */
+    protected static $serverUniqueId;
 
     /**
      * @return Task
@@ -34,13 +41,28 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param OutputInterface $output
+     *
      * @return Worker
      */
-    public function createWorker()
+    public function createWorker(OutputInterface $output)
     {
         return new Worker(
-            array_keys($this->getProcessorMessagePlugins()),
-            $this->getQueueWorkerConfig()
+            $this->createProcessManager(),
+            $this->getQueueNames(),
+            $this->getQueueWorkerConfig(),
+            $output
+        );
+    }
+
+    /**
+     * @return ProcessManagerInterface
+     */
+    public function createProcessManager()
+    {
+        return new ProcessManager(
+            $this->getQueryContainer(),
+            $this->getServerUniqueId()
         );
     }
 
@@ -53,6 +75,26 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return string
+     */
+    public function getServerUniqueId()
+    {
+        if (static::$serverUniqueId === null) {
+            static::$serverUniqueId = $this->getConfig()->getQueueServerId();
+        }
+
+        return static::$serverUniqueId;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueueNames()
+    {
+        return array_keys($this->getProcessorMessagePlugins());
+    }
+
+    /**
      * @return QueueClientInterface
      */
     public function getQueueClient()
@@ -61,7 +103,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return QueueMessageProcessorInterface[]
+     * @return QueueMessageProcessorPluginInterface[]
      */
     public function getProcessorMessagePlugins()
     {

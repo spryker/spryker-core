@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Queue\Communication\Controller;
+
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Queue\Communication\QueueCommunicationFactory;
+
+/**
+ * @method QueueCommunicationFactory getFactory()
+ */
+class IndexController extends AbstractController
+{
+
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $queueProcessTable = $this->getFactory()
+            ->createQueueProcessTable();
+
+        return [
+            'queueProcesses' => $queueProcessTable->render(),
+        ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getFactory()
+            ->createQueueProcessTable();
+
+        return $this->jsonResponse($table->fetchData());
+    }
+}

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 class Task implements TaskInterface
@@ -31,14 +31,14 @@ class Task implements TaskInterface
     protected $queueConfig;
 
     /**
-     * @var QueueMessageProcessorInterface[]
+     * @var QueueMessageProcessorPluginInterface[]
      */
     protected $messageProcessorPlugins;
 
     /**
      * @param QueueClientInterface $client
      * @param QueueConfig $queueConfig
-     * @param QueueMessageProcessorInterface[] $messageProcessorPlugins
+     * @param QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
      */
     public function __construct(QueueClientInterface $client, QueueConfig $queueConfig, array $messageProcessorPlugins)
     {
@@ -69,7 +69,7 @@ class Task implements TaskInterface
      *
      * @throws MissingQueuePluginException
      *
-     * @return QueueMessageProcessorInterface
+     * @return QueueMessageProcessorPluginInterface
      */
     protected function getQueueProcessorPlugin($queueName)
     {

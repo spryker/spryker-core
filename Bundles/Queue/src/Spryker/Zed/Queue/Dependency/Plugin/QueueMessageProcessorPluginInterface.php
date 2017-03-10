@@ -9,10 +9,13 @@ namespace Spryker\Zed\Queue\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 
-interface QueueMessageProcessorInterface
+interface QueueMessageProcessorPluginInterface
 {
 
     /**
+     * Specification:
+     * - This plugin interface is using for message processing for the queues
+     *
      * @param QueueMessageTransfer[] $queueMessageTransfers
      *
      * @return QueueMessageTransfer[]

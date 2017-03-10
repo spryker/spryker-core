@@ -14,9 +14,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QueueConfig extends AbstractBundleConfig
 {
 
-    const DEFAULT_QUEUE_OUTPUT_FILE = 'queue.out';
-    const DEFAULT_INTERVAL_SECONDS = 5;
-    const DEFAULT_THRESHOLD = 55;
+    const DEFAULT_QUEUE_OUTPUT_FILE = 'queue.log';
+    const DEFAULT_INTERVAL_SECONDS = 1000;
+    const DEFAULT_THRESHOLD = 59;
 
     /**
      * @param string $queueName
@@ -41,13 +41,29 @@ class QueueConfig extends AbstractBundleConfig
     {
         return [
             QueueConstants::QUEUE_WORKER_PROCESSOR => $this->getQueueWorkerProcessorCount(),
-            QueueConstants::QUEUE_WORKER_INTERVAL_SECONDS => $this->getQueueWorkerInterval(),
+            QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS => $this->getQueueWorkerInterval(),
             QueueConstants::QUEUE_WORKER_OUTPUT_FILE => $this->getQueueWorkerOutputFile(),
             QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS => $this->getQueueWorkerMaxThreshold(),
         ];
     }
 
     /**
+     * @return string
+     */
+    public function getQueueServerId()
+    {
+        $defaultServerId = (gethostname()) ?: php_uname('n');
+
+        return $this->get(QueueConstants::QUEUE_SERVER_ID, $defaultServerId);
+    }
+
+    /**
+     * The Amount of queue processors can be defined
+     * here by having queue name as a key.
+     * The default value is 1 process per queue.
+     *
+     *  e.g: 'mail' => 5
+     *
      * @return array
      */
     protected function getQueueWorkerProcessorCount()
@@ -60,7 +76,7 @@ class QueueConfig extends AbstractBundleConfig
      */
     protected function getQueueWorkerInterval()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_SECONDS, self::DEFAULT_INTERVAL_SECONDS);
+        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, self::DEFAULT_INTERVAL_SECONDS);
     }
 
     /**
@@ -94,5 +110,6 @@ class QueueConfig extends AbstractBundleConfig
      */
     protected function getDefaultQueueReceiverConfig()
     {
+        return new QueueOptionTransfer();
     }
 }
