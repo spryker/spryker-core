@@ -153,13 +153,13 @@ class CountryManager implements CountryManagerInterface
     public function getCountryByIso2Code($iso2code)
     {
         $query = $this->countryQueryContainer->queryCountryByIso2Code($iso2code);
-        $country = $query->findOne();
+        $countryEntity = $query->findOne();
 
-        if (!$country) {
-            throw new MissingCountryException();
+        if (!$countryEntity) {
+            throw new MissingCountryException(sprintf('Country not found for country code: %s', $iso2code));
         }
 
-        $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
 
         return $countryTransfer;
     }
@@ -174,13 +174,13 @@ class CountryManager implements CountryManagerInterface
     public function getCountryByIso3Code($iso3code)
     {
         $query = $this->countryQueryContainer->queryCountryByIso3Code($iso3code);
-        $country = $query->findOne();
+        $countryEntity = $query->findOne();
 
-        if (!$country) {
-            throw new MissingCountryException();
+        if (!$countryEntity) {
+            throw new MissingCountryException(sprintf('Country not found for country code: %s', $iso3code));
         }
 
-        $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
 
         return $countryTransfer;
     }

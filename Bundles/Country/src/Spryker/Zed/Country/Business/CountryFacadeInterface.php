@@ -38,6 +38,9 @@ interface CountryFacadeInterface
     public function getIdCountryByIso2Code($iso2Code);
 
     /**
+     * Specification:
+     * - Reads country from persistence for provided ISO 2 country code
+     *
      * @api
      *
      * @param string $iso2Code
@@ -47,6 +50,9 @@ interface CountryFacadeInterface
     public function getCountryByIso2Code($iso2Code);
 
     /**
+     * Specification:
+     * - Reads country from persistence for provided ISO 3 country code
+     *
      * @api
      *
      * @param string $iso3Code

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
+use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
@@ -101,6 +102,24 @@ class CountryFacadeTest extends Test
 
         $this->assertInstanceOf(CountryTransfer::class, $result);
         $this->assertEquals($country->getIdCountry(), $result->getIdCountry());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCountryByIso3CodeReturnsException()
+    {
+        $this->expectException(MissingCountryException::class);
+        $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCountryByIso2CodeReturnsException()
+    {
+        $this->expectException(MissingCountryException::class);
+        $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
     }
 
 }
