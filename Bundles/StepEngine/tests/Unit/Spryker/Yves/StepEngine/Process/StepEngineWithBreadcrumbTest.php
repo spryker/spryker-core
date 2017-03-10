@@ -10,7 +10,7 @@ namespace Unit\Spryker\Yves\StepEngine\Process;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface;
-use Spryker\Yves\StepEngine\Process\StepEngineWithBreadcrumb;
+use Spryker\Yves\StepEngine\Process\StepEngine;
 use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumb;
 
 /**
@@ -34,11 +34,11 @@ class StepEngineWithBreadcrumbTest extends AbstractStepEngineTest
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock(true, true, true, self::STEP_ROUTE_A));
 
-        $stepEngine = new StepEngineWithBreadcrumb($stepCollection, $this->getDataContainerMock(), $this->getStepBreadcrumbGeneratorMock());
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock(), $this->getStepBreadcrumbGeneratorMock());
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
         $this->assertInternalType('array', $response);
-        $this->assertArrayHasKey(StepEngineWithBreadcrumb::TEMPLATE_VARIABLE_STEP_BREADCRUMB, $response);
+        $this->assertArrayHasKey(StepEngine::TEMPLATE_VARIABLE_STEP_BREADCRUMB, $response);
     }
 
     /**

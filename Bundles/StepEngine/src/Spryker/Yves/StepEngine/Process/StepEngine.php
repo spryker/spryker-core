@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class StepEngine implements StepEngineInterface
 {
 
+    const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
+    const TEMPLATE_VARIABLE_STEP_BREADCRUMB = 'stepBreadcrumb';
+
     /**
      * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
      */
@@ -28,15 +31,23 @@ class StepEngine implements StepEngineInterface
     protected $dataContainer;
 
     /**
+     * @var \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
+     */
+    protected $stepBreadcrumbGenerator;
+
+    /**
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
+     * @param \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null $stepBreadcrumbGenerator
      */
     public function __construct(
         StepCollectionInterface $stepCollection,
-        DataContainerInterface $dataContainer
+        DataContainerInterface $dataContainer,
+        StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null
     ) {
         $this->stepCollection = $stepCollection;
         $this->dataContainer = $dataContainer;
+        $this->stepBreadcrumbGenerator = $stepBreadcrumbGenerator;
     }
 
     /**
@@ -151,9 +162,14 @@ class StepEngine implements StepEngineInterface
      */
     protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
     {
-        $templateVariables = [
-            'previousStepUrl' => $this->stepCollection->getPreviousUrl($currentStep),
-        ];
+        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep);
+        if ($this->stepBreadcrumbGenerator) {
+            $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMB] = $this->stepBreadcrumbGenerator->generateStepBreadcrumb(
+                $this->stepCollection,
+                $dataTransfer,
+                $currentStep
+            );
+        }
         $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables($dataTransfer));
 
         if ($formCollection !== null) {

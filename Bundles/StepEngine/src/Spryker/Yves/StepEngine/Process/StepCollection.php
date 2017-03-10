@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Process;
 
+use ArrayIterator;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
@@ -246,11 +247,11 @@ class StepCollection implements StepCollectionInterface
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return \Traversable
      */
-    public function getAll()
+    public function getIterator()
     {
-        return $this->steps;
+        return new ArrayIterator($this->steps);
     }
 
 }

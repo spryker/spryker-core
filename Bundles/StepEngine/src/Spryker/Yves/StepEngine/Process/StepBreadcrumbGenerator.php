@@ -47,7 +47,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
     protected function getStepsWithBreadcrumb(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null)
     {
         $breadcrumbSteps = [];
-        foreach ($stepCollection->getAll() as $step) {
+        foreach ($stepCollection as $step) {
             if ($step instanceof StepWithBreadcrumbInterface && !$this->isHidden($step, $dataTransfer)) {
                 $breadcrumbSteps[] = $step;
             }
