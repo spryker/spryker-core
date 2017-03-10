@@ -42,11 +42,37 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @param string $iso2Code
      *
+     * @deprecated Use getCountryByIso2Code() instead.
+     *
      * @return int
      */
     public function getIdCountryByIso2Code($iso2Code)
     {
         return $this->getFactory()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2Code)
+    {
+        return $this->getFactory()->createCountryManager()->getCountryByIso2Code($iso2Code);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $iso3Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso3Code($iso3Code)
+    {
+        return $this->getFactory()->createCountryManager()->getCountryByIso3Code($iso3Code);
     }
 
     /**

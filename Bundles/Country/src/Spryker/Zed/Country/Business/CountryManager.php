@@ -146,6 +146,48 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      *
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2code)
+    {
+        $query = $this->countryQueryContainer->queryCountryByIso2Code($iso2code);
+        $country = $query->findOne();
+
+        if (!$country) {
+            throw new MissingCountryException();
+        }
+
+        $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+
+        return $countryTransfer;
+    }
+
+    /**
+     * @param string $iso3code
+     *
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso3Code($iso3code)
+    {
+        $query = $this->countryQueryContainer->queryCountryByIso3Code($iso3code);
+        $country = $query->findOne();
+
+        if (!$country) {
+            throw new MissingCountryException();
+        }
+
+        $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+
+        return $countryTransfer;
+    }
+
+    /**
+     * @param string $iso2code
+     *
      * @throws \Spryker\Zed\Country\Business\Exception\CountryExistsException
      *
      * @return void
