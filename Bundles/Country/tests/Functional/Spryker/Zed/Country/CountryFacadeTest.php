@@ -69,7 +69,6 @@ class CountryFacadeTest extends Test
         $this->assertEquals($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(self::ISO2_CODE));
     }
 
-
     /**
      * @return void
      */

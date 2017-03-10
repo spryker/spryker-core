@@ -40,9 +40,9 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     /**
      * @api
      *
-     * @param string $iso2Code
-     *
      * @deprecated Use getCountryByIso2Code() instead.
+     *
+     * @param string $iso2Code
      *
      * @return int
      */
