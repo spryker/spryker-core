@@ -19,6 +19,10 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
 
+    const PLUGINS_URL_BEFORE_CREATE = 'PLUGINS_URL_BEFORE_CREATE';
+    const PLUGINS_URL_AFTER_CREATE = 'PLUGINS_URL_AFTER_CREATE';
+    const PLUGINS_URL_BEFORE_UPDATE = 'PLUGINS_URL_BEFORE_UPDATE';
+    const PLUGINS_URL_AFTER_UPDATE = 'PLUGINS_URL_AFTER_UPDATE';
     /**
      * @deprecated Use `getConnection()` method from query container instead.
      */
@@ -43,7 +47,55 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
             return Propel::getConnection();
         };
 
+        $container[self::PLUGINS_URL_BEFORE_CREATE] = function () {
+            return $this->getUrlBeforeCreatePlugins();
+        };
+
+        $container[self::PLUGINS_URL_AFTER_CREATE] = function () {
+            return $this->getUrlAfterCreatePlugins();
+        };
+
+        $container[self::PLUGINS_URL_BEFORE_UPDATE] = function () {
+            return $this->getUrlBeforeUpdatePlugins();
+        };
+
+        $container[self::PLUGINS_URL_AFTER_UPDATE] = function () {
+            return $this->getUrlAfterUpdatePlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     */
+    protected function getUrlBeforeCreatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     */
+    protected function getUrlAfterCreatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlBeforeUpdatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlAfterUpdatePlugins()
+    {
+        return [];
     }
 
 }
