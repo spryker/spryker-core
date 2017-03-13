@@ -6,10 +6,13 @@
     }
   },
   "require": {
+    "spryker/collector": "^5.0.0",
     "spryker/kernel": "^2.0.0",
+    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/propel": "^2.0.0",
-    "spryker/url": "^2.3.0"
+    "spryker/url": "^2.3.0",
+    "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -12,7 +12,13 @@ use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
@@ -195,6 +201,45 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationTouch()
             ->touchByUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function runStorageNavigationMenuCollector(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $localeTransfer,
+        BatchResultInterface $result,
+        ReaderInterface $dataReader,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    ) {
+
+        $collector = $this->getFactory()->createStorageNavigationMenuCollector();
+
+        $this->getFactory()->getCollectorFacade()->runCollector(
+            $collector,
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
     }
 
 }
