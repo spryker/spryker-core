@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/rule-query-builder
+composer require spryker/propel-query-builder
 ```
 
 ## Documentation
