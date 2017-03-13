@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Navigation\Twig;
+
+use Spryker\Client\Navigation\NavigationClientInterface;
+use Spryker\Shared\Twig\TwigExtension;
+use Spryker\Yves\Kernel\Application;
+use Twig_Environment;
+use Twig_SimpleFunction;
+
+class NavigationTwigExtension extends TwigExtension
+{
+
+    const EXTENSION_NAME = 'NavigationTwigExtension';
+
+    const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
+
+    /**
+     * @var \Spryker\Client\Navigation\NavigationClientInterface
+     */
+    protected $navigationClient;
+
+    /**
+     * @var \Spryker\Yves\Kernel\Application
+     */
+    private $application;
+
+    /**
+     * @param \Spryker\Client\Navigation\NavigationClientInterface $navigationClient
+     * @param \Spryker\Yves\Kernel\Application $application
+     */
+    public function __construct(NavigationClientInterface $navigationClient, Application $application)
+    {
+        $this->navigationClient = $navigationClient;
+        $this->application = $application;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFunctions()
+    {
+        return [
+            new Twig_SimpleFunction(self::FUNCTION_NAME_NAVIGATION, [$this, 'renderNavigation'], [
+                'is_safe' => ['html'],
+                'needs_environment' => true,
+            ]),
+        ];
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param string $navigationKey
+     * @param string $template
+     *
+     * @return string
+     */
+    public function renderNavigation(Twig_Environment $twig, $navigationKey, $template)
+    {
+        $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
+
+        if (!$navigationTreeTransfer || !$navigationTreeTransfer->getNavigation()->getIsActive()) {
+            return '';
+        }
+
+        return $twig->render($template, [
+            'navigationTree' => $navigationTreeTransfer,
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getLocale()
+    {
+        return $this->application['locale'];
+    }
+
+}
