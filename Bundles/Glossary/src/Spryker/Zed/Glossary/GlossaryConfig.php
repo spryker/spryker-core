@@ -13,15 +13,16 @@ class GlossaryConfig extends AbstractBundleConfig
 {
 
     /**
-     * TODO Document this feature
-     *
      * @return array
      */
     public function getGlossaryFilePaths()
     {
-        return glob(
-            APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml'
-        );
+        $paths = [
+            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml'),
+            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml'),
+        ];
+
+        return $paths;
     }
 
 }

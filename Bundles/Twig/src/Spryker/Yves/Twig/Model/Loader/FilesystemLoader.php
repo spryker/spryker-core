@@ -67,27 +67,6 @@ class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
     }
 
     /**
-     * Prepends a path where templates are stored.
-     *
-     * @param string $path A path where to look for templates
-     *
-     * @return void
-     */
-    public function prependPath($path)
-    {
-        // invalidate the cache
-        $this->cache = [];
-
-        $path = rtrim($path, '/\\');
-
-        if (empty($this->paths)) {
-            $this->paths[] = $path;
-        } else {
-            array_unshift($this->paths, $path);
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getSource($name)

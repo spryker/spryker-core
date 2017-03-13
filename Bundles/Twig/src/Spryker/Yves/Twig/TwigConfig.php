@@ -60,6 +60,8 @@ class TwigConfig extends AbstractBundleConfig
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $themeName;
         }
 
+        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Yves/%s/Theme' . $themeName;
+
         return $paths;
     }
 
