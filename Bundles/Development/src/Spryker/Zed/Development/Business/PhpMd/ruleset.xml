@@ -13,17 +13,110 @@
     <exclude-pattern>tests/_data</exclude-pattern>
     <exclude-pattern>tests/_output</exclude-pattern>
     <exclude-pattern>tests/_support</exclude-pattern>
+    <exclude-pattern>*/Persistence/Base/*</exclude-pattern>
+    <exclude-pattern>*/Persistence/Map/*</exclude-pattern>
+    <exclude-pattern>*/Orm/Propel/*</exclude-pattern>
+    <exclude-pattern>*/Generated/*</exclude-pattern>
 
-    <rule ref="rulesets/cleancode.xml" />
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess" />
+    </rule>
 
-    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/design.xml">
+        <exclude name="NumberOfChildren" />
+        <exclude name="CouplingBetweenObjects" />
+    </rule>
+
+    <rule name="NumberOfChildren"
+          since="0.2"
+          message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
+          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren"
+          externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren">
+        <description>
+            <![CDATA[
+A class with an excessive number of children is an indicator for an unbalanced
+class hierarchy. You should consider to refactor this class hierarchy.
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="15" description="Maximum number of acceptable child classes." />
+        </properties>
+    </rule>
+
+    <rule name="CouplingBetweenObjects"
+          since="1.1.0"
+          message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
+          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects"
+          externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects">
+        <description>
+            <![CDATA[
+A class with too many dependencies has negative impacts on several quality
+aspects of a class. This includes quality criteria like stability,
+maintainability and understandability
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="TooManyMethods" />
+        <exclude name="TooManyPublicMethods" />
+    </rule>
+
+    <rule name="TooManyMethods"
+          since="0.1"
+          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods"
+          message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
+        <description>
+            <![CDATA[
+A class with too many methods is probably a good suspect for refactoring, in
+order to reduce its complexity and find a way to have more fine grained objects.
+
+By default it ignores methods starting with 'get' or 'set'.
+
+The default was changed from 10 to 25 in PHPMD 2.3.
+            ]]>
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maxmethods" description="The method count reporting threshold" value="25"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+        </properties>
+    </rule>
+
+    <rule name="TooManyPublicMethods"
+          since="0.1"
+          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods"
+          message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanypublicmethods">
+        <description>
+            <![CDATA[
+A class with too many public methods is probably a good suspect for refactoring, in
+order to reduce its complexity and find a way to have more fine grained objects.
+
+By default it ignores methods starting with 'get' or 'set'.
+            ]]>
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maxmethods" description="The method count reporting threshold" value="10"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+        </properties>
+    </rule>
+
     <rule ref="rulesets/controversial.xml" />
-    <rule ref="rulesets/design.xml" />
 
     <rule ref="rulesets/naming.xml">
         <exclude name="LongVariable" />
     </rule>
 
-    <rule ref="rulesets/unusedcode.xml" />
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter" />
+    </rule>
 
 </ruleset>
