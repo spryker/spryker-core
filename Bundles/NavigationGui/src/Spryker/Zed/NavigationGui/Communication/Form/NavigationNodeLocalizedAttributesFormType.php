@@ -243,7 +243,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    function reverseTransformCmsPageUrlField(NavigationNodeLocalizedAttributesTransfer $localizedAttributesTransfer)
+    public function reverseTransformCmsPageUrlField(NavigationNodeLocalizedAttributesTransfer $localizedAttributesTransfer)
     {
         if (!$localizedAttributesTransfer->getCmsPageUrl()) {
             return $localizedAttributesTransfer;
@@ -281,7 +281,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    function reverseTransformCategoryUrlField(NavigationNodeLocalizedAttributesTransfer $localizedAttributesTransfer)
+    public function reverseTransformCategoryUrlField(NavigationNodeLocalizedAttributesTransfer $localizedAttributesTransfer)
     {
         if (!$localizedAttributesTransfer->getCategoryUrl()) {
             return $localizedAttributesTransfer;

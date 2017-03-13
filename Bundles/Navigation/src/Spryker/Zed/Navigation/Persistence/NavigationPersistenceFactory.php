@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationPersistenceFactory extends AbstractPersistenceFactory
 {

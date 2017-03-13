@@ -64,7 +64,6 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
         $navigationTreeTransfer->requireNodes();
         $navigationTreeTransfer->requireNavigation();
 
-
         foreach ($navigationTreeTransfer->getNodes() as $navigationTreeNodeTransfer) {
             $this->assertNavigationTreeNodeRecursively($navigationTreeNodeTransfer);
         }
@@ -102,7 +101,7 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer $navigationTreeNodeTransfer
-     * @param $fkParentNavigationNode
+     * @param int $fkParentNavigationNode
      *
      * @return void
      */
