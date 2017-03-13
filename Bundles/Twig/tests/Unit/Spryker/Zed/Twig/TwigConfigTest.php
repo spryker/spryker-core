@@ -38,4 +38,22 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $twigConfig->getTemplatePaths());
     }
 
+    /**
+     * @return void
+     */
+    public function testGetPathCacheFilePathReturnsString()
+    {
+        $twigConfig = new TwigConfig();
+        $this->assertInternalType('string', $twigConfig->getPathCacheFilePath());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPathCacheEnabledReturnsBoolean()
+    {
+        $twigConfig = new TwigConfig();
+        $this->assertInternalType('bool', $twigConfig->isPathCacheEnabled());
+    }
+
 }

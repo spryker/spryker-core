@@ -9,6 +9,7 @@ namespace Spryker\Zed\Twig;
 
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TwigConfig extends AbstractBundleConfig
@@ -61,8 +62,8 @@ class TwigConfig extends AbstractBundleConfig
     {
         $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
 
-        foreach ($namespaces as $package => $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/' . $package . '/src/' . $namespace . '/Zed/%s/Presentation/';
+        foreach ($namespaces as $namespace) {
+            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
         $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
@@ -76,6 +77,22 @@ class TwigConfig extends AbstractBundleConfig
     protected function getStoreName()
     {
         return Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathCacheFilePath()
+    {
+        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, '');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPathCacheEnabled()
+    {
+        return $this->get(TwigConstants::ZED_PATH_CACHE_ENABLED, true);
     }
 
 }

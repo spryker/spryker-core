@@ -7,116 +7,25 @@
 
 namespace Spryker\Shared\Twig;
 
-use Spryker\Shared\Twig\Cache\CacheInterface;
 use Twig_Error_Loader;
-use Twig_LoaderInterface;
+use Twig_Loader_Filesystem;
 use Zend\Filter\Word\CamelCaseToDash;
 
-class TwigFileSystem implements Twig_LoaderInterface
+class TwigFileSystem extends Twig_Loader_Filesystem
 {
 
     /**
-     * @var array
-     */
-    protected $paths;
-
-    /**
-     * @var CacheInterface
-     */
-    protected $cache;
-
-    /**
-     * @param array $paths
-     * @param \Spryker\Shared\Twig\Cache\CacheInterface $pathCache
-     */
-    public function __construct(array $paths = [], CacheInterface $pathCache)
-    {
-        $this->paths = $paths;
-        $this->cache = $pathCache;
-    }
-
-    /**
-     * @param string $name
+     * @param string $path
+     * @param string $namespace
      *
-     * @return string
+     * @return void
      */
-    public function getSource($name)
+    public function addPath($path, $namespace = self::MAIN_NAMESPACE)
     {
-        return file_get_contents($this->findTemplate($name));
+        // invalidate the cache
+        $this->cache = [];
+        $this->paths[] = rtrim($path, '/\\');
     }
-
-    /**
-     * @param string $name
-     * @param int $time
-     *
-     * @return bool
-     */
-    public function isFresh($name, $time)
-    {
-        return filemtime($this->findTemplate($name)) <= $time;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getCacheKey($name)
-    {
-        return $this->findTemplate($name);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws \Twig_Error_Loader
-     */
-    protected function findTemplate($name)
-    {
-        $name = (string)$name;
-
-        // normalize name
-        $name = str_replace(['///', '//', '\\'], '/', $name);
-
-        $nameParts = explode('/', $name);
-        $templateName = array_pop($nameParts);
-        $filter = new CamelCaseToDash();
-        $templateName = strtolower($filter->filter($templateName));
-        array_push($nameParts, $templateName);
-        $name = implode('/', $nameParts);
-
-        if ($this->cache->has($name)) {
-            if ($this->cache->get($name) !== false) {
-                return $this->cache->get($name);
-            } else {
-                throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (cached).', $name));
-            }
-        }
-
-        if (isset($name[0]) && $name[0] === '@') {
-            $pos = strpos($name, '/');
-            if ($pos === false) {
-                $this->cache->set($name, false);
-
-                throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
-            }
-            $bundle = ucfirst(substr($name, 1, $pos - 1));
-            $templateName = ucfirst(substr($name, $pos + 1));
-
-            return $this->load($name, $bundle, $templateName);
-        }
-
-        $name = '/' . ltrim($name, '/');
-        $pos = strpos(ltrim($name, '/'), '/');
-        if ($pos === false) {
-            $this->cache->set($name, false);
-            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
-        }
-        $bundle = ucfirst(substr($name, 1, $pos));
-        $templateName = ucfirst(substr($name, $pos + 2));
-
-        return $this->load($name, $bundle, $templateName);
-    }
-
 
     /**
      * @param string $bundle
@@ -151,6 +60,69 @@ class TwigFileSystem implements Twig_LoaderInterface
 
     /**
      * @param string $name
+     *
+     * @return string
+     */
+    public function getCacheKey($name)
+    {
+        return $name;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     * @throws \Twig_Error_Loader
+     */
+    protected function findTemplate($name)
+    {
+        $name = (string)$name;
+
+        // normalize name
+        $name = str_replace(['///', '//', '\\'], '/', $name);
+
+        $nameParts = explode('/', $name);
+        $templateName = array_pop($nameParts);
+        $filter = new CamelCaseToDash();
+        $templateName = strtolower($filter->filter($templateName));
+        array_push($nameParts, $templateName);
+        $name = implode('/', $nameParts);
+
+        if (isset($this->cache[$name])) {
+            if ($this->cache[$name] !== false) {
+                return $this->cache[$name];
+            } else {
+                throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (cached).', $name));
+            }
+        }
+
+        $this->validateName($name);
+
+        if (isset($name[0]) && $name[0] === '@') {
+            $pos = strpos($name, '/');
+            if ($pos === false) {
+                $this->cache[$name] = false;
+                throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
+            }
+            $bundle = ucfirst(substr($name, 1, $pos - 1));
+            $templateName = ucfirst(substr($name, $pos + 1));
+
+            return $this->load($name, $bundle, $templateName);
+        }
+
+        $name = '/' . ltrim($name, '/');
+        $pos = strpos(ltrim($name, '/'), '/');
+        if ($pos === false) {
+            $this->cache[$name] = false;
+            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
+        }
+        $bundle = ucfirst(substr($name, 1, $pos));
+        $templateName = ucfirst(substr($name, $pos + 2));
+
+        return $this->load($name, $bundle, $templateName);
+    }
+
+    /**
+     * @param string $name
      * @param string $bundle
      * @param string $templateName
      *
@@ -163,15 +135,11 @@ class TwigFileSystem implements Twig_LoaderInterface
         $paths = $this->getPathsForBundle($bundle);
         foreach ($paths as $path) {
             if (is_file($path . '/' . $templateName)) {
-                $fullFilePath = $path . '/' . $templateName;
-                $this->cache->set($name, $fullFilePath);
-                $this->cache->__destruct();
-                return $fullFilePath;
+                return $this->cache[$name] = $path . '/' . $templateName;
             }
         }
 
-        $this->cache->set($name, false);
-
+        $this->cache[$name] = false;
         throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
 

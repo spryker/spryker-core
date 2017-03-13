@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Twig\Communication;
 
+use Spryker\Shared\Twig\Cache\Filesystem\PathCache;
 use Spryker\Shared\Twig\TwigFileSystem;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -22,8 +23,22 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     public function createFilesystemLoader()
     {
         return new TwigFileSystem(
-            $this->getConfig()->getTemplatePaths()
+            $this->getConfig()->getTemplatePaths(),
+            $this->createPathCache()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Cache\Filesystem\PathCache
+     */
+    protected function createPathCache()
+    {
+        $pathCache = new PathCache(
+            $this->getConfig()->getPathCacheFilePath(),
+            $this->getConfig()->isPathCacheEnabled()
+        );
+
+        return $pathCache;
     }
 
 }

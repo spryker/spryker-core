@@ -81,4 +81,20 @@ class TwigConfig extends AbstractBundleConfig
         return Store::getInstance()->getStoreName();
     }
 
+    /**
+     * @return string
+     */
+    public function getPathCacheFilePath()
+    {
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPathCacheEnabled()
+    {
+        return $this->get(TwigConstants::YVES_PATH_CACHE_ENABLED, true);
+    }
+
 }

@@ -8,16 +8,10 @@
 namespace Spryker\Yves\Twig\Model\Loader;
 
 use Twig_Error_Loader;
-use Twig_ExistsLoaderInterface;
 use Twig_LoaderInterface;
 
-class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterface
+class FilesystemLoader implements Twig_LoaderInterface
 {
-
-    /**
-     * @var array
-     */
-    protected $bundlePaths = [];
 
     /**
      * @var array
@@ -34,36 +28,17 @@ class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
      */
     public function __construct(array $paths = [])
     {
-        $this->setPaths($paths);
+        $this->paths = $paths;
     }
 
     /**
-     * Sets the paths where templates are stored.
+     * @param string $name
      *
-     * @param array $paths A path or an array of paths where to look for templates
-     *
-     * @return void
+     * @return string
      */
-    public function setPaths(array $paths)
+    public function getCacheKey($name)
     {
-        $this->paths = [];
-        foreach ($paths as $path) {
-            $this->addPath($path);
-        }
-    }
-
-    /**
-     * Adds a path where templates are stored.
-     *
-     * @param string $path A path where to look for templates
-     *
-     * @return void
-     */
-    public function addPath($path)
-    {
-        // invalidate the cache
-        $this->cache = [];
-        $this->paths[] = rtrim($path, '/\\');
+        return $this->findTemplate($name);
     }
 
     /**
@@ -77,59 +52,9 @@ class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
     /**
      * {@inheritdoc}
      */
-    public function getCacheKey($name)
-    {
-        return $this->findTemplate($name);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function exists($name)
-    {
-        $name = (string)$name;
-        if (isset($this->cache[$name])) {
-            return $this->cache[$name] !== false;
-        }
-
-        try {
-            $this->findTemplate($name);
-
-            return true;
-        } catch (Twig_Error_Loader $exception) {
-            return false;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function isFresh($name, $time)
     {
         return filemtime($this->findTemplate($name)) <= $time;
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return array
-     */
-    protected function getPathsForBundle($bundle)
-    {
-        $paths = [];
-        foreach ($this->paths as $path) {
-            $path = sprintf($path, $bundle);
-            if (strpos($path, '*') !== false) {
-                $path = glob($path);
-                if (count($path) > 0) {
-                    $paths[] = $path[0];
-                }
-            } else {
-                $paths[] = $path;
-            }
-        }
-
-        return $paths;
     }
 
     /**
@@ -153,8 +78,6 @@ class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
 
         // normalize name
         $name = str_replace(['///', '//', '\\'], '/', $name);
-
-        $this->validateName($name);
 
         if (isset($name[0]) && $name[0] === '@') {
             $pos = strpos($name, '/');
@@ -182,32 +105,26 @@ class FilesystemLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterfa
     }
 
     /**
-     * @param string $name
+     * @param string $bundle
      *
-     * @throws \Twig_Error_Loader
-     *
-     * @return void
+     * @return array
      */
-    protected function validateName($name)
+    protected function getPathsForBundle($bundle)
     {
-        if (strpos($name, "\0") !== false) {
-            throw new Twig_Error_Loader('A template name cannot contain NUL bytes.');
-        }
-
-        $name = ltrim($name, '/');
-        $parts = explode('/', $name);
-        $level = 0;
-        foreach ($parts as $part) {
-            if ($part === '..') {
-                --$level;
-            } elseif ($part !== '.') {
-                ++$level;
-            }
-
-            if ($level < 0) {
-                throw new Twig_Error_Loader(sprintf('Looks like you try to load a template outside configured directories (%s).', $name));
+        $paths = [];
+        foreach ($this->paths as $path) {
+            $path = sprintf($path, $bundle);
+            if (strpos($path, '*') !== false) {
+                $path = glob($path);
+                if (count($path) > 0) {
+                    $paths[] = $path[0];
+                }
+            } else {
+                $paths[] = $path;
             }
         }
+
+        return $paths;
     }
 
 }

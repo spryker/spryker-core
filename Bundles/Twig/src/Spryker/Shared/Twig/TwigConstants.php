@@ -30,11 +30,19 @@ interface TwigConstants
 
     /**
      * Specification:
-     * - Array of paths where FilesystemLoader should look for template files.
+     * - Path to cache file for resolved template directories.
      *
      * @api
      */
-    const YVES_FILESYSTEM_LOOKUP_PATHS = 'YVES_FILESYSTEM_LOOKUP_PATHS';
+    const YVES_PATH_CACHE_FILE = 'YVES_PATH_CACHE_FILE';
+
+    /**
+     * Specification:
+     * - Defines if the path cache is enabled.
+     *
+     * @api
+     */
+    const YVES_PATH_CACHE_ENABLED = 'YVES_PATH_CACHE_ENABLED';
 
     /**
      * Specification:
@@ -47,10 +55,18 @@ interface TwigConstants
 
     /**
      * Specification:
-     * - Array of paths where FilesystemLoader should look for template files.
+     * - Path to cache file for resolved template directories.
      *
      * @api
      */
-    const ZED_FILESYSTEM_LOOKUP_PATHS = 'ZED_FILESYSTEM_LOOKUP_PATHS';
+    const ZED_PATH_CACHE_FILE = 'ZED_PATH_CACHE_FILE';
+
+    /**
+     * Specification:
+     * - Defines if the path cache is enabled.
+     *
+     * @api
+     */
+    const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
 
 }
