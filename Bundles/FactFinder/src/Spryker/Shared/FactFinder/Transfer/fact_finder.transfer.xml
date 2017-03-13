@@ -20,6 +20,7 @@
         <property name="page" type="string"/>
         <property name="sortName" type="string"/>
         <property name="sortPrice" type="string"/>
+        <property name="format" type="string"/>
     </transfer>
 
     <transfer name="FactFinderSearchResponse">

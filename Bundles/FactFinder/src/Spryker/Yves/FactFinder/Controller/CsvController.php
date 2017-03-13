@@ -7,8 +7,7 @@
 
 namespace Spryker\Yves\FactFinder\Controller;
 
-use Spryker\Yves\Application\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Spryker\Yves\Kernel\Controller\AbstractController;use Symfony\Component\HttpFoundation\StreamedResponse;
 use \Symfony\Component\HttpFoundation\Request;
 
 /**

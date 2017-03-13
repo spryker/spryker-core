@@ -10,7 +10,7 @@ namespace Spryker\Client\FactFinder\Business\Api;
 use FACTFinder\Loader as FF;
 use FACTFinder\Util\Parameters;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
-use Spryker\Zed\FactFinder\FactFinderConfig;
+use Spryker\Client\FactFinder\FactFinderConfig;
 
 class FactFinderConnector
 {
@@ -86,7 +86,7 @@ class FactFinderConnector
 //    protected $configuration;
 
     /**
-     * @param \Spryker\Zed\FactFinder\FactFinderConfig $factFinderConfig
+     * @param \Spryker\Client\FactFinder\FactFinderConfig $factFinderConfig
      */
     public function __construct(FactFinderConfig $factFinderConfig)
     {

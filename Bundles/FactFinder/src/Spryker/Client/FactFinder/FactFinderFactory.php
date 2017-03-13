@@ -9,7 +9,6 @@ namespace Spryker\Client\FactFinder;
 
 use Pyz\Yves\Product\Builder\FrontendProductBuilder;
 use Pyz\Yves\Product\Model\ProductAbstract;
-use Spryker\Client\Cart\Session\QuoteSession;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
@@ -18,15 +17,13 @@ use Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest;
 use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Client\Quote\Session\QuoteSession;
 
 /**
  * @method \Spryker\Zed\FactFinder\FactFinderConfig getConfig()
  */
 class FactFinderFactory extends AbstractFactory
 {
-
-    use BundleConfigResolverAwareTrait;
 
     /**
      * @return \Spryker\Client\FactFinder\Zed\FactFinderStubInterface
@@ -66,11 +63,11 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     * @return QuoteSession
      */
     public function createSession()
     {
-        return new QuoteSession($this->getSessionClient());
+        return new QuoteSession($this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_SESSION));
     }
 
     /**

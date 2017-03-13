@@ -8,9 +8,8 @@
 namespace Spryker\Yves\FactFinder\Controller;
 
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Yves\Application\Controller\AbstractController;
+use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -65,5 +64,22 @@ class IndexController extends AbstractController
         ];
 
         return $productData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function searchAction(Request $request)
+    {
+        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
+
+        $factFinderSearchRequestTransfer->setQuery($request->query->get('query', '*'));
+        $factFinderSearchRequestTransfer->setFormat($request->query->get('format'), '');
+
+        $ffSearchResponseTransfer = $this->getClient()->search($factFinderSearchRequestTransfer);
+
+        return $this->jsonResponse($ffSearchResponseTransfer->toArray());
     }
 }
