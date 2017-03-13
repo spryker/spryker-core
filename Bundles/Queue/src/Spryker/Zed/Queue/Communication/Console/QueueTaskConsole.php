@@ -1,20 +1,19 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Queue\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\Queue\Business\QueueFacade;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method QueueFacade getFacade()
+ * @method \Spryker\Zed\Queue\Business\QueueFacade getFacade()
  */
 class QueueTaskConsole extends Console
 {
@@ -50,4 +49,5 @@ class QueueTaskConsole extends Console
 
         return static::CODE_SUCCESS;
     }
+
 }

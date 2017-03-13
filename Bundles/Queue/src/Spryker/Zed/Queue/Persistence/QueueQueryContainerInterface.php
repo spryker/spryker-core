@@ -1,41 +1,50 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Queue\Persistence;
 
-use Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface QueueQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $serverId
      * @param string $queueName
      *
-     * @return SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
     public function queryProcessesByServerIdAndQueueName($serverId, $queueName);
 
     /**
+     * @api
+     *
      * @param string $serverId
      *
-     * @return SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
     public function queryProcessesByServerId($serverId);
 
     /**
+     * @api
+     *
      * @param array $processIds
      *
-     * @return SpyQueueProcessQuery
+     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
     public function queryProcessesByProcessIds(array $processIds);
 
     /**
-     * @return SpyQueueProcessQuery
+     * @api
+     *
+     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
     public function queryProcesses();
+
 }

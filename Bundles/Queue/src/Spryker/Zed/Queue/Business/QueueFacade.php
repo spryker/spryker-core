@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,12 +11,14 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method QueueBusinessFactory getFactory()
+ * @method \Spryker\Zed\Queue\Business\QueueBusinessFactory getFactory()
  */
 class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $queueName
      *
      * @return void
@@ -29,8 +31,10 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $command
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -40,4 +44,5 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
             ->createWorker($output)
             ->start($command);
     }
+
 }

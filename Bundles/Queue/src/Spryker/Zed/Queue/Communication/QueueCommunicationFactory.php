@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,16 +9,16 @@ namespace Spryker\Zed\Queue\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Queue\Communication\Table\QueueProcessTable;
-use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
 
 /**
- * @method QueueQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Queue\QueueConfig getConfig()
  */
 class QueueCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return QueueProcessTable
+     * @return \Spryker\Zed\Queue\Communication\Table\QueueProcessTable
      */
     public function createQueueProcessTable()
     {
@@ -26,4 +26,5 @@ class QueueCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer()
         );
     }
+
 }

@@ -25,6 +25,6 @@ interface SenderInterface
      *
      * @return void
      */
-    public function sendMessages($queueName ,array $queueMessageTransfers);
+    public function sendMessages($queueName, array $queueMessageTransfers);
 
 }

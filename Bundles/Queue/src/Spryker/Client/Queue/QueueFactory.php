@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Queue\Model\Proxy\QueueProxy;
 
 /**
- * @method QueueConfig getConfig()
+ * @method \Spryker\Client\Queue\QueueConfig getConfig()
  */
 class QueueFactory extends AbstractFactory
 {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -18,7 +17,7 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     const QUEUE_MESSAGE_PROCESSOR_PLUGINS = 'queue message processor plugin';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -40,12 +39,13 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
      *
      *  e.g: 'mail' => new MailQueueMessageProcessorPlugin()
      *
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return QueueMessageProcessorPluginInterface[]
+     * @return \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
      */
     protected function getProcessorMessagePlugins(Container $container)
     {
         return [];
     }
+
 }

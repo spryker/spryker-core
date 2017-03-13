@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Queue\Business;
 
-use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Queue\Business\Model\Process\ProcessManager;
-use Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface;
 use Spryker\Zed\Queue\Business\Model\Task\Task;
 use Spryker\Zed\Queue\Business\Model\Worker\Worker;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
-use Spryker\Zed\Queue\QueueConfig;
 use Spryker\Zed\Queue\QueueDependencyProvider;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method QueueConfig getConfig()
+ * @method \Spryker\Zed\Queue\QueueConfig getConfig()
+ * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainer getQueryContainer()
  */
 class QueueBusinessFactory extends AbstractBusinessFactory
 {
@@ -29,7 +27,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     protected static $serverUniqueId;
 
     /**
-     * @return Task
+     * @return \Spryker\Zed\Queue\Business\Model\Task\Task
      */
     public function createTask()
     {
@@ -41,9 +39,9 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return Worker
+     * @return \Spryker\Zed\Queue\Business\Model\Worker\Worker
      */
     public function createWorker(OutputInterface $output)
     {
@@ -56,7 +54,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProcessManagerInterface
+     * @return \Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface
      */
     public function createProcessManager()
     {
@@ -95,7 +93,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return QueueClientInterface
+     * @return \Spryker\Client\Queue\QueueClientInterface
      */
     public function getQueueClient()
     {
@@ -103,10 +101,11 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return QueueMessageProcessorPluginInterface[]
+     * @return \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
      */
     public function getProcessorMessagePlugins()
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
     }
+
 }

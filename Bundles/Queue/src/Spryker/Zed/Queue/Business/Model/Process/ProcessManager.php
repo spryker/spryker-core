@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,7 +17,7 @@ class ProcessManager implements ProcessManagerInterface
 {
 
     /**
-     * @var QueueQueryContainerInterface
+     * @var \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -27,7 +27,7 @@ class ProcessManager implements ProcessManagerInterface
     protected $serverUniqueId;
 
     /**
-     * @param QueueQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface $queryContainer
      * @param string $serverUniqueId
      */
     public function __construct(QueueQueryContainerInterface $queryContainer, $serverUniqueId)
@@ -40,7 +40,7 @@ class ProcessManager implements ProcessManagerInterface
      * @param string $queue
      * @param string $command
      *
-     * @return Process
+     * @return \Symfony\Component\Process\Process
      */
     public function triggerQueueProcess($command, $queue)
     {
@@ -108,7 +108,6 @@ class ProcessManager implements ProcessManagerInterface
         return $busyProcessIndex;
     }
 
-
     /**
      * @param int $processId
      *
@@ -121,12 +120,11 @@ class ProcessManager implements ProcessManagerInterface
         return trim($output) !== '';
     }
 
-
     /**
      * @param string $queue
      * @param int $processId
      *
-     * @return QueueProcessTransfer
+     * @return \Generated\Shared\Transfer\QueueProcessTransfer
      */
     protected function createQueueProcessTransfer($queue, $processId)
     {
@@ -140,9 +138,9 @@ class ProcessManager implements ProcessManagerInterface
     }
 
     /**
-     * @param QueueProcessTransfer $queueProcessTransfer
+     * @param \Generated\Shared\Transfer\QueueProcessTransfer $queueProcessTransfer
      *
-     * @return QueueProcessTransfer
+     * @return \Generated\Shared\Transfer\QueueProcessTransfer
      */
     protected function saveProcess(QueueProcessTransfer $queueProcessTransfer)
     {
@@ -154,9 +152,9 @@ class ProcessManager implements ProcessManagerInterface
     }
 
     /**
-     * @param SpyQueueProcess $processEntity
+     * @param \Orm\Zed\Queue\Persistence\SpyQueueProcess $processEntity
      *
-     * @return QueueProcessTransfer
+     * @return \Generated\Shared\Transfer\QueueProcessTransfer
      */
     protected function convertSToQueueProcessTransfer(SpyQueueProcess $processEntity)
     {
@@ -167,14 +165,15 @@ class ProcessManager implements ProcessManagerInterface
     }
 
     /**
-     * @param $cleanupProcesses
+     * @param array $processIds
      *
      * @return int
      */
-    protected function deleteProcesses($cleanupProcesses)
+    protected function deleteProcesses(array $processIds)
     {
         return $this->queryContainer
-            ->queryProcessesByProcessIds($cleanupProcesses)
+            ->queryProcessesByProcessIds($processIds)
             ->delete();
     }
+
 }

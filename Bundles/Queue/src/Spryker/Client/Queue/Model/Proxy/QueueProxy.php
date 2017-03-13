@@ -10,7 +10,6 @@ namespace Spryker\Client\Queue\Model\Proxy;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Queue\Exception\MissingQueueAdapterException;
-use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
 
 class QueueProxy implements QueueProxyInterface
 {
@@ -45,7 +44,7 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     public function createQueue(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -80,21 +79,21 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
      */
     public function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
     {
         $queueAdapter = $this->getQueueAdapter($queueOptionTransfer->getQueueName());
 
-       return $queueAdapter->receiveMessages($queueOptionTransfer);
+        return $queueAdapter->receiveMessages($queueOptionTransfer);
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function receiveMessage(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -104,9 +103,9 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function handleErrorMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -128,7 +127,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return bool
      */
@@ -166,7 +165,7 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param string $queueName
      *
-     * @return AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected function getQueueAdapter($queueName)
     {
@@ -184,9 +183,9 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @throws MissingQueueAdapterException
+     * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
      *
-     * @return AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected function getDefaultQueueAdapter()
     {
@@ -198,4 +197,5 @@ class QueueProxy implements QueueProxyInterface
 
         return $this->queueAdapters[$this->defaultQueueAdapterName];
     }
+
 }

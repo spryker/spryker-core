@@ -1,18 +1,16 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Queue\Business\Model\Task;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
-use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 class Task implements TaskInterface
@@ -21,24 +19,24 @@ class Task implements TaskInterface
     const DEFAULT_CONSUMER_CONFIG_QUEUE_NAME = 'default';
 
     /**
-     * @var QueueClientInterface
+     * @var \Spryker\Client\Queue\QueueClientInterface
      */
     protected $client;
 
     /**
-     * @var QueueConfig
+     * @var \Spryker\Zed\Queue\QueueConfig
      */
     protected $queueConfig;
 
     /**
-     * @var QueueMessageProcessorPluginInterface[]
+     * @var \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
      */
     protected $messageProcessorPlugins;
 
     /**
-     * @param QueueClientInterface $client
-     * @param QueueConfig $queueConfig
-     * @param QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
+     * @param \Spryker\Client\Queue\QueueClientInterface $client
+     * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
+     * @param \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
      */
     public function __construct(QueueClientInterface $client, QueueConfig $queueConfig, array $messageProcessorPlugins)
     {
@@ -67,9 +65,9 @@ class Task implements TaskInterface
     /**
      * @param string $queueName
      *
-     * @throws MissingQueuePluginException
+     * @throws \Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException
      *
-     * @return QueueMessageProcessorPluginInterface
+     * @return \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface
      */
     protected function getQueueProcessorPlugin($queueName)
     {
@@ -86,14 +84,13 @@ class Task implements TaskInterface
         return $this->messageProcessorPlugins[$queueName];
     }
 
-
     /**
      * @param string $queueName
      * @param int $chunkSize
      *
-     * @throws MissingQueueConfigException
+     * @throws \Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException
      *
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     protected function getQueueReceiverConfigTransfer($queueName, $chunkSize)
     {
@@ -117,9 +114,9 @@ class Task implements TaskInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
      */
     protected function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -127,7 +124,7 @@ class Task implements TaskInterface
     }
 
     /**
-     * @param QueueMessageTransfer[] $processedMessages
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $processedMessages
      *
      * @return void
      */
@@ -147,4 +144,5 @@ class Task implements TaskInterface
             }
         }
     }
+
 }

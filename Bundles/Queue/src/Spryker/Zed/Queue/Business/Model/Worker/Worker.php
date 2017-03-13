@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,13 +9,11 @@ namespace Spryker\Zed\Queue\Business\Model\Worker;
 
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface;
-use Spryker\Zed\Queue\Business\QueueBusinessFactory;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
- * @method QueueBusinessFactory getFactory()
+ * @method \Spryker\Zed\Queue\Business\QueueBusinessFactory getFactory()
  */
 class Worker implements WorkerInterface
 {
@@ -22,7 +21,7 @@ class Worker implements WorkerInterface
     const DEFAULT_MAX_QUEUE_WORKER = 1;
 
     /**
-     * @var ProcessManagerInterface
+     * @var \Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface
      */
     protected $processManager;
 
@@ -52,12 +51,12 @@ class Worker implements WorkerInterface
     protected $queueNames;
 
     /**
-     * @var OutputInterface
+     * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
 
     /**
-     * @var ProgressBar
+     * @var \Symfony\Component\Console\Helper\ProgressBar
      */
     protected $progressBar;
 
@@ -67,31 +66,31 @@ class Worker implements WorkerInterface
     protected $firstRun = false;
 
     /**
-     * @param ProcessManagerInterface $processManager
+     * @param \Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface $processManager
      * @param array $queues
      * @param array $workerConfig
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __construct(
         ProcessManagerInterface $processManager,
         array $queues,
         array $workerConfig,
         OutputInterface $output
-    )
-    {
+    ) {
+
         $this->processManager = $processManager;
         $this->queueNames = $queues;
         $this->output = $output;
 
-        $this->maxThreshold = $workerConfig[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS];
-        $this->delayInterval = $workerConfig[QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS];
+        $this->maxThreshold = (int)$workerConfig[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS];
+        $this->delayInterval = (int)$workerConfig[QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS];
         $this->processorWorker = $workerConfig[QueueConstants::QUEUE_WORKER_PROCESSOR];
         $this->outputFile = $workerConfig[QueueConstants::QUEUE_WORKER_OUTPUT_FILE];
     }
 
     /**
      * @param int $round
-     * @param string $command
+     * @param string|int $command
      * @param array $processes
      *
      * @return void
@@ -123,7 +122,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $command
      * @param int $round
-     * @param Process[] $processes
+     * @param \Symfony\Component\Process\Process[] $processes
      *
      * @return void
      */
@@ -139,9 +138,9 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param Process[] $processes
+     * @param \Symfony\Component\Process\Process[] $processes
      *
-     * @return Process[]
+     * @return \Symfony\Component\Process\Process[]
      */
     protected function getPendingProcesses($processes)
     {
@@ -158,7 +157,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $command
      *
-     * @return Process[]
+     * @return \Symfony\Component\Process\Process[]
      */
     protected function executeOperation($command)
     {
@@ -195,7 +194,7 @@ class Worker implements WorkerInterface
         return [
             'busy' => $busyProcessNumber,
             'new' => $numberOfWorkers,
-            'processes' => $processes
+            'processes' => $processes,
         ];
     }
 
@@ -214,7 +213,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @return ProgressBar
+     * @return \Symfony\Component\Console\Helper\ProgressBar
      */
     protected function createProgressBar()
     {
@@ -261,4 +260,5 @@ class Worker implements WorkerInterface
             )
         );
     }
+
 }

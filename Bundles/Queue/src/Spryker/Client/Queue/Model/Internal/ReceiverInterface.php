@@ -14,16 +14,16 @@ interface ReceiverInterface
 {
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
      */
     public function receiveMessages(QueueOptionTransfer $queueOptionTransfer);
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function receiveMessage(QueueOptionTransfer $queueOptionTransfer);
 
@@ -35,7 +35,7 @@ interface ReceiverInterface
     public function acknowledge(QueueMessageTransfer $queueMessageTransfer);
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return bool
      */

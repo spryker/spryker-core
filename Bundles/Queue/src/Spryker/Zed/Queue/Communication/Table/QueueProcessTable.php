@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -16,14 +16,14 @@ class QueueProcessTable extends AbstractTable
 {
 
     /**
-     * @var QueueQueryContainerInterface
+     * @var \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
      * QueueProcessTable constructor.
      *
-     * @param QueueQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface $queryContainer
      */
     public function __construct(QueueQueryContainerInterface $queryContainer)
     {
@@ -38,7 +38,7 @@ class QueueProcessTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS=> 'ID',
+            SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS => 'ID',
             SpyQueueProcessTableMap::COL_SERVER_ID => 'Server',
             SpyQueueProcessTableMap::COL_WORKER_PID => 'Worker PID',
             SpyQueueProcessTableMap::COL_PROCESS_PID => 'Queue PID',
@@ -74,4 +74,5 @@ class QueueProcessTable extends AbstractTable
 
         return $results;
     }
+
 }

@@ -1,12 +1,11 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Queue\Business\Model\Process;
-
-use Symfony\Component\Process\Process;
 
 interface ProcessManagerInterface
 {
@@ -15,7 +14,7 @@ interface ProcessManagerInterface
      * @param string $queue
      * @param string $command
      *
-     * @return Process
+     * @return \Symfony\Component\Process\Process
      */
     public function triggerQueueProcess($command, $queue);
 
@@ -30,4 +29,5 @@ interface ProcessManagerInterface
      * @return void
      */
     public function flushIdleProcesses();
+
 }

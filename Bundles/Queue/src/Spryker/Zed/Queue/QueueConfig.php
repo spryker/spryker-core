@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -21,7 +21,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @param string $queueName
      *
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     public function getQueueReceiverConfig($queueName)
     {
@@ -64,7 +64,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      *  e.g: 'mail' => 5
      *
-     * @return array
+     * @return int[]
      */
     protected function getQueueWorkerProcessorCount()
     {
@@ -101,15 +101,16 @@ class QueueConfig extends AbstractBundleConfig
     protected function getQueueReceiverConfigs()
     {
         return [
-            'default' => $this->getDefaultQueueReceiverConfig()
+            'default' => $this->getDefaultQueueReceiverConfig(),
         ];
     }
 
     /**
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     protected function getDefaultQueueReceiverConfig()
     {
         return new QueueOptionTransfer();
     }
+
 }

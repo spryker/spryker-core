@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\Queue\Model\Adapter;
 
-
-use Spryker\Client\Queue\Model\Internal\ReceiverInterface;
 use Spryker\Client\Queue\Model\Internal\ManagerInterface;
+use Spryker\Client\Queue\Model\Internal\ReceiverInterface;
 use Spryker\Client\Queue\Model\Internal\SenderInterface;
 
 interface AdapterInterface extends ReceiverInterface, SenderInterface, ManagerInterface

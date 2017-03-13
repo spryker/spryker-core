@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -16,7 +16,7 @@ interface ManagerInterface
     /**
      * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     public function createQueue(QueueOptionTransfer $queueOptionTransfer);
 
@@ -35,9 +35,9 @@ interface ManagerInterface
     public function purgeQueue($queueName);
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function handleErrorMessage(QueueMessageTransfer $queueMessageTransfer);
 

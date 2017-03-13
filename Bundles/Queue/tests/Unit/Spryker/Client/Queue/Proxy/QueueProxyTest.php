@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -19,17 +19,18 @@ use Spryker\Client\Queue\Model\Proxy\QueueProxy;
  * @group Client
  * @group Queue
  * @group Proxy
+ * @group QueueProxyTest
  */
 class QueueProxyTest extends Test
 {
 
     /**
-     * @var QueueProxy
+     * @var \Spryker\Client\Queue\Model\Proxy\QueueProxy
      */
     protected $queueProxy;
 
     /**
-     * @var AdapterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $queueAdapterMock;
 
@@ -72,7 +73,6 @@ class QueueProxyTest extends Test
 
         $this->queueProxy->sendMessage(new QueueMessageTransfer());
         $this->queueProxy->receiveMessage(new QueueOptionTransfer());
-
     }
 
     /**
@@ -120,7 +120,7 @@ class QueueProxyTest extends Test
         $queueProxy = new QueueProxy(
             [
                 'alphaQueueEngine' => $alphaQueueAdapterMock,
-                'betaQueueEngine' => $betaQueueAdapterMock
+                'betaQueueEngine' => $betaQueueAdapterMock,
             ],
             'alphaQueueEngine',
             [
@@ -137,7 +137,7 @@ class QueueProxyTest extends Test
     }
 
     /**
-     * @return QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     protected function createDummyQueueMessageTransfer($body, $queueName)
     {
@@ -147,4 +147,5 @@ class QueueProxyTest extends Test
 
         return $queueMessageTransfer;
     }
+
 }

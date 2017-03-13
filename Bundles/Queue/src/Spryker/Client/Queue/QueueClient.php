@@ -22,7 +22,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
      *
-     * @return QueueOptionTransfer
+     * @return \Generated\Shared\Transfer\QueueOptionTransfer
      */
     public function createQueue(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -30,6 +30,8 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
      *
      * @return void
@@ -40,6 +42,8 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $queueName
      * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $queueMessageTransfers
      *
@@ -51,9 +55,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @api
      *
-     * @return QueueMessageTransfer[]
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
      */
     public function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -61,9 +67,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueOptionTransfer $queueOptionTransfer
+     * @api
      *
-     * @return QueueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function receiveMessage(QueueOptionTransfer $queueOptionTransfer)
     {
@@ -95,9 +103,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
-     * @param QueueMessageTransfer $queueMessageTransfer
+     * @api
      *
-     * @return QueueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueMessageTransfer
      */
     public function handleErrorMessage(QueueMessageTransfer $queueMessageTransfer)
     {
@@ -117,6 +127,8 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $queueName
      *
      * @return bool
@@ -125,4 +137,5 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     {
         return $this->getFactory()->createQueueProxy()->deleteQueue($queueName);
     }
+
 }
