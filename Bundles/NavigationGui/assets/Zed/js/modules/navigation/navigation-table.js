@@ -7,12 +7,15 @@
 
 require('ZedGui');
 var navigationTree = require('./navigation-tree');
+var navigationTable;
 
 /**
  * @param {string} selector
  */
 function initialize(selector) {
-    var navigationTable = $(selector).DataTable();
+    navigationTable = $(selector).DataTable();
+
+    navigationTree.initialize();
 
     $(selector).find('tbody').on('click', 'tr', tableRowSelect);
     navigationTable.on('draw', selectFirstRow);
@@ -53,7 +56,7 @@ function loadNavigationTree(e, api, type, indexes) {
  * @return {void}
  */
 function resetNavigationTree(e, api) {
-    api.reset();
+    navigationTree.reset();
 }
 
 /**

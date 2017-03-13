@@ -7,33 +7,53 @@
 
 require('jstree');
 
-/*
- * TODO: Clean up JS code
- */
+var $treeContainer = $('#navigation-tree-container');
+var $treeContent = $('#navigation-tree-content');
+var $treeSearchField = $('#navigation-tree-search-field');
+var $treeProgressBar = $('#navigation-tree-loader');
+var $formProgressBar = $('#navigation-node-form-loader');
+var $treeUpdateProgressBar = $('#navigation-tree-update-loader');
+var $treeOrderSaveBtn = $('#navigation-tree-save-btn');
+var $iframe = $('#navigation-node-form-iframe');
 
-var treeProgressBar = $('#navigation-tree-loader');
-var treeUpdateProgressBar = $('#navigation-tree-update-loader');
-var treeContainer = $('#navigation-tree-container');
-var targetElement = $('#navigation-tree-content');
-var treeOrderSaveBtn = $('#navigation-tree-save-btn');
 var ajaxRequest;
-var navigationTreeTypes = {
-    'default': {
-        'icon': 'fa fa-folder'
-    },
-    'navigation': {
-        'icon': 'fa fa-list'
-    },
-    'cms': {
-        'icon': 'fa fa-file-o'
-    },
-    'category': {
-        'icon': 'fa fa-sitemap'
-    },
-    'external_url': {
-        'icon': 'fa fa-external-link'
+var treeSearchTimeout = false;
+
+var config = {
+    navigationTreeUrl: '/navigation-gui/tree',
+    navigationNodeFormUrlPrefix: '/navigation-gui/node/',
+    navigationTreeHierarchyUpdateUrl: '/navigation-gui/tree/update-hierarchy',
+    navigationTreeNodeTypes: {
+        'default': {
+            'icon': 'fa fa-folder'
+        },
+        'navigation': {
+            'icon': 'fa fa-list'
+        },
+        'cms': {
+            'icon': 'fa fa-file-o'
+        },
+        'category': {
+            'icon': 'fa fa-sitemap'
+        },
+        'external_url': {
+            'icon': 'fa fa-external-link'
+        }
     }
 };
+
+/**
+ * @return {void}
+ */
+function initialize() {
+    $treeOrderSaveBtn.on('click', onTreeSaveOrderClick);
+    $treeSearchField.keyup(onTreeSearchKeyup);
+
+    // Enable save order button on tree change
+    $(document).bind('dnd_stop.vakata', function() {
+        $treeOrderSaveBtn.removeAttr('disabled');
+    });
+}
 
 /**
  * @param {int} idNavigation
@@ -44,54 +64,17 @@ var navigationTreeTypes = {
  */
 function loadTree(idNavigation, selected, skipFormLoad)
 {
-    treeProgressBar.removeClass('hidden');
-    treeContainer.addClass('hidden');
-
-    var url = '/navigation-gui/tree/?id-navigation=' + idNavigation;
+    $treeProgressBar.removeClass('hidden');
+    $treeContainer.addClass('hidden');
 
     if (ajaxRequest) {
         ajaxRequest.abort();
     }
 
-    ajaxRequest = $.get(url, $.proxy(function(targetElement, response) {
-        targetElement.html(response);
-
-        // tree init
-        $('#navigation-tree').jstree({
-            'core': {
-                'check_callback': function (op, node, par, pos, more) {
-                    // disable drop on root level
-                    if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
-                        return !!more.ref.data.idNavigationNode;
-                    }
-
-                    return true;
-                }
-            },
-            'plugins': ['types', 'wholerow', 'dnd', 'search'],
-            'types': navigationTreeTypes,
-            'dnd': {
-                'is_draggable': function(items) {
-                    var idNavigationNode = items[0].data.idNavigationNode;
-                    return !!idNavigationNode;
-                }
-            }
+    ajaxRequest = $.get(config.navigationTreeUrl, {'id-navigation': idNavigation}, createTreeLoadHandler(idNavigation, selected, skipFormLoad))
+        .always(function() {
+            $treeProgressBar.addClass('hidden');
         });
-
-        treeContainer.removeClass('hidden');
-
-        if (skipFormLoad) {
-            selectNode(selected);
-            setNodeSelectListener(idNavigation);
-        } else {
-            setNodeSelectListener(idNavigation);
-            selectNode(selected);
-        }
-
-    }, null, targetElement))
-    .always(function() {
-        treeProgressBar.addClass('hidden');
-    });
 }
 
 /**
@@ -103,8 +86,59 @@ function resetTree()
         ajaxRequest.abort();
     }
 
-    targetElement.html('');
+    $treeContent.html('');
     resetForm();
+}
+
+/**
+ * @param {int} idNavigation
+ * @param {int|null} selected
+ * @param {boolean} skipFormLoad
+ *
+ * @returns {Function}
+ */
+function createTreeLoadHandler(idNavigation, selected, skipFormLoad) {
+    return function(response) {
+        $treeContent.html(response);
+
+        initJsTree();
+
+        $treeContainer.removeClass('hidden');
+
+        if (skipFormLoad) {
+            selectNode(selected);
+            setNodeSelectListener(idNavigation);
+        } else {
+            setNodeSelectListener(idNavigation);
+            selectNode(selected);
+        }
+    }
+}
+
+/**
+ * @return {void}
+ */
+function initJsTree() {
+    $('#navigation-tree').jstree({
+        'core': {
+            'check_callback': function (op, node, par, pos, more) {
+                // disable drop on root level
+                if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
+                    return !!more.ref.data.idNavigationNode;
+                }
+
+                return true;
+            }
+        },
+        'plugins': ['types', 'wholerow', 'dnd', 'search'],
+        'types': config.navigationTreeNodeTypes,
+        'dnd': {
+            'is_draggable': function(items) {
+                var idNavigationNode = items[0].data.idNavigationNode;
+                return !!idNavigationNode;
+            }
+        }
+    });
 }
 
 /**
@@ -130,12 +164,6 @@ function setNodeSelectListener(idNavigation) {
     });
 }
 
-
-
-
-var formProgressBar = $('#navigation-node-form-loader');
-var iframe = $('#navigation-node-form-iframe');
-
 /**
  * @param {int} idNavigation
  * @param {int} idNavigationNode
@@ -144,25 +172,23 @@ var iframe = $('#navigation-node-form-iframe');
  */
 function loadForm(idNavigation, idNavigationNode)
 {
-    iframe.addClass('hidden');
-    formProgressBar.removeClass('hidden');
-
-    var baseUri = '/navigation-gui/node/';
-    if (idNavigationNode) {
-        baseUri += 'update';
-    } else {
-        baseUri += 'create';
-    }
-
     var data = {
         'id-navigation': idNavigation,
-        'id-navigation-node': idNavigationNode,
-        'no-cache': new Date()
+        'id-navigation-node': idNavigationNode
     };
-    var url = baseUri + '?' + $.param(data);
+    var uri = config.navigationNodeFormUrlPrefix;
+    if (idNavigationNode) {
+        uri += 'update';
+    } else {
+        uri += 'create';
+    }
+    var url = uri + '?' + $.param(data);
 
-    iframe.off('load').on('load', iFrameOnLoad);
-    iframe.attr('src', url);
+    $iframe.addClass('hidden');
+    $formProgressBar.removeClass('hidden');
+
+    $iframe.off('load').on('load', onIframeLoad);
+    $iframe[0].contentWindow.location.replace(url);
 }
 
 /**
@@ -170,21 +196,20 @@ function loadForm(idNavigation, idNavigationNode)
  */
 function resetForm()
 {
-    iframe.addClass('hidden');
+    $iframe.addClass('hidden');
 }
 
 /**
  * @return {void}
  */
-function iFrameOnLoad(){
-    formProgressBar.addClass('hidden');
-    iframe.removeClass('hidden');
+function onIframeLoad(){
+    $formProgressBar.addClass('hidden');
+    $iframe.removeClass('hidden');
 
-    // set iframe height on change
     changeIframeHeight();
 
     // tree reloading
-    var treeReloader = iframe.contents().find('#navigation-tree-reloader');
+    var treeReloader = $iframe.contents().find('#navigation-tree-reloader');
     if (treeReloader.length) {
         loadTree($(treeReloader[0]).data('idNavigation'), $(treeReloader[0]).data('idSelectedTreeNode'), true);
     }
@@ -194,27 +219,27 @@ function iFrameOnLoad(){
  * @return {void}
  */
 function changeIframeHeight() {
-    var iframeContentHeight = iframe[0].contentWindow.document.body.scrollHeight;
-    iframe.height(iframeContentHeight);
+    var iframeContentHeight = $iframe[0].contentWindow.document.body.scrollHeight;
+    $iframe.height(iframeContentHeight);
 }
 
-
-
-// search input
-var timeout = false;
-$('#navigation-tree-search-field').keyup(function () {
-    if(timeout) {
-        clearTimeout(timeout);
+/**
+ * @return {void}
+ */
+function onTreeSearchKeyup() {
+    if(treeSearchTimeout) {
+        clearTimeout(treeSearchTimeout);
     }
-    timeout = setTimeout(function () {
-        var term = $('#navigation-tree-search-field').val();
-        $('#navigation-tree').jstree(true).search(term);
+    treeSearchTimeout = setTimeout(function () {
+        $('#navigation-tree').jstree(true).search($treeSearchField.val());
     }, 250);
-});
+}
 
-// click save order
-treeOrderSaveBtn.on('click', function(){
-    treeUpdateProgressBar.removeClass('hidden');
+/**
+ * @return {void}
+ */
+function onTreeSaveOrderClick(){
+    $treeUpdateProgressBar.removeClass('hidden');
 
     var jstreeData = $('#navigation-tree').jstree(true).get_json();
     var params = {
@@ -226,24 +251,18 @@ treeOrderSaveBtn.on('click', function(){
         }
     };
 
-    $.post('/navigation-gui/tree/update-hierarchy', params, function(response) {
+    $.post(config.navigationTreeHierarchyUpdateUrl, params, function(response) {
         window.sweetAlert({
             title: response.success ? "Success" : "Error",
             text: response.message,
             type: response.success ? "success" : "error"
         });
 
-        treeOrderSaveBtn.attr('disabled', 'disabled');
-    })
-    .always(function() {
-        treeUpdateProgressBar.addClass('hidden');
+        $treeOrderSaveBtn.attr('disabled', 'disabled');
+    }).always(function() {
+        $treeUpdateProgressBar.addClass('hidden');
     });
-});
-
-// Enable save order button on tree change
-$(document).bind('dnd_stop.vakata', function(e, data) {
-    treeOrderSaveBtn.removeAttr('disabled');
-});
+}
 
 /**
  * @param {Object} jstreeNode
@@ -253,7 +272,7 @@ $(document).bind('dnd_stop.vakata', function(e, data) {
 function getNavigationNodesRecursively(jstreeNode) {
     var nodes = [];
 
-    $.each(jstreeNode.children, function (i, childNode) {
+    $.each(jstreeNode.children, function(i, childNode) {
         var navigationNode = {
             'navigation_node': {
                 'id_navigation_node': childNode.data.idNavigationNode,
@@ -268,10 +287,12 @@ function getNavigationNodesRecursively(jstreeNode) {
     return nodes;
 }
 
+
 /**
  * Open public methods
  */
 module.exports = {
+    initialize: initialize,
     load: loadTree,
     reset: resetTree
 };

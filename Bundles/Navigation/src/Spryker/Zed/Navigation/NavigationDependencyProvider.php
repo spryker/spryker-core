@@ -9,7 +9,7 @@ namespace Spryker\Zed\Navigation;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Navigation\Dependency\NavigationToTouchBridge;
+use Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchBridge;
 
 class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {

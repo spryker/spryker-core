@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 interface NavigationTouchInterface
 {
@@ -25,5 +26,12 @@ interface NavigationTouchInterface
      * @return bool
      */
     public function touchDeleted(NavigationTransfer $navigationTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function touchByUrl(UrlTransfer $urlTransfer);
 
 }

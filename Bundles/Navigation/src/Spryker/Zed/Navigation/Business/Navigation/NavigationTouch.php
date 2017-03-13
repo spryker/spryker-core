@@ -8,23 +8,32 @@
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Shared\Navigation\NavigationConfig;
-use Spryker\Zed\Navigation\Dependency\NavigationToTouchInterface;
+use Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchInterface;
+use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTouch implements NavigationTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Navigation\Dependency\NavigationToTouchInterface
+     * @var \Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @param \Spryker\Zed\Navigation\Dependency\NavigationToTouchInterface $touchFacade
+     * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
      */
-    public function __construct(NavigationToTouchInterface $touchFacade)
+    protected $navigationQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     */
+    public function __construct(NavigationToTouchInterface $touchFacade, NavigationQueryContainerInterface $navigationQueryContainer)
     {
         $this->touchFacade = $touchFacade;
+        $this->navigationQueryContainer = $navigationQueryContainer;
     }
 
     /**
@@ -53,6 +62,24 @@ class NavigationTouch implements NavigationTouchInterface
             ->getIdNavigation();
 
         return $this->touchFacade->touchDeleted(NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU, $idNavigation);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function touchByUrl(UrlTransfer $urlTransfer)
+    {
+        $urlTransfer->requireIdUrl();
+
+        $navigationNodeEntities = $this->navigationQueryContainer
+            ->queryNavigationNodeByFkUrl($urlTransfer->getIdUrl())
+            ->find();
+
+        foreach ($navigationNodeEntities as $navigationNodeEntity) {
+            $this->touchFacade->touchActive(NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU, $navigationNodeEntity->getFkNavigation());
+        }
     }
 
 }

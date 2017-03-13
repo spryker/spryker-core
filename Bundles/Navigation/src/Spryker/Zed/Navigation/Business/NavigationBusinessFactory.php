@@ -114,7 +114,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationTouch()
     {
-        return new NavigationTouch($this->getTouchFacade());
+        return new NavigationTouch($this->getTouchFacade(), $this->getQueryContainer());
     }
 
     /**
@@ -126,7 +126,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Navigation\Dependency\NavigationToTouchInterface
+     * @return \Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchInterface
      */
     public function getTouchFacade()
     {

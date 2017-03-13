@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
@@ -20,7 +21,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Persists new navigation entity to database.
+     * - Touches navigation entity as active.
      *
      * @api
      *
@@ -32,7 +34,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Persists navigation entity changes to database.
+     * - Touches navigation entity as active.
      *
      * @api
      *
@@ -44,7 +47,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Finds navigation entity in database by ID.
+     * - Returns navigation transfer if found, NULL otherwise.
      *
      * @api
      *
@@ -56,7 +60,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Deletes navigation entity from database.
+     * - Touches navigation entity as deleted.
      *
      * @api
      *
@@ -68,7 +73,9 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Persists new navigation node entity to database.
+     * - Persists new navigation node localized attributes to database.
+     * - Touches related navigation entity as active.
      *
      * @api
      *
@@ -80,7 +87,9 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Persists navigation node entity changes to database.
+     * - Persists navigation node localized attribute changes to database.
+     * - Touches related navigation entity as active.
      *
      * @api
      *
@@ -92,7 +101,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Finds navigation node entity in database by ID.
+     * - Returns navigation node transfer along with its related localized attributes if found, NULL otherwise.
      *
      * @api
      *
@@ -104,7 +114,8 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Deletes navigation node entity from database.
+     * - Touches related navigation entity as active.
      *
      * @api
      *
@@ -116,20 +127,23 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Finds navigation entity in database by ID.
+     * - Returns a fully hydrated navigation tree transfer if found, NULL otherwise.
+     * - When locale is provided only the specified locale will be hydrated into the tree.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
     public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Persists hierarchy (position and parent) changes of navigation node entities to database.
+     * - Touches related navigation entity as active.
      *
      * @api
      *
@@ -138,5 +152,17 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
+
+    /**
+     * Specification:
+     * - Touches navigation entities as active which contains any node with the provided url.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function touchNavigationByUrl(UrlTransfer $urlTransfer);
 
 }

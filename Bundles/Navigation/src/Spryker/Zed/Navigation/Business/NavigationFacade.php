@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -155,7 +156,7 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
     public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
     {
@@ -178,6 +179,22 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationTreeHierarchyUpdater()
             ->updateNavigationTreeHierarchy($navigationTreeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function touchNavigationByUrl(UrlTransfer $urlTransfer)
+    {
+        $this->getFactory()
+            ->createNavigationTouch()
+            ->touchByUrl($urlTransfer);
     }
 
 }

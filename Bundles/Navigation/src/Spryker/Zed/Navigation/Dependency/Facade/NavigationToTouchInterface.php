@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Dependency;
+namespace Spryker\Zed\Navigation\Dependency\Facade;
 
 interface NavigationToTouchInterface
 {
