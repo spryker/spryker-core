@@ -9,7 +9,7 @@
         <column name="queue_name" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_queue_process-unique-key">
             <unique-column name="server_id"/>
-            <unique-column name="process_id"/>
+            <unique-column name="process_pid"/>
             <unique-column name="queue_name"/>
         </unique>
         <index name="spy_queue_process-index-key">
