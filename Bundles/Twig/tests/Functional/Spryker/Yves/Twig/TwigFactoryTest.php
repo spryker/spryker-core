@@ -8,8 +8,6 @@
 namespace Functional\Spryker\Yves\Twig;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Twig\TwigDependencyProvider;
 use Spryker\Yves\Twig\TwigFactory;
 use Twig_LoaderInterface;
 
