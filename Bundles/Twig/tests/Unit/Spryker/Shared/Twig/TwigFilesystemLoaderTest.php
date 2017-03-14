@@ -8,10 +8,13 @@
 namespace Unit\Spryker\Shared\Twig;
 
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
-use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface;
+use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
+use Twig_Error_Loader;
 use Twig_LoaderInterface;
+use Unit\Spryker\Shared\Twig\Stub\CacheStub;
 
 /**
  * @group Unit
@@ -23,35 +26,161 @@ use Twig_LoaderInterface;
 class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
 {
 
+    const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
+    const CONTENT_CACHED_FILE = 'cached file' . PHP_EOL;
+    const CONTENT_PROJECT_ZED_FILE = 'project zed file' . PHP_EOL;
+    const TEMPLATE_NAME = '@Bundle/Controller/index.twig';
+
     /**
      * @return void
      */
     public function testCanBeConstructedWithTemplatePathsArray()
     {
         $templatePaths = [];
-        $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheMock(), $this->getUtilTextServiceMock());
+        $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getUtilTextService());
 
         $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\Cache\CacheInterface
+     * @return void
      */
-    protected function getCacheMock()
+    public function testGetSourceReturnsFileFromCache()
     {
-        $mockBuilder = $this->getMockBuilder(CacheInterface::class);
+        $cache = $this->getCacheStub();
+        $cache->set('@CachedBundle/Controller/index.twig', __DIR__ . '/Fixtures/cache/cached.twig');
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT, $cache);
 
-        return $mockBuilder->getMock();
+        $this->assertSame(static::CONTENT_CACHED_FILE, $filesystemLoader->getSource('@CachedBundle/Controller/index.twig'));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
+     * @return void
      */
-    protected function getUtilTextServiceMock()
+    public function testGetSourceThrowsExceptionWhenPathInCacheMarkedAsInvalid()
     {
-        $mockBuilder = $this->getMockBuilder(TwigToUtilTextServiceInterface::class);
+        $cache = $this->getCacheStub();
+        $cache->set('@Invalid/Controller/index.twig', false);
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT, $cache);
 
-        return $mockBuilder->getMock();
+        $this->expectException(Twig_Error_Loader::class);
+        $this->expectExceptionMessage('Unable to find template "@Invalid/Controller/index.twig" (cached).');
+
+        $filesystemLoader->getSource('@Invalid/Controller/index.twig');
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenNameStartsWithAtLoadReturnsFileContent()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $content = $filesystemLoader->getSource(static::TEMPLATE_NAME);
+
+        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenNameStartsWithSlashLoadReturnsFileContent()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $content = $filesystemLoader->getSource('/Bundle/Controller/index.twig');
+
+        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSourceThrowsExceptionWhenFileNotExists()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+
+        $this->expectException(Twig_Error_Loader::class);
+        $this->expectExceptionMessage('Unable to find template "NotExistent/index.twig');
+
+        $filesystemLoader->getSource('@Bundle/NotExistent/index.twig');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+
+        $this->expectException(Twig_Error_Loader::class);
+        $this->expectExceptionMessage('Malformed bundle template name "@bundle" (expecting "@bundle/template_name").');
+
+        $filesystemLoader->getSource('@Bundle');
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsFreshReturnsTrueWhenFileIsFresh()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') + 10;
+
+        $this->assertTrue($filesystemLoader->isFresh(static::TEMPLATE_NAME, $time));
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsFreshReturnsFalseWhenFileIsNotFresh()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $time = filemtime(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig') - 10;
+
+        $this->assertFalse($filesystemLoader->isFresh(static::TEMPLATE_NAME, $time));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheKeyReturnsPathToTemplate()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $cacheKey = $filesystemLoader->getCacheKey(static::TEMPLATE_NAME);
+
+        $this->assertSame(static::PATH_TO_ZED_PROJECT . '/Controller/index.twig', $cacheKey);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Cache\CacheInterface
+     */
+    protected function getCacheStub()
+    {
+        return new CacheStub();
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge
+     */
+    protected function getUtilTextService()
+    {
+        $twigToUtilTextBridge = new TwigToUtilTextServiceBridge(new UtilTextService());
+
+        return $twigToUtilTextBridge;
+    }
+
+    /**
+     * @param string $path
+     * @param \Spryker\Shared\Twig\Cache\CacheInterface|null $cache
+     *
+     * @return \Spryker\Shared\Twig\TwigFilesystemLoader
+     */
+    protected function getFilesystemLoader($path, CacheInterface $cache = null)
+    {
+        if (!$cache) {
+            $cache = $this->getCacheStub();
+        }
+
+        return new TwigFilesystemLoader([$path], $cache, $this->getUtilTextService());
     }
 
 }

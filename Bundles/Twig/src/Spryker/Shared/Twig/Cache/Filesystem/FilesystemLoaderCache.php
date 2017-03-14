@@ -23,6 +23,11 @@ class FilesystemLoaderCache implements CacheInterface
     protected $enabled;
 
     /**
+     * @var bool
+     */
+    protected $refresh = false;
+
+    /**
      * @var array
      */
     protected $cache;
@@ -87,6 +92,7 @@ class FilesystemLoaderCache implements CacheInterface
     public function set($key, $value)
     {
         $this->cache[$key] = $value;
+        $this->refresh = true;
 
         return $this;
     }
@@ -107,7 +113,7 @@ class FilesystemLoaderCache implements CacheInterface
 
     public function __destruct()
     {
-        if (count($this->cache) === 0) {
+        if (count($this->cache) === 0 || !$this->refresh) {
             return;
         }
 

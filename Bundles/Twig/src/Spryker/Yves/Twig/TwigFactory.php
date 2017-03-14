@@ -8,8 +8,8 @@
 namespace Spryker\Yves\Twig;
 
 use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
+use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Twig\Model\Loader\FilesystemLoader;
 
 /**
  * @method \Spryker\Yves\Twig\TwigConfig getConfig()
@@ -22,7 +22,7 @@ class TwigFactory extends AbstractFactory
      */
     public function createFilesystemLoader()
     {
-        return new FilesystemLoader(
+        return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
             $this->createFilesystemLoaderCache(),
             $this->getUtilTextService()

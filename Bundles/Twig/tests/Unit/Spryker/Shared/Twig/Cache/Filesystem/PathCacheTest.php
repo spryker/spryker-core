@@ -212,6 +212,29 @@ EOL
     }
 
     /**
+     * @return void
+     */
+    public function testWhenDestructIsCalledAndCacheDirectoryDoesNotExistsItWillBeCreated()
+    {
+        $directoryToCreate = $this->getFixtureDirectory() . '/additional-directory/';
+        $pathToCacheFile = $directoryToCreate . 'cache.php';
+
+        if (is_file($pathToCacheFile)) {
+            unlink($pathToCacheFile);
+            rmdir($directoryToCreate);
+        }
+
+        $this->assertFalse(is_dir($directoryToCreate), 'Directory was not removed before test');
+
+        $cache = new FilesystemLoaderCache($pathToCacheFile, true);
+        $cache->set(static::NEW_CACHE_KEY, static::NEW_CACHE_VALUE);
+
+        $cache->__destruct();
+
+        $this->assertTrue(is_dir($directoryToCreate), 'Directory was not created by cache');
+    }
+
+    /**
      * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
      */
     protected function getEnabledCache()

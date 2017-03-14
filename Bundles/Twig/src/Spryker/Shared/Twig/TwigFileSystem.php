@@ -13,6 +13,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * @deprecated Use TwigFilesystemLoader instead.
+ * @codeCoverageIgnore
  */
 class TwigFileSystem extends Twig_Loader_Filesystem
 {

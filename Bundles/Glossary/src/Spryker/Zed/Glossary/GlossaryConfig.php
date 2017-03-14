@@ -19,9 +19,7 @@ class GlossaryConfig extends AbstractBundleConfig
     {
         $paths = array_merge(
             glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml'),
-            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.csv'),
-            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml'),
-            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.csv')
+            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml')
         );
 
         return $paths;
