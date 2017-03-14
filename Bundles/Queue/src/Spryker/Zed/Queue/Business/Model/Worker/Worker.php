@@ -254,8 +254,8 @@ class Worker implements WorkerInterface
                 '[%d] %s queue process(es): New: %d Busy: %d Last Update: %s',
                 $rowId,
                 $queueName,
-                $busyProcessNumber,
                 $newProcessNumber,
+                $busyProcessNumber,
                 date('H:i:s')
             )
         );
