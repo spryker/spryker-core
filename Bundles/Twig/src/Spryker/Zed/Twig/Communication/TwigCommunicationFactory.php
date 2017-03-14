@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Twig\Communication;
 
-use Spryker\Shared\Twig\Cache\Filesystem\PathCache;
-use Spryker\Shared\Twig\TwigFileSystem;
+use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
+use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Twig\TwigDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
@@ -22,23 +23,32 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createFilesystemLoader()
     {
-        return new TwigFileSystem(
+        return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
-            $this->createPathCache()
+            $this->createFilesystemLoaderCache(),
+            $this->getUtilTextService()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\PathCache
+     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
      */
-    protected function createPathCache()
+    protected function createFilesystemLoaderCache()
     {
-        $pathCache = new PathCache(
+        $filesystemLoaderCache = new FilesystemLoaderCache(
             $this->getConfig()->getPathCacheFilePath(),
             $this->getConfig()->isPathCacheEnabled()
         );
 
-        return $pathCache;
+        return $filesystemLoaderCache;
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
+     */
+    protected function getUtilTextService()
+    {
+        return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Twig;
 
+use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\Loader\FilesystemLoader;
 
@@ -22,8 +23,31 @@ class TwigFactory extends AbstractFactory
     public function createFilesystemLoader()
     {
         return new FilesystemLoader(
-            $this->getConfig()->getTemplatePaths()
+            $this->getConfig()->getTemplatePaths(),
+            $this->createFilesystemLoaderCache(),
+            $this->getUtilTextService()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
+     */
+    protected function createFilesystemLoaderCache()
+    {
+        $filesystemLoaderCache = new FilesystemLoaderCache(
+            $this->getConfig()->getPathCacheFilePath(),
+            $this->getConfig()->isPathCacheEnabled()
+        );
+
+        return $filesystemLoaderCache;
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
+     */
+    protected function getUtilTextService()
+    {
+        return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
 }

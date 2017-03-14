@@ -9,7 +9,7 @@ namespace Unit\Spryker\Shared\Twig\Cache\Filesystem;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Twig\Cache\CacheInterface;
-use Spryker\Shared\Twig\Cache\Filesystem\PathCache;
+use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
 
 /**
  * @group Unit
@@ -78,7 +78,7 @@ class PathCacheTest extends PHPUnit_Framework_TestCase
     'invalid key' => false,
 ];
 EOL
-);
+        );
     }
 
     /**
@@ -110,7 +110,7 @@ EOL
      */
     public function testLoadReturnsEmptyArrayIfCacheFileDoesNotExists()
     {
-        $cache = new PathCache('/invalid/file/path', true);
+        $cache = new FilesystemLoaderCache('/invalid/file/path', true);
         $this->assertInstanceOf(CacheInterface::class, $cache);
     }
 
@@ -212,23 +212,23 @@ EOL
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\PathCache
+     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
      */
     protected function getEnabledCache()
     {
         $pathToCacheFile = $this->getCacheFile();
 
-        return new PathCache($pathToCacheFile, true);
+        return new FilesystemLoaderCache($pathToCacheFile, true);
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\PathCache
+     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
      */
     protected function getDisabledCache()
     {
         $pathToCacheFile = $this->getCacheFile();
 
-        return new PathCache($pathToCacheFile, false);
+        return new FilesystemLoaderCache($pathToCacheFile, false);
     }
 
 }
