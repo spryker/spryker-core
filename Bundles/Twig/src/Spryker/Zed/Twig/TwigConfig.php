@@ -82,9 +82,17 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPathCacheFilePath()
+    public function getCacheFilePath()
     {
         return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheFilePathForYves()
+    {
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
     }
 
     /**
@@ -93,6 +101,28 @@ class TwigConfig extends AbstractBundleConfig
     public function isPathCacheEnabled()
     {
         return $this->get(TwigConstants::ZED_PATH_CACHE_ENABLED, true);
+    }
+
+    /**
+     * @return array
+     */
+    public function getZedDirectoryPathPattern()
+    {
+        return [
+            'src/*/Zed/*/Presentation',
+            'vendor/*/*/src/*/Zed/*/Presentation',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getYvesDirectoryPathPattern()
+    {
+        return [
+            'src/*/Yves/*/Theme',
+            'vendor/*/*/src/*/Yves/*/Theme',
+        ];
     }
 
 }

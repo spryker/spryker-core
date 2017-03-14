@@ -7,7 +7,9 @@
 
 namespace Spryker\Yves\Twig;
 
-use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
+use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
+use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
 
@@ -24,22 +26,39 @@ class TwigFactory extends AbstractFactory
     {
         return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
-            $this->createFilesystemLoaderCache(),
+            $this->createFilesystemCache(),
             $this->getUtilTextService()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
+     * @return \Spryker\Shared\Twig\Cache\CacheInterface
      */
-    protected function createFilesystemLoaderCache()
+    protected function createFilesystemCache()
     {
-        $filesystemLoaderCache = new FilesystemLoaderCache(
-            $this->getConfig()->getPathCacheFilePath(),
+        $filesystemLoaderCache = new FilesystemCache(
+            $this->createFilesystemCacheLoader(),
+            $this->createFilesystemCacheWriter(),
             $this->getConfig()->isPathCacheEnabled()
         );
 
         return $filesystemLoaderCache;
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Cache\CacheLoaderInterface
+     */
+    protected function createFilesystemCacheLoader()
+    {
+        return new FilesystemCacheLoader($this->getConfig()->getCacheFilePath());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Cache\CacheWriterInterface
+     */
+    protected function createFilesystemCacheWriter()
+    {
+        return new FilesystemCacheWriter($this->getConfig()->getCacheFilePath());
     }
 
     /**

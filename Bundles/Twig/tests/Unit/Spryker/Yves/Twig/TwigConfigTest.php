@@ -33,10 +33,10 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetPathCacheFilePathReturnsString()
+    public function testGetCacheFilePathReturnsString()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('string', $twigConfig->getPathCacheFilePath());
+        $this->assertInternalType('string', $twigConfig->getCacheFilePath());
     }
 
     /**

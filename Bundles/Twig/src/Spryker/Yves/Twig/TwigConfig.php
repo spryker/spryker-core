@@ -84,7 +84,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPathCacheFilePath()
+    public function getCacheFilePath()
     {
         return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
     }

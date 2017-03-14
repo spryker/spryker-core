@@ -5,11 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Twig\Cache\Filesystem;
+namespace Spryker\Shared\Twig\Cache\Cache;
 
 use Spryker\Shared\Twig\Cache\CacheInterface;
+use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
+use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
-class FilesystemLoaderCache implements CacheInterface
+class FilesystemCache implements CacheInterface
 {
 
     /**
@@ -33,26 +35,20 @@ class FilesystemLoaderCache implements CacheInterface
     protected $cache;
 
     /**
-     * @param string $cacheFilePath
-     * @param bool $enabled
+     * @var array
      */
-    public function __construct($cacheFilePath, $enabled)
-    {
-        $this->cacheFilePath = $cacheFilePath;
-        $this->enabled = $enabled;
-        $this->cache = $this->loadCache();
-    }
+    protected $cacheWriter;
 
     /**
-     * @return array
+     * @param \Spryker\Shared\Twig\Cache\CacheLoaderInterface $cacheLoader
+     * @param \Spryker\Shared\Twig\Cache\CacheWriterInterface $cacheWriter
+     * @param bool $enabled
      */
-    protected function loadCache()
+    public function __construct(CacheLoaderInterface $cacheLoader, CacheWriterInterface $cacheWriter, $enabled)
     {
-        if (!file_exists($this->cacheFilePath)) {
-            return [];
-        }
-
-        return include($this->cacheFilePath);
+        $this->cache = $cacheLoader->load();
+        $this->cacheWriter = $cacheWriter;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -117,18 +113,7 @@ class FilesystemLoaderCache implements CacheInterface
             return;
         }
 
-        $cacheFileContent = '<?php return [' . PHP_EOL;
-        foreach ($this->cache as $key => $value) {
-            $cacheFileContent .= '    \'' . $key . '\' => ' . var_export($value, true) . ',' . PHP_EOL;
-        }
-        $cacheFileContent .= '];';
-
-        $directory = dirname($this->cacheFilePath);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        file_put_contents($this->cacheFilePath, $cacheFileContent);
+        $this->cacheWriter->write($this->cache);
     }
 
 }

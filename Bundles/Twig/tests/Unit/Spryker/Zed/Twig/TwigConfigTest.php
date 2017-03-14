@@ -41,10 +41,19 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetPathCacheFilePathReturnsString()
+    public function testGetCacheFilePathReturnsString()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('string', $twigConfig->getPathCacheFilePath());
+        $this->assertInternalType('string', $twigConfig->getCacheFilePath());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheFilePathForYvesReturnsString()
+    {
+        $twigConfig = new TwigConfig();
+        $this->assertInternalType('string', $twigConfig->getCacheFilePathForYves());
     }
 
     /**
@@ -54,6 +63,24 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
     {
         $twigConfig = new TwigConfig();
         $this->assertInternalType('bool', $twigConfig->isPathCacheEnabled());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetZedDirectoryPathPattern()
+    {
+        $twigConfig = new TwigConfig();
+        $this->assertInternalType('array', $twigConfig->getZedDirectoryPathPattern());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetYvesDirectoryPathPattern()
+    {
+        $twigConfig = new TwigConfig();
+        $this->assertInternalType('array', $twigConfig->getYvesDirectoryPathPattern());
     }
 
 }

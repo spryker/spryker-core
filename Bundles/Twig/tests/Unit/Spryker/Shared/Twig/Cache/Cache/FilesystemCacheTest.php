@@ -5,11 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Twig\Cache\Filesystem;
+namespace Unit\Spryker\Shared\Twig\Cache\Cache;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Twig\Cache\CacheInterface;
-use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
+use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
+use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 
 /**
  * @group Unit
@@ -17,10 +19,10 @@ use Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache;
  * @group Shared
  * @group Twig
  * @group Cache
- * @group Filesystem
- * @group PathCacheTest
+ * @group Cache
+ * @group FilesystemCacheTest
  */
-class PathCacheTest extends PHPUnit_Framework_TestCase
+class FilesystemCacheTest extends PHPUnit_Framework_TestCase
 {
 
     const EXISTING_CACHE_KEY = 'key';
@@ -35,7 +37,7 @@ class PathCacheTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function setup()
+    public function setUp()
     {
         if (is_file($this->getCacheFile())) {
             unlink($this->getCacheFile());
@@ -103,15 +105,6 @@ EOL
     public function testHasReturnsFalseIfCacheHasKeyButCacheIsDisabled()
     {
         $this->assertFalse($this->getDisabledCache()->has(static::EXISTING_CACHE_KEY));
-    }
-
-    /**
-     * @return void
-     */
-    public function testLoadReturnsEmptyArrayIfCacheFileDoesNotExists()
-    {
-        $cache = new FilesystemLoaderCache('/invalid/file/path', true);
-        $this->assertInstanceOf(CacheInterface::class, $cache);
     }
 
     /**
@@ -212,46 +205,51 @@ EOL
     }
 
     /**
-     * @return void
-     */
-    public function testWhenDestructIsCalledAndCacheDirectoryDoesNotExistsItWillBeCreated()
-    {
-        $directoryToCreate = $this->getFixtureDirectory() . '/additional-directory/';
-        $pathToCacheFile = $directoryToCreate . 'cache.php';
-
-        if (is_file($pathToCacheFile)) {
-            unlink($pathToCacheFile);
-            rmdir($directoryToCreate);
-        }
-
-        $this->assertFalse(is_dir($directoryToCreate), 'Directory was not removed before test');
-
-        $cache = new FilesystemLoaderCache($pathToCacheFile, true);
-        $cache->set(static::NEW_CACHE_KEY, static::NEW_CACHE_VALUE);
-
-        $cache->__destruct();
-
-        $this->assertTrue(is_dir($directoryToCreate), 'Directory was not created by cache');
-    }
-
-    /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
+     * @return \Spryker\Shared\Twig\Cache\Cache\FilesystemCache
      */
     protected function getEnabledCache()
     {
         $pathToCacheFile = $this->getCacheFile();
 
-        return new FilesystemLoaderCache($pathToCacheFile, true);
+        return new FilesystemCache(
+            $this->getFilesystemCacheLoader($pathToCacheFile),
+            $this->getFilesystemCacheWriter($pathToCacheFile),
+            true
+        );
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Cache\Filesystem\FilesystemLoaderCache
+     * @return \Spryker\Shared\Twig\Cache\Cache\FilesystemCache
      */
     protected function getDisabledCache()
     {
         $pathToCacheFile = $this->getCacheFile();
 
-        return new FilesystemLoaderCache($pathToCacheFile, false);
+        return new FilesystemCache(
+            $this->getFilesystemCacheLoader($pathToCacheFile),
+            $this->getFilesystemCacheWriter($pathToCacheFile),
+            false
+        );
+    }
+
+    /**
+     * @param string $pathToCacheFile
+     *
+     * @return \Spryker\Shared\Twig\CacheLoader\FilesystemCacheLoader
+     */
+    protected function getFilesystemCacheLoader($pathToCacheFile)
+    {
+        return new FilesystemCacheLoader($pathToCacheFile);
+    }
+
+    /**
+     * @param string $pathToCacheFile
+     *
+     * @return \Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter
+     */
+    protected function getFilesystemCacheWriter($pathToCacheFile)
+    {
+        return new FilesystemCacheWriter($pathToCacheFile);
     }
 
 }
