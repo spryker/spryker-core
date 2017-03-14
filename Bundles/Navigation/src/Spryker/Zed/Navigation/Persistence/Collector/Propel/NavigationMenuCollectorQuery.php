@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Navigation\Persistence\Collector\Propel;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
@@ -29,17 +30,10 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
             Criteria::INNER_JOIN
         );
 
+        $this->touchQuery->addAnd(SpyTouchStorageTableMap::COL_FK_LOCALE, $this->getLocale()->getIdLocale());
+
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, self::FIELD_ID_NAVIGATION);
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, self::FIELD_KEY);
-
-        // TODO: fix duplicated entries of collected items
-//        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ID_TOUCH);
-//        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_EVENT);
-//        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_TYPE);
-//        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_ID);
-//        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_TOUCHED);
-//        $this->touchQuery->addGroupByColumn(SpyNavigationTableMap::COL_ID_NAVIGATION);
-//        $this->touchQuery->addGroupByColumn(SpyNavigationTableMap::COL_KEY);
     }
 
 }
