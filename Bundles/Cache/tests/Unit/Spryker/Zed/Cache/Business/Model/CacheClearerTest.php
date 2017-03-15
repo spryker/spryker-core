@@ -86,7 +86,7 @@ class CacheClearerTest extends Test
             ->will($this->returnSelf());
 
         $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
-        $cacheClearer->clearAutoLoadCache();
+        $cacheClearer->clearAutoLoaderCache();
     }
 
     /**
@@ -143,6 +143,11 @@ class CacheClearerTest extends Test
             ->expects($this->once())
             ->method('getAllowedStores')
             ->will($this->returnValue($stores));
+
+        $mock
+            ->expects($this->any())
+            ->method('getStorePatternMarker')
+            ->will($this->returnValue(CacheConfig::STORE_PATTERN_MARKER));
 
         return $mock;
     }

@@ -18,6 +18,6 @@ interface CacheClearerInterface
     /**
      * @return string[]
      */
-    public function clearAutoLoadCache();
+    public function clearAutoLoaderCache();
 
 }

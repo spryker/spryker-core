@@ -55,7 +55,7 @@ class CacheClearer implements CacheClearerInterface
     /**
      * @return string[]
      */
-    public function clearAutoLoadCache()
+    public function clearAutoLoaderCache()
     {
         return $this->clear(
             $this->config->getAutoloaderCachePath(),
@@ -95,7 +95,7 @@ class CacheClearer implements CacheClearerInterface
      */
     protected function getDirectoryPathFromPattern($directoryPattern, $store)
     {
-        return str_replace('{STORE}', $store, $directoryPattern);
+        return str_replace($this->config->getStorePatternMarker(), $store, $directoryPattern);
     }
 
     /**

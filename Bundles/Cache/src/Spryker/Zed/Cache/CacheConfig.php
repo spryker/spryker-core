@@ -13,12 +13,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CacheConfig extends AbstractBundleConfig
 {
 
+    const STORE_PATTERN_MARKER = '{STORE}';
+
     /**
      * @return string
      */
     public function getCachePath()
     {
-        return APPLICATION_ROOT_DIR . '/data/{STORE}/cache';
+        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/cache';
     }
 
     /**
@@ -26,7 +28,15 @@ class CacheConfig extends AbstractBundleConfig
      */
     public function getAutoloaderCachePath()
     {
-        return APPLICATION_ROOT_DIR . '/data/{STORE}/autoloader';
+        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/autoloader';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorePatternMarker()
+    {
+        return static::STORE_PATTERN_MARKER;
     }
 
     /**
