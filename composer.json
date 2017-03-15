@@ -292,6 +292,11 @@
       "Functional\\Spryker\\Shared\\Navigation\\": "Bundles/Navigation/tests",
       "Functional\\Spryker\\Zed\\Navigation\\": "Bundles/Navigation/tests",
 
+      "Spryker\\Shared\\NavigationCollector\\": "Bundles/NavigationCollector/src",
+      "Spryker\\Zed\\NavigationCollector\\": "Bundles/NavigationCollector/src",
+      "Functional\\Spryker\\Shared\\NavigationCollector\\": "Bundles/NavigationCollector/tests",
+      "Functional\\Spryker\\Zed\\NavigationCollector\\": "Bundles/NavigationCollector/tests",
+
       "Spryker\\Shared\\NavigationGui\\": "Bundles/NavigationGui/src",
       "Spryker\\Zed\\NavigationGui\\": "Bundles/NavigationGui/src",
       "Functional\\Spryker\\Shared\\NavigationGui\\": "Bundles/NavigationGui/tests",
