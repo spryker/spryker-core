@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Dependency\Facade;
+namespace Spryker\Zed\NavigationCollector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -16,21 +16,8 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class NavigationToCollectorBridge implements NavigationToCollectorInterface
+interface NavigationCollectorToCollectorInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
-     */
-    protected $collectorFacade;
-
-    /**
-     * @param \Spryker\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
-     */
-    public function __construct($collectorFacade)
-    {
-        $this->collectorFacade = $collectorFacade;
-    }
 
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
@@ -53,17 +40,6 @@ class NavigationToCollectorBridge implements NavigationToCollectorInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
-        $this->collectorFacade->runCollector(
-            $collector,
-            $baseQuery,
-            $localeTransfer,
-            $result,
-            $dataReader,
-            $dataWriter,
-            $touchUpdater,
-            $output
-        );
-    }
+    );
 
 }

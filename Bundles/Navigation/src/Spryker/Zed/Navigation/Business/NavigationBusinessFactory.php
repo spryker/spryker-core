@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business;
 
-use Spryker\Shared\Navigation\KeyBuilder\NavigationKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Navigation\Business\Collector\Storage\NavigationMenuCollector;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationCreator;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationDeleter;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationReader;
@@ -23,7 +21,6 @@ use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeHierarchyUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReader;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
-use Spryker\Zed\Navigation\Persistence\Collector\Propel\NavigationMenuCollectorQuery;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
@@ -134,63 +131,6 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function getTouchFacade()
     {
         return $this->getProvidedDependency(NavigationDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * @return \Spryker\Zed\Navigation\Business\Collector\Storage\NavigationMenuCollector
-     */
-    public function createStorageNavigationMenuCollector()
-    {
-        $storageNavigationMenuCollector = new NavigationMenuCollector(
-            $this->getUtilDataReaderService(),
-            $this->createNavigationTreeReader(),
-            $this->createNavigationKeyBuilder()
-        );
-
-        $storageNavigationMenuCollector->setTouchQueryContainer($this->getTouchQueryContainer());
-        $storageNavigationMenuCollector->setQueryBuilder($this->createNavigationMenuCollectorQuery());
-
-        return $storageNavigationMenuCollector;
-    }
-
-    /**
-     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
-     */
-    protected function createNavigationKeyBuilder()
-    {
-        return new NavigationKeyBuilder();
-    }
-
-    /**
-     * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
-     */
-    protected function getUtilDataReaderService()
-    {
-        return $this->getProvidedDependency(NavigationDependencyProvider::SERVICE_DATA_READER);
-    }
-
-    /**
-     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
-     */
-    protected function getTouchQueryContainer()
-    {
-        return $this->getProvidedDependency(NavigationDependencyProvider::QUERY_CONTAINER_TOUCH);
-    }
-
-    /**
-     * @return \Spryker\Zed\Navigation\Persistence\Collector\Propel\NavigationMenuCollectorQuery
-     */
-    protected function createNavigationMenuCollectorQuery()
-    {
-        return new NavigationMenuCollectorQuery();
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
-     */
-    public function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(NavigationDependencyProvider::FACADE_COLLECTOR);
     }
 
 }

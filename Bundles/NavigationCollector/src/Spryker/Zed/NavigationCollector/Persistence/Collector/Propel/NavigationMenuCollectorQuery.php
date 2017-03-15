@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Persistence\Collector\Propel;
+namespace Spryker\Zed\NavigationCollector\Persistence\Collector\Propel;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;

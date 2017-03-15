@@ -5,22 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Dependency\Facade;
+namespace Spryker\Zed\NavigationCollector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-interface NavigationToCollectorInterface
+interface NavigationCollectorFacadeInterface
 {
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
+     * Specification:
+     * - Executes navigation storage collector.
+     * - Collects all touched navigation entries.
+     * - Builds and exports navigation tree for each locale.
+     *
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
@@ -31,8 +36,7 @@ interface NavigationToCollectorInterface
      *
      * @return void
      */
-    public function runCollector(
-        DatabaseCollectorInterface $collector,
+    public function runStorageNavigationMenuCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,

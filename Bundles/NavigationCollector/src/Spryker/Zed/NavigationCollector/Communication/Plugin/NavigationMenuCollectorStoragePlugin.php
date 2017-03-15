@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Communication\Plugin;
+namespace Spryker\Zed\NavigationCollector\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -17,8 +17,7 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Navigation\Communication\NavigationCommunicationFactory getFactory()
- * @method \Spryker\Zed\Navigation\Business\NavigationFacade getFacade()
+ * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacade getFacade()
  */
 class NavigationMenuCollectorStoragePlugin extends AbstractCollectorPlugin
 {

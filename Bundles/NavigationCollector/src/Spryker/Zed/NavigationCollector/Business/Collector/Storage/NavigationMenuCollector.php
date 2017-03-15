@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Navigation\Business\Collector\Storage;
+namespace Spryker\Zed\NavigationCollector\Business\Collector\Storage;
 
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\Navigation\NavigationConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface;
-use Spryker\Zed\Navigation\Persistence\Collector\Propel\NavigationMenuCollectorQuery;
+use Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface;
+use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuCollectorQuery;
 
 class NavigationMenuCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface
+     * @var \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface
      */
-    protected $navigationTreeReader;
+    protected $navigationFacade;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
@@ -30,17 +30,17 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface $navigationTreeReader
+     * @param \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface $navigationFacade
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        NavigationTreeReaderInterface $navigationTreeReader,
+        NavigationCollectorToNavigationInterface $navigationFacade,
         KeyBuilderInterface $keyBuilder
     ) {
         parent::__construct($utilDataReaderService);
 
-        $this->navigationTreeReader = $navigationTreeReader;
+        $this->navigationFacade = $navigationFacade;
         $this->keyBuilder = $keyBuilder;
     }
 
@@ -75,7 +75,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($collectItemData[NavigationMenuCollectorQuery::FIELD_ID_NAVIGATION]);
 
-        $navigationTransfer = $this->navigationTreeReader->findNavigationTree($navigationTransfer, $this->locale);
+        $navigationTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $this->locale);
 
         return $navigationTransfer->toArray();
     }
