@@ -7,12 +7,13 @@
 
 namespace Spryker\Yves\FactFinder\Controller;
 
+use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
+use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @method \Spryker\Yves\FactFinder\FactFinderFactory getFactory()
@@ -73,13 +74,21 @@ class IndexController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
+        $ffSuggestRequestTransfer = new FactFinderSuggestRequestTransfer();
+        $ffSuggestRequestTransfer->setQuery($request->query->get('query', '*'));
 
-        $factFinderSearchRequestTransfer->setQuery($request->query->get('query', '*'));
-        $factFinderSearchRequestTransfer->setFormat($request->query->get('format'), '');
+        $response = $this->getClient()->getSuggestions($ffSuggestRequestTransfer);
 
-        $ffSearchResponseTransfer = $this->getClient()->search($factFinderSearchRequestTransfer);
+        return $this->jsonResponse($response->getSuggestions());
+    }
 
-        return $this->jsonResponse($ffSearchResponseTransfer->toArray());
+    public function recommendationsAction(Request $request)
+    {
+        $ffSuggestRequestTransfer = new FactFinderRecommendationRequestTransfer();
+        $ffSuggestRequestTransfer->setId($request->query->get('id', ''));
+
+        $response = $this->getClient()->getRecommendations($ffSuggestRequestTransfer);
+
+        return $this->jsonResponse($response->getSuggestions());
     }
 }

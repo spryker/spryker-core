@@ -183,7 +183,7 @@
     <!--END FACTFinder\Data\.. Objects-->
 
     <transfer name="FactFinderRecommendationRequest">
-        <property name="temp" type="string"/>
+        <property name="id" type="string"/>
     </transfer>
 
     <transfer name="FactFinderRecommendationResponse">
@@ -191,11 +191,11 @@
     </transfer>
 
     <transfer name="FactFinderSuggestRequest">
-        <property name="temp" type="string"/>
+        <property name="query" type="string"/>
     </transfer>
 
     <transfer name="FactFinderSuggestResponse">
-        <property name="temp" type="string"/>
+        <property name="suggestions" type="array"/>
     </transfer>
 
     <transfer name="FactFinderTagCloudRequest">

@@ -33,6 +33,17 @@ class SuggestResponseConverter extends BaseConverter
     {
         $responseTransfer = new FactFinderSuggestResponseTransfer();
 
+        $suggestions = $this->suggestAdapter->getSuggestions();
+
+        foreach($suggestions as $suggestion) {
+            $responseTransfer->addSuggestions([
+                'imageUrl' => $suggestion->getImageUrl(),
+                'label' => $suggestion->getLabel(),
+                'url' => $suggestion->getUrl(),
+                'attributes' => $suggestion->getAttributes(),
+            ]);
+        }
+
         return $responseTransfer;
     }
 

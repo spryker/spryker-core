@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\FactFinder;
 
+use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
+use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 
 interface FactFinderClientInterface
 {
@@ -43,18 +45,19 @@ interface FactFinderClientInterface
     /**
      * @api
      *
-     * @param string $locale
-     * @param string $lang
-     * @param string $sku
-     * @return \Pyz\Yves\Product\Model\ProductAbstract
+     * @param \Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FactFinderRecommendationsResponseTransfer
      */
-    public function getProductData($locale, $lang, $sku);
+    public function getRecommendations(FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer);
 
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FactFinderRecommendationsResponseTransfer
+     * @param FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
-    public function recommendations();
+    public function getSuggestions(FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer);
 
 }

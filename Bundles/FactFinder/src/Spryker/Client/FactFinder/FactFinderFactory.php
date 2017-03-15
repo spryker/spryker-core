@@ -13,7 +13,9 @@ use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Client\FactFinder\Business\Api\FactFinderConnector;
+use Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest;
+use Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequest;
 use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -41,6 +43,28 @@ class FactFinderFactory extends AbstractFactory
     public function createSearchRequest()
     {
         return new SearchRequest(
+            $this->createFactFinderConnector(),
+            $this->createConverterFactory()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequest
+     */
+    public function createSuggestRequest()
+    {
+        return new SuggestRequest(
+            $this->createFactFinderConnector(),
+            $this->createConverterFactory()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest
+     */
+    public function createRecommendationsRequest()
+    {
+        return new RecommendationRequest(
             $this->createFactFinderConnector(),
             $this->createConverterFactory()
         );

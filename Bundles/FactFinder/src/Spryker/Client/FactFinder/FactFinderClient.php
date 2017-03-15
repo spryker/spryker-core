@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\FactFinder;
 
+use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
+use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -69,31 +71,39 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
-     * @api
+     * @param FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
      *
-     * @param string $locale
-     * @param string $lang
-     * @param string $sku
-     * @return \Pyz\Yves\Product\Model\ProductAbstract
+     * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
-    public function getProductData($locale, $lang, $sku)
+    public function getSuggestions(FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer)
     {
-        $productData = $this->getFactory()
-            ->createProductByUrlResolver()
-            ->getProductDataByLocaleAndSku($locale, $lang, $sku);
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setFactFinderSuggestRequest($factFinderSuggestRequestTransfer);
 
-        return $this->getFactory()->createFrontendProductBuilder()->buildProduct($productData);
+        $ffSuggestResponseTransfer = $this
+            ->getFactory()
+            ->createSuggestRequest()
+            ->request($quoteTransfer);
 
+        return $ffSuggestResponseTransfer;
     }
 
     /**
-     * @api
+     * @param FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderRecommendationResponseTransfer
      */
-    public function recommendations()
+    public function getRecommendations(FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer)
     {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setFactFinderRecommendationRequest($factFinderRecommendationRequestTransfer);
 
+        $factFinderRecommendationResponseTransfer = $this
+            ->getFactory()
+            ->createRecommendationsRequest()
+            ->request($quoteTransfer);
+
+        return $factFinderRecommendationResponseTransfer;
     }
 
     /**

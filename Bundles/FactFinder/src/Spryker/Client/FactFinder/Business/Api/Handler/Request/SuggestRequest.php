@@ -22,13 +22,13 @@ class SuggestRequest extends AbstractRequest implements RequestInterface
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFactFinderSuggestRequest();
+        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
+        $this->ffConnector->setRequestParameters($requestParameters);
 
         $suggestAdapter = $this->ffConnector->createSuggestAdapter();
 
         $this->logInfo($quoteTransfer, $suggestAdapter);
 
-        // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createSuggestResponseConverter($suggestAdapter)
             ->convert();

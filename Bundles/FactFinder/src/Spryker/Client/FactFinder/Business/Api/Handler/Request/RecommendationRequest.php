@@ -22,15 +22,17 @@ class RecommendationRequest extends AbstractRequest implements RequestInterface
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $recommendationRequestTransfer = $quoteTransfer->getFactFinderRecommendationRequest();
+        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
+        $this->ffConnector->setRequestParameters($requestParameters);
 
-        $recommendationAdapter = $this->ffConnector->createRecommendationAdapter();
+        $suggestAdapter = $this->ffConnector->createRecommendationAdapter();
 
-        $this->logInfo($quoteTransfer, $recommendationAdapter);
+        $rec = $suggestAdapter->getRecommendations();
 
-        // convert to FFSearchResponseTransfer
+        $this->logInfo($quoteTransfer, $suggestAdapter);
+
         $responseTransfer = $this->converterFactory
-            ->createRecommendationResponseConverter($recommendationAdapter)
+            ->createRecommendationResponseConverter($suggestAdapter)
             ->convert();
 
         return $responseTransfer;
