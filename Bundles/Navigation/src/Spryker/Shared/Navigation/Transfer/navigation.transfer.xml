@@ -27,6 +27,7 @@
         <property name="title" type="string" />
         <property name="fkUrl" type="int" />
         <property name="url" type="string" />
+        <property name="link" type="string" />
         <property name="externalUrl" type="string" />
     </transfer>
 

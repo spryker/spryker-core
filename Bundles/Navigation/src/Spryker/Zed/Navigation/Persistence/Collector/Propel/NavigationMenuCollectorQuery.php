@@ -30,8 +30,6 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
             Criteria::INNER_JOIN
         );
 
-        $this->touchQuery->addAnd(SpyTouchStorageTableMap::COL_FK_LOCALE, $this->getLocale()->getIdLocale());
-
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, self::FIELD_ID_NAVIGATION);
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, self::FIELD_KEY);
     }

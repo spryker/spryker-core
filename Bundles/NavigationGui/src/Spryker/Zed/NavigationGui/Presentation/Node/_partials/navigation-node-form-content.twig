@@ -16,6 +16,10 @@
                             {{ form_errors(navigationNodeLocalizedAttributes.title) }}
                         </div>
 
+                        <div class="js-node-type-field hidden" data-node-type="link">
+                            {{ form_row(navigationNodeLocalizedAttributes.link) }}
+                        </div>
+
                         <div class="js-node-type-field hidden" data-node-type="external_url">
                             {{ form_row(navigationNodeLocalizedAttributes.external_url) }}
                         </div>

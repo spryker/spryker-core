@@ -92,6 +92,7 @@ class NavigationNodeFormDataProvider
         return [
             'Category' => 'category',
             'CMS page' => 'cms',
+            'Link' => 'link',
             'External URL' => 'external_url',
         ];
     }
@@ -104,6 +105,7 @@ class NavigationNodeFormDataProvider
         return [
             'Category' => ['data-url' => '/search-for-category'],
             'CMS page' => ['data-url' => '/search-for-cms'],
+            'Link' => [],
             'External URL' => [],
         ];
     }

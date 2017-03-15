@@ -36,6 +36,9 @@ var config = {
         'category': {
             'icon': 'fa fa-sitemap'
         },
+        'link': {
+            'icon': 'fa fa-link'
+        },
         'external_url': {
             'icon': 'fa fa-external-link'
         }

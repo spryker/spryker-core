@@ -53,6 +53,7 @@
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_url" required="false" type="INTEGER" default="NULL"/>
         <column name="title" type="VARCHAR" size="255" required="true"/>
+        <column name="link" type="VARCHAR" size="255" required="false" default="NULL"/>
         <column name="external_url" type="VARCHAR" size="255" required="false" default="NULL"/>
 
         <foreign-key foreignTable="spy_navigation_node" onDelete="CASCADE">

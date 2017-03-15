@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
 class NavigationNodeLocalizedAttributesFormType extends AbstractType
@@ -29,6 +30,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
 
     const FIELD_TITLE = 'title';
     const FIELD_FK_LOCALE = 'fk_locale';
+    const FIELD_LINK = 'link';
     const FIELD_EXTERNAL_URL = 'external_url';
     const FIELD_FK_URL = 'fk_url';
     const FIELD_CMS_PAGE_URL = 'cms_page_url';
@@ -36,6 +38,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
 
     const GROUP_CMS = 'cms';
     const GROUP_CATEGORY = 'category';
+    const GROUP_LINK = 'link';
     const GROUP_EXTERNAL_URL = 'external_url';
 
     /**
@@ -106,6 +109,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         $this
             ->addTitleField($builder)
+            ->addInternalUrlField($builder)
             ->addExternalUrlField($builder)
             ->addCmsPageUrlField($builder)
             ->addCategoryUrlField($builder)
@@ -177,6 +181,34 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             [$this, 'transformCategoryUrlField'],
             [$this, 'reverseTransformCategoryUrlField']
         ));
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addInternalUrlField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_LINK, TextType::class, [
+                'label' => 'Link',
+                'attr' => [
+                    'placeholder' => '/',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'groups' => [self::GROUP_LINK],
+                    ]),
+                    new Regex([
+                        'pattern' => '/^\/.*/i',
+                        'groups' => [self::GROUP_LINK],
+                        'message' => 'Links should start with "/".',
+                    ]),
+                ],
+            ]);
 
         return $this;
     }
