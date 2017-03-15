@@ -55,6 +55,14 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     }
 
     /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
+
+    /**
      * @param string $touchKey
      * @param array $collectItemData
      *
