@@ -30,7 +30,7 @@ var config = {
         'navigation': {
             'icon': 'fa fa-list'
         },
-        'cms': {
+        'cms_page': {
             'icon': 'fa fa-file-o'
         },
         'category': {

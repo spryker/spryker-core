@@ -35,6 +35,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     const FIELD_FK_URL = 'fk_url';
     const FIELD_CMS_PAGE_URL = 'cms_page_url';
     const FIELD_CATEGORY_URL = 'category_url';
+    const FIELD_CUSTOM_CLASS = 'custom_class';
 
     const GROUP_CMS = 'cms';
     const GROUP_CATEGORY = 'category';
@@ -109,10 +110,11 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         $this
             ->addTitleField($builder)
-            ->addInternalUrlField($builder)
+            ->addLinkField($builder)
             ->addExternalUrlField($builder)
             ->addCmsPageUrlField($builder)
             ->addCategoryUrlField($builder)
+            ->addClassField($builder)
             ->addFkLocaleField($builder);
     }
 
@@ -190,7 +192,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addInternalUrlField(FormBuilderInterface $builder)
+    protected function addLinkField(FormBuilderInterface $builder)
     {
         $builder
             ->add(self::FIELD_LINK, TextType::class, [
@@ -234,6 +236,21 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
                         'groups' => [self::GROUP_EXTERNAL_URL],
                     ]),
                 ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addClassField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_CUSTOM_CLASS, TextType::class, [
+                'label' => 'Custom CSS class',
             ]);
 
         return $this;

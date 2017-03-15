@@ -91,7 +91,7 @@ class NavigationNodeFormDataProvider
     {
         return [
             'Category' => 'category',
-            'CMS page' => 'cms',
+            'CMS page' => 'cms_page',
             'Link' => 'link',
             'External URL' => 'external_url',
         ];
