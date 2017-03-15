@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Queue\Business\Model\Process;
+namespace Spryker\Zed\Queue\Business\Process;
 
 use Generated\Shared\Transfer\QueueProcessTransfer;
-use Orm\Zed\Queue\Persistence\Map\SpyQueueProcessTableMap;
 use Orm\Zed\Queue\Persistence\SpyQueueProcess;
 use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
 use Symfony\Component\Process\Process;
@@ -62,7 +61,6 @@ class ProcessManager implements ProcessManagerInterface
     {
         $processIds = $this->queryContainer
             ->queryProcessesByServerIdAndQueueName($this->serverUniqueId, $queueName)
-            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID)
             ->find();
 
         $busyProcessIndex = $this->releaseIdleProcesses($processIds);
@@ -77,7 +75,6 @@ class ProcessManager implements ProcessManagerInterface
     {
         $processIds = $this->queryContainer
             ->queryProcessesByServerId($this->serverUniqueId)
-            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID)
             ->find();
 
         if (!empty($processIds)) {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Queue\Business\Model\Process;
+namespace Spryker\Zed\Queue\Business\Process;
 
 interface ProcessManagerInterface
 {

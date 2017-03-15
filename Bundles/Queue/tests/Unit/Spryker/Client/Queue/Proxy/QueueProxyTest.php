@@ -8,10 +8,11 @@
 namespace Unit\Spryker\Client\Queue\Proxy;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\QueueMessageTransfer;
-use Generated\Shared\Transfer\QueueOptionTransfer;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
 use Spryker\Client\Queue\Model\Proxy\QueueProxy;
+use Spryker\Shared\Queue\QueueConfig;
 
 /**
  * @group Unit
@@ -23,6 +24,8 @@ use Spryker\Client\Queue\Model\Proxy\QueueProxy;
  */
 class QueueProxyTest extends Test
 {
+
+    const TEST_QUEUE_NAME = 'testQueueName';
 
     /**
      * @var \Spryker\Client\Queue\Model\Proxy\QueueProxy
@@ -44,8 +47,11 @@ class QueueProxyTest extends Test
 
         $this->queueProxy = new QueueProxy(
             ['testQueueEngine' => $this->queueAdapterMock],
-            'testQueueEngine',
-            ['testQueue' => 'testQueueEngine']
+            [
+                self::TEST_QUEUE_NAME => [
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock)
+                ]
+            ]
         );
     }
 
@@ -58,9 +64,9 @@ class QueueProxyTest extends Test
         $this->queueAdapterMock->expects($this->once())->method('purgeQueue');
         $this->queueAdapterMock->expects($this->once())->method('deleteQueue');
 
-        $this->queueProxy->createQueue(new QueueOptionTransfer());
-        $this->queueProxy->purgeQueue('testingQueue');
-        $this->queueProxy->deleteQueue('testingQueue');
+        $this->queueProxy->createQueue(self::TEST_QUEUE_NAME);
+        $this->queueProxy->purgeQueue(self::TEST_QUEUE_NAME);
+        $this->queueProxy->deleteQueue(self::TEST_QUEUE_NAME);
     }
 
     /**
@@ -71,8 +77,8 @@ class QueueProxyTest extends Test
         $this->queueAdapterMock->expects($this->once())->method('sendMessage');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessage');
 
-        $this->queueProxy->sendMessage(new QueueMessageTransfer());
-        $this->queueProxy->receiveMessage(new QueueOptionTransfer());
+        $this->queueProxy->sendMessage(self::TEST_QUEUE_NAME, new QueueSendMessageTransfer());
+        $this->queueProxy->receiveMessage(self::TEST_QUEUE_NAME);
     }
 
     /**
@@ -83,8 +89,8 @@ class QueueProxyTest extends Test
         $this->queueAdapterMock->expects($this->once())->method('sendMessages');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessages');
 
-        $this->queueProxy->sendMessages('testQueue', [new QueueMessageTransfer()]);
-        $this->queueProxy->receiveMessages(new QueueOptionTransfer());
+        $this->queueProxy->sendMessages(self::TEST_QUEUE_NAME, [new QueueSendMessageTransfer()]);
+        $this->queueProxy->receiveMessages(self::TEST_QUEUE_NAME);
     }
 
     /**
@@ -94,11 +100,12 @@ class QueueProxyTest extends Test
     {
         $this->queueAdapterMock->expects($this->once())->method('acknowledge');
         $this->queueAdapterMock->expects($this->once())->method('reject');
-        $this->queueAdapterMock->expects($this->once())->method('handleErrorMessage');
+        $this->queueAdapterMock->expects($this->once())->method('handleError');
 
-        $this->queueProxy->acknowledge(new QueueMessageTransfer());
-        $this->queueProxy->reject(new QueueMessageTransfer());
-        $this->queueProxy->handleErrorMessage(new QueueMessageTransfer());
+        $queueReceiveMessageTransfer = (new QueueReceiveMessageTransfer())->setQueueName(self::TEST_QUEUE_NAME);
+        $this->queueProxy->acknowledge($queueReceiveMessageTransfer);
+        $this->queueProxy->reject($queueReceiveMessageTransfer);
+        $this->queueProxy->handleError($queueReceiveMessageTransfer);
     }
 
     /**
@@ -106,14 +113,15 @@ class QueueProxyTest extends Test
      */
     public function testQueueProxyGetsRightAdapter()
     {
-        $alphaQueueMessageTransfer = $this->createDummyQueueMessageTransfer('Alpha', 'alphaQueue');
-        $betaQueueMessageTransfer = $this->createDummyQueueMessageTransfer('Beta', 'betaQueue');
+        $alphaQueueMessageTransfer = $this->createDummyQueueReceiveMessageTransfer('Alpha', 'alphaQueue');
+        $betaQueueMessageTransfer = $this->createDummyQueueReceiveMessageTransfer('Beta', 'betaQueue');
 
         $alphaQueueAdapterMock = $this->getMockBuilder(AdapterInterface::class)->getMock();
         $alphaQueueAdapterMock->method('receiveMessage')
             ->willReturn($alphaQueueMessageTransfer);
-
-        $betaQueueAdapterMock = $this->getMockBuilder(AdapterInterface::class)->getMock();
+        $betaQueueAdapterMock = $this->getMockBuilder(AdapterInterface::class)
+            ->setMockClassName('Spryker_Client_Queue_Model_Adapter_Beta_AdapterInterface')
+            ->getMock();
         $betaQueueAdapterMock->method('receiveMessage')
             ->willReturn($betaQueueMessageTransfer);
 
@@ -122,27 +130,33 @@ class QueueProxyTest extends Test
                 'alphaQueueEngine' => $alphaQueueAdapterMock,
                 'betaQueueEngine' => $betaQueueAdapterMock,
             ],
-            'alphaQueueEngine',
             [
-                'alphaQueue' => 'alphaQueueEngine',
-                'betaQueue' => 'betaQueueEngine',
+                'alphaQueue' => [
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($alphaQueueAdapterMock)
+                ],
+                'betaQueue' => [
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($betaQueueAdapterMock)
+                ],
             ]
         );
 
-        $alphaMessage = $queueProxy->receiveMessage((new QueueOptionTransfer())->setQueueName('alphaQueue'));
+        $alphaMessage = $queueProxy->receiveMessage('alphaQueue')->setQueueName('alphaQueue');
         $this->assertEquals($alphaQueueMessageTransfer->toArray(), $alphaMessage->toArray());
 
-        $betaMessage = $queueProxy->receiveMessage((new QueueOptionTransfer())->setQueueName('betaQueue'));
+        $betaMessage = $queueProxy->receiveMessage('betaQueue')->setQueueName('betaQueue');
         $this->assertEquals($betaQueueMessageTransfer->toArray(), $betaMessage->toArray());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    protected function createDummyQueueMessageTransfer($body, $queueName)
+    protected function createDummyQueueReceiveMessageTransfer($body, $queueName)
     {
-        $queueMessageTransfer = new QueueMessageTransfer();
-        $queueMessageTransfer->setBody($body);
+        $queueSendMessageTransfer = new QueueSendMessageTransfer();
+        $queueSendMessageTransfer->setBody($body);
+
+        $queueMessageTransfer = new QueueReceiveMessageTransfer();
+        $queueMessageTransfer->setQueueMessage($queueSendMessageTransfer);
         $queueMessageTransfer->setQueueName($queueName);
 
         return $queueMessageTransfer;

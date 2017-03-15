@@ -7,38 +7,45 @@
 
 namespace Spryker\Client\Queue\Model\Internal;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
-use Generated\Shared\Transfer\QueueOptionTransfer;
-
 interface ManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     * Specification
+     *  - Creates a queue with the given queue name and returns the queue information
      *
-     * @return \Generated\Shared\Transfer\QueueOptionTransfer
+     * @api
+     *
+     * @param string $queueName
+     * @param array|null $options
+     *
+     * @return array
      */
-    public function createQueue(QueueOptionTransfer $queueOptionTransfer);
+    public function createQueue($queueName, array $options = null);
 
     /**
+     * Specification
+     *  - Purges all messages from the queue
+     *
+     * @api
+     *
      * @param string $queueName
+     * @param array|null $options
      *
      * @return bool
      */
-    public function deleteQueue($queueName);
+    public function purgeQueue($queueName, array $options = null);
 
     /**
+     * Specification
+     *  - Deletes a queue with the given queue name
+     *
+     * @api
+     *
      * @param string $queueName
+     * @param array|null $options
      *
      * @return bool
      */
-    public function purgeQueue($queueName);
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
-     */
-    public function handleErrorMessage(QueueMessageTransfer $queueMessageTransfer);
-
+    public function deleteQueue($queueName, array $options = null);
 }

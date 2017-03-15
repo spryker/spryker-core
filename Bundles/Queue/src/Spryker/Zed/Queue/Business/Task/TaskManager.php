@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Queue\Business\Model\Task;
+namespace Spryker\Zed\Queue\Business\Task;
 
-use Generated\Shared\Transfer\QueueOptionTransfer;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
-use Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
 
-class Task implements TaskInterface
+class TaskManager implements TaskManagerInterface
 {
-
-    const DEFAULT_CONSUMER_CONFIG_QUEUE_NAME = 'default';
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -53,8 +49,8 @@ class Task implements TaskInterface
     public function run($queueName)
     {
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
-        $queueOptionTransfer = $this->getQueueReceiverConfigTransfer($queueName, $processorPlugin->getChunkSize());
-        $messages = $this->receiveMessages($queueOptionTransfer);
+        $queueOptions = $this->getQueueReceiverOptions($queueName);
+        $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize() ,$queueOptions);
 
         if ($messages !== null) {
             $processedMessages = $processorPlugin->processMessages($messages);
@@ -86,63 +82,45 @@ class Task implements TaskInterface
 
     /**
      * @param string $queueName
+     *
+     * @return array
+     */
+    protected function getQueueReceiverOptions($queueName)
+    {
+        return $this->queueConfig->getQueueReceiverOption($queueName);
+    }
+
+    /**
+     * @param string $queueName
      * @param int $chunkSize
+     * @param array|null $options
      *
-     * @throws \Spryker\Zed\Queue\Business\Exception\MissingQueueConfigException
-     *
-     * @return \Generated\Shared\Transfer\QueueOptionTransfer
+     * @return QueueReceiveMessageTransfer[]
      */
-    protected function getQueueReceiverConfigTransfer($queueName, $chunkSize)
+    public function receiveMessages($queueName, $chunkSize, array $options = null)
     {
-        $queueOptionTransfer = $this->queueConfig->getQueueReceiverConfig($queueName);
-        if ($queueOptionTransfer === null) {
-            throw new MissingQueueConfigException(
-                sprintf(
-                    'No queue configuration was found for this queue: %s, ',
-                    'you can fix this error by adding it in QueueConfig',
-                    $queueName
-                )
-            );
-        }
-
-        $queueOptionTransfer->setChunkSize($chunkSize);
-        if ($queueOptionTransfer->getQueueName() === self::DEFAULT_CONSUMER_CONFIG_QUEUE_NAME) {
-            $queueOptionTransfer->setQueueName($queueName);
-        }
-
-        return $queueOptionTransfer;
+        return $this->client->receiveMessages($queueName, $chunkSize, $options);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
-     */
-    protected function receiveMessages(QueueOptionTransfer $queueOptionTransfer)
-    {
-        return $this->client->receiveMessages($queueOptionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $processedMessages
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
      *
      * @return void
      */
-    protected function postProcessMessages(array $processedMessages)
+    protected function postProcessMessages(array $queueReceiveMessageTransfers)
     {
-        foreach ($processedMessages as $processedMessage) {
-            if ($processedMessage->getAcknowledge()) {
-                $this->client->acknowledge($processedMessage);
+        foreach ($queueReceiveMessageTransfers as $queueReceiveMessageTransfer) {
+            if ($queueReceiveMessageTransfer->getAcknowledge()) {
+                $this->client->acknowledge($queueReceiveMessageTransfer);
             }
 
-            if ($processedMessage->getReject()) {
-                $this->client->reject($processedMessage);
+            if ($queueReceiveMessageTransfer->getReject()) {
+                $this->client->reject($queueReceiveMessageTransfer);
             }
 
-            if ($processedMessage->getHasError()) {
-                $this->client->handleErrorMessage($processedMessage);
+            if ($queueReceiveMessageTransfer->getHasError()) {
+                $this->client->handleError($queueReceiveMessageTransfer);
             }
         }
     }
-
 }

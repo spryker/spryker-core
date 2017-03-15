@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Queue\Business\Model\Process\ProcessManager;
-use Spryker\Zed\Queue\Business\Model\Task\Task;
-use Spryker\Zed\Queue\Business\Model\Worker\Worker;
+use Spryker\Zed\Queue\Business\Process\ProcessManager;
+use Spryker\Zed\Queue\Business\Task\TaskManager;
+use Spryker\Zed\Queue\Business\Worker\Worker;
+use Spryker\Zed\Queue\Business\Worker\WorkerProgressBar;
 use Spryker\Zed\Queue\QueueDependencyProvider;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -27,11 +28,11 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     protected static $serverUniqueId;
 
     /**
-     * @return \Spryker\Zed\Queue\Business\Model\Task\Task
+     * @return \Spryker\Zed\Queue\Business\Task\TaskManager
      */
     public function createTask()
     {
-        return new Task(
+        return new TaskManager(
             $this->getQueueClient(),
             $this->getConfig(),
             $this->getProcessorMessagePlugins()
@@ -41,20 +42,20 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Queue\Business\Model\Worker\Worker
+     * @return \Spryker\Zed\Queue\Business\Worker\Worker
      */
     public function createWorker(OutputInterface $output)
     {
         return new Worker(
             $this->createProcessManager(),
-            $this->getQueueNames(),
-            $this->getQueueWorkerConfig(),
-            $output
+            $this->getConfig(),
+            $this->createWorkerProgressbar($output),
+            $this->getQueueNames()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Queue\Business\Model\Process\ProcessManagerInterface
+     * @return \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface
      */
     public function createProcessManager()
     {
@@ -65,11 +66,13 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @param OutputInterface $output
+     *
+     * @return WorkerProgressBar
      */
-    public function getQueueWorkerConfig()
+    public function createWorkerProgressbar(OutputInterface $output)
     {
-        return $this->getConfig()->getQueueWorkerConfig();
+        return new WorkerProgressBar($output);
     }
 
     /**
@@ -107,5 +110,4 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
     }
-
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Queue;
 
-use Generated\Shared\Transfer\QueueOptionTransfer;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -21,30 +20,31 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @param string $queueName
      *
-     * @return \Generated\Shared\Transfer\QueueOptionTransfer
+     * @return array|null
      */
-    public function getQueueReceiverConfig($queueName)
+    public function getQueueReceiverOption($queueName)
     {
-        $queueReceiverConfigs = $this->getQueueReceiverConfigs();
+        $queueReceiverOptions = $this->getQueueReceiverOptions();
 
-        if (array_key_exists($queueName, $queueReceiverConfigs)) {
-            return $queueReceiverConfigs[$queueName];
+        if (array_key_exists($queueName, $queueReceiverOptions)) {
+            return $queueReceiverOptions[$queueName];
         }
 
-        return $queueReceiverConfigs['default'];
+        return null;
     }
 
     /**
+     * Queue receiver options can be defined
+     * here by having queue name as a key.
+     *
+     *  e.g: 'mail' => $option
+     *
      * @return array
+     *
      */
-    public function getQueueWorkerConfig()
+    protected function getQueueReceiverOptions()
     {
-        return [
-            QueueConstants::QUEUE_WORKER_PROCESSOR => $this->getQueueWorkerProcessorCount(),
-            QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS => $this->getQueueWorkerInterval(),
-            QueueConstants::QUEUE_WORKER_OUTPUT_FILE => $this->getQueueWorkerOutputFile(),
-            QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS => $this->getQueueWorkerMaxThreshold(),
-        ];
+        return [];
     }
 
     /**
@@ -58,23 +58,9 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
-     * The Amount of queue processors can be defined
-     * here by having queue name as a key.
-     * The default value is 1 process per queue.
-     *
-     *  e.g: 'mail' => 5
-     *
-     * @return int[]
-     */
-    protected function getQueueWorkerProcessorCount()
-    {
-        return [];
-    }
-
-    /**
      * @return int
      */
-    protected function getQueueWorkerInterval()
+    public function getQueueWorkerInterval()
     {
         return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, self::DEFAULT_INTERVAL_SECONDS);
     }
@@ -82,7 +68,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    protected function getQueueWorkerOutputFile()
+    public function getQueueWorkerOutputFile()
     {
         return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE, self::DEFAULT_QUEUE_OUTPUT_FILE);
     }
@@ -90,7 +76,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    protected function getQueueWorkerMaxThreshold()
+    public function getQueueWorkerMaxThreshold()
     {
         return $this->get(QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS, self::DEFAULT_THRESHOLD);
     }
@@ -98,19 +84,9 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    protected function getQueueReceiverConfigs()
+    public function getQueueAdapterConfiguration()
     {
-        return [
-            'default' => $this->getDefaultQueueReceiverConfig(),
-        ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QueueOptionTransfer
-     */
-    protected function getDefaultQueueReceiverConfig()
-    {
-        return new QueueOptionTransfer();
+        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION);
     }
 
 }

@@ -16,17 +16,8 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getQueueAdapterNameMapping()
+    public function getQueueAdapterConfiguration()
     {
-        return $this->get(QueueConstants::QUEUE_ADAPTOR_NAME_MAPPING);
+        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION);
     }
-
-    /**
-     * @return string
-     */
-    public function getDefaultQueueAdapterName()
-    {
-        return $this->get(QueueConstants::QUEUE_ADAPTOR_NAME_DEFAULT);
-    }
-
 }

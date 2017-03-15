@@ -5,10 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Queue\Business\Exception;
+namespace Spryker\Zed\Queue\Business\Task;
 
-use Exception;
-
-class MissingQueueConfigException extends Exception
+interface TaskManagerInterface
 {
+
+    /**
+     * @param string $queueName
+     *
+     * @return void
+     */
+    public function run($queueName);
+
 }

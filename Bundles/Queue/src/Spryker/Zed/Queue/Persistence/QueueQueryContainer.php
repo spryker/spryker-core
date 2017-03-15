@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Queue\Persistence;
 
+use Orm\Zed\Queue\Persistence\Map\SpyQueueProcessTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -29,7 +30,8 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
         return $this->getFactory()
             ->createSpyQueueProcessQuery()
             ->filterByServerId($serverId)
-            ->filterByQueueName($queueName);
+            ->filterByQueueName($queueName)
+            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID);
     }
 
     /**
@@ -57,7 +59,8 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     {
         return $this->getFactory()
             ->createSpyQueueProcessQuery()
-            ->filterByServerId($serverId);
+            ->filterByServerId($serverId)
+            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID);
     }
 
     /**

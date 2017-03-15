@@ -7,24 +7,35 @@
 
 namespace Spryker\Client\Queue\Model\Internal;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
 
 interface SenderInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * Specification:
+     * - Sends message to queue
+     *
+     * @api
+     * 
+     * @param string $queueName
+     * @param QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */
-    public function sendMessage(QueueMessageTransfer $queueMessageTransfer);
+    public function sendMessage($queueName, QueueSendMessageTransfer $queueSendMessageTransfer);
 
     /**
+     * Specification:
+     * - Sends batch messages to queue
+     *
+     * @api
+     *
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $queueMessageTransfers
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
      *
      * @return void
      */
-    public function sendMessages($queueName, array $queueMessageTransfers);
+    public function sendMessages($queueName, array $queueSendMessageTransfers);
 
 }

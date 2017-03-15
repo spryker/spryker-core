@@ -7,38 +7,72 @@
 
 namespace Spryker\Client\Queue\Model\Internal;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
-use Generated\Shared\Transfer\QueueOptionTransfer;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 
 interface ReceiverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     * Specification
+     *  - Returns messages from the queue
      *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
+     * @api
+     *
+     * @param string $queueName
+     * @param int $chunkSize
+     * @param array|null $options
+     *
+     * @return QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages(QueueOptionTransfer $queueOptionTransfer);
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = null);
 
     /**
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     * Specification
+     *  - Return a message from the queue
      *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
+     * @api
+     *
+     * @param string $queueName
+     * @param array|null $options
+     *
+     * @return QueueReceiveMessageTransfer
      */
-    public function receiveMessage(QueueOptionTransfer $queueOptionTransfer);
+    public function receiveMessage($queueName, array $options = null);
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * Specification
+     *  - Sends acknowledgement for a specific message to queue
+     *
+     * @api
+     *
+     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
-    public function acknowledge(QueueMessageTransfer $queueMessageTransfer);
+    public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * Specification
+     *  - Sends reject for a specific message to queue
+     *
+     * @api
+     *
+     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
-    public function reject(QueueMessageTransfer $queueMessageTransfer);
+    public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
+
+    /**
+     * Specification
+     *  - Manages error handling for the queue
+     *
+     * @api
+     *
+     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
+     * @return bool
+     */
+    public function handleError(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
 
 }
