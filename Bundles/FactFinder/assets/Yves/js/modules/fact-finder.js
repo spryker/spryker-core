@@ -14,8 +14,23 @@ function init(config) {
         window.location = $("#ffSortSelect").val();
     });
 
-    $("#ffSearchInput").keyup(function(){
-        factFinderSearch.query($("#ffSearchInput").val());
+    $("#ffSearchInput").keyup(function(e){
+        switch(e.which) {
+            case 38: // up
+                suggestionsBox.highlightRow(-1);
+                break;
+
+            case 40: // down
+                suggestionsBox.highlightRow(1);
+                break;
+
+            case 13: // enter
+                suggestionsBox.goTo(e);
+                break;
+
+            default: factFinderSearch.query($("#ffSearchInput").val());
+                break;
+        }
     });
 
     $("#ffSearchInput").click(function(){

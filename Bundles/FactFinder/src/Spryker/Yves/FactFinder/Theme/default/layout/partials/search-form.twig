@@ -1,4 +1,4 @@
-<form action="/fact-finder">
+<form action="/fact-finder" autocomplete="off">
     <div class="input-group __no-margin-bottom">
         <input name="query" type="text" class="input-group-field" placeholder="{{ 'global.search' | trans }}"
                value="{{ app.request.get('query') }}" id="ffSearchInput">
@@ -50,7 +50,7 @@
 <script type="text/template" id="suggestions-box-row">
     <a class="row suggestions-panel__product js-product js-navigable" href=":url">
         <span class="columns">
-            <img class="thumbnail" src=:image>
+            <img class="thumbnail" src=:image style="height: 60px">
         </span>
 
         <span class="small-9 columns ff-product-name">

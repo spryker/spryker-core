@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "FACT-Finder/FACT-Finder-PHP-Library": "1.2.*"
+    "FACT-Finder/FACT-Finder-PHP-Library": "1.3.*"
   },
   "description": "fact-finder bundle",
   "license": "proprietary",

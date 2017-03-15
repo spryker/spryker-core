@@ -49,8 +49,6 @@ var factFinderSearch = {
         var objectsList = [];
         items = this.getDecreasedItemsList(items);
 
-        console.log(items);
-
         $.each(items, function (i, item) {
             objectsList.push({
                 'name': factFinderSearch.getHighlited(item.label, factFinderSearch.queryText),
