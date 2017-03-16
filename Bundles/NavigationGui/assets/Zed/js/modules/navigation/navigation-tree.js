@@ -65,8 +65,7 @@ function initialize() {
  *
  * @return {void}
  */
-function loadTree(idNavigation, selected, skipFormLoad)
-{
+function loadTree(idNavigation, selected, skipFormLoad)  {
     $treeProgressBar.removeClass('hidden');
     $treeContainer.addClass('hidden');
 
@@ -83,8 +82,7 @@ function loadTree(idNavigation, selected, skipFormLoad)
 /**
  * @return {void}
  */
-function resetTree()
-{
+function resetTree()  {
     if (ajaxRequest) {
         ajaxRequest.abort();
     }
@@ -173,8 +171,7 @@ function setNodeSelectListener(idNavigation) {
  *
  * @return {void}
  */
-function loadForm(idNavigation, idNavigationNode)
-{
+function loadForm(idNavigation, idNavigationNode)  {
     var data = {
         'id-navigation': idNavigation,
         'id-navigation-node': idNavigationNode
@@ -197,8 +194,7 @@ function loadForm(idNavigation, idNavigationNode)
 /**
  * @return {void}
  */
-function resetForm()
-{
+function resetForm()  {
     $iframe.addClass('hidden');
 }
 
