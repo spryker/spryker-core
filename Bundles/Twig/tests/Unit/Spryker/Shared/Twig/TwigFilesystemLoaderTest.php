@@ -94,6 +94,17 @@ class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testWhenNameStartsWithBundleNameLoadReturnsFileContent()
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+        $content = $filesystemLoader->getSource('Bundle/Controller/index.twig');
+
+        $this->assertSame(static::CONTENT_PROJECT_ZED_FILE, $content);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetSourceThrowsExceptionWhenFileNotExists()
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);

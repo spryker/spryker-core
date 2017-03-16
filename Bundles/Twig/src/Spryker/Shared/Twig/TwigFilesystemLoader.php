@@ -90,8 +90,8 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
         $this->validateName($name, $pos);
 
-        $bundle = ucfirst(substr($name, 1, $pos));
-        $templateName = ucfirst(substr($name, $pos + 2));
+        $bundle = ucfirst(substr($nameWithoutPrefix, 0, $pos));
+        $templateName = ucfirst(substr($nameWithoutPrefix, $pos + 1));
 
         return $this->load($name, $bundle, $templateName);
     }

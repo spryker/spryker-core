@@ -44,7 +44,7 @@ class FilesystemCacheLoaderTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCanBeInstantiatedWIthPathToCacheFile()
+    public function testCanBeInstantiatedWithPathToCacheFile()
     {
         $cacheLoader = new FilesystemCacheLoader($this->getCacheFile());
 

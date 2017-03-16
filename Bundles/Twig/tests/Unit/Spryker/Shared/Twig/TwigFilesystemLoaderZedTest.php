@@ -61,7 +61,7 @@ class TwigFilesystemLoaderZedTest extends PHPUnit_Framework_TestCase
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_CORE_NON_SPLIT);
 
-        $this->assertSame(static::CONTENT_CORE_NON_SPLIT_FILE, $filesystemLoader->getSource('@Bundle/Controller/index.twig'));
+        $this->assertSame(static::CONTENT_CORE_NON_SPLIT_FILE, $filesystemLoader->getSource('Bundle/Controller/index.twig'));
     }
 
     /**
@@ -85,7 +85,7 @@ class TwigFilesystemLoaderZedTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Twig\Model\Loader\FilesystemLoader
+     * @return \PHPUnit_Framework_MockObject_MockObject|TwigFilesystemLoader
      */
     protected function getFilesystemLoaderForSplitBundleConverterTest()
     {
