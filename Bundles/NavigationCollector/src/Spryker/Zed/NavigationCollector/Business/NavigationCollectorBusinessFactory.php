@@ -13,6 +13,9 @@ use Spryker\Zed\NavigationCollector\Business\Collector\Storage\NavigationMenuCol
 use Spryker\Zed\NavigationCollector\NavigationCollectorDependencyProvider;
 use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuCollectorQuery;
 
+/**
+ * @method \Spryker\Zed\NavigationCollector\NavigationCollectorConfig getConfig()
+ */
 class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
 {
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\NavigationCollector\Persistence\Collector\Propel;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
