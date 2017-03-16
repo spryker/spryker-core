@@ -29,21 +29,26 @@ class IdeAutoCompletionWriterTest extends Test
 {
 
     /**
+     * @var FunctionalTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testWriterCreatesYvesAutoCompletionFiles()
     {
-        $i = $this->createFunctionalTester();
+        $tester = $this->createFunctionalTester();
 
-        $i->execute(function () {
+        $tester->execute(function () {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createYvesIdeAutoCompletionWriter()
                 ->writeCompletionFiles();
         });
 
-        $i->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
-        $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
     }
 
     /**
@@ -51,17 +56,17 @@ class IdeAutoCompletionWriterTest extends Test
      */
     public function testWriterCreatesZedAutoCompletionFiles()
     {
-        $i = $this->createFunctionalTester();
+        $tester = $this->createFunctionalTester();
 
-        $i->execute(function () {
+        $tester->execute(function () {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createZedIdeAutoCompletionWriter()
                 ->writeCompletionFiles();
         });
 
-        $i->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
-        $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
     }
 
     /**
@@ -69,17 +74,17 @@ class IdeAutoCompletionWriterTest extends Test
      */
     public function testWriterCreatesClientAutoCompletionFiles()
     {
-        $i = $this->createFunctionalTester();
+        $tester = $this->createFunctionalTester();
 
-        $i->execute(function () {
+        $tester->execute(function () {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createClientIdeAutoCompletionWriter()
                 ->writeCompletionFiles();
         });
 
-        $i->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
-        $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
     }
 
     /**
@@ -87,17 +92,17 @@ class IdeAutoCompletionWriterTest extends Test
      */
     public function testWriterCreatesServiceAutoCompletionFiles()
     {
-        $i = $this->createFunctionalTester();
+        $tester = $this->createFunctionalTester();
 
-        $i->execute(function () {
+        $tester->execute(function () {
             $this
                 ->getDevelopmentBusinessFactory()
                 ->createServiceIdeAutoCompletionWriter()
                 ->writeCompletionFiles();
         });
 
-        $i->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
-        $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
+        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
     }
 
     /**
@@ -105,7 +110,7 @@ class IdeAutoCompletionWriterTest extends Test
      */
     protected function createFunctionalTester()
     {
-        return new FunctionalTester($this->getScenario());
+        return $this->tester;
     }
 
     /**
