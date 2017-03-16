@@ -37,7 +37,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     const FIELD_CATEGORY_URL = 'category_url';
     const FIELD_CUSTOM_CLASS = 'custom_class';
 
-    const GROUP_CMS = 'cms';
+    const GROUP_CMS = 'cms_page';
     const GROUP_CATEGORY = 'category';
     const GROUP_LINK = 'link';
     const GROUP_EXTERNAL_URL = 'external_url';
