@@ -16,6 +16,8 @@ class NavigationClient extends AbstractClient implements NavigationClientInterfa
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $navigationKey

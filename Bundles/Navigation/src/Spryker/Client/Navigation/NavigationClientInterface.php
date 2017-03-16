@@ -11,6 +11,10 @@ interface NavigationClientInterface
 {
 
     /**
+     * Specification:
+     * - Finds navigation tree in the Key-Value Storage.
+     * - Returns the navigation tree with all the stored data if found, NULL otherwise.
+     *
      * @api
      *
      * @param string $navigationKey
