@@ -61,8 +61,8 @@ class PayolutionFacadeMockBuilder
     {
         $businessFactoryMock = $testCase->getMockBuilder(PayolutionBusinessFactory::class)
             ->setMethods(
-            ['createAdapter', 'getMoneyFacade']
-        )->getMock();
+                ['createAdapter', 'getMoneyFacade']
+            )->getMock();
 
         $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
         $businessFactoryMock->method('getMoneyFacade')->willReturn($payolutionToMoneyBridge);

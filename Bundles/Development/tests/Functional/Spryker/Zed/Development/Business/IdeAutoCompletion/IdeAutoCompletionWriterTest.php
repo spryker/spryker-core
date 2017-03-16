@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\Development\Business\IdeAutoCompletion;
 
 use Codeception\TestCase\Test;
-use Development\FunctionalTester;
 use Development\Module\IdeAutoCompletion;
 use Spryker\Zed\Development\Business\DevelopmentBusinessFactory;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
@@ -29,7 +28,7 @@ class IdeAutoCompletionWriterTest extends Test
 {
 
     /**
-     * @var FunctionalTester
+     * @var \Development\FunctionalTester
      */
     protected $tester;
 

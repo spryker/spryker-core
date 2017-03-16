@@ -25,8 +25,6 @@ class GenerateIndexMapConsoleTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     *
-     *
      * @return void
      */
     public function testCommandIsExecutable()
