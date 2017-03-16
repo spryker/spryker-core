@@ -76,7 +76,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please see createTransferGeneratedDirectory() for a replacement
+     * @deprecated Use createTransferGeneratedDirectory() instead
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */

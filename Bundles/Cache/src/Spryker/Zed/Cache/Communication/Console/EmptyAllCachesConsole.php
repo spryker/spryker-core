@@ -77,7 +77,7 @@ class EmptyAllCachesConsole extends Console
     protected function printEmptiedDirectories(array $directories, OutputInterface $output)
     {
         foreach ($directories as $directory) {
-            $output->writeln($directory);
+            $output->writeln($directory, OutputInterface::VERBOSITY_NORMAL);
         }
     }
 

@@ -20,7 +20,7 @@ class CacheBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @deprecated Please see createCacheClearer() for a replacement
+     * @deprecated Use createCacheClearer() instead
      *
      * @return \Spryker\Zed\Cache\Business\Model\CacheDelete
      */
@@ -30,7 +30,7 @@ class CacheBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please see createCacheClearer() for a replacement
+     * @deprecated Use createCacheClearer() instead
      *
      * @return \Spryker\Zed\Cache\Business\Model\AutoloaderCacheDelete
      */

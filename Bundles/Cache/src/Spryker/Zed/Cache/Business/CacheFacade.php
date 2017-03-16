@@ -19,7 +19,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use emptyCache() instead
+     * @deprecated Use emptyCache() instead
      *
      * @return array
      */
@@ -29,6 +29,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string[]
@@ -41,7 +43,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use emptyAutoLoaderCache() instead
+     * @deprecated Use emptyAutoLoaderCache() instead
      *
      * @return array
      */
@@ -51,6 +53,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string[]

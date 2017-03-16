@@ -41,7 +41,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please see createGeneratedDirectoryModel() for a replacement
+     * @deprecated Use createGeneratedDirectoryModel() instead
      *
      * @return \Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface
      */
@@ -53,7 +53,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please see createGeneratedDirectoryModel() for a replacement
+     * @deprecated Use createGeneratedDirectoryModel() instead
      *
      * @param string $path
      *

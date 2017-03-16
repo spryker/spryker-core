@@ -36,13 +36,16 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use emptyGeneratedDirectory() instead
+     * @deprecated Use emptyGeneratedDirectory() instead
      *
      * @return void
      */
     public function removeGeneratedDirectory();
 
     /**
+     * Specification:
+     * - Emtpies the configured directory that contains generated files
+     *
      * @api
      *
      * @return void

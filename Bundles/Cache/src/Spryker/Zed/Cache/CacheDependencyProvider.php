@@ -25,12 +25,33 @@ class CacheDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addFileSystem($container);
+        $container = $this->addFinder($container);
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileSystem(Container $container)
+    {
         $container[static::SYMFONY_FILE_SYSTEM] = function () {
             return new Filesystem();
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFinder(Container $container)
+    {
         $container[static::SYMFONY_FINDER] = function () {
             return new Finder();
         };

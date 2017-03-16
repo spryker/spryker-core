@@ -13,14 +13,17 @@ interface CacheFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use emptyCache() instead
+     *
      * @return array
      */
     public function deleteAllFiles();
 
     /**
-     * @api
+     * Specification
+     * - Empties configured cache directory
      *
-     * @deprecated Please use emptyCache() instead
+     * @api
      *
      * @return string[]
      */
@@ -29,13 +32,16 @@ interface CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use emptyAutoLoaderCache() instead
+     * @deprecated Use emptyAutoLoaderCache() instead
      *
      * @return array
      */
     public function deleteAllAutoloaderFiles();
 
     /**
+     * Specification:
+     * - Empties configured auto-loader cache directory
+     *
      * @api
      *
      * @return string[]

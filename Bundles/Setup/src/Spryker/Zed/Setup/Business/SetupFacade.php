@@ -50,7 +50,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use emptyGeneratedDirectory() instead
+     * @deprecated Use emptyGeneratedDirectory() instead
      *
      * @return void
      */
@@ -60,6 +60,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
