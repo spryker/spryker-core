@@ -8,7 +8,6 @@ namespace Development\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;
-use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
@@ -20,7 +19,7 @@ class IdeAutoCompletion extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestCase $test)
     {
         parent::_before($test);
 
