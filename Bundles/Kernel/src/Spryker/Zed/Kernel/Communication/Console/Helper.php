@@ -11,6 +11,9 @@ use RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Trait will be removed in next major version of Kernel
+ */
 trait Helper
 {
 

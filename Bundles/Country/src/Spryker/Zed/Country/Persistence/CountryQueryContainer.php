@@ -44,6 +44,22 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     /**
      * @api
      *
+     * @param string $iso3Code
+     *
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    public function queryCountryByIso3Code($iso3Code)
+    {
+        $query = $this->queryCountries();
+        $query
+            ->filterByIso3Code($iso3Code);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions()

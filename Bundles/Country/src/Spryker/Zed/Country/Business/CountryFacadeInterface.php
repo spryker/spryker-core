@@ -29,11 +29,37 @@ interface CountryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use getCountryByIso2Code() instead.
+     *
      * @param string $iso2Code
      *
      * @return int
      */
     public function getIdCountryByIso2Code($iso2Code);
+
+    /**
+     * Specification:
+     * - Reads country from persistence for provided ISO 2 country code
+     *
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2Code);
+
+    /**
+     * Specification:
+     * - Reads country from persistence for provided ISO 3 country code
+     *
+     * @api
+     *
+     * @param string $iso3Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso3Code($iso3Code);
 
     /**
      * @api

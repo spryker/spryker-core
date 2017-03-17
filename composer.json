@@ -633,6 +633,13 @@
       "Spryker\\Zed\\Queue\\": "Bundles/Queue/src",
       "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests",
 
+      "Spryker\\Yves\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Client\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Shared\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Unit\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests",
+      "Functional\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests",
+
       "Spryker\\Client\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Shared\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Zed\\FactFinder\\": "Bundles/FactFinder/src",
