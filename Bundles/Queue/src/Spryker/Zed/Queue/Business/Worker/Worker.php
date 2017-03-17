@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Queue\Business\Worker;
 
+use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
 use Spryker\Zed\Queue\QueueConfig;
-use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 
 /**
  * @method \Spryker\Zed\Queue\Business\QueueBusinessFactory getFactory()
@@ -25,12 +25,12 @@ class Worker implements WorkerInterface
     protected $processManager;
 
     /**
-     * @var QueueConfig
+     * @var \Spryker\Zed\Queue\QueueConfig
      */
     protected $queueConfig;
 
     /**
-     * @var WorkerProgressBar
+     * @var \Spryker\Zed\Queue\Business\Worker\WorkerProgressBar
      */
     protected $workerProgressBar;
 
@@ -41,8 +41,8 @@ class Worker implements WorkerInterface
 
     /**
      * @param \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface $processManager
-     * @param QueueConfig $queueConfig
-     * @param WorkerProgressBar $workerProgressBar
+     * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
+     * @param \Spryker\Zed\Queue\Business\Worker\WorkerProgressBar $workerProgressBar
      * @param array $queueNames
      */
     public function __construct(
@@ -189,4 +189,5 @@ class Worker implements WorkerInterface
 
         return $queueAdapterConfiguration[SharedConfig::CONFIG_MAX_WORKER_NUMBER];
     }
+
 }

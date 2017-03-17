@@ -22,7 +22,7 @@ interface ReceiverInterface
      * @param int $chunkSize
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = null);
 
@@ -35,7 +35,7 @@ interface ReceiverInterface
      * @param string $queueName
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     public function receiveMessage($queueName, array $options = null);
 
@@ -45,7 +45,7 @@ interface ReceiverInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -57,7 +57,7 @@ interface ReceiverInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -69,7 +69,7 @@ interface ReceiverInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */

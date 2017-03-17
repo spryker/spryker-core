@@ -50,7 +50,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param QueueSendMessageTransfer $queueSendMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class QueueProxy implements QueueProxyInterface
      * @param int $chunkSize
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = null)
     {
@@ -92,7 +92,7 @@ class QueueProxy implements QueueProxyInterface
      * @param string $queueName
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     public function receiveMessage($queueName, array $options = null)
     {
@@ -102,7 +102,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -114,7 +114,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -136,6 +136,7 @@ class QueueProxy implements QueueProxyInterface
 
         return $queueAdapter->handleError($queueReceiveMessageTransfer);
     }
+
     /**
      * @param string $queueName
      * @param array|null $options
@@ -184,13 +185,13 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param $queueConfiguration
+     * @param array $queueConfiguration
      *
      * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
      *
      * @return mixed|null|\Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
-    protected function getConfigQueueAdapter($queueConfiguration)
+    protected function getConfigQueueAdapter(array $queueConfiguration)
     {
         foreach ($this->queueAdapters as $queueAdapter) {
             $queueAdapterClassName = get_class($queueAdapter);
@@ -206,4 +207,5 @@ class QueueProxy implements QueueProxyInterface
             )
         );
     }
+
 }

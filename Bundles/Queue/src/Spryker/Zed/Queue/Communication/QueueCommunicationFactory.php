@@ -26,4 +26,5 @@ class QueueCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer()
         );
     }
+
 }

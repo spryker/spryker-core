@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Queue\Business\Task;
 
-use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
 
 class TaskManager implements TaskManagerInterface
 {
+
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -50,7 +50,7 @@ class TaskManager implements TaskManagerInterface
     {
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
-        $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize() ,$queueOptions);
+        $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize(), $queueOptions);
 
         if ($messages !== null) {
             $processedMessages = $processorPlugin->processMessages($messages);
@@ -95,7 +95,7 @@ class TaskManager implements TaskManagerInterface
      * @param int $chunkSize
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function receiveMessages($queueName, $chunkSize, array $options = null)
     {
@@ -123,4 +123,5 @@ class TaskManager implements TaskManagerInterface
             }
         }
     }
+
 }

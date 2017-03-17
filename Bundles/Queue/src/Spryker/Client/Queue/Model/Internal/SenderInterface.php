@@ -17,9 +17,9 @@ interface SenderInterface
      * - Sends message to queue
      *
      * @api
-     * 
+     *
      * @param string $queueName
-     * @param QueueSendMessageTransfer $queueSendMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */

@@ -40,7 +40,6 @@ class QueueConfig extends AbstractBundleConfig
      *  e.g: 'mail' => $option
      *
      * @return array
-     *
      */
     protected function getQueueReceiverOptions()
     {

@@ -38,7 +38,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param QueueSendMessageTransfer $queueSendMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @param int $chunkSize
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = null)
     {
@@ -86,7 +86,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @param string $queueName
      * @param array|null $options
      *
-     * @return QueueReceiveMessageTransfer
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     public function receiveMessage($queueName, array $options = null)
     {
@@ -98,7 +98,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -112,7 +112,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @api
      *
-     * @param QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */

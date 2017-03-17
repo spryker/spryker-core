@@ -48,4 +48,5 @@ interface ManagerInterface
      * @return bool
      */
     public function deleteQueue($queueName, array $options = null);
+
 }

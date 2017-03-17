@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -45,7 +46,6 @@ class WorkerProgressBar
      */
     public function start($steps, $round)
     {
-
         if ($this->output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
             return;
         }
@@ -111,7 +111,6 @@ class WorkerProgressBar
             return;
         }
 
-
         $this->output->writeln(
             sprintf(
                 '[%d] %s queue process(es): New: %d Busy: %d Last Update: %s',
@@ -131,4 +130,5 @@ class WorkerProgressBar
     {
         unset($this->progressBar);
     }
+
 }

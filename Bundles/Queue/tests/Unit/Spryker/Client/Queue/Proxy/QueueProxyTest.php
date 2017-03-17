@@ -49,8 +49,8 @@ class QueueProxyTest extends Test
             ['testQueueEngine' => $this->queueAdapterMock],
             [
                 self::TEST_QUEUE_NAME => [
-                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock)
-                ]
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock),
+                ],
             ]
         );
     }
@@ -132,10 +132,10 @@ class QueueProxyTest extends Test
             ],
             [
                 'alphaQueue' => [
-                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($alphaQueueAdapterMock)
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($alphaQueueAdapterMock),
                 ],
                 'betaQueue' => [
-                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($betaQueueAdapterMock)
+                    QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($betaQueueAdapterMock),
                 ],
             ]
         );
