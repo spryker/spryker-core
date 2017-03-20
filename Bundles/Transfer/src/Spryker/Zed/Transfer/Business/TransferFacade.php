@@ -33,6 +33,14 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     *
+     */
+    public function generateDataBuilders(LoggerInterface $messenger)
+    {
+        $this->getFactory()->createDataBuilderGenerator($messenger)->execute();
+    }
+
+    /**
      * Specification:
      * - Deletes all generated transfer objects
      *

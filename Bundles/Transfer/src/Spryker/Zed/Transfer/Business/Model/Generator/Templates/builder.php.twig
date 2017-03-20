@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Generated\Shared\Transfer\Builder;
+
+use  Spryker\Shared\Testify\AbstractTransfer;
+
+/**
+ * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
+ * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ {% if deprecationDescription is not null -%}
+ *
+ * @deprecated {{ deprecationDescription }}
+ {% endif -%}
+ */
+class {{ className }} extends AbstractDataBuilder
+{
+    protected $rules = [
+    {% for rule in rules %}
+        '{{ loop.index }}' => '{{ rule }}',
+    {% endfor %}
+    ];
+
+    protected $dependencies = [
+    {% for dependency in dependencies %}
+        '{{ loop.index }}' => '{{ dependency }}',
+    {% endfor %}
+    ];
+}
