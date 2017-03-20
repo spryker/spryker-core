@@ -9,8 +9,10 @@ namespace Spryker\Zed\Transfer\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
@@ -41,18 +43,28 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
+     * @param LoggerInterface $messenger
+     * @return TransferGenerator
      */
-    protected function createClassGenerator()
+    public function createDataBuilderGenerator(LoggerInterface $messenger)
     {
-        return new ClassGenerator(
-            $this->getConfig()->getClassTargetDirectory()
+        return new DataBuilderGenerator(
+            $messenger,
+            $this->createDataBuilderClassGenerator(),
+            $this->createDataBuilderDefinitionBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
+    protected function createDataBuilderClassGenerator()
+    {
+        return new DataBuilderClassGenerator(
+            $this->getConfig()->getClassTargetDirectory()
+        );
+    }
+
     protected function createTransferDefinitionBuilder()
     {
         return new TransferDefinitionBuilder(
@@ -60,6 +72,26 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $this->createTransferDefinitionMerger(),
             $this->createClassDefinition()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
+     */
+    protected function createDataBuilderDefinitionBuilder()
+    {
+        return new TransferDefinitionBuilder(
+            $this->createLoader(),
+            $this->createTransferDefinitionMerger(),
+            $this->createClassDefinition()
+        );
+    }
+
+    /**
+     * @return DataBuilderDefinition
+     */
+    protected function createDataBuilderDefinition()
+    {
+        return new DataBuilderDefinition();
     }
 
     /**

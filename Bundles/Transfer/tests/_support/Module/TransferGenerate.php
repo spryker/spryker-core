@@ -43,6 +43,7 @@ class TransferGenerate extends Module
 
         $transferFacade->deleteGeneratedTransferObjects();
         $transferFacade->generateTransferObjects(new NullLogger());
+        $transferFacade->generateDataBuilders(new NullLogger());
     }
 
     /**

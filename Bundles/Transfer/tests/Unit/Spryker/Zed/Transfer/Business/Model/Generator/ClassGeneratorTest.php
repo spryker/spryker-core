@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -65,7 +65,7 @@ class ClassGeneratorTest extends PHPUnit_Framework_TestCase
      */
     public function testGenerateShouldCreateTargetDirectoryIfNotExist()
     {
-        $transferGenerator = new ClassGenerator($this->getFixtureDirectory());
+        $transferGenerator = new DataBuilderClassGenerator($this->getFixtureDirectory());
         $transferDefinition = new ClassDefinition();
         $transferDefinition->setDefinition([
             'name' => 'Name',
