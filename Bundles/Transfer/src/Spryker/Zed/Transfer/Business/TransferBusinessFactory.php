@@ -11,8 +11,10 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
@@ -43,8 +45,18 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
+     */
+    protected function createClassGenerator()
+    {
+        return new ClassGenerator(
+            $this->getConfig()->getClassTargetDirectory()
+        );
+    }
+
+    /**
      * @param LoggerInterface $messenger
-     * @return TransferGenerator
+     * @return DataBuilderGenerator
      */
     public function createDataBuilderGenerator(LoggerInterface $messenger)
     {
@@ -61,7 +73,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createDataBuilderClassGenerator()
     {
         return new DataBuilderClassGenerator(
-            $this->getConfig()->getClassTargetDirectory()
+            $this->getConfig()->getDataBuilderTargetDirectory()
         );
     }
 
@@ -79,10 +91,10 @@ class TransferBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDataBuilderDefinitionBuilder()
     {
-        return new TransferDefinitionBuilder(
+        return new DataBuilderDefinitionBuilder(
             $this->createLoader(),
             $this->createTransferDefinitionMerger(),
-            $this->createClassDefinition()
+            $this->createDataBuilderDefinition()
         );
     }
 

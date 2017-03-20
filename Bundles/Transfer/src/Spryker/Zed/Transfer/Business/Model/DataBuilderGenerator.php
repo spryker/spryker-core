@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Zed\Transfer\Business\Model;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 

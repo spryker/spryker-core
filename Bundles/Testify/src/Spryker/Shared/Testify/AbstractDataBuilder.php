@@ -51,7 +51,7 @@ abstract class AbstractDataBuilder
     {
         $data = [];
         foreach ($this->dependencies as $field => $builder) {
-            $data[$field] = $this->locateBuilder($builder)->build();
+            $data[$field] = $this->locateDataBuilder($builder)->build();
         }
         return $data;
     }
@@ -61,10 +61,15 @@ abstract class AbstractDataBuilder
      * @return AbstractDataBuilder
      * @throws \Exception
      */
-    protected function locateBuilder($builder)
+    protected function locateDataBuilder($builder)
     {
         // can be overridden to locate builders inside a bundle
-        $builderClass = __NAMESPACE__ . "\\$builder";
+        $class = get_class($this);
+        $classParts = explode('\\', $class);
+        array_pop($classParts);
+        array_push($classParts, $builder);
+        $builderClass = implode('\\', $class);
+
         if (!class_exists($builderClass)) {
             throw new \Exception("Builder '$builderClass' not found");
         }
