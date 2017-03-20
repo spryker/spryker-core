@@ -9,7 +9,6 @@ namespace Spryker\Zed\NavigationGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
-use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleInterface;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface;
 
@@ -59,10 +58,7 @@ class NavigationNodeFormDataProvider
      */
     public function getOptions()
     {
-        return [
-            NavigationNodeFormType::OPTION_NODE_TYPE_OPTIONS => $this->getNodeTypeOptions(),
-            NavigationNodeFormType::OPTION_NODE_TYPE_OPTION_ATTRIBUTES => $this->getNodeTypeOptionAttributes(),
-        ];
+        return [];
     }
 
     /**
@@ -82,32 +78,6 @@ class NavigationNodeFormDataProvider
         }
 
         return $navigationNodeTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getNodeTypeOptions()
-    {
-        return [
-            'Category' => 'category',
-            'CMS page' => 'cms_page',
-            'Link' => 'link',
-            'External URL' => 'external_url',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getNodeTypeOptionAttributes()
-    {
-        return [
-            'Category' => ['data-url' => '/search-for-category'],
-            'CMS page' => ['data-url' => '/search-for-cms'],
-            'Link' => [],
-            'External URL' => [],
-        ];
     }
 
 }

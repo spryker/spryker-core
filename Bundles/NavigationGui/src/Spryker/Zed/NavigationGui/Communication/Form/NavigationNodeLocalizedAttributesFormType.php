@@ -32,7 +32,6 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     const FIELD_FK_LOCALE = 'fk_locale';
     const FIELD_LINK = 'link';
     const FIELD_EXTERNAL_URL = 'external_url';
-    const FIELD_FK_URL = 'fk_url';
     const FIELD_CMS_PAGE_URL = 'cms_page_url';
     const FIELD_CATEGORY_URL = 'category_url';
     const FIELD_CUSTOM_CLASS = 'custom_class';
