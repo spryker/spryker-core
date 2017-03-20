@@ -23,6 +23,8 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_URL_AFTER_CREATE = 'PLUGINS_URL_AFTER_CREATE';
     const PLUGINS_URL_BEFORE_UPDATE = 'PLUGINS_URL_BEFORE_UPDATE';
     const PLUGINS_URL_AFTER_UPDATE = 'PLUGINS_URL_AFTER_UPDATE';
+    const PLUGINS_URL_BEFORE_DELETE = 'PLUGINS_URL_BEFORE_DELETE';
+    const PLUGINS_URL_AFTER_DELETE = 'PLUGINS_URL_AFTER_DELETE';
     /**
      * @deprecated Use `getConnection()` method from query container instead.
      */
@@ -63,6 +65,14 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getUrlAfterUpdatePlugins();
         };
 
+        $container[self::PLUGINS_URL_BEFORE_DELETE] = function () {
+            return $this->getUrlBeforeDeletePlugins();
+        };
+
+        $container[self::PLUGINS_URL_AFTER_DELETE] = function () {
+            return $this->getUrlAfterDeletePlugins();
+        };
+
         return $container;
     }
 
@@ -94,6 +104,22 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
      */
     protected function getUrlAfterUpdatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlBeforeDeletePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlAfterDeletePlugins()
     {
         return [];
     }

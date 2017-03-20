@@ -5,23 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Url\Dependency\Plugin;
+namespace Spryker\Zed\Url\Business\Deletion;
 
 use Generated\Shared\Transfer\UrlTransfer;
 
-interface UrlCreatePluginInterface
+interface UrlDeleterAfterDeleteObserverInterface
 {
 
     /**
-     * Specification:
-     * - This plugin is executed before and/or after new URL entity creation, depending for which event was it provided.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function create(UrlTransfer $urlTransfer);
+    public function handleUrlDeletion(UrlTransfer $urlTransfer);
 
 }

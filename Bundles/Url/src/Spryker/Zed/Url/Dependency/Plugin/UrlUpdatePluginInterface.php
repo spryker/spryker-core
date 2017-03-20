@@ -14,7 +14,7 @@ interface UrlUpdatePluginInterface
 
     /**
      * Specification:
-     * TODO: add specification
+     * - This plugin is executed before and/or after URL entity update, depending for which event was it provided.
      *
      * @api
      *

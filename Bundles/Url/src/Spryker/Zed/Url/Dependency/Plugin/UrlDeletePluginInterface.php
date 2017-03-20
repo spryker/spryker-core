@@ -9,12 +9,12 @@ namespace Spryker\Zed\Url\Dependency\Plugin;
 
 use Generated\Shared\Transfer\UrlTransfer;
 
-interface UrlCreatePluginInterface
+interface UrlDeletePluginInterface
 {
 
     /**
      * Specification:
-     * - This plugin is executed before and/or after new URL entity creation, depending for which event was it provided.
+     * - This plugin is executed before and/or after URL entity deletion, depending for which event was it provided.
      *
      * @api
      *
@@ -22,6 +22,6 @@ interface UrlCreatePluginInterface
      *
      * @return void
      */
-    public function create(UrlTransfer $urlTransfer);
+    public function delete(UrlTransfer $urlTransfer);
 
 }
