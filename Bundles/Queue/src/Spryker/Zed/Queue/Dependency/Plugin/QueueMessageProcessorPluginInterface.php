@@ -12,17 +12,23 @@ interface QueueMessageProcessorPluginInterface
 
     /**
      * Specification:
-     * - This plugin interface is using for message processing for the queues
+     * - This plugin interface is used for message processing for the queues,
+     *   by implementing this and adding to QueueDependencyProvider::getProcessorMessagePlugins()
+     *   for specific queue, receives messages will pass to this method for processing
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer[] $queueMessageTransfers
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer[]
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function processMessages(array $queueMessageTransfers);
 
     /**
+     * Specification:
+     * - Returns the number of messages which need to fetch
+     *   from queue
+     *
      * @api
      *
      * @return int

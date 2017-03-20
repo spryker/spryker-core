@@ -43,7 +43,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function triggerQueueProcess($command, $queue)
     {
-        $process = new Process($command);
+        $process = $this->createProcess($command);
         $process->start();
 
         $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
@@ -145,7 +145,7 @@ class ProcessManager implements ProcessManagerInterface
         $processEntity->fromArray($queueProcessTransfer->toArray());
         $processEntity->save();
 
-        return $this->convertSToQueueProcessTransfer($processEntity);
+        return $this->convertToQueueProcessTransfer($processEntity);
     }
 
     /**
@@ -153,7 +153,7 @@ class ProcessManager implements ProcessManagerInterface
      *
      * @return \Generated\Shared\Transfer\QueueProcessTransfer
      */
-    protected function convertSToQueueProcessTransfer(SpyQueueProcess $processEntity)
+    protected function convertToQueueProcessTransfer(SpyQueueProcess $processEntity)
     {
         $queueProcessTransfer = new QueueProcessTransfer();
         $queueProcessTransfer->fromArray($processEntity->toArray(), true);
@@ -171,6 +171,16 @@ class ProcessManager implements ProcessManagerInterface
         return $this->queryContainer
             ->queryProcessesByProcessIds($processIds)
             ->delete();
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function createProcess($command)
+    {
+        return new Process($command);
     }
 
 }

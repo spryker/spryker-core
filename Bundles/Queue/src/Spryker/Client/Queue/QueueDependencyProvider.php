@@ -35,7 +35,10 @@ class QueueDependencyProvider extends AbstractDependencyProvider
      * All queue adapters need to define here as an array
      * Queue adapters need to implement: \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      *
-     * e.g: $container->getLocator()->...->client()->createQueueAdapter(),
+     * e.g:
+     *      return [
+     *          new RabbitMqAdapter()
+     *      ];
      *
      * @param \Spryker\Client\Kernel\Container $container
      *

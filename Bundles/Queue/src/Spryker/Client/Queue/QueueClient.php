@@ -23,11 +23,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return array
      */
-    public function createQueue($queueName, array $options = null)
+    public function createQueue($queueName, array $options = [])
     {
         return $this->getFactory()->createQueueProxy()->createQueue($queueName, $options);
     }
@@ -69,11 +69,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize = 100, array $options = null)
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
     {
         return $this->getFactory()->createQueueProxy()->receiveMessages($queueName, $chunkSize, $options);
     }
@@ -84,11 +84,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    public function receiveMessage($queueName, array $options = null)
+    public function receiveMessage($queueName, array $options = [])
     {
         return $this->getFactory()->createQueueProxy()->receiveMessage($queueName, $options);
     }
@@ -141,11 +141,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function purgeQueue($queueName, array $options = null)
+    public function purgeQueue($queueName, array $options = [])
     {
         return $this->getFactory()->createQueueProxy()->purgeQueue($queueName, $options);
     }
@@ -156,11 +156,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function deleteQueue($queueName, array $options = null)
+    public function deleteQueue($queueName, array $options = [])
     {
         return $this->getFactory()->createQueueProxy()->deleteQueue($queueName, $options);
     }

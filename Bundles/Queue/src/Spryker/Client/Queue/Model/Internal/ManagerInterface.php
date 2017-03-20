@@ -17,11 +17,11 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return array
      */
-    public function createQueue($queueName, array $options = null);
+    public function createQueue($queueName, array $options = []);
 
     /**
      * Specification
@@ -30,11 +30,11 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function purgeQueue($queueName, array $options = null);
+    public function purgeQueue($queueName, array $options = []);
 
     /**
      * Specification
@@ -43,10 +43,10 @@ interface ManagerInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function deleteQueue($queueName, array $options = null);
+    public function deleteQueue($queueName, array $options = []);
 
 }

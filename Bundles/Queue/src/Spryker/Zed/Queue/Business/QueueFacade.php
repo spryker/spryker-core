@@ -17,6 +17,8 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $queueName
@@ -31,6 +33,8 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $command

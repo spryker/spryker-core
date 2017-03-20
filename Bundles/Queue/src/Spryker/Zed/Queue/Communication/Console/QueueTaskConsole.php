@@ -41,11 +41,7 @@ class QueueTaskConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $queueName = $input->getArgument('queue');
-
-        if ($queueName !== null) {
-            $this->getFacade()->startTask($queueName);
-        }
+        $this->getFacade()->startTask($input->getArgument('queue'));
 
         return static::CODE_SUCCESS;
     }

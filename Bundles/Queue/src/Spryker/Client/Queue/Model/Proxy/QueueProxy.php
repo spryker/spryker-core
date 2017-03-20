@@ -37,11 +37,11 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return array
      */
-    public function createQueue($queueName, array $options = null)
+    public function createQueue($queueName, array $options = [])
     {
         $queueAdapter = $this->getQueueAdapter($queueName);
 
@@ -77,11 +77,11 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize = 100, array $options = null)
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
     {
         $queueAdapter = $this->getQueueAdapter($queueName);
 
@@ -90,11 +90,11 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    public function receiveMessage($queueName, array $options = null)
+    public function receiveMessage($queueName, array $options = [])
     {
         $queueAdapter = $this->getQueueAdapter($queueName);
 
@@ -139,11 +139,11 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function purgeQueue($queueName, array $options = null)
+    public function purgeQueue($queueName, array $options = [])
     {
         $queueAdapter = $this->getQueueAdapter($queueName);
 
@@ -152,11 +152,11 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return bool
      */
-    public function deleteQueue($queueName, array $options = null)
+    public function deleteQueue($queueName, array $options = [])
     {
         $queueAdapter = $this->getQueueAdapter($queueName);
 
@@ -175,7 +175,9 @@ class QueueProxy implements QueueProxyInterface
         if (!array_key_exists($queueName, $this->queueConfiguration)) {
             throw new MissingQueueAdapterException(
                 sprintf(
-                    'There is no queue adapter configuration with this name: %s',
+                    'There is no queue adapter configuration with this name: %s ,' .
+                    ' you can fix this by adding the queue adapter in ' .
+                    'QUEUE_ADAPTER_CONFIGURATION in the config_default.php',
                     $queueName
                 )
             );
@@ -189,20 +191,21 @@ class QueueProxy implements QueueProxyInterface
      *
      * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
      *
-     * @return mixed|null|\Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected function getConfigQueueAdapter(array $queueConfiguration)
     {
         foreach ($this->queueAdapters as $queueAdapter) {
-            $queueAdapterClassName = get_class($queueAdapter);
-            if ($queueAdapterClassName === $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]) {
+            if (get_class($queueAdapter) === $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]) {
                 return $queueAdapter;
             }
         }
 
         throw new MissingQueueAdapterException(
             sprintf(
-                'There is no such a queue adapter with this name: %s',
+                'There is no such a queue adapter with this name: %s ,' .
+                ' you can fix this by adding the queue adapter in ' .
+                'QueueDependencyProvider::createQueueAdapters()',
                 $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]
             )
         );

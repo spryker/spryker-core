@@ -10,7 +10,7 @@ namespace Spryker\Zed\Queue\Business\Worker;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class WorkerProgressBar
+class WorkerProgressBar implements WorkerProgressBarInterface
 {
 
     /**
@@ -50,7 +50,7 @@ class WorkerProgressBar
             return;
         }
 
-        $this->progressBar = new ProgressBar($this->output, $steps);
+        $this->progressBar = $this->createProgressBar($steps);
         $this->progressBar->setFormatDefinition('queue', '%message% %current%/%max% sec [%bar%] %percent:3s%%');
         $this->progressBar->setFormat('queue');
         $this->progressBar->setMessage(sprintf('Main Queue Process <execution round #%d>:', $round));
@@ -129,6 +129,16 @@ class WorkerProgressBar
     public function reset()
     {
         unset($this->progressBar);
+    }
+
+    /**
+     * @param int $steps
+     *
+     * @return \Symfony\Component\Console\Helper\ProgressBar
+     */
+    protected function createProgressBar($steps)
+    {
+        return new ProgressBar($this->output, $steps);
     }
 
 }

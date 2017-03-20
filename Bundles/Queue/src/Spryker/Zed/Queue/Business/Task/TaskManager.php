@@ -51,11 +51,16 @@ class TaskManager implements TaskManagerInterface
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
         $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize(), $queueOptions);
-
-        if ($messages !== null) {
-            $processedMessages = $processorPlugin->processMessages($messages);
-            $this->postProcessMessages($processedMessages);
+        if ($messages === null) {
+            return;
         }
+
+        $processedMessages = $processorPlugin->processMessages($messages);
+        if ($processedMessages === null) {
+            return;
+        }
+
+        $this->postProcessMessages($processedMessages);
     }
 
     /**

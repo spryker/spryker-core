@@ -13,6 +13,9 @@ interface QueueFacadeInterface
 {
 
     /**
+     * Specification
+     *  - Starts receiving and processing messages task for one specific queue
+     *
      * @api
      *
      * @param string $queueName
@@ -22,6 +25,9 @@ interface QueueFacadeInterface
     public function startTask($queueName);
 
     /**
+     * Specification
+     *  - Starts multiple task/processes per queue
+     *
      * @api
      *
      * @param string $command

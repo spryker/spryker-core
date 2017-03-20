@@ -68,7 +68,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Queue\Business\Worker\WorkerProgressBar
+     * @return \Spryker\Zed\Queue\Business\Worker\WorkerProgressBarInterface
      */
     public function createWorkerProgressbar(OutputInterface $output)
     {

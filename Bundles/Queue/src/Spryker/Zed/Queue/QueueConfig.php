@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QueueConfig extends AbstractBundleConfig
 {
 
-    const DEFAULT_QUEUE_OUTPUT_FILE = 'queue.log';
+    const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
     const DEFAULT_INTERVAL_SECONDS = 1000;
     const DEFAULT_THRESHOLD = 59;
 
@@ -67,9 +67,9 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getQueueWorkerOutputFile()
+    public function getQueueWorkerOutputFileName()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE, self::DEFAULT_QUEUE_OUTPUT_FILE);
+        return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME, self::DEFAULT_QUEUE_OUTPUT_FILE_NAME);
     }
 
     /**

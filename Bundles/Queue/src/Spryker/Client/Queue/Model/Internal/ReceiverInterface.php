@@ -20,11 +20,11 @@ interface ReceiverInterface
      *
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize = 100, array $options = null);
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = []);
 
     /**
      * Specification
@@ -33,11 +33,11 @@ interface ReceiverInterface
      * @api
      *
      * @param string $queueName
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    public function receiveMessage($queueName, array $options = null);
+    public function receiveMessage($queueName, array $options = []);
 
     /**
      * Specification
