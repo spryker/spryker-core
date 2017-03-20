@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
 use Generated\Shared\Transfer\NavigationTransfer;
+use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNotFoundException;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
@@ -75,9 +76,7 @@ class NavigationUpdater implements NavigationUpdaterInterface
         $navigationEntity->fromArray($navigationTransfer->modifiedToArray());
         $navigationEntity->save();
 
-        $navigationTransfer->fromArray($navigationEntity->toArray(), true);
-
-        return $navigationTransfer;
+        return $this->hydrateNavigationTransfer($navigationTransfer, $navigationEntity);
     }
 
     /**
@@ -101,6 +100,19 @@ class NavigationUpdater implements NavigationUpdaterInterface
         }
 
         return $navigationEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    protected function hydrateNavigationTransfer(NavigationTransfer $navigationTransfer, SpyNavigation $navigationEntity)
+    {
+        $navigationTransfer->fromArray($navigationEntity->toArray(), true);
+
+        return $navigationTransfer;
     }
 
 }

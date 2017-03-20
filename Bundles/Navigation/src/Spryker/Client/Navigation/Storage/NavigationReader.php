@@ -48,6 +48,16 @@ class NavigationReader implements NavigationReaderInterface
             return null;
         }
 
+        return $this->mapNavigationTree($navigationTreeData);
+    }
+
+    /**
+     * @param array $navigationTreeData
+     *
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer
+     */
+    protected function mapNavigationTree(array $navigationTreeData)
+    {
         $navigationTreeTransfer = new NavigationTreeTransfer();
         $navigationTreeTransfer->fromArray($navigationTreeData);
 

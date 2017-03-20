@@ -28,7 +28,7 @@ class NavigationTwigExtension extends TwigExtension
     /**
      * @var \Spryker\Yves\Kernel\Application
      */
-    private $application;
+    protected $application;
 
     /**
      * @param \Spryker\Client\Navigation\NavigationClientInterface $navigationClient
@@ -74,7 +74,7 @@ class NavigationTwigExtension extends TwigExtension
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     protected function getLocale()
     {

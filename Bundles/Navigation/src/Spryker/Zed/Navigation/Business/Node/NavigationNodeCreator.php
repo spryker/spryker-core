@@ -28,6 +28,7 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
 
     /**
      * @param \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface $navigationQueryContainer
+     * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeTouchInterface $navigationNodeTouch
      */
     public function __construct(NavigationQueryContainerInterface $navigationQueryContainer, NavigationNodeTouchInterface $navigationNodeTouch)
     {
@@ -93,9 +94,7 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
         $navigationNodeEntity = $this->createNavigationNodeEntityFromTransfer($navigationNodeTransfer);
         $navigationNodeEntity->save();
 
-        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
-
-        return $navigationNodeTransfer;
+        return $this->hydrateNavigationNodeTransfer($navigationNodeTransfer, $navigationNodeEntity);
     }
 
     /**
@@ -140,6 +139,19 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
         $navigationNodeLocalizedAttributesEntity->fromArray($navigationNodeLocalizedAttributesTransfer->toArray());
 
         return $navigationNodeLocalizedAttributesEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    protected function hydrateNavigationNodeTransfer(NavigationNodeTransfer $navigationNodeTransfer, SpyNavigationNode $navigationNodeEntity)
+    {
+        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
+
+        return $navigationNodeTransfer;
     }
 
 }

@@ -75,9 +75,7 @@ class NavigationCreator implements NavigationCreatorInterface
         $navigationEntity = $this->createEntityFromTransfer($navigationTransfer);
         $navigationEntity->save();
 
-        $navigationTransfer->fromArray($navigationEntity->toArray(), true);
-
-        return $navigationTransfer;
+        return $this->hydrateNavigationTransfer($navigationTransfer, $navigationEntity);
     }
 
     /**
@@ -91,6 +89,19 @@ class NavigationCreator implements NavigationCreatorInterface
         $navigationEntity->fromArray($navigationTransfer->modifiedToArray());
 
         return $navigationEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    protected function hydrateNavigationTransfer(NavigationTransfer $navigationTransfer, SpyNavigation $navigationEntity)
+    {
+        $navigationTransfer->fromArray($navigationEntity->toArray(), true);
+
+        return $navigationTransfer;
     }
 
 }
