@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -15,13 +14,13 @@ use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
-use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface;
+use Spryker\Zed\Product\Business\Product\Observer\AbstractProductConcreteManagerSubject;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductConcreteManager implements ProductConcreteManagerInterface
+class ProductConcreteManager extends AbstractProductConcreteManagerSubject implements ProductConcreteManagerInterface
 {
 
     /**
@@ -50,11 +49,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $productConcreteAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface
-     */
-    protected $pluginConcreteManager;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
     private $attributeEncoder;
@@ -70,7 +64,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
-     * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface $pluginConcreteManager
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      */
@@ -80,7 +73,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductToLocaleInterface $localeFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
-        PluginConcreteManagerInterface $pluginConcreteManager,
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper
     ) {
@@ -89,7 +81,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->localeFacade = $localeFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
-        $this->pluginConcreteManager = $pluginConcreteManager;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
     }
@@ -118,7 +109,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $sku = $productConcreteTransfer->getSku();
         $this->productConcreteAssertion->assertSkuIsUnique($sku);
 
-        $productConcreteTransfer = $this->pluginConcreteManager->triggerBeforeCreatePlugins($productConcreteTransfer);
+        $productConcreteTransfer = $this->notifyBeforeCreateObservers($productConcreteTransfer);
 
         $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -127,7 +118,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
         $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
-        $this->pluginConcreteManager->triggerAfterCreatePlugins($productConcreteTransfer);
+        $this->notifyAfterCreateObservers($productConcreteTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -159,7 +150,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->productConcreteAssertion->assertProductExists($idProduct);
         $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
 
-        $productConcreteTransfer = $this->pluginConcreteManager->triggerBeforeUpdatePlugins($productConcreteTransfer);
+        $productConcreteTransfer = $this->notifyBeforeUpdateObservers($productConcreteTransfer);
 
         $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -168,7 +159,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
         $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
-        $this->pluginConcreteManager->triggerAfterUpdatePlugins($productConcreteTransfer);
+        $this->notifyAfterUpdateObservers($productConcreteTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -305,23 +296,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
-    {
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
-                return $localizedAttribute->getName();
-            }
-        }
-
-        return $productConcreteTransfer->getSku();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -362,7 +336,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     {
         $this->loadLocalizedAttributes($productTransfer);
 
-        $this->pluginConcreteManager->triggerReadPlugins($productTransfer);
+        $this->notifyReadObservers($productTransfer);
 
         return $productTransfer;
     }

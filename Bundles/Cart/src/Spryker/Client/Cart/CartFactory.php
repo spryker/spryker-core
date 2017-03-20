@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Cart;
 
-use Spryker\Client\Cart\Session\QuoteSession;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -15,11 +14,11 @@ class CartFactory extends AbstractFactory
 {
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
-    public function createSession()
+    public function getQuoteClient()
     {
-        return new QuoteSession($this->getSessionClient());
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_QUOTE);
     }
 
     /**
@@ -28,6 +27,22 @@ class CartFactory extends AbstractFactory
     public function createZedStub()
     {
         return new CartStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
+     */
+    public function getItemCounter()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGIN_ITEM_COUNT);
     }
 
 }

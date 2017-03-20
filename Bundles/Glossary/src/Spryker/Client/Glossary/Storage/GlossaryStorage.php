@@ -8,7 +8,7 @@
 namespace Spryker\Client\Glossary\Storage;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
@@ -19,7 +19,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected $storage;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
@@ -35,7 +35,7 @@ class GlossaryStorage implements GlossaryStorageInterface
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
     public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)

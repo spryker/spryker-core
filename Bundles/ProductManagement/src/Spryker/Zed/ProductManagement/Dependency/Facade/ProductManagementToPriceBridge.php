@@ -25,7 +25,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
 
     /**
      * @param int $idAbstractProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
@@ -36,13 +36,24 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
 
     /**
      * @param int $idProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductConcretePrice($idProduct, $priceType = null)
     {
         return $this->priceFacade->findProductConcretePrice($idProduct, $priceType);
+    }
+
+    /**
+     * @param string $sku
+     * @param string|null $priceTypeName
+     *
+     * @return int
+     */
+    public function getPriceBySku($sku, $priceTypeName = null)
+    {
+        return $this->priceFacade->getPriceBySku($sku, $priceTypeName);
     }
 
 }

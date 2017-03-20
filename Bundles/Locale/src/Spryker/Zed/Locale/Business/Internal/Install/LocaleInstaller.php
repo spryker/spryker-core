@@ -8,10 +8,9 @@
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
 use Orm\Zed\Locale\Persistence\SpyLocale;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
-class LocaleInstaller extends AbstractInstaller
+class LocaleInstaller implements LocaleInstallerInterface
 {
 
     /**

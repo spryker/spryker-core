@@ -17,4 +17,14 @@ interface TaxProductConnectorToProductInterface
      */
     public function touchProductActive($idProductAbstract);
 
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountryIso2Code();
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate();
+
 }

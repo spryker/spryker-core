@@ -12,9 +12,10 @@ use InvalidArgumentException;
 use Propel\Runtime\Propel;
 use ReflectionObject;
 use Silex\Application;
+use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Shared\Library\Application\Environment;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -78,6 +79,9 @@ class SystemUnderTestBootstrap
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $path);
 
         Environment::initialize();
+
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
 
         if (self::APPLICATION_ZED === $application) {
             $this->bootstrapZed();

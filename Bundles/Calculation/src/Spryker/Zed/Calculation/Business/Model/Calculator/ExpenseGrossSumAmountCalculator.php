@@ -22,6 +22,10 @@ class ExpenseGrossSumAmountCalculator implements CalculatorInterface
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseTransfer->requireUnitGrossPrice()->requireQuantity();
             $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+
+            $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPrice());
+            $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPrice());
+
         }
     }
 

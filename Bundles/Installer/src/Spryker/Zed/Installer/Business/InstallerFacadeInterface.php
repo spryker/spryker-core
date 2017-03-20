@@ -13,7 +13,7 @@ interface InstallerFacadeInterface
     /**
      * @api
      *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     public function getInstallerPlugins();
 

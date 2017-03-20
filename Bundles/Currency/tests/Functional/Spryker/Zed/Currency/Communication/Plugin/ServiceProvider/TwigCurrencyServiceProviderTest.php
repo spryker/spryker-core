@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Currency\Communication\Plugin\ServiceProvider;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider;
 use Twig_Environment;
@@ -33,7 +33,7 @@ class TwigCurrencyServiceProviderTest extends PHPUnit_Framework_TestCase
     protected static $twigServiceProvider;
 
     /**
-     * @var \Spryker\Shared\Application\Communication\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected static $application;
 
@@ -102,7 +102,7 @@ class TwigCurrencyServiceProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected static function getApplication()
     {

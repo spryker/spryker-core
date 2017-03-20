@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Ratepay\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()

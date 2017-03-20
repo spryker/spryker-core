@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface SearchFacadeInterface
@@ -26,11 +26,11 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger);
+    public function install(LoggerInterface $messenger);
 
     /**
      * Specification:
@@ -105,5 +105,20 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Loads index definition json files from the folders
+     * - Generates IndexMap class for each mapping type
+     * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
+     * - The generated files will be removed and re-created always when the command runs
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generatePageIndexMap(LoggerInterface $messenger);
 
 }

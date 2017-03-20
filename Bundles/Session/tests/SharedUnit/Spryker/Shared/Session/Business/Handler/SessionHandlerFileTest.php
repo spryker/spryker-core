@@ -8,17 +8,19 @@
 namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\NewRelic\NewRelicApi;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
+ * @group SharedUnit
  * @group Spryker
  * @group Shared
  * @group Session
  * @group Business
- * @group SessionHandlerFile
+ * @group Handler
+ * @group SessionHandlerFileTest
  */
 class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
 {
@@ -210,7 +212,7 @@ class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function createNewRelicApiMock()
     {

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Silex\Application as SilexApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,8 +34,10 @@ class ConsoleBootstrap extends Application
 
         parent::__construct($name, $version);
         $this->setCatchExceptions(false);
-
         $this->addEventDispatcher();
+
+        $propelService = new PropelServiceProvider();
+        $propelService->boot(new SilexApplication());
     }
 
     /**

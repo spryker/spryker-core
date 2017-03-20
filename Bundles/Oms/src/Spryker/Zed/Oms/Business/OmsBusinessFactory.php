@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
@@ -107,16 +106,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessTransition(),
             $this->createProcessProcess(),
             $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface
-     */
-    public function createModelDummy()
-    {
-        return new Dummy(
-            $this->createOrderStateMachineBuilder()
         );
     }
 
@@ -259,14 +248,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getReservationHandlerPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
-     */
-    protected function getSalesFacade()
-    {
-        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
     }
 
     /**

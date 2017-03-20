@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Setup\Business\Internal\Install;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
@@ -62,7 +60,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
+     * @return \Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
     public function getTransferObjectRepeater()
     {
@@ -199,19 +197,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     protected function createDeployPreparePropelConsole()
     {
         return new DeployPreparePropelConsole();
-    }
-
-    /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return \Spryker\Zed\Product\Business\Internal\Install
-     */
-    public function createTestDataInstaller(MessengerInterface $messenger)
-    {
-        $installer = new Install();
-        $installer->setMessenger($messenger);
-
-        return $installer;
     }
 
 }

@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductManagementConfig extends AbstractBundleConfig
 {
 
+    const PRODUCT_TYPE_BUNDLE = 'bundle';
+    const PRODUCT_TYPE_REGULAR = 'regular';
+
     /**
      * @return array
      */
@@ -35,7 +38,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getImageUrlPrefix()
     {
-        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
+        return $this->get(ProductManagementConstants::HOST_YVES);
     }
 
     /**
@@ -43,7 +46,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
+        return $this->get(ProductManagementConstants::HOST_YVES);
     }
 
 }

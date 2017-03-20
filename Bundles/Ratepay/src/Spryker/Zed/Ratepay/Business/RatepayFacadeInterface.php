@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Ratepay\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -13,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayBusinessFactory getFactory()
@@ -249,11 +249,9 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null);
+    public function install();
 
     /**
      * Specification:

@@ -12,7 +12,7 @@ interface ProductManagementToPriceInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
@@ -20,10 +20,18 @@ interface ProductManagementToPriceInterface
 
     /**
      * @param int $idProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductConcretePrice($idProduct, $priceType = null);
+
+    /**
+     * @param string $sku
+     * @param string|null $priceTypeName
+     *
+     * @return int
+     */
+    public function getPriceBySku($sku, $priceTypeName = null);
 
 }

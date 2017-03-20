@@ -9,8 +9,8 @@ namespace Spryker\Zed\Tax\Communication\Table;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -26,18 +26,18 @@ class SetTable extends AbstractTable
     protected $taxSetQuery;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxSetQuery
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(SpyTaxSetQuery $taxSetQuery, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyTaxSetQuery $taxSetQuery, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->taxSetQuery = $taxSetQuery;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -91,7 +91,7 @@ class SetTable extends AbstractTable
             $result[] = [
                 SpyTaxSetTableMap::COL_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
                 SpyTaxSetTableMap::COL_NAME => $taxSetEntity->getName(),
-                SpyTaxSetTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($taxSetEntity->getCreatedAt()),
+                SpyTaxSetTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($taxSetEntity->getCreatedAt()),
                 self::TABLE_COL_ACTIONS => $this->getActionButtons($taxSetEntity),
             ];
         }

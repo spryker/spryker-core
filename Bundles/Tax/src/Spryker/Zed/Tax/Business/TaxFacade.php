@@ -273,23 +273,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 
     /**
      * Specification:
-     *  - Set tax rate for each item
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createProductItemTaxRateCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specification:
      *  - Calculate tax amount for each item
      *
      * @api

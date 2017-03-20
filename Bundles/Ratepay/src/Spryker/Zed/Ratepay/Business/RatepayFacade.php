@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayBusinessFactory getFactory()
@@ -327,13 +327,11 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
      * @return void
      */
-    public function install(MessengerInterface $messenger = null)
+    public function install()
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
     /**

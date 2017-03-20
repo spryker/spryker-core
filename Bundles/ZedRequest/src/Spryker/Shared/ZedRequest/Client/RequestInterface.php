@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface RequestInterface
 {
@@ -27,13 +27,13 @@ interface RequestInterface
     /**
      * @param string $name
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getMetaTransfer($name);
 
     /**
      * @param string $name
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */
@@ -76,12 +76,12 @@ interface RequestInterface
     public function setTime($time);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer();
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */

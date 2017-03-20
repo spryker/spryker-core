@@ -17,9 +17,11 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Service\UtilText\UtilTextService;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
@@ -41,7 +43,8 @@ class InvoiceTest extends Test
     public function testMapToPreCheck()
     {
         $quoteTransfer = $this->getQuoteTransfer();
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
+
         $requestData = $methodMapper->buildPreCheckRequest($quoteTransfer);
 
         $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
@@ -98,7 +101,7 @@ class InvoiceTest extends Test
      */
     public function testMapToPreAuthorization()
     {
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
         $requestData = $methodMapper->buildPreAuthorizationRequest($orderTransfer, $paymentEntityMock);
@@ -114,7 +117,7 @@ class InvoiceTest extends Test
     public function testMapToReAuthorization()
     {
         $uniqueId = $this->getRandomString();
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
         $requestData = $methodMapper->buildReAuthorizationRequest($orderTransfer, $paymentEntityMock, $uniqueId);
@@ -129,9 +132,9 @@ class InvoiceTest extends Test
      */
     private function getRandomString()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return 'test_' . $generator->generateRandomString();
+        return 'test_' . $utilTextService->generateRandomString(32);
     }
 
     /**
@@ -140,7 +143,7 @@ class InvoiceTest extends Test
     public function testMapToReversal()
     {
         $uniqueId = $this->getRandomString();
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
         $requestData = $methodMapper->buildRevertRequest($orderTransfer, $paymentEntityMock, $uniqueId);
@@ -156,7 +159,7 @@ class InvoiceTest extends Test
     public function testMapToCapture()
     {
         $uniqueId = $this->getRandomString();
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
         $requestData = $methodMapper->buildCaptureRequest($orderTransfer, $paymentEntityMock, $uniqueId);
@@ -172,7 +175,7 @@ class InvoiceTest extends Test
     public function testMapToRefund()
     {
         $uniqueId = $this->getRandomString();
-        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $methodMapper = new Invoice($this->getBundleConfigMock(), $this->getMoneyFacade());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
         $requestData = $methodMapper->buildRefundRequest($orderTransfer, $paymentEntityMock, $uniqueId);
@@ -196,7 +199,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\PayolutionConfig
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\PayolutionConfig
      */
     private function getBundleConfigMock()
     {
@@ -240,6 +243,16 @@ class InvoiceTest extends Test
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE);
 
         return $paymentEntityMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
+
+        return $payolutionToMoneyBridge;
     }
 
 }

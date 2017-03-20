@@ -15,7 +15,7 @@ use Propel\Runtime\ActiveQuery\ModelJoin;
 use Spryker\Shared\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractAttributeMarker implements AttributeMarkerInterface
 {

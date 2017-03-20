@@ -1,5 +1,30 @@
 {
   "name": "spryker/braintree",
+  "require": {
+    "braintree/braintree_php": "~3.15.0",
+    "spryker/checkout": "^3.0.0",
+    "spryker/config": "^3.0.0",
+    "spryker/currency": "^2.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/oms": "^6.0.0",
+    "spryker/payment": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/refund": "^4.0.0",
+    "spryker/sales": "^5.0.0",
+    "spryker/step-engine": "^2.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/customer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -19,31 +44,6 @@
       "Sales\\Module\\": "vendor/spryker/sales/tests/_support/Module",
       "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
-  },
-  "require": {
-    "braintree/braintree_php": "~3.15.0",
-    "spryker/application": "^2.4.4",
-    "spryker/checkout": "^2.1.3",
-    "spryker/config": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/currency": "^1.0.0",
-    "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/money": "^1.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/payment": "^2.0.0",
-    "spryker/propel": "^2.3.1",
-    "spryker/refund": "^3.0.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0",
-    "spryker/step-engine": "^1.0.1",
-    "spryker/symfony": "^2.1.6",
-    "spryker/transfer": "^2.0.0",
-    "spryker/url": "^2.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/customer": "^2.0.0 || ^3.0.0",
-    "spryker/testify": "*"
   },
   "description": "Braintree bundle",
   "license": "proprietary",

@@ -29,8 +29,6 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
 use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
@@ -185,6 +183,9 @@ abstract class AbstractBusinessTest extends Test
         return $ratepayPaymentRequestTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
     protected function getTotalsTransfer()
     {
         $totalsTransfer = new TotalsTransfer();
@@ -197,6 +198,11 @@ abstract class AbstractBusinessTest extends Test
         return $totalsTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
     protected function getAddressTransfer($itemPrefix)
     {
         $addressTransfer = new AddressTransfer();
@@ -215,6 +221,11 @@ abstract class AbstractBusinessTest extends Test
         return $addressTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
     protected function getItemTransfer($itemPrefix)
     {
         $itemTransfer = new ItemTransfer();
@@ -231,6 +242,9 @@ abstract class AbstractBusinessTest extends Test
         return $itemTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     protected function getCustomerTransfer()
     {
         $customerTransfer = new CustomerTransfer();
@@ -293,14 +307,14 @@ abstract class AbstractBusinessTest extends Test
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentTransfer
      *
      * @return void
      */
     abstract protected function setRatepayPaymentDataToPaymentTransfer($payment, $paymentTransfer);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     abstract protected function getRatepayPaymentMethodTransfer();
 
@@ -309,6 +323,9 @@ abstract class AbstractBusinessTest extends Test
      */
     abstract protected function getPaymentTransferFromQuote();
 
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Order\MethodMapper\PaymentMethodMapperInterface
+     */
     protected function getPaymentMapper()
     {
         return $this->getRatepayBusinessBusinessFactory()
@@ -387,14 +404,12 @@ abstract class AbstractBusinessTest extends Test
     {
         $stateEntity = $this->createOrderItemStateEntity();
         $processEntity = $this->createOrderProcessEntity();
-        $bundleEntity = $this->createOrderItemBundleEntity();
 
         $orderItemEntity = new SpySalesOrderItem();
         $orderItemEntity
             ->setFkSalesOrder($idSalesOrder)
             ->setFkOmsOrderItemState($stateEntity->getIdOmsOrderItemState())
             ->setFkOmsOrderProcess($processEntity->getIdOmsOrderProcess())
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
             ->setName('test product')
             ->setSku('1324354657687980')
             ->setGrossPrice(1000)
@@ -426,31 +441,6 @@ abstract class AbstractBusinessTest extends Test
         $processEntity->save();
 
         return $processEntity;
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
-     */
-    protected function createOrderItemBundleEntity()
-    {
-        $bundleEntity = new SpySalesOrderItemBundle();
-        $bundleEntity
-            ->setName('test bundle')
-            ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setBundleType('NonSplitBundle');
-        $bundleEntity->save();
-
-        $bundleItemEntity = new SpySalesOrderItemBundleItem();
-        $bundleItemEntity
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
-            ->setName('test bundle item')
-            ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setVariety('Simple');
-        $bundleItemEntity->save();
-
-        return $bundleEntity;
     }
 
 }

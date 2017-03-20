@@ -17,7 +17,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
@@ -1038,6 +1038,38 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+        $query->filterByFkLocale($idLocale);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+
+        return $query;
     }
 
 }

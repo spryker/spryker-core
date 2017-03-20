@@ -74,17 +74,6 @@
         <id-method-parameter value="spy_product_localized_attributes_pk_seq"/>
     </table>
 
-    <table name="spy_product_to_bundle" identifierQuoting="true">
-        <column name="fk_product" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="fk_related_product" type="INTEGER" required="true" primaryKey="true"/>
-        <foreign-key name="spy_product_to_bundle-fk_product" foreignTable="spy_product">
-            <reference local="fk_product" foreign="id_product"/>
-        </foreign-key>
-        <foreign-key name="spy_product_to_bundle-fk_related_product" foreignTable="spy_product" phpName="BundleProduct" refPhpName="BundleProduct">
-            <reference local="fk_related_product" foreign="id_product"/>
-        </foreign-key>
-    </table>
-
     <table name="spy_product_attribute_key" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeKey" identifierQuoting="true">
         <column name="id_product_attribute_key" primaryKey="true" type="INTEGER" autoIncrement="true"/>
         <column name="key" required="true" type="VARCHAR"/>

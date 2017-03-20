@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
@@ -19,7 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductIm
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
+use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
@@ -30,14 +31,15 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_URL = 'FACADE_URL';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
+    const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -65,10 +67,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
@@ -137,10 +135,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
         };
 
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
-        };
-
         $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
             return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
@@ -183,6 +177,14 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
+        };
+
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductManagementToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        $container[self::FACADE_AVAILABILITY] = function (Container $container) {
+            return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
         return $container;

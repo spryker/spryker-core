@@ -29,7 +29,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getQuote()
     {
-        return $this->getSession()->getQuote();
+        return $this->getQuoteClient()->getQuote();
     }
 
     /**
@@ -41,19 +41,25 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function clearQuote()
     {
-        $this->getSession()->clearQuote();
+        $this->getQuoteClient()->clearQuote();
     }
 
     /**
-     * Returns number of items in quote
-     *
      * @api
      *
      * @return int
      */
     public function getItemCount()
     {
-        return $this->getSession()->getItemCount();
+        return $this->getItemCounter()->getItemCount($this->getQuote());
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
+     */
+    protected function getItemCounter()
+    {
+        return $this->getFactory()->getItemCounter();
     }
 
     /**
@@ -67,7 +73,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getSession()->setQuote($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
     /**
@@ -82,6 +88,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function addItem(ItemTransfer $itemTransfer)
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->addItem($cartChangeTransfer);
     }
 
@@ -99,6 +106,26 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $itemTransfer = $this->findItem($sku, $groupKey);
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
+        return $this->getZedStub()->removeItem($cartChangeTransfer);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Remove all given items
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItems(ArrayObject $items)
+    {
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer->setItems($items);
+
         return $this->getZedStub()->removeItem($cartChangeTransfer);
     }
 
@@ -117,6 +144,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
                 $itemTransfer->getGroupKey() === $groupKey) {
+
                 return $itemTransfer;
             }
         }
@@ -148,7 +176,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $delta = abs($itemTransfer->getQuantity() - $quantity);
 
         if ($delta === 0) {
-            return $this->getSession()->getQuote();
+            return $this->getQuoteClient()->getQuote();
         }
 
         if ($itemTransfer->getQuantity() > $quantity) {
@@ -175,6 +203,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->removeItem($cartChangeTransfer);
     }
 
@@ -195,6 +224,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+
         return $this->getZedStub()->addItem($cartChangeTransfer);
     }
 
@@ -203,7 +233,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function createCartChangeTransfer()
     {
-        $quoteTransfer = $this->getSession()->getQuote();
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
         $items = $quoteTransfer->getItems();
 
         if (count($items) === 0) {
@@ -230,19 +260,21 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
-    protected function getZedStub()
+    public function getZedStub()
     {
         return $this->getFactory()->createZedStub();
     }
 
     /**
-     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
-    protected function getSession()
+    protected function getQuoteClient()
     {
-        return $this->getFactory()->createSession();
+        return $this->getFactory()->getQuoteClient();
     }
 
 }

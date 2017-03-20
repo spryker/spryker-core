@@ -34,7 +34,7 @@ class CmsFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {

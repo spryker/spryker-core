@@ -29,4 +29,6 @@ interface PayoneConstants
     const PAYONE_MODE_TEST = 'test';
     const PAYONE_MODE_LIVE = 'live';
 
+    const HOST_YVES = 'HOST_YVES';
+
 }

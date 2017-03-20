@@ -18,13 +18,13 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     private $storage;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface KeyBuilderInterface
      */
     private $keyBuilder;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface KeyBuilderInterface $keyBuilder
      */
     public function __construct($storage, $keyBuilder)
     {

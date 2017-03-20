@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process\Fixtures;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -62,7 +62,7 @@ class StepMock implements StepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class StepMock implements StepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -83,9 +83,9 @@ class StepMock implements StepInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function execute(Request $request, AbstractTransfer $dataTransfer)
     {
@@ -93,7 +93,7 @@ class StepMock implements StepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -119,7 +119,7 @@ class StepMock implements StepInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return array
      */

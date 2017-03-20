@@ -52,4 +52,50 @@ interface ErrorHandlerConstants
      */
     const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
 
+    /**
+     * Specification:
+     * - Pattern for the link from the browser to the IDE.
+     * - The default `phpstorm://open?file=%s&line=%s` works for most OS.
+     *
+     * @api
+     */
+    const PATTERN_IDE_LINK = 'PATTERN_IDE_LINK';
+
+    /**
+     * Specification:
+     * - Path to the project on local machine e.g. `/Users/foo/www/spryker/project`
+     * - This is used to replace the path from server (/data/shop/development/current) with the user path.
+     * - Enables file opening in IDE.
+     *
+     * @api
+     */
+    const USER_BASE_PATH = 'USER_BASE_PATH';
+
+    /**
+     * Specification:
+     * - Path to the project on virtual machine, defaults to `/data/shop/development/current`
+     * - This will be replaced with the user path.
+     *
+     * @api
+     */
+    const SERVER_BASE_PATH = 'SERVER_BASE_PATH';
+
+    /**
+     * Specification:
+     * - When using the USER_BASE_PATH to open files in IDE, some IDEs require AJAX calls for it to work.
+     *
+     * @api
+     */
+    const AS_AJAX = 'AS_AJAX';
+
+    /**
+     * Specification:
+     * - Set php.ini config 'display_errors'
+     * - type bool
+     * - default false
+     *
+     * @api
+     */
+    const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
+
 }

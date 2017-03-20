@@ -28,6 +28,14 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(CategoryExporterDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
      * @return \Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder
      */
     public function createCategoryTreeBuilder()
@@ -47,7 +55,7 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createResourceKeyBuilder()
     {

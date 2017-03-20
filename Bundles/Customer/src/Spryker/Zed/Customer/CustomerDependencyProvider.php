@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -71,9 +70,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new CustomerToCountryBridge($container->getLocator()->country()->facade());
         };
-
-        $container[static::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
         };
 
         return $container;

@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
@@ -66,7 +66,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory
+     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
     protected function getFactory()
     {
@@ -100,7 +100,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      */
     public function getConnection()
     {
-        return (new Connection())->get();
+        return Propel::getConnection();
     }
 
 }

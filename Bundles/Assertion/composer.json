@@ -6,12 +6,15 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/silex": "^2.0.0"
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
   "description": "Assertion bundle",
   "license": "proprietary",
@@ -19,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

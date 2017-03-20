@@ -29,6 +29,9 @@ class ServiceMethodBuilderTest extends Test
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
     const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Service/';
 
+    /**
+     * @return void
+     */
     public function testMethodNameIsClient()
     {
         $methodBuilderMock = $this->getServiceMethodBuilderMock();
@@ -42,6 +45,9 @@ class ServiceMethodBuilderTest extends Test
         $this->assertSame('service', $bundleMethodTransfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testFileLookupIsPerformedInClientApplication()
     {
         $methodBuilderMock = $this->getServiceMethodBuilderMock();

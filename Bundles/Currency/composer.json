@@ -1,16 +1,21 @@
 {
   "name": "spryker/currency",
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^2.1.3",
-    "spryker/transfer": "^2.0.0",
-    "spryker/twig": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/application": "^2.0.0",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/transfer": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex.",
+    "spryker/twig": "If you want to use Currency in Twig you need to install spryker/twig."
   },
   "description": "Currency bundle",
   "license": "proprietary",
@@ -18,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

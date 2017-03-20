@@ -12,12 +12,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use CMS page creation from CmsGui bundle.
+ *
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
@@ -124,7 +126,7 @@ class PageController extends AbstractController
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getFactory()->getUrlFacade()->updateUrl($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 

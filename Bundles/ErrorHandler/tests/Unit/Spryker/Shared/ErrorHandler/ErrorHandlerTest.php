@@ -14,7 +14,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\ErrorHandler\ErrorLoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 /**
  * @group Unit
@@ -194,7 +194,7 @@ class ErrorHandlerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function getNewRelicApiMock()
     {

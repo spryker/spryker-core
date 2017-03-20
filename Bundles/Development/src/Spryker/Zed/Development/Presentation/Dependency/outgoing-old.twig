@@ -1,0 +1,99 @@
+{% extends '@Application/Layout/layout.twig' %}
+{% block content %}
+    <div class="spy-layout sparse">
+
+        <table class="table table-striped spy-grid">
+
+            <tr>
+                <td colspan="4"><h3>{{ "Outgoing dependencies of the" | trans }} {{ bundle }} {{ "bundle" | trans }}</h3></td>
+            </tr>
+
+            <tr>
+                <th>{{ 'Dependency' | trans }}</th>
+                <th>{{ 'Count' | trans }}</th>
+                <th>{{ 'in src' | trans }}</th>
+                <th>{{ 'in tests' | trans }}</th>
+            </tr>
+
+            {% for dependencyBundle in dependencies.dependencyBundles %}
+                <tr>
+                    <td><a href="/development/dependency/outgoing?bundle={{ dependencyBundle.bundle }}">{{ dependencyBundle.bundle }}</a></td>
+                    <td>{{ dependencyBundle.dependencies | length }}</td>
+                    {% set inSrc = 0 %}
+                    {% set inTest = 0 %}
+                    {% for dependency in dependencyBundle.dependencies  %}
+                        {% if dependency.isInTest %}
+                            {% set inTest = inTest + 1 %}
+                        {% else %}
+                            {% set inSrc = inSrc + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ inSrc }}</td>
+                    <td>{{ inTest }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="4"><h3>{{ "Composer dependencies" | trans }}</h3></td>
+            </tr>
+
+            <tr>
+                <th colspan="2">{{ 'Found in src' | trans }}</th>
+                <th>{{ 'Declared in composer.json' | trans }}</th>
+                <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
+            </tr>
+
+            {% set hasDevOnlyRequirements = false %}
+            {% for composerDependency in composerDependencies %}
+
+                {% if composerDependency.src or composerDependency.composerRequire %}
+                    <tr>
+                        <td colspan="2"{% if not composerDependency.composerRequire %} style="color: red"{% endif %}>{{ composerDependency.src }}</td>
+                        <td{% if not composerDependency.src %} style="color: red"{% endif %}>{{ composerDependency.composerRequire }}</td>
+                        <td{% if composerDependency.tests and not composerDependency.composerRequireDev %} style="color: red"{% endif %}> {{ composerDependency.composerRequireDev }}</td>
+                    </tr>
+                {% else %}
+                    {% set hasDevOnlyRequirements = true %}
+                {% endif %}
+
+            {% endfor %}
+
+            <tr>
+                <th colspan="3">{{ 'Found in test' | trans }}</th>
+                <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
+            </tr>
+
+            {% for composerDependency in composerDependencies %}
+                {% if composerDependency.tests or composerDependency.src %}
+                    {% if (composerDependency.tests or composerDependency.composerRequireDev) and not composerDependency.src %}
+                        <tr>
+                            <td colspan="3">{{ composerDependency.tests }}</td>
+                            <td{% if composerDependency.tests and not composerDependency.composerRequireDev %} style="color: red"{% endif %}> {{ composerDependency.tests }}</td>
+                        </tr>
+                    {% elseif (not composerDependency.tests and composerDependency.composerRequireDev) %}
+                        <tr>
+                            <td colspan="3">{{ composerDependency.tests }}</td>
+                            <td style="color: red">{{ composerDependency.composerRequireDev }}</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if hasDevOnlyRequirements %}
+                <tr>
+                    <td colspan="4"><h3>{{ "Composer dev only dependencies" | trans }}</h3></td>
+                </tr>
+
+                {% for composerDependency in composerDependencies %}
+                    {% if not composerDependency.src and not composerDependency.tests %}
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                        <td>{{ composerDependency.composerRequireDev }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+
+{% endblock %}

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\NewRelic\Communication\Plugin;
 
+use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\NewRelicApiInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -25,7 +26,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     const PRIORITY = -255;
 
     /**
-     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected $newRelicApi;
 
@@ -35,9 +36,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $store;
 
     /**
-     * @var \Spryker\Shared\Library\System
+     * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
-    protected $system;
+    protected $utilNetworkService;
 
     /**
      * @var array
@@ -45,16 +46,16 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $ignorableTransactions;
 
     /**
-     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Shared\Library\System $system
+     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
-    public function __construct(NewRelicApiInterface $newRelicApi, Store $store, System $system, array $ignorableTransactions = [])
+    public function __construct(NewRelicApiInterface $newRelicApi, Store $store, UtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
     {
         $this->newRelicApi = $newRelicApi;
         $this->store = $store;
-        $this->system = $system;
+        $this->utilNetworkService = $utilNetworkService;
         $this->ignorableTransactions = $ignorableTransactions;
     }
 
@@ -72,7 +73,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $request = $event->getRequest();
         $transactionName = $this->getTransactionName($request);
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
-        $host = $request->server->get('COMPUTERNAME', $this->system->getHostname());
+        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostname());
 
         $this->newRelicApi->setNameOfTransaction($transactionName);
         $this->newRelicApi->addCustomParameter('request_uri', $requestUri);

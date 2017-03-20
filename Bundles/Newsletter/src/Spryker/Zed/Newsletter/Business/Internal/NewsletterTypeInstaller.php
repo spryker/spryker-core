@@ -8,10 +8,9 @@
 namespace Spryker\Zed\Newsletter\Business\Internal;
 
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
-class NewsletterTypeInstaller extends AbstractInstaller
+class NewsletterTypeInstaller implements NewsletterTypeInstallerInterface
 {
 
     /**

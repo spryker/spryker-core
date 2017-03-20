@@ -9,6 +9,9 @@ namespace Spryker\Zed\Session\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ */
 class SessionCommunicationFactory extends AbstractCommunicationFactory
 {
 }

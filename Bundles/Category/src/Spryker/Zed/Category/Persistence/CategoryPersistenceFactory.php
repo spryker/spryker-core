@@ -23,7 +23,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -34,7 +34,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -45,7 +45,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -56,7 +56,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
@@ -67,7 +67,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery

@@ -1,4 +1,4 @@
-namespace: CustomerGroupDiscountConnnector
+namespace: CustomerGroupDiscountConnector
 actor: Tester
 paths:
     tests: tests

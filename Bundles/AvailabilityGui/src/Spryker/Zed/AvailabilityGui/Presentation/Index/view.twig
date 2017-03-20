@@ -1,0 +1,91 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Product Availability' | trans %}
+
+{% block action %}
+    {{ backActionButton('/availability-gui', 'List of product availability' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-lg-2">
+                    <p><b>{{ 'SKU' | trans }}</b></p><p> {{ productAbstractAvailability.sku }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Name' | trans }}:</b></p><p> {{ productAbstractAvailability.productName }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Availability' | trans }}:</b></p><p>
+                        {% if productAbstractAvailability.availability > 0 or productAbstractAvailability.isNeverOutOfStock %}
+                            <span class="label label-info"> {{ "Available" | trans }}</span>
+                        {% else  %}
+                            <span class="label label-info"> {{ "Not available" | trans }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractAvailability.stockQuantity }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p>
+                        <b>{{ 'Is never out of stock' | trans }}:</b>
+                    </p>
+                    <p>
+                        {{  productAbstractAvailability.isNeverOutOfStock ? 'Yes' | trans : 'No' | trans }}
+                    </p>
+                </div>
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Variant availability' | trans } %}
+
+        {% block widget_content %}
+                {{ indexTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+
+    <div id="bundled-products" style="display:none;">
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Bundled products' } %}
+            {% block widget_content %}
+                <div class="row">
+                    <table class="table table-striped table-bordered table-hover gui-table-data" id="table-bundled-products" data-paging="false">
+                        <thead>
+                        <tr>
+                            <th>{{ 'SKU' | trans }}</th>
+                            <th>{{ 'Name' | trans }}</th>
+                            <th>{{ 'Availability' | trans }}</th>
+                            <th>{{ 'Current Stock' | trans }}</th>
+                            <th>{{ 'Reserved Products' | trans }}</th>
+                            <th>{{ 'Quantity in Bundle' | trans }}</th>
+                            <th>{{ 'Is never out of stock' | trans }}</th>
+                            <th>{{ 'Actions' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    </div>
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-availability-gui-main.js"></script>
+{% endblock %}
+
+
+

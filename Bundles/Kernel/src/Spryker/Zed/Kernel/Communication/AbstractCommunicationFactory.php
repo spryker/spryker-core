@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -17,7 +16,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {
 
-    const FORM_FACTORY = 'form.factory';
+    const FORM_FACTORY = 'FORM_FACTORY';
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
@@ -83,7 +82,9 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      */
     protected function getFormFactory()
     {
-        return (new Pimple())->getApplication()[self::FORM_FACTORY];
+        $container = $this->createContainerWithProvidedDependencies();
+
+        return $container[self::FORM_FACTORY];
     }
 
 }

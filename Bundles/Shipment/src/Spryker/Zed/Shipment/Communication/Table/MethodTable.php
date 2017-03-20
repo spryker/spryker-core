@@ -9,7 +9,7 @@ namespace Spryker\Zed\Shipment\Communication\Table;
 
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
@@ -93,13 +93,17 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param int $value
+     * @param int|null $value
      * @param bool $includeSymbol
      *
      * @return string
      */
     protected function formatPrice($value, $includeSymbol = true)
     {
+        if ($value === null) {
+            return '';
+        }
+
         $moneyTransfer = $this->moneyFacade->fromInteger($value);
 
         if ($includeSymbol) {

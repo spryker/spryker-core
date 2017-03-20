@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Country\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {

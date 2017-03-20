@@ -7,13 +7,15 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/sales": "^2.0.0 || ^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/sales": "^5.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/oms": "If you want to use Oms command plugins you need to install spryker/oms."
   },
   "description": "Nopayment bundle",
   "license": "proprietary",
@@ -21,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

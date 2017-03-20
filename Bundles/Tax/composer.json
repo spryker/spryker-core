@@ -6,19 +6,22 @@
     }
   },
   "require": {
-    "spryker/Application": "^2.0.0",
-    "spryker/Gui": "^2.0.0",
-    "spryker/Url": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/gui": "^3.0.0",
+    "spryker/country": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation."
   },
   "description": "Tax bundle",
   "license": "proprietary",
@@ -26,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

@@ -100,6 +100,9 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
                 (int)$itemTransfer->getSumTotalDiscountAmount() + $totalDiscountSumGrossAmount
             );
 
+            $itemTransfer->setFinalUnitDiscountAmount($itemTransfer->getUnitTotalDiscountAmountWithProductOption());
+            $itemTransfer->setFinalSumDiscountAmount($itemTransfer->getSumTotalDiscountAmountWithProductOption());
+
             $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
                 (int)$itemTransfer->getSumGrossPriceWithProductOptions() - $itemTransfer->getSumTotalDiscountAmountWithProductOption()
             );
@@ -107,6 +110,10 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
             $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
                 (int)$itemTransfer->getUnitGrossPriceWithProductOptions() - $itemTransfer->getUnitTotalDiscountAmountWithProductOption()
             );
+
+            $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts());
+            $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+
         }
     }
 
@@ -297,12 +304,18 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
             $itemTransfer->setUnitTotalDiscountAmountWithProductOption((int)$unitDiscountAmountWithOptions);
             $itemTransfer->setSumTotalDiscountAmountWithProductOption((int)$sumDiscountAmountWithOptions);
 
+            $itemTransfer->setFinalUnitDiscountAmount((int)$unitDiscountAmountWithOptions);
+            $itemTransfer->setFinalSumDiscountAmount((int)$sumDiscountAmountWithOptions);
+
             $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
                 (int)round($itemTransfer->getUnitGrossPriceWithProductOptions() - $unitDiscountAmountWithOptions)
             );
             $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
                 (int)round($itemTransfer->getSumGrossPriceWithProductOptions() - $sumDiscountAmountWithOptions)
             );
+
+            $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts());
+            $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts());
 
             $itemTransfer->setRefundableAmount(
                 (int)round($itemTransfer->getRefundableAmount() - $sumDiscountAmountWithOptions)

@@ -17,7 +17,6 @@ use Spryker\Shared\Application\Log\Processor\GuzzleBodyProcessor;
 use Spryker\Shared\Application\Log\Processor\RequestProcessor;
 use Spryker\Shared\Application\Log\Processor\ResponseProcessor;
 use Spryker\Shared\Application\Log\Processor\ServerProcessor;
-use Spryker\Shared\Application\Log\Processor\TransferSanitizerProcessor;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\LogConstants;
@@ -58,7 +57,6 @@ class SprykerLoggerConfig implements LoggerConfigInterface
 
         return [
             new PsrLogMessageProcessor(),
-            new TransferSanitizerProcessor($sanitizer),
             new EntitySanitizerProcessor($sanitizer),
             new EnvironmentProcessor(),
             new ServerProcessor(),

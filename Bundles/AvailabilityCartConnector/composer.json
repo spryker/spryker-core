@@ -6,12 +6,15 @@
     }
   },
   "require": {
-    "spryker/availability": "^3.0.0",
-    "spryker/kernel": "^2.0.0"
+    "spryker/availability": "^5.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
   },
   "description": "AvailabilityCartConnector bundle",
   "license": "proprietary",
@@ -19,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

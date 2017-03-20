@@ -14,13 +14,14 @@
     "datatables.net-responsive-bs": "~2.0.0",
     "datatables.net-select": "~1.1.0",
     "datatables.net-select-bs": "~1.1.0",
+    "es6-promise": "~4.0.5",
     "font-awesome": "~4.5.0",
     "jquery": "~2.2.0",
     "jquery-ui": "~1.10.5",
     "metismenu": "~2.2.0",
-    "nestable": "github:ilmente/Nestable#v1.1.1",
-    "pace": "github:hubspot/pace#v1.0.2",
-    "select2": "github:select2/select2#4.0.2",
+    "nestable": "git+https://git@github.com/ilmente/Nestable#v1.1.1",
+    "pace": "git+https://git@github.com/hubspot/pace#v1.0.2",
+    "select2": "git+https://git@github.com/select2/select2#4.0.2",
     "summernote": "~0.8.1",
     "sweetalert": "~1.1.3"
   }

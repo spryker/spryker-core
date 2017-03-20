@@ -2,4 +2,3 @@ class_name: FunctionalTester
 modules:
     enabled:
         - \Testify\Module\Environment
-        - \Category\Module\Functional

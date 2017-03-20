@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Search\Communication\Table\SearchTable;
-use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Search\SearchConfig getConfig()
@@ -24,14 +23,6 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     public function createSearchTable()
     {
         return new SearchTable($this->getFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToCollectorInterface
-     */
-    public function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
     }
 
     /**

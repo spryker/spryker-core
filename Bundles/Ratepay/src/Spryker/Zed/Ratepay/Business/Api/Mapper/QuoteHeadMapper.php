@@ -9,7 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestHeadTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Ratepay\RatepayConfig;
 
 class QuoteHeadMapper extends BaseMapper
@@ -21,7 +21,7 @@ class QuoteHeadMapper extends BaseMapper
     protected $quoteTransfer;
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface
+     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected $paymentData;
 
@@ -37,7 +37,7 @@ class QuoteHeadMapper extends BaseMapper
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentData
      * @param \Spryker\Zed\Ratepay\RatepayConfig $config
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */

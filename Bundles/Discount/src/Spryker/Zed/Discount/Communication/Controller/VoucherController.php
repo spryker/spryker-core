@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Discount\Communication\Controller;
 
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

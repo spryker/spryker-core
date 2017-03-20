@@ -11,13 +11,13 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
-use Spryker\Shared\Library\LibraryConstants;
 
 class ErrorHandlerFactory
 {
 
     const APPLICATION_ZED = 'ZED';
     const SAPI_CLI = 'cli';
+    const SAPI_PHPDBG = 'phpdbg';
 
     /**
      * @var string
@@ -77,7 +77,7 @@ class ErrorHandlerFactory
      */
     protected function isCliCall()
     {
-        return (PHP_SAPI === static::SAPI_CLI);
+        return (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG);
     }
 
     /**
@@ -88,10 +88,10 @@ class ErrorHandlerFactory
     protected function getLegacyConfigKey()
     {
         if ($this->application === static::APPLICATION_ZED) {
-            return LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE;
+            return ErrorHandlerConstants::ERROR_RENDERER;
         }
 
-        return LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE;
+        return ErrorHandlerConstants::ERROR_RENDERER;
     }
 
     /**

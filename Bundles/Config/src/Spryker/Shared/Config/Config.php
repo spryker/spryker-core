@@ -10,7 +10,6 @@ namespace Spryker\Shared\Config;
 use ArrayObject;
 use Exception;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
 
 class Config
 {

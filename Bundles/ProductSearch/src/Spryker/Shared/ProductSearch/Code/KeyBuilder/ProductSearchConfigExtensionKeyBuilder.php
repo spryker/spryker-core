@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\ProductSearch\Code\KeyBuilder;
 
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 use Spryker\Shared\ProductSearch\ProductSearchConfig;
 
 class ProductSearchConfigExtensionKeyBuilder implements KeyBuilderInterface

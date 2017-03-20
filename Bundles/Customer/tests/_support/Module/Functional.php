@@ -12,15 +12,15 @@ use Propel\Runtime\Propel;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Spryker\Shared\Application\Communication\Application;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
+use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
+use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
-use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Country\Business\CountryFacade;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -48,8 +48,8 @@ class Functional extends Module
         $application->register(new SilexTwigServiceProvider());
         $application->register(new ValidatorServiceProvider());
         $application->register(new FormServiceProvider());
-        $application->register(new TwigServiceProvider());
-        $application->register(new DateFormatterServiceProvider());
+        $application->register(new DateTimeFormatterServiceProvider());
+        $application->register(new FormFactoryServiceProvider());
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot($application);
@@ -73,11 +73,11 @@ class Functional extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\Model\ConsoleMessenger
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
     protected function getMessenger()
     {
-        $messenger = new ConsoleMessenger(
+        $messenger = new ConsoleLogger(
             new ConsoleOutput(OutputInterface::VERBOSITY_QUIET)
         );
 

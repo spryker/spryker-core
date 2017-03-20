@@ -22,8 +22,10 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 
 /**
  * @group Functional
@@ -69,9 +71,19 @@ class AbstractFacadeTest extends Test
         parent::_before();
         $this->setUpSalesOrderTestData();
         $this->setUpPaymentTestData();
-        $this->responseConverter = new ResponseConverter();
+        $this->responseConverter = new ResponseConverter($this->getMoneyFacade());
         $this->requestLogQuery = new SpyPaymentPayolutionTransactionRequestLogQuery();
         $this->statusLogQuery = new SpyPaymentPayolutionTransactionStatusLogQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
+
+        return $payolutionToMoneyBridge;
     }
 
     /**

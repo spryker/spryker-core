@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +22,7 @@ class EditController extends AddController
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
+    const PARAM_PRODUCT_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -89,9 +91,11 @@ class EditController extends AddController
             }
         };
 
+        $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
+
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, $type);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -132,6 +136,11 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
+        $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
+        if ($productTransfer->getProductBundle() !== null) {
+            $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
+        }
+
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
@@ -139,9 +148,12 @@ class EditController extends AddController
             ->getFactory()
             ->createProductVariantFormEdit(
                 $dataProvider->getData($idProductAbstract, $idProduct),
-                $dataProvider->getOptions($idProductAbstract)
+                $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);
+
+        $bundledProductTable = $this->getFactory()
+            ->createBundledProductTable($idProduct);
 
         if ($form->isValid()) {
             try {
@@ -167,11 +179,12 @@ class EditController extends AddController
                 ));
 
                 return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d',
+                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
                     self::PARAM_ID_PRODUCT_ABSTRACT,
                     $idProductAbstract,
                     self::PARAM_ID_PRODUCT,
-                    $idProduct
+                    $idProduct,
+                    $type
                 ));
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -187,6 +200,8 @@ class EditController extends AddController
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
+            'bundledProductTable' => $bundledProductTable->render(),
+            'type' => $type,
         ]);
     }
 
@@ -197,13 +212,15 @@ class EditController extends AddController
      */
     public function variantTableAction(Request $request)
     {
-        $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
-        ));
+        $idProductAbstract = $this->castId(
+            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT)
+        );
+
+        $type = $request->get(self::PARAM_PRODUCT_TYPE);
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, $type);
 
         return $this->jsonResponse(
             $variantTable->fetchData()

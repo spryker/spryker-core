@@ -35,4 +35,9 @@ interface ClassDefinitionInterface extends DefinitionInterface
      */
     public function getNormalizedProperties();
 
+    /**
+     * @return string|null
+     */
+    public function getDeprecationDescription();
+
 }

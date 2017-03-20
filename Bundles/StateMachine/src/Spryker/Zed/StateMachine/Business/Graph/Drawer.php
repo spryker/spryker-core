@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Graph;
 
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\StateMachine\Business\Exception\DrawerException;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
@@ -172,9 +172,9 @@ class Drawer implements DrawerInterface
      */
     protected function getDiamondId()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**

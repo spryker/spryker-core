@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\ZedRequest\Client\Exception;
 
-use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
+use Exception;
 
-class RequestException extends AbstractErrorRendererException
+class RequestException extends Exception
 {
 }

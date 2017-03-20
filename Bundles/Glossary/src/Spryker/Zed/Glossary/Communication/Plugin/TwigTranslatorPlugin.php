@@ -55,25 +55,25 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @param string $id
+     * @param string $identifier
      * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
         }
         $localeTransfer = $this->getLocaleTransfer();
 
-        if ($this->getFacade()->hasTranslation($id, $localeTransfer)) {
-            $id = $this->getFacade()->translate($id, $parameters, $localeTransfer);
+        if ($this->getFacade()->hasTranslation($identifier, $localeTransfer)) {
+            $identifier = $this->getFacade()->translate($identifier, $parameters, $localeTransfer);
         }
 
-        return $id;
+        return $identifier;
     }
 
     /**
@@ -82,7 +82,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @param string $id
+     * @param string $identifier
      * @param int $number
      * @param array $parameters
      * @param string|null $domain
@@ -92,14 +92,14 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string The translated string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice($identifier, $number, array $parameters = [], $domain = null, $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
         }
         $localeTransfer = $this->getLocaleTransfer();
 
-        $ids = explode('|', $id);
+        $ids = explode('|', $identifier);
 
         if ($number === 1) {
             if (!$this->getFacade()->hasTranslation($ids[0], $localeTransfer)) {
@@ -109,7 +109,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
         }
 
         if (!isset($ids[1])) {
-            throw new InvalidArgumentException(sprintf('The message "%s" cannot be pluralized, because it is missing a plural (e.g. "There is one apple|There are %%count%% apples").', $id));
+            throw new InvalidArgumentException(sprintf('The message "%s" cannot be pluralized, because it is missing a plural (e.g. "There is one apple|There are %%count%% apples").', $identifier));
         }
 
         if (!$this->getFacade()->hasTranslation($ids[1], $localeTransfer)) {

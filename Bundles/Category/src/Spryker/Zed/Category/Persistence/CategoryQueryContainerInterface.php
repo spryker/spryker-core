@@ -445,4 +445,23 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode);
+
 }

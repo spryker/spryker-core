@@ -11,7 +11,7 @@ use Elastica\Client;
 use Elastica\Index;
 use Elastica\Type\Mapping;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
@@ -29,16 +29,16 @@ class IndexInstaller implements SearchInstallerInterface
     protected $elasticaClient;
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      */
-    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, MessengerInterface $messenger)
+    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, LoggerInterface $messenger)
     {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;

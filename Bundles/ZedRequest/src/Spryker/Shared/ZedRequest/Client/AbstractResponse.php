@@ -7,7 +7,8 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
 
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
@@ -43,20 +44,32 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
         parent::fromArray($values);
 
         foreach ($this->values[ResponseInterface::INFO_MESSAGES] as $key => $message) {
-            $this->values[ResponseInterface::INFO_MESSAGES][$key] = new Message($message);
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($message['value']);
+            $messageTransfer->setParameters($message['parameters']);
+
+            $this->values[ResponseInterface::INFO_MESSAGES][$key] = $messageTransfer;
         }
 
         foreach ($this->values[ResponseInterface::ERROR_MESSAGES] as $key => $message) {
-            $this->values[ResponseInterface::ERROR_MESSAGES][$key] = new Message($message);
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($message['value']);
+            $messageTransfer->setParameters($message['parameters']);
+
+            $this->values[ResponseInterface::ERROR_MESSAGES][$key] = $messageTransfer;
         }
 
         foreach ($this->values[ResponseInterface::SUCCESS_MESSAGES] as $key => $message) {
-            $this->values[ResponseInterface::SUCCESS_MESSAGES][$key] = new Message($message);
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($message['value']);
+            $messageTransfer->setParameters($message['parameters']);
+
+            $this->values[ResponseInterface::SUCCESS_MESSAGES][$key] = $messageTransfer;
         }
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorMessages()
     {
@@ -72,7 +85,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         $errorMessages = $this->getErrorMessages();
         foreach ($errorMessages as $errorMessage) {
-            if ($errorMessage->getMessage() === $messageString) {
+            if ($errorMessage->getValue() === $messageString) {
                 return true;
             }
         }
@@ -95,11 +108,11 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $errorMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $errorMessage
      *
      * @return $this
      */
-    public function addErrorMessage(Message $errorMessage)
+    public function addErrorMessage(MessageTransfer $errorMessage)
     {
         $this->values[ResponseInterface::ERROR_MESSAGES][] = $errorMessage;
 
@@ -107,7 +120,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoMessages()
     {
@@ -123,7 +136,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         $messages = $this->getInfoMessages();
         foreach ($messages as $message) {
-            if ($message->getMessage() === $messageString) {
+            if ($message->getValue() === $messageString) {
                 return true;
             }
         }
@@ -132,11 +145,11 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return $this
      */
-    public function addInfoMessage(Message $message)
+    public function addInfoMessage(MessageTransfer $message)
     {
         $this->values[ResponseInterface::INFO_MESSAGES][] = $message;
 
@@ -158,7 +171,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessMessages()
     {
@@ -174,7 +187,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         $successMessages = $this->getSuccessMessages();
         foreach ($successMessages as $successMessage) {
-            if ($successMessage->getMessage() === $messageString) {
+            if ($successMessage->getValue() === $messageString) {
                 return true;
             }
         }
@@ -197,11 +210,11 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Client\Message $successMessage
+     * @param \Generated\Shared\Transfer\MessageTransfer $successMessage
      *
      * @return $this
      */
-    public function addSuccessMessage(Message $successMessage)
+    public function addSuccessMessage(MessageTransfer $successMessage)
     {
         $this->values[ResponseInterface::SUCCESS_MESSAGES][] = $successMessage;
 
@@ -231,7 +244,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer()
     {
@@ -250,7 +263,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param string $transferClassName
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private function createTransferObject($transferClassName)
     {
@@ -260,7 +273,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */

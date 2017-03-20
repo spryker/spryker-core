@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Cms;
 
+use Propel\Runtime\Propel;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -59,7 +59,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return (new Connection())->get();
+            return Propel::getConnection();
         };
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
@@ -72,6 +72,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_URL] = function (Container $container) {
             return new CmsToUrlBridge($container->getLocator()->url()->facade());
+        };
+
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

@@ -9,7 +9,6 @@ interface UtilNetworkServiceInterface
 {
 
     /**
-     *
      * Specification:
      *  - Get current running script hostname
      *
@@ -18,5 +17,13 @@ interface UtilNetworkServiceInterface
      * @return string
      */
     public function getHostName();
+
+    /**
+     * Specification:
+     *  - Get string to follow requests between applications
+     *
+     * @return string
+     */
+    public function getRequestId();
 
 }

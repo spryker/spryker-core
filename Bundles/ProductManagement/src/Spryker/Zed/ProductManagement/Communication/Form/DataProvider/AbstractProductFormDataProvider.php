@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -94,7 +94,7 @@ class AbstractProductFormDataProvider
     protected $priceFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Spryker\Shared\Library\Collection\CollectionInterface
+     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
 
@@ -108,6 +108,20 @@ class AbstractProductFormDataProvider
      */
     protected $imageUrlPrefix;
 
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
+     * @param array $attributeCollection
+     * @param array $taxCollection
+     * @param string $imageUrlPrefix
+     */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
@@ -137,7 +151,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param int|null $idProductAbstract |null
+     * @param int|null $idProductAbstract
      *
      * @return mixed
      */
@@ -699,6 +713,11 @@ class AbstractProductFormDataProvider
         return $values;
     }
 
+    /**
+     * @param string $keyToLocalize
+     *
+     * @return string
+     */
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {
         if (!$this->attributeTransferCollection->has($keyToLocalize)) {

@@ -9,7 +9,8 @@ namespace Unit\Spryker\Zed\Kernel\Communication;
 
 use PHPUnit_Framework_TestCase;
 use Silex\Application;
-use Unit\Spryker\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Unit\Spryker\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
 
 /**
  * @group Unit
@@ -30,7 +31,7 @@ class AbstractGatewayControllerTest extends PHPUnit_Framework_TestCase
         $application = new Application();
 
         $this->assertInstanceOf(
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController',
+            AbstractGatewayController::class,
             new FixtureGatewayController($application)
         );
     }

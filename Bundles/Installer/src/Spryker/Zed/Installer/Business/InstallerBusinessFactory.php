@@ -17,7 +17,7 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     public function getInstallerPlugins()
     {

@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
-use Spryker\Shared\ZedRequest\Client\Message;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Generated\Shared\Transfer\MessageTransfer;
 
 abstract class AbstractGatewayController extends AbstractController
 {
@@ -19,17 +18,17 @@ abstract class AbstractGatewayController extends AbstractController
     protected $success = true;
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\Message[]
+     * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
     private $errorMessages = [];
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\Message[]
+     * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
     private $infoMessages = [];
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\Message[]
+     * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
     private $successMessages = [];
 
@@ -61,9 +60,9 @@ abstract class AbstractGatewayController extends AbstractController
      */
     protected function addInfoMessage($message, array $data = [])
     {
-        $messageObject = new Message();
-        $messageObject->setMessage($message);
-        $messageObject->setData($data);
+        $messageObject = new MessageTransfer();
+        $messageObject->setValue($message);
+        $messageObject->setParameters($data);
 
         $this->infoMessages[] = $messageObject;
 
@@ -78,9 +77,9 @@ abstract class AbstractGatewayController extends AbstractController
      */
     protected function addErrorMessage($message, array $data = [])
     {
-        $messageObject = new Message();
-        $messageObject->setMessage($message);
-        $messageObject->setData($data);
+        $messageObject = new MessageTransfer();
+        $messageObject->setValue($message);
+        $messageObject->setParameters($data);
 
         $this->errorMessages[] = $messageObject;
 
@@ -95,9 +94,9 @@ abstract class AbstractGatewayController extends AbstractController
      */
     protected function addSuccessMessage($message, array $data = [])
     {
-        $messageObject = new Message();
-        $messageObject->setMessage($message);
-        $messageObject->setData($data);
+        $messageObject = new MessageTransfer();
+        $messageObject->setValue($message);
+        $messageObject->setParameters($data);
 
         $this->successMessages[] = $messageObject;
 
@@ -105,7 +104,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorMessages()
     {
@@ -113,7 +112,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoMessages()
     {
@@ -121,7 +120,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessMessages()
     {

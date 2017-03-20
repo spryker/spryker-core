@@ -7,18 +7,22 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/customer": "^2.0.0 || ^3.0.0",
-    "spryker/glossary": "^2.0.0",
-    "spryker/installer": "^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^2.8.0",
-    "spryker/library": "^2.0.0",
-    "spryker/mail": "^3.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/customer": "^4.0.0",
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/mail": "^4.0.0",
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer."
   },
   "description": "Newsletter bundle",
   "license": "proprietary",
@@ -26,7 +30,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

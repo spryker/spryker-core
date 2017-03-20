@@ -1,0 +1,23 @@
+<div class="row" id="{{ bundledProductForm.vars.id }}">
+
+    <div class="form-group col-md-2">
+        {{ form_label(bundledProductForm.sku) }}
+        {{ form_widget(bundledProductForm.sku) }}
+        {{ form_errors(bundledProductForm.sku) }}
+    </div>
+
+    <div class="form-group col-md-2 {% if bundledProductForm.quantity.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(bundledProductForm.quantity) }}
+        {{ form_widget(bundledProductForm.quantity) }}
+        {{ form_errors(bundledProductForm.quantity) }}
+    </div>
+
+    <div class="form-group col-md-2">
+        <label>&nbsp;</label>
+        <div class="input-group">
+            <input type="button" value="Remove" class="btn btn-sm btn-outline btn-remove"/>
+        </div>
+    </div>
+
+    {{ form_widget(bundledProductForm) }}
+</div>

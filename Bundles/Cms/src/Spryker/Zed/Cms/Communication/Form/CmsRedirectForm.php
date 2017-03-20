@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -22,7 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CmsRedirectForm extends AbstractType
 {
 
-    const FIELD_ID_REDIRECT = 'id_redirect';
+    const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
     const FIELD_FROM_URL = 'from_url';
     const FIELD_TO_URL = 'to_url';
     const FIELD_STATUS = 'status';
@@ -93,7 +96,7 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addIdRedirectField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_REDIRECT, 'hidden');
+        $builder->add(self::FIELD_ID_URL_REDIRECT, 'hidden');
 
         return $this;
     }
@@ -120,9 +123,12 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addToUrlField(FormBuilderInterface $builder)
     {
+        $constraints = $this->getMandatoryConstraints();
+        $constraints[] = new Callback(['methods' => [[$this, 'validateUrlRedirectLoop']]]);
+
         $builder->add(self::FIELD_TO_URL, 'text', [
             'label' => 'To URL',
-            'constraints' => $this->getMandatoryConstraints(),
+            'constraints' => $constraints,
         ]);
 
         return $this;
@@ -143,7 +149,14 @@ class CmsRedirectForm extends AbstractType
                 'constraints' => [
                     $this->createNotBlankConstraint()
                 ],
-                'choices' => [201 => 201, 301 => 301, 302 => 302, 303 => 303, 307 => 307, 308 => 308],
+                'choices' => [
+                    Response::HTTP_CREATED => Response::HTTP_CREATED,
+                    Response::HTTP_MOVED_PERMANENTLY => Response::HTTP_MOVED_PERMANENTLY,
+                    Response::HTTP_FOUND => Response::HTTP_FOUND,
+                    Response::HTTP_SEE_OTHER => Response::HTTP_SEE_OTHER,
+                    Response::HTTP_TEMPORARY_REDIRECT => Response::HTTP_TEMPORARY_REDIRECT,
+                    Response::HTTP_PERMANENTLY_REDIRECT => Response::HTTP_PERMANENTLY_REDIRECT,
+                ],
                 'placeholder' => 'Please select',
             ]
         );
@@ -161,8 +174,11 @@ class CmsRedirectForm extends AbstractType
         $urlConstraints[] = new Callback([
             'methods' => [
                 function ($url, ExecutionContextInterface $context) {
-                    if ($this->urlFacade->hasUrl($url)) {
-                        $context->addViolation('URL is already used');
+                    $urlTransfer = new UrlTransfer();
+                    $urlTransfer->setUrl($url);
+
+                    if ($this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer)) {
+                        $context->addViolation('URL is already used.');
                     }
                 },
             ],
@@ -215,6 +231,30 @@ class CmsRedirectForm extends AbstractType
     protected function createLengthConstraint($max)
     {
         return new Length(['max' => $max]);
+    }
+
+    /**
+     * @param string $toUrl
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return void
+     */
+    public function validateUrlRedirectLoop($toUrl, ExecutionContextInterface $context)
+    {
+        $fromUrl = $context->getRoot()->get(static::FIELD_FROM_URL)->getData();
+
+        $sourceUrlTransfer = new UrlTransfer();
+        $sourceUrlTransfer->setUrl($fromUrl);
+        $urlRedirectTransfer = new UrlRedirectTransfer();
+        $urlRedirectTransfer
+            ->setSource($sourceUrlTransfer)
+            ->setToUrl($toUrl);
+
+        $validationResponse = $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
+
+        if (!$validationResponse->getIsValid()) {
+            $context->addViolation($validationResponse->getError());
+        }
     }
 
 }

@@ -106,7 +106,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     {
         $taxRateQuery = $this->getQueryContainer()->queryAllTaxRates();
 
-        return new RateTable($taxRateQuery, $this->getDateFormatter());
+        return new RateTable($taxRateQuery, $this->getDateTimeService());
     }
 
     /**
@@ -116,13 +116,13 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     {
         $taxSetQuery = $this->getQueryContainer()->queryAllTaxSets();
 
-        return new SetTable($taxSetQuery, $this->getDateFormatter());
+        return new SetTable($taxSetQuery, $this->getDateTimeService());
     }
 
     /**
-     * @return \Spryker\Shared\Library\DateFormatterInterface
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected function getDateFormatter()
+    protected function getDateTimeService()
     {
         return $this->getProvidedDependency(TaxDependencyProvider::SERVICE_DATE_FORMATTER);
     }

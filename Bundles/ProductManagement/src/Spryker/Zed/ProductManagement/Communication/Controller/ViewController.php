@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,7 +55,7 @@ class ViewController extends AddController
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR);
 
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
@@ -132,6 +133,8 @@ class ViewController extends AddController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function variantTableAction(Request $request)
@@ -142,7 +145,7 @@ class ViewController extends AddController
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR);
 
         return $this->jsonResponse(
             $variantTable->fetchData()

@@ -16,4 +16,19 @@ interface AvailabilityHandlerInterface
      */
     public function updateAvailability($sku);
 
+    /**
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract);
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveCurrentAvailability($sku, $quantity);
+
 }

@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -28,6 +28,7 @@ class ProductTable extends AbstractProductTable
     const COL_STATUS = 'status';
 
     const COL_ACTIONS = 'actions';
+    const COL_IS_BUNDLE = 'is_bundle';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -65,11 +66,13 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => 'Tax Set',
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
+            static::COL_IS_BUNDLE => 'Contains bundles',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
+            static::COL_IS_BUNDLE,
             static::COL_ACTIONS,
         ]);
 
@@ -103,7 +106,7 @@ class ProductTable extends AbstractProductTable
             ->queryProductAbstract()
             ->innerJoinSpyTaxSet()
             ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($this->localeTransfer->getIdLocale())
+            ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
@@ -132,6 +135,7 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
+            static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
     }
@@ -173,11 +177,26 @@ class ProductTable extends AbstractProductTable
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
             if ($spyProductEntity->getIsActive()) {
                 $isActive = true;
-                break;
             }
         }
 
         return $this->getStatusLabel($isActive);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getIsBundleProductLable(SpyProductAbstract $productAbstractEntity)
+    {
+        foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
+            if ($spyProductEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
+                return 'Yes';
+            }
+        }
+
+        return 'No';
     }
 
 }

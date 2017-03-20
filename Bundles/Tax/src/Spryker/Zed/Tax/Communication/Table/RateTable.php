@@ -11,8 +11,8 @@ use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -29,18 +29,18 @@ class RateTable extends AbstractTable
     protected $taxRateQuery;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxRateQuery $taxRateQuery
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(SpyTaxRateQuery $taxRateQuery, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyTaxRateQuery $taxRateQuery, UtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->taxRateQuery = $taxRateQuery;
-        $this->dateFormatter = $dateFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -99,7 +99,7 @@ class RateTable extends AbstractTable
         foreach ($queryResult as $taxRateEntity) {
             $result[] = [
                 SpyTaxRateTableMap::COL_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
-                SpyTaxRateTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($taxRateEntity->getCreatedAt()),
+                SpyTaxRateTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($taxRateEntity->getCreatedAt()),
                 SpyTaxRateTableMap::COL_NAME => $taxRateEntity->getName(),
                 SpyCountryTableMap::COL_NAME => $this->getCountryName($taxRateEntity),
                 SpyTaxRateTableMap::COL_RATE => $taxRateEntity->getRate(),

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Gui\Form;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -36,12 +36,12 @@ abstract class AbstractForm implements FormTypeInterface
     abstract public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface|array
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|array
      */
     abstract public function populateFormFields();
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
     abstract protected function getDataClass();
 
@@ -52,7 +52,7 @@ abstract class AbstractForm implements FormTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        if ($this->getDataClass() instanceof TransferInterface && !($this->getDataClass() instanceof NullFormTransfer)) {
+        if ($this->getDataClass() instanceof TransferInterface) {
             $resolver->setDefault('data_class', get_class($this->getDataClass()));
         }
     }

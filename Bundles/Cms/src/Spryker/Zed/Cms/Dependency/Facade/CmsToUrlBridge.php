@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsToUrlBridge implements CmsToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
     protected $urlFacade;
 
@@ -28,83 +27,13 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
-     * @param string $url
-     * @param string $resourceType
-     * @param int $idResource
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrlForCurrentLocale($url, $resourceType, $idResource)
+    public function createUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->createUrlForCurrentLocale($url, $resourceType, $idResource);
-    }
-
-    /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $idResource
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
-    {
-        return $this->urlFacade->createUrl($url, $locale, $resourceType, $idResource);
-    }
-
-    /**
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlActive($idUrl)
-    {
-        $this->urlFacade->touchUrlActive($idUrl);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idUrl
-     *
-     * @return void
-     */
-    public function touchUrlDeleted($idUrl)
-    {
-        $this->urlFacade->touchUrlDeleted($idUrl);
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    public function hasUrl($url)
-    {
-        return $this->urlFacade->hasUrl($url);
-    }
-
-    /**
-     * @param string $toUrl
-     * @param int $status
-     *
-     * @return \Generated\Shared\Transfer\RedirectTransfer
-     */
-    public function createRedirectAndTouch($toUrl, $status = 303)
-    {
-        return $this->urlFacade->createRedirectAndTouch($toUrl, $status);
-    }
-
-    /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param int $idUrlRedirect
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
-    {
-        return $this->urlFacade->saveRedirectUrlAndTouch($url, $locale, $idUrlRedirect);
+        return $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -112,29 +41,89 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
+    public function updateUrl(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        return $this->urlFacade->updateUrl($urlTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
-     *
-     * @return \Generated\Shared\Transfer\RedirectTransfer
-     */
-    public function saveRedirectAndTouch(RedirectTransfer $redirect)
-    {
-        return $this->urlFacade->saveRedirectAndTouch($redirect);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
+    public function activateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->activateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deactivateUrl(UrlTransfer $urlTransfer)
+    {
+        $this->urlFacade->deactivateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->hasUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(UrlRedirectTransfer $redirectTransfer)
     {
         $this->urlFacade->deleteUrlRedirect($redirectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->urlFacade->createUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
+     */
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        return $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
     }
 
 }

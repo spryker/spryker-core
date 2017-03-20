@@ -7,20 +7,19 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
-use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface;
+use Spryker\Zed\Product\Business\Product\Observer\AbstractProductAbstractManagerSubject;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductAbstractManager implements ProductAbstractManagerInterface
+class ProductAbstractManager extends AbstractProductAbstractManagerSubject implements ProductAbstractManagerInterface
 {
 
     /**
@@ -44,11 +43,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $productAbstractAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface
-     */
-    protected $pluginAbstractManager;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
     protected $skuGenerator;
@@ -56,19 +50,18 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
      */
-    private $productTransferMapper;
+    protected $productTransferMapper;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
-     * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface $pluginAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
@@ -78,7 +71,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductToTouchInterface $touchFacade,
         ProductToLocaleInterface $localeFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
-        PluginAbstractManagerInterface $pluginAbstractManager,
         SkuGeneratorInterface $skuGenerator,
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper
@@ -87,7 +79,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->touchFacade = $touchFacade;
         $this->localeFacade = $localeFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
-        $this->pluginAbstractManager = $pluginAbstractManager;
         $this->skuGenerator = $skuGenerator;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
@@ -120,7 +111,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 
-        $productAbstractTransfer = $this->pluginAbstractManager->triggerBeforeCreatePlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->notifyBeforeCreateObservers($productAbstractTransfer);
 
         $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
@@ -129,7 +120,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
 
-        $this->pluginAbstractManager->triggerAfterCreatePlugins($productAbstractTransfer);
+        $this->notifyAfterCreateObservers($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -152,12 +143,12 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productAbstractAssertion->assertProductExists($idProductAbstract);
         $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
-        $productAbstractTransfer = $this->pluginAbstractManager->triggerBeforeUpdatePlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->notifyBeforeUpdateObservers($productAbstractTransfer);
 
         $this->persistEntity($productAbstractTransfer);
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
 
-        $this->pluginAbstractManager->triggerAfterUpdatePlugins($productAbstractTransfer);
+        $this->notifyAfterUpdateObservers($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -201,7 +192,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $productAbstractTransfer = $this->productTransferMapper->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
 
-        $this->pluginAbstractManager->triggerReadPlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -229,23 +220,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         }
 
         return $productConcrete->getSpyProductAbstract()->getSku();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
-    {
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
-                return $localizedAttribute->getName();
-            }
-        }
-
-        return $productAbstractTransfer->getSku();
     }
 
     /**

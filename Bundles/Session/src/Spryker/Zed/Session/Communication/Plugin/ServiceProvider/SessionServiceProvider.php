@@ -10,15 +10,15 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Storage\StorageConfig;
+use Spryker\Zed\Session\SessionConfig;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Session\Business\SessionFacade getFacade()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -63,7 +63,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function boot(Application $app)
     {
-        if (PHP_SAPI === 'cli') {
+        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
             return;
         }
 
@@ -77,7 +77,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         switch ($saveHandler) {
             case SessionConstants::SESSION_HANDLER_COUCHBASE:
                 $savePath = !empty($savePath) ? $savePath : null;
-
                 $sessionHelper->registerCouchbaseSessionHandler($savePath);
                 break;
 
@@ -89,6 +88,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             case SessionConstants::SESSION_HANDLER_REDIS:
                 $savePath = !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerRedisSessionHandler($savePath);
+                break;
+
+            case SessionConstants::SESSION_HANDLER_REDIS_LOCKING:
+                $savePath = !empty($savePath) ? $savePath : null;
+                $sessionHelper->registerRedisLockingSessionHandler($savePath);
                 break;
 
             case SessionConstants::SESSION_HANDLER_FILE:
@@ -117,13 +121,13 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         $path = null;
 
-        if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
+        if ($this->isRedisSaveHandler($saveHandler)) {
             $path = sprintf(
                 '%s://%s:%s?database=%s',
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
             );
 
             if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
@@ -133,7 +137,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
                 );
             }
 
@@ -148,6 +152,21 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
+     * @param string $saveHandler
+     *
+     * @return bool
+     */
+    protected function isRedisSaveHandler($saveHandler)
+    {
+        $redisSaveHandlers = [
+            SessionConstants::SESSION_HANDLER_REDIS,
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING,
+        ];
+
+        return in_array($saveHandler, $redisSaveHandlers);
+    }
+
+    /**
      * Secure flag of cookies can only be set to true if SSL is enabled. If you set it to true
      * without SSL enabled you will not get the same session in browsers like Firefox and Safari
      *
@@ -155,7 +174,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function secureCookie()
     {
-        if (Config::get(ApplicationConstants::ZED_SSL_ENABLED, false)
+        if (Config::get(SessionConstants::ZED_SSL_ENABLED, false)
             && Config::get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true)
         ) {
             return true;

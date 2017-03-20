@@ -20,6 +20,7 @@ class TransitionLog implements TransitionLogInterface
 {
 
     const SAPI_CLI = 'cli';
+    const SAPI_PHPDBG = 'phpdbg';
     const QUERY_STRING = 'QUERY_STRING';
     const DOCUMENT_URI = 'DOCUMENT_URI';
     const ARGV = 'argv';
@@ -176,8 +177,8 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setHostname($this->utilNetworkService->getHostName());
 
         $path = 'N/A';
-        if (PHP_SAPI === self::SAPI_CLI) {
-            $path = self::SAPI_CLI;
+        if (PHP_SAPI === self::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG) {
+            $path = PHP_SAPI;
             if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
                 $path = implode(' ', $_SERVER[self::ARGV]);
             }

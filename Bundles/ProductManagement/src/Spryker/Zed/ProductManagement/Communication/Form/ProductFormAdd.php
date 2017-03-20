@@ -19,7 +19,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -45,13 +44,13 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
-    const FORM_IMAGE_SET = 'image_set';
 
+    const FORM_IMAGE_SET = 'image_set';
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
     const OPTION_ID_LOCALE = 'option_id_locale';
-    const OPTION_TAX_RATES = 'option_tax_rates';
 
+    const OPTION_TAX_RATES = 'option_tax_rates';
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
@@ -82,11 +81,6 @@ class ProductFormAdd extends AbstractType
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
      */
     protected $utilTextService;
@@ -96,7 +90,6 @@ class ProductFormAdd extends AbstractType
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface $urlFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      */
     public function __construct(
@@ -104,7 +97,6 @@ class ProductFormAdd extends AbstractType
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
-        ProductManagementToUrlInterface $urlFacade,
         ProductManagementToUtilTextInterface $utilTextService
     ) {
 
@@ -112,7 +104,6 @@ class ProductFormAdd extends AbstractType
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->moneyFacade = $moneyFacade;
-        $this->urlFacade = $urlFacade;
         $this->utilTextService = $utilTextService;
     }
 
@@ -434,19 +425,6 @@ class ProductFormAdd extends AbstractType
                                         $type
                                     ));
                                 }
-                            }
-
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
-                                    $selectedAttributes[] = $valueSet[AttributeSuperForm::FIELD_VALUE];
-                                    break;
-                                }
-                            }
-
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please select at least one attribute and its value under Variants');
-                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],

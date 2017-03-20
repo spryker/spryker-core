@@ -6,7 +6,7 @@ function Tabs(selector, onTabChange) {
     this.currentTabPosition = 0;
     this.currentUrlHash = window.location.hash;
     this.tabsContainer = $(selector);
-    this.tabUrls = this.tabsContainer.find('li a');
+    this.tabUrls = this.tabsContainer.find('.nav li a');
     this.onTabChange = onTabChange || function(){};
 
     this.checkErrors();

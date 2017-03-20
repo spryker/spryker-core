@@ -13,11 +13,24 @@ use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface;
 
 class Converter implements ConverterInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface $moneyFacade
+     */
+    public function __construct(PayolutionToMoneyInterface $moneyFacade)
+    {
+        $this->moneyFacade = $moneyFacade;
+    }
 
     /**
      * @param string $stringData
@@ -220,12 +233,12 @@ class Converter implements ConverterInterface
     protected function arrayToCalculationPaymentDetailTransfer(array $data)
     {
         $paymentDetailTransfer = (new PayolutionCalculationPaymentDetailTransfer())
-            ->setOriginalAmount($this->centsToDecimal($data['OriginalAmount']))
-            ->setTotalAmount($this->centsToDecimal($data['TotalAmount']))
-            ->setMinimumInstallmentFee($this->centsToDecimal($data['MinimumInstallmentFee']))
+            ->setOriginalAmount($this->decimalToInteger($data['OriginalAmount']))
+            ->setTotalAmount($this->decimalToInteger($data['TotalAmount']))
+            ->setMinimumInstallmentFee($this->decimalToInteger($data['MinimumInstallmentFee']))
             ->setDuration($data['Duration'])
-            ->setInterestRate($this->centsToDecimal($data['InterestRate']))
-            ->setEffectiveInterestRate($this->centsToDecimal($data['EffectiveInterestRate']))
+            ->setInterestRate($this->decimalToInteger($data['InterestRate']))
+            ->setEffectiveInterestRate($this->decimalToInteger($data['EffectiveInterestRate']))
             ->setUsage($data['Usage'])
             ->setCurrency($data['Currency'])
             ->setStandardCreditInformationUrl($data['StandardCreditInformationUrl']);
@@ -247,7 +260,7 @@ class Converter implements ConverterInterface
      */
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {
-        $data['Amount'] = $this->centsToDecimal($data['Amount']);
+        $data['Amount'] = $this->decimalToInteger($data['Amount']);
 
         return (new PayolutionCalculationInstallmentTransfer())->fromArray($data);
     }
@@ -257,9 +270,9 @@ class Converter implements ConverterInterface
      *
      * @return int
      */
-    protected function centsToDecimal($amount)
+    protected function decimalToInteger($amount)
     {
-        return CurrencyManager::getInstance()->convertDecimalToCent($amount);
+        return $this->moneyFacade->convertDecimalToInteger((float)$amount);
     }
 
 }

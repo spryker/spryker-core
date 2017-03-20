@@ -7,12 +7,30 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
+use Generated\Shared\Transfer\MessageTransfer;
+
 interface KernelToMessengerInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
      */
-    public function getStoredMessages();
+    public function addSuccessMessage(MessageTransfer $message);
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(MessageTransfer $message);
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addErrorMessage(MessageTransfer $message);
 
 }

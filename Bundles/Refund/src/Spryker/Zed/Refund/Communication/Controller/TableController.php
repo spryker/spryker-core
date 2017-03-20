@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Refund\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()

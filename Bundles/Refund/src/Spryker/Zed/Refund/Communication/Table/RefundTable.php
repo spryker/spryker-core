@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface;
@@ -25,7 +25,7 @@ class RefundTable extends AbstractTable
     protected $refundQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected $dateFormatter;
 
@@ -36,11 +36,14 @@ class RefundTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $dateFormatter
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface $moneyFacade
      */
-    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, RefundToMoneyInterface $moneyFacade)
-    {
+    public function __construct(
+        RefundQueryContainerInterface $refundQueryContainer,
+        UtilDateTimeServiceInterface $dateFormatter,
+        RefundToMoneyInterface $moneyFacade
+    ) {
         $this->refundQueryContainer = $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
         $this->moneyFacade = $moneyFacade;
@@ -130,7 +133,7 @@ class RefundTable extends AbstractTable
      */
     protected function formatDate($date)
     {
-        return $this->dateFormatter->dateTime($date);
+        return $this->dateFormatter->formatDateTime($date);
     }
 
 }

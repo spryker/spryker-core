@@ -206,7 +206,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -246,7 +246,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */

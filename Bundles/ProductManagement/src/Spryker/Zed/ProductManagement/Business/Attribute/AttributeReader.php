@@ -15,7 +15,7 @@ use PDO;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class AttributeReader implements AttributeReaderInterface
 {

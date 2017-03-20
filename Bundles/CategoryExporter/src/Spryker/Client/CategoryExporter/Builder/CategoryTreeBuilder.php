@@ -9,7 +9,7 @@ namespace Spryker\Client\CategoryExporter\Builder;
 
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CategoryTreeBuilder
 {
@@ -23,13 +23,13 @@ class CategoryTreeBuilder
     protected $kvReader;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $kvReader
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(StorageClientInterface $kvReader, KeyBuilderInterface $keyBuilder)
     {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Acl;
 
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -31,8 +30,8 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadeUser($container);
         $container = $this->addAclQueryContainer($container);
 
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
         };
 
         return $container;

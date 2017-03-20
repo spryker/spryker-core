@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Controller;
 
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

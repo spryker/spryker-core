@@ -33,6 +33,9 @@ class TouchQueryContainerTest extends Test
     const ITEM_ID_5 = 5;
     const ITEM_ID_6 = 6;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Shared\Library\BatchIterator\PdoBatchIterator;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -27,6 +27,19 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
      * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
+
+    /**
+     * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
+     */
+    protected $utilDataReaderService;
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     */
+    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService)
+    {
+        $this->utilDataReaderService = $utilDataReaderService;
+    }
 
     /**
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
@@ -62,11 +75,11 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
     }
 
     /**
-     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator
      */
     protected function generateBatchIterator()
     {
-        return new PdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->chunkSize);
+        return $this->utilDataReaderService->getPdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->chunkSize);
     }
 
     /**

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
-use Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface;
+use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
@@ -18,9 +18,9 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface
      */
-    protected $productAbstractManager;
+    protected $productAbstractNameGenerator;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
@@ -33,16 +33,16 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
+     * @param \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface $productAbstractNameGenerator
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
      */
     public function __construct(
-        ProductAbstractManagerInterface $productAbstractManager,
+        ProductAbstractNameGeneratorInterface $productAbstractNameGenerator,
         ProductToLocaleInterface $localeFacade,
         ProductToUtilTextInterface $utilTextService
     ) {
-        $this->productAbstractManager = $productAbstractManager;
+        $this->productAbstractNameGenerator = $productAbstractNameGenerator;
         $this->localeFacade = $localeFacade;
         $this->utilTextService = $utilTextService;
     }
@@ -81,7 +81,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
         $productName = $this->utilTextService->generateSlug(
-            $this->productAbstractManager->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer)
+            $this->productAbstractNameGenerator->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer)
         );
 
         return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();

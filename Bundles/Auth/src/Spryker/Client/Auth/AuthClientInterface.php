@@ -9,24 +9,4 @@ namespace Spryker\Client\Auth;
 
 interface AuthClientInterface
 {
-
-    /**
-     * @api
-     *
-     * @param string $rawToken
-     *
-     * @return string
-     */
-    public function generateToken($rawToken);
-
-    /**
-     * @api
-     *
-     * @param string $rawToken
-     * @param string $token
-     *
-     * @return bool
-     */
-    public function checkToken($rawToken, $token);
-
 }

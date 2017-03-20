@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,13 +18,11 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
      * @return void
      */
-    public function install(LoggerInterface $messenger)
+    public function install()
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
     /**
@@ -41,7 +38,11 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @deprecated Use getCountryByIso2Code() instead.
      *
      * @param string $iso2Code
      *
@@ -50,6 +51,32 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     public function getIdCountryByIso2Code($iso2Code)
     {
         return $this->getFactory()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2Code)
+    {
+        return $this->getFactory()->createCountryManager()->getCountryByIso2Code($iso2Code);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $iso3Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso3Code($iso3Code)
+    {
+        return $this->getFactory()->createCountryManager()->getCountryByIso3Code($iso3Code);
     }
 
     /**

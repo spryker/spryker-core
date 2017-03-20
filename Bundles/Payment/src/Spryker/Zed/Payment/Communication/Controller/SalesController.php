@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Payment\Communication\Controller;
 
 use DateTime;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class SalesController extends AbstractController

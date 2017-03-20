@@ -9,15 +9,14 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use LogicException;
+use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Service\UtilSanitize\UtilSanitizeService;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
-use Spryker\Zed\Library\Generator\StringGenerator;
-use Spryker\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -309,8 +308,8 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $generator = new StringGenerator();
-        $this->tableIdentifier = $prefix . $generator->generateRandomString();
+        $utilTextService = new UtilTextService();
+        $this->tableIdentifier = $prefix . $utilTextService->generateRandomString(32);
 
         return $this;
     }
@@ -613,9 +612,9 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
+                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
                 // @todo fix this in CD-412
-                if ($sqlDriver === 'pgsql') {
+                if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }
 
@@ -814,7 +813,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Shared\Url\Url $url
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -829,7 +828,8 @@ abstract class AbstractTable
         $parameters = $this->getButtonParameters($buttonOptions);
 
         if (is_string($url)) {
-            $url = Html::escape($url);
+            $utilSanitizeService = new UtilSanitizeService();
+            $url = $utilSanitizeService->escapeHtml($url);
         } else {
             $url = $url->buildEscaped();
         }

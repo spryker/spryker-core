@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\Mail;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Application\Communication\Application;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionAddInterface;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionAddInterface;

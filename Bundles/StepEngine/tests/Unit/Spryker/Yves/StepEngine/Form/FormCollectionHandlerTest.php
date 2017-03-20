@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Yves\StepEngine\Form;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
@@ -135,6 +135,9 @@ class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FormInterface::class, $formCollectionHandlerMock->handleRequest($request, $this->getDataTransferMock()));
     }
 
+    /**
+     * @return void
+     */
     public function testProvideDefaultFormData()
     {
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock(['getForms']);
@@ -235,7 +238,7 @@ class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     private function getDataTransferMock()
     {

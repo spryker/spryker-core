@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 abstract class AbstractRequest extends AbstractObject implements EmbeddedTransferInterface, RequestInterface
 {
@@ -57,7 +57,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     /**
      * @param string $name
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
     public function getMetaTransfer($name)
     {
@@ -75,7 +75,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $name
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */
@@ -150,7 +150,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     }
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
@@ -170,7 +170,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
      * @return $this
      */
@@ -205,7 +205,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     /**
      * @param string $transferClassName
      *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     private function createTransferObject($transferClassName)
     {
