@@ -5,16 +5,16 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Acceptance\Discount;
+namespace Acceptance;
 
 use Discount\PageObject\DiscountCreatePage;
 use Discount\AcceptanceTester;
 
 /**
  * @group Acceptance
- * @group Discount
  * @group Zed
  * @group DiscountCreateCest
+ *
  * @group ZedLogin
  */
 class DiscountCreateCest
