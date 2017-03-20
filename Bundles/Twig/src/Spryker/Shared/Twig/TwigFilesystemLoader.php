@@ -91,7 +91,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
         $this->validateName($name, $pos);
 
         $bundle = ucfirst(substr($nameWithoutPrefix, 0, $pos));
-        $templateName = ucfirst(substr($nameWithoutPrefix, $pos + 1));
+        $templateName = substr($nameWithoutPrefix, $pos + 1);
 
         return $this->load($name, $bundle, $templateName);
     }
