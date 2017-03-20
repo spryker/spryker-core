@@ -10,10 +10,13 @@ namespace Spryker\Zed\Navigation\Business\Node;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationNodeDeleter implements NavigationNodeDeleterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -44,15 +47,9 @@ class NavigationNodeDeleter implements NavigationNodeDeleterInterface
     {
         $this->assertNavigationNodeForDelete($navigationNodeTransfer);
 
-        $navigationNodeEntity = $this->getNavigationNodeEntity($navigationNodeTransfer);
-        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
-
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $this->deleteNavigationNodeEntity($navigationNodeEntity);
-        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
-
-        $this->navigationQueryContainer->getConnection()->commit();
+        $this->handleDatabaseTransaction(function () use ($navigationNodeTransfer) {
+            $this->executeDeleteNavigationNodeTransaction($navigationNodeTransfer);
+        });
     }
 
     /**
@@ -63,6 +60,20 @@ class NavigationNodeDeleter implements NavigationNodeDeleterInterface
     protected function assertNavigationNodeForDelete(NavigationNodeTransfer $navigationNodeTransfer)
     {
         $navigationNodeTransfer->requireIdNavigationNode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteNavigationNodeTransaction(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $navigationNodeEntity = $this->getNavigationNodeEntity($navigationNodeTransfer);
+        $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
+
+        $this->deleteNavigationNodeEntity($navigationNodeEntity);
+        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
     }
 
     /**

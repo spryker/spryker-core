@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -46,12 +49,9 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     {
         $this->assertNavigationTreeForUpdate($navigationTreeTransfer);
 
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $this->persistNavigationTree($navigationTreeTransfer);
-        $this->navigationTouch->touchActive($navigationTreeTransfer->getNavigation());
-
-        $this->navigationQueryContainer->getConnection()->commit();
+        $this->handleDatabaseTransaction(function () use ($navigationTreeTransfer) {
+            $this->executeUpdateNavigationTreeHierarchyTransaction($navigationTreeTransfer);
+        });
     }
 
     /**
@@ -67,6 +67,17 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
         foreach ($navigationTreeTransfer->getNodes() as $navigationTreeNodeTransfer) {
             $this->assertNavigationTreeNodeRecursively($navigationTreeNodeTransfer);
         }
+    }
+
+    /**
+     * @param NavigationTreeTransfer $navigationTreeTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateNavigationTreeHierarchyTransaction(NavigationTreeTransfer $navigationTreeTransfer)
+    {
+        $this->persistNavigationTree($navigationTreeTransfer);
+        $this->navigationTouch->touchActive($navigationTreeTransfer->getNavigation());
     }
 
     /**

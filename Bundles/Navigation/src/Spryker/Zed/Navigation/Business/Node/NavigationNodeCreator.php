@@ -11,10 +11,13 @@ use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationNodeCreator implements NavigationNodeCreatorInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -45,15 +48,9 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
     {
         $this->assertNavigationNodeForCreation($navigationNodeTransfer);
 
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
-        $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
-        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
-
-        $this->navigationQueryContainer->getConnection()->commit();
-
-        return $navigationNodeTransfer;
+        return $this->handleDatabaseTransaction(function () use ($navigationNodeTransfer) {
+            return $this->executeCreateNavigationNodeTransaction($navigationNodeTransfer);
+        });
     }
 
     /**
@@ -82,6 +79,20 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
         $navigationNodeLocalizedAttributesTransfer
             ->requireFkLocale()
             ->requireTitle();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    protected function executeCreateNavigationNodeTransaction(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
+        $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
+        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
+
+        return $navigationNodeTransfer;
     }
 
     /**

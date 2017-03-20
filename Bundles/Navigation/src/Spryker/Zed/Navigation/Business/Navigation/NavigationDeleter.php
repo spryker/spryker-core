@@ -10,10 +10,13 @@ namespace Spryker\Zed\Navigation\Business\Navigation;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNotFoundException;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationDeleter implements NavigationDeleterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -44,14 +47,9 @@ class NavigationDeleter implements NavigationDeleterInterface
     {
         $this->assertNavigationForDelete($navigationTransfer);
 
-        $navigationEntity = $this->getNavigationEntity($navigationTransfer);
-
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $this->deleteNavigationEntity($navigationEntity);
-        $this->navigationTouch->touchDeleted($navigationTransfer);
-
-        $this->navigationQueryContainer->getConnection()->commit();
+        $this->handleDatabaseTransaction(function () use ($navigationTransfer) {
+            $this->executeDeleteNavigationTransaction($navigationTransfer);
+        });
     }
 
     /**
@@ -62,6 +60,19 @@ class NavigationDeleter implements NavigationDeleterInterface
     protected function assertNavigationForDelete(NavigationTransfer $navigationTransfer)
     {
         $navigationTransfer->requireIdNavigation();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteNavigationTransaction(NavigationTransfer $navigationTransfer)
+    {
+        $navigationEntity = $this->getNavigationEntity($navigationTransfer);
+
+        $this->deleteNavigationEntity($navigationEntity);
+        $this->navigationTouch->touchDeleted($navigationTransfer);
     }
 
     /**

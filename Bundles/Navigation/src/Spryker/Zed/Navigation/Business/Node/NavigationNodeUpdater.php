@@ -13,10 +13,13 @@ use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeLocalizedAttributesNotFoundException;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -47,15 +50,9 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     {
         $this->assertNavigationNodeForUpdate($navigationNodeTransfer);
 
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
-        $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
-        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
-
-        $this->navigationQueryContainer->getConnection()->commit();
-
-        return $navigationNodeTransfer;
+        return $this->handleDatabaseTransaction(function () use ($navigationNodeTransfer) {
+            return $this->executeUpdateNavigationNodeTransaction($navigationNodeTransfer);
+        });
     }
 
     /**
@@ -66,6 +63,20 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     protected function assertNavigationNodeForUpdate(NavigationNodeTransfer $navigationNodeTransfer)
     {
         $navigationNodeTransfer->requireIdNavigationNode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer
+     */
+    protected function executeUpdateNavigationNodeTransaction(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $navigationNodeTransfer = $this->persistNavigationNode($navigationNodeTransfer);
+        $navigationNodeTransfer = $this->persistNavigationNodeLocalizedAttributes($navigationNodeTransfer);
+        $this->navigationNodeTouch->touchNavigationNode($navigationNodeTransfer);
+
+        return $navigationNodeTransfer;
     }
 
     /**

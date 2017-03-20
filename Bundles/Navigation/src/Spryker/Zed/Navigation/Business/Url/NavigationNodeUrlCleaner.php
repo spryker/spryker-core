@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdaterInterface;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface

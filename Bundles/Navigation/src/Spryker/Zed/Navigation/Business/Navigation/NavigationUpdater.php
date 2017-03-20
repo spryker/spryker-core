@@ -10,10 +10,13 @@ namespace Spryker\Zed\Navigation\Business\Navigation;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNotFoundException;
+use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationUpdater implements NavigationUpdaterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
@@ -44,14 +47,9 @@ class NavigationUpdater implements NavigationUpdaterInterface
     {
         $this->assertNavigationForUpdate($navigationTransfer);
 
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $navigationTransfer = $this->persistNavigation($navigationTransfer);
-        $this->navigationTouch->touchActive($navigationTransfer);
-
-        $this->navigationQueryContainer->getConnection()->commit();
-
-        return $navigationTransfer;
+        return $this->handleDatabaseTransaction(function () use ($navigationTransfer) {
+            return $this->executeUpdateNavigationTransaction($navigationTransfer);
+        });
     }
 
     /**
@@ -62,6 +60,19 @@ class NavigationUpdater implements NavigationUpdaterInterface
     protected function assertNavigationForUpdate(NavigationTransfer $navigationTransfer)
     {
         $navigationTransfer->requireIdNavigation();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    protected function executeUpdateNavigationTransaction(NavigationTransfer $navigationTransfer)
+    {
+        $navigationTransfer = $this->persistNavigation($navigationTransfer);
+        $this->navigationTouch->touchActive($navigationTransfer);
+
+        return $navigationTransfer;
     }
 
     /**
