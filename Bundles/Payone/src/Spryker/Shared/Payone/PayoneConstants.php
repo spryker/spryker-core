@@ -37,6 +37,6 @@ interface PayoneConstants
      *
      * @api
      */
-    const BASE_URL_YVES = 'PAYONE_BASE_URL_YVES';
+    const BASE_URL_YVES = 'PAYONE:BASE_URL_YVES';
 
 }

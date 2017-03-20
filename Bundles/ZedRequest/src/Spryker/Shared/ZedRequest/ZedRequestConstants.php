@@ -23,14 +23,14 @@ interface ZedRequestConstants
      *
      * @api
      */
-    const BASE_URL_ZED_API = 'BASE_URL_ZED_API';
+    const BASE_URL_ZED_API = 'ZED_REQUEST:BASE_URL_ZED_API';
 
     /**
      * Secure base url for Zed API including scheme and port (e.g. http://www.zed.demoshop.local:8443)
      *
      * @api
      */
-    const BASE_URL_SSL_ZED_API = 'BASE_URL_SSL_ZED_API';
+    const BASE_URL_SSL_ZED_API = 'ZED_REQUEST:BASE_URL_SSL_ZED_API';
 
     const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = 'TRANSFER_DEBUG_SESSION_FORWARD_ENABLED';
     const TRANSFER_DEBUG_SESSION_NAME = 'TRANSFER_DEBUG_SESSION_NAME';

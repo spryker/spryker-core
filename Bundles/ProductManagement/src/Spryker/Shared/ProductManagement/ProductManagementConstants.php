@@ -22,6 +22,6 @@ interface ProductManagementConstants
      *
      * @api
      */
-    const BASE_URL_YVES = 'MANAGEMENT_BASE_URL_YVES';
+    const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
 
 }

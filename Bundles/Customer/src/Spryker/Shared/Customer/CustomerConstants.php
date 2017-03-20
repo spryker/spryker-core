@@ -21,7 +21,7 @@ interface CustomerConstants
      *
      * @api
      */
-    const BASE_URL_YVES = 'BASE_URL_YVES';
+    const BASE_URL_YVES = 'CUSTOMER:BASE_URL_YVES';
 
     const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
 

@@ -22,6 +22,6 @@ interface NewsletterConstants
      *
      * @api
      */
-    const BASE_URL_YVES = 'NEWSLETTER_BASE_URL_YVES';
+    const BASE_URL_YVES = 'NEWSLETTER:BASE_URL_YVES';
 
 }

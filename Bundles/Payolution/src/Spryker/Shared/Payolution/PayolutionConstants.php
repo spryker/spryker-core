@@ -58,6 +58,6 @@ interface PayolutionConstants
      *
      * @api
      */
-    const BASE_URL_YVES = 'PAYOLUTION_BASE_URL_YVES';
+    const BASE_URL_YVES = 'PAYOLUTION:BASE_URL_YVES';
 
 }
