@@ -165,4 +165,18 @@ interface NavigationFacadeInterface
      */
     public function touchNavigationByUrl(UrlTransfer $urlTransfer);
 
+    /**
+     * Specification:
+     * - Unset provided URL entity relation from all navigation nodes.
+     * - Affected navigation nodes will be set to inactive.
+     * - Touches related navigation entities as active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
+
 }

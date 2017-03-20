@@ -126,4 +126,18 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
         ->endUse();
     }
 
+    /**
+     * @api
+     *
+     * @param int $fkUrl
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributesQuery
+     */
+    public function queryNavigationNodeLocalizedAttributesByFkUrl($fkUrl)
+    {
+        return $this->getFactory()
+            ->createNavigationNodeLocalizedAttributesQuery()
+            ->filterByFkUrl($fkUrl);
+    }
+
 }

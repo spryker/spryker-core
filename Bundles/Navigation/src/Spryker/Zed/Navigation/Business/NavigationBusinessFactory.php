@@ -20,6 +20,7 @@ use Spryker\Zed\Navigation\Business\Node\NavigationNodeTouch;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeHierarchyUpdater;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReader;
+use Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleaner;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
@@ -131,6 +132,14 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function getTouchFacade()
     {
         return $this->getProvidedDependency(NavigationDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleanerInterface
+     */
+    public function createNavigationNodeUrlCleaner()
+    {
+        return new NavigationNodeUrlCleaner($this->getQueryContainer(), $this->createNavigationNodeUpdater());
     }
 
 }

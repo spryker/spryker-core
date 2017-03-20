@@ -11,10 +11,12 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
 
@@ -89,12 +91,7 @@ class NavigationNodeCRUDTest extends Test
      */
     public function testUpdateExistingNavigationNodePersistsToDatabase()
     {
-        $navigationNodeEntity = new SpyNavigationNode();
-        $navigationNodeEntity
-            ->setFkNavigation($this->navigationTransfer->getIdNavigation())
-            ->setIsActive(false)
-            ->save();
-
+        $navigationNodeEntity = $this->createNavigationNodeEntity(false);
         $idLocale = $this->createLocale('ab_CD');
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity
@@ -130,12 +127,7 @@ class NavigationNodeCRUDTest extends Test
      */
     public function testReadExistingNavigationNodeReadsFromDatabase()
     {
-        $navigationNodeEntity = new SpyNavigationNode();
-        $navigationNodeEntity
-            ->setFkNavigation($this->navigationTransfer->getIdNavigation())
-            ->setIsActive(true)
-            ->save();
-
+        $navigationNodeEntity = $this->createNavigationNodeEntity(true);
         $idLocale = $this->createLocale('ab_CD');
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity
@@ -165,12 +157,7 @@ class NavigationNodeCRUDTest extends Test
      */
     public function testDeleteExistingNavigationNodeDeletesFromDatabase()
     {
-        $navigationNodeEntity = new SpyNavigationNode();
-        $navigationNodeEntity
-            ->setFkNavigation($this->navigationTransfer->getIdNavigation())
-            ->setIsActive(true)
-            ->save();
-
+        $navigationNodeEntity = $this->createNavigationNodeEntity(true);
         $idLocale = $this->createLocale('ab_CD');
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity
@@ -195,6 +182,39 @@ class NavigationNodeCRUDTest extends Test
 
         $this->assertSame(0, $actualNavigationNodeCount, 'Navigation entity should not be in database after deletion.');
         $this->assertSame(0, $actualNavigationNodeLocalizedAttributesCount, 'Navigation entity localized attributes should not be in database after deletion.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDetachUrlFromNavigationNodesPersistsChangedToDatabase()
+    {
+        $idLocale = $this->createLocale('ab_CD');
+        $urlEntity = new SpyUrl();
+        $urlEntity
+            ->setUrl('/detach/url/from/navigation/test')
+            ->setFkLocale($idLocale)
+            ->save();
+
+        $navigationNodeEntity = $this->createNavigationNodeEntity(true);
+        $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
+        $navigationNodeLocalizedAttributesEntity
+            ->setFkNavigationNode($navigationNodeEntity->getIdNavigationNode())
+            ->setFkLocale($idLocale)
+            ->setTitle('Node 1 (ab_CD)')
+            ->setFkUrl($urlEntity->getIdUrl())
+            ->save();
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setIdUrl($urlEntity->getIdUrl());
+
+        $this->navigationFacade->detachUrlFromNavigationNodes($urlTransfer);
+
+        $navigationNodeEntity->reload();
+        $this->assertFalse($navigationNodeEntity->getIsActive(), 'Detached navigation entity should be set to inactive.');
+
+        $actualCount = $this->navigationQueryContainer->queryNavigationNodeByFkUrl($urlEntity->getIdUrl())->count();
+        $this->assertSame(0, $actualCount, 'No navigation entity should exist with previously detached URL entity.');
     }
 
     /**
@@ -257,6 +277,22 @@ class NavigationNodeCRUDTest extends Test
             ->save();
 
         return $localeEntity->getIdLocale();
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
+     */
+    protected function createNavigationNodeEntity($isActive)
+    {
+        $navigationNodeEntity = new SpyNavigationNode();
+        $navigationNodeEntity
+            ->setFkNavigation($this->navigationTransfer->getIdNavigation())
+            ->setIsActive($isActive)
+            ->save();
+
+        return $navigationNodeEntity;
     }
 
 }

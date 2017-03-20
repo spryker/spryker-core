@@ -83,4 +83,13 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryNavigationNodeByFkUrl($fkUrl);
 
+    /**
+     * @api
+     *
+     * @param int $fkUrl
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributesQuery
+     */
+    public function queryNavigationNodeLocalizedAttributesByFkUrl($fkUrl);
+
 }

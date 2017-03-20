@@ -197,4 +197,20 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
             ->touchByUrl($urlTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer)
+    {
+        $this->getFactory()
+            ->createNavigationNodeUrlCleaner()
+            ->detachUrlFromNavigationNodes($urlTransfer);
+    }
+
 }
