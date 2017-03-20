@@ -86,7 +86,7 @@ class TwigFilesystemLoaderYvesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TwigFilesystemLoader
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
      */
     protected function getFilesystemLoaderForSplitBundleConverterTest()
     {
