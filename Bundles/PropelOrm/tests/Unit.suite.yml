@@ -1,0 +1,6 @@
+class_name: UnitTester
+modules:
+    enabled:
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Transfer\Module\TransferGenerate

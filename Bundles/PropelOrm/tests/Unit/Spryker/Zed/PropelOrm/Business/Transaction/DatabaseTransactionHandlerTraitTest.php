@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Propel\Business\Transaction;
+namespace Unit\Spryker\Zed\PropelOrm\Business\Transaction;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Stub\DatabaseTransactionHandlerTraitStub;
+use PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
 /**
  * @group Unit
