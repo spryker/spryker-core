@@ -32,7 +32,7 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
      */
     protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
-        if ($this->config && $this->config->getEnablePrepareScopeKeyJoinFixFeatureFlag() === true) {
+        if ($this->isStorageTableJoinWithLocaleEnabled()) {
             $this->joinStorageTableWithLocale($touchQuery, $locale);
         } else {
             $this->joinStorageTable($touchQuery);
@@ -41,6 +41,14 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
         $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
 
         parent::prepareCollectorScope($touchQuery, $locale);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return ($this->config && $this->config->getEnablePrepareScopeKeyJoinFixFeatureFlag() === true);
     }
 
     /**
