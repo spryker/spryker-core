@@ -33,7 +33,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     *
+     * @param LoggerInterface $messenger
      */
     public function generateDataBuilders(LoggerInterface $messenger)
     {

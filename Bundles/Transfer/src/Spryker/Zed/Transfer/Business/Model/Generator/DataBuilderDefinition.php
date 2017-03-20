@@ -1,14 +1,17 @@
 <?php
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-class DataBuilderDefinition implements DefinitionInterface
+class DataBuilderDefinition implements DataBuilderDefinitionInterface
 {
 
     protected $name;
 
+    protected $dtoName;
+
     protected $rules = [];
 
     protected $dependencies = [];
+
     /**
      * @return string
      */
@@ -39,7 +42,7 @@ class DataBuilderDefinition implements DefinitionInterface
 
             // non arrays and non-basic types are dependencies
             if (preg_match('/^[A-Z]\w+$/', $property['type'])) {
-                $this->dependencies[$property['name']];
+                $this->dependencies[] = $property;
                 continue;
             }
 
@@ -47,13 +50,33 @@ class DataBuilderDefinition implements DefinitionInterface
             if (!isset($property['generate'])) {
                 continue;
             }
-            $this->rules[$property['name']] = $property['generate'];
+            $this->rules[] = $property;
         }
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     private function setName($name)
     {
-        $this->name = $name;
+        $name = ucfirst($name);
+        $this->dtoName = $name . 'Transfer';
+
+        if (strpos($name, 'Builder') === false) {
+            $name .= 'Builder';
+        }
+        $this->name = ucfirst($name);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDTOName()
+    {
+        return $this->dtoName;
     }
 
     /**
