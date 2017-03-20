@@ -12,9 +12,9 @@ use Discount\AcceptanceTester;
 
 /**
  * @group Acceptance
- * @group Discount
  * @group Zed
  * @group DiscountListCest
+ *
  * @group ZedLogin
  */
 class DiscountListCest

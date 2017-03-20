@@ -4,11 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Discount\Business;
+namespace Business\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
 use DateTime;
+use Discount\BusinessTester;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
@@ -29,21 +30,31 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
- * @group Functional
  * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business
- * @group DiscountFacadeTest
+ * @group Facade
+ * @group DiscountFacadeCalculateTest
+ *
+ * @group Functional
  */
 class DiscountFacadeTest extends Test
 {
+
+    /**
+     * @var BusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
      */
     public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote()
     {
+        $facade = $this->tester->getLocator()->discount()->facade();
+        $facade->calculateDiscounts(new QuoteTransfer());
+
         $discountFacade = $this->createDiscountFacade();
 
         $quoteTransfer = new QuoteTransfer();

@@ -9,15 +9,15 @@ namespace Unit\Spryker\Zed\Discount\Communication\Plugin\Calculator;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 
+
 /**
- * @group Unit
  * @group Spryker
  * @group Zed
- * @group Discount
  * @group Communication
  * @group Plugin
- * @group Calculator
- * @group PercentagePluginTest
+ * @group FixedPluginTest
+ *
+ * @group Functional
  */
 class PercentagePluginTest extends Test
 {
