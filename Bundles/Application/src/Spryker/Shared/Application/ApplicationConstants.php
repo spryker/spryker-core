@@ -103,21 +103,102 @@ interface ApplicationConstants
     /** @deprecated Unused, will be removed with next major release */
     const CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME = 'CLOUD_CDN_PRODUCT_IMAGES';
 
+    /**
+     * Yves host name / domain without scheme and port (e.g. www.de.demoshop.local) (Required)
+     *
+     * @api
+     */
     const HOST_YVES = 'HOST_YVES';
+
+    /**
+     * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
+     *
+     * @api
+     */
     const HOST_ZED = 'HOST_ZED';
 
+    /**
+     * Port definition for Yves with leading colon (e.g. :8080)
+     *
+     * @api
+     */
     const PORT_YVES = 'PORT_YVES';
+
+    /**
+     * Port definition for Zed with leading colon (e.g. :9080)
+     *
+     * @api
+     */
     const PORT_ZED = 'PORT_ZED';
+
+    /**
+     * Secure port definition for Yves with leading colon (e.g. :8443)
+     *
+     * @api
+     */
     const PORT_SSL_YVES = 'PORT_SSL_YVES';
+
+    /**
+     * Secure port definition for Zed with leading colon (e.g. :9443)
+     *
+     * @api
+     */
     const PORT_SSL_ZED = 'PORT_SSL_ZED';
 
+    /**
+     * Base url for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     */
     const BASE_URL_YVES = 'BASE_URL_YVES';
+
+    /**
+     * Base url for Zed including scheme and port (e.g. http://zed.de.demoshop.local:9080)
+     *
+     * @api
+     */
     const BASE_URL_ZED = 'BASE_URL_ZED';
+
+    /**
+     * Base url for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     *
+     * @api
+     */
     const BASE_URL_STATIC_ASSETS = 'BASE_URL_STATIC_ASSETS';
+
+    /**
+     * Base url for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     *
+     * @api
+     */
     const BASE_URL_STATIC_MEDIA = 'BASE_URL_STATIC_MEDIA';
+
+    /**
+     * Secure base url for Yves including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     *
+     * @api
+     */
     const BASE_URL_SSL_YVES = 'BASE_URL_SSL_YVES';
+
+    /**
+     * Secure base url for Zed including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     *
+     * @api
+     */
     const BASE_URL_SSL_ZED = 'BASE_URL_SSL_ZED';
+
+    /**
+     * Secure base url for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
+     *
+     * @api
+     */
     const BASE_URL_SSL_STATIC_ASSETS = 'BASE_URL_SSL_STATIC_ASSETS';
+
+    /**
+     * Secure base url for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
+     *
+     * @api
+     */
     const BASE_URL_SSL_STATIC_MEDIA = 'BASE_URL_SSL_STATIC_MEDIA';
 
     /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead */

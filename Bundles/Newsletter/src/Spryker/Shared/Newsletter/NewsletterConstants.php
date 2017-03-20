@@ -16,6 +16,12 @@ interface NewsletterConstants
 
     /** @deprecated Please use NewsletterConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    /**
+     * Base url for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     */
     const BASE_URL_YVES = 'NEWSLETTER_BASE_URL_YVES';
 
 }

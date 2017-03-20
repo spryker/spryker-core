@@ -17,6 +17,11 @@ interface ProductManagementConstants
     /** @deprecated Please use ProductManagementConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
 
-    const BASE_URL_YVES = 'PRODUCT_MANAGEMENT_BASE_URL_YVES';
+    /**
+     * Base url for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     */
+    const BASE_URL_YVES = 'MANAGEMENT_BASE_URL_YVES';
 
 }

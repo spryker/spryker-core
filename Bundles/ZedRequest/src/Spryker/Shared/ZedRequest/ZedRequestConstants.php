@@ -18,7 +18,18 @@ interface ZedRequestConstants
 
     const HOST_ZED_API = 'HOST_ZED_API';
 
+    /**
+     * Base url for Zed API including scheme and port (e.g. http://www.zed.demoshop.local:8080)
+     *
+     * @api
+     */
     const BASE_URL_ZED_API = 'BASE_URL_ZED_API';
+
+    /**
+     * Secure base url for Zed API including scheme and port (e.g. http://www.zed.demoshop.local:8443)
+     *
+     * @api
+     */
     const BASE_URL_SSL_ZED_API = 'BASE_URL_SSL_ZED_API';
 
     const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = 'TRANSFER_DEBUG_SESSION_FORWARD_ENABLED';
