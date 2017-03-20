@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
@@ -154,7 +154,7 @@ class TransferGeneratorTest extends Test
     protected function getClassGenerator()
     {
         $targetDirectory = $this->getTargetDirectory();
-        $generator = new ClassGenerator($targetDirectory);
+        $generator = new DataBuilderClassGenerator($targetDirectory);
 
         return $generator;
     }

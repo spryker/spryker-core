@@ -9,7 +9,8 @@
     "moneyphp/money": "~3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "fzaninotto/faker": "^1.6"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
