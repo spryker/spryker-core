@@ -21,7 +21,15 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return string
+     */
+    public function getDataBuilderTargetDirectory()
+    {
+        return APPLICATION_SOURCE_DIR . '/Generated/Shared/DataBuilder/';
+    }
+
+    /**
+     * @return array
      */
     public function getSourceDirectories()
     {

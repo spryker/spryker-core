@@ -12,12 +12,12 @@
         <property name="customerId" type="string" />
         <property name="fkCustomer" type="int" />
         <property name="email" type="string" />
-        <property name="salutation" type="string" />
+        <property name="salutation" type="string"  />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
+        <property name="address1" type="string" generate="address" />
+        <property name="address2" type="string" generate="address" />
+        <property name="address3" type="string" generate="address" />
         <property name="company" type="string" />
         <property name="city" type="string" />
         <property name="zipCode" type="string" />

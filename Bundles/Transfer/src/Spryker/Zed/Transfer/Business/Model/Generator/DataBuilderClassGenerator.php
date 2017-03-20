@@ -57,13 +57,14 @@ class DataBuilderClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param DataBuilderDefinition $dataBuilderDefinition
+     * @param DataBuilderDefinition|DataBuilderDefinitionInterface $dataBuilderDefinition
      * @return array
      */
-    public function getTwigData(DataBuilderDefinition $dataBuilderDefinition)
+    public function getTwigData(DataBuilderDefinitionInterface $dataBuilderDefinition)
     {
         return [
             'className' => $dataBuilderDefinition->getName(),
+            'dtoName' => $dataBuilderDefinition->getDTOName(),
             'rules' => $dataBuilderDefinition->getRules(),
             'dependencies' => $dataBuilderDefinition->getDependencies()
         ];

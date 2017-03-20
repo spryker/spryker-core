@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Generated\Shared\Transfer\Builder;
+namespace Generated\Shared\DataBuilder;
 
-use  Spryker\Shared\Testify\AbstractTransfer;
-
+use Spryker\Shared\Testify\AbstractDataBuilder;
+use Generated\Shared\Transfer\{{ dtoName }};
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
@@ -19,14 +19,20 @@ use  Spryker\Shared\Testify\AbstractTransfer;
 class {{ className }} extends AbstractDataBuilder
 {
     protected $rules = [
-    {% for rule in rules %}
-        '{{ loop.index }}' => '{{ rule }}',
-    {% endfor %}
+{% for rule in rules %}
+        '{{ rule.name }}' => '{{ rule.generate }}',
+{% endfor %}
     ];
 
     protected $dependencies = [
-    {% for dependency in dependencies %}
-        '{{ loop.index }}' => '{{ dependency }}',
-    {% endfor %}
+{% for dependency in dependencies %}
+        '{{ dependency.name }}' => '{{ dependency.type }}',
+{% endfor %}
     ];
+
+    public function getDTO()
+    {
+        return new {{ dtoName }};
+    }
+
 }
