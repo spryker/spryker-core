@@ -80,4 +80,12 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
         return $navigationTransfer->toArray();
     }
 
+    /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
+
 }
