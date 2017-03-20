@@ -10,6 +10,7 @@ namespace Spryker\Yves\Twig;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
+use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
 
@@ -27,7 +28,7 @@ class TwigFactory extends AbstractFactory
         return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
             $this->createFilesystemCache(),
-            $this->getUtilTextService()
+            $this->createTemplateNameExtractor()
         );
     }
 
@@ -59,6 +60,14 @@ class TwigFactory extends AbstractFactory
     protected function createFilesystemCacheWriter()
     {
         return new FilesystemCacheWriter($this->getConfig()->getCacheFilePath());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
+     */
+    protected function createTemplateNameExtractor()
+    {
+        return new TemplateNameExtractor($this->getUtilTextService());
     }
 
     /**

@@ -11,6 +11,7 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
+use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Twig_Error_Loader;
 use Twig_LoaderInterface;
@@ -37,7 +38,7 @@ class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
     public function testCanBeConstructedWithTemplatePathsArray()
     {
         $templatePaths = [];
-        $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getUtilTextService());
+        $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getTemplateNameExtractor());
 
         $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
     }
@@ -123,7 +124,7 @@ class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
         $this->expectException(Twig_Error_Loader::class);
-        $this->expectExceptionMessage('Malformed bundle template name "@bundle" (expecting "@bundle/template_name").');
+        $this->expectExceptionMessage('Malformed bundle template name "@Bundle" (expecting "@Bundle/template_name").');
 
         $filesystemLoader->getSource('@Bundle');
     }
@@ -170,13 +171,14 @@ class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge
+     * @return \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
      */
-    protected function getUtilTextService()
+    protected function getTemplateNameExtractor()
     {
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge(new UtilTextService());
+        $templateNameExtractor = new TemplateNameExtractor($twigToUtilTextBridge);
 
-        return $twigToUtilTextBridge;
+        return $templateNameExtractor;
     }
 
     /**
@@ -191,7 +193,7 @@ class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
             $cache = $this->getCacheStub();
         }
 
-        return new TwigFilesystemLoader([$path], $cache, $this->getUtilTextService());
+        return new TwigFilesystemLoader([$path], $cache, $this->getTemplateNameExtractor());
     }
 
 }

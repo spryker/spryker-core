@@ -11,6 +11,7 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
+use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Unit\Spryker\Shared\Twig\Stub\CacheStub;
 
@@ -91,7 +92,7 @@ class TwigFilesystemLoaderZedTest extends PHPUnit_Framework_TestCase
     {
         $mockBuilder = $this->getMockBuilder(TwigFilesystemLoader::class)
             ->setMethods(['isPathInSplit'])
-            ->setConstructorArgs([[static::PATH_TO_CORE], $this->getCacheStub(), $this->getUtilTextService()]);
+            ->setConstructorArgs([[static::PATH_TO_CORE], $this->getCacheStub(), $this->getTemplateNameExtractor()]);
 
         $mock = $mockBuilder->getMock();
         $mock->expects($this->once())->method('isPathInSplit')->willReturn(true);
@@ -108,13 +109,14 @@ class TwigFilesystemLoaderZedTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge
+     * @return \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
      */
-    protected function getUtilTextService()
+    protected function getTemplateNameExtractor()
     {
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge(new UtilTextService());
+        $templateNameExtractor = new TemplateNameExtractor($twigToUtilTextBridge);
 
-        return $twigToUtilTextBridge;
+        return $templateNameExtractor;
     }
 
     /**
@@ -129,7 +131,7 @@ class TwigFilesystemLoaderZedTest extends PHPUnit_Framework_TestCase
             $cache = $this->getCacheStub();
         }
 
-        return new TwigFilesystemLoader([$path], $cache, $this->getUtilTextService());
+        return new TwigFilesystemLoader([$path], $cache, $this->getTemplateNameExtractor());
     }
 
 }

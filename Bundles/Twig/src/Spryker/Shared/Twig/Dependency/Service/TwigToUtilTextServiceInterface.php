@@ -17,4 +17,11 @@ interface TwigToUtilTextServiceInterface
      */
     public function camelCaseToDash($string);
 
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public function dashToCamelCase($string);
+
 }

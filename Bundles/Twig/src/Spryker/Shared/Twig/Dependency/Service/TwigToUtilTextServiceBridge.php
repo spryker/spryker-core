@@ -33,4 +33,14 @@ class TwigToUtilTextServiceBridge implements TwigToUtilTextServiceInterface
         return $this->utilTextService->camelCaseToSeparator($string);
     }
 
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public function dashToCamelCase($string)
+    {
+        return $this->utilTextService->separatorToCamelCase($string);
+    }
+
 }

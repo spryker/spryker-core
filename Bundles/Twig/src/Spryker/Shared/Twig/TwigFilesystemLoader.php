@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Twig;
 
 use Spryker\Shared\Twig\Cache\CacheInterface;
-use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface;
+use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
 use Twig_Error_Loader;
 use Twig_LoaderInterface;
 
@@ -26,20 +26,20 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     protected $cache;
 
     /**
-     * @var \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
+     * @var \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface
      */
-    protected $utilTextService;
+    protected $templateNameExtractor;
 
     /**
      * @param array $paths
      * @param \Spryker\Shared\Twig\Cache\CacheInterface $cache
-     * @param \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface $templateNameExtractor
      */
-    public function __construct(array $paths, CacheInterface $cache, TwigToUtilTextServiceInterface $utilTextService)
+    public function __construct(array $paths, CacheInterface $cache, TemplateNameExtractorInterface $templateNameExtractor)
     {
         $this->paths = $paths;
         $this->cache = $cache;
-        $this->utilTextService = $utilTextService;
+        $this->templateNameExtractor = $templateNameExtractor;
     }
 
     /**
@@ -75,25 +75,19 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
     /**
      * {@inheritdoc}
-     *
      */
     protected function findTemplate($name)
     {
-        $name = $this->normalizeName($name);
-
         if ($this->cache->has($name)) {
             return $this->returnFromCache($name);
         }
 
-        $nameWithoutPrefix = ltrim($name, '@/');
-        $pos = strpos($nameWithoutPrefix, '/');
+        $this->validateName($name);
 
-        $this->validateName($name, $pos);
+        $bundle = $this->templateNameExtractor->extractBundleName($name);
+        $templatePath = $this->templateNameExtractor->extractTemplatePath($name);
 
-        $bundle = ucfirst(substr($nameWithoutPrefix, 0, $pos));
-        $templateName = substr($nameWithoutPrefix, $pos + 1);
-
-        return $this->load($name, $bundle, $templateName);
+        return $this->load($name, $bundle, $templatePath);
     }
 
     /**
@@ -108,7 +102,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
             $package = $bundle;
 
             if ($this->isPathInSplit($path)) {
-                $package = $this->utilTextService->camelCaseToDash($bundle);
+                $package = $this->filterBundleName($bundle);
             }
 
             $path = sprintf($path, $bundle, $package);
@@ -156,25 +150,6 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     /**
      * @param string $name
      *
-     * @return array
-     */
-    protected function normalizeName($name)
-    {
-        $name = (string)$name;
-        $name = str_replace(['///', '//', '\\'], '/', $name);
-
-        $nameParts = explode('/', $name);
-        $templateName = array_pop($nameParts);
-        $templateName = $this->utilTextService->camelCaseToDash($templateName);
-        array_push($nameParts, $templateName);
-        $name = implode('/', $nameParts);
-
-        return $name;
-    }
-
-    /**
-     * @param string $name
-     *
      * @throws \Twig_Error_Loader
      *
      * @return string
@@ -190,18 +165,20 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
     /**
      * @param string $name
-     * @param bool|int $pos
      *
      * @throws \Twig_Error_Loader
      *
      * @return void
      */
-    protected function validateName($name, $pos)
+    protected function validateName($name)
     {
-        if ($pos === false) {
+        $nameWithoutPrefix = ltrim($name, '@/');
+        $firstSeparatorPosition = strpos($nameWithoutPrefix, '/');
+
+        if ($firstSeparatorPosition === false) {
             $this->cache->set($name, false);
 
-            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
+            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@Bundle/template_name").', $name));
         }
     }
 
@@ -213,6 +190,16 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     protected function isPathInSplit($path)
     {
         return strpos($path, 'vendor/spryker/spryker/Bundles') === false && strpos($path, 'vendor/') > 0;
+    }
+
+    /**
+     * @param string $bundleName
+     *
+     * @return string
+     */
+    protected function filterBundleName($bundleName)
+    {
+        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes('-', '$') . '$2', $bundleName));
     }
 
 }
