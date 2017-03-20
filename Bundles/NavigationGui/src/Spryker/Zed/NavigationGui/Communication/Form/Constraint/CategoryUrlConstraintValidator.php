@@ -49,7 +49,7 @@ class CategoryUrlConstraintValidator extends ConstraintValidator
 
         if (!$urlTransfer || !$urlTransfer->getFkResourceCategorynode() || $urlTransfer->getFkLocale() != $value->getFkLocale()) {
             $this->context
-                ->buildViolation('This value is not a valid category URL.')
+                ->buildViolation('This value is not a valid category URL for the given locale.')
                 ->atPath(NavigationNodeLocalizedAttributesFormType::FIELD_CATEGORY_URL)
                 ->addViolation();
         }

@@ -49,7 +49,7 @@ class CmsPageUrlConstraintValidator extends ConstraintValidator
 
         if (!$urlTransfer || !$urlTransfer->getFkResourcePage() || $urlTransfer->getFkLocale() != $value->getFkLocale()) {
             $this->context
-                ->buildViolation('This value is not a valid CMS page URL.')
+                ->buildViolation('This value is not a valid CMS page URL for the given locale.')
                 ->atPath(NavigationNodeLocalizedAttributesFormType::FIELD_CMS_PAGE_URL)
                 ->addViolation();
         }
