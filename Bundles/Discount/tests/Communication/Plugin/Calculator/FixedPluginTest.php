@@ -11,14 +11,13 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 
 /**
- * @group Unit
  * @group Spryker
  * @group Zed
- * @group Discount
  * @group Communication
  * @group Plugin
- * @group Calculator
  * @group FixedPluginTest
+ *
+ * @group Functional
  */
 class FixedPluginTest extends Test
 {

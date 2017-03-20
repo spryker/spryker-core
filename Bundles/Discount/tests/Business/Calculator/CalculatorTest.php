@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Discount\Business\Calculator;
+namespace Business\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -39,7 +39,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterfa
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
- * @group Functional
  * @group Spryker
  * @group Zed
  * @group Discount

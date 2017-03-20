@@ -9,6 +9,15 @@ namespace Communication\Controller;
 
 use Discount\CommunicationTester;
 
+/**
+ * @group Spryker
+ * @group Zed
+ * @group Communication
+ * @group Controller
+ * @group IndexControllerCest
+ *
+ * @group Functional
+ */
 class IndexControllerCest
 {
 

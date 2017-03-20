@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Discount\Business;
+namespace Business;
 
 use Codeception\TestCase\Test;
 use DateTime;
@@ -22,12 +22,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
- * @group Functional
  * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business
+ * @group Facade
  * @group DiscountFacadeCalculateTest
+ *
+ * @group Functional
  */
 class DiscountFacadeCalculateTest extends Test
 {
