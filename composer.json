@@ -415,6 +415,8 @@
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
 
       "Spryker\\Zed\\PropelOrm\\": "Bundles/PropelOrm/src",
+      "Unit\\Spryker\\Zed\\PropelOrm\\": "Bundles/PropelOrm/tests",
+      "Functional\\Spryker\\Zed\\PropelOrm\\": "Bundles/PropelOrm/tests",
 
       "Spryker\\Client\\Quote\\": "Bundles/Quote/src",
 
