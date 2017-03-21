@@ -17,6 +17,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    const TWIG_LOADER_YVES = 'twig.loader.yves';
+
     /**
      * @param \Silex\Application $app
      *
@@ -24,7 +26,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     public function register(Application $app)
     {
-        $app['twig.loader.yves'] = function () {
+        $app[static::TWIG_LOADER_YVES] = function () {
             return $this->getFactory()->createFilesystemLoader();
         };
     }
