@@ -19,7 +19,6 @@
         <property name="bankAccountHolder" type="string"/>
         <property name="bankAccountBic" type="string"/>
         <property name="bankAccountIban" type="string"/>
-        <property name="customer" type="BraintreePaymentCustomer"/>
     </transfer>
 
     <transfer name="BraintreeTransactionResponse">

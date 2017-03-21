@@ -42,7 +42,9 @@ class TransferGenerate extends Module
         $this->copyFromTestBundle();
 
         $transferFacade->deleteGeneratedTransferObjects();
+        $this->debug('Generating Transfer Objects...');
         $transferFacade->generateTransferObjects(new NullLogger());
+        $this->debug('Generating DataBuilders...');
         $transferFacade->generateDataBuilders(new NullLogger());
     }
 
