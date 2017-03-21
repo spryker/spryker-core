@@ -32,10 +32,10 @@
                             {{ form_row(navigationNodeLocalizedAttributes.category_url, {'url': url('/navigation-gui/url-suggestion/category', {'id-locale': localeTransfer.idLocale})}) }}
                         </div>
 
-                        <div class="form-group {% if navigationNodeLocalizedAttributes.custom_class.vars.errors|length %}has-error{% endif %}">
-                            {{ form_label(navigationNodeLocalizedAttributes.custom_class) }}
-                            {{ form_widget(navigationNodeLocalizedAttributes.custom_class, {'attr': {'data-translation-key': navigationNodeLocalizedAttributes.custom_class.vars.name}}) }}
-                            {{ form_errors(navigationNodeLocalizedAttributes.custom_class) }}
+                        <div class="form-group {% if navigationNodeLocalizedAttributes.css_class.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(navigationNodeLocalizedAttributes.css_class) }}
+                            {{ form_widget(navigationNodeLocalizedAttributes.css_class, {'attr': {'data-translation-key': navigationNodeLocalizedAttributes.css_class.vars.name}}) }}
+                            {{ form_errors(navigationNodeLocalizedAttributes.css_class) }}
                         </div>
 
                         {{ form_rest(navigationNodeLocalizedAttributes) }}

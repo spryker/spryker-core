@@ -34,7 +34,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     const FIELD_EXTERNAL_URL = 'external_url';
     const FIELD_CMS_PAGE_URL = 'cms_page_url';
     const FIELD_CATEGORY_URL = 'category_url';
-    const FIELD_CUSTOM_CLASS = 'custom_class';
+    const FIELD_CSS_CLASS = 'css_class';
 
     const GROUP_CMS = 'cms_page';
     const GROUP_CATEGORY = 'category';
@@ -113,7 +113,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ->addExternalUrlField($builder)
             ->addCmsPageUrlField($builder)
             ->addCategoryUrlField($builder)
-            ->addClassField($builder)
+            ->addCssClassField($builder)
             ->addFkLocaleField($builder);
     }
 
@@ -245,10 +245,10 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addClassField(FormBuilderInterface $builder)
+    protected function addCssClassField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_CUSTOM_CLASS, TextType::class, [
+            ->add(self::FIELD_CSS_CLASS, TextType::class, [
                 'label' => 'Custom CSS class',
             ]);
 
