@@ -30,7 +30,7 @@ class NavigationGuiPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function createCmsPageLocalizedAttributes()
+    public function createCmsPageLocalizedAttributesQuery()
     {
         return SpyCmsPageLocalizedAttributesQuery::create();
     }

@@ -49,15 +49,9 @@ class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
     {
         $this->assertUrlForDetach($urlTransfer);
 
-        $this->navigationQueryContainer->getConnection()->beginTransaction();
-
-        $navigationNodeLocalizedAttributesEntities = $this->findNodesByUrl($urlTransfer);
-        foreach ($navigationNodeLocalizedAttributesEntities as $navigationNodeLocalizedAttributes) {
-            $navigationNodeTransfer = $this->createUpdateNavigationNodeTransfer($navigationNodeLocalizedAttributes);
-            $this->nodeUpdater->updateNavigationNode($navigationNodeTransfer);
-        }
-
-        $this->navigationQueryContainer->getConnection()->commit();
+        $this->handleDatabaseTransaction(function () use ($urlTransfer) {
+            $this->executeDetachUrlFromNavigationNodesTransaction($urlTransfer);
+        });
     }
 
     /**
@@ -68,6 +62,20 @@ class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
     protected function assertUrlForDetach(UrlTransfer $urlTransfer)
     {
         $urlTransfer->requireIdUrl();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    protected function executeDetachUrlFromNavigationNodesTransaction(UrlTransfer $urlTransfer)
+    {
+        $navigationNodeLocalizedAttributesEntities = $this->findNodesByUrl($urlTransfer);
+        foreach ($navigationNodeLocalizedAttributesEntities as $navigationNodeLocalizedAttributes) {
+            $navigationNodeTransfer = $this->createUpdateNavigationNodeTransfer($navigationNodeLocalizedAttributes);
+            $this->nodeUpdater->updateNavigationNode($navigationNodeTransfer);
+        }
     }
 
     /**

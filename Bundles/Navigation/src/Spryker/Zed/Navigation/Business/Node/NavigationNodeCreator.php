@@ -133,7 +133,7 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
             $navigationNodeLocalizedAttributesEntity->setFkNavigationNode($navigationNodeTransfer->getIdNavigationNode());
             $navigationNodeLocalizedAttributesEntity->save();
 
-            $navigationNodeLocalizedAttributesTransfer->fromArray($navigationNodeLocalizedAttributesEntity->toArray(), true);
+            $this->hydrateNavigationNodeLocalizedAttributesTransfer($navigationNodeLocalizedAttributesTransfer, $navigationNodeLocalizedAttributesEntity);
         }
 
         return $navigationNodeTransfer;
@@ -163,6 +163,21 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
         $navigationNodeTransfer->fromArray($navigationNodeEntity->toArray(), true);
 
         return $navigationNodeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
+     */
+    protected function hydrateNavigationNodeLocalizedAttributesTransfer(
+        NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer,
+        SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+    ) {
+        $navigationNodeLocalizedAttributesTransfer->fromArray($navigationNodeLocalizedAttributesEntity->toArray(), true);
+
+        return $navigationNodeLocalizedAttributesTransfer;
     }
 
 }

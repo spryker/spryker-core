@@ -110,8 +110,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     protected function persistNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
     {
         $navigationNodeEntity = $this->getNavigationNodeEntity($navigationNodeTransfer);
-
-        $navigationNodeEntity->fromArray($navigationNodeTransfer->modifiedToArray());
+        $navigationNodeEntity = $this->setNavigationNodeEntityChanges($navigationNodeEntity, $navigationNodeTransfer);
         $navigationNodeEntity->save();
 
         return $this->hydrateNavigationNodeTransfer($navigationNodeTransfer, $navigationNodeEntity);
@@ -126,8 +125,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     {
         foreach ($navigationNodeTransfer->getNavigationNodeLocalizedAttributes() as $navigationNodeLocalizedAttributesTransfer) {
             $navigationNodeLocalizedAttributesEntity = $this->findOrCreateNavigationNodeLocalizedAttributesEntity($navigationNodeLocalizedAttributesTransfer);
-
-            $navigationNodeLocalizedAttributesEntity->fromArray($navigationNodeLocalizedAttributesTransfer->modifiedToArray());
+            $navigationNodeLocalizedAttributesEntity = $this->setNavigationNodeLocalizedAttributesEntityChanges($navigationNodeLocalizedAttributesEntity, $navigationNodeLocalizedAttributesTransfer);
             $navigationNodeLocalizedAttributesEntity->save();
 
             $this->hydrateNavigationNodeLocalizedAttributesTransfer($navigationNodeLocalizedAttributesTransfer, $navigationNodeLocalizedAttributesEntity);
@@ -164,6 +162,19 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     }
 
     /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
+     */
+    protected function setNavigationNodeEntityChanges(SpyNavigationNode $navigationNodeEntity, NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $navigationNodeEntity->fromArray($navigationNodeTransfer->modifiedToArray());
+
+        return $navigationNodeEntity;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
      *
@@ -177,7 +188,22 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
     }
 
     /**
-     * @param NavigationNodeLocalizedAttributesTransfer$navigationNodeLocalizedAttributesTransfer
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes
+     */
+    protected function setNavigationNodeLocalizedAttributesEntityChanges(
+        SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity,
+        NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer
+    ) {
+        $navigationNodeLocalizedAttributesEntity->fromArray($navigationNodeLocalizedAttributesTransfer->modifiedToArray());
+
+        return $navigationNodeLocalizedAttributesEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer

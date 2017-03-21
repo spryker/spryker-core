@@ -83,8 +83,7 @@ class NavigationUpdater implements NavigationUpdaterInterface
     protected function persistNavigation(NavigationTransfer $navigationTransfer)
     {
         $navigationEntity = $this->getNavigationEntityById($navigationTransfer);
-
-        $navigationEntity->fromArray($navigationTransfer->modifiedToArray());
+        $navigationEntity = $this->setNavigationEntityChanges($navigationEntity, $navigationTransfer);
         $navigationEntity->save();
 
         return $this->hydrateNavigationTransfer($navigationTransfer, $navigationEntity);
@@ -109,6 +108,19 @@ class NavigationUpdater implements NavigationUpdaterInterface
                 $navigationTransfer->getIdNavigation()
             ));
         }
+
+        return $navigationEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
+     */
+    protected function setNavigationEntityChanges(SpyNavigation $navigationEntity, NavigationTransfer $navigationTransfer)
+    {
+        $navigationEntity->fromArray($navigationTransfer->modifiedToArray());
 
         return $navigationEntity;
     }

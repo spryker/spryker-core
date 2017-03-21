@@ -194,7 +194,7 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
     {
         $this->getFactory()
             ->createNavigationTouch()
-            ->touchByUrl($urlTransfer);
+            ->touchActiveByUrl($urlTransfer);
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Navigation\Business\Tree;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
+use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
@@ -70,7 +71,7 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     }
 
     /**
-     * @param NavigationTreeTransfer $navigationTreeTransfer
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
      *
      * @return void
      */
@@ -120,10 +121,8 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
     {
         $navigationNodeTransfer = $navigationTreeNodeTransfer->getNavigationNode();
         $navigationNodeEntity = $this->getNavigationNodeEntity($navigationNodeTransfer);
-        $navigationNodeEntity
-            ->setPosition($navigationNodeTransfer->getPosition())
-            ->setFkParentNavigationNode($fkParentNavigationNode)
-            ->save();
+        $navigationNodeEntity = $this->setNavigationNodeEntityChanges($navigationNodeEntity, $navigationNodeTransfer, $fkParentNavigationNode);
+        $navigationNodeEntity->save();
 
         foreach ($navigationTreeNodeTransfer->getChildren() as $childNavigationTreeNodeTransfer) {
             $this->persistNavigationTreeNodeRecursively($childNavigationTreeNodeTransfer, $navigationNodeEntity->getIdNavigationNode());
@@ -149,6 +148,22 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
                 $navigationNodeTransfer->getIdNavigationNode()
             ));
         }
+
+        return $navigationNodeEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     * @param int $fkParentNavigationNode
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
+     */
+    protected function setNavigationNodeEntityChanges(SpyNavigationNode $navigationNodeEntity, NavigationNodeTransfer $navigationNodeTransfer, $fkParentNavigationNode)
+    {
+        $navigationNodeEntity
+            ->setPosition($navigationNodeTransfer->getPosition())
+            ->setFkParentNavigationNode($fkParentNavigationNode);
 
         return $navigationNodeEntity;
     }

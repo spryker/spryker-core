@@ -32,6 +32,6 @@ interface NavigationTouchInterface
      *
      * @return void
      */
-    public function touchByUrl(UrlTransfer $urlTransfer);
+    public function touchActiveByUrl(UrlTransfer $urlTransfer);
 
 }

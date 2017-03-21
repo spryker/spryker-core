@@ -66,7 +66,7 @@ class NavigationCreator implements NavigationCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
-     * @return NavigationTransfer
+     * @return \Generated\Shared\Transfer\NavigationTransfer
      */
     protected function executeCreateNavigationTransaction(NavigationTransfer $navigationTransfer)
     {

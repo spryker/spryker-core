@@ -52,7 +52,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
          *   AND scpla.name ILIKE '%:searchText%'
          */
         $query = $this->getFactory()
-            ->createCmsPageLocalizedAttributes()
+            ->createCmsPageLocalizedAttributesQuery()
             ->addJoin(
                 [SpyCmsPageLocalizedAttributesTableMap::COL_FK_CMS_PAGE, SpyCmsPageLocalizedAttributesTableMap::COL_FK_LOCALE],
                 [SpyUrlTableMap::COL_FK_RESOURCE_PAGE, SpyUrlTableMap::COL_FK_LOCALE],
