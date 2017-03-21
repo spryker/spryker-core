@@ -13,8 +13,8 @@ use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeLocalizedAttributesNotFoundException;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
-use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
 {

@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
-use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationNodeCreator implements NavigationNodeCreatorInterface
 {

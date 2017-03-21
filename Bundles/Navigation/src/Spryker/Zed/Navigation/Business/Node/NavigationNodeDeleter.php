@@ -10,8 +10,8 @@ namespace Spryker\Zed\Navigation\Business\Node;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
-use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationNodeDeleter implements NavigationNodeDeleterInterface
 {

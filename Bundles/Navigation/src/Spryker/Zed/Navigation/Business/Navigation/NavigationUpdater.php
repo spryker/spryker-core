@@ -10,8 +10,8 @@ namespace Spryker\Zed\Navigation\Business\Navigation;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNotFoundException;
-use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationUpdater implements NavigationUpdaterInterface
 {

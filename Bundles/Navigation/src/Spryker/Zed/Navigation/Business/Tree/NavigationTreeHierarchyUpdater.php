@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Navigation\Business\Exception\NavigationNodeNotFoundException;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface;
-use Spryker\Zed\Navigation\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterInterface
 {
