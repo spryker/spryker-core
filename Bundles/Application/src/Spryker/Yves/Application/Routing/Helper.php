@@ -9,8 +9,8 @@ namespace Spryker\Yves\Application\Routing;
 
 use LogicException;
 use Silex\Application;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 
 class Helper
 {
@@ -47,11 +47,11 @@ class Helper
         }
         list($namespace, $application, $bundle, $layer, $controllerName) = explode('\\', $controllerNamespaceName);
 
-        $filter = new CamelCaseToSeparatorFilter('-');
-
         $bundle = str_replace(Store::getInstance()->getStoreName(), '', $bundle);
-        $controller = $filter->filter(str_replace('Controller', '', $controllerName));
-        $action = $filter->filter(str_replace('Action', '', $actionName));
+
+        $utilTextService = new UtilTextService();
+        $controller = $utilTextService->camelCaseToSeparator(str_replace('Controller', '', $controllerName));
+        $action = $utilTextService->camelCaseToSeparator((str_replace('Action', '', $actionName)));
 
         return $bundle . '/' . $controller . '/' . $action;
     }

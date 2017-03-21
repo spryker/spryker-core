@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -28,7 +29,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     public function onConsoleTerminate(ConsoleTerminateEvent $event)
     {
         $transactionName = $this->getTransactionName($event);
-        $hostName = $this->getFactory()->getSystem()->getHostname();
+        $hostName = $this->getFactory()->getUtilNetworkService()->getHostname();
 
         $this->getFactory()->getNewRelicApi()
             ->markAsBackgroundJob()

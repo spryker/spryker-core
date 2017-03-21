@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -97,7 +98,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $bundleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
     public function showOutgoingDependenciesForBundle($bundleName)
     {
@@ -138,6 +139,30 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function buildDependencyTree($application, $bundle, $layer)
     {
         $this->getFactory()->createDependencyTreeBuilder($application, $bundle, $layer)->buildDependencyTree();
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function calculateStability()
+    {
+        return $this->getFactory()->createStabilityCalculator()->calculateStability();
+    }
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     * @param array $excludedBundles
+     * @param bool $showIncomingDependencies
+     *
+     * @return string
+     */
+    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false)
+    {
+        return $this->getFactory()->createOutgoingDependencyGraphBuilder($bundleToView, $excludedBundles)->build($showIncomingDependencies);
     }
 
     /**
@@ -220,14 +245,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string $bundleName
-     * @param array $dependencies
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison($bundleName, array $dependencies)
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleName, $dependencies);
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
     }
 
     /**

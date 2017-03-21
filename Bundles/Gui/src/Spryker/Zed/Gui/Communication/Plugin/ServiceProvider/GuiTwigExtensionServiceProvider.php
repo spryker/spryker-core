@@ -9,6 +9,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_Environment;
@@ -26,6 +27,8 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      */
     public function register(Application $app)
     {
+        $this->provideFormTypeExtension($app);
+
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
 
@@ -86,6 +89,20 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      */
     public function boot(Application $app)
     {
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    protected function provideFormTypeExtension(Application $app)
+    {
+        $app['form.type.extensions'] = $app->share(function () {
+            return [
+                new NoValidateTypeExtension(),
+            ];
+        });
     }
 
 }

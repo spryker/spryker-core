@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\User;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\User\Dependency\Facade\UserToAclBridge;
+use Spryker\Zed\User\Dependency\Plugin\GroupPlugin;
 
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_ACL = 'facade acl';
+    const PLUGIN_GROUP = 'group plugin';
     const CLIENT_SESSION = 'client session';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
 
@@ -26,9 +25,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
-        };
+        $container = $this->addSession($container);
 
         return $container;
     }
@@ -40,12 +37,49 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_ACL] = function (Container $container) {
-            return new UserToAclBridge($container->getLocator()->acl()->facade());
+        $container = $this->addDateFormatter($container);
+        $container = $this->addGroupPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSession(Container $container)
+    {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
+            return $container->getLocator()->session()->client();
         };
 
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDateFormatter(Container $container)
+    {
+        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGroupPlugin(Container $container)
+    {
+        $container[static::PLUGIN_GROUP] = function (Container $container) {
+            return new GroupPlugin();
         };
 
         return $container;

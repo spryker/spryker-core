@@ -1,0 +1,14 @@
+{% extends '@Application/Layout/layout.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-2">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" class="btn btn-primary" value="{{ 'Reload' | trans }}" />
+            {{ form_end(form) }}
+        </div>
+        <div class="col-lg-10" style="overflow:scroll">
+            {{ graph | raw }}
+        </div>
+    </div>
+{% endblock %}

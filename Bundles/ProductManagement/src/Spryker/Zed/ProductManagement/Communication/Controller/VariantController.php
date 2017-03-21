@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Shared\Library\Json;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Service\UtilEncoding\Model\Json;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -51,9 +51,10 @@ class VariantController extends AbstractController
         $localizedAttributeValuesJsonArray = $request->get(self::PARAM_LOCALIZED_ATTRIBUTE_VALUES, []);
 
         $localizedAttributes = [];
-        $attributes = Json::decode($attributeValuesJson, true) ?: [];
+        $jsonUtil = new Json();
+        $attributes = $jsonUtil->decode($attributeValuesJson, true) ?: [];
         foreach ($localizedAttributeValuesJsonArray as $locale => $localizedJson) {
-            $localizedAttributes[$locale] = Json::decode($localizedJson, true) ?: [];
+            $localizedAttributes[$locale] = $jsonUtil->decode($localizedJson, true) ?: [];
         }
 
         $productAbstractTransfer = new ProductAbstractTransfer();

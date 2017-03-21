@@ -17,7 +17,7 @@ use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class Writer implements WriterInterface
 {

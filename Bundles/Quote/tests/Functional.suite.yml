@@ -1,0 +1,5 @@
+class_name: FunctionalTester
+modules:
+    enabled:
+        - \Testify\Module\Environment
+        - \Transfer\Module\TransferGenerate

@@ -10,8 +10,8 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 

@@ -26,7 +26,7 @@ class ListController extends IndexController
         ];
     }
 
-    /***
+    /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listTableAction()

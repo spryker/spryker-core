@@ -100,7 +100,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->convertCentToDecimal($quoteTransfer->getTotals()->getGrandTotal()),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->moneyFacade->convertIntegerToDecimal($quoteTransfer->getTotals()->getGrandTotal()),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
@@ -158,7 +158,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $payolutionTransfer->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($payolutionTransfer->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->moneyFacade->convertIntegerToDecimal((int)$payolutionTransfer->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $payolutionTransfer->getBankAccountBic(),
@@ -204,7 +204,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($paymentEntity->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->moneyFacade->convertIntegerToDecimal((int)$paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $paymentEntity->getBankAccountBic(),

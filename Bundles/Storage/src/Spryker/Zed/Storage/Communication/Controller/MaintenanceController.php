@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Storage\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -56,17 +56,6 @@ class MaintenanceController extends AbstractController
         return $this->jsonResponse(
             $table->fetchData()
         );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function dropTimestampsAction()
-    {
-        $timestamps = $this->getFacade()->getTimestamps();
-        $this->getFactory()->getCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
-
-        return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }
 
     /**

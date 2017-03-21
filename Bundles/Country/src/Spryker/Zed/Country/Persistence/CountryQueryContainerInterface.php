@@ -31,6 +31,15 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $iso3Code
+     *
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    public function queryCountryByIso3Code($iso3Code);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions();

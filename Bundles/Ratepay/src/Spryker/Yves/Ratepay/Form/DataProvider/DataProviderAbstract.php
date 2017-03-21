@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Ratepay\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 abstract class DataProviderAbstract implements StepEngineFormDataProviderInterface
@@ -25,7 +25,7 @@ abstract class DataProviderAbstract implements StepEngineFormDataProviderInterfa
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */

@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,7 +108,7 @@ abstract class AbstractStepEngineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getDataTransferMock()
     {

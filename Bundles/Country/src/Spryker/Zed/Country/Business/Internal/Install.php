@@ -12,9 +12,8 @@ use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
 use Spryker\Zed\Country\CountryConfig;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
-class Install extends AbstractInstaller
+class Install implements InstallInterface
 {
 
     /**

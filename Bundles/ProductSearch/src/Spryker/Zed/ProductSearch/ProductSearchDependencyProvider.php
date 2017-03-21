@@ -24,6 +24,7 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'touch facade';
     const FACADE_COLLECTOR = 'collector facade';
     const QUERY_CONTAINER_TOUCH = 'touch query container';
+    const SERVICE_DATA = 'util data service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +39,7 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideTouchFacade($container);
         $this->provideCollectorFacade($container);
         $this->provideTouchQueryContainer($container);
+        $this->provideUtilDataReaderService($container);
 
         return $container;
     }
@@ -134,6 +136,18 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideUtilDataReaderService(Container $container)
+    {
+        $container[static::SERVICE_DATA] = function (Container $container) {
+            return $container->getLocator()->utilDataReader()->service();
         };
     }
 

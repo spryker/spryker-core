@@ -8,14 +8,13 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\DataDirectory;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
@@ -27,7 +26,7 @@ class ZedBootstrap
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
-     * @var \Spryker\Shared\Application\Communication\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
 
@@ -37,15 +36,16 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function boot()
     {
+        $store = Store::getInstance();
         $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
-        $this->application['locale'] = Store::getInstance()->getCurrentLocale();
+        $this->application['locale'] = $store->getCurrentLocale();
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
-            $this->application['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
+            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getCurrentCountry() . '/cache/profiler';
         }
 
         $this->optimizeApp();
@@ -131,7 +131,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function getBaseApplication()
     {
@@ -145,7 +145,7 @@ class ZedBootstrap
     }
 
     /**
-     * @param \Spryker\Shared\Application\Communication\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
@@ -187,7 +187,7 @@ class ZedBootstrap
                 $variables += [
                     'environment' => APPLICATION_ENV,
                     'store' => Store::getInstance()->getStoreName(),
-                    'title' => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
+                    'title' => Config::get(KernelConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
                     'currentController' => get_class($this),
                 ];
 
@@ -231,11 +231,17 @@ class ZedBootstrap
     }
 
     /**
+     * For performance reasons you can disable this in your project
+     * Set `AuthConstants::AUTH_ZED_ENABLED` in your config to false
+     * if you don't need authentication enabled.
+     *
+     * If set to false only a subset of ServiceProvider will be added.
+     *
      * @return bool
      */
     protected function isAuthenticationEnabled()
     {
-        return Config::get(AuthConstants::AUTH_ZED_ENABLED, true);
+        return true;
     }
 
 }

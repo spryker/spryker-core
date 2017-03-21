@@ -12,7 +12,6 @@ use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
@@ -72,15 +71,13 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller
      */
-    public function createInstaller(MessengerInterface $messenger)
+    public function createInstaller()
     {
         $installer = new GlossaryInstaller(
             $this->createTranslationManager(),
             $this->createKeyManager(),
             $this->getConfig()->getGlossaryFilePaths()
         );
-
-        $installer->setMessenger($messenger);
 
         return $installer;
     }

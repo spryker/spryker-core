@@ -117,6 +117,9 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
         $this->orderEntity->save();
     }
 
+    /**
+     * @return void
+     */
     protected function setUpPaymentTestData()
     {
         $this->paymentEntity = (new SpyPaymentRatepay())
@@ -188,6 +191,9 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
         $this->assertFalse($this->expectedResponseTransfer->getSuccessful());
     }
 
+    /**
+     * @return void
+     */
     protected function testResponseInstance()
     {
         $this->assertInstanceOf('Generated\Shared\Transfer\RatepayResponseTransfer', $this->responseTransfer);

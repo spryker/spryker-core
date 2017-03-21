@@ -37,8 +37,8 @@ class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
     /**
      * @param string $jsonString
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return array
      */

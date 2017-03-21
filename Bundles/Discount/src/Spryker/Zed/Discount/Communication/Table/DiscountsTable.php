@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -237,7 +237,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Shared\Url\Url $viewDiscountUrl
+     * @param \Spryker\Service\UtilText\Model\Url\Url $viewDiscountUrl
      * @param string $visibility
      *
      * @return string

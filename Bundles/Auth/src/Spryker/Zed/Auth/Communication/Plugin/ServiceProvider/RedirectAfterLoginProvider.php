@@ -9,8 +9,8 @@ namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Auth\AuthConstants;
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;

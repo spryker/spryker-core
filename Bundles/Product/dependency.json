@@ -1,8 +1,0 @@
-{
-  "description": "Needed for core dependency management - overwrites dependencies between bundles",
-  "include": {
-    "UtilEncoding": "Required by bridge"
-  },
-  "exclude": {
-  }
-}

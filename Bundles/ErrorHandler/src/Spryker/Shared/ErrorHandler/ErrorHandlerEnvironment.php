@@ -31,6 +31,8 @@ class ErrorHandlerEnvironment
         $this->setExceptionHandler();
         $this->registerShutDownFunction();
         $this->setAssertOptions();
+
+        ini_set('display_errors', Config::get(ErrorHandlerConstants::DISPLAY_ERRORS, false));
     }
 
     /**

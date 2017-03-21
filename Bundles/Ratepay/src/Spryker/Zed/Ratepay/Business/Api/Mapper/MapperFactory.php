@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
@@ -89,7 +89,7 @@ class MapperFactory extends AbstractBusinessFactory
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentData
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\QuoteHeadMapper
      */
@@ -187,7 +187,7 @@ class MapperFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param bool $needToSendShipping
      * @param float|int $discountTaxRate
      *

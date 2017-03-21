@@ -44,6 +44,9 @@ abstract class AbstractMapperTest extends PHPUnit_Framework_TestCase
      */
     protected $requestTransfer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -52,6 +55,9 @@ abstract class AbstractMapperTest extends PHPUnit_Framework_TestCase
         $this->mapperFactory = new MapperFactory($this->requestTransfer);
     }
 
+    /**
+     * @return void
+     */
     abstract public function testMapper();
 
     /**

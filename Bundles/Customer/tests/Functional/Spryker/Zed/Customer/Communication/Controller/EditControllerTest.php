@@ -9,13 +9,13 @@ namespace Functional\Spryker\Zed\Customer\Communication\Controller;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Controller\EditController;
 use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -68,6 +68,9 @@ class EditControllerTest extends Test
         $controllerMock->method('getFacade')->willReturn($customerFacade);
 
         $this->controller = $controllerMock;
+
+        $pimple = new Pimple();
+        $this->controller->setApplication($pimple->getApplication());
     }
 
     /**

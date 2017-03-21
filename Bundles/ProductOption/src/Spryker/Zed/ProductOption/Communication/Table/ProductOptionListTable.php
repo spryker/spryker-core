@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
@@ -266,7 +266,7 @@ class ProductOptionListTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Shared\Url\Url $viewDiscountUrl
+     * @param \Spryker\Service\UtilText\Model\Url\Url $viewDiscountUrl
      * @param string $isActive
      *
      * @return string

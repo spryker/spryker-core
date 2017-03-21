@@ -13,8 +13,8 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use PDO;
 use Propel\Runtime\Formatter\StatementFormatter;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use Spryker\Shared\Gui\ProgressBar\ProgressBarBuilder;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -61,7 +61,7 @@ abstract class AbstractCollector
     abstract protected function collectResourceType();
 
     /**
-     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     abstract protected function generateBatchIterator();
 

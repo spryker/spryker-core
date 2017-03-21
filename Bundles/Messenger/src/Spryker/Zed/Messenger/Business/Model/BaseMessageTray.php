@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
+use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 
 class BaseMessageTray
 {
 
     /**
-     * @var \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
+     * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
-    protected $glossaryFacade;
+    protected $translationPlugin;
 
     /**
-     * @param \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
      */
-    public function __construct(MessengerToGlossaryInterface $glossaryFacade)
+    public function __construct(TranslationPluginInterface $translationPlugin)
     {
-        $this->glossaryFacade = $glossaryFacade;
+        $this->translationPlugin = $translationPlugin;
     }
 
     /**
@@ -34,8 +34,8 @@ class BaseMessageTray
     protected function translate($keyName, array $data = [])
     {
         $translation = $keyName;
-        if ($this->glossaryFacade->hasKey($keyName)) {
-            $translation = $this->glossaryFacade->translate($keyName, $data);
+        if ($this->translationPlugin->hasKey($keyName)) {
+            $translation = $this->translationPlugin->translate($keyName, $data);
         }
 
         return $translation;

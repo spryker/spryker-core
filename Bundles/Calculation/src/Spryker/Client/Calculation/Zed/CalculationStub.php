@@ -8,9 +8,9 @@
 namespace Spryker\Client\Calculation\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\Stub\BaseStub;
+use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
-class CalculationStub extends BaseStub
+class CalculationStub extends ZedRequestStub
 {
 
     /**

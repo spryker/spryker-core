@@ -25,7 +25,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
 
     /**
      * @param int $idAbstractProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
@@ -36,7 +36,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
 
     /**
      * @param int $idProduct
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */

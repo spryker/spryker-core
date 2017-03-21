@@ -23,6 +23,8 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 class TransferCleanerTest extends PHPUnit_Framework_TestCase
 {
 
+    const TEST_FILE_NAME = 'TestTransfer.php';
+
     /**
      * @return void
      */
@@ -33,7 +35,7 @@ class TransferCleanerTest extends PHPUnit_Framework_TestCase
             mkdir($testDirectory, 0775, true);
         }
 
-        file_put_contents($testDirectory . 'file', '');
+        file_put_contents($testDirectory . static::TEST_FILE_NAME, '');
     }
 
     /**
@@ -49,9 +51,13 @@ class TransferCleanerTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $testFile1 = $this->getTestDirectory() . 'file';
+        $testFile1 = $this->getTestDirectory() . static::TEST_FILE_NAME;
         if (file_exists($testFile1)) {
             unlink($testFile1);
+        }
+
+        if (is_dir($this->getTestDirectory())) {
+            rmdir($this->getTestDirectory());
         }
     }
 
@@ -60,12 +66,12 @@ class TransferCleanerTest extends PHPUnit_Framework_TestCase
      */
     public function testExecuteShouldDeleteAllFilesInADirectory()
     {
-        $this->assertTrue(file_exists($this->getTestDirectory() . 'file'));
+        $this->assertTrue(file_exists($this->getTestDirectory() . static::TEST_FILE_NAME));
 
         $cleaner = new TransferCleaner($this->getTestDirectory());
         $cleaner->cleanDirectory();
 
-        $this->assertFalse(file_exists($this->getTestDirectory() . 'file'));
+        $this->assertFalse(file_exists($this->getTestDirectory() . static::TEST_FILE_NAME));
     }
 
 }

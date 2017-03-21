@@ -8,7 +8,7 @@
 namespace Spryker\Client\Payolution\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class PayolutionStub implements PayolutionStubInterface
 {
@@ -19,9 +19,9 @@ class PayolutionStub implements PayolutionStubInterface
     protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedRequestClient
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(ZedRequestClient $zedRequestClient)
+    public function __construct(ZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
     }

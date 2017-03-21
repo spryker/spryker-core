@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesSplit\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 use Symfony\Component\HttpFoundation\Request;
 

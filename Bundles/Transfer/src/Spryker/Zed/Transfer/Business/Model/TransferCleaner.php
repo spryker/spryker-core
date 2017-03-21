@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Transfer\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class TransferCleaner implements TransferCleanerInterface
 {
@@ -15,7 +16,7 @@ class TransferCleaner implements TransferCleanerInterface
     /**
      * @var string
      */
-    private $directory;
+    protected $directory;
 
     /**
      * @param string $directory
@@ -32,8 +33,22 @@ class TransferCleaner implements TransferCleanerInterface
     {
         if (is_dir($this->directory)) {
             $fileSystem = new Filesystem();
-            $fileSystem->remove($this->directory);
+            $fileSystem->remove($this->findFiles());
         }
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function findFiles()
+    {
+        $finder = new Finder();
+        $finder
+            ->in($this->directory)
+            ->files()
+            ->name('*Transfer.php');
+
+        return $finder;
     }
 
 }

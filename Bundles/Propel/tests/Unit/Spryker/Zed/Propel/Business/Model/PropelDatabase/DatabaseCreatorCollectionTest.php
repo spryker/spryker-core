@@ -26,6 +26,9 @@ class DatabaseCreatorCollectionTest extends PHPUnit_Framework_TestCase
 
     const TEST_ENGINE = 'testEngine';
 
+    /**
+     * @return void
+     */
     public function testAdd()
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();

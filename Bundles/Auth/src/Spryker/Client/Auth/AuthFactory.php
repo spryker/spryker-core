@@ -7,18 +7,8 @@
 
 namespace Spryker\Client\Auth;
 
-use Spryker\Client\Auth\Token\TokenService;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class AuthFactory extends AbstractFactory
 {
-
-    /**
-     * @return \Spryker\Client\Auth\Token\TokenService
-     */
-    public function createTokenService()
-    {
-        return new TokenService();
-    }
-
 }

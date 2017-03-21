@@ -135,6 +135,9 @@ class BuilderTest extends PHPUnit_Framework_TestCase
          );
     }
 
+    /**
+     * @return \Spryker\Zed\StateMachine\Business\Process\Event
+     */
     protected function createEvent()
     {
         return new Event();

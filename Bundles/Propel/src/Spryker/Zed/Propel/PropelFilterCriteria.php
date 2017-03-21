@@ -18,6 +18,9 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
      */
     protected $filterTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     */
     public function __construct(FilterTransfer $filterTransfer)
     {
         $this->filterTransfer = $filterTransfer;
@@ -32,7 +35,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return void
      */

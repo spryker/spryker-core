@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface;
@@ -35,11 +35,11 @@ class TransferBusinessFactoryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
-        return $this->getMockBuilder(MessengerInterface::class)->getMock();
+        return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     /**

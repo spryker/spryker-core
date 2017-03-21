@@ -9,13 +9,11 @@ namespace Spryker\Zed\Storage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Storage\Dependency\Facade\StorageToCollectorBridge;
 
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_STORAGE = 'storage client';
-    const FACADE_COLLECTOR = 'collector facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +35,6 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $this->addStorageClient($container);
-        $this->addCollectorFacade($container);
 
         return $container;
     }
@@ -51,18 +48,6 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addCollectorFacade($container)
-    {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new StorageToCollectorBridge($container->getLocator()->collector()->facade());
         };
     }
 

@@ -191,6 +191,9 @@ class CalculatorTest extends Test
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     */
     protected function createDecisionRulePlugins()
     {
         return [

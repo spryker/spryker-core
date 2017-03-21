@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\CategoryExporter\Code\KeyBuilder;
 
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 abstract class NavigationKeyBuilder implements KeyBuilderInterface
 {

@@ -113,12 +113,18 @@
       "Spryker\\Zed\\Cms\\": "Bundles/Cms/src",
       "Functional\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
       "Unit\\Spryker\\Zed\\Cms\\": "Bundles/Cms/tests",
+
       "Spryker\\Client\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Client\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Shared\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Shared\\Collector\\": "Bundles/Collector/tests",
       "Spryker\\Zed\\Collector\\": "Bundles/Collector/src",
       "Unit\\Spryker\\Zed\\Collector\\": "Bundles/Collector/tests",
+
+      "Spryker\\Zed\\CollectorStorageConnector\\": "Bundles/CollectorStorageConnector/src",
+
+      "Spryker\\Zed\\CollectorSearchConnector\\": "Bundles/CollectorSearchConnector/src",
+
       "Spryker\\Shared\\Config\\": "Bundles/Config/src",
       "Unit\\Spryker\\Shared\\Config\\": "Bundles/Config/tests",
       "Spryker\\Zed\\Console\\": "Bundles/Console/src",
@@ -238,15 +244,9 @@
       "Unit\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
 
-      "Spryker\\Shared\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
-      "Spryker\\Yves\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Yves\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Yves\\Library\\": "Bundles/Library/tests",
-      "Spryker\\Zed\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Zed\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Zed\\Library\\": "Bundles/Library/tests",
+      "Spryker\\Shared\\KeyBuilder\\": "Bundles/KeyBuilder/src",
+      "Unit\\Spryker\\Shared\\KeyBuilder\\": "Bundles/KeyBuilder/tests",
+
       "Spryker\\Client\\Locale\\": "Bundles/Locale/src",
       "Unit\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
       "Functional\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
@@ -285,9 +285,15 @@
       "Unit\\Spryker\\Yves\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Zed\\Money\\": "Bundles/Money/tests",
 
+      "Spryker\\Shared\\ZedNavigation\\": "Bundles/ZedNavigation/src",
+      "Spryker\\Zed\\ZedNavigation\\": "Bundles/ZedNavigation/src",
+      "Unit\\Spryker\\Zed\\ZedNavigation\\": "Bundles/ZedNavigation/tests",
+
       "Spryker\\Shared\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Zed\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Yves\\NewRelic\\": "Bundles/NewRelic/src",
+
+      "Spryker\\Shared\\NewRelicApi\\": "Bundles/NewRelicApi/src",
 
       "Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/src",
       "Functional\\Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/tests",
@@ -419,6 +425,10 @@
       "Spryker\\Zed\\Propel\\": "Bundles/Propel/src",
       "Unit\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
+
+      "Spryker\\Zed\\PropelOrm\\": "Bundles/PropelOrm/src",
+
+      "Spryker\\Client\\Quote\\": "Bundles/Quote/src",
 
       "Spryker\\Shared\\Refund\\": "Bundles/Refund/src",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
@@ -578,8 +588,21 @@
       "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
       "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
 
+      "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
+      "Unit\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/tests",
+
+      "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
+      "Unit\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
+      "Functional\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
+
       "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
-      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
+      "Unit\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
+
+      "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
+      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilDataReader/tests",
+
+      "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
+      "Spryker\\Shared\\UtilDateTime\\": "Bundles/UtilDateTime/src",
 
       "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
       "Functional\\Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
@@ -605,6 +628,7 @@
       "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
       "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
 
+      "Spryker\\Client\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Shared\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Yves\\ProductBundle\\": "Bundles/ProductBundle/src",
@@ -621,7 +645,14 @@
       "Spryker\\Shared\\Queue\\": "Bundles/Queue/src",
       "Functional\\Spryker\\Shared\\Queue\\": "Bundles/Queue/tests",
       "Spryker\\Zed\\Queue\\": "Bundles/Queue/src",
-      "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests"
+      "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests",
+
+      "Spryker\\Yves\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Client\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Shared\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
+      "Unit\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests",
+      "Functional\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

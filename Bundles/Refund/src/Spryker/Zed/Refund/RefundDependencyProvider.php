@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Refund;
 
-use Spryker\Shared\Library\Context;
-use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Communication\Plugin\RefundableExpenseAmountCalculatorPlugin;
@@ -24,7 +22,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_SALES = 'sales query container';
     const PLUGIN_ITEM_REFUND_CALCULATOR = 'item refund calculator plugin';
     const PLUGIN_EXPENSE_REFUND_CALCULATOR = 'expense refund calculator plugin';
-    const DATE_FORMATTER = 'date formatter';
+    const SERVICE_DATE_TIME = 'date formatter';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -131,8 +129,8 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateFormatter(Container $container)
     {
-        $container[static::DATE_FORMATTER] = function () {
-            return new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
+        $container[static::SERVICE_DATE_TIME] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
         };
 
         return $container;

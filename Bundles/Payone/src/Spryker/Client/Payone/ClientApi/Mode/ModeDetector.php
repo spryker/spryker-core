@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Payone\ClientApi\Mode;
 
-use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
 /**

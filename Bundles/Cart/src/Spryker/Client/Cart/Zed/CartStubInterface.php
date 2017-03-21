@@ -13,14 +13,14 @@ interface CartStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

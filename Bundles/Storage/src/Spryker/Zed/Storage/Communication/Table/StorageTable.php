@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Storage\Communication\Table;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilSanitize\UtilSanitizeService;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Library\Sanitize\Html;
 
 class StorageTable extends AbstractTable
 {
@@ -79,8 +79,9 @@ class StorageTable extends AbstractTable
 
         foreach ($values as $key => $value) {
             $url = Url::generate('/storage/maintenance/key', ['key' => $key]);
+            $utilSanitizeService = new UtilSanitizeService();
             $result[] = [
-                'key' => '<a href="' . $url . '">' . Html::escape($key) . '</a>',
+                'key' => '<a href="' . $url . '">' . $utilSanitizeService->escapeHtml($key) . '</a>',
                 'value' => substr($value, 0, 200),
             ];
         }

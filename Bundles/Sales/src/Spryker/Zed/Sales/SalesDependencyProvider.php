@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -164,8 +163,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateTimeFormatter(Container $container)
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
         };
 
         return $container;

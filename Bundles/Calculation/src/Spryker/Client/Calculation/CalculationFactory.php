@@ -21,4 +21,12 @@ class CalculationFactory extends AbstractFactory
         return new CalculationStub($this->getZedRequestClient());
     }
 
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(CalculationDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
 }

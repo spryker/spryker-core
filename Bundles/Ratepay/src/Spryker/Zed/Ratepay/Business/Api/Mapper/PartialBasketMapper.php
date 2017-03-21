@@ -10,7 +10,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PartialBasketMapper extends BaseMapper
@@ -54,7 +54,7 @@ class PartialBasketMapper extends BaseMapper
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param bool $needToSendShipping
      * @param float $discountTaxRate
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
@@ -113,6 +113,9 @@ class PartialBasketMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function initBasketIfEmpty()
     {
         if (!$this->requestTransfer->getShoppingBasket()) {

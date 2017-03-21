@@ -6,14 +6,17 @@
     }
   },
   "require": {
-    "spryker/discount": "^3.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/locale": "^2.2.0",
-    "spryker/product": "^4.0.0"
+    "spryker/discount": "^4.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/tax": "^3.0.0",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
+    "spryker/tax": "*",
     "spryker/testify": "*"
   },
   "description": "ProductDiscountConnector bundle",
@@ -22,7 +25,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

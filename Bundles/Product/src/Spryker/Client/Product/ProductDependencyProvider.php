@@ -18,7 +18,7 @@ class ProductDependencyProvider extends AbstractDependencyProvider
 
     const CLIENT_LOCALE = 'client locale';
     const KV_STORAGE = 'kv storage';
-    const UTIL_ENCODING = 'util encoding';
+    const SERVICE_ENCODING = 'util encoding';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -35,7 +35,7 @@ class ProductDependencyProvider extends AbstractDependencyProvider
             return new ProductToLocaleBridge($container->getLocator()->locale()->client());
         };
 
-        $container[static::UTIL_ENCODING] = function (Container $container) {
+        $container[static::SERVICE_ENCODING] = function (Container $container) {
             return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 

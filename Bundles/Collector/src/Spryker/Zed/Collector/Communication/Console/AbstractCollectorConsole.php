@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Collector\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 
 abstract class AbstractCollectorConsole extends Console
 {

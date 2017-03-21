@@ -9,20 +9,15 @@ namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\UserForm;
-use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
+use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 
 class UserFormDataProvider
 {
 
     /**
-     * @var array
+     * @var \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface
      */
-    protected $groupCollectionCache;
-
-    /**
-     * @var \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
-     */
-    protected $aclFacade;
+    protected $groupPlugin;
 
     /**
      * @var \Spryker\Zed\User\Business\UserFacade
@@ -30,12 +25,12 @@ class UserFormDataProvider
     protected $userFacade;
 
     /**
-     * @param \Spryker\Zed\User\Dependency\Facade\UserToAclInterface $aclFacade
+     * @param \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface $groupPlugin
      * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
-    public function __construct(UserToAclInterface $aclFacade, UserFacade $userFacade)
+    public function __construct(GroupPluginInterface $groupPlugin, UserFacade $userFacade)
     {
-        $this->aclFacade = $aclFacade;
+        $this->groupPlugin = $groupPlugin;
         $this->userFacade = $userFacade;
     }
 
@@ -72,15 +67,14 @@ class UserFormDataProvider
      */
     protected function getGroupChoices()
     {
-        if ($this->groupCollectionCache === null) {
-            $groupsTransfer = $this->aclFacade->getAllGroups();
+        $groupCollection = [];
+        $groupsTransfer = $this->groupPlugin->getAllGroups();
 
-            foreach ($groupsTransfer->getGroups() as $groupTransfer) {
-                $this->groupCollectionCache[$groupTransfer->getIdAclGroup()] = $this->formatGroupName($groupTransfer->getName());
-            }
+        foreach ($groupsTransfer->getGroups() as $groupTransfer) {
+            $groupCollection[$groupTransfer->getIdAclGroup()] = $this->formatGroupName($groupTransfer->getName());
         }
 
-        return $this->groupCollectionCache;
+        return $groupCollection;
     }
 
     /**
@@ -101,7 +95,7 @@ class UserFormDataProvider
      */
     protected function populateSelectedAclGroups($idUser, array $formData)
     {
-        $userAclGroupsTransfer = $this->aclFacade->getUserGroups($idUser);
+        $userAclGroupsTransfer = $this->groupPlugin->getUserGroups($idUser);
         $groupChoices = $this->getGroupChoices();
 
         foreach ($userAclGroupsTransfer->getGroups() as $aclGroupTransfer) {

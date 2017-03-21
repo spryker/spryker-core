@@ -28,6 +28,9 @@ use Spryker\Zed\Kernel\Container;
 class IdeAutoCompletionWriterTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testWriterCreatesYvesAutoCompletionFiles()
     {
         $i = $this->createFunctionalTester();
@@ -43,6 +46,9 @@ class IdeAutoCompletionWriterTest extends Test
         $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
     }
 
+    /**
+     * @return void
+     */
     public function testWriterCreatesZedAutoCompletionFiles()
     {
         $i = $this->createFunctionalTester();
@@ -58,6 +64,9 @@ class IdeAutoCompletionWriterTest extends Test
         $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
     }
 
+    /**
+     * @return void
+     */
     public function testWriterCreatesClientAutoCompletionFiles()
     {
         $i = $this->createFunctionalTester();
@@ -73,6 +82,9 @@ class IdeAutoCompletionWriterTest extends Test
         $i->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
     }
 
+    /**
+     * @return void
+     */
     public function testWriterCreatesServiceAutoCompletionFiles()
     {
         $i = $this->createFunctionalTester();

@@ -8,7 +8,9 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use PHPUnit_Framework_TestCase;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
@@ -58,8 +60,11 @@ class PayolutionFacadeMockBuilder
     {
         $businessFactoryMock = $testCase->getMock(
             'Spryker\Zed\Payolution\Business\PayolutionBusinessFactory',
-            ['createAdapter']
+            ['createAdapter', 'getMoneyFacade']
         );
+
+        $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
+        $businessFactoryMock->method('getMoneyFacade')->willReturn($payolutionToMoneyBridge);
 
         return $businessFactoryMock;
     }

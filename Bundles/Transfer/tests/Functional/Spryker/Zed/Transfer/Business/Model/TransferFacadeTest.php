@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
@@ -38,7 +38,7 @@ class TransferFacadeTest extends PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMockBuilder(MessengerInterface::class)->getMock();
+        return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     /**
@@ -48,7 +48,10 @@ class TransferFacadeTest extends PHPUnit_Framework_TestCase
     {
         $this->getFacade()->deleteGeneratedTransferObjects();
 
-        $this->assertFalse(is_dir($this->getConfig()->getClassTargetDirectory()));
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php')->files();
+
+        $this->assertCount(0, $finder, 'Directory containing generated transfer object files is not empty');
     }
 
     /**

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
@@ -42,7 +42,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getSprykerCoreSourceDirectoryGlobPattern()
     {
-        return Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/';
+        return Config::get(KernelConstants::SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/';
     }
 
     /**

@@ -25,7 +25,7 @@ class NewRelicFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
     protected function getNewRelicApi()
     {
@@ -33,11 +33,11 @@ class NewRelicFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\System
+     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
     protected function getSystem()
     {
-        return $this->getProvidedDependency(NewRelicDependencyProvider::SYSTEM);
+        return $this->getProvidedDependency(NewRelicDependencyProvider::SERVICE_NETWORK);
     }
 
 }

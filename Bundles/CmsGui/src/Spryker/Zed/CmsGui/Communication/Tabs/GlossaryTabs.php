@@ -29,11 +29,10 @@ class GlossaryTabs extends AbstractTabs
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
-     * @param null $con
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function build(TabsViewTransfer $tabsViewTransfer, $con = null)
+    protected function build(TabsViewTransfer $tabsViewTransfer)
     {
          $this->createPlaceHolderTabs($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-
 interface LocaleFacadeInterface
 {
 
@@ -135,11 +133,9 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
      * @return void
      */
-    public function install(MessengerInterface $messenger);
+    public function install();
 
     /**
      * Specification:

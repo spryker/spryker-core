@@ -1,30 +1,20 @@
 {
   "name": "spryker/kernel",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "php": ">=5.6.0",
-    "spryker/application": "^2.0.0",
-    "spryker/config": "^2.1.1",
-    "spryker/library": "^2.1.0",
-    "spryker/messenger": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/session": "^2.0.0",
+    "everon/collection": "^1.0.0",
+    "spryker/config": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/silex": "^2.0.0",
-    "spryker/storage": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.0.0",
-    "spryker/zed-request": "^2.5.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-encoding": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/console": "^2.0.1",
-    "spryker/testify": "*"
+    "spryker/console": "^3.0.0",
+    "spryker/testify": "*",
+    "spryker/transfer": "^3.0.0"
   },
   "description": "Kernel bundle",
   "license": "proprietary",
@@ -32,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "repositories": [
@@ -43,6 +33,11 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
   },
   "autoload-dev": {
     "psr-0": {

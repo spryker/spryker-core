@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductOption\Storage;
 use Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer;
 use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
 use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductOptionStorage implements ProductOptionStorageInterface
 {
@@ -21,7 +21,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     protected $storage;
 
     /**
-     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
@@ -37,7 +37,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
 
     /**
      * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface $storage
-     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
     public function __construct(ProductOptionToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)

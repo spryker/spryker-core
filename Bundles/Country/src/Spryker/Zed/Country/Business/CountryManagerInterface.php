@@ -44,6 +44,24 @@ interface CountryManagerInterface
     public function getIdCountryByIso2Code($iso2code);
 
     /**
+     * @param string $iso2code
+     *
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2code);
+
+    /**
+     * @param string $iso3code
+     *
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso3Code($iso3code);
+
+    /**
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer

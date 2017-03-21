@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Spryker\Shared\Url\Url;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
@@ -136,7 +136,7 @@ class ProductOptionTable extends AbstractTable
         return $results;
     }
 
-    /***
+    /**
      * @param array $productOption
      *
      * @return array
@@ -154,7 +154,7 @@ class ProductOptionTable extends AbstractTable
         ];
     }
 
-    /***
+    /**
      * @return array
      */
     protected function buildHeaderActionByTableContext()

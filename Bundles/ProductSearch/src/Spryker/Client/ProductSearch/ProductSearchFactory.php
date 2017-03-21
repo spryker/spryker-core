@@ -14,11 +14,19 @@ class ProductSearchFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     public function createProductSearchConfigExtensionKeyBuilder()
     {
         return new ProductSearchConfigExtensionKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    public function getStorageClient()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_STORAGE);
     }
 
     /**

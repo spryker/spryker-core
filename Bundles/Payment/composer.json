@@ -6,14 +6,16 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/sales": "^2.0.0 || ^3.0.0",
+    "spryker/sales": "^5.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
   "description": "Payment bundle",
   "license": "proprietary",
@@ -21,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

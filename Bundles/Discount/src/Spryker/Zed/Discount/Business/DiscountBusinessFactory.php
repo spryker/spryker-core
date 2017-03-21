@@ -304,8 +304,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /*
-     * @return DiscountConfiguratorHydrate
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     public function createDiscountConfiguratorHydrate()
     {

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
@@ -27,7 +28,6 @@ use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTy
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
@@ -182,9 +182,9 @@ class Customer
      */
     protected function generateKey()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**

@@ -8,7 +8,7 @@
 namespace Spryker\Client\Availability\KeyBuilder;
 
 use Spryker\Shared\Availability\AvailabilityConfig;
-use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
 class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
 {

@@ -3,7 +3,6 @@
   "include": {
   },
   "exclude": {
-    "Symfony": "Now directly using symfony/console",
-    "Log": "Required by optional ConsoleLogPlugin"
+    "Symfony": "Now directly using symfony/console"
   }
 }

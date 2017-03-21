@@ -9,7 +9,7 @@ namespace Spryker\Zed\StateMachine\Business\Logger;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog;
-use Spryker\Shared\Library\System;
+use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
@@ -30,11 +30,17 @@ class TransitionLog implements TransitionLogInterface
     protected $pathFinder;
 
     /**
+     * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+     */
+    protected $utilNetworkService;
+
+    /**
      * @param \Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface $pathFinder
      */
-    public function __construct(PathFinderInterface $pathFinder)
+    public function __construct(PathFinderInterface $pathFinder, UtilNetworkServiceInterface $utilNetworkService)
     {
         $this->pathFinder = $pathFinder;
+        $this->utilNetworkService = $utilNetworkService;
     }
 
     /**
@@ -145,7 +151,7 @@ class TransitionLog implements TransitionLogInterface
         $stateMachineTransitionLogEntity->setFkStateMachineProcess(
             $stateMachineItemTransfer->getIdStateMachineProcess()
         );
-        $stateMachineTransitionLogEntity->setHostname(System::getHostname());
+        $stateMachineTransitionLogEntity->setHostname($this->utilNetworkService->getHostname());
 
         $path = $this->pathFinder->getCurrentExecutionPath();
         $stateMachineTransitionLogEntity->setPath($path);

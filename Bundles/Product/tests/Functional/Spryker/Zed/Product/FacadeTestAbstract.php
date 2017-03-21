@@ -253,6 +253,9 @@ class FacadeTestAbstract extends Test
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
+    /**
+     * @return void
+     */
     protected function setupDefaultProducts()
     {
         $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);

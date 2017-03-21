@@ -100,9 +100,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         return new OrdersTable(
             $this->createOrdersTableQueryBuilder(),
             $this->getSalesAggregator(),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE)
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 

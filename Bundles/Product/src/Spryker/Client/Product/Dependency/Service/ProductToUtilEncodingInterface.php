@@ -20,8 +20,8 @@ interface ProductToUtilEncodingInterface
     /**
      * @param array $jsonString
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return array
      */

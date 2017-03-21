@@ -417,7 +417,7 @@ class WishlistFacadeTest extends Test
 
     /**
      * @param int $expected
-     * @param null $idWishlist
+     * @param int|null $idWishlist
      *
      * @return void
      */
