@@ -8,7 +8,7 @@
 namespace Testify\Module;
 
 use Codeception\Module;
-use Spryker\Shared\Testify\Locator\BusinessLocator as Locator;
+use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
 class BusinessLocator extends Module
 {
@@ -17,17 +17,18 @@ class BusinessLocator extends Module
      * @var array
      */
     protected $config = [
-        'namespaces' => [
-            'Spryker'
-        ]
+        'projectNamespaces' => [],
+        'coreNamespaces' => [
+            'Spryker',
+        ],
     ];
 
-
     /**
-     * @return \Spryker\Shared\Testify\Locator|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
      */
     public function getLocator()
     {
-        return new Locator();
+        return new Locator($this->config['projectNamespaces'], $this->config['coreNamespaces']);
     }
+
 }
