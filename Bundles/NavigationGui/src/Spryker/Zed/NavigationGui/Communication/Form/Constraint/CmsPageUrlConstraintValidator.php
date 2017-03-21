@@ -8,7 +8,6 @@
 namespace Spryker\Zed\NavigationGui\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Symfony\Component\Validator\Constraint;
@@ -45,7 +44,7 @@ class CmsPageUrlConstraintValidator extends ConstraintValidator
             return;
         }
 
-        $urlTransfer = $this->findUrl($value, $constraint);
+        $urlTransfer = $constraint->findUrl($value);
 
         if (!$urlTransfer || !$urlTransfer->getFkResourcePage() || $urlTransfer->getFkLocale() != $value->getFkLocale()) {
             $this->context
@@ -53,20 +52,6 @@ class CmsPageUrlConstraintValidator extends ConstraintValidator
                 ->atPath(NavigationNodeLocalizedAttributesFormType::FIELD_CMS_PAGE_URL)
                 ->addViolation();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $value
-     * @param \Spryker\Zed\NavigationGui\Communication\Form\Constraint\CmsPageUrlConstraint $constraint
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrl(NavigationNodeLocalizedAttributesTransfer $value, CmsPageUrlConstraint $constraint)
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($value->getCmsPageUrl());
-
-        return $constraint->getUrlFacade()->findUrl($urlTransfer);
     }
 
 }

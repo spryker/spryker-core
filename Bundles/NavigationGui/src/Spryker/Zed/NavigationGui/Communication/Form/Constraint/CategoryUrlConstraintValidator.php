@@ -8,7 +8,6 @@
 namespace Spryker\Zed\NavigationGui\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Symfony\Component\Validator\Constraint;
@@ -45,7 +44,7 @@ class CategoryUrlConstraintValidator extends ConstraintValidator
             return;
         }
 
-        $urlTransfer = $this->findUrl($value, $constraint);
+        $urlTransfer = $constraint->findUrl($value);
 
         if (!$urlTransfer || !$urlTransfer->getFkResourceCategorynode() || $urlTransfer->getFkLocale() != $value->getFkLocale()) {
             $this->context
@@ -53,20 +52,6 @@ class CategoryUrlConstraintValidator extends ConstraintValidator
                 ->atPath(NavigationNodeLocalizedAttributesFormType::FIELD_CATEGORY_URL)
                 ->addViolation();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $value
-     * @param \Spryker\Zed\NavigationGui\Communication\Form\Constraint\CategoryUrlConstraint $constraint
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrl(NavigationNodeLocalizedAttributesTransfer $value, CategoryUrlConstraint $constraint)
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($value->getCategoryUrl());
-
-        return $constraint->getUrlFacade()->findUrl($urlTransfer);
     }
 
 }

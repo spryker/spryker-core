@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CmsPageUrlConstraint extends SymfonyConstraint
@@ -20,19 +22,24 @@ class CmsPageUrlConstraint extends SymfonyConstraint
     protected $urlFacade;
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
-     */
-    public function getUrlFacade()
-    {
-        return $this->urlFacade;
-    }
-
-    /**
      * @return string
      */
     public function getTargets()
     {
         return static::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer $value
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrl(NavigationNodeLocalizedAttributesTransfer $value)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl($value->getCmsPageUrl());
+
+        return $this->urlFacade->findUrl($urlTransfer);
     }
 
 }
