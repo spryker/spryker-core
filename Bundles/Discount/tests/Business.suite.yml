@@ -2,7 +2,8 @@ class_name: BusinessTester
 modules:
   enabled:
     - \Discount\Module\Functional
-    - \Testify\Module\Locator:
-        namespaces: ['Pyz', 'SprykerEco']
+    - \Testify\Module\BusinessLocator:
+        projectNamespaces: []
+        coreNamespaces: ['Spryker']
 
 
