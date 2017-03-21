@@ -4,6 +4,7 @@ modules:
     - \Discount\Module\Functional
     - \Testify\Module\BusinessLocator:
         projectNamespaces: []
-        coreNamespaces: ['Spryker']
+        coreNamespaces:
+          - 'Spryker'
 
 
