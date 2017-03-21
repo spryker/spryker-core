@@ -23,11 +23,13 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Testify\Locator\TestifyConfigurator;
 
 /**
  * @group Spryker
@@ -35,7 +37,7 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
  * @group Discount
  * @group Business
  * @group Facade
- * @group DiscountFacadeCalculateTest
+ * @group DiscountFacadeTest
  *
  * @group Functional
  */
@@ -52,7 +54,12 @@ class DiscountFacadeTest extends Test
      */
     public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote()
     {
+        $callback = function (TestifyConfigurator $configurator) {
+            $configurator->getConfig()->set('Foo', 'Bar');
+            $configurator->getContainer()->set(DiscountDependencyProvider::FACADE_MESSENGER, 'foo');
+        };
         $facade = $this->tester->getLocator()->discount()->facade();
+
         $facade->calculateDiscounts(new QuoteTransfer());
 
         $discountFacade = $this->createDiscountFacade();
