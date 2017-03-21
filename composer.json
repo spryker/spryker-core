@@ -533,7 +533,11 @@
       "Spryker\\Zed\\TaxProductConnector\\": "Bundles/TaxProductConnector/src",
       "Unit\\Spryker\\Zed\\TaxProductConnector\\": "Bundles/TaxProductConnector/tests",
       "Functional\\Spryker\\Zed\\TaxProductConnector\\": "Bundles/TaxProductConnector/tests",
+
+      "Spryker\\Yves\\Testify\\": "Bundles/Testify/src",
+      "Spryker\\Zed\\Testify\\": "Bundles/Testify/src",
       "Spryker\\Shared\\Testify\\": "Bundles/Testify/src",
+
       "Spryker\\Shared\\Touch\\": "Bundles/Touch/src",
       "Unit\\Spryker\\Shared\\Touch\\": "Bundles/Touch/tests",
       "Functional\\Spryker\\Shared\\Touch\\": "Bundles/Touch/tests",
