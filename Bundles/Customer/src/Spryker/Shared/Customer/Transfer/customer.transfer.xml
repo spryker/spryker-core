@@ -11,19 +11,19 @@
         <property name="idCustomerAddress" type="int" />
         <property name="customerId" type="string" />
         <property name="fkCustomer" type="int" />
-        <property name="email" type="string" />
-        <property name="salutation" type="string"  />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="email" type="string" generate="email" />
+        <property name="salutation" type="string" generate="randomElement(['Mr.', 'Ms.', 'Mrs.'])"  />
+        <property name="firstName" type="string" generate="firstName" />
+        <property name="lastName" type="string" generate="lastName" />
         <property name="address1" type="string" generate="address" />
         <property name="address2" type="string" generate="address" />
         <property name="address3" type="string" generate="address" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="phone" type="string" />
+        <property name="company" type="string" generate="company" />
+        <property name="city" type="string" generate="city" />
+        <property name="zipCode" type="string" generate="postcode" />
+        <property name="phone" type="string" generate="e164PhoneNumber" />
         <property name="comment" type="string" />
-        <property name="state" type="string" />
+        <property name="state" type="string" generate="country" />
         <property name="isDeleted" type="bool" />
         <property name="isDefaultBilling" type="bool" />
         <property name="isDefaultShipping" type="bool" />
@@ -37,22 +37,22 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" type="string" />
+        <property name="email" type="string" generate="email" />
         <property name="idCustomer" type="int" />
         <property name="customerReference" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="company" type="string" />
-        <property name="gender" type="string" />
-        <property name="dateOfBirth" type="string" />
-        <property name="salutation" type="string" />
+        <property name="firstName" type="string" generate="firstName" />
+        <property name="lastName" type="string" generate="lastName" />
+        <property name="company" type="string" generate="company" />
+        <property name="gender" type="string" generate="randomElement(['Male', 'Female'])" />
+        <property name="dateOfBirth" type="string" generate="date('Y-m-d', '-20 years')" />
+        <property name="salutation" type="string" generate="randomElement(['Mr.', 'Ms.', 'Mrs.'])" />
         <property name="password" type="string" />
         <property name="newPassword" type="string" />
         <property name="billingAddress" type="Address[]" />
         <property name="shippingAddress" type="Address[]" />
         <property name="addresses" type="Addresses" singular="address" />
-        <property name="defaultBillingAddress" type="string" />
-        <property name="defaultShippingAddress" type="string" />
+        <property name="defaultBillingAddress" type="string" generate="address" />
+        <property name="defaultShippingAddress" type="string" generate="address" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="restorePasswordKey" type="string" />
@@ -62,8 +62,8 @@
         <property name="registered" type="string" />
         <property name="message" type="string" />
         <property name="sendPasswordToken" type="bool" />
-        <property name="isGuest" type="bool"/>
-        <property name="locale" type="Locale"/>
+        <property name="isGuest" type="bool" generate="=false"/>
+        <property name="locale" type="Locale" generate="locale"/>
     </transfer>
 
     <transfer name="CustomerError">

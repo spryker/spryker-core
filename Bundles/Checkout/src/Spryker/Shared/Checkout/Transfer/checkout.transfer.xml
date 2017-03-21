@@ -35,12 +35,12 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
-    <transfer name="Item">
+    <transfer name="Item" >
         <property name="idSalesOrderItem" type="int" />
-        <property name="sku" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="sku" type="string" generate="isbn10" />
+        <property name="unitGrossPrice" type="int" generate="randomFloat(2)"  />
+        <property name="sumGrossPrice" type="int"  />
+        <property name="quantity" type="int" generate="=1" />
     </transfer>
 
     <transfer name="Address">

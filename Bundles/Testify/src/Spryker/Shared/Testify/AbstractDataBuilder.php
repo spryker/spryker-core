@@ -14,29 +14,49 @@ abstract class AbstractDataBuilder
 
     protected $dependencies = [];
 
+    protected $seedData = [];
+
     /**
      * @return AbstractTransfer
      */
     abstract protected function getDTO();
+
+    /**
+     * @param $builder
+     * @return AbstractDataBuilder
+     * @throws \Exception
+     */
+    abstract protected function locateDataBuilder($builder);
 
     public function __construct()
     {
         $this->faker = \Faker\Factory::create();
     }
 
-    public function build($override = [])
+    /**
+     * @param array $override
+     * @param bool $randomize
+     * @return AbstractTransfer
+     */
+    public function build($override = [], $randomize = true)
     {
+        if ($randomize) {
+            $this->seedData = $override;
+        }
         $transfer = $this->getDTO();
         $transfer->fromArray($this->generateFields());
+        $this->seedData = $this->getScalarValues($transfer);
+        
         $transfer->fromArray($this->generateDependencies());
-        $transfer->fromArray($override);
+        $transfer->fromArray($override, true);
         return $transfer;
     }
 
-    public function buildMany($num)
+    private function getScalarValues(AbstractTransfer $dto)
     {
-        return array_map([$this, 'build'], array_fill(0, $num, null));
+        return array_filter($dto->toArray(false), 'is_scalar');
     }
+
 
     protected function generateFields()
     {
@@ -50,30 +70,12 @@ abstract class AbstractDataBuilder
     public function generateDependencies()
     {
         $data = [];
-        foreach ($this->dependencies as $field => $builder) {
-            $data[$field] = $this->locateDataBuilder($builder)->build();
+        foreach ($this->dependencies as $field => $builderName) {
+            $builder = $this->locateDataBuilder($builderName);
+            $data[$field] = $builder->build($this->seedData);
+            $this->seedData += $builder->getSeedData();
         }
         return $data;
-    }
-
-    /**
-     * @param $builder
-     * @return AbstractDataBuilder
-     * @throws \Exception
-     */
-    protected function locateDataBuilder($builder)
-    {
-        // can be overridden to locate builders inside a bundle
-        $class = get_class($this);
-        $classParts = explode('\\', $class);
-        array_pop($classParts);
-        array_push($classParts, $builder);
-        $builderClass = implode('\\', $class);
-
-        if (!class_exists($builderClass)) {
-            throw new \Exception("Builder '$builderClass' not found");
-        }
-        return new $builderClass;
     }
 
     protected function generateFromRule($rule)
@@ -81,9 +83,15 @@ abstract class AbstractDataBuilder
         if (strpos($rule, '=') === 0) {
           return substr($rule, 1);
         }
-
-        $faker = $this->faker;
-
-        return eval("$faker->{$rule}");
+        return (string) eval("return \$this->faker->$rule;");
     }
+
+    /**
+     * @return array
+     */
+    public function getSeedData()
+    {
+        return $this->seedData;
+    }
+
 }
