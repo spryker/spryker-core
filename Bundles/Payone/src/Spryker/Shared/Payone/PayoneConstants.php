@@ -33,7 +33,7 @@ interface PayoneConstants
     const HOST_YVES = 'HOST_YVES';
 
     /**
-     * Base url for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
      */

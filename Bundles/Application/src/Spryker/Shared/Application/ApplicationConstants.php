@@ -146,56 +146,56 @@ interface ApplicationConstants
     const PORT_SSL_ZED = 'APPLICATION:PORT_SSL_ZED';
 
     /**
-     * Base url for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
      */
     const BASE_URL_YVES = 'APPLICATION:BASE_URL_YVES';
 
     /**
-     * Base url for Zed including scheme and port (e.g. http://zed.de.demoshop.local:9080)
+     * Base URL for Zed including scheme and port (e.g. http://zed.de.demoshop.local:9080)
      *
      * @api
      */
     const BASE_URL_ZED = 'APPLICATION:BASE_URL_ZED';
 
     /**
-     * Base url for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     * Base URL for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
      * @api
      */
     const BASE_URL_STATIC_ASSETS = 'APPLICATION:BASE_URL_STATIC_ASSETS';
 
     /**
-     * Base url for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     * Base URL for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
      * @api
      */
     const BASE_URL_STATIC_MEDIA = 'APPLICATION:BASE_URL_STATIC_MEDIA';
 
     /**
-     * Secure base url for Yves including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     * Secure base URL for Yves including scheme and port (e.g. https://www.de.demoshop.local:8443)
      *
      * @api
      */
     const BASE_URL_SSL_YVES = 'APPLICATION:BASE_URL_SSL_YVES';
 
     /**
-     * Secure base url for Zed including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     * Secure base URL for Zed including scheme and port (e.g. https://www.de.demoshop.local:8443)
      *
      * @api
      */
     const BASE_URL_SSL_ZED = 'APPLICATION:BASE_URL_SSL_ZED';
 
     /**
-     * Secure base url for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
+     * Secure base URL for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
      * @api
      */
     const BASE_URL_SSL_STATIC_ASSETS = 'APPLICATION:BASE_URL_SSL_STATIC_ASSETS';
 
     /**
-     * Secure base url for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
+     * Secure base URL for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
      * @api
      */
