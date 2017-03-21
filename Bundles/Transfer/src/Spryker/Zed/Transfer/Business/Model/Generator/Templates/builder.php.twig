@@ -20,16 +20,44 @@ class {{ className }} extends AbstractDataBuilder
 {
     protected $rules = [
 {% for rule in rules %}
-        '{{ rule.name }}' => '{{ rule.generate }}',
+        "{{ rule.name }}" => "{{ rule.generate | raw }}",
 {% endfor %}
     ];
 
     protected $dependencies = [
 {% for dependency in dependencies %}
-        '{{ dependency.name }}' => '{{ dependency.type }}',
+        "{{ dependency.name }}" => "{{ dependency.type }}",
 {% endfor %}
     ];
 
+    /**
+     * @param array $override
+     * @param bool $randomize
+     * @return {{ dtoName }}
+     */
+    public function build($override = [], $randomize = true)
+    {
+         return parent::build($override, $randomize);
+    }
+
+    /**
+     * @param $builder
+     * @return AbstractDataBuilder
+     * @throws \Exception
+     */
+    protected function locateDataBuilder($builder)
+    {
+        $builderClass = __NAMESPACE__ . "\\{$builder}Builder";
+
+        if (!class_exists($builderClass)) {
+            throw new \Exception("Builder '$builderClass' not found");
+        }
+        return new $builderClass;
+    }
+
+    /**
+     * @return {{ dtoName }};
+     */
     public function getDTO()
     {
         return new {{ dtoName }};

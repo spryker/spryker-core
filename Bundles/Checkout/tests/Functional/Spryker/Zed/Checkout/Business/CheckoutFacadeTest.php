@@ -8,10 +8,14 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\ProductAbstractBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -40,6 +44,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
@@ -119,6 +124,7 @@ class CheckoutFacadeTest extends Test
 
     /**
      * @return void
+     * @group current
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
@@ -131,7 +137,14 @@ class CheckoutFacadeTest extends Test
             ->setPassword('MyPass')
             ->save();
 
-        $quoteTransfer = $this->getBaseQuoteTransfer();
+
+        $quoteTransfer = (new QuoteBuilder())->build([
+            'email' => 'max@mustermann.de'
+        ]);
+        $productFacade = new ProductFacade();
+        codecept_debug($adto = (new ProductAbstractBuilder())->build());
+        $apid = $productFacade->createProductAbstract($adto);
+        $quoteTransfer->addItem((new ItemBuilder())->build());
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
