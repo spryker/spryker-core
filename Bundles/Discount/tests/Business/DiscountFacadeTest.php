@@ -25,6 +25,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
@@ -54,11 +55,54 @@ class DiscountFacadeTest extends Test
      */
     public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote()
     {
-        $callback = function (TestifyConfigurator $configurator) {
-            $configurator->getConfig()->set('Foo', 'Bar');
-            $configurator->getContainer()->set(DiscountDependencyProvider::FACADE_MESSENGER, 'foo');
-        };
+        $this->tester->setConfig(KernelConstants::SPRYKER_ROOT, '');
+        $this->tester->setDependency(DiscountDependencyProvider::FACADE_MESSENGER, 'foo');
+
         $facade = $this->tester->getLocator()->discount()->facade();
+//        $discountTransfer = $this->tester->buildDiscountTransfer();
+        $return = $this->tester->getFacade()->saveDiscount($discountTransfer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//        $callback = function (TestifyConfigurator $configurator) {
+//            $configurator->getConfig()->set('Foo', 'Bar');
+//            $configurator->getContainer()->set(DiscountDependencyProvider::FACADE_MESSENGER, 'foo');
+//        };
+//        $facade = $this->tester->getLocator()->discount()->facade();
+//
+//
+//
+//        $config = $this->tester->changeConfig($foo, $bar);
+//        $container = $this->tester->changeContainer(const, 'foo');
+//        $facade = $this->tester->getLocator()->discount()->facade($config, $container);
+//        $facade = $this->tester->getLocator()->discount()->facade($config);
+//        $facade = $this->tester->getLocator()->discount()->facade($container);
+//        $facade = $this->tester->getLocator()->discount()->configValue(2)facade($container);
+//
+
+
+
+
+
+
+
+
 
         $facade->calculateDiscounts(new QuoteTransfer());
 
