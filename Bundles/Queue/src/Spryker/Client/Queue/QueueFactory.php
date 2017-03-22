@@ -10,6 +10,9 @@ namespace Spryker\Client\Queue;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Queue\Model\Proxy\QueueProxy;
 
+/**
+ * @method \Spryker\Client\Queue\QueueConfig getConfig()
+ */
 class QueueFactory extends AbstractFactory
 {
 
@@ -18,15 +21,18 @@ class QueueFactory extends AbstractFactory
      */
     public function createQueueProxy()
     {
-        return new QueueProxy($this->getQueueAdapter());
+        return new QueueProxy(
+            $this->getQueueAdapters(),
+            $this->getConfig()->getQueueAdapterConfiguration()
+        );
     }
 
     /**
-     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
      */
-    protected function getQueueAdapter()
+    protected function getQueueAdapters()
     {
-        return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_ADAPTER);
+        return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_ADAPTERS);
     }
 
 }

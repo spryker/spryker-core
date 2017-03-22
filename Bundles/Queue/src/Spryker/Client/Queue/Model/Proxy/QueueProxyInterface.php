@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\Queue\Model\Proxy;
 
-use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
+use Spryker\Client\Queue\Model\Internal\ManagerInterface;
+use Spryker\Client\Queue\Model\Internal\ReceiverInterface;
+use Spryker\Client\Queue\Model\Internal\SenderInterface;
 
-interface QueueProxyInterface extends AdapterInterface
+interface QueueProxyInterface extends ReceiverInterface, SenderInterface, ManagerInterface
 {
 }

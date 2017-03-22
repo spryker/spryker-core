@@ -631,10 +631,13 @@
       "Acceptance\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests",
 
       "Spryker\\Client\\Queue\\": "Bundles/Queue/src",
+      "Unit\\Spryker\\Client\\Queue\\": "Bundles/Queue/tests",
       "Functional\\Spryker\\Client\\Queue\\": "Bundles/Queue/tests",
       "Spryker\\Shared\\Queue\\": "Bundles/Queue/src",
+      "Unit\\Spryker\\Shared\\Queue\\": "Bundles/Queue/tests",
       "Functional\\Spryker\\Shared\\Queue\\": "Bundles/Queue/tests",
       "Spryker\\Zed\\Queue\\": "Bundles/Queue/src",
+      "Unit\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests",
       "Functional\\Spryker\\Zed\\Queue\\": "Bundles/Queue/tests",
 
       "Spryker\\Yves\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",

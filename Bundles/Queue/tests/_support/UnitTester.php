@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends Actor
+class UnitTester extends Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\UnitTesterActions;
 
    /**
     * Define custom actions here
