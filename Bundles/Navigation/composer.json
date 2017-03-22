@@ -21,6 +21,9 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/silex": "If you want to use the NavigationTwigServiceProvider you need to install spryker/silex."
+  },
   "description": "Navigation bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
