@@ -7,8 +7,9 @@
 
 namespace ZedPresentation\Sales\Order\Zed;
 
-use ZedPresentation\Sales\Order\Zed\PageObject\SalesDetailPage;
-use ZedPresentation\Sales\Order\Zed\Tester\SalesListTester;
+use Sales\PageObject\SalesDetailPage;
+use Sales\PageObject\SalesListPage;
+use Sales\ZedPresentationTester;
 
 /**
  * @group Acceptance
@@ -21,26 +22,28 @@ class SalesListCest
 {
 
     /**
-     * @param \ZedPresentation\Sales\Order\Zed\Tester\SalesListTester $i
+     * @param \Sales\ZedPresentationTester $i
+     * @param \Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testOrderListShouldContainOrders(SalesListTester $i)
+    public function testOrderListShouldContainOrders(ZedPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
-        $i->seeListOfOrders();
+        $salesListPage->seeListOfOrders();
     }
 
     /**
-     * @param \ZedPresentation\Sales\Order\Zed\Tester\SalesListTester $i
+     * @param \Sales\ZedPresentationTester $i
+     * @param \Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testICanGoToLatestOrderDetailsPage(SalesListTester $i)
+    public function testICanGoToLatestOrderDetailsPage(ZedPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
 
-        $latestOrderId = $i->grabLatestOrderId();
+        $latestOrderId = $salesListPage->grabLatestOrderId();
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
 
         $i->amOnPage($url);

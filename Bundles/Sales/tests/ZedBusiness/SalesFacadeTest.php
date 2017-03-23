@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ZedCommunication\Business;
+namespace ZedBusiness;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Sales\ZedBusinessTester;
 use Spryker\Zed\Sales\Business\SalesFacade;
 
 /**
@@ -25,13 +26,20 @@ use Spryker\Zed\Sales\Business\SalesFacade;
 class SalesFacadeTest extends Test
 {
 
+    const DEFAULT_OMS_PROCESS_NAME = 'test';
+    const DEFAULT_ITEM_STATE = 'test';
+
+    /**
+     * @var ZedBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
-        $testOrderCreator = $this->createTestOrderCreator();
-        $salesOrderEntity = $testOrderCreator->create();
+        $salesOrderEntity = $this->tester->create();
 
         $salesFacade = $this->createSalesFacade();
 
@@ -42,12 +50,12 @@ class SalesFacadeTest extends Test
         $this->assertCount(2, $orderTransfer->getItems());
 
         $itemTransfer = $orderTransfer->getItems()[0];
-        $this->assertEquals(TestOrderCreator::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(TestOrderCreator::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
+        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
 
         $itemTransfer = $orderTransfer->getItems()[1];
-        $this->assertEquals(TestOrderCreator::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(TestOrderCreator::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
+        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
 
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
@@ -59,8 +67,7 @@ class SalesFacadeTest extends Test
      */
     public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
     {
-        $testOrderCreator = $this->createTestOrderCreator();
-        $salesOrderEntity = $testOrderCreator->create();
+        $salesOrderEntity = $this->tester->create();
 
         $salesFacade = $this->createSalesFacade();
 
@@ -76,8 +83,7 @@ class SalesFacadeTest extends Test
      */
     public function testCustomerOrderShouldReturnGrandTotalWithDiscounts()
     {
-        $testOrderCreator = $this->createTestOrderCreator();
-        $salesOrderEntity = $testOrderCreator->create();
+        $salesOrderEntity = $this->tester->create();
 
         $orderItemEntity = $salesOrderEntity->getItems()[0];
 
@@ -106,14 +112,6 @@ class SalesFacadeTest extends Test
     protected function createSalesFacade()
     {
         return new SalesFacade();
-    }
-
-    /**
-     * @return \ZedCommunication\Business\TestOrderCreator
-     */
-    protected function createTestOrderCreator()
-    {
-        return new TestOrderCreator();
     }
 
 }
