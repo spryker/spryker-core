@@ -1,0 +1,5 @@
+class_name: ZedBusinessTester
+modules:
+    enabled:
+        - \Sales\Helper\ZedBusiness
+        - \Sales\Module\Functional

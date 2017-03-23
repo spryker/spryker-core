@@ -1,0 +1,6 @@
+class_name: ZedBusinessTester
+modules:
+  enabled:
+    - \Testify\Module\Environment
+    - \Discount\Module\Functional
+    - \Testify\Module\BusinessLocator

@@ -54,11 +54,10 @@ class BusinessLocator extends AbstractLocator
             new ServiceLocator(),
         ];
 
-        $bundleProxy = new BundleProxy($this);
+        $bundleProxy = new BundleProxy($this, $this->closure);
         $bundleProxy
             ->setProjectNamespaces($this->projectNamespaces)
             ->setCoreNamespaces($this->coreNamespaces)
-            ->setClosure($this->closure)
             ->setLocator($locators);
 
         return $bundleProxy;
