@@ -18,9 +18,9 @@ use Generated\Shared\Transfer\{{ dtoName }};
  */
 class {{ className }} extends AbstractDataBuilder
 {
-    protected $rules = [
+    protected $defaultRules = [
 {% for rule in rules %}
-        "{{ rule.name }}" => "{{ rule.generate | raw }}",
+        "{{ rule.name }}" => "{{ rule.dataBuilderRule | raw }}",
 {% endfor %}
     ];
 
@@ -31,13 +31,11 @@ class {{ className }} extends AbstractDataBuilder
     ];
 
     /**
-     * @param array $override
-     * @param bool $randomize
      * @return {{ dtoName }}
      */
-    public function build($override = [], $randomize = true)
+    public function build()
     {
-         return parent::build($override, $randomize);
+         return parent::build();
     }
 
     /**
@@ -63,4 +61,32 @@ class {{ className }} extends AbstractDataBuilder
         return new {{ dtoName }};
     }
 
+{% for dependency in dependencies %}
+    /**
+     * @return self
+     */
+    public function with{{ dependency.ucfirstName }}($overrideOrBuilder = [])
+    {
+        if ($overrideOrBuilder instanceof AbstractDataBuilder) {
+            $this->addDependencyBuilder('{{ dependency.name }}', $overrideOrBuilder, false);
+            return $this;
+        }
+        $this->buildDependency('{{ dependency.name }}', $overrideOrBuilder);
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function withAnother{{ dependency.ucfirstName }}($overrideOrBuilder = [])
+    {
+        if ($overrideOrBuilder instanceof AbstractDataBuilder) {
+            $this->addDependencyBuilder('{{ dependency.name }}', $overrideOrBuilder, true);
+            return $this;
+        }
+        $this->buildDependency('{{ dependency.name }}', $overrideOrBuilder, true);
+        return $this;
+    }
+
+{% endfor %}
 }

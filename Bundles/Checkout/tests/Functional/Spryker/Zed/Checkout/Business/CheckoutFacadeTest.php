@@ -8,9 +8,14 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
+use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\StockProductBuilder;
+use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,6 +25,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -35,6 +41,7 @@ use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
@@ -53,6 +60,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\Stock\Business\StockFacade;
 
 /**
  * @group Functional
@@ -136,15 +144,34 @@ class CheckoutFacadeTest extends Test
             ->setLastName('Mustermann')
             ->setPassword('MyPass')
             ->save();
-
+////
+        (new CustomerBuilder())->build(['email' => 'max@mustermann.de']);
+//        (new CustomerFacade())->registerCustomer((new CustomerBuilder())->build(['email' => 'max@mustermann.de']));
 
         $quoteTransfer = (new QuoteBuilder())->build([
             'email' => 'max@mustermann.de'
         ]);
+
         $productFacade = new ProductFacade();
-        codecept_debug($adto = (new ProductAbstractBuilder())->build());
-        $apid = $productFacade->createProductAbstract($adto);
-        $quoteTransfer->addItem((new ItemBuilder())->build());
+        $abstractProjectId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
+        $product = (new ProductConcreteBuilder())->build(['fkProductAbstract' => $abstractProjectId]);
+        $id = $productFacade->createProductConcrete($product);
+
+        // stock things
+        $stockFacade = new StockFacade();
+        $stockType = (new TypeBuilder())->build();
+        $stockFacade->createStockType($stockType);
+
+        $stockFacade->createStockProduct((new StockProductBuilder())->build(['sku' => $product->getSku()])->setStockType($stockType->getName()));
+
+        $item = (new ItemTransfer())
+            ->setSku($product->getSku())
+            ->setQuantity(1)
+            ->setName('Product2')
+            ->setUnitGrossPrice(100)
+            ->setSumGrossPrice(100);
+
+        $quoteTransfer->addItem($item);
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 

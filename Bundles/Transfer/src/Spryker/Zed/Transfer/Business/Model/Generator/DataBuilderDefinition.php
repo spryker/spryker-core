@@ -41,13 +41,15 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
         foreach ($properties as $property) {
 
             // non arrays and non-basic types are dependencies
-            if (preg_match('/^[A-Z]\w+$/', $property['type'])) {
+            if (preg_match('/^[A-Z]\w+(\[\])?$/', $property['type'])) {
+                $property['ucfirstName'] = ucfirst($property['name']);
+                $property['type'] = str_replace('[]', '', $property['type']); // remove array marker
                 $this->dependencies[] = $property;
                 continue;
             }
 
-            // basic properties should have 'generate' field for generator
-            if (!isset($property['generate'])) {
+            // basic properties should have 'dataBuilderRule' field for generator
+            if (!isset($property['dataBuilderRule'])) {
                 continue;
             }
             $this->rules[] = $property;
