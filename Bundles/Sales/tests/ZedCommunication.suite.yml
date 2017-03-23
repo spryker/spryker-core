@@ -1,0 +1,4 @@
+class_name: ZedCommunicationTester
+modules:
+    enabled:
+        - \Sales\Helper\ZedCommunication

@@ -8,7 +8,7 @@
 namespace Discount\PageObject;
 
 use Codeception\Util\Locator;
-use Discount\AcceptanceTester;
+use Discount\ZedPresentationTester;
 
 class DiscountCreatePage
 {
@@ -64,14 +64,14 @@ class DiscountCreatePage
     ];
 
     /**
-     * @var \Discount\AcceptanceTester
+     * @var \Discount\ZedPresentationTester
      */
     protected $tester;
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      */
-    public function __construct(AcceptanceTester $i)
+    public function __construct(ZedPresentationTester $i)
     {
         $this->tester = $i;
     }
