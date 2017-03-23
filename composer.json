@@ -285,6 +285,23 @@
       "Unit\\Spryker\\Yves\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Zed\\Money\\": "Bundles/Money/tests",
 
+      "Spryker\\Client\\Navigation\\": "Bundles/Navigation/src",
+      "Spryker\\Shared\\Navigation\\": "Bundles/Navigation/src",
+      "Spryker\\Yves\\Navigation\\": "Bundles/Navigation/src",
+      "Spryker\\Zed\\Navigation\\": "Bundles/Navigation/src",
+      "Functional\\Spryker\\Shared\\Navigation\\": "Bundles/Navigation/tests",
+      "Functional\\Spryker\\Zed\\Navigation\\": "Bundles/Navigation/tests",
+
+      "Spryker\\Shared\\NavigationCollector\\": "Bundles/NavigationCollector/src",
+      "Spryker\\Zed\\NavigationCollector\\": "Bundles/NavigationCollector/src",
+      "Functional\\Spryker\\Shared\\NavigationCollector\\": "Bundles/NavigationCollector/tests",
+      "Functional\\Spryker\\Zed\\NavigationCollector\\": "Bundles/NavigationCollector/tests",
+
+      "Spryker\\Shared\\NavigationGui\\": "Bundles/NavigationGui/src",
+      "Spryker\\Zed\\NavigationGui\\": "Bundles/NavigationGui/src",
+      "Functional\\Spryker\\Shared\\NavigationGui\\": "Bundles/NavigationGui/tests",
+      "Functional\\Spryker\\Zed\\NavigationGui\\": "Bundles/NavigationGui/tests",
+
       "Spryker\\Shared\\ZedNavigation\\": "Bundles/ZedNavigation/src",
       "Spryker\\Zed\\ZedNavigation\\": "Bundles/ZedNavigation/src",
       "Unit\\Spryker\\Zed\\ZedNavigation\\": "Bundles/ZedNavigation/tests",

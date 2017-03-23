@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
+
+    {% block head_css %}
+        <link rel="stylesheet" href="/assets/css/spryker-zed-gui-commons.css">
+    {% endblock %}
+
+</head>
+<body style="background: transparent">
+
+    {% include '@Messenger/Partials/flash-messages.twig' %}
+
+    {% block content -%}{%- endblock %}
+
+    {% block footer_js %}
+        <script src="/assets/js/spryker-zed-gui-commons.js"></script>
+    {% endblock %}
+
+</body>
+</html>

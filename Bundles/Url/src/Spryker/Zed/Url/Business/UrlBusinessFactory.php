@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Url\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Url\Business\Deletion\AbstractUrlDeleterSubject;
+use Spryker\Zed\Url\Business\Deletion\Observer\UrlDeletePluginObserver;
 use Spryker\Zed\Url\Business\Deletion\UrlDeleter;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectAppendObserver;
 use Spryker\Zed\Url\Business\Redirect\Observer\UrlRedirectInjectionObserver;
@@ -21,6 +23,8 @@ use Spryker\Zed\Url\Business\Redirect\UrlRedirectUpdater;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectValidator;
 use Spryker\Zed\Url\Business\Url\AbstractUrlCreatorSubject;
 use Spryker\Zed\Url\Business\Url\AbstractUrlUpdaterSubject;
+use Spryker\Zed\Url\Business\Url\Observer\UrlCreatePluginObserver;
+use Spryker\Zed\Url\Business\Url\Observer\UrlUpdatePluginObserver;
 use Spryker\Zed\Url\Business\Url\UrlActivator;
 use Spryker\Zed\Url\Business\Url\UrlCreator;
 use Spryker\Zed\Url\Business\Url\UrlReader;
@@ -64,6 +68,8 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     public function createUrlDeleter()
     {
         $urlDeleter = new UrlDeleter($this->getQueryContainer(), $this->createUrlActivator(), $this->createUrlRedirectActivator());
+
+        $this->attachUrlDeleterObservers($urlDeleter);
 
         return $urlDeleter;
     }
@@ -203,12 +209,29 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param \Spryker\Zed\Url\Business\Deletion\AbstractUrlDeleterSubject $urlDeleter
+     *
+     * @return void
+     */
+    protected function attachUrlDeleterObservers(AbstractUrlDeleterSubject $urlDeleter)
+    {
+        foreach ($this->createUrlDeleterBeforeDeleteObservers() as $urlUpdaterObserver) {
+            $urlDeleter->attachBeforeDeleteObserver($urlUpdaterObserver);
+        }
+
+        foreach ($this->createUrlDeleterAfterDeleteObservers() as $urlUpdaterObserver) {
+            $urlDeleter->attachAfterDeleteObserver($urlUpdaterObserver);
+        }
+    }
+
+    /**
      * @return \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface[]
      */
     protected function createUrlCreatorBeforeSaveObservers()
     {
         return [
             $this->createUrlRedirectOverwriteObserver(),
+            $this->createUrlBeforeCreatePluginObserver(),
         ];
     }
 
@@ -220,6 +243,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createUrlRedirectAppendObserver(),
             $this->createUrlRedirectInjectionObserver(),
+            $this->createUrlAfterCreatePluginObserver(),
         ];
     }
 
@@ -254,6 +278,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createUrlRedirectOverwriteObserver(),
+            $this->createUrlBeforeUpdatePluginObserver(),
         ];
     }
 
@@ -267,6 +292,27 @@ class UrlBusinessFactory extends AbstractBusinessFactory
             $this->createUrlRedirectInjectionObserver(),
             $this->createUrlRedirectAppendObserver(),
             $this->createUrlUpdateObserver(),
+            $this->createUrlAfterUpdatePluginObserver(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface[]
+     */
+    protected function createUrlDeleterBeforeDeleteObservers()
+    {
+        return [
+            $this->createUrlBeforeDeletePluginObserver(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterAfterDeleteObserverInterface[]
+     */
+    protected function createUrlDeleterAfterDeleteObservers()
+    {
+        return [
+            $this->createUrlAfterDeletePluginObserver(),
         ];
     }
 
@@ -284,6 +330,102 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     protected function createUrlUpdateObserver()
     {
         return new UrlUpdateObserver($this->createUrlRedirectCreator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface
+     */
+    protected function createUrlBeforeCreatePluginObserver()
+    {
+        return new UrlCreatePluginObserver($this->getUrlBeforeCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface
+     */
+    protected function createUrlAfterCreatePluginObserver()
+    {
+        return new UrlCreatePluginObserver($this->getUrlAfterCreatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface
+     */
+    protected function createUrlBeforeUpdatePluginObserver()
+    {
+        return new UrlUpdatePluginObserver($this->getUrlBeforeUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface
+     */
+    protected function createUrlAfterUpdatePluginObserver()
+    {
+        return new UrlUpdatePluginObserver($this->getUrlAfterUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface
+     */
+    protected function createUrlBeforeDeletePluginObserver()
+    {
+        return new UrlDeletePluginObserver($this->getUrlBeforeDeletePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterAfterDeleteObserverInterface
+     */
+    protected function createUrlAfterDeletePluginObserver()
+    {
+        return new UrlDeletePluginObserver($this->getUrlAfterDeletePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     */
+    protected function getUrlBeforeCreatePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_BEFORE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     */
+    protected function getUrlAfterCreatePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_AFTER_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlBeforeUpdatePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_BEFORE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     */
+    protected function getUrlAfterUpdatePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_AFTER_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     */
+    protected function getUrlBeforeDeletePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_BEFORE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     */
+    protected function getUrlAfterDeletePlugins()
+    {
+        return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_AFTER_DELETE);
     }
 
 }
