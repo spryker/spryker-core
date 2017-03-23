@@ -1,10 +1,30 @@
 <?php
+
 namespace Sales\Helper;
 
-// here you can define custom actions
-// all public methods declared in helper class will be available in $I
+use Codeception\Module;
+use Codeception\TestCase;
 
-class ZedPresentation extends \Codeception\Module
+class ZedPresentation extends Module
 {
+
+    /**
+     * @param \Codeception\TestCase $e
+     *
+     * @return void
+     */
+    public function _before(TestCase $e)
+    {
+        $this->getZedModule()->amZed();
+        $this->getZedModule()->amLoggedInUser();
+    }
+
+    /**
+     * @return \Application\Module\Zed
+     */
+    protected function getZedModule()
+    {
+        return $this->getModule('\Application\Module\Zed');
+    }
 
 }
