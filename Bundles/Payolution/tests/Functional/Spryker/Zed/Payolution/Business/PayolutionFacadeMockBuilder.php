@@ -10,6 +10,8 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -40,10 +42,9 @@ class PayolutionFacadeMockBuilder
 
         // Mock the facade to override getFactory() and have it return out
         // previously created mock.
-        $facade = $testCase->getMock(
-            'Spryker\Zed\Payolution\Business\PayolutionFacade',
-            ['getFactory']
-        );
+        $facade = $testCase->getMockBuilder(PayolutionFacade::class)
+            ->setMethods(['getFactory'])->getMock();
+
         $facade->expects($testCase->any())
             ->method('getFactory')
             ->will($testCase->returnValue($businessFactoryMock));
@@ -58,10 +59,10 @@ class PayolutionFacadeMockBuilder
      */
     protected static function getBusinessFactoryMock(PHPUnit_Framework_TestCase $testCase)
     {
-        $businessFactoryMock = $testCase->getMock(
-            'Spryker\Zed\Payolution\Business\PayolutionBusinessFactory',
-            ['createAdapter', 'getMoneyFacade']
-        );
+        $businessFactoryMock = $testCase->getMockBuilder(PayolutionBusinessFactory::class)
+            ->setMethods(
+                ['createAdapter', 'getMoneyFacade']
+            )->getMock();
 
         $payolutionToMoneyBridge = new PayolutionToMoneyBridge(new MoneyFacade());
         $businessFactoryMock->method('getMoneyFacade')->willReturn($payolutionToMoneyBridge);

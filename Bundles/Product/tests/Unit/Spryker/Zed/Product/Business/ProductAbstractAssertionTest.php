@@ -41,7 +41,8 @@ class ProductAbstractAssertionTest extends Test
     {
         parent::setUp();
 
-        $this->productQueryContainer = $this->getMock(ProductQueryContainerInterface::class, [], [], '', false);
+        $this->productQueryContainer = $this->getMockBuilder(ProductQueryContainerInterface::class)
+            ->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -49,7 +50,8 @@ class ProductAbstractAssertionTest extends Test
      */
     public function testAssertSkuIsUnique()
     {
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->once())
@@ -78,7 +80,8 @@ class ProductAbstractAssertionTest extends Test
             self::SKU
         ));
 
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->once())
@@ -101,7 +104,8 @@ class ProductAbstractAssertionTest extends Test
      */
     public function testAssertSkuIsUniqueWhenUpdatingProduct()
     {
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->at(1))
@@ -136,7 +140,8 @@ class ProductAbstractAssertionTest extends Test
             self::SKU
         ));
 
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->at(1))
@@ -165,7 +170,8 @@ class ProductAbstractAssertionTest extends Test
      */
     public function testAssertProductExists()
     {
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->at(1))
@@ -199,7 +205,8 @@ class ProductAbstractAssertionTest extends Test
             self::ID_PRODUCT_ABSTRACT
         ));
 
-        $query = $this->getMock(SpyProductAbstractQuery::class, [], [], '', false);
+        $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
+            ->disableOriginalConstructor()->getMock();
 
         $query
             ->expects($this->at(1))

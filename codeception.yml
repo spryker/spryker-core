@@ -1,3 +1,4 @@
+namespace: Spryker
 actor: Tester
 
 include:

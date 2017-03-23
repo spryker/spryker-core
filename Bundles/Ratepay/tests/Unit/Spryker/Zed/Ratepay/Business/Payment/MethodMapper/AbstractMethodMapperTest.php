@@ -347,12 +347,28 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     }
 
     /**
-     * @return \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface
      */
     protected function getQueryContainerMock()
     {
-        $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst', 'filterByMessage']);
+        $queryContainer = $this->getMockBuilder(RatepayQueryContainerInterface::class)->getMock();
+        $queryPaymentsMock = $this->getPaymentRatepayQueryMock();
+        $queryContainer->method('queryPayments')->willReturn($queryPaymentsMock);
+
+        $queryPaymentLogMock = $this->getPaymentRatepayLogQueryMock();
+        $queryContainer->method('queryPaymentLog')->willReturn($queryPaymentLogMock);
+
+        return $queryContainer;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery
+     */
+    protected function getPaymentRatepayQueryMock()
+    {
+        $queryPaymentsMock = $this->getMockBuilder(SpyPaymentRatepayQuery::class)
+            ->setMethods(['findByFkSalesOrder', 'getFirst', 'filterByMessage'])
+            ->getMock();
 
         $ratepayPaymentEntity = new SpyPaymentRatepay();
         $salesOrder = new SpySalesOrder();
@@ -362,15 +378,24 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $queryPaymentsMock->method('findByFkSalesOrder')->willReturnSelf();
         $queryPaymentsMock->method('filterByMessage')->willReturnSelf();
         $queryPaymentsMock->method('getFirst')->willReturn($ratepayPaymentEntity);
-        $queryContainer->method('queryPayments')->willReturn($queryPaymentsMock);
 
-        $queryPaymentLogMock = $this->getMock(SpyPaymentRatepayLogQuery::class, ['findByFkSalesOrder', 'getData', 'filterByMessage']);
+        return $queryPaymentsMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery
+     */
+    protected function getPaymentRatepayLogQueryMock()
+    {
+        $queryPaymentLogMock = $this->getMockBuilder(SpyPaymentRatepayLogQuery::class)
+            ->setMethods(['findByFkSalesOrder', 'getData', 'filterByMessage'])
+            ->getMock();
+
         $queryPaymentLogMock->method('findByFkSalesOrder')->willReturnSelf();
         $queryPaymentLogMock->method('filterByMessage')->willReturnSelf();
         $queryPaymentLogMock->method('getData')->willReturn([]);
-        $queryContainer->method('queryPaymentLog')->willReturn($queryPaymentLogMock);
 
-        return $queryContainer;
+        return $queryPaymentLogMock;
     }
 
     /**

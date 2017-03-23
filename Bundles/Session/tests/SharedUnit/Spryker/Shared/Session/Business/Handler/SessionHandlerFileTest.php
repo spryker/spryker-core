@@ -39,8 +39,10 @@ class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->getFixtureDirectory());
+        if (is_dir($this->getFixtureDirectory())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getFixtureDirectory());
+        }
     }
 
     /**

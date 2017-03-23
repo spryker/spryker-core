@@ -77,8 +77,11 @@ class ProductUrlGeneratorTest extends Test
         $this->setupLocales();
         $this->setupProductAbstract();
 
-        $this->localeFacade = $this->getMock(ProductToLocaleBridge::class, [], [], '', false);
-        $this->utilTextService = $this->getMock(ProductToUtilTextBridge::class, [], [], '', false);
+        $this->localeFacade = $this->getMockBuilder(ProductToLocaleBridge::class)
+            ->disableOriginalConstructor()->getMock();
+
+        $this->utilTextService = $this->getMockBuilder(ProductToUtilTextBridge::class)
+            ->disableOriginalConstructor()->getMock();
 
         $availableLocalesCollection = [
             $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
@@ -90,7 +93,8 @@ class ProductUrlGeneratorTest extends Test
             ->method('getLocaleCollection')
             ->willReturn($availableLocalesCollection);
 
-        $this->productAbstractNameGenerator = $this->getMock(ProductAbstractNameGeneratorInterface::class, [], [], '', false);
+        $this->productAbstractNameGenerator = $this->getMockBuilder(ProductAbstractNameGeneratorInterface::class)
+            ->disableOriginalConstructor()->getMock();
 
         $this->productAbstractNameGenerator
             ->expects($this->at(0))
