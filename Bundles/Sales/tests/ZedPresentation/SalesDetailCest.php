@@ -8,8 +8,8 @@
 namespace ZedPresentation\Sales\Order\Zed;
 
 use Sales\PageObject\SalesDetailPage;
-use ZedPresentation\Sales\Order\Zed\Tester\SalesDetailPageTester;
-use ZedPresentation\Sales\Order\Zed\Tester\SalesListTester;
+use Sales\PageObject\SalesListPage;
+use Sales\ZedPresentationTester;
 
 /**
  * @group Acceptance
@@ -22,16 +22,16 @@ class SalesDetailCest
 {
 
     /**
-     * @param \ZedPresentation\Sales\Order\Zed\Tester\SalesDetailPageTester $i
-     * @param \ZedPresentation\Sales\Order\Zed\Tester\SalesListTester $salesListTester
+     * @param \Sales\ZedPresentationTester $i
+     * @param \Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesDetailPageTester $i, SalesListTester $salesListTester)
+    public function testThatOrderDetailPageIsVisibleWhenOrderExists(ZedPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
 
-        $idSalesOrder = $salesListTester->grabLatestOrderId();
+        $idSalesOrder = $salesListPage->grabLatestOrderId();
         $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
         $i->waitForElement('#items', 3);
         $i->seeElement(['xpath' => SalesDetailPage::getSalesOrderItemRowSelector(1)]);

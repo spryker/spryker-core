@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ZedCommunication\Business;
+namespace ZedBusiness;
 
 use Codeception\TestCase\Test;
 use DateTime;

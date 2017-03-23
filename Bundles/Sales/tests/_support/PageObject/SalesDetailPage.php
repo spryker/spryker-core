@@ -7,6 +7,8 @@
 
 namespace Sales\PageObject;
 
+use Sales\ZedPresentationTester;
+
 class SalesDetailPage
 {
 
@@ -21,6 +23,19 @@ class SalesDetailPage
 
     const ATTRIBUTE_ITEM_TOTAL_RAW = 'data-qa-raw';
     const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
+
+    /**
+     * @var \Sales\ZedPresentationTester
+     */
+    protected $tester;
+
+    /**
+     * @param \Sales\ZedPresentationTester $i
+     */
+    public function __construct(ZedPresentationTester $i)
+    {
+        $this->tester = $i;
+    }
 
     /**
      * @param int $idSalesOrder
@@ -70,6 +85,32 @@ class SalesDetailPage
     public static function getSalesOrderItemRowSelector($rowPosition)
     {
         return str_replace('{{position}}', $rowPosition, static::SELECTOR_SALES_ORDER_ROW);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function openDetailPageForOrder($idSalesOrder)
+    {
+        $i = $this->tester;
+        $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
+    }
+
+    /**
+     * This method assumes that we are already on a details page
+     *
+     * @param int $rowPosition
+     *
+     * @return int
+     */
+    public function grabIdSalesOrderItemFromRow($rowPosition)
+    {
+        $i = $this->tester;
+        $idSalesOrderItem = $i->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
+
+        return $idSalesOrderItem;
     }
 
 }

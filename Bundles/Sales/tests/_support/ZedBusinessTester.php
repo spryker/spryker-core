@@ -18,9 +18,7 @@ namespace Sales;
 */
 class ZedBusinessTester extends \Codeception\Actor
 {
+
     use _generated\ZedBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
 }
