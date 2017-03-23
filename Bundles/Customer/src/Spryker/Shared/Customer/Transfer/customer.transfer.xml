@@ -3,33 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="Mail">
-        <property name="customer" type="Customer" />
-    </transfer>
-
     <transfer name="Address">
-        <property name="idCustomerAddress" type="int" />
-        <property name="customerId" type="string" />
-        <property name="fkCustomer" type="int" />
-        <property name="email" type="string" generate="email" />
-        <property name="salutation" type="string" generate="randomElement(['Mr.', 'Ms.', 'Mrs.'])"  />
-        <property name="firstName" type="string" generate="firstName" />
-        <property name="lastName" type="string" generate="lastName" />
-        <property name="address1" type="string" generate="address" />
-        <property name="address2" type="string" generate="address" />
-        <property name="address3" type="string" generate="address" />
-        <property name="company" type="string" generate="company" />
-        <property name="city" type="string" generate="city" />
-        <property name="zipCode" type="string" generate="postcode" />
-        <property name="phone" type="string" generate="e164PhoneNumber" />
-        <property name="comment" type="string" />
-        <property name="state" type="string" generate="country" />
-        <property name="isDeleted" type="bool" />
-        <property name="isDefaultBilling" type="bool" />
-        <property name="isDefaultShipping" type="bool" />
-        <property name="fkCountry" type="int" />
-        <property name="fkRegion" type="int" />
-        <property name="iso2Code" type="string" />
+        <property name="email" type="string" dataBuilderRule="email" />
+        <property name="salutation" type="string" dataBuilderRule="randomElement(['Mr', 'Mrs'])"  />
+        <property name="firstName" type="string" dataBuilderRule="firstName" />
+        <property name="lastName" type="string" dataBuilderRule="lastName" />
+        <property name="address1" type="string" dataBuilderRule="address" />
+        <property name="company" type="string" dataBuilderRule="company" />
+        <property name="city" type="string" dataBuilderRule="city" />
+        <property name="zipCode" type="string" dataBuilderRule="postcode" />
+        <property name="phone" type="string" dataBuilderRule="e164PhoneNumber" />
+        <property name="state" type="string" dataBuilderRule="country" />
+        <property name="iso2Code" type="string" dataBuilderRule="=DE" />
     </transfer>
 
     <transfer name="Addresses">
@@ -37,22 +22,22 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" type="string" generate="email" />
+        <property name="email" type="string" dataBuilderRule="email" />
         <property name="idCustomer" type="int" />
         <property name="customerReference" type="string" />
-        <property name="firstName" type="string" generate="firstName" />
-        <property name="lastName" type="string" generate="lastName" />
-        <property name="company" type="string" generate="company" />
-        <property name="gender" type="string" generate="randomElement(['Male', 'Female'])" />
-        <property name="dateOfBirth" type="string" generate="date('Y-m-d', '-20 years')" />
-        <property name="salutation" type="string" generate="randomElement(['Mr.', 'Ms.', 'Mrs.'])" />
+        <property name="firstName" type="string" dataBuilderRule="firstName" />
+        <property name="lastName" type="string" dataBuilderRule="lastName" />
+        <property name="company" type="string" dataBuilderRule="company" />
+        <property name="gender" type="string" dataBuilderRule="randomElement(['Male', 'Female'])" />
+        <property name="dateOfBirth" type="string" dataBuilderRule="date('Y-m-d', '-20 years')" />
+        <property name="salutation" type="string" dataBuilderRule="randomElement(['Mr', 'Mrs'])" />
         <property name="password" type="string" />
         <property name="newPassword" type="string" />
         <property name="billingAddress" type="Address[]" />
         <property name="shippingAddress" type="Address[]" />
         <property name="addresses" type="Addresses" singular="address" />
-        <property name="defaultBillingAddress" type="string" generate="address" />
-        <property name="defaultShippingAddress" type="string" generate="address" />
+        <property name="defaultBillingAddress" type="string" />
+        <property name="defaultShippingAddress" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="restorePasswordKey" type="string" />
@@ -62,8 +47,8 @@
         <property name="registered" type="string" />
         <property name="message" type="string" />
         <property name="sendPasswordToken" type="bool" />
-        <property name="isGuest" type="bool" generate="=false"/>
-        <property name="locale" type="Locale" generate="locale"/>
+        <property name="isGuest" type="bool" dataBuilderRule="=false"/>
+        <property name="locale" type="Locale" dataBuilderRule="locale"/>
     </transfer>
 
     <transfer name="CustomerError">
