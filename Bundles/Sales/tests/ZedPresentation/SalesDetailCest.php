@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ZedPresentation\Sales\Order\Zed;
+namespace ZedPresentation;
 
 use Sales\PageObject\SalesDetailPage;
 use Sales\PageObject\SalesListPage;
@@ -32,7 +32,13 @@ class SalesDetailCest
         $i->createOrderWithOneItem();
 
         $idSalesOrder = $salesListPage->grabLatestOrderId();
+
+        $url = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
+        codecept_debug($url);
+        $i->pauseExecution();
         $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
+        $i->pauseExecution();
+
         $i->waitForElement('#items', 3);
         $i->seeElement(['xpath' => SalesDetailPage::getSalesOrderItemRowSelector(1)]);
     }
