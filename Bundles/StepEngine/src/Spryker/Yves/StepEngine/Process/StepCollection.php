@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Process;
 
+use ArrayIterator;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
@@ -243,6 +244,14 @@ class StepCollection implements StepCollectionInterface
     protected function getUrlFromRoute($route)
     {
         return $this->urlGenerator->generate($route);
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->steps);
     }
 
 }

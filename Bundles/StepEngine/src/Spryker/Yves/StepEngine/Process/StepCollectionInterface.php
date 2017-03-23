@@ -7,11 +7,12 @@
 
 namespace Spryker\Yves\StepEngine\Process;
 
+use IteratorAggregate;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-interface StepCollectionInterface
+interface StepCollectionInterface extends IteratorAggregate
 {
 
     /**
