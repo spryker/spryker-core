@@ -15,7 +15,6 @@ class ZedPresentation extends Module
      */
     public function _before(TestCase $e)
     {
-        $this->getZedModule()->amZed();
         $this->getZedModule()->amLoggedInUser();
     }
 
