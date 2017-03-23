@@ -25,19 +25,15 @@ class ShortVariable extends PHPMDShortVariable
         if ($this->hasMinimumLength($node)) {
             return;
         }
-
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-
         if ($this->isInExceptionList($node)) {
             return;
         }
-
         if ($this->isCestFile($node)) {
             return;
         }
-
         $threshold = $this->getIntProperty('minimum');
         $this->addViolation($node, [$node->getImage(), $threshold]);
     }
@@ -139,6 +135,7 @@ class ShortVariable extends PHPMDShortVariable
             }
             $parent = $parent->getParent();
         }
+
         return false;
     }
 
