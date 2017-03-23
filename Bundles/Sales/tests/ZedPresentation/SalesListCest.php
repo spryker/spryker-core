@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ZedPresentation\Sales\Order\Zed;
+namespace ZedPresentation;
 
 use Sales\PageObject\SalesDetailPage;
 use Sales\PageObject\SalesListPage;
