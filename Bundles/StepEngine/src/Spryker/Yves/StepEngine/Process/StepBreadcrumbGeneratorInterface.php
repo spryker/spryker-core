@@ -18,8 +18,8 @@ interface StepBreadcrumbGeneratorInterface
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface|null $currentStep
      *
-     * @return \Generated\Shared\Transfer\StepBreadcrumbTransfer
+     * @return \Generated\Shared\Transfer\StepBreadcrumbsTransfer
      */
-    public function generateStepBreadcrumb(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null);
+    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null);
 
 }

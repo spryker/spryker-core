@@ -8,7 +8,7 @@
 namespace Spryker\Yves\StepEngine\Process;
 
 use Generated\Shared\Transfer\StepBreadcrumbItemTransfer;
-use Generated\Shared\Transfer\StepBreadcrumbTransfer;
+use Generated\Shared\Transfer\StepBreadcrumbsTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
@@ -21,18 +21,18 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface|null $currentStep
      *
-     * @return \Generated\Shared\Transfer\StepBreadcrumbTransfer
+     * @return \Generated\Shared\Transfer\StepBreadcrumbsTransfer
      */
-    public function generateStepBreadcrumb(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null)
+    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null)
     {
-        $stepBreadcrumbTransfer = new StepBreadcrumbTransfer();
+        $stepBreadcrumbTransfer = new StepBreadcrumbsTransfer();
 
         foreach ($this->getStepsWithBreadcrumb($stepCollection, $dataTransfer) as $stepWithBreadcrumb) {
             $stepBreadcrumbItemTransfer = $this->createStepBreadcrumbItem($stepWithBreadcrumb);
             $stepBreadcrumbItemTransfer->setIsEnabled($this->isEnabled($stepWithBreadcrumb, $dataTransfer));
             $stepBreadcrumbItemTransfer->setIsActive($this->isActive($stepWithBreadcrumb, $currentStep));
 
-            $stepBreadcrumbTransfer->addItem($stepBreadcrumbItemTransfer);
+            $stepBreadcrumbTransfer->addBreadcrumb($stepBreadcrumbItemTransfer);
         }
 
         return $stepBreadcrumbTransfer;

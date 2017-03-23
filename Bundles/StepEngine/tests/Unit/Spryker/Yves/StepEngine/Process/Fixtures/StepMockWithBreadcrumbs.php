@@ -10,7 +10,7 @@ namespace Unit\Spryker\Yves\StepEngine\Process\Fixtures;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 
-class StepMockWithBreadcrumb extends StepMock implements StepWithBreadcrumbInterface
+class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInterface
 {
 
     /**

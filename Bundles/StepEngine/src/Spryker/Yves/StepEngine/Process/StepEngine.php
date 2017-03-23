@@ -18,7 +18,7 @@ class StepEngine implements StepEngineInterface
 {
 
     const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
-    const TEMPLATE_VARIABLE_STEP_BREADCRUMB = 'stepBreadcrumb';
+    const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
 
     /**
      * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
@@ -164,7 +164,7 @@ class StepEngine implements StepEngineInterface
     {
         $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep);
         if ($this->stepBreadcrumbGenerator) {
-            $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMB] = $this->stepBreadcrumbGenerator->generateStepBreadcrumb(
+            $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
                 $this->stepCollection,
                 $dataTransfer,
                 $currentStep

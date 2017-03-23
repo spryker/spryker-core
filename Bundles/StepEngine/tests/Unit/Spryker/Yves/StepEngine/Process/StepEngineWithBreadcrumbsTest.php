@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
-use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumb;
+use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
 
 /**
  * @group Unit
@@ -19,9 +19,9 @@ use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumb;
  * @group Yves
  * @group StepEngine
  * @group Process
- * @group StepEngineWithBreadcrumbTest
+ * @group StepEngineWithBreadcrumbsTest
  */
-class StepEngineWithBreadcrumbTest extends AbstractStepEngineTest
+class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
 {
 
     const FORM_NAME = 'formName';
@@ -38,7 +38,7 @@ class StepEngineWithBreadcrumbTest extends AbstractStepEngineTest
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
         $this->assertInternalType('array', $response);
-        $this->assertArrayHasKey(StepEngine::TEMPLATE_VARIABLE_STEP_BREADCRUMB, $response);
+        $this->assertArrayHasKey(StepEngine::TEMPLATE_VARIABLE_STEP_BREADCRUMBS, $response);
     }
 
     /**
@@ -78,7 +78,7 @@ class StepEngineWithBreadcrumbTest extends AbstractStepEngineTest
      */
     protected function getStepMockWithBreadcrumb($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
     {
-        return new StepMockWithBreadcrumb($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
+        return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 
 }
