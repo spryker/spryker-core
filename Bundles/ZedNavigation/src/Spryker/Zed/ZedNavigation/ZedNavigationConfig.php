@@ -28,9 +28,12 @@ class ZedNavigationConfig extends AbstractBundleConfig
      */
     public function getNavigationSchemaPathPattern()
     {
-        return [
-            $this->getBundlesDirectory() . '/*/src/*/Zed/*/Communication',
-        ];
+        $navigationSchemaPathPatterns = array_merge(
+            glob($this->getBundlesDirectory() . '/*/src/*/Zed/*/Communication'),
+            glob(APPLICATION_SOURCE_DIR . '/*/Zed/*/Communication')
+        );
+
+        return $navigationSchemaPathPatterns;
     }
 
     /**
