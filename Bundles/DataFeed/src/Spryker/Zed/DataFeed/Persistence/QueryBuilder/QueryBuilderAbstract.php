@@ -8,30 +8,40 @@
 namespace Spryker\Zed\DataFeed\Persistence\QueryBuilder;
 
 use Generated\Shared\Transfer\DataFeedPaginationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 abstract class QueryBuilderAbstract implements QueryBuilderInterface
 {
 
+    const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
+
+    const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
+
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
      * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
-     * @return void
+     * @return ModelCriteria
      */
     protected function applyPagination(
         ModelCriteria $entityQuery,
-        DataFeedPaginationTransfer $dataFeedPaginationTransfer
+        DataFeedPaginationTransfer $dataFeedPaginationTransfer = null
     ) {
-        $this->setQueryLimit($entityQuery, $dataFeedPaginationTransfer);
-        $this->setQueryOffset($entityQuery, $dataFeedPaginationTransfer);
+        if ($dataFeedPaginationTransfer !== null) {
+            $entityQuery = $this->setQueryLimit($entityQuery, $dataFeedPaginationTransfer);
+            $entityQuery = $this->setQueryOffset($entityQuery, $dataFeedPaginationTransfer);
+        }
+
+        return $entityQuery;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
      * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
-     * @return void
+     * @return ModelCriteria
      */
     protected function setQueryLimit(
         ModelCriteria $entityQuery,
@@ -41,13 +51,15 @@ abstract class QueryBuilderAbstract implements QueryBuilderInterface
             $entityQuery
                 ->setLimit($dataFeedPaginationTransfer->getLimit());
         }
+
+        return $entityQuery;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $entityQuery
      * @param \Generated\Shared\Transfer\DataFeedPaginationTransfer $dataFeedPaginationTransfer
      *
-     * @return void
+     * @return ModelCriteria
      */
     protected function setQueryOffset(
         ModelCriteria $entityQuery,
@@ -57,6 +69,29 @@ abstract class QueryBuilderAbstract implements QueryBuilderInterface
             $entityQuery
                 ->setOffset($dataFeedPaginationTransfer->getOffset());
         }
+
+        return $entityQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    protected function getIdLocaleFilterConditions(LocaleTransfer $localeTransfer = null)
+    {
+        if ($localeTransfer !== null && $localeTransfer->getIdLocale() !== null) {
+            $filterCriteria = Criteria::EQUAL;
+            $filterValue = $localeTransfer->getIdLocale();
+        } else {
+            $filterCriteria = Criteria::NOT_EQUAL;
+            $filterValue = null;
+        }
+
+        return [
+            self::LOCALE_FILTER_VALUE => $filterValue,
+            self::LOCALE_FILTER_CRITERIA => $filterCriteria,
+        ];
     }
 
 }
