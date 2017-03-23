@@ -1,0 +1,28 @@
+
+{{ form_row(productRelationForm.isRebuildScheduled) }}
+{{ form_row(productRelationForm.productRelationType) }}
+
+<h4>{{ 'Selected product' | trans }}</h4>
+
+<div id="select-product-notice" class="form-group">
+    {{ "Please select product from the list below" | trans  }}
+</div>
+{{ form_row(productRelationForm.fkProductAbstract) }}
+
+<div class="ibox-content product-box" id="selected-product" style="display:none;">
+    <div class="product-desc">
+        <small class="text-muted" id="product-category"></small>
+        <span class="product-name"></span>
+
+        <div class="small m-t-xs" id="product-description"></div>
+    </div>
+</div>
+
+<br />
+
+<h4>{{ 'Select product' | trans }}</h4>
+
+{{ productTable | raw }}
+
+{{ form_row(productRelationForm.idProductRelation) }}
+

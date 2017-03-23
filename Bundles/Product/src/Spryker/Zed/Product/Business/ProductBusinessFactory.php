@@ -76,6 +76,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductTransferMapper()
         );
 
+        $productAbstractManager->setEventFacade($this->getEventFacade());
+
         return $this->attachProductAbstractManagerObservers($productAbstractManager);
     }
 
@@ -93,6 +95,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeEncoder(),
             $this->createProductTransferMapper()
         );
+
+        $productConcreteManager->setEventFacade($this->getEventFacade());
 
         return $this->attachProductConcreteManagerObservers($productConcreteManager);
     }
@@ -516,6 +520,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductConcreteReadObserverPluginManager()
     {
         return new ProductConcreteReadObserverPluginManager($this->getProductConcreteReadPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
     }
 
 }

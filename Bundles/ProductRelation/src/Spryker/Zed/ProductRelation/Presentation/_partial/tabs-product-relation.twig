@@ -1,0 +1,6 @@
+{{ form_start(productRelationForm, {attr: {id : 'form-product-relation'}}) }}
+{{ form_errors(productRelationForm) }}
+
+{{ tabs(productRelationTabs, {'productRelationForm' : productRelationForm, 'productTable' : productTable , 'productRuleTable' : productRuleTable} ) }}
+
+{{ form_end(productRelationForm) }}

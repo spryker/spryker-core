@@ -1,0 +1,38 @@
+{
+  "name": "spryker/event",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "require": {
+    "spryker/config": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/log": "^3.0.0",
+    "spryker/monolog": "^2.0.0",
+    "spryker/queue": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "description": "Event bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  }
+}

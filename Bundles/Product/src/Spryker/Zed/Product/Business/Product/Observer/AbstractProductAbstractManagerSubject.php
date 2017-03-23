@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business\Product\Observer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 
 abstract class AbstractProductAbstractManagerSubject
 {
@@ -36,6 +38,11 @@ abstract class AbstractProductAbstractManagerSubject
      * @var \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInterface[]
      */
     protected $readObservers = [];
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     */
+    protected $eventFacade;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface $productAbstractCreateObserver
@@ -98,6 +105,8 @@ abstract class AbstractProductAbstractManagerSubject
             $productAbstractTransfer = $observer->create($productAbstractTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_BEFORE_CREATE, $productAbstractTransfer);
+
         return $productAbstractTransfer;
     }
 
@@ -111,6 +120,8 @@ abstract class AbstractProductAbstractManagerSubject
         foreach ($this->afterCreateObservers as $observer) {
             $productAbstractTransfer = $observer->create($productAbstractTransfer);
         }
+
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_AFTER_CREATE, $productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -126,6 +137,8 @@ abstract class AbstractProductAbstractManagerSubject
             $productAbstractTransfer = $observer->update($productAbstractTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_BEFORE_UPDATE, $productAbstractTransfer);
+
         return $productAbstractTransfer;
     }
 
@@ -139,6 +152,8 @@ abstract class AbstractProductAbstractManagerSubject
         foreach ($this->afterUpdateObservers as $observer) {
             $productAbstractTransfer = $observer->update($productAbstractTransfer);
         }
+
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_AFTER_UPDATE, $productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -154,7 +169,33 @@ abstract class AbstractProductAbstractManagerSubject
             $productAbstractTransfer = $observer->read($productAbstractTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_RED, $productAbstractTransfer);
+
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function triggerEvent($eventName, ProductAbstractTransfer $productAbstractTransfer)
+    {
+        if (!$this->eventFacade) {
+            return;
+        }
+        $this->eventFacade->trigger($eventName, $productAbstractTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface $eventService
+     *
+     * @return void
+     */
+    public function setEventFacade(ProductToEventInterface $eventService)
+    {
+        $this->eventFacade = $eventService;
     }
 
 }
