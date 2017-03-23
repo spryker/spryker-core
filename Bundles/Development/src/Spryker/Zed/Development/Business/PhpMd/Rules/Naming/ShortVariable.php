@@ -22,8 +22,7 @@ class ShortVariable extends PHPMDShortVariable
      */
     protected function checkMinimumLength(AbstractNode $node)
     {
-        $threshold = $this->getIntProperty('minimum');
-        if ($threshold <= strlen($node->getImage()) - 1) {
+        if ($this->hasMinimumLength($node)) {
             return;
         }
 
@@ -31,9 +30,7 @@ class ShortVariable extends PHPMDShortVariable
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+        if ($this->isInExceptionList($node)) {
             return;
         }
 
@@ -41,7 +38,39 @@ class ShortVariable extends PHPMDShortVariable
             return;
         }
 
+        $threshold = $this->getIntProperty('minimum');
         $this->addViolation($node, [$node->getImage(), $threshold]);
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    private function hasMinimumLength(AbstractNode $node)
+    {
+        $threshold = $this->getIntProperty('minimum');
+        if ($threshold <= strlen($node->getImage()) - 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    private function isInExceptionList(AbstractNode $node)
+    {
+        $exceptions = $this->getExceptionsList();
+
+        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
