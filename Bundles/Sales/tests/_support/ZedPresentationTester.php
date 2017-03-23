@@ -24,7 +24,4 @@ class ZedPresentationTester extends Actor
 
     use _generated\ZedPresentationTesterActions;
 
-
-
-
 }
