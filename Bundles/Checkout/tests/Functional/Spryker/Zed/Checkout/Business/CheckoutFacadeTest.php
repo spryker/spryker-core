@@ -97,6 +97,81 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
+     * @return void
+     * @group current
+     */
+    public function testCheckoutSuccessfully()
+    {
+        // ARRANGE
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
+
+        // ACT
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem(['sku' => $product->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        // ASSERT
+        $this->assertTrue($result->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     * @group current
+     */
+    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
+    {
+        // ARRANGE
+        $this->tester->haveCustomer(['email' => 'max@mustermann.de']);
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
+
+        // ACT
+        $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
+            ->withItem(['sku' => $product->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        // ASSERT
+        $this->assertFalse($result->getIsSuccess());
+        $this->assertEquals(1, count($result->getErrors()));
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutCreatesOrderItems()
+    {
+        $quoteTransfer = $this->getBaseQuoteTransfer();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        $this->assertTrue($result->getIsSuccess());
+        $this->assertEquals(0, count($result->getErrors()));
+
+        $orderItem1Query = SpySalesOrderItemQuery::create()
+            ->filterBySku('OSB1337');
+        $orderItem2Query = SpySalesOrderItemQuery::create()
+            ->filterBySku('OSB1338');
+
+        $this->assertEquals(1, $orderItem1Query->count());
+        $this->assertEquals(1, $orderItem2Query->count());
+    }
+
+
+    /**
      * @todo move this code to customer checkout connector, registration can only happen if we have
      * already installed customer bundle
      *
@@ -133,51 +208,6 @@ class CheckoutFacadeTest extends Test
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
         $this->assertEquals(0, $customerQuery->count());
-    }
-
-    /**
-     * @return void
-     * @group current
-     */
-    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
-    {
-        // ARRANGE
-        $this->tester->haveCustomer(['email' => 'max@mustermann.de']);
-        $product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
-
-        // ACT
-        $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
-            ->withCustomer()
-            ->build()
-            ->addItem((new ItemBuilder(['sku' => $product->getSku()]))->build());
-
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
-
-        $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckoutCreatesOrderItems()
-    {
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
-
-        $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
-
-        $orderItem1Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337');
-        $orderItem2Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338');
-
-        $this->assertEquals(1, $orderItem1Query->count());
-        $this->assertEquals(1, $orderItem2Query->count());
     }
 
     /**
