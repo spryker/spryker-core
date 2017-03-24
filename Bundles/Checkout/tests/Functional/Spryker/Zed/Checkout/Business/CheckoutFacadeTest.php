@@ -150,24 +150,36 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
+     * @group current
      * @return void
      */
     public function testCheckoutCreatesOrderItems()
     {
-        $quoteTransfer = $this->getBaseQuoteTransfer();
+        $product1 = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $product1->getSku()]);
+        $product2 = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $product2->getSku()]);
+
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem(['sku' => $product1->getSku()])
+            ->withAnotherItem(['sku' => $product2->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
 
-        $orderItem1Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337');
-        $orderItem2Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338');
-
-        $this->assertEquals(1, $orderItem1Query->count());
-        $this->assertEquals(1, $orderItem2Query->count());
+        $salesFacade = $this->tester->getLocator()->sales()->facade();
+        $order = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
+        $this->assertEquals(2, $order->getItems()->count());
+        $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
+        $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
     }
 
 
