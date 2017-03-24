@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -318,6 +319,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderStateMachinePersistenceManager()
             ->getStateEntity($stateName);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
+     */
+    public function createItemState(ItemStateTransfer $itemStateTransfer)
+    {
+        return $this->getFactory()->createItemState()->createItemState($itemStateTransfer);
     }
 
     /**

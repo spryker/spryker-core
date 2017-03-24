@@ -48,6 +48,6 @@ class CustomerData extends Module
      */
     private function getLocator()
     {
-        return $this->getModule('\\' . BusinessLocator::class);
+        return $this->getModule('\\' . BusinessHelper::class);
     }
 }
