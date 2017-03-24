@@ -8,8 +8,8 @@
 require('ZedGui');
 require('../../sass/main.scss');
 
-let ProductSelector = require('./libs/product-selector');
-let SqlQueryBuilder = require('./libs/sql-query-builder');
+var ProductSelector = require('./libs/product-selector');
+var SqlQueryBuilder = require('./libs/sql-query-builder');
 
 $(document).ready(function() {
 

@@ -5,7 +5,7 @@
 
 'use strict';
 
-let ProductSelector = function ProductSelector(options)
+var ProductSelector = function ProductSelector(options)
 {
     this.idProductAbstractElement = null;
     this.selectedProductContainer = null;
@@ -19,7 +19,7 @@ let ProductSelector = function ProductSelector(options)
 
 ProductSelector.prototype.initialiseProductTable = function ()
 {
-    let self = this;
+    var self = this;
     this.productTable.dataTable({
         destroy: true,
         scrollX: 'auto',
@@ -32,12 +32,12 @@ ProductSelector.prototype.initialiseProductTable = function ()
 
 ProductSelector.prototype.onTableDraw = function(settings)
 {
-    let self = this;
+    var self = this;
     $('a[data-select-product]').each(function(index, element) {
         self.addClickEventToCheckbox($(element));
     });
 
-    let selectedProduct = this.findSelectedProduct(settings);
+    var selectedProduct = this.findSelectedProduct(settings);
     if (!selectedProduct) {
         return;
     }
@@ -47,19 +47,19 @@ ProductSelector.prototype.onTableDraw = function(settings)
 
 ProductSelector.prototype.findSelectedProduct = function(settings)
 {
-    let idSelectedProduct = this.idProductAbstractElement.val();
+    var idSelectedProduct = parseInt(this.idProductAbstractElement.val());
     if (!idSelectedProduct) {
         return;
     }
 
-    for (let i = 0; i < settings.json.data.length; i++) {
-        let product = settings.json.data[i];
-        let idProduct = parseInt(product[0]);
+    for (var i = 0; i < settings.json.data.length; i++) {
+        var product = settings.json.data[i];
+        var idProduct = parseInt(product[0]);
 
-        let selectElement = jQuery.parseHTML(product[5]);
-        let rowData = $.parseJSON($(selectElement).attr('data-row'));
+        var selectElement = jQuery.parseHTML(product[5]);
+        var rowData = $.parseJSON($(selectElement).attr('data-row'));
 
-        if (idProduct == idSelectedProduct) {
+        if (idProduct === idSelectedProduct) {
             return rowData;
         }
     }
@@ -67,10 +67,10 @@ ProductSelector.prototype.findSelectedProduct = function(settings)
 
 ProductSelector.prototype.addClickEventToCheckbox = function(element)
 {
-    let self = this;
+    var self = this;
     $(element).on('click', function(event) {
 
-        let selectedProduct = $.parseJSON($(event.target).attr('data-row'));
+        var selectedProduct = $.parseJSON($(event.target).attr('data-row'));
 
         self.updateSelectedProduct(selectedProduct);
 
@@ -81,9 +81,9 @@ ProductSelector.prototype.addClickEventToCheckbox = function(element)
 
 ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
 {
-    let name = selectedProduct['spy_product_abstract_localized_attributes.name'];
-    let description = selectedProduct['spy_product_abstract_localized_attributes.description'];
-    let categories = selectedProduct['assignedCategories'];
+    var name = selectedProduct['spy_product_abstract_localized_attributes.name'];
+    var description = selectedProduct['spy_product_abstract_localized_attributes.description'];
+    var categories = selectedProduct['assignedCategories'];
 
     this.selectProductNotice.hide();
 

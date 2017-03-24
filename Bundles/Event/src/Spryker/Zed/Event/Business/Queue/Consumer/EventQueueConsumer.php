@@ -184,7 +184,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer)
     {
-        //should we drop or requeue messages?
+        $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
     }
