@@ -4,15 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Testify\Module;
+namespace Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 
-/**
- * @deprecated Use Testify\Helper\Environment instead
- */
 class Environment extends Module
 {
 
@@ -50,7 +47,6 @@ class Environment extends Module
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $applicationRoot);
-        defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
     }
 
