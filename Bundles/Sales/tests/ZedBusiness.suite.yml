@@ -2,5 +2,5 @@ class_name: ZedBusinessTester
 modules:
     enabled:
         - \Testify\Module\Environment
-        - \Sales\Module\Functional
+        - \Propel\Helper\Transaction
         - \Sales\Helper\ZedBusiness
