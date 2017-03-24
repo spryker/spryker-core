@@ -136,6 +136,8 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
+        // ARRANGE
+        // have customer
         $customer = new SpyCustomer();
         $customer
             ->setCustomerReference('TestCustomer1')
@@ -144,34 +146,25 @@ class CheckoutFacadeTest extends Test
             ->setLastName('Mustermann')
             ->setPassword('MyPass')
             ->save();
-////
-        (new CustomerBuilder())->build(['email' => 'max@mustermann.de']);
-//        (new CustomerFacade())->registerCustomer((new CustomerBuilder())->build(['email' => 'max@mustermann.de']));
 
-        $quoteTransfer = (new QuoteBuilder())->build([
-            'email' => 'max@mustermann.de'
-        ]);
-
+        // have product
         $productFacade = new ProductFacade();
         $abstractProjectId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
-        $product = (new ProductConcreteBuilder())->build(['fkProductAbstract' => $abstractProjectId]);
-        $id = $productFacade->createProductConcrete($product);
+        $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProjectId]))->build();
+        $productFacade->createProductConcrete($product);
 
-        // stock things
+        // have product in stock
         $stockFacade = new StockFacade();
         $stockType = (new TypeBuilder())->build();
         $stockFacade->createStockType($stockType);
+        $stockFacade->createStockProduct((new StockProductBuilder(['sku' => $product->getSku()]))->build()->setStockType($stockType->getName()));
 
-        $stockFacade->createStockProduct((new StockProductBuilder())->build(['sku' => $product->getSku()])->setStockType($stockType->getName()));
-
-        $item = (new ItemTransfer())
-            ->setSku($product->getSku())
-            ->setQuantity(1)
-            ->setName('Product2')
-            ->setUnitGrossPrice(100)
-            ->setSumGrossPrice(100);
-
-        $quoteTransfer->addItem($item);
+        // ACT
+        $item = (new ItemBuilder(['sku' => $product->getSku()]))->build();
+        $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
+            ->withCustomer()
+            ->build()
+            ->addItem($item);
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 

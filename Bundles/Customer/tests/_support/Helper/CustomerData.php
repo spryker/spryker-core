@@ -9,21 +9,29 @@ namespace Customer\Helper;
 
 use Codeception\Module;
 use Codeception\Util\Stub;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
 use Testify\Module\BusinessLocator;
 
-class Customer extends Module
+class CustomerData extends Module
 {
-
     /**
-     * @return void
+     * @param array $override
      */
-    public function haveCustomer()
+    public function haveCustomer($override = [])
     {
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($this->getCustomerFacade()) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        $customer = (new CustomerBuilder($override))
+            ->withBillingAddress()
+            ->withShippingAddress()
+            ->build();
+        $this->getCustomerFacade()->registerCustomer($customer);
+
     }
 
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     */
     private function getCustomerFacade()
     {
         $locator = $this->getLocator();

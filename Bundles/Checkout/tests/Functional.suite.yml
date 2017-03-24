@@ -3,3 +3,5 @@ modules:
     enabled:
         - Filesystem
         - \Checkout\Module\Functional
+        - \Testify\Module\BusinessLocator
+        - \Customer\Helper\CustomerData
