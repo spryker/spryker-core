@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="Type">
-        <property name="name" dataBuilderRule="unique->word" />
+        <property name="name" dataBuilderRule="unique->lexify('??????')" />
     </transfer>
 
 </transfers>
