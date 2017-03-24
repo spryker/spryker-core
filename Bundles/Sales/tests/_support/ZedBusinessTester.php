@@ -1,5 +1,8 @@
 <?php
+
 namespace Sales;
+
+use Codeception\Actor;
 
 /**
  * Inherited Methods
@@ -15,8 +18,8 @@ namespace Sales;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ZedBusinessTester extends \Codeception\Actor
+ */
+class ZedBusinessTester extends Actor
 {
 
     use _generated\ZedBusinessTesterActions;

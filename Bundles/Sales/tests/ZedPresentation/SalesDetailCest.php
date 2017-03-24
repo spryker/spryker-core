@@ -33,11 +33,7 @@ class SalesDetailCest
 
         $idSalesOrder = $salesListPage->grabLatestOrderId();
 
-        $url = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
-        codecept_debug($url);
-        $i->pauseExecution();
         $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
-        $i->pauseExecution();
 
         $i->waitForElement('#items', 3);
         $i->seeElement(['xpath' => SalesDetailPage::getSalesOrderItemRowSelector(1)]);
