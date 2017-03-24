@@ -18,6 +18,7 @@ class CustomerData extends Module
 {
     /**
      * @param array $override
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function haveCustomer($override = [])
     {
@@ -26,7 +27,7 @@ class CustomerData extends Module
             ->withShippingAddress()
             ->build();
         $this->getCustomerFacade()->registerCustomer($customer);
-
+        return $customer;
     }
 
     /**
@@ -36,7 +37,7 @@ class CustomerData extends Module
     {
         $locator = $this->getLocator();
 
-        $mailStub = Stub::make(MailFacadeInterface::class);
+        $mailStub = Stub::makeEmpty(MailFacadeInterface::class);
         $locator->setDependency(CustomerDependencyProvider::FACADE_MAIL, $mailStub);
 
         return $locator->getLocator()->customer()->facade();
@@ -47,6 +48,6 @@ class CustomerData extends Module
      */
     private function getLocator()
     {
-        return $this->getModule(BusinessLocator::class);
+        return $this->getModule('\\' . BusinessLocator::class);
     }
 }

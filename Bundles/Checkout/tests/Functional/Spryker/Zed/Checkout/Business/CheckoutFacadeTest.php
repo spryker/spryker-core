@@ -79,6 +79,11 @@ class CheckoutFacadeTest extends Test
     protected $checkoutFacade;
 
     /**
+     * @var \Checkout\FunctionalTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -137,34 +142,15 @@ class CheckoutFacadeTest extends Test
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
         // ARRANGE
-        // have customer
-        $customer = new SpyCustomer();
-        $customer
-            ->setCustomerReference('TestCustomer1')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setPassword('MyPass')
-            ->save();
-
-        // have product
-        $productFacade = new ProductFacade();
-        $abstractProjectId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
-        $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProjectId]))->build();
-        $productFacade->createProductConcrete($product);
-
-        // have product in stock
-        $stockFacade = new StockFacade();
-        $stockType = (new TypeBuilder())->build();
-        $stockFacade->createStockType($stockType);
-        $stockFacade->createStockProduct((new StockProductBuilder(['sku' => $product->getSku()]))->build()->setStockType($stockType->getName()));
+        $this->tester->haveCustomer(['email' => 'max@mustermann.de']);
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
 
         // ACT
-        $item = (new ItemBuilder(['sku' => $product->getSku()]))->build();
         $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
             ->withCustomer()
             ->build()
-            ->addItem($item);
+            ->addItem((new ItemBuilder(['sku' => $product->getSku()]))->build());
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
