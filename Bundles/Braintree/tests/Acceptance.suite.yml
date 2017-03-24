@@ -14,6 +14,6 @@ modules:
         - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Braintree
-        - \Sales\Module\Sales
+        - \Sales\Helper\Sales
         - \Oms\Module\Oms
         - Asserts

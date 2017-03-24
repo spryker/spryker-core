@@ -7,12 +7,11 @@
 
 namespace Testify\Module;
 
-use Codeception\Configuration;
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\TestCase;
+use Spryker\Shared\Testify\SystemUnderTestBootstrap;
 use Symfony\Component\HttpKernel\Client;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ZedBootstrap extends Framework
 {
@@ -20,7 +19,7 @@ class ZedBootstrap extends Framework
     const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap
      */
     protected $application;
 
@@ -46,7 +45,7 @@ class ZedBootstrap extends Framework
      */
     public function _before(TestCase $test)
     {
-        $this->client = new Client($this->application->boot());
+        $this->client = new Client($this->application->bootstrap(SystemUnderTestBootstrap::APPLICATION_ZED));
     }
 
     /**
@@ -56,8 +55,11 @@ class ZedBootstrap extends Framework
      */
     protected function loadApplication()
     {
-        $this->application = new \Spryker\Zed\Testify\Bootstrap\ZedBootstrap($this->config[self::CONFIG_KEY_SERVICE_PROVIDER]);
-        $this->application;
+        $this->application = SystemUnderTestBootstrap::getInstance();
+//        $this->application = new SystemUnderTestBootstrap();
+
+//        $this->application = new BootstrapZedBootstrap($this->config[self::CONFIG_KEY_SERVICE_PROVIDER]);
+//        $this->application;
 
         if (!isset($this->application)) {
             throw new ModuleConfigException(__CLASS__, 'Application instance was not received from bootstrap file');

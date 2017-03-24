@@ -12,5 +12,5 @@ modules:
         - \Propel\Module\PropelInstall
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Sales\Module\Sales
+        - \Sales\Helper\Sales
         - \Oms\Module\Oms
