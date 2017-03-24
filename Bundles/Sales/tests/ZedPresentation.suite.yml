@@ -6,9 +6,9 @@ modules:
             browser: phantomjs
             window_size: 1920x1080
 
-        - \Testify\Module\Environment
+        - Asserts
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Sales\Helper\Sales
         - \Sales\Helper\ZedPresentation
-        - Asserts
+        - \Testify\Helper\Environment

@@ -18,13 +18,10 @@ class Transaction extends Module
 {
 
     /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @return void
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function _initialize()
     {
-        parent::__construct($moduleContainer, $config);
-
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
