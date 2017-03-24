@@ -59,7 +59,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Kernel
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -84,10 +84,10 @@ class SystemUnderTestBootstrap
         $errorHandlerEnvironment->initialize();
 
         if (self::APPLICATION_ZED === $application) {
-            $this->bootstrapZed();
+            return $this->bootstrapZed();
         }
         if (self::APPLICATION_YVES === $application) {
-            $this->bootstrapYves();
+            return $this->bootstrapYves();
         }
     }
 
@@ -106,21 +106,23 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Kernel
      */
     protected function bootstrapZed()
     {
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
-        $application->boot();
+        $kernel = $application->boot();
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
+
+        return $kernel;
     }
 
     /**
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Kernel
      */
     protected function bootstrapYves()
     {
@@ -129,7 +131,9 @@ class SystemUnderTestBootstrap
         $locator = Locator::getInstance();
         $this->resetLocator($locator);
 
-        $application->boot();
+        $kernel = $application->boot();
+
+        return $kernel;
     }
 
     /**
