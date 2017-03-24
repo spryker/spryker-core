@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Transfer\Business\Model\DataBuilderCleaner;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
@@ -92,7 +93,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createDataBuilderDefinitionBuilder()
     {
         return new DataBuilderDefinitionBuilder(
-            $this->createLoader(),
+            $this->createDataBuilderLoader(),
             $this->createTransferDefinitionMerger(),
             $this->createDataBuilderDefinition()
         );
@@ -118,6 +119,17 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
+     */
+    protected function createDataBuilderLoader()
+    {
+        return new TransferDefinitionLoader(
+            $this->createDataBuilderFinder(),
+            $this->createDefinitionNormalizer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
     public function createTransferCleaner()
@@ -126,6 +138,17 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getClassTargetDirectory()
         );
     }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
+     */
+    public function createDataBuilderCleaner()
+    {
+        return new DataBuilderCleaner(
+            $this->getConfig()->getDataBuilderTargetDirectory()
+        );
+    }
+
 
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
@@ -171,6 +194,16 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionFinder(
             $this->getConfig()->getSourceDirectories()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
+     */
+    protected function createDataBuilderFinder()
+    {
+        return new TransferDefinitionFinder(
+            $this->getConfig()->getDataBuilderSourceDirectories()
         );
     }
 
