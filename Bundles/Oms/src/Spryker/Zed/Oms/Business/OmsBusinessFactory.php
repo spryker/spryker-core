@@ -20,6 +20,7 @@ use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\State\ItemState;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -301,6 +302,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\State\ItemStateInterface
+     */
+    public function createItemState()
+    {
+        return new ItemState();
     }
 
 }
