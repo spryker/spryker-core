@@ -9,6 +9,6 @@ modules:
         - \Testify\Module\Environment
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Sales\Module\Sales
+        - \Sales\Helper\Sales
         - \Sales\Helper\ZedPresentation
         - Asserts
