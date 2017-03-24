@@ -2,15 +2,13 @@ class_name: ZedPresentationTester
 modules:
     enabled:
         - WebDriver:
-            url: 'http://zed-test.de.project.local'
-            browser: chrome
-            host: "10.10.0.1"
+            url: ''
+            browser: phantomjs
             window_size: 1920x1080
 
-        - Asserts
         - \Testify\Module\Environment
-        - \Sales\Module\Functional
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Sales\Module\Sales
         - \Sales\Helper\ZedPresentation
+        - Asserts
