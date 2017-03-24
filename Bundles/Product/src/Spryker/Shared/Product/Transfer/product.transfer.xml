@@ -5,8 +5,8 @@
 
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int" />
-        <property name="sku" type="string" dataBuilderRule="isbn10" />
-        <property name="isActive" type="bool" dataBuilderRule="=true" />
+        <property name="sku" type="string" />
+        <property name="isActive" type="bool" />
         <property name="attributes" type="array" singular="attribute" />
         <property name="fkProductAbstract" type="int" />
         <property name="abstractSku" type="string" />
@@ -15,7 +15,7 @@
 
     <transfer name="ProductAbstract">
         <property name="idProductAbstract" type="int" />
-        <property name="sku" type="string" dataBuilderRule="isbn10" />
+        <property name="sku" type="string" />
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />

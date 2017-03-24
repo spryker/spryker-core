@@ -37,10 +37,10 @@
 
     <transfer name="Item" >
         <property name="idSalesOrderItem" type="int" />
-        <property name="sku" type="string" dataBuilderRule="isbn10" />
-        <property name="unitGrossPrice" type="int" dataBuilderRule="randomFloat(2)"  />
-        <property name="sumGrossPrice" type="int"  />
-        <property name="quantity" type="int" dataBuilderRule="=1" />
+        <property name="sku" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="Address">
@@ -73,7 +73,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
         <property name="billingSameAsShipping" type="bool"/>
-        <property name="customer" type="Customer" dataBuilderRule="true" />
+        <property name="customer" type="Customer" />
         <property name="orderReference" type="string" />
     </transfer>
 
