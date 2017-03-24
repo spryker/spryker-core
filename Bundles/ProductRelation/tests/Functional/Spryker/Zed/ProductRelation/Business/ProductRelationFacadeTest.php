@@ -210,11 +210,11 @@ class ProductRelationFacadeTest extends Test
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
 
-        if ($skuValueForFilter) {
+        if ($skuValueForFilter !== null) {
             $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer($skuValueForFilter));
         }
 
-        if ($categoryName) {
+        if ($categoryName !== null) {
             $ruleQuerySetTransfer->addRules($this->createProductCategoryNameRuleTransfer($categoryName));
         }
 

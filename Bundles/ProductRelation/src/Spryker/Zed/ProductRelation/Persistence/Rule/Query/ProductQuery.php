@@ -64,6 +64,8 @@ class ProductQuery implements QueryInterface
      */
     protected function buildProductMapping()
     {
+        $mapping = [];
+
         $propelQueryBuilderCriteriaMappingTransfer = new PropelQueryBuilderCriteriaMappingTransfer();
         $propelQueryBuilderCriteriaMappingTransfer->setAlias('product_sku');
         $propelQueryBuilderCriteriaMappingTransfer->setColumns([

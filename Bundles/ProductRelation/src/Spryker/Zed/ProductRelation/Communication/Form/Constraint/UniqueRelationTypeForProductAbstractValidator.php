@@ -37,15 +37,7 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
         }
 
         if ($this->hasProductRelationType($constraint, $value)) {
-            $this->context
-                ->buildViolation(
-                    sprintf(
-                        'Selected product already have "%s" relation type.',
-                        $value->getProductRelationType()->getKey()
-                    )
-                )
-                ->atPath(ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY)
-                ->addViolation();
+            $this->createViolationMessage($value);
         }
     }
 
@@ -77,6 +69,24 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
 
         return true;
 
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $value
+     *
+     * @return void
+     */
+    protected function createViolationMessage(ProductRelationTransfer $value)
+    {
+        $this->context
+            ->buildViolation(
+                sprintf(
+                    'Selected product already have "%s" relation type.',
+                    $value->getProductRelationType()->getKey()
+                )
+            )
+            ->atPath(ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY)
+            ->addViolation();
     }
 
 }

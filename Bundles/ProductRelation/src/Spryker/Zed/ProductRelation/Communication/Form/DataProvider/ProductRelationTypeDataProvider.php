@@ -67,7 +67,12 @@ class ProductRelationTypeDataProvider
             return $this->createInitialProductRelationTransfer();
         }
 
-        return $this->productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationTransfer = $this->productRelationFacade->findProductRelationById($idProductRelation);
+        if ($productRelationTransfer === null) {
+            $productRelationTransfer = $this->createInitialProductRelationTransfer();
+        }
+
+        return $productRelationTransfer;
     }
 
     /**

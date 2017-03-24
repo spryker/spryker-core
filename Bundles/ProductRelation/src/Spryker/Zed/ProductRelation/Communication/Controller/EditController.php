@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
@@ -23,6 +24,8 @@ class EditController extends BaseProductRelationController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -51,7 +54,7 @@ class EditController extends BaseProductRelationController
             $editProductRelationUrl = Url::generate(
                 '/product-relation/edit/',
                 [
-                    EditController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
+                    static::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
                 ]
             )->build();
 
@@ -60,6 +63,15 @@ class EditController extends BaseProductRelationController
 
         $productRelationTransfer = $this->getFacade()
             ->findProductRelationById($idProductRelation);
+
+        if ($productRelationTransfer === null) {
+            throw new NotFoundHttpException(
+                sprintf(
+                    'Product relation with id "%d" not found.',
+                    $idProductRelation
+                )
+            );
+        }
 
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);

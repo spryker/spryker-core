@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductRelation\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
@@ -23,6 +24,8 @@ class ViewController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -36,6 +39,15 @@ class ViewController extends AbstractController
         $productAbstractTransfer = $this->getFactory()
             ->getProductFacade()
             ->findProductAbstractById($productRelationTransfer->getFkProductAbstract());
+
+        if ($productRelationTransfer === null) {
+            throw new NotFoundHttpException(
+                sprintf(
+                    'Product relation with id "%d" not found.',
+                    $idProductRelation
+                )
+            );
+        }
 
         return [
             'productRelation' => $productRelationTransfer,

@@ -195,21 +195,21 @@ class EventFacadeTest extends Test
             $queueClientMock = $this->createQueueClientMock();
         }
 
-        $eventDependencyProvider = new EventDependencyProvider();
+        $eventDependencyProvider = new EventDependencyProvider();                                         c
 
         $container = new Container();
 
         $businessLayerDependencies = $eventDependencyProvider->provideBusinessLayerDependencies($container);
 
-        $container[EventDependencyProvider::CLIENT_QUEUE] = function (Container $container) use ($queueClientMock) {
+        $container[EventDependencyProvider::CLIENT_QUEUE] = function () use ($queueClientMock) {
             return $queueClientMock;
         };
 
-        $container[EventDependencyProvider::EVENT_LISTENERS] = function (Container $container) use ($eventCollection) {
+        $container[EventDependencyProvider::EVENT_LISTENERS] = function () use ($eventCollection) {
             return $eventCollection;
         };
 
-        $container[EventDependencyProvider::EVENT_SUBSCRIBERS] = function (Container $container) use ($eventSubscribers) {
+        $container[EventDependencyProvider::EVENT_SUBSCRIBERS] = function () use ($eventSubscribers) {
             return $eventSubscribers;
         };
 
