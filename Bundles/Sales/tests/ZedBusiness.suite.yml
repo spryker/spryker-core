@@ -1,6 +1,10 @@
 class_name: ZedBusinessTester
 modules:
     enabled:
-        - \Testify\Module\Environment
+        - Asserts
         - \Propel\Helper\Transaction
         - \Sales\Helper\ZedBusiness
+        - \Testify\Helper\Environment
+        - \Testify\Helper\BusinessHelper
+        - \Testify\Helper\ConfigHelper
+

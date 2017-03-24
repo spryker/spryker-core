@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Testify\Module;
+namespace Testify\Helper;
 
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;

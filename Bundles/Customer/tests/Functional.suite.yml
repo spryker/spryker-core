@@ -6,5 +6,5 @@ modules:
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate
-        - \Customer\Module\Functional
+        - \Propel\Helper\Transaction
 

@@ -12,7 +12,7 @@ use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use Testify\Module\BusinessLocator;
+use Testify\Helper\BusinessHelper;
 
 class CustomerData extends Module
 {
@@ -44,7 +44,7 @@ class CustomerData extends Module
     }
 
     /**
-     * @return BusinessLocator
+     * @return BusinessHelper
      */
     private function getLocator()
     {
