@@ -42,6 +42,18 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    public function getDataBuilderSourceDirectories()
+    {
+        $globPatterns = $this->getSourceDirectories();
+
+        $globPatterns[] = Config::get(KernelConstants::SPRYKER_ROOT) . '/*/tests/_data/';
+
+        return $globPatterns;
+    }
+
+    /**
      * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead
      *
      * @return string
@@ -52,6 +64,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     *
      * @return string[]
      */
     protected function getCoreSourceDirectoryGlobPatterns()
