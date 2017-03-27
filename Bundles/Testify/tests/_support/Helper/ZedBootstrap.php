@@ -65,7 +65,7 @@ class ZedBootstrap extends Framework
     /**
      * @return array
      */
-    public function getInternalDomains()
+    protected function getInternalDomains()
     {
         $internalDomains = [];
 
