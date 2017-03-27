@@ -2,22 +2,39 @@
 
 namespace Testify\Helper;
 
+use Closure;
+use Codeception\Module;
 use Codeception\TestCase;
 
-class DataCleanup extends \Codeception\Module
+class DataCleanup extends Module
 {
+
+    /**
+     * @var array
+     */
     protected $cleanups = [];
 
+    /**
+     * @var array
+     */
     protected $config = ['cleanup' => true];
 
-    public function _addCleanup(\Closure $closure)
+    /**
+     * @param \Closure $closure
+     *
+     * @return void
+     */
+    public function _addCleanup(Closure $closure)
     {
         $this->cleanups[] = $closure;
     }
 
     /**
      * Cleans up inserted data
-     * @param TestCase $test
+     *
+     * @param \Codeception\TestCase $test
+     *
+     * @return void
      */
     public function _after(TestCase $test)
     {

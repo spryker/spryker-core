@@ -22,6 +22,7 @@ class IndexControllerCest
      */
     public function testThatICanOpenSalesIndexPage(ZedCommunicationTester $i)
     {
+        $i->setCookie('XDEBUG_SESSION', 'PHPSTORM');
         $i->amOnPage('/sales');
         $i->seeResponseCodeIs(200);
     }
@@ -33,6 +34,7 @@ class IndexControllerCest
      */
     public function testThatICanOpenSalesIndexPageAgain(ZedCommunicationTester $i)
     {
+        $i->setCookie('XDEBUG_SESSION', 'PHPSTORM');
         $i->amOnPage('/sales');
         $i->seeResponseCodeIs(200);
     }

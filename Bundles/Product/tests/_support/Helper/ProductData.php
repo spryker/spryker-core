@@ -1,13 +1,15 @@
 <?php
 namespace Product\Helper;
 
+use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Testify\Helper\DataCleanup;
 use Testify\Helper\BusinessHelper;
+use Testify\Helper\DataCleanup;
 
-class ProductData extends \Codeception\Module
+class ProductData extends Module
 {
+
     /**
      * @param array $override
      *
@@ -23,13 +25,13 @@ class ProductData extends \Codeception\Module
             ->build();
 
         $productFacade->createProductConcrete($product);
-        $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: ".$product->getIdProductConcrete());
+        $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
 
         if ($this->hasModule('\\' . DataCleanup::class)) {
-            /** @var $cleanupModule DataCleanup  **/
+            /** @var \Testify\Helper\DataCleanup $cleanupModule */
             $cleanupModule = $this->getModule('\\' . DataCleanup::class);
-            $cleanupModule->_addCleanup(function() use ($product, $abstractProductId) {
-                $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: ".$product->getIdProductConcrete());
+            $cleanupModule->_addCleanup(function () use ($product, $abstractProductId) {
+                $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
                 $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
                 $this->getProductQuery()->queryProductAbstract()->findByIdProductAbstract($abstractProductId)->delete();
             });
@@ -52,6 +54,5 @@ class ProductData extends \Codeception\Module
     {
         return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->queryContainer();
     }
-    
-    
+
 }
