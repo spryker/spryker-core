@@ -7,4 +7,8 @@ modules:
         - \Testify\Helper\Environment
         - \Testify\Helper\BusinessHelper
         - \Testify\Helper\ConfigHelper
+        - \Oms\Helper\OmsData
+        - \Sales\Helper\SalesData
+        - \Product\Helper\ProductData
+        - \Stock\Helper\StockData
 

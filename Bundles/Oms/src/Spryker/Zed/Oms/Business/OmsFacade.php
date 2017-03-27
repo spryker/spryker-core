@@ -322,6 +322,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer

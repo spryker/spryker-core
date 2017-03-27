@@ -1,20 +1,26 @@
 <?php
+
 namespace Stock\Helper;
 
+use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
-use Testify\Module\BusinessLocator;
+use Testify\Helper\BusinessHelper;
 
-class StockData extends \Codeception\Module
+class StockData extends Module
 {
 
+    /**
+     * @param array $override
+     *
+     * @return void
+     */
     public function haveProductInStock($override = [])
     {
         $stockFacade = $this->getStockFacade();
         $stockType = (new TypeBuilder())->build();
         $stockFacade->createStockType($stockType);
         $stockFacade->createStockProduct((new StockProductBuilder($override))->build()->setStockType($stockType->getName()));
-
     }
 
     /**
@@ -22,18 +28,7 @@ class StockData extends \Codeception\Module
      */
     private function getStockFacade()
     {
-        $locator = $this->getLocator();
-
-        return $locator->getLocator()->stock()->facade();
+        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->stock()->facade();
     }
-
-    /**
-     * @return BusinessLocator
-     */
-    private function getLocator()
-    {
-        return $this->getModule('\\' . BusinessLocator::class);
-    }
-
 
 }

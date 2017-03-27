@@ -1,15 +1,33 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DataBuilderDefinition implements DataBuilderDefinitionInterface
 {
 
+    /**
+     * @var string
+     */
     protected $name;
 
-    protected $dtoName;
+    /**
+     * @var string
+     */
+    protected $transferName;
 
+    /**
+     * @var array
+     */
     protected $rules = [];
 
+    /**
+     * @var array
+     */
     protected $dependencies = [];
 
     /**
@@ -36,6 +54,11 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
         return $this;
     }
 
+    /**
+     * @param array $properties
+     *
+     * @return void
+     */
     protected function getGeneratorRules(array $properties)
     {
         foreach ($properties as $property) {
@@ -60,13 +83,14 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return $this
      */
     private function setName($name)
     {
         $name = ucfirst($name);
-        $this->dtoName = $name . 'Transfer';
+        $this->transferName = $name . 'Transfer';
 
         if (strpos($name, 'Builder') === false) {
             $name .= 'Builder';
@@ -79,9 +103,9 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @return string
      */
-    public function getDTOName()
+    public function getTransferName()
     {
-        return $this->dtoName;
+        return $this->transferName;
     }
 
     /**
@@ -99,4 +123,5 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     {
         return $this->dependencies;
     }
+
 }

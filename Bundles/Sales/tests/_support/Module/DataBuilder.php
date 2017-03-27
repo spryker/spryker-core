@@ -1,10 +1,16 @@
 <?php
 namespace Sales\Module;
 
-class DataBuilder extends \Codeception\Module
+use Codeception\Module;
+
+class DataBuilder extends Module
 {
+
+    /**
+     * @return void
+     */
     public function haveData($dtoClass)
     {
-
     }
+
 }

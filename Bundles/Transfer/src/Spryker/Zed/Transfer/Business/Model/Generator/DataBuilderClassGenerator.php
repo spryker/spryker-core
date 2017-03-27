@@ -57,16 +57,18 @@ class DataBuilderClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param DataBuilderDefinition|DataBuilderDefinitionInterface $dataBuilderDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition|\Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $dataBuilderDefinition
+     *
      * @return array
      */
     public function getTwigData(DataBuilderDefinitionInterface $dataBuilderDefinition)
     {
         return [
             'className' => $dataBuilderDefinition->getName(),
-            'dtoName' => $dataBuilderDefinition->getDTOName(),
+            'transferName' => $dataBuilderDefinition->getTransferName(),
             'rules' => $dataBuilderDefinition->getRules(),
-            'dependencies' => $dataBuilderDefinition->getDependencies()
+            'dependencies' => $dataBuilderDefinition->getDependencies(),
         ];
     }
+
 }

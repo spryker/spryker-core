@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 interface DataBuilderDefinitionInterface extends DefinitionInterface
 {
+
     /**
      * @return array
      */
@@ -18,6 +19,5 @@ interface DataBuilderDefinitionInterface extends DefinitionInterface
      * @return array
      */
     public function getDependencies();
-
 
 }

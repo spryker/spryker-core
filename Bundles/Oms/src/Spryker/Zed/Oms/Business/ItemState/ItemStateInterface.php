@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oms\Business\State;
+namespace Spryker\Zed\Oms\Business\ItemState;
 
 use Generated\Shared\Transfer\ItemStateTransfer;
 
@@ -15,7 +15,7 @@ interface ItemStateInterface
     /**
      * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
      */
     public function createItemState(ItemStateTransfer $itemStateTransfer);
 

@@ -56,8 +56,9 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface $messenger
-     * @return DataBuilderGenerator
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator
      */
     public function createDataBuilderGenerator(LoggerInterface $messenger)
     {
@@ -78,6 +79,9 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder
+     */
     protected function createTransferDefinitionBuilder()
     {
         return new TransferDefinitionBuilder(
@@ -100,7 +104,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DataBuilderDefinition
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition
      */
     protected function createDataBuilderDefinition()
     {
@@ -148,7 +152,6 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getDataBuilderTargetDirectory()
         );
     }
-
 
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface

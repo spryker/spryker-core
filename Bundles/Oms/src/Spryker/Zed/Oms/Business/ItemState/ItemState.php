@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oms\Business\State;
+namespace Spryker\Zed\Oms\Business\ItemState;
 
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
@@ -16,7 +16,7 @@ class ItemState implements ItemStateInterface
     /**
      * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
      */
     public function createItemState(ItemStateTransfer $itemStateTransfer)
     {
@@ -24,7 +24,9 @@ class ItemState implements ItemStateInterface
         $itemStateEntity->fromArray($itemStateTransfer->toArray());
         $itemStateEntity->save();
 
-        $itemStateTransfer->fromArray($itemStateEntity->toArray());
+        $itemStateTransfer->fromArray($itemStateEntity->toArray(), true);
+
+        return $itemStateTransfer;
     }
 
 }

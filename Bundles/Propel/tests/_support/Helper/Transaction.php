@@ -7,7 +7,6 @@
 
 namespace Propel\Helper;
 
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\TestCase;
 use Propel\Runtime\Propel;
@@ -62,4 +61,5 @@ class Transaction extends Module
 
         Propel::getWriteConnection('zed')->rollBack();
     }
+
 }
