@@ -7,10 +7,28 @@
 
 namespace Spryker\Zed\Testify\Bootstrap;
 
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\HttpFragmentServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider as SprykerTwigServiceProvider;
+use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
+use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
@@ -19,7 +37,7 @@ class ZedBootstrap
     /**
      * @var \Silex\ServiceProviderInterface[]
      */
-    private $serviceProvider;
+    private $additionalServiceProvider;
 
     /**
      * @var \Silex\Application
@@ -27,11 +45,11 @@ class ZedBootstrap
     private $application;
 
     /**
-     * @param \Silex\ServiceProviderInterface[] $serviceProvider
+     * @param \Silex\ServiceProviderInterface[] $additionalServiceProvider
      */
-    public function __construct(array $serviceProvider)
+    public function __construct(array $additionalServiceProvider)
     {
-        $this->serviceProvider = $serviceProvider;
+        $this->additionalServiceProvider = $additionalServiceProvider;
     }
 
     /**
@@ -85,10 +103,60 @@ class ZedBootstrap
      */
     private function registerServiceProvider()
     {
-        foreach ($this->serviceProvider as $serviceProviderClassName) {
-            $serviceProvider = new $serviceProviderClassName;
+        $serviceProviders = $this->getServiceProvider();
+        foreach ($serviceProviders as $serviceProvider) {
+            if (!($serviceProvider instanceof ServiceProviderInterface)) {
+                $serviceProvider = $serviceProvider = new $serviceProvider;
+            }
             $this->getApplication()->register($serviceProvider);
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function getServiceProvider()
+    {
+        $defaultServiceProviders = $this->getDefaultServiceProvider();
+
+        return array_merge($defaultServiceProviders, $this->additionalServiceProvider);
+    }
+
+    /**
+     * @return array
+     */
+    private function getDefaultServiceProvider()
+    {
+        return [
+            new SessionServiceProvider(),
+            new TwigServiceProvider(),
+            new SprykerTwigServiceProvider(),
+            new FormServiceProvider(),
+            new HttpFragmentServiceProvider(),
+            new ServiceControllerServiceProvider(),
+            new ValidatorServiceProvider(),
+            new HeaderServiceProvider(),
+            new MvcRoutingServiceProvider(),
+            new RequestServiceProvider(),
+            new RoutingServiceProvider(),
+            new SubRequestServiceProvider(),
+            new TranslationServiceProvider(),
+            new UrlGeneratorServiceProvider(),
+            new GuiTwigExtensionServiceProvider(),
+            $this->getGatewayServiceProvider(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin
+     */
+    private function getGatewayServiceProvider()
+    {
+        $controllerListener = new GatewayControllerListenerPlugin();
+        $serviceProvider = new GatewayServiceProviderPlugin();
+        $serviceProvider->setControllerListener($controllerListener);
+
+        return $serviceProvider;
     }
 
     /**

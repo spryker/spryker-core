@@ -31,4 +31,15 @@ class IndexControllerCest
         $i->seeResponseCodeIs(200);
     }
 
+    /**
+     * @param \Sales\ZedCommunicationTester $i
+     *
+     * @return void
+     */
+    public function testThatICanOpenSalesIndexPageAgain(ZedCommunicationTester $i)
+    {
+        $i->amOnPage('/sales');
+        $i->seeResponseCodeIs(200);
+    }
+
 }
