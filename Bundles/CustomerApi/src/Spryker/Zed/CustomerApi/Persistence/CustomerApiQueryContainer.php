@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CustomerApi\Persistence;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -34,10 +37,9 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      */
     public function queryFind(array $fields = [])
     {
-        $query = $this->queryCustomer();
-        $fieldMapper = $this->createFieldMapper();
+        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
 
-        return $fieldMapper->mapFields($query, $fields);
+        return $query;
     }
 
     /**
@@ -50,10 +52,7 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      */
     public function queryCustomerById($idCustomer, array $fields = [])
     {
-        $query = $this->queryCustomer();
-        $fieldMapper = $this->createFieldMapper();
-
-        $query = $fieldMapper->mapFields($query, $fields);
+        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
 
         return $query
             ->filterByIdCustomer($idCustomer)
@@ -61,13 +60,19 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     }
 
     /**
-     * @api
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $queryCustomer
+     * @param array $fields
      *
-     * @return FieldMapper\FieldMapperInterface
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function createFieldMapper()
+    protected function mapQueryFields(SpyCustomerQuery $queryCustomer, array $fields)
     {
-        return $this->getFactory()->createFieldMapper();
+        return $this->getFactory()->getApiQueryContainer()->mapFields(
+            SpyCustomerTableMap::TABLE_NAME,
+            SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME),
+            $queryCustomer,
+            $fields
+        );
     }
 
 }

@@ -60,14 +60,16 @@ class CustomerApiToApiBridge implements CustomerApiToApiInterface
     }
 
     /**
+     * @param string $tableName
+     * @param array $tableFields
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $allowedFields
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapFields(ModelCriteria $query, array $allowedFields)
+    public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields)
     {
-        return $this->apiQueryContainer->mapFields($query, $allowedFields);
+        return $this->apiQueryContainer->mapFields($tableName, $tableFields, $query, $allowedFields);
     }
 
 }

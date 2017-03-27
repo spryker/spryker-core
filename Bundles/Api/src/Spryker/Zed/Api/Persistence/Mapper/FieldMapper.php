@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerApi\Persistence\FieldMapper;
+namespace Spryker\Zed\Api\Persistence\Mapper;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class FieldMapper implements FieldMapperInterface
 {
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $query
+     * @param string $tableName
+     * @param array $tableFields
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $allowedFields
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapFields(SpyCustomerQuery $query, array $allowedFields)
+    public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields)
     {
         $query->clearSelectColumns();
 
@@ -28,16 +28,14 @@ class FieldMapper implements FieldMapperInterface
             return $query;
         }
 
-        $columns = SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
-
         $allowedColumns = array_intersect_key(
-            array_flip($columns),
+            array_flip($tableFields),
             array_flip($allowedFields)
         );
 
         $selectedColumns = [];
         foreach ($allowedColumns as $columnAlias => $index) {
-            $columnName = SpyCustomerTableMap::TABLE_NAME . '.' . $columnAlias;
+            $columnName = $tableName . '.' . $columnAlias;
             $selectedColumns[] = $columnName;
 
             $query->withColumn($columnName, $columnAlias);

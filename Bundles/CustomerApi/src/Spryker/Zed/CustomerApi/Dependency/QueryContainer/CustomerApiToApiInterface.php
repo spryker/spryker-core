@@ -38,11 +38,13 @@ interface CustomerApiToApiInterface
     public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer);
 
     /**
+     * @param string $tableName
+     * @param array $tableFields
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $allowedFields
      *
-     * @return array
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapFields(ModelCriteria $query, array $allowedFields);
+    public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields);
 
 }

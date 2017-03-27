@@ -34,6 +34,17 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+            return new CustomerApiToApiBridge($container->getLocator()->api()->queryContainer());
+        };
+
+        return $container;
+    }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
