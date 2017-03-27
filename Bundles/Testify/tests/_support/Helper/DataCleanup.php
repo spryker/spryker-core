@@ -4,11 +4,16 @@ namespace Testify\Helper;
 
 use Codeception\TestCase;
 
-abstract class AbstractDataHelper extends \Codeception\Module
+class DataCleanup extends \Codeception\Module
 {
     protected $cleanups = [];
 
-    protected $config = ['cleanup' => false];
+    protected $config = ['cleanup' => true];
+
+    public function _addCleanup(\Closure $closure)
+    {
+        $this->cleanups[] = $closure;
+    }
 
     /**
      * Cleans up inserted data
@@ -20,7 +25,11 @@ abstract class AbstractDataHelper extends \Codeception\Module
             return;
         }
         foreach (array_reverse($this->cleanups) as $cleanup) {
-            $cleanup();
+            try {
+                $cleanup();
+            } catch (\Exception $e) {
+                $this->debugSection('Cleanup Failure', $e->getMessage());
+            }
         }
         $this->cleanups = [];
     }
