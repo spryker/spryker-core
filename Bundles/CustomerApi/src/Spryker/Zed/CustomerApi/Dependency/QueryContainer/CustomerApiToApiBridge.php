@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Dependency\QueryContainer;
 
+use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
@@ -45,6 +46,17 @@ class CustomerApiToApiBridge implements CustomerApiToApiInterface
     public function createPropelQueryBuilderCriteriaFromJson($json)
     {
         return $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson($json);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\ApiPaginationTransfer $apiPaginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer)
+    {
+        return $this->apiQueryContainer->mapPagination($query, $apiPaginationTransfer);
     }
 
 }

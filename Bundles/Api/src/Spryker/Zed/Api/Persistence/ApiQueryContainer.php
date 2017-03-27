@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Persistence;
 
+use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -48,6 +49,23 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
         return $this->getFactory()
             ->getPropelQueryBuilder()
             ->createPropelQueryBuilderCriteriaFromJson($json);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\ApiPaginationTransfer $apiPaginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer)
+    {
+        return $this->getFactory()
+            ->createPaginationQueryMapper()
+            ->mapPagination($query, $apiPaginationTransfer);
     }
 
 }
