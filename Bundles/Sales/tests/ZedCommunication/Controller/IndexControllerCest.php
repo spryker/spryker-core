@@ -16,11 +16,6 @@ class IndexControllerCest
 {
 
     /**
-     * @var \Sales\ZedCommunicationTester
-     */
-    protected $tester;
-
-    /**
      * @param \Sales\ZedCommunicationTester $i
      *
      * @return void
