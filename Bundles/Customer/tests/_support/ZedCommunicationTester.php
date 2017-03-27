@@ -23,8 +23,4 @@ class ZedCommunicationTester extends Actor
 
     use _generated\ZedCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
 }
