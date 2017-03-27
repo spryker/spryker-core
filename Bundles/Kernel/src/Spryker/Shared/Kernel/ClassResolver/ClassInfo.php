@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\Kernel\Store;
 
 class ClassInfo
 {
@@ -92,7 +93,36 @@ class ClassInfo
      */
     public function getBundle()
     {
-        return $this->callerClassParts[self::KEY_BUNDLE];
+        $bundleName = $this->callerClassParts[self::KEY_BUNDLE];
+        $bundleName = $this->removeStoreFromBundleName($bundleName);
+
+        return $bundleName;
+    }
+
+    /**
+     * @param string $bundleName
+     *
+     * @return string
+     */
+    protected function removeStoreFromBundleName($bundleName)
+    {
+        $storeName = $this->getStoreName();
+        $storeIdentifierLength = mb_strlen($storeName);
+        $storeSuffix = mb_substr($bundleName, -$storeIdentifierLength);
+
+        if ($storeSuffix === $storeName) {
+            $bundleName = mb_substr($bundleName, 0, -$storeIdentifierLength);
+        }
+
+        return $bundleName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return Store::getInstance()->getStoreName();
     }
 
     /**

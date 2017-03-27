@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Store;
 use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
@@ -72,7 +73,36 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getBundle()
     {
-        return $this->filter($this->bundle);
+        $bundleName = $this->filter($this->bundle);
+        $bundleName = $this->removeStoreFromBundleName($bundleName);
+
+        return $bundleName;
+    }
+
+    /**
+     * @param string $bundleName
+     *
+     * @return string
+     */
+    protected function removeStoreFromBundleName($bundleName)
+    {
+        $storeName = $this->getStoreName();
+        $storeIdentifierLength = mb_strlen($storeName);
+        $storeSuffix = mb_substr($bundleName, -$storeIdentifierLength);
+
+        if ($storeSuffix === $storeName) {
+            $bundleName = mb_substr($bundleName, 0, -$storeIdentifierLength);
+        }
+
+        return $bundleName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return Store::getInstance()->getStoreName();
     }
 
     /**
