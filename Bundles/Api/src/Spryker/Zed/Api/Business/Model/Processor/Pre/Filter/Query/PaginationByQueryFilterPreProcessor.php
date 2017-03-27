@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class CreateActionPreProcessor implements PreProcessorInterface
+class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -19,15 +20,12 @@ class CreateActionPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'create') {
+        $queryStrings = $apiRequestTransfer->getQueryData();
+        if (empty($queryStrings['pagination'])) {
             return;
         }
 
-        $postData = (array)$apiRequestTransfer->getRequestData();
-        $params = [];
-        $params[] = $postData;
-        $apiRequestTransfer->setResourceParams($params);
+        // Implement on project level
     }
 
 }

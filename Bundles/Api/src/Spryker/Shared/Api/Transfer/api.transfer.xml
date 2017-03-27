@@ -34,8 +34,8 @@
 
     <transfer name="ApiFilter">
         <property name="fields" type="array" />
-        <property name="conditions" type="string" />
-        <property name="sort" type="string" />
+        <property name="criteria" type="string" />
+        <property name="sort" type="array" />
         <property name="pagination" type="string" />
     </transfer>
 

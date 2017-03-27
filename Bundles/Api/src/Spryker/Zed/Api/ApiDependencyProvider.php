@@ -13,7 +13,9 @@ use Spryker\Zed\Kernel\Container;
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
+
     const PLUGIN_STACK_PRE_PROCESS = 'PLUGIN_STACK_PRE_PROCESS';
     const PLUGIN_STACK_POST_PROCESS = 'PLUGIN_STACK_POST_PROCESS';
 
@@ -24,8 +26,26 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container[static::SERVICE_ENCODING] = function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
+            return $container->getLocator()->propelQueryBuilder()->queryContainer();
         };
 
         return $container;

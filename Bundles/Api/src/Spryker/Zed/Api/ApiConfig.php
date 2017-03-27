@@ -8,20 +8,20 @@
 namespace Spryker\Zed\Api;
 
 use Spryker\Zed\Api\Business\Exception\PluginNotFoundException;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\ConditionsByQueryFilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\FieldsByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\FindActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\FormatTypeByExtensionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\FormatTypeByHeaderPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationByHeaderFilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByExtensionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\ResourceActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\ResourceParamsPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\ResourcePreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\SortByQueryFilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\UpdateActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParamsPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\CustomerApi\Communication\Plugin\Api\CustomerApiPlugin;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -56,8 +56,8 @@ class ApiConfig extends AbstractBundleConfig
     {
         return [
             'customers' => CustomerApiPlugin::class, // Sales /api/orders => findOrders()
-            'customer-addresses' => CustomerAddressApiPlugin::class, // Sales /api/orders => findOrders()
-            'orders' => OrderApiPlugin::class, // /SalesApi/Plugin/Api/OrderApiPlugin Sales /api/orders/1 => getOrder(1)
+            //'customer-addresses' => CustomerAddressApiPlugin::class, // Sales /api/orders => findOrders()
+            //'orders' => OrderApiPlugin::class, // /SalesApi/Plugin/Api/OrderApiPlugin Sales /api/orders/1 => getOrder(1)
         ];
     }
 
@@ -75,12 +75,12 @@ class ApiConfig extends AbstractBundleConfig
             ResourcePreProcessor::class,
             ResourceActionPreProcessor::class,
             ResourceParamsPreProcessor::class,
+            FilterPreProcessor::class,
             FindActionPreProcessor::class,
             UpdateActionPreProcessor::class,
-            FilterPreProcessor::class,
-            FieldsByQueryFilterPreProcessor::class,
+            FieldsByQueryPreProcessor::class,
             SortByQueryFilterPreProcessor::class,
-            ConditionsByQueryFilterPreProcessor::class,
+            CriteriaByQueryFilterPreProcessor::class,
             PaginationByQueryFilterPreProcessor::class,
             PaginationByHeaderFilterPreProcessor::class,
         ];

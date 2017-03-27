@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class ConditionsByQueryFilterPreProcessor implements PreProcessorInterface
+class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -19,14 +20,12 @@ class ConditionsByQueryFilterPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings['filter'])) {
+        $headers = $apiRequestTransfer->getHeaderData();
+        if (empty($headers['range'])) {
             return;
         }
 
-        $conditions = $queryStrings['filter'];
-
-        $apiRequestTransfer->getFilter()->setConditions($conditions);
+        // Implement on project level
     }
 
 }

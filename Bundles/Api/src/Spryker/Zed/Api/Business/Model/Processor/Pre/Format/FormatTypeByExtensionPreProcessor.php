@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Format;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class FormatTypeByExtensionPreProcessor implements PreProcessorInterface
 {

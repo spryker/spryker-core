@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Format;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class FieldsByQueryFilterPreProcessor implements PreProcessorInterface
+class FormatTypeByHeaderPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -19,14 +20,7 @@ class FieldsByQueryFilterPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings['fields'])) {
-            return;
-        }
-
-        $fields = (array)$queryStrings['fields'];
-
-        $apiRequestTransfer->getFilter()->setFields($fields);
+        // Implement on project level, e.g. with https://github.com/auraphp/Aura.Accept
     }
 
 }

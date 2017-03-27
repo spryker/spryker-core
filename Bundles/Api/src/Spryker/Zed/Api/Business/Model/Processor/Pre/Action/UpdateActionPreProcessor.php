@@ -5,34 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
  */
-class ResourceParamsPreProcessor implements PreProcessorInterface
+class UpdateActionPreProcessor implements PreProcessorInterface
 {
 
     /**
-     * Maps all remaining path segments as resource params.
-     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return void
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $path = $apiRequestTransfer->getPath();
-
-        $elements = [$path];
-        if (strpos($path, '/') !== false) {
-            $elements = explode('/', $path);
+        $method = $apiRequestTransfer->getResourceAction();
+        if ($method !== 'update') {
+            return;
         }
 
-        $apiRequestTransfer->setResourceParams($elements);
+        $postData = (array)$apiRequestTransfer->getRequestData();
+        $params = (array)$apiRequestTransfer->getResourceParams();
+        $params[] = $postData;
+        $apiRequestTransfer->setResourceParams($params);
     }
 
 }

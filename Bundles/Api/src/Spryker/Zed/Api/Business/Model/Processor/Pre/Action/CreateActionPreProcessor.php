@@ -5,16 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
-use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-/**
- * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
- */
-class FindActionPreProcessor implements PreProcessorInterface
+class CreateActionPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -24,14 +20,14 @@ class FindActionPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $method = $apiRequestTransfer->getResourceAction();
-        if ($method !== 'find') {
+        $action = $apiRequestTransfer->getResourceAction();
+        if ($action !== 'create') {
             return;
         }
 
-        $filter = new ApiFilterTransfer();
-
-        $params = [$filter];
+        $postData = (array)$apiRequestTransfer->getRequestData();
+        $params = [];
+        $params[] = $postData;
         $apiRequestTransfer->setResourceParams($params);
     }
 

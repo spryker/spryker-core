@@ -7,6 +7,18 @@
 
 namespace Spryker\Zed\Api\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ApiRequestTransfer;
+
 interface ApiPluginInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer);
+
 }

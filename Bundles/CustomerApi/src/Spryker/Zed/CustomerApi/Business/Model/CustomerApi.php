@@ -7,112 +7,93 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerToCustomer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
+use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
 
 class CustomerApi
 {
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     * @var \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface
+     */
+    protected $apiQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
+     * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer)
-    {
+    public function __construct(
+        CustomerApiToApiInterface $apiQueryContainer,
+        CustomerApiQueryContainerInterface $queryContainer
+    ) {
+        $this->apiQueryContainer = $apiQueryContainer;
         $this->queryContainer = $queryContainer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function get(ApiRequestTransfer $customerTransfer)
+    public function get(ApiRequestTransfer $apiRequestTransfer)
     {
+        return $apiRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function add(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $customerTransfer = new CustomerTransfer();
 
         return $customerTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomerToCustomer[] $customerToCustomerCollection
-     *
-     * @return \Generated\Shared\Transfer\CustomerToCustomerTransfer[]
-     */
-    protected function entityCollectionToTransferCollection(ObjectCollection $customerToCustomerCollection)
-    {
-        $customers = new ArrayObject();
-
-        foreach ($customerToCustomerCollection as $customerToCustomerEntity) {
-            $customerToCustomerTransfer = new CustomerToCustomerTransfer();
-            $customerToCustomerTransfer->fromArray($customerToCustomerEntity->toArray(), true);
-
-            $customers[] = $customerToCustomerTransfer;
-        }
-
-        return $customers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function add(ApiRequestTransfer $customerTransfer)
+    public function update(ApiRequestTransfer $apiRequestTransfer)
     {
+        $customerTransfer = new CustomerTransfer();
 
-        return $customerTransfer;
+        return $apiRequestTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function update(CustomerTransfer $customerTransfer)
-    {
-
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
-     *
-     * @return void
-     */
-    protected function saveCustomers(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
-    {
-        foreach ($customerTransfer->getCustomers() as $customerTransfer) {
-            $customerToCustomerEntity = new SpyCustomerToCustomer();
-            $customerToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
-            $customerToCustomerEntity->setFkCustomer($customerTransfer->getFkCustomer());
-
-            $customerToCustomerEntity->save();
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return bool
      */
-    public function delete(CustomerTransfer $customerTransfer)
+    public function delete(ApiRequestTransfer $apiRequestTransfer)
     {
-        $customerEntity = $this->getCustomer($customerTransfer);
-        $customerEntity->delete();
-
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaRuleSet = new PropelQueryBuilderRuleSetTransfer();
+
+        sd($apiRequestTransfer->toArray());
     }
 
 }

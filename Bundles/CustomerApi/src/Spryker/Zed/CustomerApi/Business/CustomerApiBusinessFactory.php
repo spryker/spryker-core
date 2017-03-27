@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
-use Spryker\Zed\CustomerApi\CustomerApiDependencyProvider;
 use Spryker\Zed\CustomerApi\Business\Model\CustomerApi;
+use Spryker\Zed\CustomerApi\CustomerApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
- * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
+ * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainer getQueryContainer()
  */
 class CustomerApiBusinessFactory extends AbstractBusinessFactory
 {
@@ -23,15 +23,18 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerApi()
     {
-        return new CustomerApi($this->getCustomerQueryContainer());
+        return new CustomerApi(
+            $this->getApiQueryContainer(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     * @return \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface
      */
-    protected function getCustomerQueryContainer()
+    protected function getApiQueryContainer()
     {
-        return $this->getProvidedDependency(CustomerApiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
+        return $this->getProvidedDependency(CustomerApiDependencyProvider::QUERY_CONTAINER_API);
     }
 
 }

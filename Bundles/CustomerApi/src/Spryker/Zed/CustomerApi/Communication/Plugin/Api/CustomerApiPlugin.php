@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -25,7 +26,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer[]
      */
-    public function find(ApiFilterTransfer $apiRequestTransfer)
+    public function find(ApiRequestTransfer $apiRequestTransfer)
     {
         return $this->getFacade()->findCustomers($apiRequestTransfer);
     }

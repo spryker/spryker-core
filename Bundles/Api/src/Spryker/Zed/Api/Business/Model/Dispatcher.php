@@ -57,9 +57,15 @@ class Dispatcher
 
         // right now can also be transfer
         $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
+        $data = [];
+        if ($entityOrCollection) {
+            $data = $entityOrCollection->toArray();
+        } else {
+            //nothing found
+        }
 
         $apiResponseTransfer = new ApiResponseTransfer();
-        $apiResponseTransfer->setData($entityOrCollection->toArray());
+        $apiResponseTransfer->setData($data);
 
         $this->postProcess($apiResponseTransfer);
 

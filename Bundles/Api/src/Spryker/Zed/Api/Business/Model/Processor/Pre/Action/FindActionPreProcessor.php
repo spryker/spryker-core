@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class FormatTypeByHeaderPreProcessor implements PreProcessorInterface
+class FindActionPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -19,7 +20,9 @@ class FormatTypeByHeaderPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        // Implement on project level, e.g. with https://github.com/auraphp/Aura.Accept
+        $params = [$apiRequestTransfer];
+
+        $apiRequestTransfer->setResourceParams($params);
     }
 
 }

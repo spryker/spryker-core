@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi;
 
+use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -14,7 +15,8 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
-    const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+
+    const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,8 +25,10 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->queryContainer();
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+            return new CustomerApiToApiBridge($container->getLocator()->api()->queryContainer());
         };
 
         return $container;

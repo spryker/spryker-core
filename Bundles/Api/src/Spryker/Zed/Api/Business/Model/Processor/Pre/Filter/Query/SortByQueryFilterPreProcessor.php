@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
+class SortByQueryFilterPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -24,7 +25,16 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
             return;
         }
 
-        // Implement on project level
+        $sortString = $queryStrings['sort'];
+        $sortCollection = explode(',', $sortString);
+
+        $sort = [];
+        foreach ($sortCollection as $sortItemString) {
+            list($column, $order) = explode(':', $sortItemString);
+            $sort[$column] = $order;
+        }
+
+        $apiRequestTransfer->getFilter()->setSort($sort);
     }
 
 }
