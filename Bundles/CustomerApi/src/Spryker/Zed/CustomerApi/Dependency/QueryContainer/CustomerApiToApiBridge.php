@@ -59,4 +59,15 @@ class CustomerApiToApiBridge implements CustomerApiToApiInterface
         return $this->apiQueryContainer->mapPagination($query, $apiPaginationTransfer);
     }
 
+    /**
+     * @param array $data
+     * @param array $allowedFields
+     *
+     * @return array
+     */
+    public function mapFields(array $data, array $allowedFields)
+    {
+        return $this->apiQueryContainer->mapFields($data, $allowedFields);
+    }
+
 }

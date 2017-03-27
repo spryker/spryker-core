@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Api;
 
 use Spryker\Zed\Api\Business\Exception\PluginNotFoundException;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\CreateActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
@@ -78,13 +80,15 @@ class ApiConfig extends AbstractBundleConfig
             ResourceParamsPreProcessor::class,
             FilterPreProcessor::class,
             PaginationPreProcessor::class,
-            FindActionPreProcessor::class,
-            UpdateActionPreProcessor::class,
             FieldsByQueryPreProcessor::class,
             SortByQueryFilterPreProcessor::class,
             CriteriaByQueryFilterPreProcessor::class,
             PaginationByQueryFilterPreProcessor::class,
             PaginationByHeaderFilterPreProcessor::class,
+            CreateActionPreProcessor::class,
+            UpdateActionPreProcessor::class,
+            GetActionPreProcessor::class,
+            FindActionPreProcessor::class,
         ];
     }
 

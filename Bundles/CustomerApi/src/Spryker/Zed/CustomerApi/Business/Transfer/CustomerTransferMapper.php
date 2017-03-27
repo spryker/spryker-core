@@ -7,24 +7,38 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Transfer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 
 class CustomerTransferMapper implements CustomerTransferMapperInterface
 {
 
     /**
+     * @var \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface
+     */
+    protected $apiQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
+     */
+    public function __construct(CustomerApiToApiInterface $apiQueryContainer)
+    {
+        $this->apiQueryContainer = $apiQueryContainer;
+    }
+
+    /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
     public function convertCustomer(SpyCustomer $customerEntity)
     {
-        //TODO filter fields
-        $customerTransfer = new CustomerTransfer();
+        $customerTransfer = new CustomerApiTransfer();
+        $data = $customerEntity->toArray();
 
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
+        $customerTransfer->fromArray($data, true);
 
         return $customerTransfer;
     }
@@ -32,29 +46,13 @@ class CustomerTransferMapper implements CustomerTransferMapperInterface
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
     public function convertCustomerCollection(ObjectCollection $customerEntityCollection)
     {
         $transferList = [];
         foreach ($customerEntityCollection as $customerEntity) {
             $transferList[] = $this->convertCustomer($customerEntity);
-        }
-
-        return $transferList;
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
-     *
-     * @return array
-     */
-    public function convertCustomerCollectionToArray(ObjectCollection $customerEntityCollection)
-    {
-        $transferList = [];
-        foreach ($customerEntityCollection as $customerEntity) {
-            $customerTransfer = $this->convertCustomer($customerEntity);
-            $transferList[] = $customerTransfer->toArray();
         }
 
         return $transferList;

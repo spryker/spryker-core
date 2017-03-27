@@ -36,7 +36,9 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerTransferMapper()
     {
-        return new CustomerTransferMapper();
+        return new CustomerTransferMapper(
+            $this->getApiQueryContainer()
+        );
     }
 
     /**

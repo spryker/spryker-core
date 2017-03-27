@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface ApiPluginInterface
@@ -17,8 +18,18 @@ interface ApiPluginInterface
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
      */
     public function find(ApiRequestTransfer $apiRequestTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     */
+    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer);
 
 }

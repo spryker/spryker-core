@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CustomerGroup;
+namespace Spryker\Shared\CustomerApi;
 
-interface CustomerGroupConstants
+interface CustomerApiConstants
 {
 }

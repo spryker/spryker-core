@@ -58,13 +58,4 @@
         <property name="name" type="string" />
     </transfer>
 
-    <transfer name="ApiResponsePagination">
-        <property name="previous" type="string" />
-        <property name="next" type="string" />
-        <property name="page" type="int" />
-        <property name="pagesTotal" type="int" />
-        <property name="itemsPerPage" type="int" />
-        <property name="itemsTotal" type="int" />
-    </transfer>
-
 </transfers>

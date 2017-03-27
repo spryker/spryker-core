@@ -9,7 +9,8 @@ namespace Spryker\Zed\Api\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Api\ApiDependencyProvider;
-use Spryker\Zed\Api\Persistence\Pagination\PaginationQueryMapper;
+use Spryker\Zed\Api\Persistence\Mapper\FieldMapper;
+use Spryker\Zed\Api\Persistence\Mapper\PaginationQueryMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -28,11 +29,19 @@ class ApiPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Persistence\Pagination\PaginationQueryMapperInterface
+     * @return \Spryker\Zed\Api\Persistence\Mapper\PaginationQueryMapperInterface
      */
     public function createPaginationQueryMapper()
     {
         return new PaginationQueryMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Persistence\Mapper\FieldMapperInterface
+     */
+    public function createFieldMapper()
+    {
+        return new FieldMapper();
     }
 
     /**

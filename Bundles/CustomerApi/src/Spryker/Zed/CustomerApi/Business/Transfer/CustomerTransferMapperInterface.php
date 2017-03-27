@@ -16,22 +16,15 @@ interface CustomerTransferMapperInterface
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
     public function convertCustomer(SpyCustomer $customerEntity);
 
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
     public function convertCustomerCollection(ObjectCollection $customerEntityCollection);
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
-     *
-     * @return array
-     */
-    public function convertCustomerCollectionToArray(ObjectCollection $customerEntityCollection);
 
 }

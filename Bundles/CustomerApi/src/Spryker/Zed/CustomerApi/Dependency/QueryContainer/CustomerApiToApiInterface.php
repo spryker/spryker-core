@@ -37,4 +37,12 @@ interface CustomerApiToApiInterface
      */
     public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer);
 
+    /**
+     * @param array $data
+     * @param array $allowedFields
+     *
+     * @return array
+     */
+    public function mapFields(array $data, array $allowedFields);
+
 }

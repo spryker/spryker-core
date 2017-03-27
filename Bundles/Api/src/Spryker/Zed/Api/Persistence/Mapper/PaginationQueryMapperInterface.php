@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Persistence\Pagination;
+namespace Spryker\Zed\Api\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;

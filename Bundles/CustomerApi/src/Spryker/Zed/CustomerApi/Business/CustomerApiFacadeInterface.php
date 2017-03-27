@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
+use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -19,8 +20,9 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
-     * @param ApiRequestTransfer $apiRequestTransfer
-     * @return CustomerTransfer[]
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
      */
     public function findCustomers(ApiRequestTransfer $apiRequestTransfer);
 
@@ -30,10 +32,11 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
-     * @param ApiRequestTransfer $apiRequestTransfer
-     * @return CustomerTransfer
      * @internal param CustomerTransfer $customerTransfer
      *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createCustomer(ApiRequestTransfer $apiRequestTransfer);
 
@@ -44,13 +47,12 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer $customerTransfer
      */
-    public function getCustomer(CustomerTransfer $customerTransfer);
+    public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer);
 
     /**
      * Specification:

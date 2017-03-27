@@ -55,4 +55,16 @@ interface ApiQueryContainerInterface extends QueryContainerInterface
      */
     public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer);
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param array $allowedFields
+     *
+     * @return array
+     */
+    public function mapFields(array $data, array $allowedFields);
+
 }

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
+use Exception;
+use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
@@ -48,13 +51,23 @@ class CustomerApi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $apiRequestTransfer
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function get(ApiRequestTransfer $apiRequestTransfer)
+    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
-        return $apiRequestTransfer;
+        $customerEntity = $this->queryContainer->queryCustomerById($idCustomer);
+
+        //TODO react on not found
+        if (!$customerEntity) {
+            throw new Exception('Customer not found idCustomer: ' . $idCustomer);
+        }
+
+        return $this->transferMapper->convertCustomer($customerEntity);
     }
 
     /**
@@ -94,7 +107,7 @@ class CustomerApi
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface //TODO should return transfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -114,7 +127,9 @@ class CustomerApi
             $apiRequestTransfer->getFilter()->getPagination()
         );
 
-        return $this->transferMapper->convertCustomerCollectionToArray($query->find());
+        $collection = $this->transferMapper->convertCustomerCollection($query->find());
+
+        return new ApiCollection($collection);
     }
 
 }

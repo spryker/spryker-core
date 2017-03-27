@@ -8,9 +8,9 @@
 namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -24,7 +24,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -33,15 +33,13 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
 
     /**
      * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function get($idCustomer, ApiDataTransfer $apiDataTransfer)
+    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        return $this->getFacade()->getCustomer($customerTransfer);
+        return $this->getFacade()->getCustomer($idCustomer, $apiFilterTransfer);
     }
 
     /**

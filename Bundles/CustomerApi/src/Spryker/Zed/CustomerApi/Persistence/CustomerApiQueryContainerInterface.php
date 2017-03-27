@@ -24,8 +24,17 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryFind();
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null
+     */
+    public function queryCustomerById($idCustomer);
 
 }

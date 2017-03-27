@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
+use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -22,7 +23,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
      */
     public function findCustomers(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -52,15 +53,16 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer $customerTransfer
      */
-    public function getCustomer(CustomerTransfer $customerTransfer)
+    public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
         return $this->getFactory()
             ->createCustomerApi()
-            ->get($customerTransfer);
+            ->get($idCustomer, $apiFilterTransfer);
     }
 
     /**

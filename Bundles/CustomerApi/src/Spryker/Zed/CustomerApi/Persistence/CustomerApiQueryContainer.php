@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerApi\Persistence;
 
-use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -29,11 +28,25 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     /**
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryFind()
     {
         return $this->queryCustomer();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null
+     */
+    public function queryCustomerById($idCustomer)
+    {
+        return $this->queryCustomer()
+            ->filterByIdCustomer($idCustomer)
+            ->findOne();
     }
 
 }

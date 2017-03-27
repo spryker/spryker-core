@@ -59,7 +59,7 @@ class Dispatcher
         $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
         $data = [];
         if ($entityOrCollection) {
-            $data = $entityOrCollection;
+            $data = $entityOrCollection->toArray(true);
         } else {
             //nothing found
         }
@@ -79,7 +79,7 @@ class Dispatcher
      *
      * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
      *
-     * @return mixed
+     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function callApiPlugin($resource, $method, $params)
     {
