@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Oms\Helper\OmsDataBuilder;
+namespace Oms\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ItemStateBuilder;
@@ -14,19 +14,25 @@ use Testify\Helper\BusinessHelper;
 class OmsData extends Module
 {
 
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
+     */
     public function haveState($override = [])
     {
-        $omsFacade = $this->getLocator()->oms()->facade();
+        $omsFacade = $this->getOmsFacade();
         $omsDataBuilder = new ItemStateBuilder($override);
 
-        $omsFacade->
+        return $omsFacade->createItemState($omsDataBuilder->build());
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function getLocator()
+    protected function getOmsFacade()
     {
-        return $this->getModule('\\' . BusinessHelper::class);
+        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->oms()->facade();
     }
+
 }

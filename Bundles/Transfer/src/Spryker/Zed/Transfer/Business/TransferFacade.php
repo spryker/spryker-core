@@ -33,7 +33,11 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * @param LoggerInterface $messenger
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
      */
     public function generateDataBuilders(LoggerInterface $messenger)
     {
@@ -52,7 +56,6 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     {
         $this->getFactory()->createTransferCleaner()->cleanDirectory();
     }
-
 
     /**
      * Specification:

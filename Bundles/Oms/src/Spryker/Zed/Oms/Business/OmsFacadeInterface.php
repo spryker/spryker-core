@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -281,6 +282,18 @@ interface OmsFacadeInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getStateEntity($stateName);
+
+    /**
+     * Specification
+     * - Stores a new ItemState entity from given transfer data
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
+     */
+    public function createItemState(ItemStateTransfer $itemStateTransfer);
 
     /**
      * Specification:

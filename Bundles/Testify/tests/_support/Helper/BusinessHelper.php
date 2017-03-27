@@ -10,7 +10,6 @@ namespace Testify\Helper;
 use Codeception\Configuration;
 use Codeception\Module;
 use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
 class BusinessHelper extends Module
@@ -53,7 +52,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade()
     {

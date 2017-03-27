@@ -3,7 +3,7 @@ modules:
     enabled:
         - Filesystem
         - \Checkout\Module\Functional
-        - \Testify\Module\BusinessLocator
+        - \Testify\Helper\BusinessHelper
         - \Customer\Helper\CustomerData
         - \Product\Helper\ProductData
         - \Stock\Helper\StockData

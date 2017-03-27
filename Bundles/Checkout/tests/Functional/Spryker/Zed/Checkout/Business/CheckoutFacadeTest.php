@@ -8,26 +8,16 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\CurrencyBuilder;
-use Generated\Shared\DataBuilder\CustomerBuilder;
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\ProductAbstractBuilder;
-use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\StockProductBuilder;
-use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -41,7 +31,6 @@ use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
@@ -51,7 +40,6 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
@@ -60,7 +48,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\Stock\Business\StockFacade;
 
 /**
  * @group Functional
@@ -97,8 +84,9 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @return void
      * @group current
+     *
+     * @return void
      */
     public function testCheckoutSuccessfully()
     {
@@ -122,8 +110,9 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @return void
      * @group current
+     *
+     * @return void
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
@@ -151,6 +140,7 @@ class CheckoutFacadeTest extends Test
 
     /**
      * @group current
+     *
      * @return void
      */
     public function testCheckoutCreatesOrderItems()
@@ -159,7 +149,6 @@ class CheckoutFacadeTest extends Test
         $this->tester->haveProductInStock(['sku' => $product1->getSku()]);
         $product2 = $this->tester->haveProduct();
         $this->tester->haveProductInStock(['sku' => $product2->getSku()]);
-
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(['sku' => $product1->getSku()])
@@ -181,7 +170,6 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
         $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
     }
-
 
     /**
      * @todo move this code to customer checkout connector, registration can only happen if we have

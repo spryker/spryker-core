@@ -16,8 +16,10 @@ use Testify\Helper\BusinessHelper;
 
 class CustomerData extends Module
 {
+
     /**
      * @param array $override
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function haveCustomer($override = [])
@@ -44,10 +46,11 @@ class CustomerData extends Module
     }
 
     /**
-     * @return BusinessHelper
+     * @return \Testify\Helper\BusinessHelper
      */
     private function getLocator()
     {
         return $this->getModule('\\' . BusinessHelper::class);
     }
+
 }

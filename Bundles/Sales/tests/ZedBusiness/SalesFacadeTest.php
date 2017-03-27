@@ -12,8 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
-use Sales\ZedBusinessTester;
-use Spryker\Zed\Sales\Business\SalesFacade;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @group Functional
@@ -30,7 +29,7 @@ class SalesFacadeTest extends Test
     const DEFAULT_ITEM_STATE = 'test';
 
     /**
-     * @var ZedBusinessTester
+     * @var \Sales\ZedBusinessTester
      */
     protected $tester;
 
@@ -39,6 +38,12 @@ class SalesFacadeTest extends Test
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStock(['sku' => $productTransfer->getSku()]);
+        $this->tester->haveState();
+
+        $checkoutResponseTransfer = $this->tester->haveOrder();
+//        echo '<pre>' . PHP_EOL . VarDumper::dump($checkoutResponseTransfer) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 
         $salesOrderEntity = $this->tester->create();
 

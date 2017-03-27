@@ -6,8 +6,9 @@
 
 namespace Generated\Shared\DataBuilder;
 
+use Generated\Shared\Transfer\{{ transferName }};
 use Spryker\Shared\Testify\AbstractDataBuilder;
-use Generated\Shared\Transfer\{{ dtoName }};
+
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
@@ -18,12 +19,19 @@ use Generated\Shared\Transfer\{{ dtoName }};
  */
 class {{ className }} extends AbstractDataBuilder
 {
+
+    /**
+     * @var array
+     */
     protected $defaultRules = [
 {% for rule in rules %}
         "{{ rule.name }}" => "{{ rule.dataBuilderRule | raw }}",
 {% endfor %}
     ];
 
+    /**
+     * @var array
+     */
     protected $dependencies = [
 {% for dependency in dependencies %}
         "{{ dependency.name }}" => "{{ dependency.type }}",
@@ -31,7 +39,7 @@ class {{ className }} extends AbstractDataBuilder
     ];
 
     /**
-     * @return {{ dtoName }}
+     * @return \Generated\Shared\Transfer\{{ transferName }}|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function build()
     {
@@ -39,9 +47,11 @@ class {{ className }} extends AbstractDataBuilder
     }
 
     /**
-     * @param $builder
-     * @return AbstractDataBuilder
+     * @param string $builder
+     *
      * @throws \Exception
+     *
+     * @return \Spryker\Shared\Testify\AbstractDataBuilder
      */
     protected function locateDataBuilder($builder)
     {
@@ -54,37 +64,45 @@ class {{ className }} extends AbstractDataBuilder
     }
 
     /**
-     * @return {{ dtoName }};
+     * @return \Generated\Shared\Transfer\{{ transferName }};
      */
-    public function getDTO()
+    public function getTransfer()
     {
-        return new {{ dtoName }};
+        return new {{ transferName }};
     }
 
 {% for dependency in dependencies %}
     /**
-     * @return self
+     * @param array|\Spryker\Shared\Testify\AbstractDataBuilder
+     *
+     * @return $this
      */
     public function with{{ dependency.ucfirstName }}($overrideOrBuilder = [])
     {
         if ($overrideOrBuilder instanceof AbstractDataBuilder) {
             $this->addDependencyBuilder('{{ dependency.name }}', $overrideOrBuilder, false);
+
             return $this;
         }
         $this->buildDependency('{{ dependency.name }}', $overrideOrBuilder);
+
         return $this;
     }
 
     /**
-     * @return self
+     * @param array|\Spryker\Shared\Testify\AbstractDataBuilder
+     *
+     * @return $this
      */
     public function withAnother{{ dependency.ucfirstName }}($overrideOrBuilder = [])
     {
         if ($overrideOrBuilder instanceof AbstractDataBuilder) {
             $this->addDependencyBuilder('{{ dependency.name }}', $overrideOrBuilder, true);
+
             return $this;
         }
         $this->buildDependency('{{ dependency.name }}', $overrideOrBuilder, true);
+
         return $this;
     }
 
