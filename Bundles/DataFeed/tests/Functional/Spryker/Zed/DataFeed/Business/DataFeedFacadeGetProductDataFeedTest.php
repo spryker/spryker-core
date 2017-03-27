@@ -14,7 +14,15 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductFeedJoinTransfer;
 use Spryker\Zed\DataFeed\Business\DataFeedFacade;
 
-class DataFeedFacadeTest extends Test
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group DataFeed
+ * @group Business
+ * @group DataFeedFacadeGetProductDataFeedTest
+ */
+class DataFeedFacadeGetProductDataFeedTest extends Test
 {
 
     /**
@@ -86,7 +94,7 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(266, $result);
+        $this->assertCount(133, $result);
     }
 
     public function testLocaleIsNotActiveConditionGetProductFeed()
@@ -102,7 +110,7 @@ class DataFeedFacadeTest extends Test
     public function testPaginationGetProductFeed()
     {
         $this->dataFeedPaginationTransfer->setLimit(20);
-        $this->dataFeedPaginationTransfer->setOffset(0);
+//        $this->dataFeedPaginationTransfer->setOffset(0);
         $this->dataFeedTransfer->setPagination($this->dataFeedPaginationTransfer);
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
@@ -118,7 +126,7 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(266, $result);
+        $this->assertCount(133, $result);
 
         $this->dataFeedDateFilterTransfer->setUpdatedFrom('2017-03-22');
         $this->dataFeedDateFilterTransfer->setUpdatedTo(null);
@@ -136,10 +144,8 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(266, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getImageArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertCount(133, $result);
+        $this->assertTrue(isset($result[0]['SpyProductImageSets'][0]['SpyProductImageSetToProductImages'][0]['SpyProductImage']));
     }
 
     public function testJoinImageFilteringExistingLocaleGetProductFeed()
@@ -153,9 +159,7 @@ class DataFeedFacadeTest extends Test
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
         $this->assertCount(133, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getImageArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertTrue(isset($result[0]['SpyProductImageSets'][0]['SpyProductImageSetToProductImages'][0]['SpyProductImage']));
     }
 
     public function testJoinImageFilteringNotExistingLocaleGetProductFeed()
@@ -178,10 +182,8 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(532, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getCategoryArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertCount(133, $result);
+        $this->assertTrue(isset($result[0]['SpyProductCategories'][0]['SpyCategory']['Attributes']));
     }
 
     public function testJoinProductPriceGetProductFeed()
@@ -191,10 +193,8 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(266, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getPriceArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertCount(133, $result);
+        $this->assertTrue(isset($result[0]['PriceProducts'][0]['PriceType']));
     }
 
     public function testJoinProductCategoryFilteringLocaleGetProductFeed()
@@ -217,10 +217,8 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(1096, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getVariantArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertCount(133, $result);
+        $this->assertTrue(isset($result[0]['SpyProducts']));
     }
 
     public function testJoinVariantFilterLocaleGetProductFeed()
@@ -232,7 +230,7 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(274, $result);
+        $this->assertCount(133, $result);
     }
 
     public function testJoinOptionGetProductFeed()
@@ -242,10 +240,8 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(402, $result);
-
-        $expectedArrayKeys = array_merge($this->getProductArrayKeys(), $this->getOptionArrayKeys());
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertCount(133, $result);
+        $this->assertTrue(isset($result[0]['SpyProductAbstractProductOptionGroups'][0]['SpyProductOptionGroup']['SpyProductOptionValues']));
     }
 
     public function testAllJoinsGetProductFeed()
@@ -259,17 +255,14 @@ class DataFeedFacadeTest extends Test
 
         $result = $this->dataFeedFacade->getProductDataFeed($this->dataFeedTransfer);
 
-        $this->assertCount(3504, $result);
+        $this->assertCount(133, $result);
 
-        $expectedArrayKeys = array_merge(
-            $this->getProductArrayKeys(),
-            $this->getImageArrayKeys(),
-            $this->getCategoryArrayKeys(),
-            $this->getPriceArrayKeys(),
-            $this->getVariantArrayKeys(),
-            $this->getOptionArrayKeys()
-        );
-        $this->assertEquals($expectedArrayKeys, array_keys($result[0]));
+        $this->assertTrue(isset($result[0]['PriceProducts']));
+        $this->assertTrue(isset($result[0]['SpyProductAbstractLocalizedAttributess']));
+        $this->assertTrue(isset($result[0]['SpyProducts']));
+        $this->assertTrue(isset($result[0]['SpyProductCategories']));
+        $this->assertTrue(isset($result[0]['SpyProductImageSets']));
+        $this->assertTrue(isset($result[0]['SpyProductAbstractProductOptionGroups']));
     }
 
     /**
@@ -330,102 +323,6 @@ class DataFeedFacadeTest extends Test
         $productFeedJoinTransfer = new ProductFeedJoinTransfer();
         
         return $productFeedJoinTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getProductArrayKeys()
-    {
-        return [
-            'IsFeatured',
-            'IdProductAbstract',
-            'Sku',
-            'Attributes',
-            'FkTaxSet',
-            'CreatedAt',
-            'UpdatedAt',
-            'LocalizedFkLocale',
-            'LocalizedName',
-            'LocalizedAttributes',
-            'LocalizedDescription',
-            'LocalizedMetaTitle',
-            'LocalizedMetaKeywords',
-            'LocalizedMetaDescription',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getImageArrayKeys()
-    {
-        return [
-            'ImageExternalUrlSmall',
-            'ImageExternalUrlLarge',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCategoryArrayKeys()
-    {
-        return [
-            'CategoryIsActive',
-            'CategoryIsClickable',
-            'CategoryIsInMenu',
-            'CategoryIsSearchable',
-            'CategoryFkLocale',
-            'CategoryName',
-            'CategoryMetaTitle',
-            'CategoryMetaKeywords',
-            'CategoryMetaDescription',
-            'CategoryImageName',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPriceArrayKeys()
-    {
-        return [
-            'PricePrice',
-            'PriceFkProduct',
-            'PriceTypeName',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getVariantArrayKeys()
-    {
-        return [
-            'VariantIdProduct',
-            'VariantSku',
-            'VariantIsActive',
-            'VariantAttributes',
-            'VariantFkLocale',
-            'VariantName',
-            'VariantIsComplete',
-            'VariantDescription',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getOptionArrayKeys()
-    {
-        return [
-            'OptionGroupName',
-            'OptionGroupActive',
-            'OptionPrice',
-            'OptionSku',
-            'OptionValue',
-        ];
     }
 
 }

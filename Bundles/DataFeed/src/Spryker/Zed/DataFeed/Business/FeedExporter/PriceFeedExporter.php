@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataFeed\Business\FeedExporter;
 
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
+use Spryker\Zed\DataFeed\Persistence\DataFeedPager;
 
 class PriceFeedExporter extends FeedExporterAbstract implements FeedExporterInterface
 {
@@ -19,11 +20,11 @@ class PriceFeedExporter extends FeedExporterAbstract implements FeedExporterInte
      */
     public function getDataFeed(DataFeedConditionTransfer $dataFeedConditionTransfer)
     {
-        $priceEntities = $this->queryContainer
-            ->queryPriceDataFeedCollection($dataFeedConditionTransfer)
-            ->find();
+        $priceQuery = $this->queryContainer
+            ->queryPriceDataFeedCollection($dataFeedConditionTransfer);
+        $result = $this->getResults($priceQuery, $dataFeedConditionTransfer);
 
-        return $this->convertEntityCollection($priceEntities);
+        return $result;
     }
 
 }

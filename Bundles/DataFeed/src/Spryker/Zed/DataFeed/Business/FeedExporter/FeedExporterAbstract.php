@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\DataFeed\Business\FeedExporter;
 
+use Generated\Shared\Transfer\DataFeedConditionTransfer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\DataFeed\Persistence\DataFeedPager;
 use Spryker\Zed\DataFeed\Persistence\DataFeedQueryContainerInterface;
 
 abstract class FeedExporterAbstract
@@ -26,6 +29,20 @@ abstract class FeedExporterAbstract
     public function __construct(DataFeedQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param DataFeedConditionTransfer $dataFeedConditionTransfer
+     *
+     * @return array
+     */
+    public function getResults(ModelCriteria $query, DataFeedConditionTransfer $dataFeedConditionTransfer)
+    {
+        $pager = new DataFeedPager($query, $dataFeedConditionTransfer);
+        $entitiesArray = $pager->getResults();
+
+        return $entitiesArray;
     }
 
     /**

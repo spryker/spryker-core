@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataFeed\Persistence\QueryBuilder;
 
 use Generated\Shared\Transfer\DataFeedConditionTransfer;
-use Generated\Shared\Transfer\DataFeedDateFilterTransfer;
 use Generated\Shared\Transfer\PriceFeedJoinTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
@@ -40,9 +39,7 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
         $productPriceQuery = $this->priceQueryContainer
             ->queryPriceProduct();
 
-        $this->applyJoins($productPriceQuery, $priceFeedJoinTransfer);
-        $this->applyPagination($productPriceQuery, $dataFeedConditionTransfer->getPagination());
-        $this->applyDateFilter($productPriceQuery, $dataFeedConditionTransfer->getDateFilter());
+        $productPriceQuery = $this->applyJoins($productPriceQuery, $priceFeedJoinTransfer);
 
         return $productPriceQuery;
     }
@@ -51,13 +48,17 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
      * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
      * @param \Generated\Shared\Transfer\PriceFeedJoinTransfer $priceFeedJoinTransfer
      *
-     * @return void
+     * @return SpyPriceProductQuery
      */
     protected function applyJoins(
         SpyPriceProductQuery $productPriceQuery,
-        PriceFeedJoinTransfer $priceFeedJoinTransfer
+        PriceFeedJoinTransfer $priceFeedJoinTransfer = null
     ) {
-        //todo: implement
+        if ($priceFeedJoinTransfer !== null) {
+            $productPriceQuery = $this->joinPriceTypes($productPriceQuery, $priceFeedJoinTransfer);
+        }
+
+        return $productPriceQuery;
     }
 
     /**
@@ -66,11 +67,26 @@ class PriceQueryBuilder extends QueryBuilderAbstract implements QueryBuilderInte
      *
      * @return void
      */
-    protected function applyDateFilter(
-        SpyPriceProductQuery $productPriceQuery,
-        DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
-    ) {
-        //todo: implement
+//    protected function applyDateFilter(
+//        SpyPriceProductQuery $productPriceQuery,
+//        DataFeedDateFilterTransfer $dataFeedDateFilterTransfer
+//    ) {
+//        //todo: implement
+//    }
+
+    /**
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
+     * @param \Generated\Shared\Transfer\PriceFeedJoinTransfer $priceFeedJoinTransfer
+     *
+     * @return SpyPriceProductQuery
+     */
+    protected function joinPriceTypes($productPriceQuery, $priceFeedJoinTransfer)
+    {
+        if ($priceFeedJoinTransfer->getIsJoinType()) {
+            $productPriceQuery->joinWithPriceType();
+        }
+
+        return $productPriceQuery;
     }
 
 }
