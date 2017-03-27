@@ -11,6 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_Environment;
 use Twig_ExtensionInterface;
 
+/**
+ * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ */
 abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
 {
 

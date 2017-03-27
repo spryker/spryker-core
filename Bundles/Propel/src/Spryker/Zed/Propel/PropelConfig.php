@@ -50,9 +50,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getPropelSchemaPathPatterns()
     {
-        return [
-            $this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()),
-        ];
+        return glob($this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()));
     }
 
     /**
@@ -62,7 +60,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     private function getSchemaPathPattern()
     {
-        return $this->get('SPRYKER_ROOT') . '/*/src/*/Zed/*/Persistence/Propel/Schema/';
+        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/*/Persistence/Propel/Schema/';
     }
 
     /**

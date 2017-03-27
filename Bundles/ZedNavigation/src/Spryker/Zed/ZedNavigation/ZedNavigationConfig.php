@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ZedNavigation;
 
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\ZedNavigation\ZedNavigationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -29,9 +28,12 @@ class ZedNavigationConfig extends AbstractBundleConfig
      */
     public function getNavigationSchemaPathPattern()
     {
-        return [
-            $this->getBundlesDirectory() . '/*/src/*/Zed/*/Communication',
-        ];
+        $navigationSchemaPathPatterns = array_merge(
+            glob($this->getBundlesDirectory() . '/*/src/*/Zed/*/Communication'),
+            glob(APPLICATION_SOURCE_DIR . '/*/Zed/*/Communication')
+        );
+
+        return $navigationSchemaPathPatterns;
     }
 
     /**
@@ -79,7 +81,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      */
     public function getBundlesDirectory()
     {
-        return $this->get(KernelConstants::SPRYKER_ROOT);
+        return APPLICATION_VENDOR_DIR . '/*';
     }
 
 }
