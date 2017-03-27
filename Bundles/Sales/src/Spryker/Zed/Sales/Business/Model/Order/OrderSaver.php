@@ -202,7 +202,10 @@ class OrderSaver implements OrderSaverInterface
         $customerTransfer = $quoteTransfer->getCustomer();
 
         $salesOrderEntity->setFkCustomer($customerTransfer->getIdCustomer());
-        $salesOrderEntity->fromArray($customerTransfer->modifiedToArray());
+        $salesOrderEntity->setEmail($customerTransfer->getEmail());
+        $salesOrderEntity->setFirstName($customerTransfer->getFirstName());
+        $salesOrderEntity->setLastName($customerTransfer->getLastName());
+        $salesOrderEntity->setSalutation($customerTransfer->getSalutation());
     }
 
     /**
