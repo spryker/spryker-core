@@ -7,16 +7,31 @@
 
 namespace Spryker\Zed\Api\Business;
 
+use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ApiResponseTransfer;
+use Symfony\Component\HttpFoundation\Response;
+
 interface ApiFacadeInterface
 {
 
     /**
      * @api
      *
-     * @param int $id
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\GroupTransfer
+     * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function getGroup($id);
+    public function dispatch(ApiRequestTransfer $apiRequestTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
+     * @param \Symfony\Component\HttpFoundation\Response $responseObject
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject);
 
 }

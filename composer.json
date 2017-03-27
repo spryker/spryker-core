@@ -151,6 +151,12 @@
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
 
+      "Spryker\\Shared\\CustomerApi\\": "Bundles/CustomerApi/src",
+      "Functional\\Spryker\\Shared\\CustomerApi\\": "Bundles/CustomerApi/tests",
+      "Acceptance\\CustomerApi\\": "Bundles/CustomerApi/tests",
+      "Spryker\\Zed\\CustomerApi\\": "Bundles/CustomerApi/src",
+      "Functional\\Spryker\\Zed\\CustomerApi\\": "Bundles/CustomerApi/tests",
+
       "Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/src",
       "Unit\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
       "Functional\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",

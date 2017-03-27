@@ -13,23 +13,9 @@ use Spryker\Zed\Kernel\Container;
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
-    const FACADE_USER = 'FACADE_USER';
-    const FACADE_USER_GROUP = 'FACADE_USER_GROUP';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
-            return $container->getLocator()->utilDateTime()->service();
-        };
-
-        return $container;
-    }
+    const SERVICE_ENCODING = 'SERVICE_ENCODING';
+    const PLUGIN_STACK_PRE_PROCESS = 'PLUGIN_STACK_PRE_PROCESS';
+    const PLUGIN_STACK_POST_PROCESS = 'PLUGIN_STACK_POST_PROCESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +24,10 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container[static::SERVICE_ENCODING] = function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
+        };
+
         return $container;
     }
 

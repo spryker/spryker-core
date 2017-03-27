@@ -48,15 +48,23 @@ class ZedBootstrap
             $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getCurrentCountry() . '/cache/profiler';
         }
 
-        $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
 
+        $serviceProvider = $this->resolveUriToServiceProviderMap();
+        if ($serviceProvider) {
+            $this->registerServiceProvider($serviceProvider);
+            return $this->application;
+        }
+
+        $this->optimizeApp();
+
+        // For BC
         if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
             $this->registerServiceProviderForInternalRequest();
 
             return $this->application;
         }
-
+        // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
 
@@ -67,6 +75,11 @@ class ZedBootstrap
         $this->addVariablesToTwig();
 
         return $this->application;
+    }
+
+    protected function resolveUriToServiceProviderMap()
+    {
+        return null;
     }
 
     /**

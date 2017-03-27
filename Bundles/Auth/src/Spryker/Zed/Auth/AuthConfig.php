@@ -54,6 +54,11 @@ class AuthConfig extends AbstractBundleConfig
             'controller' => 'password',
             'action' => 'reset-request',
         ],
+        [
+            'bundle' => 'api',
+            'controller' => 'rest',
+            'action' => 'index',
+        ],
     ];
 
     /**
