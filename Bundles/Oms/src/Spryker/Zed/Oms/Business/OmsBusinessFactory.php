@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Oms\Business\ItemState\ItemState;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
@@ -302,14 +301,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\ItemState\ItemStateInterface
-     */
-    public function createItemState()
-    {
-        return new ItemState();
     }
 
 }

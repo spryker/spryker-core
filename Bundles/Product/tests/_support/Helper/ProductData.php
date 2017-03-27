@@ -28,8 +28,7 @@ class ProductData extends Module
         $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
 
         if ($this->hasModule('\\' . DataCleanup::class)) {
-            /** @var \Testify\Helper\DataCleanup $cleanupModule */
-            $cleanupModule = $this->getModule('\\' . DataCleanup::class);
+            $cleanupModule = $this->getDataCleanupModule();
             $cleanupModule->_addCleanup(function () use ($product, $abstractProductId) {
                 $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
                 $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
@@ -53,6 +52,14 @@ class ProductData extends Module
     private function getProductQuery()
     {
         return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->queryContainer();
+    }
+
+    /**
+     * @return \Testify\Helper\DataCleanup
+     */
+    protected function getDataCleanupModule()
+    {
+        return $this->getModule('\\' . DataCleanup::class);
     }
 
 }

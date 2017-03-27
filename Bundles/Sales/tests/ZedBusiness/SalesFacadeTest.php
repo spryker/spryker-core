@@ -37,6 +37,8 @@ class SalesFacadeTest extends Test
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
+        $this->markTestSkipped();
+
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock(['sku' => $productTransfer->getSku()]);
         $this->tester->haveState();

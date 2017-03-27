@@ -2,6 +2,7 @@
 
 namespace Sales\Helper;
 
+use Application\Module\Zed;
 use Codeception\Module;
 use Codeception\TestCase;
 
@@ -24,7 +25,7 @@ class ZedPresentation extends Module
      */
     protected function getZedModule()
     {
-        return $this->getModule('\Application\Module\Zed');
+        return $this->getModule('\\' . Zed::class);
     }
 
 }

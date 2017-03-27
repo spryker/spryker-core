@@ -5,7 +5,7 @@
 
     <transfer name="StockProduct">
         <property name="sku" type="string" />
-        <property name="stockType" type="string"  />
+        <property name="stockType" type="string" />
         <property name="fkStock" type="int" />
         <property name="quantity" type="int" />
         <property name="isNeverOutOfStock" type="string" />
