@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class SortByQueryFilterPreProcessor implements PreProcessorInterface
@@ -30,7 +31,14 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
 
         $sort = [];
         foreach ($sortCollection as $sortItemString) {
-            list($column, $order) = explode(':', $sortItemString);
+            $order = Criteria::ASC;
+            $column = $sortItemString;
+
+            if ($sortItemString[0] === '-') {
+                $column = substr($sortItemString, 1);
+                $order = Criteria::DESC;
+            }
+
             $sort[$column] = $order;
         }
 
