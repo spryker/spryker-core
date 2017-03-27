@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class CustomerApi
 {
@@ -60,14 +63,14 @@ class CustomerApi
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
-        $customerEntity = $this->queryContainer->queryCustomerById($idCustomer);
+        $customerData = $this->queryContainer->queryCustomerById($idCustomer, $apiFilterTransfer->getFields());
 
         //TODO react on not found
-        if (!$customerEntity) {
+        if (!$customerData) {
             throw new Exception('Customer not found idCustomer: ' . $idCustomer);
         }
 
-        return $this->transferMapper->convertCustomer($customerEntity);
+        return $this->transferMapper->convertCustomer($customerData);
     }
 
     /**
@@ -117,8 +120,12 @@ class CustomerApi
         );
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
 
+        $query = $this->queryContainer->queryFind(
+            $apiRequestTransfer->getFilter()->getFields()
+        );
+
         $query = $this->apiQueryContainer->createQuery(
-            $this->queryContainer->queryFind(),
+            $query,
             $criteriaTransfer
         );
 

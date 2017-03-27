@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CustomerApi\Persistence;
 
-use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerApiQueryContainerInterface extends QueryContainerInterface
@@ -24,17 +22,20 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param array $fields
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryFind();
+    public function queryFind(array $fields = []);
 
     /**
      * @api
      *
      * @param int $idCustomer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null
+     * @param array $fields
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    public function queryCustomerById($idCustomer);
+    public function queryCustomerById($idCustomer, array $fields = []);
 
 }

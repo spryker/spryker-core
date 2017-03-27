@@ -30,4 +30,22 @@ class ApiCollection extends Collection implements ApiCollectionInterface
         return $result;
     }
 
+    /**
+     * @param bool $deep
+     *
+     * @return array
+     */
+    public function modifiedToArray($deep = false)
+    {
+        $data = $this->getArrayableData();
+
+        $result = [];
+        /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
+        foreach ($data as $transfer) {
+            $result[] = $transfer->modifiedToArray($deep);
+        }
+
+        return $result;
+    }
+
 }

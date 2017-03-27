@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerApi\Business\Transfer;
 
 use Generated\Shared\Transfer\CustomerApiTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Propel\Runtime\Collection\ArrayCollection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 
@@ -29,30 +30,28 @@ class CustomerTransferMapper implements CustomerTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function convertCustomer(SpyCustomer $customerEntity)
+    public function convertCustomer(array $data)
     {
-        $customerTransfer = new CustomerApiTransfer();
-        $data = $customerEntity->toArray();
+        $customerApiTransfer = new CustomerApiTransfer();
+        $customerApiTransfer->fromArray($data, true);
 
-        $customerTransfer->fromArray($data, true);
-
-        return $customerTransfer;
+        return $customerApiTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $customerEntityCollection
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
-    public function convertCustomerCollection(ObjectCollection $customerEntityCollection)
+    public function convertCustomerCollection(ArrayCollection $customerEntityCollection)
     {
         $transferList = [];
-        foreach ($customerEntityCollection as $customerEntity) {
-            $transferList[] = $this->convertCustomer($customerEntity);
+        foreach ($customerEntityCollection as $customerData) {
+            $transferList[] = $this->convertCustomer($customerData);
         }
 
         return $transferList;

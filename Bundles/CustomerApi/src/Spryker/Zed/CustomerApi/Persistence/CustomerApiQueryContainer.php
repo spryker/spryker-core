@@ -28,25 +28,46 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     /**
      * @api
      *
+     * @param array $fields
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryFind()
+    public function queryFind(array $fields = [])
     {
-        return $this->queryCustomer();
+        $query = $this->queryCustomer();
+        $fieldMapper = $this->createFieldMapper();
+
+        return $fieldMapper->mapFields($query, $fields);
     }
 
     /**
      * @api
      *
      * @param int $idCustomer
+     * @param array $fields
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    public function queryCustomerById($idCustomer)
+    public function queryCustomerById($idCustomer, array $fields = [])
     {
-        return $this->queryCustomer()
+        $query = $this->queryCustomer();
+        $fieldMapper = $this->createFieldMapper();
+
+        $query = $fieldMapper->mapFields($query, $fields);
+
+        return $query
             ->filterByIdCustomer($idCustomer)
             ->findOne();
+    }
+
+    /**
+     * @api
+     *
+     * @return FieldMapper\FieldMapperInterface
+     */
+    public function createFieldMapper()
+    {
+        return $this->getFactory()->createFieldMapper();
     }
 
 }

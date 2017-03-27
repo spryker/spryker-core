@@ -68,21 +68,4 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
             ->mapPagination($query, $apiPaginationTransfer);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $data
-     * @param array $allowedFields
-     *
-     * @return array
-     */
-    public function mapFields(array $data, array $allowedFields)
-    {
-        return $this->getFactory()
-            ->createFieldMapper()
-            ->mapFields($data, $allowedFields);
-    }
-
 }

@@ -8,23 +8,24 @@
 namespace Spryker\Zed\CustomerApi\Business\Transfer;
 
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Propel\Runtime\Collection\ArrayCollection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface CustomerTransferMapperInterface
 {
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function convertCustomer(SpyCustomer $customerEntity);
+    public function convertCustomer(array $data);
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $customerEntityCollection
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
-    public function convertCustomerCollection(ObjectCollection $customerEntityCollection);
+    public function convertCustomerCollection(ArrayCollection $customerEntityCollection);
 
 }

@@ -12,4 +12,11 @@ use Everon\Component\Collection\CollectionInterface;
 interface ApiCollectionInterface extends CollectionInterface
 {
 
+    /**
+     * @param bool $deep
+     *
+     * @return array
+     */
+    public function modifiedToArray($deep = false);
+
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerApi\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Spryker\Zed\CustomerApi\Persistence\FieldMapper\FieldMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -23,6 +24,14 @@ class CustomerApiPersistenceFactory extends AbstractPersistenceFactory
     public function createCustomerQuery()
     {
         return SpyCustomerQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerApi\Persistence\FieldMapper\FieldMapperInterface
+     */
+    public function createFieldMapper()
+    {
+        return new FieldMapper();
     }
 
 }
