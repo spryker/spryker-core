@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "codeception/codeception": "^2.1.5",
+    "codeception/codeception": "^2.2.10",
     "php-mock/php-mock": "^1.0.1",
     "satooshi/php-coveralls": "^1.0.0",
     "spryker/config": "^3.0.0",
