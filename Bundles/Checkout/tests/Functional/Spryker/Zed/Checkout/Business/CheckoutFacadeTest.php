@@ -90,11 +90,9 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutSuccessfully()
     {
-        // ARRANGE
         $product = $this->tester->haveProduct();
         $this->tester->haveProductInStock(['sku' => $product->getSku()]);
 
-        // ACT
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(['sku' => $product->getSku()])
             ->withCustomer()
@@ -105,7 +103,6 @@ class CheckoutFacadeTest extends Test
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
-        // ASSERT
         $this->assertTrue($result->getIsSuccess());
     }
 
@@ -116,12 +113,10 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
-        // ARRANGE
         $this->tester->haveCustomer(['email' => 'max@mustermann.de']);
         $product = $this->tester->haveProduct();
         $this->tester->haveProductInStock(['sku' => $product->getSku()]);
 
-        // ACT
         $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
             ->withItem(['sku' => $product->getSku()])
             ->withCustomer()
@@ -132,7 +127,6 @@ class CheckoutFacadeTest extends Test
 
         $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
-        // ASSERT
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
         $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());

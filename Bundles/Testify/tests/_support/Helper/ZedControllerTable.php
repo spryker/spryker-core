@@ -2,15 +2,17 @@
 namespace Testify\Helper;
 
 use Codeception\Lib\Interfaces\DependsOnModule;
+use Codeception\Module;
 use Codeception\TestCase;
 
-class ZedControllerTable extends \Codeception\Module implements DependsOnModule
+class ZedControllerTable extends Module implements DependsOnModule
 {
+
     /**
-     * @var ZedBootstrap
+     * @var \Testify\Helper\ZedBootstrap
      */
     protected $zedBootstrap;
-    
+
     protected $currentData = [];
 
     public function _depends()
@@ -18,11 +20,17 @@ class ZedControllerTable extends \Codeception\Module implements DependsOnModule
         return [ZedBootstrap::class => "Should be used with ZedBootstrap only"];
     }
 
+    /**
+     * @return void
+     */
     public function _before(TestCase $test)
     {
         $this->currentData = [];
     }
 
+    /**
+     * @return void
+     */
     public function _inject(ZedBootstrap $bootstrap)
     {
         $this->zedBootstrap = $bootstrap;
@@ -31,6 +39,8 @@ class ZedControllerTable extends \Codeception\Module implements DependsOnModule
     /**
      * @param $uri
      * @param array $params
+     *
+     * @return void
      */
     public function listDataTable($uri, array $params = [])
     {
@@ -41,6 +51,8 @@ class ZedControllerTable extends \Codeception\Module implements DependsOnModule
 
     /**
      * @param int $num
+     *
+     * @return void
      */
     public function seeNumRecordsInTable($num)
     {
@@ -53,6 +65,8 @@ class ZedControllerTable extends \Codeception\Module implements DependsOnModule
     /**
      * @param int $row
      * @param array $expectedRow
+     *
+     * @return void
      */
     public function seeInTable($row, array $expectedRow)
     {
@@ -64,7 +78,9 @@ class ZedControllerTable extends \Codeception\Module implements DependsOnModule
             $this->fail("No row #$row inside in a list, current number of rows: " . count($data));
         }
         $actualRow = $data[$row];
-        $this->assertEquals(count($expectedRow), array_intersect_assoc($expectedRow, $actualRow),
+        $this->assertEquals(
+            count($expectedRow),
+            array_intersect_assoc($expectedRow, $actualRow),
             "Row does not contain the provided data\n"
             . "- <info>" . var_export($expectedRow, true) . "</info>\n"
             . "+ " . var_export($actualRow, true)

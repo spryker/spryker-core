@@ -245,6 +245,8 @@ abstract class AbstractDataBuilder
     }
 
     /**
+     * @SuppressWarning(Squiz.EvalSniff)
+     * 
      * @param string $rule
      *
      * @return bool|string

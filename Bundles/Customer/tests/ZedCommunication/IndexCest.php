@@ -1,22 +1,31 @@
 <?php
 namespace ZedCommunication;
 
+use Customer\ZedCommunicationTester;
 use Faker\Factory;
-use Faker\Generator;
 
 class IndexCest
 {
+
     /**
-     * @var Generator
+     * @var \Faker\Generator
      */
     protected $faker;
 
+    /**
+     * @return void
+     */
     public function _inject()
     {
         $this->faker = Factory::create();
     }
 
-    public function listCustomers(\Customer\ZedCommunicationTester $i)
+    /**
+     * @param \Customer\ZedCommunicationTester $i
+     *
+     * @return void
+     */
+    public function listCustomers(ZedCommunicationTester $i)
     {
         $i->amOnPage('/customer');
         $i->seeResponseCodeIs(200);
@@ -24,21 +33,28 @@ class IndexCest
     }
 
     /**
-     * @group current
      * @param \Customer\ZedCommunicationTester $i
+     *
+     * @return void
      */
-    public function addCustomer(\Customer\ZedCommunicationTester $i)
+    public function addCustomer(ZedCommunicationTester $i)
     {
         $email = $this->faker->email;
+
+        $formData = [
+            'customer' => [
+                'email' => $email,
+                'salutation' => 'Mr',
+                'first_name' => $this->faker->firstName,
+                'last_name' => $this->faker->lastName,
+            ]
+        ];
+
         $i->amOnPage('/customer/add');
-        $i->submitForm(['name' => 'customer'], ['customer' => [
-            'email' => $email,
-            'salutation' => 'Mr',
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName
-        ]]);
+        $i->submitForm(['name' => 'customer'], $data);
         $i->see(1);
         $i->listDataTable('/customer/index/table');
         $i->seeInLastRow([2 => $email]);
     }
+
 }
