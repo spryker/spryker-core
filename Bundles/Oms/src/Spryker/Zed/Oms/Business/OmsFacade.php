@@ -326,20 +326,6 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer
-     */
-    public function createItemState(ItemStateTransfer $itemStateTransfer)
-    {
-        return $this->getFactory()->createItemState()->createItemState($itemStateTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
