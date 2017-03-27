@@ -17,9 +17,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Loads all *transfer.xml definitions
-     * - Generates transfer objects
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,6 +31,8 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
@@ -45,8 +45,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all generated transfer objects
+     * {@inheritdoc}
      *
      * @api
      *
@@ -58,8 +57,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all generated transfer objects
+     * {@inheritdoc}
      *
      * @api
      *
@@ -71,8 +69,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Validates all generated transfer objects
+     * {@inheritdoc}
      *
      * @api
      *
