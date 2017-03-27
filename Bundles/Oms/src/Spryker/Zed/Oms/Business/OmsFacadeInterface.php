@@ -284,18 +284,6 @@ interface OmsFacadeInterface
     public function getStateEntity($stateName);
 
     /**
-     * Specification
-     * - Stores a new ItemState entity from given transfer data
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer
-     */
-    public function createItemState(ItemStateTransfer $itemStateTransfer);
-
-    /**
      * Specification:
      *  - Gets process entity by process name from persistence
      *
