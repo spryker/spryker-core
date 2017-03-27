@@ -1,12 +1,12 @@
 <?php
 namespace Product\Helper;
 
-use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Testify\Helper\AbstractDataHelper;
 use Testify\Helper\BusinessHelper;
 
-class ProductData extends Module
+class ProductData extends AbstractDataHelper
 {
 
     /**
@@ -17,12 +17,20 @@ class ProductData extends Module
     public function haveProduct($override = [])
     {
         $productFacade = $this->getProductFacade();
-        $abstractProjectId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
-        $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProjectId]))
+        $abstractProductId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
+
+        $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProductId]))
             ->seed($override)
             ->build();
 
         $productFacade->createProductConcrete($product);
+        $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: ".$product->getIdProductConcrete());
+
+        $this->cleanups[] = function() use ($product, $abstractProductId) {
+            $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: ".$product->getIdProductConcrete());
+            $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
+            $this->getProductQuery()->queryProductAbstract()->findByIdProductAbstract($abstractProductId)->delete();
+        };
 
         return $product;
     }
@@ -35,4 +43,13 @@ class ProductData extends Module
         return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->facade();
     }
 
+    /**
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainer
+     */
+    private function getProductQuery()
+    {
+        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->queryContainer();
+    }
+    
+    
 }
