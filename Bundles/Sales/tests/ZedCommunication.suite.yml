@@ -2,22 +2,5 @@ class_name: ZedCommunicationTester
 modules:
     enabled:
         - \Sales\Helper\ZedCommunication
-        - \Testify\Helper\ZedBootstrap:
-            serviceProvider:
-              - Silex\Provider\SessionServiceProvider
-              - Silex\Provider\TwigServiceProvider
-              - Silex\Provider\FormServiceProvider
-              - Silex\Provider\HttpFragmentServiceProvider
-              - Silex\Provider\ServiceControllerServiceProvider
-              - Silex\Provider\ValidatorServiceProvider
-              - Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider
-              - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider
-              - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
+        - \Testify\Helper\ZedBootstrap
+
