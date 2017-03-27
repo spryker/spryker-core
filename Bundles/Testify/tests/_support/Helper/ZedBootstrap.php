@@ -26,8 +26,8 @@ class ZedBootstrap extends Framework
     /**
      * @var array
      */
-    protected $requiredFields = [
-        self::CONFIG_KEY_SERVICE_PROVIDER,
+    protected $config = [
+        self::CONFIG_KEY_SERVICE_PROVIDER => [],
     ];
 
     /**
@@ -55,7 +55,7 @@ class ZedBootstrap extends Framework
      */
     protected function loadApplication()
     {
-        $this->application = new TestifyBootstrap($this->config[self::CONFIG_KEY_SERVICE_PROVIDER]);
+        $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
 
         if (!isset($this->application)) {
             throw new ModuleConfigException(__CLASS__, 'Application instance was not received from bootstrap file');
