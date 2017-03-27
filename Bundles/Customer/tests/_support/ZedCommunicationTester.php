@@ -1,6 +1,8 @@
 <?php
 namespace Customer;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace Customer;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ZedCommunicationTester extends \Codeception\Actor
+ */
+class ZedCommunicationTester extends Actor
 {
+
     use _generated\ZedCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

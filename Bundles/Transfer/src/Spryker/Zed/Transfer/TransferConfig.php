@@ -64,7 +64,6 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     *
      * @return string[]
      */
     protected function getCoreSourceDirectoryGlobPatterns()
