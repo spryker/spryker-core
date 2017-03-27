@@ -48,16 +48,15 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      * @param int $idCustomer
      * @param array $fields
      *
-     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomer
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerById($idCustomer, array $fields = [])
     {
         $query = $this->mapQueryFields($this->queryCustomer(), $fields);
 
-        return $query
-            ->filterByIdCustomer($idCustomer)
-            ->findOne();
+        return $query->filterByIdCustomer($idCustomer);
     }
+
 
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $queryCustomer

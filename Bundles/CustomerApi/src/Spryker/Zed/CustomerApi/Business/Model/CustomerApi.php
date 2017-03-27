@@ -12,13 +12,10 @@ use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Propel\Runtime\Formatter\ArrayFormatter;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class CustomerApi
 {
@@ -63,9 +60,10 @@ class CustomerApi
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
-        $customerData = $this->queryContainer->queryCustomerById($idCustomer, $apiFilterTransfer->getFields());
+        $customerData = (array)$this->queryContainer
+            ->queryCustomerById($idCustomer, $apiFilterTransfer->getFields())
+            ->findOne();
 
-        //TODO react on not found
         if (!$customerData) {
             throw new Exception('Customer not found idCustomer: ' . $idCustomer);
         }
@@ -114,10 +112,10 @@ class CustomerApi
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
-        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
             $apiRequestTransfer->getFilter()->getFilter()
         );
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
 
         $query = $this->queryContainer->queryFind(
