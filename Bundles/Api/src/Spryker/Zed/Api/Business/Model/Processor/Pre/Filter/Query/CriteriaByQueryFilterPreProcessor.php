@@ -25,9 +25,9 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
             return;
         }
 
-        $criteria = $queryStrings['filter'];
+        $filter = $queryStrings['filter'];
 
-        $apiRequestTransfer->getFilter()->setCriteria($criteria);
+        $apiRequestTransfer->getFilter()->setFilter($filter);
     }
 
 }

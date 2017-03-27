@@ -18,6 +18,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryF
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByExtensionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParamsPreProcessor;
@@ -76,6 +77,7 @@ class ApiConfig extends AbstractBundleConfig
             ResourceActionPreProcessor::class,
             ResourceParamsPreProcessor::class,
             FilterPreProcessor::class,
+            PaginationPreProcessor::class,
             FindActionPreProcessor::class,
             UpdateActionPreProcessor::class,
             FieldsByQueryPreProcessor::class,
