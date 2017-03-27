@@ -33,6 +33,24 @@ class BundleControllerActionTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testGetBundleShouldStripStoreName()
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Kernel\BundleControllerAction $bundleControllerLocator */
+        $bundleControllerLocator = $this
+            ->getMockBuilder(BundleControllerAction::class)
+            ->setMethods(['getStoreName'])
+            ->setConstructorArgs(['fooDE', 'bar', 'baz'])
+            ->getMock();
+        $bundleControllerLocator
+            ->method('getStoreName')
+            ->will($this->returnValue('DE'));
+
+        $this->assertSame('foo', $bundleControllerLocator->getBundle());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetControllerShouldReturnControllerName()
     {
         $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
