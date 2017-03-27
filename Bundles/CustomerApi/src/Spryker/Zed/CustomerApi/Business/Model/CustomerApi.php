@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomerApi\Business\Model;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
 
@@ -28,15 +28,23 @@ class CustomerApi
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface
+     */
+    protected $transferMapper;
+
+    /**
      * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface $transferMapper
      */
     public function __construct(
         CustomerApiToApiInterface $apiQueryContainer,
-        CustomerApiQueryContainerInterface $queryContainer
+        CustomerApiQueryContainerInterface $queryContainer,
+        CustomerTransferMapperInterface $transferMapper
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->queryContainer = $queryContainer;
+        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -91,9 +99,17 @@ class CustomerApi
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $criteriaRuleSet = new PropelQueryBuilderRuleSetTransfer();
+        $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
+            $apiRequestTransfer->getFilter()->getCriteria()
+        );
 
-        sd($apiRequestTransfer->toArray());
+        $criteriaTransfer->setRuleSet($criteriaRuleSet);
+
+        $query = $this->queryContainer->queryFind();
+        $query = $this->apiQueryContainer->createQuery($query, $criteriaTransfer);
+        $query->setLimit(10);
+
+        return $this->transferMapper->convertCustomerCollectionToArray($query->find());
     }
 
 }

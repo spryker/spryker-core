@@ -36,7 +36,14 @@
         <property name="fields" type="array" />
         <property name="criteria" type="string" />
         <property name="sort" type="array" />
-        <property name="pagination" type="string" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int" />
+        <property name="offset" type="int" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
     </transfer>
 
     <transfer name="ApiData">

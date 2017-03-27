@@ -14,5 +14,18 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CustomerApiQueryContainerInterface extends QueryContainerInterface
 {
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function queryCustomer();
+
+    /**
+     * @api
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryFind();
 
 }

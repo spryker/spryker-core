@@ -19,7 +19,7 @@ class ApiToPropelQueryBuilderBridge implements ApiToPropelQueryBuilderInterface
     protected $propelQueryBuilderQueryContainer;
 
     /**
-     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer $propelQueryBuilderQueryContainer
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface $propelQueryBuilderQueryContainer
      */
     public function __construct($propelQueryBuilderQueryContainer)
     {

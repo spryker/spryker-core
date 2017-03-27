@@ -59,7 +59,7 @@ class Dispatcher
         $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
         $data = [];
         if ($entityOrCollection) {
-            $data = $entityOrCollection->toArray();
+            $data = $entityOrCollection;
         } else {
             //nothing found
         }

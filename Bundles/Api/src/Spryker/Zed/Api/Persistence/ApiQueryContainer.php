@@ -31,7 +31,7 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
     {
         return $this->getFactory()
             ->getPropelQueryBuilder()
-            ->buildQuery($query, $criteriaTransfer);
+            ->createQuery($query, $criteriaTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
     {
         return $this->getFactory()
             ->getPropelQueryBuilder()
-            ->createRuleQuerySetFromJson($json);
+            ->createPropelQueryBuilderCriteriaFromJson($json);
     }
 
 }

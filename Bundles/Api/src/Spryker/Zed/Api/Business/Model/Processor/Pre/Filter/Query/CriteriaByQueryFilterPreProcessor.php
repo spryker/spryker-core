@@ -21,14 +21,11 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings['criteria'])) {
+        if (empty($queryStrings['filter'])) {
             return;
         }
 
-        $criteria = $queryStrings['criteria'];
-
-        //TODO remove
-        $criteria = '{"condition":"OR","rules":[{"id":"first_name","field":"first_name","type":"string","input":"text","operator":"equal","value":"John"},{"id":"last_name","field":"last_name","type":"string","input":"text","operator":"equal","value":"Doe"}]}';
+        $criteria = $queryStrings['filter'];
 
         $apiRequestTransfer->getFilter()->setCriteria($criteria);
     }

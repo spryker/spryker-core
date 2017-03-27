@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Persistence;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -27,15 +27,13 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     }
 
     /**
-     * @param ApiRequestTransfer $apiFilterTransfer
+     * @api
      *
-     * @return array
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function find(ApiRequestTransfer $apiFilterTransfer)
+    public function queryFind()
     {
-        $query = $this->queryCustomer();
-
-
+        return $this->queryCustomer();
     }
 
 }
