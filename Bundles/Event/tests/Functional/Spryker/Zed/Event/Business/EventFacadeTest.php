@@ -195,7 +195,7 @@ class EventFacadeTest extends Test
             $queueClientMock = $this->createQueueClientMock();
         }
 
-        $eventDependencyProvider = new EventDependencyProvider();                                         
+        $eventDependencyProvider = new EventDependencyProvider();
 
         $container = new Container();
 
