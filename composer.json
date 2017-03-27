@@ -680,11 +680,11 @@
       "ErrorHandler\\Module\\": "Bundles/ErrorHandler/tests/_support/Module",
       "Oms\\Module\\": "Bundles/Oms/tests/_support/Module",
       "Propel\\Module\\": "Bundles/Propel/tests/_support/Module",
-      "Sales\\Module\\": "Bundles/Sales/tests/_support/Module",
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",
       "Transfer\\Module\\": "Bundles/Transfer/tests/_support/Module"
     },
     "files": [
+      "autoload.php",
       "Bundles/Config/src/Spryker/Shared/Config.php"
     ]
   },
