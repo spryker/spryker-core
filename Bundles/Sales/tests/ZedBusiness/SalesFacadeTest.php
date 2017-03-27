@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @group Functional

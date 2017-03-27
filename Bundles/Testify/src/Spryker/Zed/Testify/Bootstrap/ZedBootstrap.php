@@ -26,6 +26,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorSer
 use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider as SprykerTwigServiceProvider;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin;
@@ -65,9 +66,11 @@ class ZedBootstrap
         $this->enableHttpMethodParameterOverride();
 
         $this->registerServiceProvider();
+        $application['session.test'] = true;
+
         $this->addVariablesToTwig();
 
-        return $application;
+        return $this->application;
     }
 
     /**
@@ -75,14 +78,11 @@ class ZedBootstrap
      */
     private function getApplication()
     {
-        if (!$this->application) {
+        $application = new Application();
+        $this->unsetSilexExceptionHandler($application);
+        Pimple::setApplication($application);
 
-            $application = new Application();
-            $this->unsetSilexExceptionHandler($application);
-            Pimple::setApplication($application);
-
-            $this->application = $application;
-        }
+        $this->application = $application;
 
         return $this->application;
     }
@@ -92,7 +92,7 @@ class ZedBootstrap
      */
     protected function addFragmentControllerResolver()
     {
-        $application = $this->getApplication();
+        $application = $this->application;
         $application['resolver'] = $application->share(function () use ($application) {
             return new ZedFragmentControllerResolver($application);
         });
@@ -108,7 +108,7 @@ class ZedBootstrap
             if (!($serviceProvider instanceof ServiceProviderInterface)) {
                 $serviceProvider = $serviceProvider = new $serviceProvider;
             }
-            $this->getApplication()->register($serviceProvider);
+            $this->application->register($serviceProvider);
         }
     }
 
@@ -144,6 +144,7 @@ class ZedBootstrap
             new UrlGeneratorServiceProvider(),
             new GuiTwigExtensionServiceProvider(),
             $this->getGatewayServiceProvider(),
+            new PropelServiceProvider(),
         ];
     }
 
