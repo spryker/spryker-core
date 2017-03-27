@@ -254,6 +254,7 @@ abstract class AbstractDataBuilder
         if (strpos($rule, '=') === 0) {
             return substr($rule, 1);
         }
+
         return (string)eval("return \$this->faker->$rule;");
     }
 
