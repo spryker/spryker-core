@@ -14,7 +14,7 @@ class ShipmentListPage
 
     const SELECTOR_TABLE = 'dataTables_wrapper';
 
-    const BUTTON_ADD_CARRIER = 'Add new Carrier Company';
-    const BUTTON_ADD_METHOD = 'Add new Shipment Method';
+    const BUTTON_ADD_CARRIER = '//div[@class="title-action"]/a[1]';//'Add new Carrier Company';
+    const BUTTON_ADD_METHOD = '//div[@class="title-action"]/a[2]';//'Add new Shipment Method';
 
 }
