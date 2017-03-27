@@ -12,6 +12,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/log": "^3.0.0",
     "spryker/money": "^2.0.0",
     "spryker/price": "^4.0.0",
     "spryker/product": "^5.0.0",
