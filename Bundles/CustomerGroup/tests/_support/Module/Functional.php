@@ -35,7 +35,6 @@ class Functional extends Module
         $this->runInstaller();
     }
 
-
     /**
      * @return void
      */

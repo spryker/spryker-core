@@ -80,6 +80,9 @@ class ZedBootstrap
         });
     }
 
+    /**
+     * @return void
+     */
     private function registerServiceProvider()
     {
         foreach ($this->serviceProvider as $serviceProviderClassName) {

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Transfer\Business\Model;
 
 use Psr\Log\LoggerInterface;
@@ -7,6 +13,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 
 class DataBuilderGenerator
 {
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -47,6 +54,5 @@ class DataBuilderGenerator
             $this->messenger->info(sprintf('<info>%s</info> was generated', $fileName));
         }
     }
-
 
 }

@@ -1,14 +1,17 @@
 <?php
 namespace Product\Helper;
 
+use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Testify\Module\BusinessLocator;
+use Testify\Helper\BusinessHelper;
 
-class ProductData extends \Codeception\Module
+class ProductData extends Module
 {
+
     /**
      * @param array $override
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function haveProduct($override = [])
@@ -18,7 +21,9 @@ class ProductData extends \Codeception\Module
         $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProjectId]))
             ->seed($override)
             ->build();
+
         $productFacade->createProductConcrete($product);
+
         return $product;
     }
 
@@ -27,16 +32,7 @@ class ProductData extends \Codeception\Module
      */
     private function getProductFacade()
     {
-        $locator = $this->getLocator();
-
-        return $locator->getLocator()->product()->facade();
+        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->facade();
     }
 
-    /**
-     * @return BusinessLocator
-     */
-    private function getLocator()
-    {
-        return $this->getModule('\\' . BusinessLocator::class);
-    }
 }

@@ -3,6 +3,7 @@
 namespace Sales\Helper;
 
 use Codeception\Module;
+use DateTime;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -11,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use DateTime;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I

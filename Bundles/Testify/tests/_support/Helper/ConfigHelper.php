@@ -7,6 +7,7 @@
 
 namespace Testify\Helper;
 
+use ArrayObject;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\TestCase;
@@ -24,7 +25,7 @@ class ConfigHelper extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param null|array $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
@@ -83,7 +84,7 @@ class ConfigHelper extends Module
     {
         $projectNamespaces = $this->configCache[KernelConstants::PROJECT_NAMESPACES];
         $reflectionProperty = $this->getConfigReflectionProperty();
-        $reflectionProperty->setValue(new \ArrayObject($this->configCache));
+        $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }
 
 }

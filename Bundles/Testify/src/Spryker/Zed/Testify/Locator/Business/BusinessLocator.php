@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Testify\Locator\Business;
 
+use Closure;
 use Spryker\Service\Kernel\ServiceLocator;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
 use Spryker\Zed\Testify\Locator\AbstractLocator;
-use Closure;
 
 class BusinessLocator extends AbstractLocator
 {
@@ -27,7 +27,7 @@ class BusinessLocator extends AbstractLocator
     private $coreNamespaces = [];
 
     /**
-     * @var Closure
+     * @var \Closure
      */
     private $closure;
 
@@ -62,6 +62,5 @@ class BusinessLocator extends AbstractLocator
 
         return $bundleProxy;
     }
-
 
 }
