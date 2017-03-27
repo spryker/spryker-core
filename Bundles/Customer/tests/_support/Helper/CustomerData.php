@@ -28,7 +28,9 @@ class CustomerData extends Module
             ->withBillingAddress()
             ->withShippingAddress()
             ->build();
+
         $this->getCustomerFacade()->registerCustomer($customer);
+
         return $customer;
     }
 
