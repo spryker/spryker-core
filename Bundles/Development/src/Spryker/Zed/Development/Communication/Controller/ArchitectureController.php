@@ -27,7 +27,6 @@ class ArchitectureController extends AbstractController
         return $this->viewResponse([
             'bundles' => $bundles,
         ]);
-
     }
 
     public function checkBundleAction(Request $request)

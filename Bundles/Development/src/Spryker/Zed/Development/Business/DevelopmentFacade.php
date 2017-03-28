@@ -304,7 +304,6 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runArchitectureSniffer($bundle)
     {
         return $this->getFactory()->createArchitectureSniffer()->run($bundle);
-
     }
 
 }

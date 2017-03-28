@@ -20,7 +20,7 @@ class ArchitectureSniffer
     protected $command;
 
     /**
-     * @var Xml
+     * @var \Zend\Config\Reader\Xml
      */
     protected $xmlReader;
 
@@ -32,11 +32,11 @@ class ArchitectureSniffer
     {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
-
     }
 
     /**
      * @param $bundle
+     *
      * @return array
      */
     public function run($bundle)
@@ -50,6 +50,7 @@ class ArchitectureSniffer
 
     /**
      * @param $command
+     *
      * @return \Symfony\Component\Process\Process
      */
     protected function getProcess($command)
@@ -59,6 +60,7 @@ class ArchitectureSniffer
 
     /**
      * @param $bundle
+     *
      * @return string
      */
     protected function runCommand($bundle)
@@ -74,6 +76,7 @@ class ArchitectureSniffer
 
     /**
      * @param $results
+     *
      * @return array
      */
     protected function formatResult($results)
@@ -117,6 +120,5 @@ class ArchitectureSniffer
 
         return $fileViolations;
     }
-
 
 }
