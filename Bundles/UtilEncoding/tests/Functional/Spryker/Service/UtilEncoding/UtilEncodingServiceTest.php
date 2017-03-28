@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Service\UtilEncoding;
 
 use Codeception\TestCase\Test;
+use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 
 /**
@@ -21,6 +22,13 @@ class UtilEncodingServiceTest extends Test
 {
 
     const JSON_ENCODED_VALUE = '{"1":"one","2":"two"}';
+
+    const JSON_ENCODED_VALUE_PRETTY_PRINT = <<<JSON
+{
+    "1": "one",
+    "2": "two"
+}
+JSON;
 
     /**
      * @var array
@@ -45,11 +53,21 @@ class UtilEncodingServiceTest extends Test
     /**
      * @return void
      */
-    public function testEncodeJsonShouldReturnJsonEncodedValue()
+    public function testEncodeJsonWithDefaultOptions()
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData);
 
         $this->assertEquals(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEncodeJsonWithPrettyPrintIncluded()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
+
+        $this->assertEquals(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
     }
 
     /**
