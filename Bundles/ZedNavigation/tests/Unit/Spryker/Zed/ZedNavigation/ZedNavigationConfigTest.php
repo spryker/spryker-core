@@ -43,7 +43,6 @@ class ZedNavigationConfigTest extends PHPUnit_Framework_TestCase
     {
         $navigationSchemaPathPatterns = $this->getConfig()->getNavigationSchemaPathPattern();
         $this->assertInternalType('array', $navigationSchemaPathPatterns);
-        $this->assertCount(1, $navigationSchemaPathPatterns);
     }
 
     /**
