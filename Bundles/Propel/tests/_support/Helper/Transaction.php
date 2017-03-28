@@ -9,6 +9,7 @@ namespace Propel\Helper;
 
 use Codeception\Module;
 use Codeception\TestCase;
+use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -26,11 +27,11 @@ class Transaction extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -38,24 +39,25 @@ class Transaction extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
     {
         parent::_after($test);
 
         Propel::getWriteConnection('zed')->rollBack();
+        Propel::closeConnections();
     }
 
     /**
-     * @param \Codeception\TestCase $test
-     * @param bool $fail
+     * @param \Codeception\TestInterface $test
+     * @param \Exception $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

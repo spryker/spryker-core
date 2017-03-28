@@ -9,7 +9,7 @@ namespace Testify\Helper;
 
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Spryker\Zed\Testify\Bootstrap\ZedBootstrap as TestifyBootstrap;
 use Symfony\Component\HttpKernel\Client;
 
@@ -39,11 +39,11 @@ class ZedBootstrap extends Framework
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         $this->client = new Client($this->application->boot());
     }
@@ -60,22 +60,6 @@ class ZedBootstrap extends Framework
         if (!isset($this->application)) {
             throw new ModuleConfigException(__CLASS__, 'Application instance was not received from bootstrap file');
         }
-    }
-
-    /**
-     * @return array
-     */
-    protected function getInternalDomains()
-    {
-        $internalDomains = [];
-
-        foreach ($this->application['routes'] as $route) {
-            if ($domain = $route->getHost()) {
-                $internalDomains[] = '/^' . preg_quote($domain, '/') . '$/';
-            }
-        }
-
-        return $internalDomains;
     }
 
 }
