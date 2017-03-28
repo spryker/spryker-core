@@ -16,8 +16,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
 {
 
     /**
-     * Specification:
-     * - Encode given value to json
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,8 +34,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * Specification:
-     * - Decode given jsonValue, return array or stdObject
+     * {@inheritdoc}
      *
      * @api
      *
