@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Business;
 
-use Generated\Shared\Transfer\ItemStateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;

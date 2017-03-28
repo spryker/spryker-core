@@ -7,9 +7,7 @@
 namespace Testify\Helper;
 
 use Codeception\Configuration;
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Codeception\TestCase;
 
 class Environment extends Module
 {
