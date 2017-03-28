@@ -13,7 +13,7 @@ interface UtilEncodingServiceInterface
 
     /**
      * Specification:
-     * - Encode given value to json
+     * - Encodes given value to JSON string.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface UtilEncodingServiceInterface
 
     /**
      * Specification:
-     * - Decode given jsonValue, return array or stdObject
+     * - Decodes given JSON string, returns array or stdObject.
      *
      * @api
      *
