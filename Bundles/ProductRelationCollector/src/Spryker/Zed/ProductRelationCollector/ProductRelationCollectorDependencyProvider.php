@@ -118,10 +118,10 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
- * @param \Spryker\Zed\Kernel\Container $container
- *
- * @return \Spryker\Zed\Kernel\Container
- */
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function provideProductImageQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {

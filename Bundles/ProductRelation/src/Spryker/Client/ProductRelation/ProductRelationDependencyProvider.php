@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductRelation;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToLocaleClientBridge;
+use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToLocaleBridge;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageBridge;
 
 class ProductRelationDependencyProvider extends AbstractDependencyProvider
@@ -30,7 +30,7 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[static::CLIENT_LOCALE] = function (Container $container) {
-            return new ProductRelationToLocaleClientBridge($container->getLocator()->locale()->client());
+            return new ProductRelationToLocaleBridge($container->getLocator()->locale()->client());
         };
 
         return $container;

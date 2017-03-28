@@ -148,20 +148,9 @@ class ProductRuleTable extends AbstractTable
      */
     protected function getQuery()
     {
-        $query = $this->productRelationQueryContainer->getRulePropelQuery($this->productRelationTransfer);
-
-        $query
-            ->clearSelectColumns()
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->withColumn(
-                'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-                static::COL_CATEGORY_NAME
-            )
+        return $this->productRelationQueryContainer
+            ->queryRulePropelQueryWithLocalizedProductData($this->productRelationTransfer)
             ->setFormatter(new SimpleArrayFormatter());
-
-        return $query;
     }
 
     /**

@@ -73,8 +73,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     protected function findActiveProductRelations()
     {
         $productRelations = $this->productRelationQueryContainer
-            ->queryActiveProductRelations()
-            ->filterByIsRebuildScheduled(true)
+            ->queryActiveAndScheduledRelations()
             ->find();
 
         return $productRelations;

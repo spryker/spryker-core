@@ -139,7 +139,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProvider
+     * @return \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface
      */
     public function createProductRelationFormTypeDataProvider()
     {

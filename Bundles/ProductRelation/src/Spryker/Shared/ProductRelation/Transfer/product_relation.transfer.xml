@@ -28,12 +28,13 @@
         <property name="order" type="int" />
     </transfer>
 
+
+    <!-- Query rule -->
     <transfer name="RuleQueryDataProvider">
         <property name="idProductAbstract" type="int" />
         <property name="idLocale" type="int" />
     </transfer>
 
-    <!-- Query rule -->
     <transfer name="PropelQueryBuilderRuleSet">
         <property name="condition" type="string" />
         <property name="rules" type="PropelQueryBuilderRuleSet[]" />

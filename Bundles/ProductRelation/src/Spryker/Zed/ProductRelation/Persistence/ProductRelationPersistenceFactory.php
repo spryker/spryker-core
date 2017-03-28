@@ -47,7 +47,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreator
+     * @return \Spryker\Zed\ProductRelation\Persistence\Rule\ProductRelationRuleQueryCreatorInterface
      */
     public function createCatalogPriceRuleQueryCreator()
     {
@@ -58,7 +58,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Persistence\Rule\Query\ProductQuery
+     * @return \Spryker\Zed\ProductRelation\Persistence\Rule\Query\QueryInterface
      */
     protected function createProductQuery()
     {

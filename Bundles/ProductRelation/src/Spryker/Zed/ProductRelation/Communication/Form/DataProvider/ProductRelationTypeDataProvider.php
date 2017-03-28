@@ -14,7 +14,7 @@ use Spryker\Shared\ProductRelation\ProductRelationTypes;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface;
 use Spryker\Zed\ProductRelation\Communication\Form\ProductRelationFormType;
 
-class ProductRelationTypeDataProvider
+class ProductRelationTypeDataProvider implements ProductRelationTypeDataProviderInterface
 {
 
     /**

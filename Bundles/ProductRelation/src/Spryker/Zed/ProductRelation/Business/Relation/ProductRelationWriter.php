@@ -239,7 +239,6 @@ class ProductRelationWriter implements ProductRelationWriterInterface
         ProductRelationTransfer $productRelationTransfer,
         SpyProductRelation $productRelationEntity
     ) {
-
         $productRelationEntity->fromArray($productRelationTransfer->modifiedToArray());
         $productRelationEntity->setQuerySetData($this->encodeQuerySet($productRelationTransfer));
         if ($productRelationTransfer->getProductRelationType()) {

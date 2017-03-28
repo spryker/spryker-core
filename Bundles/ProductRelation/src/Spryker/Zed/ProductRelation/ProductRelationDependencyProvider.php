@@ -83,7 +83,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueryContainerProduct(Container $container)
     {
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new QueryContainerProductRelationToProductBridge(
                 $container->getLocator()->product()->queryContainer()
             );
@@ -99,7 +99,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueryContainerPropelQueryBuilder(Container $container)
     {
-        $container[self::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
             return new ProductRelationToPropelQueryBuilderBridge(
                 $container->getLocator()->propelQueryBuilder()->queryContainer()
             );

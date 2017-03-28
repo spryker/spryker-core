@@ -63,7 +63,7 @@ class ProductRelationFormType extends AbstractType
         $this->addRelationTypeField($builder, $options)
             ->addIdProductRelationField($builder)
             ->addQuerySetField($builder)
-            ->addUpdateWithScheduler($builder)
+            ->addUpdateWithSchedulerField($builder)
             ->addFkProductAbstractField($builder);
     }
 
@@ -107,10 +107,10 @@ class ProductRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addUpdateWithScheduler(FormBuilderInterface $builder)
+    protected function addUpdateWithSchedulerField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_REBUILD_SCHEDULED, CheckboxType::class, [
-            'label' => 'Update with scheduler',
+            'label' => 'Update with scheduler', //CR rename value
 
         ]);
 

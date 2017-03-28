@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductRelation\Dependency\Client;
 
-class ProductRelationToLocaleClientBridge implements ProductRelationToLocaleClientInterface
+class ProductRelationToLocaleBridge implements ProductRelationToLocaleInterface
 {
 
     /**

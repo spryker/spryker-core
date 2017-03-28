@@ -34,7 +34,7 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function queryProductsWithCategoriesByFkLocale($idLocale);
 
@@ -131,5 +131,32 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryActiveAndScheduledRelations();
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer);
+
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     * @param int $idProductRelation
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation($idLocale, $idProductRelation);
 
 }

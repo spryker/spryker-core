@@ -9,7 +9,7 @@ namespace Spryker\Zed\Event;
 
 use Spryker\Zed\Event\Dependency\Client\EventToQueueBridge;
 use Spryker\Zed\Event\Dependency\EventCollection;
-use Spryker\Zed\Event\Dependency\EventEventSubscriberCollection;
+use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -63,7 +63,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function getEventSubscriberCollection()
     {
-        return new EventEventSubscriberCollection();
+        return new EventSubscriberCollection();
     }
 
 }

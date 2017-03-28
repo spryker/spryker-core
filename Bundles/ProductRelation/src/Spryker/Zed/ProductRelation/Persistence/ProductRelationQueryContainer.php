@@ -27,6 +27,10 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
 
     const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
     const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+    const COL_CATEGORY_NAME = 'category_name';
+    const COL_NAME = 'name';
+    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    const COL_SKU = 'sku';
 
     /**
      * @api
@@ -134,7 +138,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function queryProductsWithCategoriesByFkLocale($idLocale)
     {
@@ -269,6 +273,53 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
         return $this->getFactory()
            ->getProductQueryContainer()
            ->queryProductAttributeKey();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryActiveAndScheduledRelations()
+    {
+        return $this->queryActiveProductRelations()
+            ->filterByIsRebuildScheduled(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer)
+    {
+        return $this->getRulePropelQuery($productRelationTransfer)
+         ->clearSelectColumns()
+         ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+         ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
+         ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+         ->withColumn(
+             'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
+             static::COL_CATEGORY_NAME
+         );
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     * @param int $idProductRelation
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation($idLocale, $idProductRelation)
+    {
+        return $this->queryProductsWithCategoriesByFkLocale($idLocale)
+            ->useSpyProductRelationProductAbstractQuery()
+                ->filterByFkProductRelation($idProductRelation)
+            ->endUse();
     }
 
 }

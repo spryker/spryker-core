@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event\Business\Logger;
 
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -62,8 +63,14 @@ class LoggerConfig implements LoggerConfigInterface
      */
     protected function createStreamHandler()
     {
+        $eventLogPath = $this->eventConfig->findEventLogPath();
+
+        if ($eventLogPath === null) {
+            return new NullHandler();
+        }
+
         return new StreamHandler(
-            $this->eventConfig->findEventLogPath(),
+            $eventLogPath,
             Logger::INFO
         );
     }

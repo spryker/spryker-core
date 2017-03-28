@@ -89,6 +89,14 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     }
 
     /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
+
+    /**
      * @param array $relationProduct
      *
      * @return array

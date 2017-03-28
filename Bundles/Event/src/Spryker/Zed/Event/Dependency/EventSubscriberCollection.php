@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Event\Dependency;
 
-use ArrayAccess;
 use ArrayIterator;
-use IteratorAggregate;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 
-class EventSubscriberCollection implements ArrayAccess, IteratorAggregate, EventSubscriberCollectionInterface
+class EventSubscriberCollection implements EventSubscriberCollectionInterface
 {
 
     /**

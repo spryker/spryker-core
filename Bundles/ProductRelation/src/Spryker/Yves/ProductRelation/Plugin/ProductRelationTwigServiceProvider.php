@@ -9,6 +9,7 @@ namespace Spryker\Yves\ProductRelation\Plugin;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 use Twig_SimpleFunction;
@@ -18,6 +19,8 @@ use Twig_SimpleFunction;
  */
 class ProductRelationTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
+    use LoggerTrait;
 
     /**
      * Registers services on the given app.
@@ -59,6 +62,7 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
                 ->resolveByType($type);
 
             if ($productRelationDataProvider === null) {
+                $this->getLogger()->warning(sprintf('Product relation "%s" data provider not found.', $type));
                 return '';
             }
 

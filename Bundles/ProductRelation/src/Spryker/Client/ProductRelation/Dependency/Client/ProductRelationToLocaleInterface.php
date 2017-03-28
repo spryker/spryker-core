@@ -5,10 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\ProductRelation;
+namespace Spryker\Client\ProductRelation\Dependency\Client;
 
-use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
-
-class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
+interface ProductRelationToLocaleInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocale();
+
 }

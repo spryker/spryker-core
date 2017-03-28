@@ -7,19 +7,17 @@
 
 namespace Spryker\Zed\Event\Dependency;
 
-use ArrayAccess;
 use ArrayIterator;
-use IteratorAggregate;
 use SplPriorityQueue;
 use Spryker\Zed\Event\Business\Dispatcher\EventListenerContext;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
 use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
 
-class EventCollection implements ArrayAccess, IteratorAggregate, EventCollectionInterface
+class EventCollection implements EventCollectionInterface
 {
 
     /**
-     * @var array|\SplPriorityQueue
+     * @var array|\SplPriorityQueue[]
      */
     protected $eventListeners = [];
 
@@ -89,7 +87,10 @@ class EventCollection implements ArrayAccess, IteratorAggregate, EventCollection
     {
         if (!isset($this->eventListeners[$eventName]) || count($this->eventListeners[$eventName]) == 0) {
             throw new EventListenerNotFoundException(
-                sprintf('Could not find event listeners for event "%s". You have to add it to EventDependencyProvider.', $eventName)
+                sprintf(
+                    'Could not find event listeners for event "%s". You have to add it to EventDependencyProvider.',
+                        $eventName
+                )
             );
         }
 

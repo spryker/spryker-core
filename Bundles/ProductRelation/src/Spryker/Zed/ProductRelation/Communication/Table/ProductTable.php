@@ -191,12 +191,15 @@ class ProductTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $query = $this->productRelationQueryContainer->queryProductsWithCategoriesByFkLocale($localeTransfer->getIdLocale());
 
         if ($this->idProductRelation !== null) {
-            $query->useSpyProductRelationProductAbstractQuery()
-                    ->filterByFkProductRelation($this->idProductRelation)
-                ->endUse();
+            $query = $this->productRelationQueryContainer->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(
+                $localeTransfer->getIdLocale(),
+                    $this->idProductRelation
+            );
+        } else {
+            $query = $this->productRelationQueryContainer
+                ->queryProductsWithCategoriesByFkLocale($localeTransfer->getIdLocale());
         }
 
         $queryResults = $this->runQuery($query, $config);

@@ -45,7 +45,7 @@ class ProductRelationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToLocaleClientInterface
+     * @return \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToLocaleInterface
      */
     public function getLocaleClient()
     {
