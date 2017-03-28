@@ -29,7 +29,7 @@ class GetActionPreProcessor implements PreProcessorInterface
 
         $params = [
             $idResource,
-            $apiRequestTransfer->getFilter()
+            $apiRequestTransfer->getFilter(),
         ];
 
         $apiRequestTransfer->setResourceParams($params);

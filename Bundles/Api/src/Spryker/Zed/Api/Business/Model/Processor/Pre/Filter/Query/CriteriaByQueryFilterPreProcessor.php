@@ -13,6 +13,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
 {
 
+    const FILTER = 'filter';
+
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -21,12 +23,12 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings['filter'])) {
+        if (empty($queryStrings[self::FILTER])) {
             $apiRequestTransfer->getFilter()->setFilter('{}');
             return;
         }
 
-        $filter = $queryStrings['filter'];
+        $filter = $queryStrings[self::FILTER];
 
         $apiRequestTransfer->getFilter()->setFilter($filter);
     }

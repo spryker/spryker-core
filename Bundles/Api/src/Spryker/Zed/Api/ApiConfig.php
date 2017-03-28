@@ -12,10 +12,10 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\CreateActionPreProcessor
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByExtensionPreProcessor;
@@ -100,9 +100,25 @@ class ApiConfig extends AbstractBundleConfig
     public function getPostProcessorStack()
     {
         return [
-            //CustomHeader
-            //'DateTimeFormat'
+            // CustomHeader
+            // DateTimeFormat
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimitPerPage()
+    {
+        return 20;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxLimitPerPage()
+    {
+        return 100;
     }
 
     /**

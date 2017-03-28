@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Transfer;
 
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ArrayCollection;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface CustomerTransferMapperInterface
 {

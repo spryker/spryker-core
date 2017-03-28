@@ -57,7 +57,6 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
         return $query->filterByIdCustomer($idCustomer);
     }
 
-
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $queryCustomer
      * @param array $fields

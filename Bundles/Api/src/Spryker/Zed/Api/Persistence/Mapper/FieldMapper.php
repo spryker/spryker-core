@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Api\Persistence\Mapper;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Formatter\ArrayFormatter;
 
 class FieldMapper implements FieldMapperInterface
 {

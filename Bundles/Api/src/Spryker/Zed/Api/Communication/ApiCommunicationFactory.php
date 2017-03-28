@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
  * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainer getQueryContainer()
  */
 class ApiCommunicationFactory extends AbstractCommunicationFactory
 {

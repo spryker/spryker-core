@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
@@ -15,6 +16,19 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
 
     const LIMIT = 'limit';
     const PAGE = 'page';
+
+    /**
+     * @var \Spryker\Zed\Api\ApiConfig
+     */
+    protected $apiConfig;
+
+    /**
+     * @param \Spryker\Zed\Api\ApiConfig $apiConfig
+     */
+    public function __construct(ApiConfig $apiConfig)
+    {
+        $this->apiConfig = $apiConfig;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -25,7 +39,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         $apiRequestTransfer->getFilter()->getPagination()->setPage(1);
-        $apiRequestTransfer->getFilter()->getPagination()->setLimit(20);
+        $apiRequestTransfer->getFilter()->getPagination()->setLimit($this->apiConfig->getLimitPerPage());
 
         if (!empty($queryStrings[self::PAGE])) {
             $apiRequestTransfer->getFilter()->getPagination()->setPage(
@@ -38,10 +52,13 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
                 $this->validateLimitRange($queryStrings[self::LIMIT])
             );
         }
-
-        // Implement on project level
     }
 
+    /**
+     * @param int $page
+     *
+     * @return int
+     */
     protected function validatePageInput($page)
     {
         if ($page < 0) {
@@ -51,10 +68,15 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
         return $page;
     }
 
+    /**
+     * @param int $limit
+     *
+     * @return int
+     */
     protected function validateLimitRange($limit)
     {
-        if ($limit < 0 || $limit > 100) {
-            $limit = 20;
+        if ($limit < 0 || $limit > $this->apiConfig->getMaxLimitPerPage()) {
+            $limit = $this->apiConfig->getLimitPerPage();
         }
 
         return $limit;

@@ -32,8 +32,8 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idCustomer
-     *
      * @param array $fields
+     *
      * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerById($idCustomer, array $fields = []);

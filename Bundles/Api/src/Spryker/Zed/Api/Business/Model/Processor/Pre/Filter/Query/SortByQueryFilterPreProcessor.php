@@ -14,6 +14,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 class SortByQueryFilterPreProcessor implements PreProcessorInterface
 {
 
+    const SORT = 'sort';
+
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -22,11 +24,11 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings['sort'])) {
+        if (empty($queryStrings[self::SORT])) {
             return;
         }
 
-        $sortString = $queryStrings['sort'];
+        $sortString = $queryStrings[self::SORT];
         $sortCollection = explode(',', $sortString);
 
         $sort = [];

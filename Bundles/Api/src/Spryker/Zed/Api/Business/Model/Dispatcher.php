@@ -18,7 +18,7 @@ class Dispatcher
     /**
      * @var \Spryker\Zed\Api\ApiConfig
      */
-    protected $config;
+    protected $apiConfig;
 
     /**
      * @var array
@@ -31,13 +31,13 @@ class Dispatcher
     protected $postProcessStack;
 
     /**
-     * @param \Spryker\Zed\Api\ApiConfig $config
-     * @param \Spryker\Zed\Api\Communication\Plugin\PreProcess\PreProcessPluginInterface[] $preProcessStack
-     * @param \Spryker\Zed\Api\Communication\Plugin\PostProcess\PostProcessPluginInterface[] $postProcessStack
+     * @param \Spryker\Zed\Api\ApiConfig $apiConfig
+     * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
+     * @param \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[] $postProcessStack
      */
-    public function __construct(ApiConfig $config, array $preProcessStack, array $postProcessStack)
+    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack)
     {
-        $this->config = $config;
+        $this->apiConfig = $apiConfig;
         $this->preProcessStack = $preProcessStack;
         $this->postProcessStack = $postProcessStack;
     }
@@ -83,13 +83,13 @@ class Dispatcher
      */
     protected function callApiPlugin($resource, $method, $params)
     {
-        $pluginClass = $this->config->getPluginForResource($resource);
+        $pluginClass = $this->apiConfig->getPluginForResource($resource);
 
         if (!method_exists($pluginClass, $method)) {
             throw new ApiDispatchingException(sprintf('Method %s() not found on Plugin class %s', $method, $pluginClass));
         }
 
-        $plugin = new $pluginClass($this->config);
+        $plugin = new $pluginClass($this->apiConfig);
 
         return call_user_func_array([$plugin, $method], $params);
     }
@@ -101,11 +101,11 @@ class Dispatcher
      */
     protected function preProcess(ApiRequestTransfer $apiRequestTransfer)
     {
-        foreach ($this->preProcessStack as $plugin) {
-            if (is_string($plugin)) {
-                $plugin = new $plugin();
+        foreach ($this->preProcessStack as $preProcessor) {
+            if (is_string($preProcessor)) {
+                $preProcessor = new $preProcessor($this->apiConfig);
             }
-            $plugin->process($apiRequestTransfer);
+            $preProcessor->process($apiRequestTransfer);
         }
     }
 
@@ -116,11 +116,11 @@ class Dispatcher
      */
     protected function postProcess(ApiResponseTransfer $apiResponseTransfer)
     {
-        foreach ($this->postProcessStack as $plugin) {
-            if (is_string($plugin)) {
-                $plugin = new $plugin();
+        foreach ($this->postProcessStack as $postProcessor) {
+            if (is_string($postProcessor)) {
+                $postProcessor = new $postProcessor($this->apiConfig);
             }
-            $plugin->process($apiResponseTransfer);
+            $postProcessor->process($apiResponseTransfer);
         }
     }
 

@@ -8,9 +8,7 @@
 namespace Spryker\Zed\CustomerApi\Business\Transfer;
 
 use Generated\Shared\Transfer\CustomerApiTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ArrayCollection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 
 class CustomerTransferMapper implements CustomerTransferMapperInterface
