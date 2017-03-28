@@ -672,7 +672,12 @@
       "Spryker\\Shared\\Event\\": "Bundles/Event/src",
       "Spryker\\Zed\\Event\\": "Bundles/Event/src",
       "Unit\\Spryker\\Zed\\Event\\": "Bundles/Event/tests",
-      "Functional\\Spryker\\Zed\\Event\\": "Bundles/Event/tests"
+      "Functional\\Spryker\\Zed\\Event\\": "Bundles/Event/tests",
+
+      "Spryker\\Shared\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
+      "Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
+      "Unit\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
+      "Functional\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

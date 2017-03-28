@@ -122,4 +122,14 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductAttributeKey();
 
+    /**
+     * @api
+     *
+     * @param int $idProductRelation
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
+
 }

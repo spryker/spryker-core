@@ -11,10 +11,12 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -182,6 +184,38 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->withColumn('COUNT(num_alias)', static::COL_NUMBER_OF_RELATED_PRODUCTS)
             ->joinSpyProductRelationType()
             ->groupByIdProductRelation();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductRelation
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale)
+    {
+        return $this->queryProductRelationProductAbstractByIdProductRelation($idProductRelation)
+            ->useSpyProductRelationQuery()
+                ->joinSpyProductRelationType()
+            ->endUse()
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductAbstractLocalizedAttributesQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+                ->useSpyUrlQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse()
+            ->select([
+                SpyProductAbstractTableMap::COL_SKU,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                SpyProductRelationProductAbstractTableMap::COL_ORDER,
+                SpyUrlTableMap::COL_URL,
+                SpyProductRelationTypeTableMap::COL_KEY,
+            ]);
     }
 
     /**

@@ -8,8 +8,8 @@
 namespace Spryker\Client\ProductRelation;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductRelation\KeyBuilder\ProductRelationKeyBuilder;
 use Spryker\Client\ProductRelation\Storage\ProductRelationStorage;
+use Spryker\Shared\ProductRelation\KeyBuilder\ProductRelationKeyBuilder;
 
 class ProductRelationFactory extends AbstractFactory
 {
