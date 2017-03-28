@@ -245,8 +245,8 @@ abstract class AbstractDataBuilder
     }
 
     /**
-     * @SuppressWarning(Squiz.EvalSniff)
-     * 
+     * @SuppressWarning(PHPMD.EvalSniff)
+     *
      * @param string $rule
      *
      * @return bool|string
@@ -257,7 +257,9 @@ abstract class AbstractDataBuilder
             return substr($rule, 1);
         }
 
+        // @codingStandardsIgnoreStart
         return (string)eval("return \$this->faker->$rule;");
+        // @codingStandardsIgnoreEnd
     }
 
     /**
