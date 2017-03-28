@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Persistence\Mapper;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Formatter\ArrayFormatter;
 
 class FieldMapper implements FieldMapperInterface
 {
@@ -22,16 +23,16 @@ class FieldMapper implements FieldMapperInterface
      */
     public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields)
     {
-        $query->clearSelectColumns();
-
         if (empty($allowedFields)) {
-            return $query;
+            $allowedFields = $tableFields;
         }
 
         $allowedColumns = array_intersect_key(
             array_flip($tableFields),
             array_flip($allowedFields)
         );
+
+        $query->clearSelectColumns();
 
         $selectedColumns = [];
         foreach ($allowedColumns as $columnAlias => $index) {
