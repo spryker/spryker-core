@@ -89,7 +89,7 @@ class EventCollection implements EventCollectionInterface
             throw new EventListenerNotFoundException(
                 sprintf(
                     'Could not find event listeners for event "%s". You have to add it to EventDependencyProvider.',
-                        $eventName
+                    $eventName
                 )
             );
         }

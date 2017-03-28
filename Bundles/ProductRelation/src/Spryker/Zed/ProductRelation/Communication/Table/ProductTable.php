@@ -195,7 +195,7 @@ class ProductTable extends AbstractTable
         if ($this->idProductRelation !== null) {
             $query = $this->productRelationQueryContainer->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(
                 $localeTransfer->getIdLocale(),
-                    $this->idProductRelation
+                $this->idProductRelation
             );
         } else {
             $query = $this->productRelationQueryContainer

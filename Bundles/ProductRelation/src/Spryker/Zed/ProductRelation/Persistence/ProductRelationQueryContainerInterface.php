@@ -148,7 +148,6 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      */
     public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer);
 
-
     /**
      * @api
      *
