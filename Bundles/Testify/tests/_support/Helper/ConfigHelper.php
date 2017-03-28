@@ -8,7 +8,6 @@
 namespace Testify\Helper;
 
 use ArrayObject;
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\TestCase;
 use ReflectionClass;
