@@ -67,6 +67,12 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * The following commands are a boilerplate stack. Please customize on project level.
+     *
+     * For a first initial migration you must use OPTION_NO_DIFF false.
+     *
+     * @deprecated The commands will be moved to project level in the next major.
+     *
      * @return array
      */
     public function getSetupInstallCommandNames()
