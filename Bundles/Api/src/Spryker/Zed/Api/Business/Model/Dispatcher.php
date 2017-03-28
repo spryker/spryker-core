@@ -78,7 +78,7 @@ class Dispatcher
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }
 
-        $this->postProcess($apiResponseTransfer);
+        $this->postProcess($apiRequestTransfer, $apiResponseTransfer);
 
         if ($apiResponseTransfer->getCode() === null) {
             $apiResponseTransfer->setCode(200);
@@ -125,17 +125,18 @@ class Dispatcher
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
      *
      * @return void
      */
-    protected function postProcess(ApiResponseTransfer $apiResponseTransfer)
+    protected function postProcess(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         foreach ($this->postProcessStack as $postProcessor) {
             if (is_string($postProcessor)) {
                 $postProcessor = new $postProcessor($this->apiConfig);
             }
-            $postProcessor->process($apiResponseTransfer);
+            $postProcessor->process($apiRequestTransfer, $apiResponseTransfer);
         }
     }
 

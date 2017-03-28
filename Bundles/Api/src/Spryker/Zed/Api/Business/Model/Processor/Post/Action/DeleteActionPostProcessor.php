@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Post;
+namespace Spryker\Zed\Api\Business\Model\Processor\Post\Action;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
+use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
-interface PostProcessorInterface
+class DeleteActionPostProcessor implements PostProcessorInterface
 {
 
     /**
@@ -19,6 +20,14 @@ interface PostProcessorInterface
      *
      * @return void
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer);
+    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
+    {
+        $action = $apiRequestTransfer->getResourceAction();
+        if ($action !== 'delete') {
+            return;
+        }
+
+        $apiResponseTransfer->setCode(204);
+    }
 
 }
