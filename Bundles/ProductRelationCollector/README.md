@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/navigation-collector
+composer require spryker/product-relation-collector
 ```
 
 ## Documentation
