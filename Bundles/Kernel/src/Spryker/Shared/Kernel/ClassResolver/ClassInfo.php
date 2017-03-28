@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 
 class ClassInfo
 {
@@ -27,6 +26,11 @@ class ClassInfo
      * @var string
      */
     protected $callerClassParts;
+
+    /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected $bundleNameResolver;
 
     /**
      * @param object|string $callerClass
@@ -94,35 +98,21 @@ class ClassInfo
     public function getBundle()
     {
         $bundleName = $this->callerClassParts[self::KEY_BUNDLE];
-        $bundleName = $this->removeStoreFromBundleName($bundleName);
+        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
 
         return $bundleName;
     }
 
     /**
-     * @param string $bundleName
-     *
-     * @return string
+     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function removeStoreFromBundleName($bundleName)
+    protected function getBundleNameResolver()
     {
-        $storeName = $this->getStoreName();
-        $storeIdentifierLength = mb_strlen($storeName);
-        $storeSuffix = mb_substr($bundleName, -$storeIdentifierLength);
-
-        if ($storeSuffix === $storeName) {
-            $bundleName = mb_substr($bundleName, 0, -$storeIdentifierLength);
+        if (!$this->bundleNameResolver) {
+            $this->bundleNameResolver = new BundleNameResolver();
         }
 
-        return $bundleName;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
+        return $this->bundleNameResolver;
     }
 
     /**

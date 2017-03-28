@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Kernel\ClassResolver;
 
 use Codeception\TestCase\Test;
+use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 /**
@@ -28,7 +29,7 @@ class ClassInfoTest extends Test
     {
         $classInfo = $this->getClassInfo('DE');
 
-        $classInfo->setClass('\\Pyz\\Zed\CartDE\\Business\\CartFacade');
+        $classInfo->setClass('\\ProjectNamespace\\Zed\CartDE\\Business\\CartFacade');
 
         $this->assertSame('Cart', $classInfo->getBundle());
     }
@@ -42,6 +43,25 @@ class ClassInfoTest extends Test
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
+            ->setMethods(['getBundleNameResolver'])
+            ->getMock();
+
+        $mock
+            ->method('getBundleNameResolver')
+            ->will($this->returnValue($this->getBundleNameResolverMock($storeName)));
+
+        return $mock;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected function getBundleNameResolverMock($storeName)
+    {
+        $mock = $this
+            ->getMockBuilder(BundleNameResolver::class)
             ->setMethods(['getStoreName'])
             ->getMock();
 
