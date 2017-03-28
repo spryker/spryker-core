@@ -1,9 +1,13 @@
 <?php
+
 namespace ZedCommunication;
 
 use Customer\ZedCommunicationTester;
 use Faker\Factory;
 
+/**
+ * @group IndexCest
+ */
 class IndexCest
 {
 
@@ -47,7 +51,7 @@ class IndexCest
                 'salutation' => 'Mr',
                 'first_name' => $this->faker->firstName,
                 'last_name' => $this->faker->lastName,
-            ]
+            ],
         ];
 
         $i->amOnPage('/customer/add');
@@ -59,7 +63,10 @@ class IndexCest
 
     /**
      * @group current
-     * @param ZedCommunicationTester $i
+     *
+     * @param \Customer\ZedCommunicationTester $i
+     *
+     * @return void
      */
     public function addCustomerWithoutNameAndFail(ZedCommunicationTester $i)
     {
@@ -70,7 +77,7 @@ class IndexCest
                 'email' => $email,
                 'salutation' => 'Mr',
                 'last_name' => $this->faker->lastName,
-            ]
+            ],
         ];
 
         $i->amOnPage('/customer/add');
@@ -81,6 +88,5 @@ class IndexCest
         $i->listDataTable('/customer/index/table');
         $i->dontSeeInLastRow([2 => $email]);
     }
-
 
 }

@@ -1,9 +1,10 @@
 <?php
+
 namespace Testify\Helper;
 
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 
 class ZedControllerTable extends Module implements DependsOnModule
 {
@@ -13,22 +14,34 @@ class ZedControllerTable extends Module implements DependsOnModule
      */
     protected $zedBootstrap;
 
+    /**
+     * @var array
+     */
     protected $currentData = [];
 
+    /**
+     * @return array
+     */
     public function _depends()
     {
-        return [ZedBootstrap::class => "Should be used with ZedBootstrap only"];
+        return [
+            ZedBootstrap::class => 'Should be used with ZedBootstrap only'
+        ];
     }
 
     /**
+     * @param \Codeception\TestInterface $test
+     *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         $this->currentData = [];
     }
 
     /**
+     * @param \Testify\Helper\ZedBootstrap $bootstrap
+     *
      * @return void
      */
     public function _inject(ZedBootstrap $bootstrap)
@@ -37,7 +50,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      * @param array $params
      *
      * @return void
@@ -88,33 +101,48 @@ class ZedControllerTable extends Module implements DependsOnModule
         );
     }
 
+    /**
+     * @param array $expectedRow
+     *
+     * @return void
+     */
     public function seeInLastRow(array $expectedRow)
     {
         if (!isset($this->currentData['data'])) {
             $this->fail("data for table not set; Run successful ->listDataTable before");
         }
         $rowNum = count($this->currentData['data']) - 1;
-        return $this->seeInTable($rowNum, $expectedRow);
-    }
 
-    public function seeInFirstRow(array $expectedRow)
-    {
-        return $this->seeInTable(0, $expectedRow);
+        $this->seeInTable($rowNum, $expectedRow);
     }
 
     /**
-     * @param $row
      * @param array $expectedRow
+     *
+     * @return void
+     */
+    public function seeInFirstRow(array $expectedRow)
+    {
+        $this->seeInTable(0, $expectedRow);
+    }
+
+    /**
+     * @param int $row
+     * @param array $expectedRow
+     *
+     * @return void
      */
     public function dontSeeInTable($row, array $expectedRow)
     {
         if (!isset($this->currentData['data'])) {
             $this->assertTrue(true);
+
             return;
         }
         $data = $this->currentData['data'];
         if (!isset($data[$row])) {
             $this->assertTrue(true);
+
             return;
         }
         $actualRow = $data[$row];
@@ -129,6 +157,8 @@ class ZedControllerTable extends Module implements DependsOnModule
 
     /**
      * @param array $expectedRow
+     *
+     * @return void
      */
     public function dontSeeInLastRow(array $expectedRow)
     {
@@ -137,14 +167,18 @@ class ZedControllerTable extends Module implements DependsOnModule
             return;
         }
         $rowNum = count($this->currentData['data']) - 1;
-        return $this->dontSeeInTable($rowNum, $expectedRow);
+
+        $this->dontSeeInTable($rowNum, $expectedRow);
     }
 
     /**
      * @param array $expectedRow
+     *
+     * @return void
      */
     public function dontSeeInFirstRow(array $expectedRow)
     {
-        return $this->dontSeeInTable(0, $expectedRow);
+        $this->dontSeeInTable(0, $expectedRow);
     }
+
 }
