@@ -50,9 +50,18 @@ class TransferConfig extends AbstractBundleConfig
     {
         $globPatterns = $this->getSourceDirectories();
 
-        $globPatterns[] = Config::get(KernelConstants::SPRYKER_ROOT) . '/*/tests/_data/';
+        $globPatterns[] = APPLICATION_ROOT_DIR . '/tests/_data';
+        $globPatterns[] = APPLICATION_VENDOR_DIR . '/*/*/tests/_data/';
 
         return $globPatterns;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataBuilderFileNamePattern()
+    {
+        return '/(.*?).(databuilder|transfer).xml/';
     }
 
     /**

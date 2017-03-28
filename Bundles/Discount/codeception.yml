@@ -15,6 +15,3 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
-extensions:
-    enabled:
-        - Discount\Group\ZedLogin
