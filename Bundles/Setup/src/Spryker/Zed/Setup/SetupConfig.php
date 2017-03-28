@@ -79,7 +79,7 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * The following commands are a boilerplate stack.
      *
-     * For a first initial migration you must use OPTION_NO_DIFF false.
+     * For a first initial migration you must use PropelInstallConsole with OPTION_NO_DIFF set to false.
      *
      * @deprecated The commands will be moved to project level in the next major.
      *
