@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Kernel;
 
+use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Spryker\Shared\Kernel\Store;
 use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
@@ -33,6 +33,11 @@ class BundleControllerAction implements BundleControllerActionInterface
      * @var \Zend\Filter\Word\DashToCamelCase
      */
     private $filter;
+
+    /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected $bundleNameResolver;
 
     /**
      * @param string $bundle
@@ -74,35 +79,21 @@ class BundleControllerAction implements BundleControllerActionInterface
     public function getBundle()
     {
         $bundleName = $this->filter($this->bundle);
-        $bundleName = $this->removeStoreFromBundleName($bundleName);
+        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
 
         return $bundleName;
     }
 
     /**
-     * @param string $bundleName
-     *
-     * @return string
+     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function removeStoreFromBundleName($bundleName)
+    protected function getBundleNameResolver()
     {
-        $storeName = $this->getStoreName();
-        $storeIdentifierLength = mb_strlen($storeName);
-        $storeSuffix = mb_substr($bundleName, -$storeIdentifierLength);
-
-        if ($storeSuffix === $storeName) {
-            $bundleName = mb_substr($bundleName, 0, -$storeIdentifierLength);
+        if (!$this->bundleNameResolver) {
+            $this->bundleNameResolver = new BundleNameResolver();
         }
 
-        return $bundleName;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
+        return $this->bundleNameResolver;
     }
 
     /**
