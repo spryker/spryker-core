@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
-use Exception;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
@@ -65,7 +65,7 @@ class CustomerApi
             ->findOne();
 
         if (!$customerData) {
-            throw new Exception('Customer not found idCustomer: ' . $idCustomer);
+            throw new EntityNotFoundException('Customer not found idCustomer: ' . $idCustomer);
         }
 
         return $this->transferMapper->convertCustomer($customerData);

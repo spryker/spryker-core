@@ -45,13 +45,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $newController = function () use ($controller, $action, $request) {
             $requestTransfer = $this->getRequestTransfer($controller, $request);
 
-            //$responseTransfer = new ApiResponseTransfer();
-
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
-
-                //$responseTransfer->setCode(200);
-                //$responseTransfer->setResults($result);
                 //$responseTransfer = $this->getResponse($controller, $result);
 
             } catch (\Exception $e) {
@@ -67,9 +62,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             }
 
             $responseObject = new Response();
-
-            // /api/sales/orders/1/...?dfdfjh
-            //return $this->getFactory()->createFormatter($requestTransfer->getFormatType())->format($responseTransfer);
 
             $responseObject = $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
 
@@ -94,9 +86,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
-
-        //$query = $request->attributes->all();
-        //$requestTransfer->setAttributesData($query);
 
         $serverData = $request->server->all();
         $requestTransfer->setServerData($serverData);
@@ -191,26 +180,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         }
 
         return $storedMessages;
-    }
-
-    /**
-     * @param string $className
-     *
-     * @throws \LogicException
-     *
-     * @return bool
-     */
-    protected function validateClassIsTransferObject($className)
-    {
-        if (substr($className, 0, 16) === 'Generated\Shared') {
-            return true;
-        }
-
-        if ($className === 'Spryker\Shared\Kernel\Transfer\TransferInterface') {
-            return true;
-        }
-
-        throw new LogicException('Only transfer classes are allowed in yves action as parameter');
     }
 
 }

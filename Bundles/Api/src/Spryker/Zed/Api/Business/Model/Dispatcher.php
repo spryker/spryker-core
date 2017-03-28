@@ -55,19 +55,34 @@ class Dispatcher
         $method = $apiRequestTransfer->getResourceAction();
         $params = $apiRequestTransfer->getResourceParams();
 
+        $apiResponseTransfer = new ApiResponseTransfer();
+
         // right now can also be transfer
-        $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
-        $data = [];
-        if ($entityOrCollection) {
-            $data = $entityOrCollection->modifiedToArray(true);
-        } else {
-            //nothing found
+        try {
+            $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
+            $data = [];
+            if ($entityOrCollection) {
+                $data = $entityOrCollection->modifiedToArray(true);
+            } else {
+                //nothing found
+            }
+
+            $apiResponseTransfer->setData($data);
+        } catch (\Exception $e) {
+            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setMessage($e->getMessage());
+            $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
+        } catch (\Throwable $e) {
+            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setMessage($e->getMessage());
+            $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }
 
-        $apiResponseTransfer = new ApiResponseTransfer();
-        $apiResponseTransfer->setData($data);
-
         $this->postProcess($apiResponseTransfer);
+
+        if ($apiResponseTransfer->getCode() === null) {
+            $apiResponseTransfer->setCode(200);
+        }
 
         return $apiResponseTransfer;
     }
