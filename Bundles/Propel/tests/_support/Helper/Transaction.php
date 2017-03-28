@@ -8,7 +8,6 @@
 namespace Propel\Helper;
 
 use Codeception\Module;
-use Codeception\TestCase;
 use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Application;
