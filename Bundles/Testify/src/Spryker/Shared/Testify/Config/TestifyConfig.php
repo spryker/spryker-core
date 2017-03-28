@@ -63,9 +63,6 @@ class TestifyConfig implements TestifyConfigInterface
         $configProperty->setValue($config);
     }
 
-    /**
-     *
-     */
     public function __destruct()
     {
         $reflectionProperty = $this->getConfigReflectionProperty();

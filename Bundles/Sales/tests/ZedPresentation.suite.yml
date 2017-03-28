@@ -10,4 +10,4 @@ modules:
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Sales\Helper\ZedPresentation
-        - \Testify\Helper\Environment
+        - \Sales\Helper\Sales
