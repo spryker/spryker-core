@@ -25,7 +25,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     public function _depends()
     {
         return [
-            ZedBootstrap::class => 'Should be used with ZedBootstrap only'
+            ZedBootstrap::class => 'Should be used with ZedBootstrap only',
         ];
     }
 
