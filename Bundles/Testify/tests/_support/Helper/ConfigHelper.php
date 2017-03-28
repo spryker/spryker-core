@@ -24,13 +24,10 @@ class ConfigHelper extends Module
     protected $configCache;
 
     /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null|array $config
+     * @return void
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function _initialize()
     {
-        parent::__construct($moduleContainer, $config);
-
         Config::init();
         $reflectionProperty = $this->getConfigReflectionProperty();
         $this->configCache = $reflectionProperty->getValue()->getArrayCopy();

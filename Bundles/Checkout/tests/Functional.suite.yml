@@ -2,6 +2,8 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
+        - \Testify\Module\Environment
+        - \Testify\Helper\ConfigHelper
         - \Checkout\Module\Functional
         - \Testify\Helper\BusinessHelper
         - \Customer\Helper\CustomerData
