@@ -206,7 +206,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createDataBuilderFinder()
     {
         return new TransferDefinitionFinder(
-            $this->getConfig()->getDataBuilderSourceDirectories()
+            $this->getConfig()->getDataBuilderSourceDirectories(),
+            $this->getConfig()->getDataBuilderFileNamePattern()
         );
     }
 
