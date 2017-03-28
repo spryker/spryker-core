@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
@@ -21,6 +22,8 @@ use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
+use Spryker\Zed\Development\Business\Dependency\BundleParser;
+use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
@@ -39,11 +42,11 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFaca
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\PackageNameHydrator;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\PackageVersionHydrator;
@@ -58,8 +61,6 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
-use Spryker\Zed\Development\Business\Dependency\BundleParser;
-use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder as IdeAutoCompletionBundleBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
@@ -76,6 +77,7 @@ use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Zend\Config\Reader\Xml;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -1055,6 +1057,24 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionNamespaceExtractor()
     {
         return new NamespaceExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer
+     */
+    public function createArchitectureSniffer()
+    {
+        $xml = $this->createXmlReader();
+        $command = $this->getConfig()->getArchitectureSnifferCommandAsString();
+        return new ArchitectureSniffer($xml, $command);
+    }
+
+    /**
+     * @return \Zend\Config\Reader\Xml
+     */
+    protected function createXmlReader()
+    {
+        return new Xml();
     }
 
 }

@@ -18,6 +18,25 @@
                 <action>stability</action>
                 <icon>fa-globe</icon>
             </stability>
+            <architecture-sniffer>
+                <label>Architecture Sniffer</label>
+                <title>Architecture Sniffer</title>
+                <bundle>development</bundle>
+                <controller>architecture</controller>
+                <action>index</action>
+                <icon>fa-code</icon>
+                <pages>
+                    <check-bundle>
+                        <label>Violations</label>
+                        <title>Violations</title>
+                        <bundle>development</bundle>
+                        <controller>architecture</controller>
+                        <action>check-bundle</action>
+                        <icon>fa-code</icon>
+                        <visible>0</visible>
+                    </check-bundle>
+                </pages>
+            </architecture-sniffer>
         </pages>
     </maintenance>
 </config>

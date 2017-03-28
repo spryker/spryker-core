@@ -1,0 +1,23 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Architecture sniffer results' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse">
+
+                <table class="table-condensed table-hover table-striped table-dependency">
+                    {% for bundle in bundles %}
+                        <tr>
+                            <td class="text-right">{{ bundle }}</td>
+                            <td>
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/architecture/check-bundle', {bundle: bundle}) }}">Show violations</a>&nbsp;
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends '@Application/Layout/layout.twig' %}
+{% block content %}
+    <div class="spy-layout sparse">
+
+        <h1>{{ bundle }}</h1>
+
+        {% if(fileViolations|length == 0) %}
+        {{ "No architecture violations detected" | trans }}
+        {% endif %}
+
+
+
+        {% for file, violations in fileViolations %}
+
+        {% set t = 1 %}
+
+        {% for violation in violations %}
+
+        {% if(t == 1) %}
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>
+                    {{ violation.package }}\{{ violation.class }}
+                </h5>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="ibox-content">
+                {% endif %}
+
+                {% set t = 0 %}
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>{{ violation.ruleset | trans }} &gt; {{ violation.rule }}</strong>
+                        <div class="pull-right">
+                            <small>Priority: {{ violation.priority }}</small>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+
+                            <samp> {{ violation._  | trim }}</samp>
+                        </p>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <br/>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+{% endblock %}

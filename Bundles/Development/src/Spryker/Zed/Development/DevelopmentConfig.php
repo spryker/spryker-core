@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
 
+    const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
     /**
      * @return string
      */
@@ -242,6 +244,39 @@ class DevelopmentConfig extends AbstractBundleConfig
         return [
             __DIR__ . '/Business/IdeAutoCompletion/Generator/Templates',
         ];
+    }
+
+    /**
+     * Returns CLI commmand to run the architecture sniffer with [BUNDLE] placeholder
+     *
+     * @return string
+     */
+    public function getArchitectureSnifferCommandAsString()
+    {
+        $bundleDirectory = $this->getBundleDirectory();
+        $cmdDir = str_replace(APPLICATION_ROOT_DIR, '', $bundleDirectory);
+        $cmdDir = trim($cmdDir, '/');
+
+        return $this->getPhpMdCommand() . ' ' . $cmdDir . '/' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
+    }
+
+    /**
+     * Either a relative or full path to the ruleset.xml
+     *
+     * @return string
+     */
+    public function getArchitectureSnifferRuleset()
+    {
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+        return $vendorDir . 'spryker/architecture-sniffer/src/ruleset.xml';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhpMdCommand()
+    {
+        return 'vendor/bin/phpmd';
     }
 
 }

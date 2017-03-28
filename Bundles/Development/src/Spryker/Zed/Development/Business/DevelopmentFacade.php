@@ -294,4 +294,17 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
         $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
     }
 
+    /**
+     * @api
+     *
+     * @inheritdoc
+     *
+     * @return string
+     */
+    public function runArchitectureSniffer($bundle)
+    {
+        return $this->getFactory()->createArchitectureSniffer()->run($bundle);
+
+    }
+
 }

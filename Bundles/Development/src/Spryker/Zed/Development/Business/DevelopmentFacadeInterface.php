@@ -220,4 +220,13 @@ interface DevelopmentFacadeInterface
      */
     public function generateServiceIdeAutoCompletion();
 
+    /**
+     * @api
+     *
+     * Run the architecture sniffer against the given bundle and returns the violations
+     *
+     * @return string
+     */
+    public function runArchitectureSniffer($bundle);
+
 }
