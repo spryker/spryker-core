@@ -10,24 +10,23 @@ namespace Spryker\Zed\Event\Business\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
+use Spryker\Zed\Event\EventConfig;
 
 class LoggerConfig implements LoggerConfigInterface
 {
 
     /**
-     * @var \Spryker\Shared\Config\Config
+     * @var \Spryker\Zed\Event\EventConfig
      */
-    protected $applicationConfig;
+    protected $eventConfig;
 
     /**
-     * @param \Spryker\Shared\Config\Config $applicationConfig
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
-    public function __construct(Config $applicationConfig)
+    public function __construct(EventConfig $eventConfig)
     {
-        $this->applicationConfig = $applicationConfig;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -64,7 +63,7 @@ class LoggerConfig implements LoggerConfigInterface
     protected function createStreamHandler()
     {
         return new StreamHandler(
-            $this->applicationConfig->get(EventConstants::LOG_FILE_PATH),
+            $this->eventConfig->findEventLogPath(),
             Logger::INFO
         );
     }

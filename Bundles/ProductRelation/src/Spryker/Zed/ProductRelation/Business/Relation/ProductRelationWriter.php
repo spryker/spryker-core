@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
+use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
-use Spryker\Zed\ProductRelation\ProductRelationConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationWriter implements ProductRelationWriterInterface
@@ -259,7 +259,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     protected function touchRelationActive($idProductAbstract)
     {
         $this->touchFacade->touchActive(
-            ProductRelationConfig::RESOURCE_TYPE_PRODUCT_RELATION,
+            ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
             $idProductAbstract
         );
     }

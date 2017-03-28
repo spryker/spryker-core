@@ -13,8 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductRelationConfig extends AbstractBundleConfig
 {
 
-    const RESOURCE_TYPE_PRODUCT_RELATION = 'product_relation';
-
     /**
      * @return string|null
      */

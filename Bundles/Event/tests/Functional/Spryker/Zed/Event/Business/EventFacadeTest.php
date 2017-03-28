@@ -18,7 +18,10 @@ use Spryker\Zed\Event\Business\EventFacade;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueInterface;
 use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
+use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
+use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -53,6 +56,41 @@ class EventFacadeTest extends Test
         $eventCollection->addListener(static::TEST_EVENT_NAME, $eventListenerMock);
 
         $eventBusinessFactory = $this->createEventBusinessFactory(null, $eventCollection);
+
+        $eventFacade->setFactory($eventBusinessFactory);
+        $eventFacade->trigger(static::TEST_EVENT_NAME, $transferObject);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerWhenEventProvidedWithSubscriberShouldHandleListener()
+    {
+        $eventFacade = $this->createEventFacade();
+        $transferObject = $this->createTransferObjectMock();
+
+        $eventCollection = $this->createEventListenerCollection();
+
+        $eventListenerMock = $this->createEventListenerMock();
+        $eventListenerMock->expects($this->once())
+            ->method('handle')
+            ->with($transferObject);
+
+        $eventCollection->addListener(static::TEST_EVENT_NAME, $eventListenerMock);
+
+        $eventSubscriberMock = $this->createEventSubscriberMock();
+
+        $eventSubscriberMock->method('getSubscribedEvents')
+            ->willReturn($eventCollection);
+
+        $eventSubscriberCollection = $this->createEventSubscriberCollection();
+        $eventSubscriberCollection->add($eventSubscriberMock);
+
+        $eventBusinessFactory = $this->createEventBusinessFactory(
+            null,
+            null,
+            $eventSubscriberCollection
+        );
 
         $eventFacade->setFactory($eventBusinessFactory);
         $eventFacade->trigger(static::TEST_EVENT_NAME, $transferObject);
@@ -170,6 +208,14 @@ class EventFacadeTest extends Test
     }
 
     /**
+     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
+     */
+    protected function createEventSubscriberCollection()
+    {
+        return new EventSubscriberCollection();
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function createTransferObjectMock()
@@ -179,20 +225,37 @@ class EventFacadeTest extends Test
     }
 
     /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface
+     */
+    protected function createEventSubscriberMock()
+    {
+        return $this->getMockBuilder(EventSubscriberInterface::class)
+            ->getMock();
+    }
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface|null $queueClientMock
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface|null $eventCollection
-     * @param array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[] $eventSubscribers
+     * @param \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface|null $eventSubscriberCollection
      *
      * @return \Spryker\Zed\Event\Business\EventBusinessFactory
      */
     protected function createEventBusinessFactory(
         EventToQueueInterface $queueClientMock = null,
         EventCollectionInterface $eventCollection = null,
-        array $eventSubscribers = []
+        EventSubscriberCollectionInterface $eventSubscriberCollection = null
     ) {
 
         if ($queueClientMock === null) {
             $queueClientMock = $this->createQueueClientMock();
+        }
+
+        if ($eventCollection === null) {
+            $eventCollection = $this->createEventListenerCollection();
+        }
+
+        if ($eventSubscriberCollection === null) {
+            $eventSubscriberCollection = $this->createEventSubscriberCollection();
         }
 
         $eventDependencyProvider = new EventDependencyProvider();
@@ -209,8 +272,8 @@ class EventFacadeTest extends Test
             return $eventCollection;
         };
 
-        $container[EventDependencyProvider::EVENT_SUBSCRIBERS] = function () use ($eventSubscribers) {
-            return $eventSubscribers;
+        $container[EventDependencyProvider::EVENT_SUBSCRIBERS] = function () use ($eventSubscriberCollection) {
+            return $eventSubscriberCollection;
         };
 
         $eventBusinessFactory = new EventBusinessFactory();

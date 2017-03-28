@@ -13,14 +13,14 @@ class ProductRelationDataProviderResolver implements ProductRelationDataProvider
     /**
      * @var array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[]
      */
-    protected $productRelationRendererList;
+    protected $productRelationDateProviderList;
 
     /**
-     * @param array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationRendererList
+     * @param array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationDataProvider
      */
-    public function __construct(array $productRelationRendererList)
+    public function __construct(array $productRelationDataProvider)
     {
-        $this->productRelationRendererList = $productRelationRendererList;
+        $this->productRelationDateProviderList = $productRelationDataProvider;
     }
 
     /**
@@ -30,9 +30,9 @@ class ProductRelationDataProviderResolver implements ProductRelationDataProvider
      */
     public function resolveByType($type)
     {
-        foreach ($this->productRelationRendererList as $renderer) {
-            if ($renderer->getAcceptedType() === $type) {
-                return $renderer;
+        foreach ($this->productRelationDateProviderList as $productRelationDataProvider) {
+            if ($productRelationDataProvider->getAcceptedType() === $type) {
+                return $productRelationDataProvider;
             }
         }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event;
 
 use Spryker\Zed\Event\Dependency\Client\EventToQueueBridge;
 use Spryker\Zed\Event\Dependency\EventCollection;
+use Spryker\Zed\Event\Dependency\EventEventSubscriberCollection;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -35,7 +36,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[static::EVENT_SUBSCRIBERS] = function (Container $container) {
-            return $this->getEventSubscribers();
+            return $this->getEventSubscriberCollection();
         };
 
         $container[static::CLIENT_QUEUE] = function (Container $container) {
@@ -58,11 +59,11 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
+     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
-    public function getEventSubscribers()
+    public function getEventSubscriberCollection()
     {
-        return [];
+        return new EventEventSubscriberCollection();
     }
 
 }

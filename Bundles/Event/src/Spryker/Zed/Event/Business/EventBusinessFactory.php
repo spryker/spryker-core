@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Event\Business;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
 use Spryker\Zed\Event\Business\Logger\EventLogger;
 use Spryker\Zed\Event\Business\Logger\LoggerConfig;
@@ -60,7 +59,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSubscriberMerger()
     {
-        return new SubscriberMerger($this->getEventSubscribers());
+        return new SubscriberMerger($this->getEventSubscriberCollection());
     }
 
     /**
@@ -68,15 +67,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLoggerConfig()
     {
-        return new LoggerConfig($this->getApplicationConfig());
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Config
-     */
-    protected function getApplicationConfig()
-    {
-        return Config::getInstance();
+        return new LoggerConfig($this->getConfig());
     }
 
     /**
@@ -88,9 +79,9 @@ class EventBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|\Spryker\Zed\Event\Dependency\EventCollectionInterface[]
+     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
-    protected function getEventSubscribers()
+    protected function getEventSubscriberCollection()
     {
         return $this->getProvidedDependency(EventDependencyProvider::EVENT_SUBSCRIBERS);
     }
@@ -116,7 +107,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     protected function createEventLogger()
     {
-        return new EventLogger($this->createLoggerConfig(), $this->getApplicationConfig());
+        return new EventLogger($this->createLoggerConfig(), $this->getConfig());
     }
 
 }

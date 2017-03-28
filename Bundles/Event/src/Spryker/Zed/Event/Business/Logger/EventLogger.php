@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Event\Business\Logger;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\Event\EventConfig;
 
 class EventLogger implements EventLoggerInterface
 {
@@ -23,20 +22,20 @@ class EventLogger implements EventLoggerInterface
     protected $loggerConfig;
 
     /**
-     * @var \Spryker\Shared\Config\Config
+     * @var \Spryker\Zed\Event\EventConfig
      */
-    protected $applicationConfig;
+    protected $eventConfig;
 
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
-     * @param \Spryker\Shared\Config\Config $applicationConfig
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
     public function __construct(
         LoggerConfigInterface $loggerConfig,
-        Config $applicationConfig
+        EventConfig $eventConfig
     ) {
         $this->loggerConfig = $loggerConfig;
-        $this->applicationConfig = $applicationConfig;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -46,24 +45,12 @@ class EventLogger implements EventLoggerInterface
      */
     public function log($message)
     {
-        if (!$this->isLoggerActivated()) {
+        if (!$this->eventConfig->isLoggerActivated()) {
              return;
         }
 
         $this->getLogger($this->loggerConfig)
             ->info($message);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLoggerActivated()
-    {
-        if (!$this->applicationConfig->hasKey(EventConstants::LOGGER_ACTIVE)) {
-            return false;
-        }
-
-        return $this->applicationConfig->get(EventConstants::LOGGER_ACTIVE, false);
     }
 
 }

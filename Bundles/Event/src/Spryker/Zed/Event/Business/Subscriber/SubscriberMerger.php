@@ -8,21 +8,22 @@
 namespace Spryker\Zed\Event\Business\Subscriber;
 
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
+use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
 
 class SubscriberMerger implements SubscriberMergerInterface
 {
 
     /**
-     * @var array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
+     * @var \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
-    protected $subscribers;
+    protected $eventSubscriberCollection;
 
     /**
-     * @param array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[] $subscribers
+     * @param \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface $eventSubscriberCollection
      */
-    public function __construct(array $subscribers)
+    public function __construct(EventSubscriberCollectionInterface $eventSubscriberCollection)
     {
-        $this->subscribers = $subscribers;
+        $this->eventSubscriberCollection = $eventSubscriberCollection;
     }
 
     /**
@@ -32,7 +33,7 @@ class SubscriberMerger implements SubscriberMergerInterface
      */
     public function mergeSubscribersWith(EventCollectionInterface $eventCollection)
     {
-        foreach ($this->subscribers as $subscriber) {
+        foreach ($this->eventSubscriberCollection as $subscriber) {
             $eventCollection = $subscriber->getSubscribedEvents($eventCollection);
         }
 

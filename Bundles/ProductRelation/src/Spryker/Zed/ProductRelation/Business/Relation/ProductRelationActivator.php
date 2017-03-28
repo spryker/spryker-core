@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
+use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
-use Spryker\Zed\ProductRelation\ProductRelationConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationActivator implements ProductRelationActivatorInterface
@@ -136,7 +136,7 @@ class ProductRelationActivator implements ProductRelationActivatorInterface
      */
     protected function touchActiveRelation($idProductAbstract)
     {
-        return $this->touchFacade->touchActive(ProductRelationConfig::RESOURCE_TYPE_PRODUCT_RELATION, $idProductAbstract);
+        return $this->touchFacade->touchActive(ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION, $idProductAbstract);
     }
 
 }

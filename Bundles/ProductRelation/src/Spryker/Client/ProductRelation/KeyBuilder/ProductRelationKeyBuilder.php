@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductRelation\KeyBuilder;
 
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
-use Spryker\Zed\ProductRelation\ProductRelationConfig;
+use Spryker\Shared\ProductRelation\ProductRelationConstants;
 
 class ProductRelationKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -18,7 +18,7 @@ class ProductRelationKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductRelationConfig::RESOURCE_TYPE_PRODUCT_RELATION;
+        return ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION;
     }
 
 }
