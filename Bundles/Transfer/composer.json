@@ -21,7 +21,8 @@
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/zend": "^2.0.0",
+    "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
