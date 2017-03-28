@@ -277,7 +277,7 @@ class SalesFacadeSaveOrderTest extends Test
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
 
-        $this->assertNotEquals($customerCreatedAt->format('Y-m-d'), $orderEntity->getCreatedAt('Y-m-d'));
+        $this->assertNotEquals($customerCreatedAt->format('Y-m-d'), $orderEntity->getCreatedAt('Y-m-d'), 'Dates are not expected to be equal.');
     }
 
     /**

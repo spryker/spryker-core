@@ -9,6 +9,7 @@ namespace Testify\Helper;
 use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
+use Codeception\TestCase;
 
 class Environment extends Module
 {
@@ -19,20 +20,9 @@ class Environment extends Module
     const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
 
     /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param array|null $config
-     */
-    public function __construct(ModuleContainer $moduleContainer, $config)
-    {
-        parent::__construct($moduleContainer, $config);
-
-        $this->initEnvironment();
-    }
-
-    /**
      * @return void
      */
-    private function initEnvironment()
+    public function _initialize()
     {
         $path = self::MODE_DEFAULT_ROOT;
 
@@ -48,6 +38,7 @@ class Environment extends Module
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $applicationRoot);
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
+        defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
     }
 
 }
