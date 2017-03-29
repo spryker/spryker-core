@@ -229,4 +229,13 @@ interface DevelopmentFacadeInterface
      */
     public function runArchitectureSniffer($bundle);
 
+    /**
+     * @api
+     *
+     * @inheritdoc
+     *
+     * @return array
+     */
+    public function listAllBundles();
+
 }

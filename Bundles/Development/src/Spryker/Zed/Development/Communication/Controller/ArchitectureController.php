@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Development\Communication\Controller;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,27 +21,37 @@ class ArchitectureController extends AbstractController
 {
 
     /**
+     * vendor/spryker/spryker/Bundles/[BUNDLE]/src/
+     * vendor/spryker/[BUNDLE]/src/
+     *
      * @return array
      */
     public function indexAction()
     {
-        $bundles = $this->getFacade()->getAllBundles();
+        $allBundles = $this->getFacade()->listAllBundles();
 
         return $this->viewResponse([
-            'bundles' => $bundles,
+            'bundles' => $allBundles,
         ]);
     }
 
     public function checkBundleAction(Request $request)
     {
-        $bundle = $request->query->getAlpha('bundle');
+        $bundle = $request->query->get('bundle');
+        $namespace = $request->query->get('namespace');
+        $application = $request->query->get('application');
+        $directory = $request->query->get('directory');
 
-        $fileViolations = $this->getFacade()->runArchitectureSniffer($bundle);
+        $fileViolations = $this->getFacade()->runArchitectureSniffer($directory);
 
         return $this->viewResponse([
             'bundle' => $bundle,
+            'namespace' => $namespace,
+            'application' => $application,
             'fileViolations' => $fileViolations,
         ]);
     }
+
+
 
 }

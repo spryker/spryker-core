@@ -11,7 +11,7 @@ use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\Xml;
 
-class ArchitectureSniffer
+class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
 
     /**
@@ -35,13 +35,13 @@ class ArchitectureSniffer
     }
 
     /**
-     * @param $bundle
+     * @param $directory
      *
      * @return array
      */
-    public function run($bundle)
+    public function run($directory)
     {
-        $output = $this->runCommand($bundle);
+        $output = $this->runCommand($directory);
         $results = $this->xmlReader->fromString($output);
         $fileViolations = $this->formatResult($results);
 
@@ -59,14 +59,13 @@ class ArchitectureSniffer
     }
 
     /**
-     * @param $bundle
+     * @param $directory
      *
      * @return string
      */
-    protected function runCommand($bundle)
+    protected function runCommand($directory)
     {
-        $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $bundle, $this->command);
-
+        $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
         $p = $this->getProcess($command);
         $p->setWorkingDirectory(APPLICATION_ROOT_DIR);
         $p->run();

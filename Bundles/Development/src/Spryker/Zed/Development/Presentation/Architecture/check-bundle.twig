@@ -2,7 +2,7 @@
 {% block content %}
     <div class="spy-layout sparse">
 
-        <h1>{{ bundle }}</h1>
+        <h1>{{ namespace }} / {{ application }} / {{ bundle }}</h1>
 
         {% if(fileViolations|length == 0) %}
         {{ "No architecture violations detected" | trans }}

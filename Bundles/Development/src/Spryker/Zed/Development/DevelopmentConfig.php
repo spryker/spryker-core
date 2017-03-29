@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
@@ -257,7 +258,7 @@ class DevelopmentConfig extends AbstractBundleConfig
         $cmdDir = str_replace(APPLICATION_ROOT_DIR, '', $bundleDirectory);
         $cmdDir = trim($cmdDir, '/');
 
-        return $this->getPhpMdCommand() . ' ' . $cmdDir . '/' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
+        return $this->getPhpMdCommand() . ' ' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
     }
 
     /**
@@ -277,6 +278,22 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPhpMdCommand()
     {
         return 'vendor/bin/phpmd';
+    }
+
+    /**
+     * @return array
+     */
+    public function getProjectNamespaces()
+    {
+        return $this->get(DevelopmentConstants::PROJECT_NAMESPACES);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCoreNamespaces()
+    {
+        return $this->get(DevelopmentConstants::CORE_NAMESPACES);
     }
 
 }

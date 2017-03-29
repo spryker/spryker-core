@@ -306,4 +306,17 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
         return $this->getFactory()->createArchitectureSniffer()->run($bundle);
     }
 
+    /**
+     * @api
+     *
+     * @inheritdoc
+     *
+     * @return array
+     */
+    public function listAllBundles()
+    {
+        return $this->getFactory()->createArchitectureBundleFinder()->find();
+
+    }
+
 }
