@@ -1066,15 +1066,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createArchitectureSniffer()
     {
-        $xml = $this->createXmlReader();
-        $command = $this->getConfig()->getArchitectureSnifferCommandAsString();
+        $xml = $this->getXmlReader();
+        $command = $this->getConfig()->getArchitectureSnifferCommand();
         return new ArchitectureSniffer($xml, $command);
     }
 
     /**
      * @return \Zend\Config\Reader\Xml
      */
-    protected function createXmlReader()
+    protected function getXmlReader()
     {
         return new Xml();
     }
@@ -1086,7 +1086,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new AllBundleFinder(
             $this->createFinder(),
-            $this->createCamelCaseToDashFilter(),
+            $this->getCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
         );
@@ -1095,7 +1095,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Zend\Filter\Word\CamelCaseToDash
      */
-    protected function createCamelCaseToDashFilter()
+    protected function getCamelCaseToDashFilter()
     {
         return new CamelCaseToDash();
     }

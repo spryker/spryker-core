@@ -32,6 +32,10 @@ class ArchitectureController extends AbstractController
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return array
+     */
     public function checkBundleAction(Request $request)
     {
         $bundle = $request->query->get('bundle');

@@ -295,9 +295,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @inheritdoc
+     * @api
      *
      * @return string
      */
@@ -307,9 +307,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @inheritdoc
+     * @api
      *
      * @return array
      */

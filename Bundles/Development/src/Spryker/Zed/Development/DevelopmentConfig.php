@@ -252,12 +252,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getArchitectureSnifferCommandAsString()
+    public function getArchitectureSnifferCommand()
     {
-        $bundleDirectory = $this->getBundleDirectory();
-        $cmdDir = str_replace(APPLICATION_ROOT_DIR, '', $bundleDirectory);
-        $cmdDir = trim($cmdDir, '/');
-
         return $this->getPhpMdCommand() . ' ' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
     }
 
