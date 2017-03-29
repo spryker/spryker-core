@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
@@ -151,6 +152,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
                 SpyPriceProductTableMap::COL_PRICE,
+                SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
             ])
             ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME), static::COL_ASSIGNED_CATEGORIES)
             ->joinPriceProduct()
@@ -158,6 +160,12 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
               ->filterByFkLocale($idLocale)
             ->endUse()
             ->joinSpyProductCategory()
+            ->useSpyProductImageSetQuery()
+                ->filterByFkLocale($idLocale)
+                ->useSpyProductImageSetToProductImageQuery()
+                   ->joinWithSpyProductImage()
+                ->endUse()
+            ->endUse()
             ->addJoin(
                 SpyProductCategoryTableMap::COL_FK_CATEGORY,
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY

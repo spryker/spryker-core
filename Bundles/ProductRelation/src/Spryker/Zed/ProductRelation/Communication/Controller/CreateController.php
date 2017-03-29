@@ -36,19 +36,23 @@ class CreateController extends BaseProductRelationController
 
         $productRelationForm->handleRequest($request);
 
-        if ($productRelationForm->isValid()) {
-            $idProductRelation = $this->getFacade()->createProductRelation($productRelationForm->getData());
+        if ($productRelationForm->isSubmitted()) {
+            if ($productRelationForm->isValid()) {
+                $idProductRelation = $this->getFacade()->createProductRelation($productRelationForm->getData());
 
-            $this->addSuccessMessage('Product relation successfully created');
+                $this->addSuccessMessage('Product relation successfully created');
 
-            $editProductRelationUrl = Url::generate(
-                '/product-relation/edit/',
-                [
-                    EditController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
-                ]
-            )->build();
+                $editProductRelationUrl = Url::generate(
+                    '/product-relation/edit/',
+                    [
+                        EditController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
+                    ]
+                )->build();
 
-            return $this->redirectResponse($editProductRelationUrl);
+                return $this->redirectResponse($editProductRelationUrl);
+            } else {
+                $this->addErrorMessage('Invalid data provided.');
+            }
         }
 
         $productTable = $this->getFactory()->createProductTable();

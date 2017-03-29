@@ -14,6 +14,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -153,9 +154,9 @@ class ProductRelationFormType extends AbstractType
      */
     protected function addFkProductAbstractField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, HiddenType::class, [
+        $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Please select product.'])
+                new NotBlank(['message' => 'Abstract product is not selected.'])
             ],
         ]);
 

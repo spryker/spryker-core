@@ -37,12 +37,7 @@ ProductSelector.prototype.onTableDraw = function(settings)
         self.addClickEventToCheckbox($(element));
     });
 
-    var selectedProduct = this.findSelectedProduct(settings);
-    if (!selectedProduct) {
-        return;
-    }
-
-    this.updateSelectedProduct(selectedProduct);
+    this.findSelectedProduct(settings);
 };
 
 ProductSelector.prototype.findSelectedProduct = function(settings)
@@ -52,17 +47,10 @@ ProductSelector.prototype.findSelectedProduct = function(settings)
         return;
     }
 
-    for (var i = 0; i < settings.json.data.length; i++) {
-        var product = settings.json.data[i];
-        var idProduct = parseInt(product[0]);
-
-        var selectElement = jQuery.parseHTML(product[5]);
-        var rowData = $.parseJSON($(selectElement).attr('data-row'));
-
-        if (idProduct === idSelectedProduct) {
-            return rowData;
-        }
-    }
+    var self = this;
+    $.get('/product-relation/product-selector/index?id-product-abstract='+idSelectedProduct).done(function(selectedProduct) {
+        self.updateSelectedProduct(selectedProduct);
+    });
 };
 
 ProductSelector.prototype.addClickEventToCheckbox = function(element)
@@ -84,10 +72,12 @@ ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
     var name = selectedProduct['spy_product_abstract_localized_attributes.name'];
     var description = selectedProduct['spy_product_abstract_localized_attributes.description'];
     var categories = selectedProduct['assignedCategories'];
+    var imageUrl = selectedProduct['spy_product_image.external_url_small'];
 
     this.selectProductNotice.hide();
 
     this.selectedProductContainer.show();
+    this.selectedProductContainer.find('#product-img').attr({'src': imageUrl});
     this.selectedProductContainer.find('.product-name').text(name);
     this.selectedProductContainer.find('#product-description').text(description);
     this.selectedProductContainer.find('#product-category').text(categories);

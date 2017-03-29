@@ -7,10 +7,16 @@
 <div id="select-product-notice" class="form-group">
     {{ "Please select product from the list below" | trans  }}
 </div>
-{{ form_row(productRelationForm.fkProductAbstract) }}
+<div style="display:none">
+      {{ form_widget(productRelationForm.fkProductAbstract) }}
+</div>
+<div class="{% if productRelationForm.fkProductAbstract.vars.errors|length > 0 %}has-error{% endif %}">
+      {{ form_errors(productRelationForm.fkProductAbstract) }}
+</div>
 
 <div class="ibox-content product-box" id="selected-product" style="display:none;">
     <div class="product-desc">
+        <img height="100" id="product-img" src="#"/> <br />
         <small class="text-muted" id="product-category"></small>
         <span class="product-name"></span>
 

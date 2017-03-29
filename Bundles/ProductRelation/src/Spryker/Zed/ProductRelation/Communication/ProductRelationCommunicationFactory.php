@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductRelation\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
 use Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
+use Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface;
 use Spryker\Zed\ProductRelation\Communication\Form\ProductRelationFormType;
 use Spryker\Zed\ProductRelation\Communication\Form\Transformer\RuleQuerySetTransformer;
 use Spryker\Zed\ProductRelation\Communication\QueryBuilder\FilterProvider;
@@ -83,13 +84,13 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProvider $productRelationFormTypeDataProvider
+     * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider
      * @param int|null $idProductRelation
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createRelationForm(
-        ProductRelationTypeDataProvider $productRelationFormTypeDataProvider,
+        ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider,
         $idProductRelation = null
     ) {
         $productRelationFormType = $this->createRelationFormType();
@@ -157,7 +158,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface
      */
-    protected function getLocaleFacade()
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_LOCALE);
     }
