@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Api\Communication\Plugin;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\ApiResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
