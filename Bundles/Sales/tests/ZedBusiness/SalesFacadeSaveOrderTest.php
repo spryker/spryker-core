@@ -39,14 +39,6 @@ use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
-/**
- * @group Functional
- * @group Spryker
- * @group Zed
- * @group Sales
- * @group Business
- * @group SalesFacadeSaveOrderTest
- */
 class SalesFacadeSaveOrderTest extends Test
 {
 
