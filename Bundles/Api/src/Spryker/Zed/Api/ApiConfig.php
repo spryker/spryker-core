@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Api;
 
 use Spryker\Zed\Api\Business\Exception\PluginNotFoundException;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\CreateActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
@@ -86,7 +87,7 @@ class ApiConfig extends AbstractBundleConfig
             CriteriaByQueryFilterPreProcessor::class,
             PaginationByQueryFilterPreProcessor::class,
             PaginationByHeaderFilterPreProcessor::class,
-            CreateActionPreProcessor::class,
+            AddActionPreProcessor::class,
             UpdateActionPreProcessor::class,
             GetActionPreProcessor::class,
             FindActionPreProcessor::class,
@@ -101,6 +102,7 @@ class ApiConfig extends AbstractBundleConfig
     public function getPostProcessorStack()
     {
         return [
+            AddActionPostProcessor::class,
             DeleteActionPostProcessor::class,
             // CustomHeader
             // DateTimeFormat

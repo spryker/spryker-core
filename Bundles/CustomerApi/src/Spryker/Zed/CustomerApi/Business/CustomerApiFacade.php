@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerApi\Business;
 
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -37,22 +38,6 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function createCustomer(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return $this->getFactory()
-            ->createCustomerApi()
-            ->add($apiRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
@@ -63,6 +48,22 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
         return $this->getFactory()
             ->createCustomerApi()
             ->get($idCustomer, $apiFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     */
+    public function addCustomer(CustomerApiTransfer $customerApiTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerApi()
+            ->add($customerApiTransfer);
     }
 
     /**

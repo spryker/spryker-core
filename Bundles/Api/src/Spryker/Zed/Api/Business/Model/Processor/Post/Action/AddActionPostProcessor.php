@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
-class DeleteActionPostProcessor implements PostProcessorInterface
+class AddActionPostProcessor implements PostProcessorInterface
 {
 
     /**
@@ -23,14 +23,14 @@ class DeleteActionPostProcessor implements PostProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'delete') {
+        if ($action !== 'add') {
             return;
         }
         if ($apiResponseTransfer->getCode() !== null) {
             return;
         }
 
-        $apiResponseTransfer->setCode(204);
+        $apiResponseTransfer->setCode(201);
     }
 
 }

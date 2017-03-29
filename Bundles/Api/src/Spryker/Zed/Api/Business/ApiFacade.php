@@ -35,6 +35,20 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return array
+     */
+    public function validate(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $this->getFactory()
+            ->createValidator()
+            ->validate($apiRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      * @param \Symfony\Component\HttpFoundation\Response $responseObject

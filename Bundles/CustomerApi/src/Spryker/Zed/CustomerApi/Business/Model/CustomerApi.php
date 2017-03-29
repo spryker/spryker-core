@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
@@ -72,27 +75,41 @@ class CustomerApi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function add(ApiRequestTransfer $apiRequestTransfer)
+    public function add(ApiDataTransfer $customerApiTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
-
-        return $customerTransfer;
+        return $this->persist($customerApiTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    public function update(ApiRequestTransfer $apiRequestTransfer)
+    public function update(ApiDataTransfer $customerApiTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
+        return $this->persist($customerApiTransfer);
+    }
 
-        return $apiRequestTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $customerApiTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     */
+    protected function persist(ApiDataTransfer $customerApiTransfer)
+    {
+        $customerData = new SpyCustomer();
+        $customerData->fromArray($customerApiTransfer->toArray());
+
+        $customerData->save();
+
+        $customerApiTransfer = new CustomerApiTransfer();
+        $customerApiTransfer->fromArray($customerData->toArray(), true);
+
+        return $customerApiTransfer;
     }
 
     /**

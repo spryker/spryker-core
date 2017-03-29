@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -45,11 +46,11 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     /**
      * @param array $customer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
+        $customerTransfer = new CustomerApiTransfer();
         $customerTransfer->fromArray($apiDataTransfer->getData(), true);
 
         return $this->getFacade()->addCustomer($customerTransfer);

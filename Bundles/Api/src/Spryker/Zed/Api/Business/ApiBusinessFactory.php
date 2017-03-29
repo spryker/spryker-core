@@ -13,6 +13,7 @@ use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Transformer;
+use Spryker\Zed\Api\Business\Model\Validator\Validator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -27,7 +28,12 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createDispatcher()
     {
-        return new Dispatcher($this->getConfig(), $this->getPreProcessStack(), $this->getPostProcessStack());
+        return new Dispatcher(
+            $this->getConfig(),
+            $this->getPreProcessStack(),
+            $this->getPostProcessStack(),
+            $this->createValidator()
+        );
     }
 
     /**
@@ -79,6 +85,26 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
     {
         return new Transformer($this->createFormatter($apiRequestTransfer->getFormatType()));
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface
+     */
+    public function createValidator()
+    {
+        return new Validator(
+            $this->getValidatorPluginStack()
+        );
+    }
+
+    /**
+     * Implement in your BundleApi BundleApiDepdenencyProvider.
+     *
+     * @return array
+     */
+    protected function getValidatorPluginStack()
+    {
+        return [];
     }
 
 }

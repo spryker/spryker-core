@@ -39,14 +39,14 @@ class ResourceActionPreProcessor implements PreProcessorInterface
         } if ($identifier !== '' && $requestType === 'GET') {
             $resourceAction = 'get';
         } elseif ($identifier === '' && $requestType === 'POST') {
-            $resourceAction = 'create';
+            $resourceAction = 'add';
         } elseif ($identifier !== '' && $requestType === 'PATCH') {
             $resourceAction = 'update';
         } elseif ($identifier !== '' && $requestType === 'DELETE') {
             $resourceAction = 'delete';
         }
         if ($resourceAction === null) {
-            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided URI.', $requestType), null, 405);
+            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, 400);
         }
 
         $apiRequestTransfer->setResourceAction($resourceAction);

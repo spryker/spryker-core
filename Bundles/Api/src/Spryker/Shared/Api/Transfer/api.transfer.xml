@@ -30,6 +30,12 @@
         <property name="pagination" type="ApiPagination" />
 
         <property name="data" type="array" />
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ApiValidationError">
+        <property name="field" type="string" />
+        <property name="messages" type="array"/>
     </transfer>
 
     <transfer name="ApiFilter">
@@ -54,8 +60,17 @@
         <property name="data" type="array" />
     </transfer>
 
-    <transfer name="ApiResponseMeta">
-        <property name="name" type="string" />
+    <transfer name="ApiCollection">
+        <property name="collection" type="array"/>
+    </transfer>
+
+    <transfer name="ApiItem">
+        <property name="item" type="array"/>
+    </transfer>
+
+    <transfer name="ApiMeta">
+        <property name="self" type="string" />
+        <property name="links" type="array" />
     </transfer>
 
 </transfers>

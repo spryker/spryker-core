@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerApi\Business;
 
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerApiFacadeInterface
@@ -28,20 +29,6 @@ interface CustomerApiFacadeInterface
 
     /**
      * Specification:
-     *  - Adds new customer.
-     *
-     * @api
-     *
-     * @internal param CustomerTransfer $customerTransfer
-     *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function createCustomer(ApiRequestTransfer $apiRequestTransfer);
-
-    /**
-     * Specification:
      *  - Finds customer by customer ID.
      *  - Throws CustomerNotFoundException if not found.
      *
@@ -53,6 +40,18 @@ interface CustomerApiFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerApiTransfer $customerTransfer
      */
     public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer);
+
+    /**
+     * Specification:
+     *  - Adds new customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     */
+    public function addCustomer(CustomerApiTransfer $customerApiTransfer);
 
     /**
      * Specification:

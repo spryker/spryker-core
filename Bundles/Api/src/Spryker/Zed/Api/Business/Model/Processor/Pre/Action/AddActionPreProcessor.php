@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class CreateActionPreProcessor implements PreProcessorInterface
+class AddActionPreProcessor implements PreProcessorInterface
 {
 
     /**
@@ -21,13 +22,20 @@ class CreateActionPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'create') {
+        if ($action !== 'add') {
             return;
         }
 
+        $apiData = new ApiDataTransfer();
+        $apiRequestTransfer->setData($apiData);
+
         $postData = (array)$apiRequestTransfer->getRequestData();
-        $params = [];
-        $params[] = $postData;
+        $apiRequestTransfer->getData()->setData($postData);
+
+        $params = [
+            $apiRequestTransfer->getData(),
+        ];
+
         $apiRequestTransfer->setResourceParams($params);
     }
 

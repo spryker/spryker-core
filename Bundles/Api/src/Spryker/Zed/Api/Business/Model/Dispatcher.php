@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
+use Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface;
 
 class Dispatcher
 {
@@ -31,15 +32,22 @@ class Dispatcher
     protected $postProcessStack;
 
     /**
+     * @var \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface
+     */
+    protected $validator;
+
+    /**
      * @param \Spryker\Zed\Api\ApiConfig $apiConfig
      * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
      * @param \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[] $postProcessStack
+     * @param \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface $validator
      */
-    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack)
+    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack, ValidatorInterface $validator)
     {
         $this->apiConfig = $apiConfig;
         $this->preProcessStack = $preProcessStack;
         $this->postProcessStack = $postProcessStack;
+        $this->validator = $validator;
     }
 
     /**
@@ -59,15 +67,19 @@ class Dispatcher
 
         // right now can also be transfer
         try {
-            $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
-            $data = [];
-            if ($entityOrCollection) {
-                $data = $entityOrCollection->modifiedToArray(true);
+            $errors = $this->validator->validate($apiRequestTransfer);
+            if ($errors) {
+                $apiResponseTransfer->setCode(422);
+                $apiResponseTransfer->setMessage('Validation Errors.');
+                $apiResponseTransfer->setValidationErrors($errors);
             } else {
-                //nothing found
+                $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
+                $data = [];
+                if ($entityOrCollection) {
+                    $data = $entityOrCollection->modifiedToArray(true);
+                }
+                $apiResponseTransfer->setData($data);
             }
-
-            $apiResponseTransfer->setData($data);
         } catch (\Exception $e) {
             $apiResponseTransfer->setCode($e->getCode() ?: 500);
             $apiResponseTransfer->setMessage($e->getMessage());
