@@ -112,7 +112,7 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Container|Con
+     * @return \Spryker\Yves\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainerWithProvidedDependencies()
     {

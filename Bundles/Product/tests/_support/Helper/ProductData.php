@@ -4,8 +4,8 @@ namespace Product\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Testify\Helper\BusinessHelper;
 use Testify\Helper\DataCleanup;
+use Testify\Helper\Locator;
 
 class ProductData extends Module
 {
@@ -43,7 +43,7 @@ class ProductData extends Module
      */
     private function getProductFacade()
     {
-        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->facade();
+        return $this->getModule('\\' . Locator::class)->getLocator()->product()->facade();
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductData extends Module
      */
     private function getProductQuery()
     {
-        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->product()->queryContainer();
+        return $this->getModule('\\' . Locator::class)->getLocator()->product()->queryContainer();
     }
 
     /**

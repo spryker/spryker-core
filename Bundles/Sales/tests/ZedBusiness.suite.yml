@@ -3,8 +3,9 @@ modules:
     enabled:
         - Asserts
         - \Testify\Helper\Environment
-        - \Testify\Helper\ConfigHelper
+        - \Testify\Helper\Config
+        - \Testify\Helper\Dependency
+        - \Testify\Helper\Locator
         - \Propel\Helper\Transaction
         - \Sales\Helper\ZedBusiness
-        - \Testify\Helper\BusinessHelper
 
