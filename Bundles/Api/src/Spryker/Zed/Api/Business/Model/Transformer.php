@@ -32,13 +32,32 @@ class Transformer
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
-     * @param \Symfony\Component\HttpFoundation\Response $reponse
+     * @param \Symfony\Component\HttpFoundation\Response $response
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $reponse)
+    public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        $reponse->headers->add($apiResponseTransfer->getHeaders());
+        $response->headers->add($apiResponseTransfer->getHeaders());
+        $response->setStatusCode($apiResponseTransfer->getCode());
+
+        $response = $this->addResponseContent($apiRequestTransfer, $apiResponseTransfer, $response);
+
+        return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function addResponseContent(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
+    {
+        if ($apiResponseTransfer->getCode() === 204) {
+            return $response;
+        }
 
         $content = [];
         $content['code'] = $apiResponseTransfer->getCode();
@@ -55,9 +74,9 @@ class Transformer
         }
 
         $content = $this->formatter->format($content);
-        $reponse->setContent($content);
+        $response->setContent($content);
 
-        return $reponse;
+        return $response;
     }
 
 }

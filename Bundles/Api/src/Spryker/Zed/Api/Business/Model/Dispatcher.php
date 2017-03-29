@@ -70,7 +70,7 @@ class Dispatcher
             $errors = $this->validator->validate($apiRequestTransfer);
             if ($errors) {
                 $apiResponseTransfer->setCode(422);
-                $apiResponseTransfer->setMessage('Validation Errors.');
+                $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors($errors);
             } else {
                 $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
