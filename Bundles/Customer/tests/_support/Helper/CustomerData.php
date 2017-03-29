@@ -48,7 +48,7 @@ class CustomerData extends Module
     }
 
     /**
-     * @return MailFacadeInterface|object
+     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface|object
      */
     private function getMailFacadeMock()
     {
