@@ -5,4 +5,5 @@ modules:
         - \Testify\Helper\ZedControllerTable:
             depends: \Testify\Helper\ZedBootstrap
         - \Testify\Helper\ZedBootstrap
+        - \Testify\Helper\Dependency
         - \Propel\Helper\Transaction

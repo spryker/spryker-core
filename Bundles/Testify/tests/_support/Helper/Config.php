@@ -9,12 +9,11 @@ namespace Testify\Helper;
 
 use ArrayObject;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use ReflectionClass;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\Config\Config as SprykerConfig;
 
-class ConfigHelper extends Module
+class Config extends Module
 {
 
     /**
@@ -27,7 +26,7 @@ class ConfigHelper extends Module
      */
     public function _initialize()
     {
-        Config::init();
+        SprykerConfig::init();
         $reflectionProperty = $this->getConfigReflectionProperty();
         $this->configCache = $reflectionProperty->getValue()->getArrayCopy();
     }
@@ -37,7 +36,7 @@ class ConfigHelper extends Module
      */
     protected function getConfigReflectionProperty()
     {
-        $reflection = new ReflectionClass(Config::class);
+        $reflection = new ReflectionClass(SprykerConfig::class);
         $reflectionProperty = $reflection->getProperty('config');
         $reflectionProperty->setAccessible(true);
 
@@ -72,13 +71,12 @@ class ConfigHelper extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
     {
-        $projectNamespaces = $this->configCache[KernelConstants::PROJECT_NAMESPACES];
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }

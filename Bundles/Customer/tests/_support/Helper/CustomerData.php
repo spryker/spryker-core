@@ -11,8 +11,10 @@ use Codeception\Module;
 use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use Testify\Helper\BusinessHelper;
+use Testify\Helper\Dependency;
+use Testify\Helper\Locator;
 
 class CustomerData extends Module
 {
@@ -39,20 +41,34 @@ class CustomerData extends Module
      */
     private function getCustomerFacade()
     {
-        $locator = $this->getLocator();
+        $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
+        $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
 
-        $mailStub = Stub::makeEmpty(MailFacadeInterface::class);
-        $locator->setDependency(CustomerDependencyProvider::FACADE_MAIL, $mailStub);
-
-        return $locator->getLocator()->customer()->facade();
+        return $this->getLocatorHelper()->getLocator()->customer()->facade();
     }
 
     /**
-     * @return \Testify\Helper\BusinessHelper
+     * @return MailFacadeInterface|object
      */
-    private function getLocator()
+    private function getMailFacadeMock()
     {
-        return $this->getModule('\\' . BusinessHelper::class);
+        return Stub::makeEmpty(MailFacadeInterface::class);
+    }
+
+    /**
+     * @return \Testify\Helper\Locator|\Codeception\Module
+     */
+    private function getLocatorHelper()
+    {
+        return $this->getModule('\\' . Locator::class);
+    }
+
+    /**
+     * @return \Testify\Helper\Dependency|\Codeception\Module
+     */
+    private function getDependencyHelper()
+    {
+        return $this->getModule('\\' . Dependency::class);
     }
 
 }

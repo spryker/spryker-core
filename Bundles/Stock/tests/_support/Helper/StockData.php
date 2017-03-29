@@ -5,7 +5,7 @@ namespace Stock\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
-use Testify\Helper\BusinessHelper;
+use Testify\Helper\Locator;
 
 class StockData extends Module
 {
@@ -28,7 +28,7 @@ class StockData extends Module
      */
     private function getStockFacade()
     {
-        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->stock()->facade();
+        return $this->getModule('\\' . Locator::class)->getLocator()->stock()->facade();
     }
 
 }

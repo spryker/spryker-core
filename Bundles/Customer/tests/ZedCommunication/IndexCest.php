@@ -2,8 +2,12 @@
 
 namespace ZedCommunication;
 
+use Codeception\Util\Stub;
 use Customer\ZedCommunicationTester;
 use Faker\Factory;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
+use Spryker\Zed\Mail\Business\MailFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +30,26 @@ class IndexCest
     public function _inject()
     {
         $this->faker = Factory::create();
+    }
+
+    /**
+     * @param \Customer\ZedCommunicationTester $i
+     *
+     * @return void
+     */
+    public function _before(ZedCommunicationTester $i)
+    {
+        $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
+
+        $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface|object
+     */
+    private function getMailFacadeMock()
+    {
+        return Stub::makeEmpty(MailFacadeInterface::class);
     }
 
     /**

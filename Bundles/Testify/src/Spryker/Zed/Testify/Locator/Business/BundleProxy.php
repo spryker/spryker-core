@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Testify\Locator\Business;
 
-use Closure;
 use Spryker\Shared\Kernel\BundleProxy as KernelBundleProxy;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Testify\Config\TestifyConfig;
 use Spryker\Zed\Kernel\AbstractFactory;
@@ -19,6 +19,8 @@ use Spryker\Zed\Testify\Locator\TestifyConfigurator;
 
 class BundleProxy extends KernelBundleProxy
 {
+
+    use ContainerMocker;
 
     /**
      * @var \Spryker\Zed\Testify\Locator\Business\BusinessLocator
@@ -46,18 +48,11 @@ class BundleProxy extends KernelBundleProxy
     private $coreNamespaces = [];
 
     /**
-     * @var \Closure
-     */
-    private $closure;
-
-    /**
      * @param \Spryker\Zed\Testify\Locator\Business\BusinessLocator $locator
-     * @param \Closure $closure
      */
-    public function __construct(BusinessLocator $locator, Closure $closure)
+    public function __construct(BusinessLocator $locator)
     {
         $this->locator = $locator;
-        $this->closure = $closure;
     }
 
     /**
@@ -131,12 +126,9 @@ class BundleProxy extends KernelBundleProxy
         $container = $dependencyProvider->provideBusinessLayerDependencies(
             $configurator->getContainer()
         );
+        $container = $this->overwriteForTesting($container);
 
-        $configurator = $this->getConfigurator();
-        $configurator->setContainer($container);
-
-        $closure = $this->closure;
-        $closure($configurator);
+        $factory->setContainer($container);
 
         $facade->setFactory($factory);
 

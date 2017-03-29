@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Testify\Locator\Business;
 
-use Closure;
 use Spryker\Service\Kernel\ServiceLocator;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
@@ -27,20 +26,14 @@ class BusinessLocator extends AbstractLocator
     private $coreNamespaces = [];
 
     /**
-     * @var \Closure
-     */
-    private $closure;
-
-    /**
      * @param array $projectNamespaces
      * @param array $coreNamespaces
      * @param \Closure $closure
      */
-    public function __construct(array $projectNamespaces, array $coreNamespaces, Closure $closure)
+    public function __construct(array $projectNamespaces, array $coreNamespaces)
     {
         $this->projectNamespaces = $projectNamespaces;
         $this->coreNamespaces = $coreNamespaces;
-        $this->closure = $closure;
     }
 
     /**
@@ -54,7 +47,7 @@ class BusinessLocator extends AbstractLocator
             new ServiceLocator(),
         ];
 
-        $bundleProxy = new BundleProxy($this, $this->closure);
+        $bundleProxy = new BundleProxy($this);
         $bundleProxy
             ->setProjectNamespaces($this->projectNamespaces)
             ->setCoreNamespaces($this->coreNamespaces)
