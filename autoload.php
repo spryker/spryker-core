@@ -2,8 +2,6 @@
 
 $autoloader = function ($className) {
 
-    $className = ltrim($className, '\\');
-
     $namespaces = [
         'Spryker'
     ];
@@ -24,6 +22,7 @@ $autoloader = function ($className) {
         'Client',
     ];
 
+    $className = ltrim($className, '\\');
     $classNameParts = explode('\\', $className);
 
     if (count($classNameParts) < 3) {
@@ -38,53 +37,38 @@ $autoloader = function ($className) {
 
     if (in_array($classNameParts[0], $namespaces)) {
         $className = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
-        $filePath = __DIR__ . '/Bundles/';
-        $filePath .= $classNameParts[2] . '/src/';
+        $bundle = $classNameParts[2];
+        $filePath = __DIR__ . '/Bundles/' . $bundle . '/src/';
         $filePath .= $className;
-
-        if (file_exists($filePath)) {
-            require $filePath;
-
-            return true;
-        }
     }
 
     if (in_array($classNameParts[1], $codeceptionSupportDirectories)) {
         $bundle = array_shift($classNameParts);
         $className = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
-        $filePath = __DIR__ . '/Bundles/';
-        $filePath .= $bundle . '/tests/_support/';
+        $filePath = __DIR__ . '/Bundles/' . $bundle . '/tests/_support/';
         $filePath .= $className;
-
-        if (file_exists($filePath)) {
-            require $filePath;
-
-            return true;
-        }
     }
 
     if (in_array($classNameParts[0], $testingNamespaces)) {
         if ($classNameParts[0] === 'Acceptance') {
             $bundle = $classNameParts[1];
-            $className = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
-            $filePath = __DIR__ . '/Bundles/' . $bundle . '/tests/';
-            $filePath .= $className;
-            if (file_exists($filePath)) {
-                require $filePath;
-
-                return true;
-            }
         }
         if (in_array($classNameParts[0], ['Functional', 'Unit'])) {
             $bundle = $classNameParts[3];
+        }
+
+        if (isset($bundle)) {
             $className = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
             $filePath = __DIR__ . '/Bundles/' . $bundle . '/tests/';
             $filePath .= $className;
-            if (file_exists($filePath)) {
-                require $filePath;
+        }
+    }
 
-                return true;
-            }
+    if (isset($filePath)) {
+        if (file_exists($filePath)) {
+            require $filePath;
+
+            return true;
         }
     }
 
