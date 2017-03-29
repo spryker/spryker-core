@@ -26,7 +26,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param \Zend\Config\Reader\Xml $xmlReader
-     * @param $command
+     * @param string $command
      */
     public function __construct(Xml $xmlReader, $command)
     {
@@ -35,7 +35,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $directory
+     * @param string $directory
      *
      * @return array
      */
@@ -49,7 +49,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $command
+     * @param string $command
      *
      * @return \Symfony\Component\Process\Process
      */
@@ -59,7 +59,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $directory
+     * @param string $directory
      *
      * @return string
      */
@@ -74,11 +74,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $results
+     * @param array $results
      *
      * @return array
      */
-    protected function formatResult($results)
+    protected function formatResult(array $results)
     {
         $fileViolations = [];
 
@@ -94,12 +94,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $results
-     * @param $fileViolations
+     * @param array $results
+     * @param array $fileViolations
      *
-     * @return mixed
+     * @return array
      */
-    protected function formatMultiFileResults($results, $fileViolations)
+    protected function formatMultiFileResults(array $results, array $fileViolations)
     {
         foreach ($results['file'] as $file) {
 
@@ -126,12 +126,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param $results
-     * @param $fileViolations
+     * @param array $results
+     * @param array $fileViolations
      *
-     * @return mixed
+     * @return array
      */
-    protected function formatSingleFileResults($results, $fileViolations)
+    protected function formatSingleFileResults(array $results, array $fileViolations)
     {
         if (array_key_exists('violation', $results['file'])) {
             if (array_key_exists('_', $results['file']['violation'])) {

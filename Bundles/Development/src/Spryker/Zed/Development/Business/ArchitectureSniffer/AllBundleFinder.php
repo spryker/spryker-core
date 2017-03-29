@@ -62,13 +62,13 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param $path
-     * @param $namespace
-     * @param $allBundles
+     * @param string $path
+     * @param string $namespace
+     * @param array $allBundles
      *
      * @return array
      */
-    protected function findBundles($path, $namespace, $allBundles)
+    protected function findBundles($path, $namespace, array $allBundles)
     {
         $directories = [];
 
@@ -93,11 +93,11 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param $allBundles
+     * @param array $allBundles
      *
      * @return array
      */
-    protected function loadProjectBundles($allBundles)
+    protected function loadProjectBundles(array $allBundles)
     {
         foreach ($this->projectNamespaces as $projectNamespace) {
             $path = APPLICATION_SOURCE_DIR . '/' . $projectNamespace . '/*';
@@ -107,11 +107,11 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param $allBundles
+     * @param array $allBundles
      *
      * @return array
      */
-    protected function loadCoreDevelopmentBundles($allBundles)
+    protected function loadCoreDevelopmentBundles(array $allBundles)
     {
         $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/Spryker/*';
         $namespace = 'Spryker';
@@ -120,11 +120,11 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param $allBundles
+     * @param array $allBundles
      *
      * @return array
      */
-    protected function loadOtherCoreBundles($allBundles)
+    protected function loadOtherCoreBundles(array $allBundles)
     {
         foreach ($this->coreNamespaces as $coreNamespace) {
 
@@ -138,11 +138,11 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param $allBundles
+     * @param array $allBundles
      *
      * @return mixed
      */
-    protected function addApplication($allBundles)
+    protected function addApplication(array $allBundles)
     {
         foreach ($allBundles as $i => $bundleData) {
             $expl = explode('/', $bundleData['directory']);

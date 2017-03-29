@@ -11,7 +11,7 @@ interface ArchitectureSnifferInterface
 {
 
     /**
-     * @param $directory
+     * @param string $directory
      *
      * @return array
      */
