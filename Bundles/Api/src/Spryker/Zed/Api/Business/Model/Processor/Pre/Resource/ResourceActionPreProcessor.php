@@ -21,7 +21,7 @@ class ResourceActionPreProcessor implements PreProcessorInterface
      *
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -50,6 +50,8 @@ class ResourceActionPreProcessor implements PreProcessorInterface
         }
 
         $apiRequestTransfer->setResourceAction($resourceAction);
+
+        return $apiRequestTransfer;
     }
 
 }

@@ -17,13 +17,13 @@ class AddActionPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
         if ($action !== 'add') {
-            return;
+            return $apiRequestTransfer;
         }
 
         $apiData = new ApiDataTransfer();
@@ -37,6 +37,8 @@ class AddActionPreProcessor implements PreProcessorInterface
         ];
 
         $apiRequestTransfer->setResourceParams($params);
+
+        return $apiRequestTransfer;
     }
 
 }

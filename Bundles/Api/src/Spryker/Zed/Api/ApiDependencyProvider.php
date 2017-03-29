@@ -70,9 +70,31 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function providePreProcessorStack(Container $container)
+    {
+        $container[static::PLUGIN_STACK_PRE_PROCESS] = function (Container $container) {
+            return $this->getApiPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
      */
     protected function getApiPluginCollection()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     */
+    protected function getPreProcessorPluginCollection()
     {
         return [];
     }

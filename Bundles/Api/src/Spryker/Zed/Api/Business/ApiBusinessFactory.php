@@ -12,6 +12,7 @@ use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
+use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Transformer;
 use Spryker\Zed\Api\Business\Model\Validator\Validator;
@@ -66,6 +67,16 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Api\Business\Model\ProcessorInterface
+     */
+    public function createProcessor()
+    {
+        return new Processor(
+
+        );
+    }
+
+    /**
      * @return \Spryker\Service\UtilEncoding\UtilEncodingService
      */
     protected function getUtilEncoding()
@@ -109,6 +120,22 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getApiPluginStack()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_API);
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     */
+    protected function getPreProcessorStack()
+    {
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_PRE_PROCESS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     */
+    protected function getPostProcessorStack()
+    {
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_POST_PROCESS);
     }
 
 }

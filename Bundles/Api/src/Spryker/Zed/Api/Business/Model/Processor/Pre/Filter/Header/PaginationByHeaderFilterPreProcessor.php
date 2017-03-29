@@ -16,16 +16,16 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $headers = $apiRequestTransfer->getHeaderData();
         if (empty($headers['range'])) {
-            return;
+            return $apiRequestTransfer;
         }
 
-        // Implement on project level
+        return $apiRequestTransfer;
     }
 
 }

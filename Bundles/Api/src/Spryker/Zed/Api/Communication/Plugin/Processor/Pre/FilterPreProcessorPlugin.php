@@ -5,36 +5,32 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
+namespace Spryker\Zed\Api\Communication\Plugin\Processor\Pre;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
+use Spryker\Zed\Api\Dependency\Plugin\ApiPreProcessorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
  */
-class UpdateActionPreProcessor implements PreProcessorInterface
+class FilterPreProcessorPlugin extends AbstractPlugin implements ApiPreProcessorPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $method = $apiRequestTransfer->getResourceAction();
-        if ($method !== 'update') {
-            return $apiRequestTransfer;
-        }
-
-        $postData = (array)$apiRequestTransfer->getRequestData();
-        $params = (array)$apiRequestTransfer->getResourceParams();
-        $params[] = $postData;
-        $apiRequestTransfer->setResourceParams($params);
-
-        return $apiRequestTransfer;
+        return $this->getFactory()
+            ->createPreProcessorProvider()
+            ->buildFilterPreProcessor()
+            ->process($apiRequestTransfer);
     }
 
 }

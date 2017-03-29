@@ -18,19 +18,21 @@ class AddActionPostProcessor implements PostProcessorInterface
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
         if ($action !== 'add') {
-            return;
+            return $apiResponseTransfer;
         }
         if ($apiResponseTransfer->getCode() !== null) {
-            return;
+            return $apiResponseTransfer;
         }
 
         $apiResponseTransfer->setCode(201);
+
+        return $apiResponseTransfer;
     }
 
 }

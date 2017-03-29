@@ -5,13 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Post;
+namespace Spryker\Zed\Api\Business\Model;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 
-interface PostProcessorInterface
+interface ProcessorInterface
 {
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     */
+    public function preProcess(ApiRequestTransfer $apiRequestTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -19,6 +26,6 @@ interface PostProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer);
+    public function postProcess(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer);
 
 }

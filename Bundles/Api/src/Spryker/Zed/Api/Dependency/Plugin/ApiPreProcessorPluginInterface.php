@@ -5,25 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre;
+namespace Spryker\Zed\Api\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
-class FilterPreProcessor implements PreProcessorInterface
+interface ApiPreProcessorPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
-    {
-        $apiFilterTransfer = new ApiFilterTransfer();
-        $apiRequestTransfer->setFilter($apiFilterTransfer);
-
-        return $apiRequestTransfer;
-    }
+    public function process(ApiRequestTransfer $apiRequestTransfer);
 
 }

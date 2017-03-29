@@ -16,18 +16,20 @@ class FindActionPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
         if ($action !== 'find') {
-            return;
+            return $apiRequestTransfer;
         }
 
         $params = [$apiRequestTransfer];
 
         $apiRequestTransfer->setResourceParams($params);
+
+        return $apiRequestTransfer;
     }
 
 }

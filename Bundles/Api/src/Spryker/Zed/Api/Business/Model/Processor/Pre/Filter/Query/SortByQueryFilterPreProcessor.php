@@ -19,13 +19,13 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         if (empty($queryStrings[self::SORT])) {
-            return;
+            return $apiRequestTransfer;
         }
 
         $sortString = $queryStrings[self::SORT];
@@ -45,6 +45,8 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
         }
 
         $apiRequestTransfer->getFilter()->getPagination()->setSort($sort);
+
+        return $apiRequestTransfer;
     }
 
 }

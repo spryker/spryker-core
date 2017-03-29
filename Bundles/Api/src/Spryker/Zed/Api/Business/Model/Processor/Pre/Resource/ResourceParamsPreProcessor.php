@@ -22,7 +22,7 @@ class ResourceParamsPreProcessor implements PreProcessorInterface
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -34,6 +34,8 @@ class ResourceParamsPreProcessor implements PreProcessorInterface
         }
 
         $apiRequestTransfer->setResourceParams($elements);
+
+        return $apiRequestTransfer;
     }
 
 }

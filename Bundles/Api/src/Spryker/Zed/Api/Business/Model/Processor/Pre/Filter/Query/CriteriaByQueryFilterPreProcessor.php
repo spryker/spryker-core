@@ -18,19 +18,21 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         if (empty($queryStrings[self::FILTER])) {
             $apiRequestTransfer->getFilter()->setFilter('{}');
-            return;
+            return $apiRequestTransfer;
         }
 
         $filter = $queryStrings[self::FILTER];
 
         $apiRequestTransfer->getFilter()->setFilter($filter);
+
+        return $apiRequestTransfer;
     }
 
 }

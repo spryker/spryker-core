@@ -16,7 +16,7 @@ class GetActionPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -24,7 +24,7 @@ class GetActionPreProcessor implements PreProcessorInterface
         $idResource = $apiRequestTransfer->getPath(); //TODO should be resource id
 
         if ($action !== 'get') {
-            return;
+            return $apiRequestTransfer;
         }
 
         $params = [
@@ -33,6 +33,8 @@ class GetActionPreProcessor implements PreProcessorInterface
         ];
 
         $apiRequestTransfer->setResourceParams($params);
+
+        return $apiRequestTransfer;
     }
 
 }

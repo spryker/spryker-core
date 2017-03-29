@@ -10,6 +10,7 @@ namespace Spryker\Zed\Api\Dependency\Plugin;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
+//TODO rename it to ApiResourcePluginInterface
 interface ApiPluginInterface
 {
 

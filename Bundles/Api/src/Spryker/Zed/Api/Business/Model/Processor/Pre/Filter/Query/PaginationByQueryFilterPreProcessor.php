@@ -33,7 +33,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -52,6 +52,8 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
                 $this->validateLimitRange($queryStrings[self::LIMIT])
             );
         }
+
+        return $apiRequestTransfer;
     }
 
     /**
