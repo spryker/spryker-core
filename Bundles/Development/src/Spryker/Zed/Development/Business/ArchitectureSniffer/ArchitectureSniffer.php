@@ -43,6 +43,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $output = $this->runCommand($directory);
         $results = $this->xmlReader->fromString($output);
+
+        if (!is_array($results)) {
+            $results = [];
+        }
+
         $fileViolations = $this->formatResult($results);
 
         return $fileViolations;
@@ -82,7 +87,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $fileViolations = [];
 
-        if (!is_array($results) || !array_key_exists('file', $results)) {
+        if (!array_key_exists('file', $results)) {
             return $fileViolations;
         }
 
