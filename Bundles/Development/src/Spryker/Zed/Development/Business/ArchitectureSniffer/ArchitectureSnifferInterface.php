@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
-use Spryker\Zed\Development\DevelopmentConfig;
-use Symfony\Component\Process\Process;
-use Zend\Config\Reader\Xml;
-
 interface ArchitectureSnifferInterface
 {
-
 
     /**
      * @param $directory
@@ -21,4 +16,5 @@ interface ArchitectureSnifferInterface
      * @return array
      */
     public function run($directory);
+
 }

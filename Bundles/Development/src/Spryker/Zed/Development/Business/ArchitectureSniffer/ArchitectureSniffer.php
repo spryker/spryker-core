@@ -96,6 +96,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param $results
      * @param $fileViolations
+     *
      * @return mixed
      */
     protected function formatMultiFileResults($results, $fileViolations)
@@ -127,6 +128,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param $results
      * @param $fileViolations
+     *
      * @return mixed
      */
     protected function formatSingleFileResults($results, $fileViolations)

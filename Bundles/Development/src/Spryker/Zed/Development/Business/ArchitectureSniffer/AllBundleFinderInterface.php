@@ -8,8 +8,10 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 interface AllBundleFinderInterface
 {
+
     /**
      * @return array
      */
     public function find();
+
 }

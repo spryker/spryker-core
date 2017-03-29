@@ -65,6 +65,7 @@ class AllBundleFinder implements AllBundleFinderInterface
      * @param $path
      * @param $namespace
      * @param $allBundles
+     *
      * @return array
      */
     protected function findBundles($path, $namespace, $allBundles)
@@ -84,7 +85,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $allBundles[] = [
                 'bundle' => $dir->getFileName(),
                 'namespace' => $namespace,
-                'directory' => $dir->getPathName()
+                'directory' => $dir->getPathName(),
             ];
         }
 
@@ -93,6 +94,7 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param $allBundles
+     *
      * @return array
      */
     protected function loadProjectBundles($allBundles)
@@ -106,6 +108,7 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param $allBundles
+     *
      * @return array
      */
     protected function loadCoreDevelopmentBundles($allBundles)
@@ -118,11 +121,11 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param $allBundles
+     *
      * @return array
      */
     protected function loadOtherCoreBundles($allBundles)
     {
-
         foreach ($this->coreNamespaces as $coreNamespace) {
 
             $namespaceDir = $this->filter->filter($coreNamespace);
@@ -136,6 +139,7 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param $allBundles
+     *
      * @return mixed
      */
     protected function addApplication($allBundles)
@@ -146,4 +150,5 @@ class AllBundleFinder implements AllBundleFinderInterface
         }
         return $allBundles;
     }
+
 }

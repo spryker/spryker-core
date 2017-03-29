@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Development\Communication\Controller;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,7 +48,5 @@ class ArchitectureController extends AbstractController
             'fileViolations' => $fileViolations,
         ]);
     }
-
-
 
 }
