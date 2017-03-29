@@ -12,11 +12,11 @@ use Sales\PageObject\SalesListPage;
 use Sales\ZedPresentationTester;
 
 /**
- * @group Acceptance
+ * Auto-generated group annotations
  * @group Sales
- * @group Order
- * @group Zed
+ * @group ZedPresentation
  * @group SalesListCest
+ * Add your own group annotations below this line
  */
 class SalesListCest
 {
