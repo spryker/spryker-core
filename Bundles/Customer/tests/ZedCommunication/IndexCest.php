@@ -6,7 +6,11 @@ use Customer\ZedCommunicationTester;
 use Faker\Factory;
 
 /**
+ * Auto-generated group annotations
+ * @group Customer
+ * @group ZedCommunication
  * @group IndexCest
+ * Add your own group annotations below this line
  */
 class IndexCest
 {
