@@ -371,6 +371,17 @@
       "Unit\\Spryker\\Zed\\DataFeed\\": "Bundles/DataFeed/tests",
       "Functional\\Spryker\\Zed\\DataFeed\\": "Bundles/DataFeed/tests",
 
+      "Spryker\\Client\\ProductDataFeed\\": "Bundles/ProductDataFeed/src",
+      "Unit\\Spryker\\Client\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+      "Functional\\Spryker\\Client\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+      "Spryker\\Shared\\ProductDataFeed\\": "Bundles/ProductDataFeed/src",
+      "Unit\\Spryker\\Shared\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+      "Functional\\Spryker\\Shared\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+      "Spryker\\Zed\\ProductDataFeed\\": "Bundles/ProductDataFeed/src",
+      "Spryker\\Yves\\ProductDataFeed\\": "Bundles/ProductDataFeed/src",
+      "Unit\\Spryker\\Zed\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+      "Functional\\Spryker\\Zed\\ProductDataFeed\\": "Bundles/ProductDataFeed/tests",
+
       "Spryker\\Shared\\ProductCartConnector\\": "Bundles/ProductCartConnector/src",
       "Unit\\Spryker\\Shared\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
       "Functional\\Spryker\\Shared\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
