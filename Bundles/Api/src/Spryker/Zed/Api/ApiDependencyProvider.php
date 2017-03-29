@@ -17,9 +17,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
 
-    const PLUGIN_STACK_API = 'PLUGIN_STACK_API';
-    const PLUGIN_STACK_PRE_PROCESS = 'PLUGIN_STACK_PRE_PROCESS';
-    const PLUGIN_STACK_POST_PROCESS = 'PLUGIN_STACK_POST_PROCESS';
+    const PLUGINS_API = 'PLUGINS_API';
+    const PLUGINS_PRE_PROCESS = 'PLUGINS_PRE_PROCESS';
+    const PLUGINS_POST_PROCESS = 'PLUGINS_POST_PROCESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +35,8 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->provideApiPlugins($container);
+        $container = $this->providePreProcessorPlugins($container);
+        $container = $this->providePostProcessorPlugins($container);
 
         return $container;
     }
@@ -62,7 +64,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideApiPlugins(Container $container)
     {
-        $container[static::PLUGIN_STACK_API] = function (Container $container) {
+        $container[static::PLUGINS_API] = function (Container $container) {
             return $this->getApiPluginCollection();
         };
 
@@ -74,10 +76,24 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function providePreProcessorStack(Container $container)
+    protected function providePreProcessorPlugins(Container $container)
     {
-        $container[static::PLUGIN_STACK_PRE_PROCESS] = function (Container $container) {
-            return $this->getApiPluginCollection();
+        $container[static::PLUGINS_PRE_PROCESS] = function (Container $container) {
+            return $this->getPreProcessorPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function providePostProcessorPlugins(Container $container)
+    {
+        $container[static::PLUGINS_POST_PROCESS] = function (Container $container) {
+            return $this->getPostProcessorPluginCollection();
         };
 
         return $container;
@@ -95,6 +111,14 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
      */
     protected function getPreProcessorPluginCollection()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
+     */
+    protected function getPostProcessorPluginCollection()
     {
         return [];
     }

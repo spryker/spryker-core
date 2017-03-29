@@ -44,6 +44,9 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $apiController = function () use ($controller, $action, $request) {
             $requestTransfer = $this->getRequestTransfer($controller, $request);
 
+            $responseTransfer = $controller->$action($requestTransfer);
+
+/*
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
             } catch (\Exception $e) {
@@ -56,8 +59,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
                 $responseTransfer->setCode($e->getCode() ?: 500);
                 $responseTransfer->setMessage($e->getMessage());
                 $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
-            }
-
+            }*/
+//Class 'Spryker\Zed\Api\Communication\Plugin\Processor\Pre\FormatTypeByHeaderPreProcessorPlugin' not found
             $responseObject = new Response();
             return $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };

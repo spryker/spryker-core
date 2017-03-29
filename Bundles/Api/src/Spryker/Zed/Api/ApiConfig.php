@@ -19,12 +19,12 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeade
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByExtensionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParamsPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -45,10 +45,10 @@ class ApiConfig extends AbstractBundleConfig
         return [
             PathPreProcessor::class,
             FormatTypeByHeaderPreProcessor::class,
-            FormatTypeByExtensionPreProcessor::class,
+            FormatTypeByPathPreProcessor::class,
             ResourcePreProcessor::class,
             ResourceActionPreProcessor::class,
-            ResourceParamsPreProcessor::class,
+            ResourceParametersPreProcessor::class,
             FilterPreProcessor::class,
             PaginationPreProcessor::class,
             FieldsByQueryPreProcessor::class,

@@ -70,7 +70,8 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createProcessor()
     {
         return new Processor(
-
+            $this->getPreProcessorPluginStack(),
+            $this->getPostProcessorPluginStack()
         );
     }
 
@@ -117,23 +118,23 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function getApiPluginStack()
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_API);
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API);
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPreProcessorPluginInterface[]
      */
-    protected function getPreProcessorStack()
+    protected function getPreProcessorPluginStack()
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_PRE_PROCESS);
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_PRE_PROCESS);
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPostProcessorPluginInterface[]
      */
-    protected function getPostProcessorStack()
+    protected function getPostProcessorPluginStack()
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_POST_PROCESS);
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_POST_PROCESS);
     }
 
 }

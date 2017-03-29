@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
+namespace Spryker\Zed\Api\Communication\Plugin\Processor\Pre\Filter\Query;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
+use Spryker\Zed\Api\Dependency\Plugin\ApiPreProcessorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
  */
-class ResourceParamsPreProcessor implements PreProcessorInterface
+class PaginationByQueryFilterPreProcessorPlugin extends AbstractPlugin implements ApiPreProcessorPluginInterface
 {
 
     /**
-     * Maps all remaining path segments as resource params.
+     * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -26,16 +27,10 @@ class ResourceParamsPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $path = $apiRequestTransfer->getPath();
-
-        $elements = [$path];
-        if (strpos($path, '/') !== false) {
-            $elements = explode('/', $path);
-        }
-
-        $apiRequestTransfer->setResourceParams($elements);
-
-        return $apiRequestTransfer;
+        return $this->getFactory()
+            ->createPreProcessorProvider()
+            ->buildPaginationByQueryFilterPreProcessor()
+            ->process($apiRequestTransfer);
     }
 
 }

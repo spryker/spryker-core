@@ -10,7 +10,7 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Format;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-class FormatTypeByExtensionPreProcessor implements PreProcessorInterface
+class FormatTypeByPathPreProcessor implements PreProcessorInterface
 {
 
     /**
