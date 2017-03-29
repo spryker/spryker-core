@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Business\Model;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
-use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
 use Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface;
 
 class Dispatcher
@@ -37,17 +36,24 @@ class Dispatcher
     protected $validator;
 
     /**
+     * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
+     */
+    private $resourceHandler;
+
+    /**
      * @param \Spryker\Zed\Api\ApiConfig $apiConfig
      * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
      * @param \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[] $postProcessStack
      * @param \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface $validator
+     * @param \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface $resourceHandler
      */
-    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack, ValidatorInterface $validator)
+    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack, ValidatorInterface $validator, ResourceHandlerInterface $resourceHandler)
     {
         $this->apiConfig = $apiConfig;
-        $this->preProcessStack = $preProcessStack;
-        $this->postProcessStack = $postProcessStack;
+        $this->preProcessStack = $preProcessStack; //TODO extract logic related to that to its own class
+        $this->postProcessStack = $postProcessStack; //TODO extract logic related to that to its own class
         $this->validator = $validator;
+        $this->resourceHandler = $resourceHandler;
     }
 
     /**
@@ -104,21 +110,11 @@ class Dispatcher
      * @param string $method
      * @param array $params
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
-     *
      * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function callApiPlugin($resource, $method, $params)
     {
-        $pluginClass = $this->apiConfig->getPluginForResource($resource);
-
-        if (!method_exists($pluginClass, $method)) {
-            throw new ApiDispatchingException(sprintf('Method %s() not found on Plugin class %s', $method, $pluginClass));
-        }
-
-        $plugin = new $pluginClass($this->apiConfig);
-
-        return call_user_func_array([$plugin, $method], $params);
+        return $this->resourceHandler->execute($resource, $method, $params);
     }
 
     /**
@@ -150,6 +146,13 @@ class Dispatcher
             }
             $postProcessor->process($apiRequestTransfer, $apiResponseTransfer);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function getPluginByResourceType($resource)
+    {
     }
 
 }

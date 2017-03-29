@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductApi\Business\Transfer;
+namespace Spryker\Zed\ProductApi\Business\Mapper;
 
 use Propel\Runtime\Collection\ArrayCollection;
 
-interface CustomerTransferMapperInterface
+interface TransferMapperInterface
 {
 
     /**
@@ -17,13 +17,13 @@ interface CustomerTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    public function convertCustomer(array $data);
+    public function toTransfer(array $data);
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $customerEntityCollection
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $productEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer[]
      */
-    public function convertCustomerCollection(ArrayCollection $customerEntityCollection);
+    public function toTransferCollection(ArrayCollection $productEntityCollection);
 
 }

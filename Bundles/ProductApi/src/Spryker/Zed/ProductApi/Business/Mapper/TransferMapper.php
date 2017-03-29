@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductApi\Business\Transfer;
+namespace Spryker\Zed\ProductApi\Business\Mapper;
 
 use Generated\Shared\Transfer\ProductApiTransfer;
 use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 
-class CustomerTransferMapper implements CustomerTransferMapperInterface
+class TransferMapper implements TransferMapperInterface
 {
 
     /**
@@ -32,7 +32,7 @@ class CustomerTransferMapper implements CustomerTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    public function convertCustomer(array $data)
+    public function toTransfer(array $data)
     {
         $productApiTransfer = new ProductApiTransfer();
         $productApiTransfer->fromArray($data, true);
@@ -41,15 +41,15 @@ class CustomerTransferMapper implements CustomerTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $customerEntityCollection
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $productEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer[]
      */
-    public function convertCustomerCollection(ArrayCollection $customerEntityCollection)
+    public function toTransferCollection(ArrayCollection $productEntityCollection)
     {
         $transferList = [];
-        foreach ($customerEntityCollection as $customerData) {
-            $transferList[] = $this->convertCustomer($customerData);
+        foreach ($productEntityCollection as $productData) {
+            $transferList[] = $this->toTransfer($productData);
         }
 
         return $transferList;

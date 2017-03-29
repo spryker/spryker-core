@@ -12,6 +12,7 @@ use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
+use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Transformer;
 use Spryker\Zed\Api\Business\Model\Validator\Validator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -30,9 +31,10 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     {
         return new Dispatcher(
             $this->getConfig(),
-            $this->getPreProcessStack(),
-            $this->getPostProcessStack(),
-            $this->createValidator()
+            $this->getConfig()->getPreProcessorStack(),
+            $this->getConfig()->getPostProcessorStack(),
+            $this->createValidator(),
+            $this->createResourceHandler()
         );
     }
 
@@ -54,27 +56,21 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
+     */
+    public function createResourceHandler()
+    {
+        return new ResourceHandler(
+            $this->getApiPluginStack()
+        );
+    }
+
+    /**
      * @return \Spryker\Service\UtilEncoding\UtilEncodingService
      */
     protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
-     */
-    protected function getPreProcessStack()
-    {
-        return $this->getConfig()->getPreProcessorStack();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
-     */
-    protected function getPostProcessStack()
-    {
-        return $this->getConfig()->getPostProcessorStack();
     }
 
     /**
@@ -84,7 +80,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
     {
-        return new Transformer($this->createFormatter($apiRequestTransfer->getFormatType()));
+        return new Transformer(
+            $this->createFormatter($apiRequestTransfer->getFormatType())
+        );
     }
 
     /**
@@ -98,13 +96,19 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * Implement in your BundleApi BundleApiDepdenencyProvider.
-     *
-     * @return array
+     * @return \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface[]
      */
     protected function getValidatorPluginStack()
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
+     */
+    protected function getApiPluginStack()
+    {
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGIN_STACK_API);
     }
 
 }

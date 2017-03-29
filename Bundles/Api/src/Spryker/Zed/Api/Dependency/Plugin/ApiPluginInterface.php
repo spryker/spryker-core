@@ -32,4 +32,11 @@ interface ApiPluginInterface
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer);
 
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getResourceType();
+
 }

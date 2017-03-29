@@ -10,8 +10,9 @@ namespace Spryker\Zed\ProductApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductApiTransfer;
+use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -21,6 +22,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
 {
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getResourceType()
+    {
+        return ProductApiConstants::RESOURCE_TYPE;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -40,7 +51,7 @@ class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
-        return $this->getFacade()->getCustomer($idCustomer, $apiFilterTransfer);
+        return $this->getFacade()->getProduct($idCustomer, $apiFilterTransfer);
     }
 
     /**

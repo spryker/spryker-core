@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerApiTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
@@ -57,7 +56,7 @@ class CustomerApi
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */

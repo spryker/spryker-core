@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductApi\Business;
 
-use Spryker\Zed\ProductApi\Business\Model\ProductApi;
-use Spryker\Zed\ProductApi\Business\Transfer\CustomerTransferMapper;
-use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductApi\Business\Mapper\TransferMapper;
+use Spryker\Zed\ProductApi\Business\Model\ProductApi;
+use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
@@ -32,11 +32,11 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductApi\Business\Transfer\CustomerTransferMapper
+     * @return \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface
      */
     public function createCustomerTransferMapper()
     {
-        return new CustomerTransferMapper(
+        return new TransferMapper(
             $this->getApiQueryContainer()
         );
     }

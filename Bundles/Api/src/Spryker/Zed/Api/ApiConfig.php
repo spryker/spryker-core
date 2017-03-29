@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Api;
 
-use Spryker\Zed\Api\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
@@ -27,7 +26,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParamsPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
-use Spryker\Zed\CustomerApi\Communication\Plugin\Api\CustomerApiPlugin;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -36,35 +34,6 @@ class ApiConfig extends AbstractBundleConfig
     const ROUTE_PREFIX_API_REST = '/api/rest/';
 
     const FORMAT_TYPE = 'json';
-
-    /**
-     * @param string $resource
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\PluginNotFoundException
-     *
-     * @return string
-     */
-    public function getPluginForResource($resource)
-    {
-        $map = $this->getResourceToPluginMap();
-        if (!isset($map[$resource])) {
-            throw new PluginNotFoundException('No plugin found for resource %s');
-        }
-
-        return $map[$resource];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getResourceToPluginMap()
-    {
-        return [
-            'customers' => CustomerApiPlugin::class, // Sales /api/orders => findOrders()
-            //'customer-addresses' => CustomerAddressApiPlugin::class, // Sales /api/orders => findOrders()
-            //'orders' => OrderApiPlugin::class, // /SalesApi/Plugin/Api/OrderApiPlugin Sales /api/orders/1 => getOrder(1)
-        ];
-    }
 
     /**
      * Stack of plugins to be used for filtering, pagination and alike in use with find() index method.

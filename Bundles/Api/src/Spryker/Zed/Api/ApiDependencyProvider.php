@@ -17,6 +17,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
 
+    const PLUGIN_STACK_API = 'PLUGIN_STACK_API';
     const PLUGIN_STACK_PRE_PROCESS = 'PLUGIN_STACK_PRE_PROCESS';
     const PLUGIN_STACK_POST_PROCESS = 'PLUGIN_STACK_POST_PROCESS';
 
@@ -32,6 +33,8 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_ENCODING] = function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
         };
+
+        $container = $this->provideApiPlugins($container);
 
         return $container;
     }
@@ -50,6 +53,28 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideApiPlugins(Container $container)
+    {
+        $container[static::PLUGIN_STACK_API] = function (Container $container) {
+            return $this->getApiPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
+     */
+    protected function getApiPluginCollection()
+    {
+        return [];
     }
 
 }

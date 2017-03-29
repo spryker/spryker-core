@@ -41,7 +41,7 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
      */
     public function validate(ApiRequestTransfer $apiRequestTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createValidator()
             ->validate($apiRequestTransfer);
     }

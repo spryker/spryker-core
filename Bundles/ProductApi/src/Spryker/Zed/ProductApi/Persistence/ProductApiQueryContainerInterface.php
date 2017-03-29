@@ -15,27 +15,27 @@ interface ProductApiQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryCustomer();
+    public function queryProductAbstract();
 
     /**
      * @api
      *
      * @param array $fields
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryFind(array $fields = []);
 
     /**
      * @api
      *
-     * @param int $idCustomer
+     * @param int $idProductAbstract
      * @param array $fields
      *
-     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryCustomerById($idCustomer, array $fields = []);
+    public function queryProductAbstractById($idProductAbstract, array $fields = []);
 
 }

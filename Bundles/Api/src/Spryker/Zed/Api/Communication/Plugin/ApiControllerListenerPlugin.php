@@ -41,13 +41,11 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
         $request = $event->getRequest();
 
-        $newController = function () use ($controller, $action, $request) {
+        $apiController = function () use ($controller, $action, $request) {
             $requestTransfer = $this->getRequestTransfer($controller, $request);
 
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
-                //$responseTransfer = $this->getResponse($controller, $result);
-
             } catch (\Exception $e) {
                 $responseTransfer = new ApiResponseTransfer();
                 $responseTransfer->setCode($e->getCode() ?: 500);
@@ -61,13 +59,12 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             }
 
             $responseObject = new Response();
-
-            $responseObject = $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
-
-            return $responseObject;
+            return $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };
 
-        $event->setController($newController);
+        $event->setController($apiController);
+
+        return null;
     }
 
     /**

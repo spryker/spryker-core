@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductApi;
 
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductApi\Persistence;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -21,11 +21,11 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryCustomer()
+    public function queryProductAbstract()
     {
-        return $this->getFactory()->createCustomerQuery();
+        return $this->getFactory()->createProductAbstractQuery();
     }
 
     /**
@@ -33,11 +33,11 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
      *
      * @param array $fields
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryFind(array $fields = [])
     {
-        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
+        $query = $this->mapQueryFields($this->queryProductAbstract(), $fields);
 
         return $query;
     }
@@ -45,30 +45,30 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
-     * @param int $idCustomer
+     * @param int $idProductAbstract
      * @param array $fields
      *
-     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryCustomerById($idCustomer, array $fields = [])
+    public function queryProductAbstractById($idProductAbstract, array $fields = [])
     {
-        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
+        $query = $this->mapQueryFields($this->queryProductAbstract(), $fields);
 
-        return $query->filterByIdCustomer($idCustomer);
+        return $query->filterByIdProductAbstract($idProductAbstract);
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $queryCustomer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstract
      * @param array $fields
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    protected function mapQueryFields(SpyCustomerQuery $queryCustomer, array $fields)
+    protected function mapQueryFields(SpyProductAbstractQuery $queryProductAbstract, array $fields)
     {
         return $this->getFactory()->getApiQueryContainer()->mapFields(
-            SpyCustomerTableMap::TABLE_NAME,
-            SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME),
-            $queryCustomer,
+            SpyProductAbstractTableMap::TABLE_NAME,
+            SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME),
+            $queryProductAbstract,
             $fields
         );
     }

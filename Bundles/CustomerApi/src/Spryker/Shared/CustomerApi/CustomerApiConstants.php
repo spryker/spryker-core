@@ -9,4 +9,7 @@ namespace Spryker\Shared\CustomerApi;
 
 interface CustomerApiConstants
 {
+
+    const RESOURCE_TYPE = 'customers';
+
 }

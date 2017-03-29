@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\CustomerApi\CustomerApiConstants;
+use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -21,6 +23,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
 {
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getResourceType()
+    {
+        return CustomerApiConstants::RESOURCE_TYPE;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -82,6 +94,16 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
         $customerTransfer->setIdCustomer($idCustomer);
 
         return $this->getFacade()->deleteCustomer($customerTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return ProductApiConstants::RESOURCE_TYPE;
     }
 
 }

@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductApi\Business;
 
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductApiTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -38,16 +38,16 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @param int $idCustomer
+     * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->get($idCustomer, $apiFilterTransfer);
+            ->get($idProduct, $apiFilterTransfer);
     }
 
     /**
