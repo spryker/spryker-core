@@ -67,15 +67,25 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * The following commands are a boilerplate stack. Please customize on project level.
+     * Please customize this stack on project level.
      *
-     * For a first initial migration you must use OPTION_NO_DIFF false.
+     * @return array
+     */
+    public function getSetupInstallCommandNames()
+    {
+        return $this->getDefaultSetupInstallCommandNames();
+    }
+
+    /**
+     * The following commands are a boilerplate stack.
+     *
+     * For a first initial migration you must use PropelInstallConsole with OPTION_NO_DIFF set to false.
      *
      * @deprecated The commands will be moved to project level in the next major.
      *
      * @return array
      */
-    public function getSetupInstallCommandNames()
+    private function getDefaultSetupInstallCommandNames()
     {
         return [
             DeleteAllCachesConsole::COMMAND_NAME,
