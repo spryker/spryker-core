@@ -28,7 +28,6 @@ class BusinessLocator extends AbstractLocator
     /**
      * @param array $projectNamespaces
      * @param array $coreNamespaces
-     * @param \Closure $closure
      */
     public function __construct(array $projectNamespaces, array $coreNamespaces)
     {

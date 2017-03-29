@@ -140,15 +140,11 @@ class BundleProxy extends KernelBundleProxy
      */
     private function getConfigurator()
     {
-        if (!static::$configurator) {
-            $config = new TestifyConfig();
-            $container = new Container();
-            $container->setLocator($this->locator);
+        $config = new TestifyConfig();
+        $container = new Container();
+        $container->setLocator($this->locator);
 
-            static::$configurator = new TestifyConfigurator($container, $config);
-        }
-
-        return static::$configurator;
+        return new TestifyConfigurator($container, $config);
     }
 
     /**
