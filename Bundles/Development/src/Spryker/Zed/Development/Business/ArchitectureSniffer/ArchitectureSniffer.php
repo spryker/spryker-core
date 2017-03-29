@@ -87,15 +87,20 @@ class ArchitectureSniffer
             return $fileViolations;
         }
 
-        if (array_key_exists('violation', $results['file'])) {
-            if (array_key_exists('_', $results['file']['violation'])) {
-                $fileViolations[$results['file']['name']][] = $results['file']['violation'];
-            } else {
-                $fileViolations[$results['file']['name']] = $results['file']['violation'];
-            }
+        $fileViolations = $this->formatSingleFileResults($results, $fileViolations);
 
-        }
+        $fileViolations = $this->formatMultiFileResults($results, $fileViolations);
 
+        return $fileViolations;
+    }
+
+    /**
+     * @param $results
+     * @param $fileViolations
+     * @return mixed
+     */
+    protected function formatMultiFileResults($results, $fileViolations)
+    {
         foreach ($results['file'] as $file) {
 
             if (!is_array($file)) {
@@ -117,7 +122,25 @@ class ArchitectureSniffer
                 }
             }
         }
+        return $fileViolations;
+    }
 
+    /**
+     * @param $results
+     * @param $fileViolations
+     * @return mixed
+     */
+    protected function formatSingleFileResults($results, $fileViolations)
+    {
+        if (array_key_exists('violation', $results['file'])) {
+            if (array_key_exists('_', $results['file']['violation'])) {
+                $fileViolations[$results['file']['name']][] = $results['file']['violation'];
+                return $fileViolations;
+            } else {
+                $fileViolations[$results['file']['name']] = $results['file']['violation'];
+                return $fileViolations;
+            }
+        }
         return $fileViolations;
     }
 
