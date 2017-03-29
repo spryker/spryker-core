@@ -39,6 +39,14 @@ use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
+/**
+ * Auto-generated group annotations
+ * @group Sales
+ * @group ZedBusiness
+ * @group Facade
+ * @group SalesFacadeSaveOrderTest
+ * Add your own group annotations below this line
+ */
 class SalesFacadeSaveOrderTest extends Test
 {
 

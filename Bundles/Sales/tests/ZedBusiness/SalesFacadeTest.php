@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 
 /**
- * @group Functional
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
  * @group Sales
- * @group Business
+ * @group ZedBusiness
+ * @group Facade
  * @group SalesFacadeTest
+ * Add your own group annotations below this line
  */
 class SalesFacadeTest extends Test
 {
