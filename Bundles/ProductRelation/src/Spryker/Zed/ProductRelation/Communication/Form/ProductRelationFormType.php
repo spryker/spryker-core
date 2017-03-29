@@ -110,7 +110,7 @@ class ProductRelationFormType extends AbstractType
     protected function addUpdateWithSchedulerField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_REBUILD_SCHEDULED, CheckboxType::class, [
-            'label' => 'Update with scheduler', //CR rename value
+            'label' => 'Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation\'s conditions.',
 
         ]);
 

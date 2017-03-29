@@ -88,9 +88,11 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idLocale
+     *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryProductRelationsWithProductCount();
+    public function queryProductRelationsWithProductCount($idLocale);
 
     /**
      * @api

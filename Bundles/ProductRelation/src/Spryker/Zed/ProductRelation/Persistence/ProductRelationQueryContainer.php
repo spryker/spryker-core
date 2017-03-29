@@ -170,9 +170,11 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
+     * @param int $idLocale
+     *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryProductRelationsWithProductCount()
+    public function queryProductRelationsWithProductCount($idLocale)
     {
         return $this->getFactory()
             ->createProductRelationQuery()
@@ -182,9 +184,15 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductRelationTypeTableMap::COL_KEY,
                 SpyProductRelationTableMap::COL_IS_ACTIVE,
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             ])
             ->joinSpyProductAbstract()
             ->joinSpyProductRelationProductAbstract('num_alias')
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductAbstractLocalizedAttributesQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse()
             ->withColumn('COUNT(num_alias)', static::COL_NUMBER_OF_RELATED_PRODUCTS)
             ->joinSpyProductRelationType()
             ->groupByIdProductRelation();

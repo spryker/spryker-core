@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelation\Communication\Table;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -113,6 +114,7 @@ class ProductRelationTable extends AbstractTable
         $config->setHeader([
             SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION => '#',
             SpyProductAbstractTableMap::COL_SKU => 'Sku',
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Abstract product name',
             SpyProductRelationTypeTableMap::COL_KEY => 'Relation type',
             ProductRelationQueryContainer::COL_NUMBER_OF_RELATED_PRODUCTS => 'Number of products',
             SpyProductRelationTableMap::COL_IS_ACTIVE => 'Active',
@@ -130,6 +132,7 @@ class ProductRelationTable extends AbstractTable
         $config->setSortable([
             SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
             SpyProductAbstractTableMap::COL_SKU,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             SpyProductRelationTableMap::COL_IS_ACTIVE,
             SpyProductRelationTypeTableMap::COL_KEY,
             ProductRelationQueryContainer::COL_NUMBER_OF_RELATED_PRODUCTS,
@@ -146,6 +149,7 @@ class ProductRelationTable extends AbstractTable
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
             SpyProductRelationTypeTableMap::COL_KEY,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
 
@@ -169,8 +173,9 @@ class ProductRelationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
         $query = $this->productRelationQueryContainer
-            ->queryProductRelationsWithProductCount();
+            ->queryProductRelationsWithProductCount($localeTransfer->getIdLocale());
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -191,6 +196,7 @@ class ProductRelationTable extends AbstractTable
         return [
             SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION => $item[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION],
             SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
             SpyProductRelationTypeTableMap::COL_KEY => $item[SpyProductRelationTypeTableMap::COL_KEY],
             ProductRelationQueryContainer::COL_NUMBER_OF_RELATED_PRODUCTS => $item[ProductRelationQueryContainer::COL_NUMBER_OF_RELATED_PRODUCTS],
             SpyProductRelationTableMap::COL_IS_ACTIVE => $this->buildActiveLabel($item),
