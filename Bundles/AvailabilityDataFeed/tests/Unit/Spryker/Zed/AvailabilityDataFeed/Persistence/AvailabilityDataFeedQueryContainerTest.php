@@ -5,13 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductDataFeed\Persistence;
+namespace Unit\Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
 use Generated\Shared\Transfer\ProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer;
+use Orm\Zed\Stock\Persistence\Base\SpyStockProductQuery;
+use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * @group Unit
@@ -21,34 +23,35 @@ use Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer;
  * @group Persistence
  * @group ProductDataFeedQueryContainer
  */
-class ProductDataFeedQueryContainerTest extends Test
+class AvailabilityDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var ProductDataFeedQueryContainer
+     * @var AvailabilityDataFeedQueryContainer
      */
-    protected $productDataFeedQueryContainer;
+    protected $availabilityDataFeedQueryContainer;
 
     /**
-     * @var ProductDataFeedTransfer
+     * @var AvailabilityDataFeedTransfer
      */
-    protected $productDataFeedTransfer;
+    protected $availabilityDataFeedTransfer;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->productDataFeedQueryContainer = $this->createProductDataFeedQueryContainer();
-        $this->productDataFeedTransfer = $this->createProductDataFeedTransfer();
+        $this->availabilityDataFeedQueryContainer = $this->createAvailabilityDataFeedQueryContainer();
+        $this->availabilityDataFeedTransfer = $this->createProductDataFeedTransfer();
     }
 
     public function testGetProductDataFeedQuery()
     {
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getAvailabilityDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
+
 
         $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
@@ -56,9 +59,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedCategories()
     {
-        $this->productDataFeedTransfer->setIsJoinCategory(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinCategory(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -73,9 +76,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedPrices()
     {
-        $this->productDataFeedTransfer->setIsJoinPrice(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinPrice(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -90,9 +93,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedOptions()
     {
-        $this->productDataFeedTransfer->setIsJoinOption(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinOption(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -107,9 +110,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedImages()
     {
-        $this->productDataFeedTransfer->setIsJoinImage(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinImage(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -124,9 +127,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedVariants()
     {
-        $this->productDataFeedTransfer->setIsJoinVariant(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinVariant(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -141,13 +144,13 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithJoinedAll()
     {
-        $this->productDataFeedTransfer->setIsJoinVariant(true);
-        $this->productDataFeedTransfer->setIsJoinCategory(true);
-        $this->productDataFeedTransfer->setIsJoinImage(true);
-        $this->productDataFeedTransfer->setIsJoinPrice(true);
-        $this->productDataFeedTransfer->setIsJoinOption(true);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setIsJoinVariant(true);
+        $this->availabilityDataFeedTransfer->setIsJoinCategory(true);
+        $this->availabilityDataFeedTransfer->setIsJoinImage(true);
+        $this->availabilityDataFeedTransfer->setIsJoinPrice(true);
+        $this->availabilityDataFeedTransfer->setIsJoinOption(true);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -166,9 +169,9 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithLocaleId()
     {
-        $this->productDataFeedTransfer->setLocaleId(46);
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setLocaleId(46);
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
@@ -176,24 +179,24 @@ class ProductDataFeedQueryContainerTest extends Test
 
     public function testGetProductDataFeedQueryWithDatesFilter()
     {
-        $this->productDataFeedTransfer->setUpdatedFrom('2017-01-01');
-        $this->productDataFeedTransfer->setUpdatedTo('2017-12-01');
-        $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setUpdatedFrom('2017-01-01');
+        $this->availabilityDataFeedTransfer->setUpdatedTo('2017-12-01');
+        $query = $this->availabilityDataFeedQueryContainer
+            ->getProductDataFeedQuery($this->availabilityDataFeedTransfer);
 
         $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($this->getParamsForDateFilter(), $query->getParams());
     }
 
     /**
-     * @return ProductDataFeedQueryContainer
+     * @return AvailabilityDataFeedQueryContainer
      */
-    protected function createProductDataFeedQueryContainer()
+    protected function createAvailabilityDataFeedQueryContainer()
     {
-        $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new ProductDataFeedQueryContainer($productQueryContainer);
+        $stockQueryContainer = new StockQueryContainer();
+        $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer($stockQueryContainer);
 
-        return $productDataFeedQueryContainer;
+        return $availabilityDataFeedQueryContainer;
     }
 
     /**
@@ -207,11 +210,11 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param SpyProductAbstractQuery $query
+     * @param SpyStockProductQuery $query
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyProductAbstractQuery $query)
+    protected function getJoinedTablesNames(SpyStockProductQuery $query)
     {
         $tablesNames = [];
         $joins = $query->getJoins();
