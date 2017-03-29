@@ -57,6 +57,8 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
             ->endUse();
 
         $stockProductQuery = $this->applyJoins($stockProductQuery, $availabilityDataFeedTransfer);
+        $stockProductQuery = $this->applyDateFilter($stockProductQuery, $availabilityDataFeedTransfer);
+        $stockProductQuery = $this->applyGroupings($stockProductQuery);
 
         return $stockProductQuery;
     }
@@ -87,7 +89,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
         AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
     ) {
         if ($availabilityDataFeedTransfer->getIsJoinProduct()) {
-            $localeTransferConditions = $this->getIdLocaleFilterConditions($availabilityDataFeedTransfer->get);
+            $localeTransferConditions = $this->getIdLocaleFilterConditions($availabilityDataFeedTransfer->getLocaleId());
 
             $stockProductQuery
                 ->useSpyProductQuery()
@@ -181,6 +183,18 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
         }
 
         return $entityQuery;
+    }
+
+    /**
+     * @param SpyStockProductQuery $stockProductQuery
+     *
+     * @return SpyStockProductQuery
+     */
+    protected function applyGroupings(SpyStockProductQuery $stockProductQuery)
+    {
+        $stockProductQuery->groupBy(SpyStockProductTableMap::COL_ID_STOCK_PRODUCT);
+
+        return $stockProductQuery;
     }
 
 }

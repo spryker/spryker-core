@@ -8,12 +8,13 @@
 namespace Spryker\Zed\PriceDataFeed\Persistence;
 
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 
 /**
- * @method \Spryker\Zed\DataFeed\Persistence\DataFeedPersistenceFactory getFactory()
+ * @method \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedPersistenceFactory getFactory()
  */
 class PriceDataFeedQueryContainer extends AbstractQueryContainer implements PriceDataFeedQueryContainerInterface
 {
@@ -48,6 +49,7 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
             ->queryPriceProduct();
 
         $productPriceQuery = $this->applyJoins($productPriceQuery, $priceDataFeedTransfer);
+        $productPriceQuery = $this->applyGroupings($productPriceQuery);
 
         return $productPriceQuery;
     }
@@ -88,6 +90,18 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         }
 
         return $productPriceQuery;
+    }
+
+    /**
+     * @param SpyPriceProductQuery $priceProductQuery
+     *
+     * @return SpyPriceProductQuery
+     */
+    protected function applyGroupings(SpyPriceProductQuery $priceProductQuery)
+    {
+        $priceProductQuery->groupBy(SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT);
+
+        return $priceProductQuery;
     }
 
 }

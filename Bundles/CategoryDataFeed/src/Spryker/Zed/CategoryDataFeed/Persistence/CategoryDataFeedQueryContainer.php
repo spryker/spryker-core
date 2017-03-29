@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataFeed\Persistence;
 
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -50,6 +51,8 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
             ->queryCategory($categoryDataFeedTransfer->getLocaleId());
 
         $categoryQuery = $this->applyJoins($categoryQuery, $categoryDataFeedTransfer);
+        $categoryQuery = $this->applyGroupings($categoryQuery);
+
 
         return $categoryQuery;
     }
@@ -120,6 +123,18 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
             self::LOCALE_FILTER_VALUE => $filterValue,
             self::LOCALE_FILTER_CRITERIA => $filterCriteria,
         ];
+    }
+
+    /**
+     * @param SpyCategoryQuery $categoryQuery
+     *
+     * @return SpyCategoryQuery
+     */
+    protected function applyGroupings(SpyCategoryQuery $categoryQuery)
+    {
+        $categoryQuery->groupBy(SpyCategoryTableMap::COL_ID_CATEGORY);
+
+        return $categoryQuery;
     }
 
 }

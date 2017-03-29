@@ -6,8 +6,6 @@
     <transfer name="CategoryDataFeed">
         <property name="isJoinProduct" type="bool" />
         <property name="localeId" type="integer" />
-        <property name="updatedFrom" type="string" />
-        <property name="updatedTo" type="string" />
     </transfer>
 
 </transfers>

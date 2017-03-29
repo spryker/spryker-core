@@ -5,8 +5,6 @@
 
     <transfer name="PriceDataFeed">
         <property name="isJoinType" type="bool" />
-        <property name="updatedFrom" type="string" />
-        <property name="updatedTo" type="string" />
     </transfer>
 
 </transfers>

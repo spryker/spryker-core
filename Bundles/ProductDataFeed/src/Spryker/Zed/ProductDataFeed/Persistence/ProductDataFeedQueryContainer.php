@@ -63,6 +63,7 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
             $productDataFeedTransfer
         );
         $abstractProductQuery = $this->applyLocaleFilter($abstractProductQuery, $productDataFeedTransfer);
+        $abstractProductQuery = $this->applyGroupings($abstractProductQuery);
         $abstractProductQuery = $this->applyDateFilter(
             $abstractProductQuery,
             $productDataFeedTransfer
@@ -345,6 +346,18 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
         }
 
         return $entityQuery;
+    }
+
+    /**
+     * @param SpyProductAbstractQuery $abstractProductQuery
+     *
+     * @return SpyProductAbstractQuery
+     */
+    protected function applyGroupings(SpyProductAbstractQuery $abstractProductQuery)
+    {
+        $abstractProductQuery->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+
+        return $abstractProductQuery;
     }
 
 }
