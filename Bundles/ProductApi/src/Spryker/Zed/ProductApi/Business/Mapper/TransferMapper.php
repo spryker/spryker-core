@@ -35,6 +35,11 @@ class TransferMapper implements TransferMapperInterface
     public function toTransfer(array $data)
     {
         $productApiTransfer = new ProductApiTransfer();
+        $jsonAttributes = trim($data[ProductApiTransfer::ATTRIBUTES]);
+        if ($jsonAttributes) {
+            $data[ProductApiTransfer::ATTRIBUTES] = json_decode($jsonAttributes, true); //TODO inject util encoding
+        }
+
         $productApiTransfer->fromArray($data, true);
 
         return $productApiTransfer;
