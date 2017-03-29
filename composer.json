@@ -404,6 +404,12 @@
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Acceptance\\ProductCategory\\": "Bundles/ProductCategory/tests",
 
+      "Spryker\\Shared\\ProductApi\\": "Bundles/ProductApi/src",
+      "Functional\\Spryker\\Shared\\ProductApi\\": "Bundles/ProductApi/tests",
+      "Acceptance\\ProductApi\\": "Bundles/ProductApi/tests",
+      "Spryker\\Zed\\ProductApi\\": "Bundles/ProductApi/src",
+      "Functional\\Spryker\\Zed\\ProductApi\\": "Bundles/ProductApi/tests",
+
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",
       "Spryker\\Client\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
