@@ -7,7 +7,6 @@
 
 namespace Propel\Helper;
 
-use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Propel\Runtime\Propel;

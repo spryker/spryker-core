@@ -37,5 +37,4 @@ class Connection extends Module
         Propel::closeConnections();
     }
 
-
 }
