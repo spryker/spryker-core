@@ -26,16 +26,14 @@ class ApiBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Dispatcher
+     * @return \Spryker\Zed\Api\Business\Model\DispatcherInterface
      */
     public function createDispatcher()
     {
         return new Dispatcher(
-            $this->getConfig(),
-            $this->getConfig()->getPreProcessorStack(),
-            $this->getConfig()->getPostProcessorStack(),
-            $this->createValidator(),
-            $this->createResourceHandler()
+            $this->createResourceHandler(),
+            $this->createProcessor(),
+            $this->createValidator()
         );
     }
 

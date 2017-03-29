@@ -9,26 +9,20 @@ namespace Spryker\Zed\Api\Business\Model;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface;
 
-class Dispatcher
+class Dispatcher implements DispatcherInterface
 {
 
     /**
-     * @var \Spryker\Zed\Api\ApiConfig
+     * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
-    protected $apiConfig;
+    protected $resourceHandler;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Api\Business\Model\ProcessorInterface
      */
-    protected $preProcessStack;
-
-    /**
-     * @var array
-     */
-    protected $postProcessStack;
+    protected $processor;
 
     /**
      * @var \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface
@@ -36,24 +30,18 @@ class Dispatcher
     protected $validator;
 
     /**
-     * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
-     */
-    private $resourceHandler;
-
-    /**
-     * @param \Spryker\Zed\Api\ApiConfig $apiConfig
-     * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
-     * @param \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[] $postProcessStack
-     * @param \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface $validator
      * @param \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface $resourceHandler
+     * @param \Spryker\Zed\Api\Business\Model\ProcessorInterface $processor
+     * @param \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface $validator
      */
-    public function __construct(ApiConfig $apiConfig, array $preProcessStack, array $postProcessStack, ValidatorInterface $validator, ResourceHandlerInterface $resourceHandler)
-    {
-        $this->apiConfig = $apiConfig;
-        $this->preProcessStack = $preProcessStack; //TODO extract logic related to that to its own class
-        $this->postProcessStack = $postProcessStack; //TODO extract logic related to that to its own class
-        $this->validator = $validator;
+    public function __construct(
+        ResourceHandlerInterface $resourceHandler,
+        ProcessorInterface $processor,
+        ValidatorInterface $validator
+    ) {
         $this->resourceHandler = $resourceHandler;
+        $this->processor = $processor;
+        $this->validator = $validator;
     }
 
     /**
@@ -63,7 +51,7 @@ class Dispatcher
      */
     public function dispatch(ApiRequestTransfer $apiRequestTransfer)
     {
-        $this->preProcess($apiRequestTransfer);
+        $apiRequestTransfer = $this->processor->preProcess($apiRequestTransfer);
 
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
@@ -96,7 +84,7 @@ class Dispatcher
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }
 
-        $this->postProcess($apiRequestTransfer, $apiResponseTransfer);
+        $apiResponseTransfer = $this->processor->postProcess($apiRequestTransfer, $apiResponseTransfer);
 
         if ($apiResponseTransfer->getCode() === null) {
             $apiResponseTransfer->setCode(200);
@@ -115,44 +103,6 @@ class Dispatcher
     protected function callApiPlugin($resource, $method, $params)
     {
         return $this->resourceHandler->execute($resource, $method, $params);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return void
-     */
-    protected function preProcess(ApiRequestTransfer $apiRequestTransfer)
-    {
-        foreach ($this->preProcessStack as $preProcessor) {
-            if (is_string($preProcessor)) {
-                $preProcessor = new $preProcessor($this->apiConfig);
-            }
-            $preProcessor->process($apiRequestTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
-     *
-     * @return void
-     */
-    protected function postProcess(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
-    {
-        foreach ($this->postProcessStack as $postProcessor) {
-            if (is_string($postProcessor)) {
-                $postProcessor = new $postProcessor($this->apiConfig);
-            }
-            $postProcessor->process($apiRequestTransfer, $apiResponseTransfer);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function getPluginByResourceType($resource)
-    {
     }
 
 }
