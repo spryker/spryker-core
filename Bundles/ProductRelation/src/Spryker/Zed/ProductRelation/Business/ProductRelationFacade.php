@@ -73,6 +73,22 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
+     * @param int $idProductRelation
+     *
+     * @return bool
+     */
+    public function deleteProductRelation($idProductRelation)
+    {
+        return $this->getFactory()
+            ->createProductRelationWriter()
+            ->deleteProductRelation($idProductRelation);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
     public function getProductRelationTypeList()

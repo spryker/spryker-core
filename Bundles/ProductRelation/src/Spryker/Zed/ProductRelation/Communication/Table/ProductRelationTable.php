@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductRelation\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductRelation\Communication\Controller\EditController;
 use Spryker\Zed\ProductRelation\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface;
@@ -28,6 +29,7 @@ class ProductRelationTable extends AbstractTable
     const COL_ACTIONS = 'Actions';
 
     const URL_RELATION_DEACTIVATE = '/product-relation/edit/deactivate';
+    const URL_RELATION_DELETE = '/product-relation/delete/index';
     const URL_RELATION_ACTIVATE = '/product-relation/edit/activate';
     const URL_PRODUCT_RELATION_LIST = '/product-relation/list';
 
@@ -208,6 +210,7 @@ class ProductRelationTable extends AbstractTable
         $buttons[] = $this->createViewInShopButton($item);
         $buttons[] = $this->createEditButton($item);
         $buttons[] = $this->createRelationStatusChangeButton($item);
+        $buttons[] = $this->createDeleteRelationButton($item);
 
         return $buttons;
     }
@@ -329,6 +332,22 @@ class ProductRelationTable extends AbstractTable
                 EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
             'Activate'
+        );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createDeleteRelationButton(array $item)
+    {
+        return $this->generateRemoveButton(
+            Url::generate(static::URL_RELATION_DELETE, [
+                DeleteController::URL_PARAM_ID_PRODUCT_RELATION => $item[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION],
+                DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
+            ]),
+            'Delete'
         );
     }
 

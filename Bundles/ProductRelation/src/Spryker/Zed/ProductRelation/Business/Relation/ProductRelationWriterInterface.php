@@ -33,4 +33,13 @@ interface ProductRelationWriterInterface
      */
     public function updateRelation(ProductRelationTransfer $productRelationTransfer);
 
+    /**
+     * @param int $idProductRelation
+     *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return bool
+     */
+    public function deleteProductRelation($idProductRelation);
+
 }

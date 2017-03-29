@@ -46,4 +46,15 @@ class ProductRelationToTouchBridge implements ProductRelationToTouchInterface
         return $this->touchFacade->touchInactive($itemType, $idItem);
     }
 
+    /**
+     * @param string $itemType
+     * @param int $idItem
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $idItem)
+    {
+        return $this->touchFacade->touchDeleted($itemType, $idItem);
+    }
+
 }

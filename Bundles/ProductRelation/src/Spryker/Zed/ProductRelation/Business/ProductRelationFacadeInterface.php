@@ -109,4 +109,17 @@ interface ProductRelationFacadeInterface
      */
     public function rebuildRelations();
 
+    /**
+     * Specification:
+     * - Deletes product relation from persistence
+     * - Touches delete relation
+     *
+     * @api
+     *
+     * @param int $idProductRelation
+     *
+     * @return bool
+     */
+    public function deleteProductRelation($idProductRelation);
+
 }

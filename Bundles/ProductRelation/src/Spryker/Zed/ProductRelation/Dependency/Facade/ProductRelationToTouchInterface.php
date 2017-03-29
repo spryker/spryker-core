@@ -27,4 +27,12 @@ interface ProductRelationToTouchInterface
      */
     public function touchInactive($itemType, $idItem);
 
+    /**
+     * @param string $itemType
+     * @param int $idItem
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $idItem);
+
 }

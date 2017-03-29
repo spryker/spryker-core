@@ -34,7 +34,7 @@ class ProductRelationCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT,
-            Criteria::INNER_JOIN
+            Criteria::LEFT_JOIN
         );
 
         $this->touchQuery->withColumn(

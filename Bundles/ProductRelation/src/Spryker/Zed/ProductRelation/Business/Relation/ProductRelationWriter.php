@@ -154,6 +154,52 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     /**
      * @param int $idProductRelation
      *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return bool
+     */
+    public function deleteProductRelation($idProductRelation)
+    {
+        $productRelationEntity = $this->findProductRelationEntityById($idProductRelation);
+
+        if ($productRelationEntity === null) {
+            throw new ProductRelationNotFoundException(
+                sprintf(
+                    'Product relation with id "%d" not found.',
+                    $productRelationEntity
+                )
+            );
+        }
+
+        $deleted = $this->handleDatabaseTransaction(function () use ($productRelationEntity) {
+            return $this->executeDeleteProductRelationTransaction($productRelationEntity);
+        });
+
+        return $deleted;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
+     *
+     * @return bool
+     */
+    protected function executeDeleteProductRelationTransaction(SpyProductRelation $productRelationEntity)
+    {
+        $this->removeRelatedProductsByIdRelation($productRelationEntity->getIdProductRelation());
+
+        $this->touchFacade->touchDeleted(
+            ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
+            $productRelationEntity->getFkProductAbstract()
+        );
+
+        $productRelationEntity->delete();
+
+        return $productRelationEntity->isDeleted();
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
      * @return int
      */
     protected function removeRelatedProductsByIdRelation($idProductRelation)

@@ -173,6 +173,24 @@ class ProductRelationFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteProductRelationShouldDropExistingRelationFromPersistence()
+    {
+        $productRelationFacade = $this->createProductRelationFacade();
+        $productRelationTransfer = $this->createProductRelationTransfer(123);
+
+        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
+
+        $deleted = $productRelationFacade->deleteProductRelation($idProductRelation);
+
+        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+
+        $this->assertNull($productRelationTransfer);
+        $this->assertTrue($deleted);
+    }
+
+    /**
      * @param string $sku
      *
      * @return int
