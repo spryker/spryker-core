@@ -19,6 +19,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
+use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
 class ProductRuleTable extends AbstractTable
@@ -30,6 +31,7 @@ class ProductRuleTable extends AbstractTable
     const COL_SKU = 'sku';
     const COL_CATEGORY_NAME = 'category_name';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    const COL_STATUS = 'status';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductInterface
@@ -160,7 +162,8 @@ class ProductRuleTable extends AbstractTable
      */
     protected function addRawColumns(TableConfiguration $config)
     {
-        $config->addRawColumn(static::COL_ACTION);
+        $config->addRawColumn(static::COL_ACTION)
+            ->addRawColumn(static::COL_STATUS);
     }
 
     /**
@@ -174,6 +177,7 @@ class ProductRuleTable extends AbstractTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $data[static::COL_ID_PRODUCT_ABSTRACT],
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $data[static::COL_NAME],
             SpyProductAbstractTableMap::COL_SKU => $data[static::COL_SKU],
+            static::COL_STATUS => $this->getStatusLabel($data),
             static::COL_CATEGORY_NAME => $data[static::COL_CATEGORY_NAME],
         ];
     }
@@ -296,6 +300,7 @@ class ProductRuleTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             static::COL_CATEGORY_NAME => 'Categories',
+            static::COL_STATUS => 'Status',
             static::COL_ACTION => '',
         ]);
     }
@@ -327,6 +332,21 @@ class ProductRuleTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             static::COL_CATEGORY_NAME,
         ]);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function getStatusLabel(array $data)
+    {
+        $statusAggregation = explode(',', $data[ProductRelationQueryContainer::COL_IS_ACTIVE_AGGREGATION]);
+        if (in_array('false', $statusAggregation, true)) {
+            return '<span class="label label-danger">Inactive</span>';
+        }
+
+        return '<span class="label label-info">Active</span>';
     }
 
 }

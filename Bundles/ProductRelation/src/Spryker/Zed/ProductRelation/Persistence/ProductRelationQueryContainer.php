@@ -17,6 +17,7 @@ use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -32,6 +33,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     const COL_NAME = 'name';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_SKU = 'sku';
+    const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
 
     /**
      * @api
@@ -313,6 +315,10 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getRulePropelQuery($productRelationTransfer)
          ->clearSelectColumns()
+            ->withColumn(
+                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+                static::COL_IS_ACTIVE_AGGREGATION
+            )
          ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
          ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
          ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)

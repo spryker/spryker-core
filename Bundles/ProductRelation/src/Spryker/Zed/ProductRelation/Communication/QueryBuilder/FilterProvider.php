@@ -87,7 +87,7 @@ class FilterProvider implements FilterProviderInterface
                 'validation' => [
                     'format' => 'yyyy/mm/dd',
                 ],
-                'plugin' =>  'datepicker',
+                'plugin' => 'datepicker',
                 'plugin_config' => [
                     'format' => 'yyyy/mm/dd',
                     'todayBtn' => 'linked',
