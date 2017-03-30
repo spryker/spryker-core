@@ -6,6 +6,7 @@ modules:
         browser: phantomjs
         window_size: 1920x1080
 
+    - \Propel\Helper\Connection
     - \Testify\Module\Environment
     - \Application\Module\Yves
     - \Application\Module\Zed

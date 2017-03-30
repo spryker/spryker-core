@@ -5,5 +5,6 @@ modules:
             url: ''
             browser: phantomjs
 
+        - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
