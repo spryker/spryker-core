@@ -4,13 +4,13 @@ modules:
     - \Testify\Module\Environment
     - \Config\Module\ConfigInit
     - \Propel\Module\PropelInstall
-    - \Propel\Module\Database
-    - \Transfer\Module\TransferGenerate
-    - \Application\Module\Zed
     - WebDriver:
         url: ''
         browser: chrome
         window_size: 1920x1080
         host: 0.0.0.0
         restart: false
+    - \Propel\Module\Database
+    - \Transfer\Module\TransferGenerate
+    - \Application\Module\Zed
 

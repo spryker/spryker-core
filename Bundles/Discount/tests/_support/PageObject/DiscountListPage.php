@@ -1,11 +1,5 @@
 <?php
-
-/**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
-
-namespace Discount\PageObject;
+namespace Acceptance\Discount\Zed\PageObject;
 
 class DiscountListPage
 {
@@ -13,5 +7,9 @@ class DiscountListPage
     const URL = '/discount/index/list';
 
     const SELECTOR_DATA_TABLE = '.dataTables_wrapper';
+
+    const DATA_TABLE_DATA = 'table.dataTable>tbody';
+
+    const DATA_TABLE_ROW = 'table.dataTable>tbody>tr';
 
 }

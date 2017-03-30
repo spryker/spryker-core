@@ -152,6 +152,7 @@ class DiscountCreatePage
     public function fillInDiscountRule($number, $filter, $operator, $value)
     {
         $i = $this->tester;
+        $i->waitForElement("select[name=builder_calculation_rule_{$number}_filter]");
         $i->selectOption("builder_calculation_rule_{$number}_filter", $filter);
         $i->selectOption("builder_calculation_rule_{$number}_operator", $operator);
         $i->fillField("builder_calculation_rule_{$number}_value_0", $value);
@@ -180,7 +181,6 @@ class DiscountCreatePage
         $i->dontSeeElement(self::DISCOUNT_CALCULATION_GROUP);
         $i->seeElement(self::FIELD_DISCOUNT_QUERY);
         $i->seeInField(self::FIELD_DISCOUNT_QUERY, $query);
-        $i->amGoingTo('turn on plain query');
         $i->click(self::BTN_CALCULATION_GET);
         $i->waitForElementVisible(self::DISCOUNT_CALCULATION_GROUP);
     }

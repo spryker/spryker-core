@@ -21,6 +21,8 @@ class Zed extends Infrastructure
      */
     private static $alreadyLoggedIn = false;
 
+    protected $config = ['login' => true];
+
     /**
      * @param \Codeception\TestInterface $test
      *
@@ -36,6 +38,11 @@ class Zed extends Infrastructure
 
         if ($process->getExitCode() != 0) {
             throw new Exception('An error in data restore occured: ' . $process->getErrorOutput());
+        }
+
+        if ($this->config['login']) {
+            $this->amZed();
+            $this->amLoggedInUser();
         }
     }
 

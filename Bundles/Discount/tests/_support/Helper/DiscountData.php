@@ -1,0 +1,71 @@
+<?php
+namespace Discount\Helper;
+
+use Codeception\Module;
+use Generated\Shared\DataBuilder\DiscountAbstractBuilder;
+use Generated\Shared\DataBuilder\DiscountConcreteBuilder;
+use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Testify\Helper\DataCleanup;
+use Testify\Helper\Locator;
+
+class DiscountData extends Module
+{
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountTransfer
+     */
+    public function haveDiscount($override = [])
+    {
+        $discountFacade = $this->getDiscountFacade();
+
+        (new DiscountConfiguratorBuilder())
+            ->withDiscountGeneral()
+            ->withDiscountCondition()
+            ->build();
+
+        $discountFacade->saveDiscount();
+
+
+
+
+        $this->debug("Inserted AbstractDiscount: $abstractDiscountId, Concrete Discount: " . $product->getIdDiscountConcrete());
+
+        if ($this->hasModule('\\' . DataCleanup::class)) {
+            $cleanupModule = $this->getDataCleanupModule();
+            $cleanupModule->_addCleanup(function () use ($product, $abstractDiscountId) {
+                $this->debug("Deleting AbstractDiscount: $abstractDiscountId, Concrete Discount: " . $product->getIdDiscountConcrete());
+                $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($product->getIdDiscountConcrete())->delete();
+                $this->getDiscountQuery()->queryDiscountAbstract()->findByIdDiscountAbstract($abstractDiscountId)->delete();
+            });
+        }
+        return $product;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
+     */
+    private function getDiscountFacade()
+    {
+        return $this->getModule('\\' . Locator::class)->getLocator()->discount()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     */
+    private function getDiscountQuery()
+    {
+        return $this->getModule('\\' . Locator::class)->getLocator()->product()->queryContainer();
+    }
+
+    /**
+     * @return \Testify\Helper\DataCleanup
+     */
+    protected function getDataCleanupModule()
+    {
+        return $this->getModule('\\' . DataCleanup::class);
+    }
+
+}
