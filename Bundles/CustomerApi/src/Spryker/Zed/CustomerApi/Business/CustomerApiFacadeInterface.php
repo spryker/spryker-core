@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerApiTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerApiFacadeInterface
 {
@@ -29,6 +28,18 @@ interface CustomerApiFacadeInterface
 
     /**
      * Specification:
+     *  - Adds new customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function addCustomer(ApiDataTransfer $apiDataTransfer);
+
+    /**
+     * Specification:
      *  - Finds customer by customer ID.
      *  - Throws CustomerNotFoundException if not found.
      *
@@ -43,31 +54,18 @@ interface CustomerApiFacadeInterface
 
     /**
      * Specification:
-     *  - Adds new customer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
-     */
-    public function addCustomer(CustomerApiTransfer $customerApiTransfer);
-
-    /**
-     * Specification:
      *  - Finds customer by customer ID.
      *  - Throws CustomerNotFoundException if not found.
      *  - Entity is modified with data from CustomerTransfer and saved.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return void
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer);
+    public function updateCustomer($idCustomer, ApiDataTransfer $apiDataTransfer);
 
     /**
      * Specification:
@@ -77,12 +75,10 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @param int $idCustomer
      *
      * @return void
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer);
+    public function deleteCustomer($idCustomer);
 
 }

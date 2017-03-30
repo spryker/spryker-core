@@ -10,8 +10,6 @@ namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerApiTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\CustomerApi\CustomerApiConstants;
 use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
@@ -48,7 +46,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
@@ -56,31 +54,24 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     }
 
     /**
-     * @param array $customer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $customerTransfer = new CustomerApiTransfer();
-        $customerTransfer->fromArray($apiDataTransfer->getData(), true);
-
-        return $this->getFacade()->addCustomer($customerTransfer);
+        return $this->getFacade()->addCustomer($apiDataTransfer);
     }
 
     /**
      * @param int $idCustomer
-     * @param array $customer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($apiDataTransfer->getData(), true);
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        return $this->getFacade()->updateCustomer($customerTransfer);
+        return $this->getFacade()->updateCustomer($idCustomer, $apiDataTransfer);
     }
 
     /**
@@ -90,10 +81,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
      */
     public function delete($idCustomer)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        return $this->getFacade()->deleteCustomer($customerTransfer);
+        return $this->getFacade()->deleteCustomer($idCustomer);
     }
 
     /**

@@ -102,11 +102,12 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
+     * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $apiDataTransfer)
+    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
     {
         $customerApiTransfer = $this->persist($apiDataTransfer);
 
@@ -115,6 +116,7 @@ class CustomerApi implements CustomerApiInterface
 
     /**
      * @param int $idCustomer
+     *
      * @return bool
      */
     public function delete($idCustomer)

@@ -37,14 +37,16 @@ interface CustomerApiInterface
     public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
+     * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $apiDataTransfer);
+    public function update($idCustomer, ApiDataTransfer $apiDataTransfer);
 
     /**
      * @param int $idCustomer
+     *
      * @return bool
      */
     public function delete($idCustomer);

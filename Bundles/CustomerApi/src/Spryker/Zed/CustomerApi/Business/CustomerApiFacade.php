@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerApiTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -38,10 +37,26 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function addCustomer(ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerApi()
+            ->add($apiDataTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer $customerTransfer
      */
     public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
@@ -55,15 +70,16 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function addCustomer(CustomerApiTransfer $customerApiTransfer)
+    public function updateCustomer($idCustomer, ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
             ->createCustomerApi()
-            ->add($customerApiTransfer);
+            ->update($idCustomer, $apiDataTransfer);
     }
 
     /**
@@ -71,31 +87,15 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function updateCustomer(CustomerTransfer $customerTransfer)
-    {
-        return $this->getFactory()
-            ->createCustomerApi()
-            ->update($customerTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCustomer
      *
      * @return bool
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer)
+    public function deleteCustomer($idCustomer)
     {
         return $this->getFactory()
             ->createCustomerApi()
-            ->delete($customerTransfer);
+            ->delete($idCustomer);
     }
 
 }
