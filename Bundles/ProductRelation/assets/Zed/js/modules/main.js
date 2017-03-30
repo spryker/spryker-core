@@ -17,7 +17,8 @@ $(document).ready(function() {
         idProductAbstractElement: $('#product_relation_fkProductAbstract'),
         selectedProductContainer: $('#selected-product'),
         selectProductNotice: $('#select-product-notice'),
-        productTable: $('#product-table')
+        productTable: $('#product-table'),
+        selectProductUrl: '/product-relation/product-selector/index?id-product-abstract='
     });
 
     new SqlQueryBuilder({

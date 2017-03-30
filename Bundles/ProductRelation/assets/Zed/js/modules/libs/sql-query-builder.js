@@ -5,6 +5,7 @@
 
 'use strict';
 
+window.moment = require('moment');
 require('jquery-query-builder');
 
 var SqlQueryBuilder = function(options) {
@@ -61,6 +62,9 @@ SqlQueryBuilder.prototype.onFormSubmit = function()
             $('.tabs-container')
                 .find('[data-tab-content-id="tab-content-assign-products"]')
                 .addClass('error');
+
+            $('.flash-messages').html('<div class="alert alert-danger">Query rule not provided.</div>');
+
             return;
         }
 

@@ -15,6 +15,6 @@ interface ProductRelationStorageInterface
      *
      * @return array|\Generated\Shared\Transfer\StorageProductRelationTransfer[]
      */
-    public function get($idAbstractProduct);
+    public function getAll($idAbstractProduct);
 
 }

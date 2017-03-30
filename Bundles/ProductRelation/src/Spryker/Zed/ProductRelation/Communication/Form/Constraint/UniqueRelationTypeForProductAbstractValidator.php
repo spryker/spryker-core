@@ -81,7 +81,7 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
         $this->context
             ->buildViolation(
                 sprintf(
-                    'Selected product already have "%s" relation type.',
+                    'Selected product already has "%s" relation type.',
                     $value->getProductRelationType()->getKey()
                 )
             )

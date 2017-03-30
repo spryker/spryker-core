@@ -34,12 +34,6 @@ class ViewController extends AbstractController
 
         $productRelationTransfer = $this->getFacade()->findProductRelationById($idProductRelation);
 
-        $productTable = $this->getFactory()->createProductTable($idProductRelation);
-
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->findProductAbstractById($productRelationTransfer->getFkProductAbstract());
-
         if ($productRelationTransfer === null) {
             throw new NotFoundHttpException(
                 sprintf(
@@ -49,10 +43,21 @@ class ViewController extends AbstractController
             );
         }
 
+        $productTable = $this->getFactory()->createProductTable($idProductRelation);
+
+        $productAbstractTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductAbstractById($productRelationTransfer->getFkProductAbstract());
+
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+
         return [
             'productRelation' => $productRelationTransfer,
             'product' => $productAbstractTransfer,
             'productTable' => $productTable->render(),
+            'locale' => $localeTransfer,
         ];
     }
 

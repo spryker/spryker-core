@@ -11,10 +11,12 @@ var ProductSelector = function ProductSelector(options)
     this.selectedProductContainer = null;
     this.selectProductNotice = null;
     this.productTable = null;
+    this.selectProductUrl = null;
 
     $.extend(this, options);
 
     this.initialiseProductTable();
+    this.findSelectedProduct();
 };
 
 ProductSelector.prototype.initialiseProductTable = function ()
@@ -37,10 +39,10 @@ ProductSelector.prototype.onTableDraw = function(settings)
         self.addClickEventToCheckbox($(element));
     });
 
-    this.findSelectedProduct(settings);
+
 };
 
-ProductSelector.prototype.findSelectedProduct = function(settings)
+ProductSelector.prototype.findSelectedProduct = function()
 {
     var idSelectedProduct = parseInt(this.idProductAbstractElement.val());
     if (!idSelectedProduct) {
@@ -48,7 +50,7 @@ ProductSelector.prototype.findSelectedProduct = function(settings)
     }
 
     var self = this;
-    $.get('/product-relation/product-selector/index?id-product-abstract='+idSelectedProduct).done(function(selectedProduct) {
+    $.get(this.selectProductUrl + idSelectedProduct).done(function(selectedProduct) {
         self.updateSelectedProduct(selectedProduct);
     });
 };

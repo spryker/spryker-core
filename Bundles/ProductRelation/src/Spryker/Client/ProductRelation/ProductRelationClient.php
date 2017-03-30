@@ -33,7 +33,7 @@ class ProductRelationClient extends AbstractClient implements ProductRelationCli
 
          return $this->getFactory()
              ->createProductRelationStorage($localeName)
-             ->get($idProductAbstract);
+             ->getAll($idProductAbstract);
     }
 
 }

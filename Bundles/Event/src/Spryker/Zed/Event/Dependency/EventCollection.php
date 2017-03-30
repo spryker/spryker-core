@@ -85,7 +85,7 @@ class EventCollection implements EventCollectionInterface
      */
     public function get($eventName)
     {
-        if (!isset($this->eventListeners[$eventName]) || count($this->eventListeners[$eventName]) == 0) {
+        if (!isset($this->eventListeners[$eventName]) || count($this->eventListeners[$eventName]) === 0) {
             throw new EventListenerNotFoundException(
                 sprintf(
                     'Could not find event listeners for event "%s". You have to add it to EventDependencyProvider.',
@@ -101,8 +101,6 @@ class EventCollection implements EventCollectionInterface
      * Whether a offset exists
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @since 5.0.0
      *
      * @param mixed $offset <p>
      * An offset to check for.
@@ -123,8 +121,6 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
-     * @since 5.0.0
-     *
      * @param mixed $offset <p>
      * The offset to retrieve.
      * </p>
@@ -140,8 +136,6 @@ class EventCollection implements EventCollectionInterface
      * Offset to set
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     *
-     * @since 5.0.0
      *
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -162,8 +156,6 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
-     * @since 5.0.0
-     *
      * @param mixed $offset <p>
      * The offset to unset.
      * </p>
@@ -179,8 +171,6 @@ class EventCollection implements EventCollectionInterface
      * Retrieve an external iterator
      *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     *
-     * @since 5.0.0
      *
      * @return \Traversable An instance of an object implementing <b>Iterator</b> or
      * <b>Traversable</b>

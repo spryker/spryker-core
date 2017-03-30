@@ -25,9 +25,25 @@
                 <strong>{{ 'Relation type:' | trans }}</strong> {{ productRelation.productRelationType.key }}
             </p>
 
+            {% for imageSet in product.imageSets %}
+                {% if imageSet.locale.idLocale == locale.idLocale and imageSet.productImages|length > 0 %}
+                    <p>
+                        <img height="200" src="{{ imageSet.productImages[0].externalUrlSmall }}" />
+                    </p>
+                {% endif %}
+            {% endfor %}
+
             <p>
                 <strong>{{ 'Sku:' | trans }}</strong> {{ product.sku }}
             </p>
+
+            {% for localizedAttributes in product.localizedAttributes %}
+                {% if localizedAttributes.locale.idLocale == locale.idLocale %}
+                    <p>
+                        <strong>{{ 'Abstract product name:' | trans }}</strong> {{ localizedAttributes.name }}
+                    </p>
+                {% endif %}
+            {% endfor %}
 
         {% endblock %}
     {% endembed %}

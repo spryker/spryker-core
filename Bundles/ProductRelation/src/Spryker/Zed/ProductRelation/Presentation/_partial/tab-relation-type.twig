@@ -4,12 +4,16 @@
 
 <h4>{{ 'Selected product' | trans }}</h4>
 
-<div id="select-product-notice" class="form-group">
-    {{ "Please select product from the list below" | trans  }}
-</div>
+{% if productRelationForm.vars.data.fkProductAbstract is empty %}
+    <div id="select-product-notice" class="form-group">
+        {{ "Please select product from the list below" | trans  }}
+    </div>
+{% endif %}
+
 <div style="display:none">
       {{ form_widget(productRelationForm.fkProductAbstract) }}
 </div>
+
 <div class="{% if productRelationForm.fkProductAbstract.vars.errors|length > 0 %}has-error{% endif %}">
       {{ form_errors(productRelationForm.fkProductAbstract) }}
 </div>
@@ -24,11 +28,11 @@
     </div>
 </div>
 
-<br />
-
-<h4>{{ 'Select product' | trans }}</h4>
-
-{{ productTable | raw }}
+{% if productTable is defined %}
+    <br />
+    <h4>{{ 'Select product' | trans }}</h4>
+    {{ productTable | raw }}
+{% endif %}
 
 {{ form_row(productRelationForm.idProductRelation) }}
 

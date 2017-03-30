@@ -42,8 +42,6 @@ class EditController extends BaseProductRelationController
         $productRelationTabs = $this->getFactory()
             ->createProductRelationTabs();
 
-        $productTable = $this->getFactory()->createProductTable($idProductRelation);
-
         $productRelationForm->handleRequest($request);
 
         if ($productRelationForm->isValid()) {
@@ -79,23 +77,9 @@ class EditController extends BaseProductRelationController
         return [
             'productRelationTabs' => $productRelationTabs->createView(),
             'productRelationForm' => $productRelationForm->createView(),
-            'productTable' => $productTable->render(),
             'productRelation' => $productRelationTransfer,
             'productRuleTable' => $productRuleTable->render(),
         ];
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function tableAction()
-    {
-        $productTable = $this->getFactory()
-            ->createProductTable();
-
-        return $this->jsonResponse(
-            $productTable->fetchData()
-        );
     }
 
     /**

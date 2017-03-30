@@ -33,8 +33,6 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
-     * @since 5.0.0
-     *
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
@@ -54,8 +52,6 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
-     * @since 5.0.0
-     *
      * @param mixed $offset <p>
      * The offset to retrieve.
      * </p>
@@ -71,8 +67,6 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      * Offset to set
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     *
-     * @since 5.0.0
      *
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -93,8 +87,6 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
-     * @since 5.0.0
-     *
      * @param mixed $offset <p>
      * The offset to unset.
      * </p>
@@ -110,8 +102,6 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      * Retrieve an external iterator
      *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     *
-     * @since 5.0.0
      *
      * @return \Traversable|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
      */

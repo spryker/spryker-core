@@ -84,6 +84,16 @@ class FilterProvider implements FilterProviderInterface
                 'label' => 'created at',
                 'type' => 'date',
                 'input' => 'text',
+                'validation' => [
+                    'format' => 'yyyy/mm/dd',
+                ],
+                'plugin' =>  'datepicker',
+                'plugin_config' => [
+                    'format' => 'yyyy/mm/dd',
+                    'todayBtn' => 'linked',
+                    'todayHighlight' => true,
+                    'autoclose' => true,
+                ],
                 'operators' => $this->getTextOperators(),
             ],
         ];

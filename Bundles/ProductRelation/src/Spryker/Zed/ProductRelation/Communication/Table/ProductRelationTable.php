@@ -117,7 +117,7 @@ class ProductRelationTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Abstract product name',
             SpyProductRelationTypeTableMap::COL_KEY => 'Relation type',
             ProductRelationQueryContainer::COL_NUMBER_OF_RELATED_PRODUCTS => 'Number of products',
-            SpyProductRelationTableMap::COL_IS_ACTIVE => 'Active',
+            SpyProductRelationTableMap::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
     }
