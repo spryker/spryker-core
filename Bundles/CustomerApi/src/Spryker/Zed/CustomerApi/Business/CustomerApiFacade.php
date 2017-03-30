@@ -23,20 +23,6 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
-     */
-    public function findCustomers(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return $this->getFactory()
-            ->createCustomerApi()
-            ->find($apiRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -96,6 +82,34 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
         return $this->getFactory()
             ->createCustomerApi()
             ->delete($idCustomer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function findCustomers(ApiRequestTransfer $apiRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerApi()
+            ->find($apiRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return array
+     */
+    public function validate(ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerApiValidator()
+            ->validate($apiDataTransfer);
     }
 
 }

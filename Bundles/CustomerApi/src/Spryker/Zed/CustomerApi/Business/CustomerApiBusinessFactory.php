@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerApi\Business;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapper;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapper;
 use Spryker\Zed\CustomerApi\Business\Model\CustomerApi;
+use Spryker\Zed\CustomerApi\Business\Model\Validator\CustomerApiValidator;
 use Spryker\Zed\CustomerApi\CustomerApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -47,6 +48,16 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
     public function createCustomerTransferMapper()
     {
         return new TransferMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerApi\Business\Model\Validator\CustomerApiValidatorInterface
+     */
+    public function createCustomerApiValidator()
+    {
+        return new CustomerApiValidator(
+            $this->createCustomerTransferMapper()
+        );
     }
 
     /**

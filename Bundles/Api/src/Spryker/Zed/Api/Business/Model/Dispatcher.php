@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Api\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface;
+use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
 
 class Dispatcher implements DispatcherInterface
 {
@@ -25,19 +27,19 @@ class Dispatcher implements DispatcherInterface
     protected $processor;
 
     /**
-     * @var \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface
+     * @var \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface
      */
     protected $validator;
 
     /**
      * @param \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface $resourceHandler
      * @param \Spryker\Zed\Api\Business\Model\ProcessorInterface $processor
-     * @param \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface $validator
+     * @param \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface $validator
      */
     public function __construct(
         ResourceHandlerInterface $resourceHandler,
         ProcessorInterface $processor,
-        ValidatorInterface $validator
+        ApiValidatorInterface $validator
     ) {
         $this->resourceHandler = $resourceHandler;
         $this->processor = $processor;
@@ -60,11 +62,13 @@ class Dispatcher implements DispatcherInterface
         $apiResponseTransfer = new ApiResponseTransfer();
 
         try {
-            $errors = $this->validator->validate($apiRequestTransfer);
+            $errors = $this->getValidationErrors($apiRequestTransfer);
+
             if ($errors) {
                 $apiResponseTransfer->setCode(422);
                 $apiResponseTransfer->setMessage('Validation errors.');
-                $apiResponseTransfer->setValidationErrors($errors);
+                $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
+                $apiResponseTransfer->setData($errors); //TODO remove
             } else {
                 $apiCollectionOrItem = $this->callApiPlugin($resource, $method, $params);
                 $data = (array)$apiCollectionOrItem->getData();
@@ -99,6 +103,23 @@ class Dispatcher implements DispatcherInterface
     protected function callApiPlugin($resource, $method, $params)
     {
         return $this->resourceHandler->execute($resource, $method, $params);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
+     */
+    protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer)
+    {
+        if (!$apiRequestTransfer->getData()) {
+            return [];
+        }
+
+        return $this->validator->validate(
+            $apiRequestTransfer->getResource(),
+            $apiRequestTransfer->getData()
+        );
     }
 
 }

@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductApi\Business\Model;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ProductApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
@@ -65,9 +67,10 @@ class ProductApi implements ProductApiInterface
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $productApiTransfer = $this->persist($apiDataTransfer);
+        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        $customerApiTransfer = $this->persist($customerEntity);
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer);
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -78,32 +81,59 @@ class ProductApi implements ProductApiInterface
      */
     public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
-        $productData = $this->getProductData($idProduct, $apiFilterTransfer);
-        $productAbstractTransfer = $this->transferMapper->toTransfer($productData);
+        $customerData = $this->getProductData($idProduct, $apiFilterTransfer);
+        $customerTransfer = $this->transferMapper->toTransfer($customerData);
 
-        return $this->apiQueryContainer->createApiItem($productAbstractTransfer);
+        return $this->apiQueryContainer->createApiItem($customerTransfer);
     }
 
     /**
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $apiDataTransfer)
+    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)
     {
-        $productApiTransfer = $this->persist($apiDataTransfer);
+        //$customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        //fetch from db
+        $entityToUpdate = $this->queryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->findOne();
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer);
+        if (!$entityToUpdate) {
+            throw new EntityNotFoundException('sdfsd');
+        }
+
+        $data = (array)$apiDataTransfer->getData();
+        $entityToUpdate->fromArray($data);
+
+        $customerApiTransfer = $this->persist($entityToUpdate);
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idProduct)
+    public function delete($idProductAbstract)
     {
-        return true;
+        $deletedRows = $this->queryContainer
+            ->queryProductAbstractById($idProductAbstract)
+            ->delete();
+
+        $customerApiTransfer = new ProductApiTransfer();
+
+        if ($deletedRows > 0) {
+            $customerApiTransfer->setIdProductAbstract($idProductAbstract);
+        }
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -115,22 +145,24 @@ class ProductApi implements ProductApiInterface
     {
         $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
         $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
-        $collection = $this->transferMapper->toTransferCollection($query->find()->toArray());
+
+        $collection = $this->transferMapper->toTransferCollection(
+            $query->find()->toArray()
+        );
 
         return $this->apiQueryContainer->createApiCollection($collection);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $entity
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    protected function persist(ApiDataTransfer $apiDataTransfer)
+    protected function persist(SpyProductAbstract $entity)
     {
-        $productAbstractEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        $productAbstractEntity->save();
+        $entity->save();
 
-        return $this->transferMapper->toTransfer($productAbstractEntity->toArray());
+        return $this->transferMapper->toTransfer($entity->toArray());
     }
 
     /**
@@ -143,15 +175,15 @@ class ProductApi implements ProductApiInterface
      */
     protected function getProductData($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
-        $productAbstractEntity = (array)$this->queryContainer
+        $customerEntity = (array)$this->queryContainer
             ->queryProductAbstractById($idProduct, $apiFilterTransfer->getFields())
             ->findOne();
 
-        if (!$productAbstractEntity) {
-            throw new EntityNotFoundException('Product not found idProduct: ' . $idProduct);
+        if (!$customerEntity) {
+            throw new EntityNotFoundException('Product not found: ' . $idProduct);
         }
 
-        return $productAbstractEntity;
+        return $customerEntity;
     }
 
     /**
@@ -163,9 +195,9 @@ class ProductApi implements ProductApiInterface
      */
     protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
     {
-        $criteriaRuleSet = $this->apiQueryContainer
-            ->createPropelQueryBuilderCriteriaFromJson($apiRequestTransfer->getFilter()
-            ->getFilter());
+        $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
+            $apiRequestTransfer->getFilter()->getFilter()
+        );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
@@ -179,7 +211,7 @@ class ProductApi implements ProductApiInterface
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function buildQuery(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
     {

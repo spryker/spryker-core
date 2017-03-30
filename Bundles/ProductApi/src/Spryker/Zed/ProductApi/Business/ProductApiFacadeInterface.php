@@ -11,74 +11,73 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
+/**
+ * @method \Spryker\Zed\ProductApi\Business\ProductApiBusinessFactory getFactory()
+ */
 interface ProductApiFacadeInterface
 {
 
     /**
-     * Specification:
-     *  - Finds Products by filter transcer, including sort, conditions and pagination.
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function findProducts(ApiRequestTransfer $apiRequestTransfer);
+    public function addProduct(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * Specification:
-     *  - Finds Product by Product ID.
-     *  - Throws ProductNotFoundException if not found.
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer);
 
     /**
-     * Specification:
-     *  - Adds new Product.
+     * {@inheritdoc}
      *
      * @api
      *
+     * @param $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function addProduct(ApiDataTransfer $apiDataTransfer);
+    public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer);
 
     /**
-     * Specification:
-     *  - Finds Product by Product ID.
-     *  - Throws ProductNotFoundException if not found.
-     *  - Entity is modified with data from ProductTransfer and saved.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return void
-     */
-    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer);
-
-    /**
-     * Specification:
-     *  - Finds Product by Product ID.
-     *  - Throws ProductNotFoundException if not found.
-     *  - Deletes Product.
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idProduct
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function deleteProduct($idProduct);
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function findProducts(ApiRequestTransfer $apiRequestTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return array
+     */
+    public function validate(ApiDataTransfer $apiDataTransfer);
 
 }

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductApi\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\ApiDataTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,6 +17,71 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterface
 {
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function addProduct(ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFactory()
+            ->createProductApi()
+            ->add($apiDataTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    {
+        return $this->getFactory()
+            ->createProductApi()
+            ->get($idProduct, $apiFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFactory()
+            ->createProductApi()
+            ->update($idProductAbstract, $apiDataTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function deleteProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductApi()
+            ->delete($idProduct);
+    }
 
     /**
      * {@inheritdoc}
@@ -33,68 +98,17 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiDataTransfer
-     */
-    public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer)
-    {
-        return $this->getFactory()
-            ->createProductApi()
-            ->get($idProduct, $apiFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiDataTransfer
+     * @return array
      */
-    public function addProduct(ApiDataTransfer $apiDataTransfer)
+    public function validate(ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
-            ->createProductApi()
-            ->add($apiDataTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductTransfer
-     */
-    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer)
-    {
-        return $this->getFactory()
-            ->createProductApi()
-            ->update($apiDataTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return bool
-     */
-    public function deleteProduct($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductApi()
-            ->delete($idProduct);
+            ->createProductApiValidator()
+            ->validate($apiDataTransfer);
     }
 
 }

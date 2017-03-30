@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
@@ -60,20 +61,16 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function find(ApiRequestTransfer $apiRequestTransfer)
+    public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
-        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
+        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        $customerApiTransfer = $this->persist($customerEntity);
 
-        $collection = $this->transferMapper->toTransferCollection(
-            $query->find()->toArray()
-        );
-
-        return $this->apiQueryContainer->createApiCollection($collection);
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -91,26 +88,30 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function add(ApiDataTransfer $apiDataTransfer)
-    {
-        $customerApiTransfer = $this->persist($apiDataTransfer);
-
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
-    }
-
-    /**
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
     {
-        $customerApiTransfer = $this->persist($apiDataTransfer);
+        //$customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        //fetch from db
+        $entityToUpdate = $this->queryContainer
+            ->queryCustomer()
+            ->filterByIdCustomer($idCustomer)
+            ->findOne();
+
+        if (!$entityToUpdate) {
+            throw new EntityNotFoundException('sdfsd');
+        }
+
+        $data = (array)$apiDataTransfer->getData();
+        $entityToUpdate->fromArray($data);
+
+        $customerApiTransfer = $this->persist($entityToUpdate);
 
         return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
@@ -136,16 +137,32 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
+        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
+
+        $collection = $this->transferMapper->toTransferCollection(
+            $query->find()->toArray()
+        );
+
+        return $this->apiQueryContainer->createApiCollection($collection);
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    protected function persist(ApiDataTransfer $apiDataTransfer)
+    protected function persist(SpyCustomer $entity)
     {
-        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        $customerEntity->save();
+        $entity->save();
 
-        return $this->transferMapper->toTransfer($customerEntity->toArray());
+        return $this->transferMapper->toTransfer($entity->toArray());
     }
 
     /**

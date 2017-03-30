@@ -10,7 +10,4 @@ namespace Spryker\Shared\CustomerApi;
 interface CustomerApiConstants
 {
 
-    //FIXME: Move to config as constant!
-    const RESOURCE_TYPE = 'customers';
-
 }

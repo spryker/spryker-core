@@ -30,18 +30,21 @@ interface ProductApiInterface
     public function get($idProduct, ApiFilterTransfer $apiFilterTransfer);
 
     /**
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $apiDataTransfer);
+    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idProduct);
+    public function delete($idProductAbstract);
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

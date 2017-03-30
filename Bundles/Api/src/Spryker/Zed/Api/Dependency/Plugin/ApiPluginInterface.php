@@ -17,6 +17,13 @@ interface ApiPluginInterface
     /**
      * @api
      *
+     * @return string
+     */
+    public function getResourceType();
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
@@ -32,12 +39,5 @@ interface ApiPluginInterface
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer);
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getResourceType();
 
 }

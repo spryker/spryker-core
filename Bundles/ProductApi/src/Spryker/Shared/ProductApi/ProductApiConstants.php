@@ -9,7 +9,4 @@ namespace Spryker\Shared\ProductApi;
 
 interface ProductApiConstants
 {
-
-    const RESOURCE_TYPE = 'products';
-
 }

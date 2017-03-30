@@ -34,7 +34,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreP
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Transformer;
-use Spryker\Zed\Api\Business\Model\Validator\Validator;
+use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -82,7 +82,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createResourceHandler()
     {
         return new ResourceHandler(
-            $this->getApiPluginStack()
+            $this->getApiPlugins()
         );
     }
 
@@ -92,8 +92,8 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createProcessor()
     {
         return new Processor(
-            $this->getPreProcessorPluginStack(),
-            $this->getPostProcessorPluginStack()
+            $this->getPreProcessorStack(),
+            $this->getPostProcessorStack()
         );
     }
 
@@ -118,27 +118,27 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface
+     * @return \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface
      */
     public function createValidator()
     {
-        return new Validator(
-            $this->getValidatorPluginStack()
+        return new ApiValidator(
+            $this->getApiValidatorPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Validator\ValidatorInterface[]
+     * @return \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface[]
      */
-    protected function getValidatorPluginStack()
+    protected function getApiValidatorPlugins()
     {
-        return [];
+        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_VALIDATOR);
     }
 
     /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
      */
-    protected function getApiPluginStack()
+    protected function getApiPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API);
     }
@@ -146,7 +146,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPreProcessorPluginInterface[]
      */
-    protected function getPreProcessorPluginStack()
+    protected function getPreProcessorStack()
     {
         return [
             $this->createPathPreProcessor(),
@@ -172,7 +172,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPostProcessorPluginInterface[]
      */
-    protected function getPostProcessorPluginStack()
+    protected function getPostProcessorStack()
     {
         return [
             $this->createAddActionPostProcessor(),

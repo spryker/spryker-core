@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,15 +27,6 @@ interface ApiFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return array
-     */
-    public function validate(ApiRequestTransfer $apiRequestTransfer);
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      * @param \Symfony\Component\HttpFoundation\Response $responseObject
@@ -42,5 +34,15 @@ interface ApiFacadeInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject);
+
+    /**
+     * @api
+     *
+     * @param string $resourceType
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
+     */
+    public function validate($resourceType, ApiDataTransfer $apiDataTransfer);
 
 }

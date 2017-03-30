@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -35,20 +36,6 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return array
-     */
-    public function validate(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return $this->getFactory()
-            ->createValidator()
-            ->validate($apiRequestTransfer);
-    }
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      * @param \Symfony\Component\HttpFoundation\Response $responseObject
@@ -60,6 +47,21 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
         return $this->getFactory()
             ->createTransformer($requestTransfer)
             ->transform($requestTransfer, $responseTransfer, $responseObject);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $resourceType
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
+     */
+    public function validate($resourceType, ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFactory()
+            ->createValidator()
+            ->validate($resourceType, $apiDataTransfer);
     }
 
 }

@@ -17,6 +17,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
     const PLUGINS_API = 'PLUGINS_API';
+    const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +33,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->provideApiPlugins($container);
+        $container = $this->provideApiValidatorPlugins($container);
 
         return $container;
     }
@@ -67,9 +69,31 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideApiValidatorPlugins(Container $container)
+    {
+        $container[static::PLUGINS_API_VALIDATOR] = function (Container $container) {
+            return $this->getApiValidatorPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
      */
     protected function getApiPluginCollection()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
+     */
+    protected function getApiValidatorPluginCollection()
     {
         return [];
     }

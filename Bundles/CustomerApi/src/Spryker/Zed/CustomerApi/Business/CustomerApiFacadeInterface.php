@@ -16,18 +16,6 @@ interface CustomerApiFacadeInterface
 
     /**
      * Specification:
-     *  - Finds customers by filter transcer, including sort, conditions and pagination.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
-     */
-    public function findCustomers(ApiRequestTransfer $apiRequestTransfer);
-
-    /**
-     * Specification:
      *  - Adds new customer.
      *
      * @api
@@ -80,5 +68,17 @@ interface CustomerApiFacadeInterface
      * @return void
      */
     public function deleteCustomer($idCustomer);
+
+    /**
+     * Specification:
+     *  - Finds customers by filter transcer, including sort, conditions and pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function findCustomers(ApiRequestTransfer $apiRequestTransfer);
 
 }

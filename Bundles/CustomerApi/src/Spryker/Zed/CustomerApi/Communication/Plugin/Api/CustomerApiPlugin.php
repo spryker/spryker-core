@@ -10,9 +10,8 @@ namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Shared\CustomerApi\CustomerApiConstants;
-use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
+use Spryker\Zed\CustomerApi\CustomerApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -23,23 +22,13 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
 {
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function getResourceType()
+    public function add(ApiDataTransfer $apiDataTransfer)
     {
-        return CustomerApiConstants::RESOURCE_TYPE;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
-     */
-    public function find(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return $this->getFacade()->findCustomers($apiRequestTransfer);
+        return $this->getFacade()->addCustomer($apiDataTransfer);
     }
 
     /**
@@ -51,16 +40,6 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
         return $this->getFacade()->getCustomer($idCustomer, $apiFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function add(ApiDataTransfer $apiDataTransfer)
-    {
-        return $this->getFacade()->addCustomer($apiDataTransfer);
     }
 
     /**
@@ -85,13 +64,23 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer)
+    {
+        return $this->getFacade()->findCustomers($apiRequestTransfer);
+    }
+
+    /**
      * @api
      *
      * @return string
      */
-    public function getType()
+    public function getResourceType()
     {
-        return ProductApiConstants::RESOURCE_TYPE;
+        return CustomerApiConfig::RESOURCE_TYPE;
     }
 
 }

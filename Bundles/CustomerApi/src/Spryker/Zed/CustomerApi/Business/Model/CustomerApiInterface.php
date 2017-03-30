@@ -15,11 +15,11 @@ interface CustomerApiInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function find(ApiRequestTransfer $apiRequestTransfer);
+    public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
      * @param int $idCustomer
@@ -30,15 +30,10 @@ interface CustomerApiInterface
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function add(ApiDataTransfer $apiDataTransfer);
-
-    /**
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
@@ -50,5 +45,12 @@ interface CustomerApiInterface
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function delete($idCustomer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer);
 
 }

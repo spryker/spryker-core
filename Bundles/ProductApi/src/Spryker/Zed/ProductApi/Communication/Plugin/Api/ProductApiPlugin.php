@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
+use Spryker\Zed\ProductApi\ProductApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -22,13 +22,45 @@ class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
 {
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function getResourceType()
+    public function add(ApiDataTransfer $apiDataTransfer)
     {
-        return ProductApiConstants::RESOURCE_TYPE;
+        return $this->getFacade()->addProduct($apiDataTransfer);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    {
+        return $this->getFacade()->getProduct($idProduct, $apiFilterTransfer);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function update($idProduct, ApiDataTransfer $apiDataTransfer)
+    {
+        return $this->getFacade()->updateProduct($idProduct, $apiDataTransfer);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function delete($idProduct)
+    {
+        return $this->getFacade()->deleteProduct($idProduct);
     }
 
     /**
@@ -42,45 +74,13 @@ class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
     }
 
     /**
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\ApiDataTransfer
+     * @return string
      */
-    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    public function getResourceType()
     {
-        return $this->getFacade()->getProduct($idProduct, $apiFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiDataTransfer
-     */
-    public function add(ApiDataTransfer $apiDataTransfer)
-    {
-        return $this->getFacade()->addProduct($apiDataTransfer);
-    }
-
-    /**
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiDataTransfer
-     */
-    public function update($idProduct, ApiDataTransfer $apiDataTransfer)
-    {
-        return $this->getFacade()->updateProduct($idProduct, $apiDataTransfer);
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return bool
-     */
-    public function delete($idProduct)
-    {
-        return $this->getFacade()->deleteProduct($idProduct);
+        return ProductApiConfig::RESOURCE_TYPE;
     }
 
 }
