@@ -97,11 +97,11 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function delete(ApiRequestTransfer $apiRequestTransfer)
+    public function delete($idProduct)
     {
         return true;
     }

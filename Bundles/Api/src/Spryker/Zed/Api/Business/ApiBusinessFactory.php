@@ -70,7 +70,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
                 return new JsonFormatter($this->getUtilEncoding());
         }
 
-        throw new FormatterNotFoundException(sprintf('Formatter for %s not found', $formatType));
+        throw new FormatterNotFoundException(sprintf('Formatter for type `%s` not found', $formatType));
     }
 
     /**

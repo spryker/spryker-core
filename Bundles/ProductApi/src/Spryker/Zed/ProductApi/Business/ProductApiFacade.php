@@ -9,8 +9,7 @@ namespace Spryker\Zed\ProductApi\Business;
 
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -41,7 +40,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiDataTransfer
      */
     public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
@@ -55,15 +54,15 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductApiTransfer $productApiTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiDataTransfer
      */
-    public function addCustomer(ProductApiTransfer $productApiTransfer)
+    public function addProduct(ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->add($productApiTransfer);
+            ->add($apiDataTransfer);
     }
 
     /**
@@ -71,15 +70,15 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\ProductTransfer
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer)
+    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->update($customerTransfer);
+            ->update($apiDataTransfer);
     }
 
     /**
@@ -87,15 +86,15 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer)
+    public function deleteProduct($idProduct)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->delete($customerTransfer);
+            ->delete($idProduct);
     }
 
 }

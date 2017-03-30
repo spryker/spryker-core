@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ProductApi\Business;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
 
 interface ProductApiFacadeInterface
 {
 
     /**
      * Specification:
-     *  - Finds customers by filter transcer, including sort, conditions and pagination.
+     *  - Finds Products by filter transcer, including sort, conditions and pagination.
      *
      * @api
      *
@@ -29,8 +28,8 @@ interface ProductApiFacadeInterface
 
     /**
      * Specification:
-     *  - Finds customer by customer ID.
-     *  - Throws CustomerNotFoundException if not found.
+     *  - Finds Product by Product ID.
+     *  - Throws ProductNotFoundException if not found.
      *
      * @api
      *
@@ -43,46 +42,43 @@ interface ProductApiFacadeInterface
 
     /**
      * Specification:
-     *  - Adds new customer.
+     *  - Adds new Product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductApiTransfer $productApiTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    public function addCustomer(ProductApiTransfer $productApiTransfer);
+    public function addProduct(ApiDataTransfer $apiDataTransfer);
 
     /**
      * Specification:
-     *  - Finds customer by customer ID.
-     *  - Throws CustomerNotFoundException if not found.
-     *  - Entity is modified with data from CustomerTransfer and saved.
+     *  - Finds Product by Product ID.
+     *  - Throws ProductNotFoundException if not found.
+     *  - Entity is modified with data from ProductTransfer and saved.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return void
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer);
+    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer);
 
     /**
      * Specification:
-     *  - Finds customer by customer ID.
-     *  - Throws CustomerNotFoundException if not found.
-     *  - Deletes customer.
+     *  - Finds Product by Product ID.
+     *  - Throws ProductNotFoundException if not found.
+     *  - Deletes Product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @param int $idProduct
      *
      * @return void
      */
-    public function deleteCustomer(CustomerTransfer $customerTransfer);
+    public function deleteProduct($idProduct);
 
 }

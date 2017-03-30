@@ -37,11 +37,11 @@ interface ProductApiInterface
     public function update(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function delete(ApiRequestTransfer $apiRequestTransfer);
+    public function delete($idProduct);
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

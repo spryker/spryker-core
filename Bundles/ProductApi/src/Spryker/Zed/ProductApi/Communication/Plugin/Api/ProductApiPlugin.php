@@ -10,15 +10,13 @@ namespace Spryker\Zed\ProductApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
 use Spryker\Shared\ProductApi\ProductApiConstants;
 use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
- * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
 {
@@ -44,55 +42,45 @@ class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
     }
 
     /**
-     * @param int $idCustomer
+     * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiDataTransfer
      */
-    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
-        return $this->getFacade()->getProduct($idCustomer, $apiFilterTransfer);
+        return $this->getFacade()->getProduct($idProduct, $apiFilterTransfer);
     }
 
     /**
-     * @param array $customer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiDataTransfer
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $customerTransfer = new ProductApiTransfer();
-        $customerTransfer->fromArray($apiDataTransfer->getData(), true);
-
-        return $this->getFacade()->addCustomer($customerTransfer);
+        return $this->getFacade()->addProduct($apiDataTransfer);
     }
 
     /**
-     * @param int $idCustomer
-     * @param array $customer
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\ApiDataTransfer
      */
-    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
+    public function update($idProduct, ApiDataTransfer $apiDataTransfer)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($apiDataTransfer->getData(), true);
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        return $this->getFacade()->updateCustomer($customerTransfer);
+        return $this->getFacade()->updateProduct($idProduct, $apiDataTransfer);
     }
 
     /**
-     * @param int $idCustomer
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function delete($idCustomer)
+    public function delete($idProduct)
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        return $this->getFacade()->deleteCustomer($customerTransfer);
+        return $this->getFacade()->deleteProduct($idProduct);
     }
 
 }
