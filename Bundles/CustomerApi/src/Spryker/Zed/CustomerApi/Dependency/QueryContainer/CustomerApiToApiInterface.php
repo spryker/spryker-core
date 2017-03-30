@@ -54,4 +54,11 @@ interface CustomerApiToApiInterface
      */
     public function createApiCollection(array $data);
 
+    /**
+     * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function createApiItem($data);
+
 }

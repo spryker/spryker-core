@@ -20,7 +20,7 @@ interface ProductApiInterface
      *
      * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($idProduct, ApiFilterTransfer $apiFilterTransfer);
 

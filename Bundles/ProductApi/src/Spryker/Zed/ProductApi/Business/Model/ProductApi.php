@@ -59,27 +59,6 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
-     */
-    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
-    {
-        $productData = (array)$this->queryContainer
-            ->queryProductAbstractById($idProduct, $apiFilterTransfer->getFields())
-            ->findOne();
-
-        if (!$productData) {
-            throw new EntityNotFoundException('Product not found idProduct: ' . $idProduct);
-        }
-
-        return $this->transferMapper->toTransfer($productData);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer|\Generated\Shared\Transfer\ProductApiTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
@@ -90,13 +69,17 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $apiDataTransfer)
+    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
-        return $this->persist($apiDataTransfer);
+        $productData = $this->getProductData($idProduct, $apiFilterTransfer);
+        $productAbstractTransfer = $this->transferMapper->toTransfer($productData);
+
+        return $this->apiQueryContainer->createApiItem($productAbstractTransfer);
     }
 
     /**
@@ -104,13 +87,9 @@ class ProductApi implements ProductApiInterface
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
-    protected function persist(ApiDataTransfer $apiDataTransfer)
+    public function update(ApiDataTransfer $apiDataTransfer)
     {
-        $productAbstractEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-
-        $productAbstractEntity->save();
-
-        return $this->transferMapper->toTransfer($productAbstractEntity->toArray());
+        return $this->persist($apiDataTransfer);
     }
 
     /**
@@ -132,10 +111,43 @@ class ProductApi implements ProductApiInterface
     {
         $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
         $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
-
         $collection = $this->transferMapper->toTransferCollection($query->find());
 
         return $this->apiQueryContainer->createApiCollection($collection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     */
+    protected function persist(ApiDataTransfer $apiDataTransfer)
+    {
+        $productAbstractEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        $productAbstractEntity->save();
+
+        return $this->transferMapper->toTransfer($productAbstractEntity->toArray());
+    }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     *
+     * @return array
+     */
+    protected function getProductData($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    {
+        $productAbstractEntity = (array)$this->queryContainer
+            ->queryProductAbstractById($idProduct, $apiFilterTransfer->getFields())
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            throw new EntityNotFoundException('Product not found idProduct: ' . $idProduct);
+        }
+
+        return $productAbstractEntity;
     }
 
     /**

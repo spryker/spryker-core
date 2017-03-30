@@ -52,27 +52,6 @@ class CustomerApi
     }
 
     /**
-     * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
-     */
-    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
-    {
-        $customerData = (array)$this->queryContainer
-            ->queryCustomerById($idCustomer, $apiFilterTransfer->getFields())
-            ->findOne();
-
-        if (!$customerData) {
-            throw new EntityNotFoundException('Customer not found idCustomer: ' . $idCustomer);
-        }
-
-        return $this->transferMapper->convertCustomer($customerData);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
@@ -83,6 +62,20 @@ class CustomerApi
     }
 
     /**
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    {
+        $customerData = $this->getCustomerData($idCustomer, $apiFilterTransfer);
+        $customerTransfer = $this->transferMapper->convertCustomer($customerData);
+
+        return $this->apiQueryContainer->createApiItem($customerTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
@@ -90,24 +83,6 @@ class CustomerApi
     public function update(ApiDataTransfer $customerApiTransfer)
     {
         return $this->persist($customerApiTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $customerApiTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
-     */
-    protected function persist(ApiDataTransfer $customerApiTransfer)
-    {
-        $customerData = new SpyCustomer();
-        $customerData->fromArray($customerApiTransfer->toArray());
-
-        $customerData->save();
-
-        $customerApiTransfer = new CustomerApiTransfer();
-        $customerApiTransfer->fromArray($customerData->toArray(), true);
-
-        return $customerApiTransfer;
     }
 
     /**
@@ -150,6 +125,45 @@ class CustomerApi
         $collection = $this->transferMapper->convertCustomerCollection($query->find());
 
         return $this->apiQueryContainer->createApiCollection($collection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $customerApiTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     */
+    protected function persist(ApiDataTransfer $customerApiTransfer)
+    {
+        $customerData = new SpyCustomer();
+        $customerData->fromArray($customerApiTransfer->toArray());
+
+        $customerData->save();
+
+        $customerApiTransfer = new CustomerApiTransfer();
+        $customerApiTransfer->fromArray($customerData->toArray(), true);
+
+        return $customerApiTransfer;
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     *
+     * @return array
+     */
+    protected function getCustomerData($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    {
+        $customerEntity = (array)$this->queryContainer
+            ->queryCustomerById($idCustomer, $apiFilterTransfer->getFields())
+            ->findOne();
+
+        if (!$customerEntity) {
+            throw new EntityNotFoundException('Customer not found idCustomer: ' . $idCustomer);
+        }
+
+        return $customerEntity;
     }
 
 }

@@ -82,4 +82,14 @@ class ProductApiToApiBridge implements ProductApiToApiInterface
         return $this->apiQueryContainer->createApiCollection($data);
     }
 
+    /**
+     * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function createApiItem($data)
+    {
+        return $this->apiQueryContainer->createApiItem($data);
+    }
+
 }

@@ -22,16 +22,16 @@ class ApiCollectionMapper implements ApiCollectionMapperInterface
     {
         $apiCollectionTransfer = new ApiCollectionTransfer();
 
-        $results = [];
+        $collectionData = [];
         foreach ($data as $item) {
             if ($item instanceof AbstractTransfer) {
-                $results[] = $item->modifiedToArray();
+                $collectionData[] = $item->modifiedToArray();
             } else {
-                $results[] = $item;
+                $collectionData[] = $item;
             }
         }
 
-        $apiCollectionTransfer->setData($results);
+        $apiCollectionTransfer->setData($collectionData);
 
         return $apiCollectionTransfer;
     }
