@@ -47,4 +47,11 @@ interface CustomerApiToApiInterface
      */
     public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields);
 
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function createApiCollection(array $data);
+
 }

@@ -24,7 +24,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function findCustomers(ApiRequestTransfer $apiRequestTransfer)
     {

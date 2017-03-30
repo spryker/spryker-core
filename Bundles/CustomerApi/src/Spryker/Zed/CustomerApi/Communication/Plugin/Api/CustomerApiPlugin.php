@@ -37,7 +37,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {

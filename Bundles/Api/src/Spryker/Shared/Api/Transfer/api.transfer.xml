@@ -61,11 +61,11 @@
     </transfer>
 
     <transfer name="ApiCollection">
-        <property name="collection" type="array"/>
+        <property name="data" type="array"/>
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="item" type="array"/>
+        <property name="data" type="array"/>
     </transfer>
 
     <transfer name="ApiMeta">

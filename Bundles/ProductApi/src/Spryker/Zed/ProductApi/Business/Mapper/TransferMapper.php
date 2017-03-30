@@ -46,7 +46,7 @@ class TransferMapper implements TransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ArrayCollection $productEntityCollection
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[]|\Propel\Runtime\Collection\ArrayCollection $productEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer[]
      */

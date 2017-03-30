@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductApi\Business\Mapper\EntityMapper;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapper;
 use Spryker\Zed\ProductApi\Business\Model\ProductApi;
 use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
@@ -20,21 +21,32 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductApi\Business\Model\ProductApi
+     * @return \Spryker\Zed\ProductApi\Business\Model\ProductApiInterface
      */
     public function createProductApi()
     {
         return new ProductApi(
             $this->getApiQueryContainer(),
             $this->getQueryContainer(),
-            $this->createCustomerTransferMapper()
+            $this->createEntityMapper(),
+            $this->createTransferMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface
+     */
+    public function createEntityMapper()
+    {
+        return new EntityMapper(
+            $this->getApiQueryContainer()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface
      */
-    public function createCustomerTransferMapper()
+    public function createTransferMapper()
     {
         return new TransferMapper(
             $this->getApiQueryContainer()

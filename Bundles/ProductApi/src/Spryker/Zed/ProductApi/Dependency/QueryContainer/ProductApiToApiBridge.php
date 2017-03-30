@@ -72,4 +72,14 @@ class ProductApiToApiBridge implements ProductApiToApiInterface
         return $this->apiQueryContainer->mapFields($tableName, $tableFields, $query, $allowedFields);
     }
 
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function createApiCollection(array $data)
+    {
+        return $this->apiQueryContainer->createApiCollection($data);
+    }
+
 }

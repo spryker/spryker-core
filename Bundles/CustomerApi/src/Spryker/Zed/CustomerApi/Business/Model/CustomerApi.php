@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
-use Spryker\Zed\Api\Business\Model\ApiCollection;
 use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
@@ -124,7 +123,7 @@ class CustomerApi
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface //TODO should return transfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -150,7 +149,7 @@ class CustomerApi
 
         $collection = $this->transferMapper->convertCustomerCollection($query->find());
 
-        return new ApiCollection($collection);
+        return $this->apiQueryContainer->createApiCollection($collection);
     }
 
 }

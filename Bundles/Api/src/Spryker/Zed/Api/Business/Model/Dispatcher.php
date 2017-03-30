@@ -67,11 +67,8 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors($errors);
             } else {
-                $entityOrCollection = $this->callApiPlugin($resource, $method, $params);
-                $data = [];
-                if ($entityOrCollection) {
-                    $data = $entityOrCollection->modifiedToArray(true);
-                }
+                $apiCollectionOrItem = $this->callApiPlugin($resource, $method, $params);
+                $data = (array)$apiCollectionOrItem->modifiedToArray(true);
                 $apiResponseTransfer->setData($data);
             }
         } catch (\Exception $e) {
@@ -98,7 +95,7 @@ class Dispatcher implements DispatcherInterface
      * @param string $method
      * @param array $params
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer
      */
     protected function callApiPlugin($resource, $method, $params)
     {

@@ -69,4 +69,13 @@ interface ApiQueryContainerInterface extends QueryContainerInterface
      */
     public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields);
 
+    /**
+     * @api
+     *
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function createApiCollection(array $data);
+
 }

@@ -87,4 +87,18 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
             ->mapFields($tableName, $tableFields, $query, $allowedFields);
     }
 
+    /**
+     * @api
+     *
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function createApiCollection(array $data)
+    {
+        return $this->getFactory()
+            ->createApiCollectionMapper()
+            ->toCollection($data);
+    }
+
 }

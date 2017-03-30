@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
-use Spryker\Zed\Api\Business\Model\ApiCollection;
+use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
 
-class ProductApi
+class ProductApi implements ProductApiInterface
 {
 
     /**
@@ -32,6 +31,11 @@ class ProductApi
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface
+     */
+    protected $entityMapper;
+
+    /**
      * @var \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface
      */
     protected $transferMapper;
@@ -39,15 +43,18 @@ class ProductApi
     /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface $transferMapper
      */
     public function __construct(
         ProductApiToApiInterface $apiQueryContainer,
         ProductApiQueryContainerInterface $queryContainer,
+        EntityMapperInterface $entityMapper,
         TransferMapperInterface $transferMapper
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->queryContainer = $queryContainer;
+        $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
     }
 
@@ -99,12 +106,11 @@ class ProductApi
      */
     protected function persist(ApiDataTransfer $apiDataTransfer)
     {
-        $productData = new SpyCustomer();
-        $productData->fromArray($apiDataTransfer->toArray());
+        $productAbstractEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
 
-        $productData->save();
+        $productAbstractEntity->save();
 
-        return $this->transferMapper->toTransfer($productData->toArray());
+        return $this->transferMapper->toTransfer($productAbstractEntity->toArray());
     }
 
     /**
@@ -120,7 +126,7 @@ class ProductApi
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface //TODO should return transfer, replace ApiRequest with ApiFilter
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
@@ -129,7 +135,7 @@ class ProductApi
 
         $collection = $this->transferMapper->toTransferCollection($query->find());
 
-        return new ApiCollection($collection); //TODO map to transfer
+        return $this->apiQueryContainer->createApiCollection($collection);
     }
 
     /**

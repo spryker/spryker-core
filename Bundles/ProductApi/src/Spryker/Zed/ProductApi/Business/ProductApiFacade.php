@@ -24,7 +24,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @return \Spryker\Zed\Api\Business\Model\ApiCollectionInterface
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function findProducts(ApiRequestTransfer $apiRequestTransfer)
     {
