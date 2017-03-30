@@ -12,7 +12,6 @@ use Exception;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -26,6 +25,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
@@ -34,6 +34,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     const BY_ORDER = 'byOrder';
     const MAX_EVENT_REPEATS = 10;
     const MAX_ON_ENTER = 50;
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var array
@@ -779,30 +781,28 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function saveOrderItems(array $orderItems, TransitionLogInterface $log, array $processes, array $sourceStateBuffer)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
-
         $currentTime = new DateTime('now');
-
         $timeoutModel = clone $this->timeout;
 
         foreach ($orderItems as $orderItem) {
-            $process = $processes[$orderItem->getProcess()->getName()];
 
-            $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
-            $targetState = $orderItem->getState()->getName();
+            $this->handleDatabaseTransaction(function () use ($orderItem, $processes, $sourceStateBuffer, $timeoutModel, $log, $currentTime) {
 
-            if ($sourceState !== $targetState) {
-                $timeoutModel->dropOldTimeout($process, $sourceState, $orderItem);
-                $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
-            }
+                $process = $processes[$orderItem->getProcess()->getName()];
 
-            $orderItem->save();
-            $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
-            $log->save($orderItem);
+                $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
+                $targetState = $orderItem->getState()->getName();
+
+                if ($sourceState !== $targetState) {
+                    $timeoutModel->dropOldTimeout($process, $sourceState, $orderItem);
+                    $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
+                }
+
+                $orderItem->save();
+                $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
+                $log->save($orderItem);
+            });
         }
-
-        $connection->commit();
     }
 
     /**
