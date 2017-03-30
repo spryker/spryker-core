@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -21,18 +22,19 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 class ProductDataFeedQueryContainer extends AbstractQueryContainer implements ProductDataFeedQueryContainerInterface
 {
 
-
     const TOUCH_ITEM_TYPE = 'product_abstract';
     const JOIN_TOUCH_TABLE_CONDITION_NAME = 'JOIN_TOUCH_TABLE_JOIN_NAME';
     const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
     const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     protected $productQueryContainer;
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
@@ -43,10 +45,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     public function getProductDataFeedQuery(ProductDataFeedTransfer $productDataFeedTransfer)
     {
@@ -74,9 +75,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function applyJoins(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -93,10 +94,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function applyLocaleFilter(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -114,9 +114,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductImages(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -142,10 +142,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductCategories(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -172,10 +171,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductPrices(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -193,10 +191,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductVariants(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -221,10 +218,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductOptions(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -244,10 +240,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinProductLocalizedAttributes(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -267,7 +262,7 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param integer $localeId
+     * @param integer|null $localeId
      *
      * @return array
      */
@@ -288,10 +283,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
      *
-     * @return SpyProductAbstractQuery
-     *
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function joinTouchTable(SpyProductAbstractQuery $abstractProductQuery)
     {
@@ -304,7 +298,7 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
             self::JOIN_TOUCH_TABLE_CONDITION_NAME,
             SpyTouchTableMap::COL_ITEM_TYPE . ' = ?',
             self::TOUCH_ITEM_TYPE,
-            \PDO::PARAM_STR
+            PDO::PARAM_STR
         );
         $abstractProductQuery->where([self::JOIN_TOUCH_TABLE_CONDITION_NAME]);
 
@@ -312,10 +306,10 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param SpyProductAbstractQuery $entityQuery
-     * @param ProductDataFeedTransfer|null $productDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $entityQuery
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer|null $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function applyDateFilter(
         SpyProductAbstractQuery $entityQuery,
@@ -329,7 +323,7 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
                     'updatedFromCondition',
                     SpyTouchTableMap::COL_TOUCHED . '> ?',
                     $productDataFeedTransfer->getUpdatedFrom(),
-                    \PDO::PARAM_STR
+                    PDO::PARAM_STR
                 );
                 $entityQuery->where(['updatedFromCondition']);
             }
@@ -339,7 +333,7 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
                     'updatedToCondition',
                     SpyTouchTableMap::COL_TOUCHED . '< ?',
                     $productDataFeedTransfer->getUpdatedTo(),
-                    \PDO::PARAM_STR
+                    PDO::PARAM_STR
                 );
                 $entityQuery->where(['updatedToCondition']);
             }
@@ -349,9 +343,9 @@ class ProductDataFeedQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function applyGroupings(SpyProductAbstractQuery $abstractProductQuery)
     {

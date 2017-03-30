@@ -19,21 +19,24 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  * @group Zed
  * @group AvailabilityDataFeed
  * @group Persistence
- * @group AvailabilityDataFeedQueryContainer
+ * @group AvailabilityDataFeedQueryContainerTest
  */
 class AvailabilityDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var AvailabilityDataFeedQueryContainer
+     * @var \Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer
      */
     protected $availabilityDataFeedQueryContainer;
 
     /**
-     * @var AvailabilityDataFeedTransfer
+     * @var \Generated\Shared\Transfer\AvailabilityDataFeedTransfer
      */
     protected $availabilityDataFeedTransfer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -42,6 +45,9 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $this->availabilityDataFeedTransfer = $this->createAvailabilityDataFeedTransfer();
     }
 
+    /**
+     * @return void
+     */
     public function testGetAvailabilityDataFeedQuery()
     {
         $query = $this->availabilityDataFeedQueryContainer
@@ -50,11 +56,13 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-
         $this->assertTrue($query instanceof SpyStockProductQuery);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetAvailabilityDataFeedQueryWithJoinedProducts()
     {
         $this->availabilityDataFeedTransfer->setIsJoinProduct(true);
@@ -72,6 +80,9 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetAvailabilityDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
         $this->availabilityDataFeedTransfer->setIsJoinProduct(true);
@@ -83,6 +94,9 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 
+    /**
+     * @return void
+     */
     public function testGetAvailabilityDataFeedQueryWithFilterByDate()
     {
         $this->availabilityDataFeedTransfer->setUpdatedFrom('2017-01-01');
@@ -95,7 +109,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return AvailabilityDataFeedQueryContainer
+     * @return \Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer
      */
     protected function createAvailabilityDataFeedQueryContainer()
     {
@@ -106,7 +120,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return AvailabilityDataFeedTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityDataFeedTransfer
      */
     protected function createAvailabilityDataFeedTransfer()
     {
@@ -116,7 +130,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param SpyStockProductQuery $query
+     * @param \Orm\Zed\Stock\Persistence\Base\SpyStockProductQuery $query
      *
      * @return array
      */
@@ -135,7 +149,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param $tablesArray
+     * @param array $tablesArray
      *
      * @return array
      */

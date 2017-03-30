@@ -8,11 +8,12 @@
 namespace Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 /**
@@ -27,11 +28,13 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     const JOIN_TOUCH_TABLE_CONDITION_NAME = 'JOIN_TOUCH_TABLE_CONDITION_NAME';
 
     /**
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      */
     protected $stockQueryContainer;
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      */
     public function __construct(StockQueryContainerInterface $stockQueryContainer)
@@ -42,7 +45,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     /**
      * @api
      *
-     * @param AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
@@ -65,9 +68,9 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
 
     /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
-     * @param AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     protected function applyJoins(
         SpyStockProductQuery $stockProductQuery,
@@ -79,10 +82,10 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
-     * @param SpyStockProductQuery $stockProductQuery
-     * @param AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
+     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     protected function joinProducts(
         SpyStockProductQuery $stockProductQuery,
@@ -106,7 +109,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
-     * @param integer $localeId
+     * @param integer|null $localeId
      *
      * @return array
      */
@@ -127,9 +130,9 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
-     * @param SpyStockProductQuery $productQuery
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $productQuery
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     protected function joinTouchTable(SpyStockProductQuery $productQuery)
     {
@@ -142,7 +145,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
             self::JOIN_TOUCH_TABLE_CONDITION_NAME,
             SpyTouchTableMap::COL_ITEM_TYPE . ' = ?',
             self::TOUCH_ITEM_TYPE,
-            \PDO::PARAM_STR
+            PDO::PARAM_STR
         );
         $productQuery->where([self::JOIN_TOUCH_TABLE_CONDITION_NAME]);
 
@@ -150,10 +153,10 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
-     * @param SpyStockProductQuery $entityQuery
-     * @param AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $entityQuery
+     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     protected function applyDateFilter(
         SpyStockProductQuery $entityQuery,
@@ -167,7 +170,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
                 'updatedFromCondition',
                 SpyTouchTableMap::COL_TOUCHED . '> ?',
                 $availabilityDataFeedTransfer->getUpdatedFrom(),
-                \PDO::PARAM_STR
+                PDO::PARAM_STR
             );
             $entityQuery->where(['updatedFromCondition']);
         }
@@ -177,7 +180,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
                 'updatedToCondition',
                 SpyTouchTableMap::COL_TOUCHED . '< ?',
                 $availabilityDataFeedTransfer->getUpdatedTo(),
-                \PDO::PARAM_STR
+                PDO::PARAM_STR
             );
             $entityQuery->where(['updatedToCondition']);
         }
@@ -186,9 +189,9 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
-     * @param SpyStockProductQuery $stockProductQuery
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     protected function applyGroupings(SpyStockProductQuery $stockProductQuery)
     {

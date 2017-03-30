@@ -9,9 +9,9 @@ namespace Spryker\Zed\CategoryDataFeed\Persistence;
 
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -26,11 +26,13 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     protected $categoryQueryContainer;
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct(CategoryQueryContainerInterface $categoryQueryContainer)
@@ -41,7 +43,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     /**
      * @api
      *
-     * @param CategoryDataFeedTransfer $categoryDataFeedTransfer
+     * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
@@ -53,15 +55,14 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
         $categoryQuery = $this->applyJoins($categoryQuery, $categoryDataFeedTransfer);
         $categoryQuery = $this->applyGroupings($categoryQuery);
 
-
         return $categoryQuery;
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param CategoryDataFeedTransfer $categoryDataFeedTransfer
+     * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     protected function applyJoins(
         SpyCategoryQuery $categoryQuery,
@@ -76,10 +77,10 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     }
 
     /**
-     * @param SpyCategoryQuery $categoryQuery
-     * @param CategoryDataFeedTransfer $categoryDataFeedTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     protected function joinProducts(
         SpyCategoryQuery $categoryQuery,
@@ -105,7 +106,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     }
 
     /**
-     * @param integer $localeId
+     * @param integer|null $localeId
      *
      * @return array
      */
@@ -126,9 +127,9 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     }
 
     /**
-     * @param SpyCategoryQuery $categoryQuery
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     protected function applyGroupings(SpyCategoryQuery $categoryQuery)
     {

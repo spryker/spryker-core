@@ -10,8 +10,8 @@ namespace Unit\Spryker\Zed\PriceDataFeed\Persistence;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\Price\Persistence\Base\SpyPriceProductQuery;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 
 /**
  * @group Unit
@@ -19,21 +19,24 @@ use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
  * @group Zed
  * @group PriceDataFeed
  * @group Persistence
- * @group PriceDataFeedQueryContainer
+ * @group PriceDataFeedQueryContainerTest
  */
 class PriceDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var PriceDataFeedQueryContainer
+     * @var \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer
      */
     protected $priceDataFeedQueryContainer;
 
     /**
-     * @var PriceDataFeedTransfer
+     * @var \Generated\Shared\Transfer\PriceDataFeedTransfer
      */
     protected $priceDataFeedTransfer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -42,6 +45,9 @@ class PriceDataFeedQueryContainerTest extends Test
         $this->priceDataFeedTransfer = $this->createPriceDataFeedTransfer();
     }
 
+    /**
+     * @return void
+     */
     public function testGetPriceDataFeedQuery()
     {
         $query = $this->priceDataFeedQueryContainer
@@ -54,6 +60,9 @@ class PriceDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetPriceDataFeedQueryWithJoinedTypes()
     {
         $this->priceDataFeedTransfer->setIsJoinType(true);
@@ -72,7 +81,7 @@ class PriceDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return PriceDataFeedQueryContainer
+     * @return \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer
      */
     protected function createPriceDataFeedQueryContainer()
     {
@@ -83,7 +92,7 @@ class PriceDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return PriceDataFeedTransfer
+     * @return \Generated\Shared\Transfer\PriceDataFeedTransfer
      */
     protected function createPriceDataFeedTransfer()
     {
@@ -93,7 +102,7 @@ class PriceDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param SpyPriceProductQuery $query
+     * @param \Orm\Zed\Price\Persistence\Base\SpyPriceProductQuery $query
      *
      * @return array
      */
@@ -112,7 +121,7 @@ class PriceDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param $tablesArray
+     * @param array $tablesArray
      *
      * @return array
      */

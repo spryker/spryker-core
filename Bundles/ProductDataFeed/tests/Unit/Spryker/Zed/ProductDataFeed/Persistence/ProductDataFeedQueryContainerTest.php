@@ -10,8 +10,8 @@ namespace Unit\Spryker\Zed\ProductDataFeed\Persistence;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer;
+use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
 /**
  * @group Unit
@@ -19,21 +19,24 @@ use Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer;
  * @group Zed
  * @group ProductDataFeed
  * @group Persistence
- * @group ProductDataFeedQueryContainer
+ * @group ProductDataFeedQueryContainerTest
  */
 class ProductDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var ProductDataFeedQueryContainer
+     * @var \Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer
      */
     protected $productDataFeedQueryContainer;
 
     /**
-     * @var ProductDataFeedTransfer
+     * @var \Generated\Shared\Transfer\ProductDataFeedTransfer
      */
     protected $productDataFeedTransfer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -42,6 +45,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->productDataFeedTransfer = $this->createProductDataFeedTransfer();
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQuery()
     {
         $query = $this->productDataFeedQueryContainer
@@ -54,6 +60,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedCategories()
     {
         $this->productDataFeedTransfer->setIsJoinCategory(true);
@@ -71,6 +80,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedPrices()
     {
         $this->productDataFeedTransfer->setIsJoinPrice(true);
@@ -88,6 +100,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedOptions()
     {
         $this->productDataFeedTransfer->setIsJoinOption(true);
@@ -105,6 +120,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedImages()
     {
         $this->productDataFeedTransfer->setIsJoinImage(true);
@@ -122,6 +140,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedVariants()
     {
         $this->productDataFeedTransfer->setIsJoinVariant(true);
@@ -139,6 +160,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithJoinedAll()
     {
         $this->productDataFeedTransfer->setIsJoinVariant(true);
@@ -164,6 +188,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithLocaleId()
     {
         $this->productDataFeedTransfer->setLocaleId(46);
@@ -174,6 +201,9 @@ class ProductDataFeedQueryContainerTest extends Test
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductDataFeedQueryWithDatesFilter()
     {
         $this->productDataFeedTransfer->setUpdatedFrom('2017-01-01');
@@ -186,7 +216,7 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return ProductDataFeedQueryContainer
+     * @return \Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer
      */
     protected function createProductDataFeedQueryContainer()
     {
@@ -197,7 +227,7 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return ProductDataFeedTransfer
+     * @return \Generated\Shared\Transfer\ProductDataFeedTransfer
      */
     protected function createProductDataFeedTransfer()
     {
@@ -207,7 +237,7 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
      *
      * @return array
      */
@@ -226,7 +256,7 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param $tablesArray
+     * @param array $tablesArray
      *
      * @return array
      */

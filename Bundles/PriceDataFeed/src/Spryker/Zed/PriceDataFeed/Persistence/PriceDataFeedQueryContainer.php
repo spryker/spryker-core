@@ -9,8 +9,8 @@ namespace Spryker\Zed\PriceDataFeed\Persistence;
 
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 
 /**
@@ -23,11 +23,13 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
     const PRICE_TYPE_COLUMNS = 'PRICE_TYPE_COLUMNS';
 
     /**
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
      */
     protected $priceQueryContainer;
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
      */
     public function __construct(PriceQueryContainerInterface $priceQueryContainer)
@@ -38,10 +40,9 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
     /**
      * @api
      *
-     * @param PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer $priceDataFeedTransfer
      *
-     * @return SpyPriceProductQuery
-     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function getPriceDataFeedQuery(PriceDataFeedTransfer $priceDataFeedTransfer)
     {
@@ -56,16 +57,15 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
 
     /**
      * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
-     * @param PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
      *
-     * @return SpyPriceProductQuery
-     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     protected function applyJoins(
         SpyPriceProductQuery $productPriceQuery,
         PriceDataFeedTransfer $priceDataFeedTransfer = null
-    )
-    {
+    ) {
+
         if ($priceDataFeedTransfer !== null) {
             $productPriceQuery = $this->joinPriceTypes($productPriceQuery, $priceDataFeedTransfer);
         }
@@ -75,16 +75,15 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
 
     /**
      * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $productPriceQuery
-     * @param PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer $priceDataFeedTransfer
      *
-     * @return SpyPriceProductQuery
-     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     protected function joinPriceTypes(
         SpyPriceProductQuery $productPriceQuery,
         PriceDataFeedTransfer $priceDataFeedTransfer
-    )
-    {
+    ) {
+
         if ($priceDataFeedTransfer->getIsJoinType()) {
             $productPriceQuery->joinPriceType();
         }
@@ -93,9 +92,9 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
     }
 
     /**
-     * @param SpyPriceProductQuery $priceProductQuery
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $priceProductQuery
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     protected function applyGroupings(SpyPriceProductQuery $priceProductQuery)
     {

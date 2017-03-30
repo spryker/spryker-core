@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceDataFeed\Persistence;
 
-use Generated\Shared\Transfer\DataFeedConditionTransfer;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -17,10 +16,9 @@ interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer $priceDataFeedTransfer
      *
      * @return \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
-     *
      */
     public function getPriceDataFeedQuery(PriceDataFeedTransfer $priceDataFeedTransfer);
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductDataFeed\Persistence;
 
-use Generated\Shared\Transfer\DataFeedConditionTransfer;
 use Generated\Shared\Transfer\ProductDataFeedTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -17,10 +16,9 @@ interface ProductDataFeedQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param ProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductDataFeedTransfer $productDataFeedTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     *
      */
     public function getProductDataFeedQuery(ProductDataFeedTransfer $productDataFeedTransfer);
 

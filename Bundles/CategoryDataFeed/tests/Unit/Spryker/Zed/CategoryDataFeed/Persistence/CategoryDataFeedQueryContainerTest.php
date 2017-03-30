@@ -10,8 +10,8 @@ namespace Unit\Spryker\Zed\CategoryDataFeed\Persistence;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryQuery;
-use Pyz\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * @group Unit
@@ -19,21 +19,24 @@ use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
  * @group Zed
  * @group CategoryDataFeed
  * @group Persistence
- * @group CategoryDataFeedQueryContainer
+ * @group CategoryDataFeedQueryContainerTest
  */
 class CategoryDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var CategoryDataFeedQueryContainer
+     * @var \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer
      */
     protected $categoryDataFeedQueryContainer;
 
     /**
-     * @var CategoryDataFeedTransfer
+     * @var \Generated\Shared\Transfer\CategoryDataFeedTransfer
      */
     protected $categoryDataFeedTransfer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -42,6 +45,9 @@ class CategoryDataFeedQueryContainerTest extends Test
         $this->categoryDataFeedTransfer = $this->createCategoryDataFeedTransfer();
     }
 
+    /**
+     * @return void
+     */
     public function testGetCategoryDataFeedQuery()
     {
         $query = $this->categoryDataFeedQueryContainer
@@ -54,6 +60,9 @@ class CategoryDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetCategoryDataFeedQueryWithJoinedProducts()
     {
         $this->categoryDataFeedTransfer->setIsJoinProduct(true);
@@ -71,6 +80,9 @@ class CategoryDataFeedQueryContainerTest extends Test
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
+    /**
+     * @return void
+     */
     public function testGetCategoryDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
         $this->categoryDataFeedTransfer->setLocaleId(46);
@@ -82,7 +94,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return CategoryDataFeedQueryContainer
+     * @return \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer
      */
     protected function createCategoryDataFeedQueryContainer()
     {
@@ -93,7 +105,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return CategoryDataFeedTransfer
+     * @return \Generated\Shared\Transfer\CategoryDataFeedTransfer
      */
     protected function createCategoryDataFeedTransfer()
     {
@@ -103,7 +115,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param SpyCategoryQuery $query
+     * @param \Orm\Zed\Category\Persistence\Base\SpyCategoryQuery $query
      *
      * @return array
      */
@@ -122,7 +134,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param $tablesArray
+     * @param array $tablesArray
      *
      * @return array
      */
