@@ -20,6 +20,8 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Version\PublishManager;
+use Spryker\Zed\Cms\Business\Version\PublishManagerInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
@@ -185,6 +187,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->createCmsGlossaryKeyGenerator()
         );
+    }
+
+    /**
+     * @return PublishManagerInterface
+     */
+    public function createPublishManager()
+    {
+        return new PublishManager($this->getQueryContainer());
     }
 
     /**

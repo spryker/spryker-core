@@ -12,12 +12,16 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageVersionTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageVersionQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
@@ -42,6 +46,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const VALUE = 'value';
     const IS_ACTIVE = 'is_active';
     const CMS_URLS = 'cmsUrls';
+    const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
+    const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
+    const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
+    const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
+    const ALIAS_TRANSLATION = 'aliasTranslation';
 
     /**
      * @api
@@ -643,6 +652,43 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinGlossaryKey()
             ->filterByPlaceholder($placeholders, Criteria::IN)
             ->filterByFkPage($idCmsPage);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return SpyCmsPageQuery
+     */
+    public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage)
+    {
+        return $this->getFactory()->createCmsPageQuery()
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
+            ->filterByIdCmsPage($idPage)
+            ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
+            ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
+                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
+                    ->innerJoinSpyGlossaryTranslation(self::ALIAS_TRANSLATION)
+                ->endUse()
+            ->endUse()
+            ->leftJoinSpyCmsPageLocalizedAttributes(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->with(self::ALIAS_CMS_PAGE_TEMPLATE)
+            ->with(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
+            ->with(self::ALIAS_GLOSSARY_KEY)
+            ->with(self::ALIAS_TRANSLATION);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return SpyCmsPageVersionQuery
+     */
+    public function queryCmsPageVersionByIdPage($idPage)
+    {
+        return $this->getFactory()
+            ->createSpyCmsPageVersionQuery()
+            ->filterByFkCmsPage($idPage)
+            ->orderBy(SpyCmsPageVersionTableMap::COL_VERSION,Criteria::DESC);
     }
 
 }

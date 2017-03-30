@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageVersionTransfer;
 
 class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 {
@@ -125,6 +126,17 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
     {
         return $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
+    }
+
+    /**
+     * @param int $idCmsPage
+     * @param string $username
+     *
+     * @return CmsPageVersionTransfer
+     */
+    public function publishAndVersionCmsPage($idCmsPage, $username)
+    {
+        return $this->cmsFacade->publishAndVersionCmsPage($idCmsPage, $username);
     }
 
     /**

@@ -11,6 +11,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageVersionQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -69,5 +70,14 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCmsPageLocalizedAttributesQuery::create();
     }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageVersionQuery
+     */
+    public function createSpyCmsPageVersionQuery()
+    {
+        return SpyCmsPageVersionQuery::create();
+    }
+
 
 }

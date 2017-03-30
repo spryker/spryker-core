@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPageVersionTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -550,4 +551,18 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->buildPageUrl($cmsPageAttributesTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param string $username
+     *
+     * @return CmsPageVersionTransfer
+     */
+    public function publishAndVersionCmsPage($idCmsPage, $username)
+    {
+        return $this->getFactory()
+            ->createPublishManager()
+            ->publishAndVersionCmsPage($idCmsPage, $username);
+    }
 }
