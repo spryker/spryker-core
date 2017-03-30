@@ -15,6 +15,7 @@ use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
@@ -177,6 +178,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createAddActionPostProcessor(),
             $this->createDeleteActionPostProcessor(),
+            $this->createPaginationByHeaderFilterPostProcessor(),
         ];
     }
 
@@ -332,6 +334,14 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createDeleteActionPostProcessor()
     {
         return new DeleteActionPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor
+     */
+    protected function createPaginationByHeaderFilterPostProcessor()
+    {
+        return new PaginationByHeaderFilterPostProcessor();
     }
 
 }
