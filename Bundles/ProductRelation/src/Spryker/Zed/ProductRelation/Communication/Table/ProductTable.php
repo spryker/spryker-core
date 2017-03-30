@@ -24,6 +24,7 @@ class ProductTable extends AbstractTable
 {
 
     const COL_ACTIONS = 'Actions';
+    const COL_STATUS = 'Status';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
@@ -103,6 +104,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             SpyPriceProductTableMap::COL_PRICE => 'Price',
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => 'Categories',
+            static::COL_STATUS => 'Status',
         ];
 
         if ($this->idProductRelation === null) {
@@ -121,6 +123,7 @@ class ProductTable extends AbstractTable
     {
         $config->setRawColumns([
             static::COL_ACTIONS,
+            static::COL_STATUS,
         ]);
     }
 
@@ -225,6 +228,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
             SpyPriceProductTableMap::COL_PRICE => $this->formatProductPrice($item[SpyPriceProductTableMap::COL_PRICE]),
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => $item[ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES],
+            static::COL_STATUS => $this->getStatusLabel($item),
         ];
 
         if ($this->idProductRelation === null) {
@@ -232,6 +236,21 @@ class ProductTable extends AbstractTable
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function getStatusLabel(array $data)
+    {
+        $statusAggregation = explode(',', $data[ProductRelationQueryContainer::COL_IS_ACTIVE_AGGREGATION]);
+        if (in_array('false', $statusAggregation, true)) {
+            return '<span class="label label-danger">Inactive</span>';
+        }
+
+        return '<span class="label label-info">Active</span>';
     }
 
     /**
