@@ -4,7 +4,7 @@ namespace ZedCommunication;
 
 use Codeception\Util\Stub;
 use Customer\ZedCommunicationTester;
-use Faker\Factory;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
@@ -13,24 +13,11 @@ use Spryker\Zed\Mail\Business\MailFacadeInterface;
  * Auto-generated group annotations
  * @group Customer
  * @group ZedCommunication
- * @group IndexCest
+ * @group IndexControllerCest
  * Add your own group annotations below this line
  */
-class IndexCest
+class IndexControllerCest
 {
-
-    /**
-     * @var \Faker\Generator
-     */
-    protected $faker;
-
-    /**
-     * @return void
-     */
-    public function _inject()
-    {
-        $this->faker = Factory::create();
-    }
 
     /**
      * @param \Customer\ZedCommunicationTester $i
@@ -71,14 +58,16 @@ class IndexCest
      */
     public function addCustomer(ZedCommunicationTester $i)
     {
-        $email = $this->faker->email;
+        $customerTransfer = $this->getCustomerTransfer();
+
+        $email = $customerTransfer->getEmail();
 
         $formData = [
             'customer' => [
                 'email' => $email,
-                'salutation' => 'Mr',
-                'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
+                'salutation' => $customerTransfer->getSalutation(),
+                'first_name' => $customerTransfer->getFirstName(),
+                'last_name' => $customerTransfer->getLastName(),
             ],
         ];
 
@@ -90,21 +79,20 @@ class IndexCest
     }
 
     /**
-     * @group current
-     *
      * @param \Customer\ZedCommunicationTester $i
      *
      * @return void
      */
     public function addCustomerWithoutNameAndFail(ZedCommunicationTester $i)
     {
-        $email = $this->faker->email;
+        $customerTransfer = $this->getCustomerTransfer();
+        $email = $customerTransfer->getEmail();
 
         $formData = [
             'customer' => [
                 'email' => $email,
-                'salutation' => 'Mr',
-                'last_name' => $this->faker->lastName,
+                'salutation' => $customerTransfer->getSalutation(),
+                'last_name' => $customerTransfer->getLastName(),
             ],
         ];
 
@@ -115,6 +103,16 @@ class IndexCest
         $i->see('This value should not be blank.', '#customer');
         $i->listDataTable('/customer/index/table');
         $i->dontSeeInLastRow([2 => $email]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    private function getCustomerTransfer()
+    {
+        $customerBuilder = new CustomerBuilder();
+
+        return $customerBuilder->build();
     }
 
 }

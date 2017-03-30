@@ -8,10 +8,9 @@
 namespace Testify\Helper;
 
 use Codeception\Configuration;
-use Codeception\Module;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
-class Locator extends Module
+class Locator extends Config
 {
 
     /**

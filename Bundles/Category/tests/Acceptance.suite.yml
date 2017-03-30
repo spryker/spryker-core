@@ -6,7 +6,8 @@ modules:
             browser: phantomjs
             window_size: 1920x1080
 
-        - \Testify\Module\Environment
+        - \Testify\Helper\Environment
+        - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Category\Module\Category

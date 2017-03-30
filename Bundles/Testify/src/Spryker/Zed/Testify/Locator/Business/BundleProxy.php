@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Testify\Locator\Business;
 
+use Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock;
 use Spryker\Shared\Kernel\BundleProxy as KernelBundleProxy;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Testify\Config\TestifyConfig;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Testify\Locator\TestifyConfigurator;
@@ -128,8 +130,10 @@ class BundleProxy extends KernelBundleProxy
         );
         $container = $this->overwriteForTesting($container);
 
-        $factory->setContainer($container);
+        $bundleConfig = $this->getBundleConfig($factory);
 
+        $factory->setContainer($container);
+        $factory->setConfig($bundleConfig);
         $facade->setFactory($factory);
 
         return $facade;
@@ -190,6 +194,25 @@ class BundleProxy extends KernelBundleProxy
         $dependencyResolver = new DependencyProviderResolver();
 
         return $dependencyResolver->resolve($factory);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\AbstractFactory $factory
+     *
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
+     */
+    private function getBundleConfig(AbstractFactory $factory)
+    {
+        $bundleConfigResolver = new BundleConfigResolver();
+
+        $config = $bundleConfigResolver->resolve($factory);
+        $bundleConfig = new BundleConfigMock();
+
+        if ($bundleConfig->hasBundleConfigMock($config)) {
+            return $bundleConfig->getBundleConfigMock($config);
+        }
+
+        return $config;
     }
 
 }
