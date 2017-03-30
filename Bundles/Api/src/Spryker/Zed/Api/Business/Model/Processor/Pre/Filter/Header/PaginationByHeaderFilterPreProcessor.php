@@ -25,6 +25,14 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
             return $apiRequestTransfer;
         }
 
+        preg_match('/[a-z]+=(\d)-(\d)/', $headers['range'][0], $matches);
+        if (!$matches) {
+            return $apiRequestTransfer;
+        }
+
+        $apiRequestTransfer->getFilter()->getPagination()->setOffset($matches[1]);
+        $apiRequestTransfer->getFilter()->getPagination()->setLimit($matches[2] - $matches[1]);
+
         return $apiRequestTransfer;
     }
 
