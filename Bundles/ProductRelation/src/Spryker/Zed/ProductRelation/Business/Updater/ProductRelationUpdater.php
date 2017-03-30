@@ -58,6 +58,10 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     {
         foreach ($this->findActiveProductRelations() as $productRelationEntity) {
             try {
+                if (!$productRelationEntity->getQuerySetData()) {
+                    continue;
+                }
+
                 $productRelationTransfer = $this->mapProductRelationTransfer($productRelationEntity);
                 $this->productRelationWriter->updateRelation($productRelationTransfer);
             } catch (Exception $exception) {
@@ -104,6 +108,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     protected function mapPropelQueryBuilderRuleSetTransfer(SpyProductRelation $productRelationEntity)
     {
         $queryRuleBuilderSetTransfer = new PropelQueryBuilderRuleSetTransfer();
+
         $queryRuleBuilderSetTransfer->fromArray(
             $this->utilEncodingService->decodeJson($productRelationEntity->getQuerySetData(), true),
             true
