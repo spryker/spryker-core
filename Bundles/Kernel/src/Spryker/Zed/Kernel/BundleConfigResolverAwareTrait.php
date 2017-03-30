@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 
 trait BundleConfigResolverAwareTrait
@@ -49,8 +50,14 @@ trait BundleConfigResolverAwareTrait
     private function resolveBundleConfig()
     {
         $resolver = new BundleConfigResolver();
+        $config = $resolver->resolve($this);
 
-        return $resolver->resolve($this);
+        $bundleConfigMock = new BundleConfigMock();
+        if ($bundleConfigMock->hasBundleConfigMock($config)) {
+            return $bundleConfigMock->getBundleConfigMock($config);
+        }
+
+        return $config;
     }
 
 }

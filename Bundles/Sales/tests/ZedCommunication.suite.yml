@@ -2,5 +2,6 @@ class_name: ZedCommunicationTester
 modules:
     enabled:
         - \Sales\Helper\ZedCommunication
-        - \Testify\Helper\ZedBootstrap
+        - \Testify\Helper\ZedBootstrap:
+            depends: \Testify\Helper\BundleConfig
 

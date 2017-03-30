@@ -26,14 +26,14 @@ class CustomerData extends Module
      */
     public function haveCustomer($override = [])
     {
-        $customer = (new CustomerBuilder($override))
+        $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
             ->withShippingAddress()
             ->build();
 
-        $this->getCustomerFacade()->registerCustomer($customer);
+        $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
-        return $customer;
+        return $customerTransfer;
     }
 
     /**

@@ -1,9 +1,13 @@
 class_name: ZedCommunicationTester
 modules:
     enabled:
-        - \Testify\Module\Environment
+        - Asserts
         - \Testify\Helper\ZedControllerTable:
             depends: \Testify\Helper\ZedBootstrap
-        - \Testify\Helper\ZedBootstrap
+        - \Testify\Helper\ZedBootstrap:
+            depends: \Testify\Helper\BundleConfig
         - \Testify\Helper\Dependency
+        - \Testify\Helper\Locator
+        - \Testify\Helper\BundleConfig
         - \Propel\Helper\Transaction
+        - \Customer\Helper\CustomerData

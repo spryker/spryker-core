@@ -9,11 +9,14 @@ namespace Testify\Helper;
 
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
+use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\TestInterface;
+use Codeception\Util\Stub;
 use Spryker\Zed\Testify\Bootstrap\ZedBootstrap as TestifyBootstrap;
+use Spryker\Zed\Twig\TwigConfig;
 use Symfony\Component\HttpKernel\Client;
 
-class ZedBootstrap extends Framework
+class ZedBootstrap extends Framework implements DependsOnModule
 {
 
     const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
@@ -21,7 +24,12 @@ class ZedBootstrap extends Framework
     /**
      * @var \Spryker\Zed\Testify\Bootstrap\ZedBootstrap
      */
-    protected $application;
+    private $application;
+
+    /**
+     * @var \Testify\Helper\BundleConfig
+     */
+    private $bundleConfig;
 
     /**
      * @var array
@@ -31,11 +39,32 @@ class ZedBootstrap extends Framework
     ];
 
     /**
+     * @return array
+     */
+    public function _depends()
+    {
+        return [
+            BundleConfig::class => 'You need to enable \Testify\Helper\BundleConfig in order to mock bundle configurations',
+        ];
+    }
+
+    /**
+     * @param \Testify\Helper\BundleConfig $bundleConfig
+     *
+     * @return void
+     */
+    public function _inject(BundleConfig $bundleConfig)
+    {
+        $this->bundleConfig = $bundleConfig;
+    }
+
+    /**
      * @return void
      */
     public function _initialize()
     {
         $this->loadApplication();
+        $this->mockBundleConfigs();
     }
 
     /**
@@ -60,6 +89,32 @@ class ZedBootstrap extends Framework
         if (!isset($this->application)) {
             throw new ModuleConfigException(__CLASS__, 'Application instance was not received from bootstrap file');
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function mockBundleConfigs()
+    {
+        $this->bundleConfig->addBundleConfigMock($this->getTwigBundleConfigMock());
+    }
+
+    /**
+     * @return object|\Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     */
+    private function getTwigBundleConfigMock()
+    {
+        $twigConfig = new TwigConfig();
+        $twigBundleConfigMock = Stub::make(TwigConfig::class, [
+            'getTemplatePaths' => function () use ($twigConfig) {
+                $paths = $twigConfig->getTemplatePaths();
+                $paths[] = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%2$s/src/*/Zed/%1$s/Presentation';
+
+                return $paths;
+            },
+        ]);
+
+        return $twigBundleConfigMock;
     }
 
 }
