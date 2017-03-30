@@ -38,7 +38,12 @@ class Transformer
      */
     public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        $response->headers->add($apiResponseTransfer->getHeaders());
+        $defaults = [
+            'Content-Type' => 'application/' . $apiRequestTransfer->getFormatType(),
+        ];
+        $headers = $apiResponseTransfer->getHeaders() + $defaults;
+
+        $response->headers->add($headers);
         $response->setStatusCode($apiResponseTransfer->getCode());
 
         $response = $this->addResponseContent($apiRequestTransfer, $apiResponseTransfer, $response);
