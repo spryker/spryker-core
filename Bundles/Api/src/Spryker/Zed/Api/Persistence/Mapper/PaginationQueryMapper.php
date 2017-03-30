@@ -27,7 +27,13 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
     public function mapPagination(ModelCriteria $query, ApiPaginationTransfer $apiPaginationTransfer)
     {
         $query = $this->mapQueryLimit($query, $apiPaginationTransfer);
-        $query = $this->mapQueryOffset($query, $apiPaginationTransfer);
+
+        if ($apiPaginationTransfer->getOffset()) {
+            $query->setOffset($apiPaginationTransfer->getOffset());
+        } else {
+            $query = $this->mapQueryOffset($query, $apiPaginationTransfer);
+        }
+
         $query = $this->mapQuerySort($query, $apiPaginationTransfer);
 
         return $query;
