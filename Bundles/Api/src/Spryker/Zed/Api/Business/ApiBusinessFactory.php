@@ -161,7 +161,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createPaginationByHeaderFilterPreProcessor(),
             $this->createAddActionPreProcessor(),
             $this->createUpdateActionPreProcessor(),
-            $this->createFindActionPreProcessor(),
+            $this->createGetActionPreProcessor(),
             $this->createFindActionPreProcessor(),
         ];
     }
