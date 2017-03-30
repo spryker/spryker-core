@@ -68,6 +68,14 @@ class Transformer
             $content['data'] = $result;
         }
 
+        $meta = $apiResponseTransfer->getMeta();
+        if ($meta) {
+            $content['links'] = $meta->getLinks();
+            if ($meta->getSelf()) {
+                $content['links']['self'] = $meta->getSelf();
+            }
+        }
+
         if (Environment::isDevelopment()) {
             $content['_stackTrace'] = $apiResponseTransfer->getStackTrace();
             $content['_request'] = $apiRequestTransfer->toArray();

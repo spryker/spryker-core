@@ -65,6 +65,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createFormatter($formatType)
     {
+        if (!$formatType) {
+            $formatType = 'json';
+        }
         switch ($formatType) {
             case 'json':
                 return new JsonFormatter($this->getUtilEncoding());
