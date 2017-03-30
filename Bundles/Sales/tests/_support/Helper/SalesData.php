@@ -10,7 +10,7 @@ namespace Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Testify\Helper\BusinessHelper;
+use Testify\Helper\Locator;
 
 class SalesData extends Module
 {
@@ -41,7 +41,7 @@ class SalesData extends Module
      */
     private function getSalesFacade()
     {
-        return $this->getModule('\\' . BusinessHelper::class)->getLocator()->sales()->facade();
+        return $this->getModule('\\' . Locator::class)->getLocator()->sales()->facade();
     }
 
 }

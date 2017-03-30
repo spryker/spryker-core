@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Kernel;
 
 use Spryker\Shared\Kernel\ContainerGlobals;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
@@ -17,13 +18,15 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 trait BundleDependencyProviderResolverAwareTrait
 {
 
+    use ContainerMocker;
+
     /**
-     * @var \Spryker\Zed\Kernel\Container $container
+     * @var \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container
      */
     private $container;
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container
      *
      * @return $this
      */
@@ -55,7 +58,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -66,6 +69,8 @@ trait BundleDependencyProviderResolverAwareTrait
 
         $this->provideExternalDependencies($dependencyProvider, $container);
         $this->injectExternalDependencies($dependencyInjector, $container);
+
+        $container = $this->overwriteForTesting($container);
 
         return $container;
     }

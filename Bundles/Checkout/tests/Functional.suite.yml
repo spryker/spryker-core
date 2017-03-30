@@ -3,9 +3,10 @@ modules:
     enabled:
         - Filesystem
         - \Testify\Module\Environment
-        - \Testify\Helper\ConfigHelper
+        - \Testify\Helper\Config
+        - \Testify\Helper\Dependency
+        - \Testify\Helper\Locator
         - \Checkout\Module\Functional
-        - \Testify\Helper\BusinessHelper
         - \Customer\Helper\CustomerData
         - \Product\Helper\ProductData
         - \Stock\Helper\StockData

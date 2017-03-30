@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\Kernel;
 
 use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
@@ -25,9 +26,61 @@ class BundleControllerActionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetBundleShouldReturnBundleName()
     {
-        $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
+        $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 
-        $this->assertSame('foo', $bundleControllerLocator->getBundle());
+        $this->assertSame('foo', $bundleControllerAction->getBundle());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetBundleShouldStripStoreName()
+    {
+        $bundleControllerAction = $this->getBundleControllerAction('fooDE', 'bar', 'baz', 'DE');
+
+        $this->assertSame('foo', $bundleControllerAction->getBundle());
+    }
+
+    /**
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param string $storeName
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Kernel\BundleControllerAction
+     */
+    protected function getBundleControllerAction($bundle, $controller, $action, $storeName)
+    {
+        $mock = $this
+            ->getMockBuilder(BundleControllerAction::class)
+            ->setMethods(['getBundleNameResolver'])
+            ->setConstructorArgs([$bundle, $controller, $action])
+            ->getMock();
+
+        $mock
+            ->method('getBundleNameResolver')
+            ->will($this->returnValue($this->getBundleNameResolverMock($storeName)));
+
+        return $mock;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected function getBundleNameResolverMock($storeName)
+    {
+        $mock = $this
+            ->getMockBuilder(BundleNameResolver::class)
+            ->setMethods(['getStoreName'])
+            ->getMock();
+
+        $mock
+            ->method('getStoreName')
+            ->will($this->returnValue($storeName));
+
+        return $mock;
     }
 
     /**
@@ -35,9 +88,9 @@ class BundleControllerActionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetControllerShouldReturnControllerName()
     {
-        $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
+        $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 
-        $this->assertSame('bar', $bundleControllerLocator->getController());
+        $this->assertSame('bar', $bundleControllerAction->getController());
     }
 
     /**
@@ -45,9 +98,9 @@ class BundleControllerActionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetActionShouldReturnActionName()
     {
-        $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
+        $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 
-        $this->assertSame('baz', $bundleControllerLocator->getAction());
+        $this->assertSame('baz', $bundleControllerAction->getAction());
     }
 
 }
