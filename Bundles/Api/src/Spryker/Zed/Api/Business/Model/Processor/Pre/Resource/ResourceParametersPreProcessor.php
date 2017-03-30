@@ -33,7 +33,7 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
             $elements = explode('/', $path);
         }
 
-        $apiRequestTransfer->setResourceParams($elements);
+        $apiRequestTransfer->setResourceParameters($elements);
 
         return $apiRequestTransfer;
     }

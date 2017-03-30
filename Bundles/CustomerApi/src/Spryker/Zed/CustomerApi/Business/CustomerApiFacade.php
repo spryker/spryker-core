@@ -89,7 +89,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @param int $idCustomer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function deleteCustomer($idCustomer)
     {

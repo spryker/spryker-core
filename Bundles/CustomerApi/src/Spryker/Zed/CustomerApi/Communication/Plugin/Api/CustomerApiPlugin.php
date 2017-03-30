@@ -77,7 +77,7 @@ class CustomerApiPlugin extends AbstractPlugin implements ApiPluginInterface
     /**
      * @param int $idCustomer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function delete($idCustomer)
     {

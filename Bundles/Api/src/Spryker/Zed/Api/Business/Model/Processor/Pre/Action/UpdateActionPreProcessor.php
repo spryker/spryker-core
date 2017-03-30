@@ -30,9 +30,9 @@ class UpdateActionPreProcessor implements PreProcessorInterface
         }
 
         $postData = (array)$apiRequestTransfer->getRequestData();
-        $params = (array)$apiRequestTransfer->getResourceParams();
+        $params = (array)$apiRequestTransfer->getResourceParameters();
         $params[] = $postData;
-        $apiRequestTransfer->setResourceParams($params);
+        $apiRequestTransfer->setResourceParameters($params);
 
         return $apiRequestTransfer;
     }

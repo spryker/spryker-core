@@ -32,7 +32,7 @@ class GetActionPreProcessor implements PreProcessorInterface
             $apiRequestTransfer->getFilter(),
         ];
 
-        $apiRequestTransfer->setResourceParams($params);
+        $apiRequestTransfer->setResourceParameters($params);
 
         return $apiRequestTransfer;
     }

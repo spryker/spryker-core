@@ -14,7 +14,7 @@
         <property name="path" type="string" />
         <property name="resource" type="string" />
         <property name="resourceAction" type="string" />
-        <property name="resourceParams" type="array" />
+        <property name="resourceParameters" type="array" />
 
         <property name="filter" type="ApiFilter" />
         <property name="data" type="ApiData" />

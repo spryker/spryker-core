@@ -27,7 +27,7 @@ class FindActionPreProcessor implements PreProcessorInterface
 
         $params = [$apiRequestTransfer];
 
-        $apiRequestTransfer->setResourceParams($params);
+        $apiRequestTransfer->setResourceParameters($params);
 
         return $apiRequestTransfer;
     }

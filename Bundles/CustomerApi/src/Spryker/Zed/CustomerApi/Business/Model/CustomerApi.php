@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerApi\Business\Model;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
@@ -117,15 +118,21 @@ class CustomerApi implements CustomerApiInterface
     /**
      * @param int $idCustomer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function delete($idCustomer)
     {
-        $deletedRows = (array)$this->queryContainer
+        $deletedRows = $this->queryContainer
             ->queryCustomerById($idCustomer)
             ->delete();
 
-        return $deletedRows > 0;
+        $customerApiTransfer = new CustomerApiTransfer();
+
+        if ($deletedRows > 0) {
+            $customerApiTransfer->setIdCustomer($idCustomer);
+        }
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -156,7 +163,7 @@ class CustomerApi implements CustomerApiInterface
             ->findOne();
 
         if (!$customerEntity) {
-            throw new EntityNotFoundException('Customer not found idCustomer: ' . $idCustomer);
+            throw new EntityNotFoundException('Customer not found: ' . $idCustomer);
         }
 
         return $customerEntity;

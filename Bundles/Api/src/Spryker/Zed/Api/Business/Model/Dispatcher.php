@@ -55,11 +55,10 @@ class Dispatcher implements DispatcherInterface
 
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
-        $params = $apiRequestTransfer->getResourceParams();
+        $params = $apiRequestTransfer->getResourceParameters();
 
         $apiResponseTransfer = new ApiResponseTransfer();
 
-        // right now can also be transfer
         try {
             $errors = $this->validator->validate($apiRequestTransfer);
             if ($errors) {

@@ -36,7 +36,7 @@ class AddActionPreProcessor implements PreProcessorInterface
             $apiRequestTransfer->getData(),
         ];
 
-        $apiRequestTransfer->setResourceParams($params);
+        $apiRequestTransfer->setResourceParameters($params);
 
         return $apiRequestTransfer;
     }
