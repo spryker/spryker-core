@@ -13,6 +13,25 @@ use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Processor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Transformer;
 use Spryker\Zed\Api\Business\Model\Validator\Validator;
@@ -126,7 +145,25 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function getPreProcessorPluginStack()
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_PRE_PROCESS);
+        return [
+            $this->createPathPreProcessor(),
+            $this->createFormatTypeByHeaderPreProcessor(),
+            $this->createFormatTypeByPathPreProcessor(),
+            $this->createResourcePreProcessor(),
+            $this->createResourceActionPreProcessor(),
+            $this->createResourceParametersPreProcessor(),
+            $this->createFilterPreProcessor(),
+            $this->createPaginationPreProcessor(),
+            $this->createFieldsByQueryPreProcessor(),
+            $this->createSortByQueryFilterPreProcessor(),
+            $this->createCriteriaByQueryFilterPreProcessor(),
+            $this->createPaginationByQueryFilterPreProcessor(),
+            $this->createPaginationByHeaderFilterPreProcessor(),
+            $this->createAddActionPreProcessor(),
+            $this->createUpdateActionPreProcessor(),
+            $this->createFindActionPreProcessor(),
+            $this->createFindActionPreProcessor(),
+        ];
     }
 
     /**
@@ -134,7 +171,164 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function getPostProcessorPluginStack()
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_POST_PROCESS);
+        return [
+            $this->createAddActionPostProcessor(),
+            $this->createDeleteActionPostProcessor(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor
+     */
+    protected function createPathPreProcessor()
+    {
+        return new PathPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor
+     */
+    protected function createFormatTypeByHeaderPreProcessor()
+    {
+        return new FormatTypeByHeaderPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor
+     */
+    protected function createFormatTypeByPathPreProcessor()
+    {
+        return new FormatTypeByPathPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor
+     */
+    protected function createResourcePreProcessor()
+    {
+        return new ResourcePreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor
+     */
+    protected function createResourceActionPreProcessor()
+    {
+        return new ResourceActionPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor
+     */
+    protected function createResourceParametersPreProcessor()
+    {
+        return new ResourceParametersPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor
+     */
+    protected function createFilterPreProcessor()
+    {
+        return new FilterPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor
+     */
+    protected function createPaginationPreProcessor()
+    {
+        return new PaginationPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor
+     */
+    protected function createFieldsByQueryPreProcessor()
+    {
+        return new FieldsByQueryPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor
+     */
+    protected function createSortByQueryFilterPreProcessor()
+    {
+        return new SortByQueryFilterPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor
+     */
+    protected function createCriteriaByQueryFilterPreProcessor()
+    {
+        return new CriteriaByQueryFilterPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor
+     */
+    protected function createPaginationByQueryFilterPreProcessor()
+    {
+        return new PaginationByQueryFilterPreProcessor(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor
+     */
+    protected function createPaginationByHeaderFilterPreProcessor()
+    {
+        return new PaginationByHeaderFilterPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor
+     */
+    protected function createAddActionPreProcessor()
+    {
+        return new AddActionPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor
+     */
+    protected function createUpdateActionPreProcessor()
+    {
+        return new UpdateActionPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor
+     */
+    protected function createGetActionPreProcessor()
+    {
+        return new GetActionPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor
+     */
+    protected function createFindActionPreProcessor()
+    {
+        return new FindActionPreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor
+     */
+    protected function createAddActionPostProcessor()
+    {
+        return new AddActionPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor
+     */
+    protected function createDeleteActionPostProcessor()
+    {
+        return new DeleteActionPostProcessor();
     }
 
 }

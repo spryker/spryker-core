@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Api\Communication;
 
-use Spryker\Zed\Api\Business\Model\Processor\Provider\PostProcessorProvider;
-use Spryker\Zed\Api\Business\Model\Processor\Provider\PreProcessorProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -18,25 +16,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ApiCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Provider\PreProcessorProviderInterface
-     */
-    public function createPreProcessorProvider()
-    {
-        return new PreProcessorProvider(
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Provider\PostProcessorProviderInterface
-     */
-    public function createPostProcessorProvider()
-    {
-        return new PostProcessorProvider(
-            $this->getConfig()
-        );
-    }
-
 }
