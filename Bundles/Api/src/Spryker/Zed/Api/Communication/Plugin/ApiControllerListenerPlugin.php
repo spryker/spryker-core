@@ -42,7 +42,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $request = $event->getRequest();
 
         $apiController = function () use ($controller, $action, $request) {
-            $requestTransfer = $this->getRequestTransfer($controller, $request);
+            $requestTransfer = $this->getRequestTransfer($request);
 
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
@@ -72,7 +72,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return int
      */
-    protected function resolveStatusCode($code) {
+    protected function resolveStatusCode($code)
+    {
         if ($code < 200 || $code > 500) {
             return 500;
         }
@@ -81,12 +82,11 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     }
 
     /**
-     * @param \Spryker\Zed\Api\Communication\Controller\AbstractApiController $controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    private function getRequestTransfer(AbstractApiController $controller, Request $request)
+    protected function getRequestTransfer(Request $request)
     {
         $requestTransfer = new ApiRequestTransfer();
 
@@ -106,89 +106,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestTransfer->setRequestData($requestData);
 
         return $requestTransfer;
-    }
-
-    /**
-     * @param \Spryker\Zed\Api\Communication\Controller\AbstractApiController $controller
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $result
-     *
-     * @return \Spryker\Zed\Api\Business\Client\Response
-     */
-    protected function getResponse(AbstractApiController $controller, $result)
-    {
-        $response = new Response();
-
-        if ($result instanceof TransferInterface) {
-            $response->setTransfer($result);
-        }
-
-        $this->setGatewayControllerMessages($controller, $response);
-        $this->setMessengerMessages($response);
-
-        $response->setSuccess($controller->isSuccess());
-
-        return $response;
-    }
-
-    /**
-     * @param \Spryker\Zed\Api\Communication\Controller\AbstractApiController $controller
-     * @param \Spryker\Zed\Api\Business\Client\Response $response
-     *
-     * @return void
-     */
-    protected function setGatewayControllerMessages(AbstractApiController $controller, Response $response)
-    {
-        $response->addSuccessMessages($controller->getSuccessMessages());
-        $response->addInfoMessages($controller->getInfoMessages());
-        $response->addErrorMessages($controller->getErrorMessages());
-    }
-
-    /**
-     * @param \Spryker\Zed\Api\Business\Client\Response $response
-     *
-     * @return void
-     */
-    protected function setMessengerMessages(Response $response)
-    {
-        $messengerFacade = $this->getFactory()->getMessengerFacade();
-
-        $messagesTransfer = $messengerFacade->getStoredMessages();
-        if ($messagesTransfer === null) {
-            return;
-        }
-
-        $response->addErrorMessages(
-            $this->createResponseMessages(
-                $messagesTransfer->getErrorMessages()
-            )
-        );
-        $response->addInfoMessages(
-            $this->createResponseMessages(
-                $messagesTransfer->getInfoMessages()
-            )
-        );
-        $response->addSuccessMessages(
-            $this->createResponseMessages(
-                $messagesTransfer->getSuccessMessages()
-            )
-        );
-    }
-
-    /**
-     * @param array $messages
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $storedMessages
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    protected function createResponseMessages(array $messages, array $storedMessages = [])
-    {
-        foreach ($messages as $message) {
-            $responseMessage = new MessageTransfer();
-            $responseMessage->setValue($message);
-            $storedMessages[] = $responseMessage;
-        }
-
-        return $storedMessages;
     }
 
 }
