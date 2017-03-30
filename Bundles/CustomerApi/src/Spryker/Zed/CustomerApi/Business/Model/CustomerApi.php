@@ -59,15 +59,20 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
-    public function add(ApiDataTransfer $apiDataTransfer)
+    public function find(ApiRequestTransfer $apiRequestTransfer)
     {
-        $customerApiTransfer = $this->persist($apiDataTransfer);
+        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
+        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        $collection = $this->transferMapper->toTransferCollection(
+            $query->find()->toArray()
+        );
+
+        return $this->apiQueryContainer->createApiCollection($collection);
     }
 
     /**
@@ -89,6 +94,18 @@ class CustomerApi implements CustomerApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
+    public function add(ApiDataTransfer $apiDataTransfer)
+    {
+        $customerApiTransfer = $this->persist($apiDataTransfer);
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
     public function update(ApiDataTransfer $apiDataTransfer)
     {
         $customerApiTransfer = $this->persist($apiDataTransfer);
@@ -97,30 +114,16 @@ class CustomerApi implements CustomerApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
+     * @param int $idCustomer
      * @return bool
      */
-    public function delete(ApiRequestTransfer $apiRequestTransfer)
+    public function delete($idCustomer)
     {
-        return true;
-    }
+        $deletedRows = (array)$this->queryContainer
+            ->queryCustomerById($idCustomer)
+            ->delete();
 
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
-     */
-    public function find(ApiRequestTransfer $apiRequestTransfer)
-    {
-        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
-        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
-
-        $collection = $this->transferMapper->toTransferCollection(
-            $query->find()->toArray()
-        );
-
-        return $this->apiQueryContainer->createApiCollection($collection);
+        return $deletedRows > 0;
     }
 
     /**

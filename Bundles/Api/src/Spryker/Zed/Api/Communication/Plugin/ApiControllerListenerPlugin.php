@@ -48,12 +48,12 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
                 $responseTransfer = $controller->$action($requestTransfer);
             } catch (\Exception $e) {
                 $responseTransfer = new ApiResponseTransfer();
-                $responseTransfer->setCode(500);
+                $responseTransfer->setCode($e->getCode() ?: 500);
                 $responseTransfer->setMessage($e->getMessage());
                 $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
             } catch (\Throwable $e) {
                 $responseTransfer = new ApiResponseTransfer();
-                $responseTransfer->setCode(500);
+                $responseTransfer->setCode($e->getCode() ?: 500);
                 $responseTransfer->setMessage($e->getMessage());
                 $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
             }

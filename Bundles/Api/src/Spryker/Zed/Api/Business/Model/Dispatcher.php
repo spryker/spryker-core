@@ -72,11 +72,11 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setData($data);
             }
         } catch (\Exception $e) {
-            $apiResponseTransfer->setCode(500);
+            $apiResponseTransfer->setCode($e->getCode() ?: 500);
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         } catch (\Throwable $e) {
-            $apiResponseTransfer->setCode(500);
+            $apiResponseTransfer->setCode($e->getCode() ?: 500);
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }

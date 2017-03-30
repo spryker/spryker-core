@@ -15,11 +15,11 @@ interface CustomerApiInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
-    public function add(ApiDataTransfer $apiDataTransfer);
+    public function find(ApiRequestTransfer $apiRequestTransfer);
 
     /**
      * @param int $idCustomer
@@ -34,20 +34,19 @@ interface CustomerApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
+    public function add(ApiDataTransfer $apiDataTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
     public function update(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
+     * @param int $idCustomer
      * @return bool
      */
-    public function delete(ApiRequestTransfer $apiRequestTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
-     */
-    public function find(ApiRequestTransfer $apiRequestTransfer);
+    public function delete($idCustomer);
 
 }
