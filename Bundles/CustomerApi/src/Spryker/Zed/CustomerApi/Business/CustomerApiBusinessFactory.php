@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\CustomerApi\Business;
 
+use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapper;
+use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapper;
 use Spryker\Zed\CustomerApi\Business\Model\CustomerApi;
-use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapper;
 use Spryker\Zed\CustomerApi\CustomerApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -20,25 +21,32 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\CustomerApi\Business\Model\CustomerApi
+     * @return \Spryker\Zed\CustomerApi\Business\Model\CustomerApiInterface
      */
     public function createCustomerApi()
     {
         return new CustomerApi(
             $this->getApiQueryContainer(),
             $this->getQueryContainer(),
+            $this->createCustomerEntityMapper(),
             $this->createCustomerTransferMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapper
+     * @return \Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface
+     */
+    public function createCustomerEntityMapper()
+    {
+        return new EntityMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface
      */
     public function createCustomerTransferMapper()
     {
-        return new CustomerTransferMapper(
-            $this->getApiQueryContainer()
-        );
+        return new TransferMapper();
     }
 
     /**

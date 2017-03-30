@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductApi\Business\Mapper;
+namespace Spryker\Zed\CustomerApi\Business\Mapper;
 
 interface TransferMapperInterface
 {
@@ -13,15 +13,15 @@ interface TransferMapperInterface
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
     public function toTransfer(array $data);
 
     /**
-     * @param array $productEntityCollection
+     * @param array $data
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
-    public function toTransferCollection(array $productEntityCollection);
+    public function toTransferCollection(array $data);
 
 }

@@ -38,9 +38,7 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createEntityMapper()
     {
-        return new EntityMapper(
-            $this->getApiQueryContainer()
-        );
+        return new EntityMapper();
     }
 
     /**
@@ -48,9 +46,7 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createTransferMapper()
     {
-        return new TransferMapper(
-            $this->getApiQueryContainer()
-        );
+        return new TransferMapper();
     }
 
     /**

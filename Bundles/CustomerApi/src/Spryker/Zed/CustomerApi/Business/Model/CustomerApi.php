@@ -10,15 +10,14 @@ namespace Spryker\Zed\CustomerApi\Business\Model;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
-use Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface;
+use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
+use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
 
-class CustomerApi
+class CustomerApi implements CustomerApiInterface
 {
 
     /**
@@ -32,33 +31,43 @@ class CustomerApi
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface
+     * @var \Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface
+     */
+    protected $entityMapper;
+
+    /**
+     * @var \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface
      */
     protected $transferMapper;
 
     /**
      * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\CustomerApi\Business\Transfer\CustomerTransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface $entityMapper
+     * @param \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface $transferMapper
      */
     public function __construct(
         CustomerApiToApiInterface $apiQueryContainer,
         CustomerApiQueryContainerInterface $queryContainer,
-        CustomerTransferMapperInterface $transferMapper
+        EntityMapperInterface $entityMapper,
+        TransferMapperInterface $transferMapper
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->queryContainer = $queryContainer;
+        $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerApiTransfer $customerApiTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function add(ApiDataTransfer $customerApiTransfer)
+    public function add(ApiDataTransfer $apiDataTransfer)
     {
-        return $this->persist($customerApiTransfer);
+        $customerApiTransfer = $this->persist($apiDataTransfer);
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -70,19 +79,21 @@ class CustomerApi
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
         $customerData = $this->getCustomerData($idCustomer, $apiFilterTransfer);
-        $customerTransfer = $this->transferMapper->convertCustomer($customerData);
+        $customerTransfer = $this->transferMapper->toTransfer($customerData);
 
         return $this->apiQueryContainer->createApiItem($customerTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update(ApiDataTransfer $customerApiTransfer)
+    public function update(ApiDataTransfer $apiDataTransfer)
     {
-        return $this->persist($customerApiTransfer);
+        $customerApiTransfer = $this->persist($apiDataTransfer);
+
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
     }
 
     /**
@@ -102,47 +113,27 @@ class CustomerApi
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
-        $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            $apiRequestTransfer->getFilter()->getFilter()
-        );
-        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $criteriaTransfer->setRuleSet($criteriaRuleSet);
+        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
+        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
 
-        $query = $this->queryContainer->queryFind(
-            $apiRequestTransfer->getFilter()->getFields()
+        $collection = $this->transferMapper->toTransferCollection(
+            $query->find()->toArray()
         );
-
-        $query = $this->apiQueryContainer->createQuery(
-            $query,
-            $criteriaTransfer
-        );
-
-        $query = $this->apiQueryContainer->mapPagination(
-            $query,
-            $apiRequestTransfer->getFilter()->getPagination()
-        );
-
-        $collection = $this->transferMapper->convertCustomerCollection($query->find());
 
         return $this->apiQueryContainer->createApiCollection($collection);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $customerApiTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer
      */
-    protected function persist(ApiDataTransfer $customerApiTransfer)
+    protected function persist(ApiDataTransfer $apiDataTransfer)
     {
-        $customerData = new SpyCustomer();
-        $customerData->fromArray($customerApiTransfer->toArray());
+        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        $customerEntity->save();
 
-        $customerData->save();
-
-        $customerApiTransfer = new CustomerApiTransfer();
-        $customerApiTransfer->fromArray($customerData->toArray(), true);
-
-        return $customerApiTransfer;
+        return $this->transferMapper->toTransfer($customerEntity->toArray());
     }
 
     /**
@@ -164,6 +155,42 @@ class CustomerApi
         }
 
         return $customerEntity;
+    }
+
+    /**
+     * TODO invert this, and put it into Api bundle
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
+            $apiRequestTransfer->getFilter()->getFilter()
+        );
+
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($criteriaRuleSet);
+
+        return $criteriaTransfer;
+    }
+
+    /**
+     * TODO invert this, and put it into Api bundle
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function buildQuery(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
+    {
+        $query = $this->queryContainer->queryFind($apiRequestTransfer->getFilter()->getFields());
+        $query = $this->apiQueryContainer->createQuery($query, $criteriaTransfer);
+        $query = $this->apiQueryContainer->mapPagination($query, $apiRequestTransfer->getFilter()->getPagination());
+
+        return $query;
     }
 
 }

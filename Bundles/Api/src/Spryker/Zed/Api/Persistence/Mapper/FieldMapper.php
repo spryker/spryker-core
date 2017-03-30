@@ -22,7 +22,7 @@ class FieldMapper implements FieldMapperInterface
      */
     public function mapFields($tableName, array $tableFields, ModelCriteria $query, array $allowedFields)
     {
-        if (empty($allowedFields)) {
+        if (empty($allowedFields)) { //TODO default fields should fallback to appropriate bundle api transfer eg. ProductApiTransfer
             $allowedFields = $tableFields;
         }
 

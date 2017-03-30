@@ -68,15 +68,15 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setValidationErrors($errors);
             } else {
                 $apiCollectionOrItem = $this->callApiPlugin($resource, $method, $params);
-                $data = (array)$apiCollectionOrItem->modifiedToArray(true);
+                $data = (array)$apiCollectionOrItem->getData();
                 $apiResponseTransfer->setData($data);
             }
         } catch (\Exception $e) {
-            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setCode(500);
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         } catch (\Throwable $e) {
-            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setCode(500);
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }

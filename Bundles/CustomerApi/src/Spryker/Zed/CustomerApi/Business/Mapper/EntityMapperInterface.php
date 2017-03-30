@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductApi\Business\Mapper;
+namespace Spryker\Zed\CustomerApi\Business\Mapper;
 
 interface EntityMapperInterface
 {
@@ -13,15 +13,15 @@ interface EntityMapperInterface
     /**
      * @param array $data
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     public function toEntity(array $data);
 
     /**
-     * @param array $productApiDataCollection
+     * @param array $data
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer[]
      */
-    public function toEntityCollection(array $productApiDataCollection);
+    public function toEntityCollection(array $data);
 
 }

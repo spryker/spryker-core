@@ -8,24 +8,9 @@
 namespace Spryker\Zed\ProductApi\Business\Mapper;
 
 use Generated\Shared\Transfer\ProductApiTransfer;
-use Propel\Runtime\Collection\ArrayCollection;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 
 class TransferMapper implements TransferMapperInterface
 {
-
-    /**
-     * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
-     */
-    protected $apiQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
-     */
-    public function __construct(ProductApiToApiInterface $apiQueryContainer)
-    {
-        $this->apiQueryContainer = $apiQueryContainer;
-    }
 
     /**
      * @param array $data
@@ -35,22 +20,18 @@ class TransferMapper implements TransferMapperInterface
     public function toTransfer(array $data)
     {
         $productApiTransfer = new ProductApiTransfer();
-        $jsonAttributes = trim($data[ProductApiTransfer::ATTRIBUTES]);
-        if ($jsonAttributes) {
-            $data[ProductApiTransfer::ATTRIBUTES] = json_decode($jsonAttributes, true); //TODO inject util encoding
-        }
-
+        $data = $this->mapAttributes($data);
         $productApiTransfer->fromArray($data, true);
 
         return $productApiTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[]|\Propel\Runtime\Collection\ArrayCollection $productEntityCollection
+     * @param array $productEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer[]
      */
-    public function toTransferCollection(ArrayCollection $productEntityCollection)
+    public function toTransferCollection(array $productEntityCollection)
     {
         $transferList = [];
         foreach ($productEntityCollection as $productData) {
@@ -58,6 +39,25 @@ class TransferMapper implements TransferMapperInterface
         }
 
         return $transferList;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function mapAttributes(array $data)
+    {
+        if (array_key_exists(ProductApiTransfer::ATTRIBUTES, $data)) {
+            $jsonAttributes = trim($data[ProductApiTransfer::ATTRIBUTES]);
+            if ($jsonAttributes) {
+                $data[ProductApiTransfer::ATTRIBUTES] = json_decode($jsonAttributes, true); //TODO inject util encoding
+            } else {
+                $data[ProductApiTransfer::ATTRIBUTES] = null;
+            }
+        }
+
+        return $data;
     }
 
 }

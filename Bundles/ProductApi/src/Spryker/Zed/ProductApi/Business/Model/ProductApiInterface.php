@@ -15,26 +15,24 @@ interface ProductApiInterface
 {
 
     /**
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function add(ApiDataTransfer $apiDataTransfer);
+
+    /**
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($idProduct, ApiFilterTransfer $apiFilterTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer|\Generated\Shared\Transfer\ProductApiTransfer $apiDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
-     */
-    public function add(ApiDataTransfer $apiDataTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function update(ApiDataTransfer $apiDataTransfer);
 

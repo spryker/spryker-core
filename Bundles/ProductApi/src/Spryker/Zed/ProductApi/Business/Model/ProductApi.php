@@ -59,13 +59,15 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer|\Generated\Shared\Transfer\ProductApiTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        return $this->persist($apiDataTransfer);
+        $productApiTransfer = $this->persist($apiDataTransfer);
+
+        return $this->apiQueryContainer->createApiItem($productApiTransfer);
     }
 
     /**
@@ -85,11 +87,13 @@ class ProductApi implements ProductApiInterface
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function update(ApiDataTransfer $apiDataTransfer)
     {
-        return $this->persist($apiDataTransfer);
+        $productApiTransfer = $this->persist($apiDataTransfer);
+
+        return $this->apiQueryContainer->createApiItem($productApiTransfer);
     }
 
     /**
@@ -111,7 +115,7 @@ class ProductApi implements ProductApiInterface
     {
         $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
         $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
-        $collection = $this->transferMapper->toTransferCollection($query->find());
+        $collection = $this->transferMapper->toTransferCollection($query->find()->toArray());
 
         return $this->apiQueryContainer->createApiCollection($collection);
     }
