@@ -4,7 +4,6 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AvailabilityDataFeed">
-        <property name="isJoinProduct" type="bool" />
         <property name="localeId" type="integer" />
         <property name="updatedFrom" type="string" />
         <property name="updatedTo" type="string" />

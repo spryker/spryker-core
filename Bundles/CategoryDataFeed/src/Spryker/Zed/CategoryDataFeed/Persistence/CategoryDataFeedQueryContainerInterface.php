@@ -20,6 +20,6 @@ interface CategoryDataFeedQueryContainerInterface extends QueryContainerInterfac
      *
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
-    public function getCategoryDataFeedQuery(CategoryDataFeedTransfer $categoryDataFeedTransfer);
+    public function queryCategoryDataFeed(CategoryDataFeedTransfer $categoryDataFeedTransfer);
 
 }

@@ -9,9 +9,9 @@ namespace Unit\Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
-use Orm\Zed\Stock\Persistence\Base\SpyStockProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 
 /**
  * @group Unit
@@ -50,13 +50,14 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQuery()
     {
+        $this->availabilityDataFeedTransfer->setLocaleId(46);
         $query = $this->availabilityDataFeedQueryContainer
-            ->getAvailabilityDataFeedQuery($this->availabilityDataFeedTransfer);
+            ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-        $this->assertTrue($query instanceof SpyStockProductQuery);
+        $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -65,18 +66,15 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQueryWithJoinedProducts()
     {
-        $this->availabilityDataFeedTransfer->setIsJoinProduct(true);
+        $this->availabilityDataFeedTransfer->setLocaleId(46);
         $query = $this->availabilityDataFeedQueryContainer
-            ->getAvailabilityDataFeedQuery($this->availabilityDataFeedTransfer);
+            ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
-        $expectedJoinedTables = array_merge(
-            $this->getDefaultJoinedTables(),
-            $this->getProductJoinedTables()
-        );
+        $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyStockProductQuery);
+        $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -85,12 +83,11 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
-        $this->availabilityDataFeedTransfer->setIsJoinProduct(true);
         $this->availabilityDataFeedTransfer->setLocaleId(46);
         $query = $this->availabilityDataFeedQueryContainer
-            ->getAvailabilityDataFeedQuery($this->availabilityDataFeedTransfer);
+            ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
-        $this->assertTrue($query instanceof SpyStockProductQuery);
+        $this->assertTrue($query instanceof SpyProductAbstractQuery);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 
@@ -101,11 +98,17 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     {
         $this->availabilityDataFeedTransfer->setUpdatedFrom('2017-01-01');
         $this->availabilityDataFeedTransfer->setUpdatedTo('2017-12-01');
-        $query = $this->availabilityDataFeedQueryContainer
-            ->getAvailabilityDataFeedQuery($this->availabilityDataFeedTransfer);
+        $this->availabilityDataFeedTransfer->setLocaleId(46);
 
-        $this->assertTrue($query instanceof SpyStockProductQuery);
-        $this->assertEquals($this->getParamsForDateFilter(), $query->getParams());
+        $query = $this->availabilityDataFeedQueryContainer
+            ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
+        $expectedParams = array_merge(
+            $this->getParamsForLocaleFilter(),
+            $this->getParamsForDateFilter()
+        );
+
+        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertEquals($expectedParams, $query->getParams());
     }
 
     /**
@@ -113,8 +116,8 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     protected function createAvailabilityDataFeedQueryContainer()
     {
-        $stockQueryContainer = new StockQueryContainer();
-        $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer($stockQueryContainer);
+        $availabilityQueryContainer = new AvailabilityQueryContainer();
+        $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer($availabilityQueryContainer);
 
         return $availabilityDataFeedQueryContainer;
     }
@@ -130,11 +133,11 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\Base\SpyStockProductQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyStockProductQuery $query)
+    protected function getJoinedTablesNames(SpyProductAbstractQuery $query)
     {
         $tablesNames = [];
         $joins = $query->getJoins();
@@ -167,20 +170,13 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     protected function getDefaultJoinedTables()
     {
         return [
-            'spy_stock',
-            'spy_stock_product',
-            'spy_touch',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getProductJoinedTables()
-    {
-        return [
+            'spy_availability',
+            'spy_availability_abstract',
+            'spy_oms_product_reservation',
             'spy_product',
+            'spy_product_abstract_localized_attributes',
             'spy_product_localized_attributes',
+            'spy_stock_product',
         ];
     }
 
@@ -191,14 +187,14 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     {
         return [
             [
-                'table' => 'spy_product_localized_attributes',
+                'table' => 'spy_product_abstract_localized_attributes',
                 'column' => 'fk_locale',
                 'value' => 46,
             ],
             [
-                'table' => null,
-                'type' => 2,
-                'value' => 'stock-product',
+                'table' => 'spy_product_localized_attributes',
+                'column' => 'fk_locale',
+                'value' => 46,
             ],
         ];
     }
@@ -210,18 +206,13 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     {
         return [
             [
-                'table' => null,
-                'type' => 2,
-                'value' => 'stock-product',
-            ],
-            [
-                'table' => null,
-                'type' => 2,
+                'table' => 'spy_product_abstract',
+                'column' => 'updated_at',
                 'value' => '2017-01-01',
             ],
             [
-                'table' => null,
-                'type' => 2,
+                'table' => 'spy_product_abstract',
+                'column' => 'updated_at',
                 'value' => '2017-12-01',
             ],
         ];

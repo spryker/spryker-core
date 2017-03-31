@@ -51,7 +51,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     public function testGetCategoryDataFeedQuery()
     {
         $query = $this->categoryDataFeedQueryContainer
-            ->getCategoryDataFeedQuery($this->categoryDataFeedTransfer);
+            ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
@@ -65,9 +65,9 @@ class CategoryDataFeedQueryContainerTest extends Test
      */
     public function testGetCategoryDataFeedQueryWithJoinedProducts()
     {
-        $this->categoryDataFeedTransfer->setIsJoinProduct(true);
+        $this->categoryDataFeedTransfer->setIsJoinAbstractProduct(true);
         $query = $this->categoryDataFeedQueryContainer
-            ->getCategoryDataFeedQuery($this->categoryDataFeedTransfer);
+            ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -85,9 +85,10 @@ class CategoryDataFeedQueryContainerTest extends Test
      */
     public function testGetCategoryDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
+        $this->categoryDataFeedTransfer->setIsJoinAbstractProduct(true);
         $this->categoryDataFeedTransfer->setLocaleId(46);
         $query = $this->categoryDataFeedQueryContainer
-            ->getCategoryDataFeedQuery($this->categoryDataFeedTransfer);
+            ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
         $this->assertTrue($query instanceof SpyCategoryQuery);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());

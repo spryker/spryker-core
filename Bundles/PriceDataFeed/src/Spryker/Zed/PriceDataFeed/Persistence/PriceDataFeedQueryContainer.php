@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceDataFeed\Persistence;
 
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
@@ -18,9 +17,6 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
  */
 class PriceDataFeedQueryContainer extends AbstractQueryContainer implements PriceDataFeedQueryContainerInterface
 {
-
-    const PRICE_QUERY_SELECT_COLUMNS = 'PRICE_QUERY_SELECT_COLUMNS';
-    const PRICE_TYPE_COLUMNS = 'PRICE_TYPE_COLUMNS';
 
     /**
      * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
@@ -44,13 +40,12 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function getPriceDataFeedQuery(PriceDataFeedTransfer $priceDataFeedTransfer)
+    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer)
     {
         $productPriceQuery = $this->priceQueryContainer
             ->queryPriceProduct();
 
         $productPriceQuery = $this->applyJoins($productPriceQuery, $priceDataFeedTransfer);
-        $productPriceQuery = $this->applyGroupings($productPriceQuery);
 
         return $productPriceQuery;
     }
@@ -84,23 +79,11 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         PriceDataFeedTransfer $priceDataFeedTransfer
     ) {
 
-        if ($priceDataFeedTransfer->getIsJoinType()) {
+        if ($priceDataFeedTransfer->getIsJoinPriceType()) {
             $productPriceQuery->joinPriceType();
         }
 
         return $productPriceQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $priceProductQuery
-     *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
-     */
-    protected function applyGroupings(SpyPriceProductQuery $priceProductQuery)
-    {
-        $priceProductQuery->groupBy(SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT);
-
-        return $priceProductQuery;
     }
 
 }

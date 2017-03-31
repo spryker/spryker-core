@@ -44,7 +44,7 @@ class AvailabilityDataFeedDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[self::AVAILABILITY_QUERY_CONTAINER] = function (Container $container) {
             //todo: add bridge.
-            return $container->getLocator()->stock()->queryContainer();
+            return $container->getLocator()->availability()->queryContainer();
         };
 
         return $container;

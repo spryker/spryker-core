@@ -8,13 +8,12 @@
 namespace Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use PDO;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedPersistenceFactory getFactory()
@@ -22,24 +21,22 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implements AvailabilityDataFeedQueryContainerInterface
 {
 
-    const TOUCH_ITEM_TYPE = 'stock-product';
-    const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
-    const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
-    const JOIN_TOUCH_TABLE_CONDITION_NAME = 'JOIN_TOUCH_TABLE_CONDITION_NAME';
+    const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+    const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer
      */
-    protected $stockQueryContainer;
+    protected $availabilityQueryContainer;
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer $availabilityQueryContainer
      */
-    public function __construct(StockQueryContainerInterface $stockQueryContainer)
+    public function __construct(AvailabilityQueryContainer $availabilityQueryContainer)
     {
-        $this->stockQueryContainer = $stockQueryContainer;
+        $this->availabilityQueryContainer = $availabilityQueryContainer;
     }
 
     /**
@@ -47,142 +44,43 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      *
      * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getAvailabilityDataFeedQuery(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer)
+    public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer)
     {
-        $stockProductQuery = $this->stockQueryContainer
-            ->queryAllStockProducts();
-        $stockProductQuery
-            ->useStockQuery()
-                ->useStockProductQuery()
-                ->endUse()
-            ->endUse();
+        $availabilityProductQuery = $this->availabilityQueryContainer
+            ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getLocaleId());
 
-        $stockProductQuery = $this->applyJoins($stockProductQuery, $availabilityDataFeedTransfer);
-        $stockProductQuery = $this->applyDateFilter($stockProductQuery, $availabilityDataFeedTransfer);
-        $stockProductQuery = $this->applyGroupings($stockProductQuery);
+        $availabilityProductQuery = $this->applyDateFilter($availabilityProductQuery, $availabilityDataFeedTransfer);
 
-        return $stockProductQuery;
+        return $availabilityProductQuery;
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $entityQuery
      * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    protected function applyJoins(
-        SpyStockProductQuery $stockProductQuery,
-        AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
-    ) {
-        $stockProductQuery = $this->joinProducts($stockProductQuery, $availabilityDataFeedTransfer);
-
-        return $stockProductQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $stockProductQuery
-     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    protected function joinProducts(
-        SpyStockProductQuery $stockProductQuery,
-        AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
-    ) {
-        if ($availabilityDataFeedTransfer->getIsJoinProduct()) {
-            $localeTransferConditions = $this->getIdLocaleFilterConditions($availabilityDataFeedTransfer->getLocaleId());
-
-            $stockProductQuery
-                ->useSpyProductQuery()
-                ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale(
-                    $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
-                )
-                ->endUse()
-                ->endUse();
-        }
-
-        return $stockProductQuery;
-    }
-
-    /**
-     * @param integer|null $localeId
-     *
-     * @return array
-     */
-    protected function getIdLocaleFilterConditions($localeId = null)
-    {
-        if ($localeId !== null) {
-            $filterCriteria = Criteria::EQUAL;
-            $filterValue = $localeId;
-        } else {
-            $filterCriteria = Criteria::NOT_EQUAL;
-            $filterValue = null;
-        }
-
-        return [
-            self::LOCALE_FILTER_VALUE => $filterValue,
-            self::LOCALE_FILTER_CRITERIA => $filterCriteria,
-        ];
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $productQuery
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    protected function joinTouchTable(SpyStockProductQuery $productQuery)
-    {
-        $productQuery->addJoin(
-            SpyStockProductTableMap::COL_ID_STOCK_PRODUCT,
-            SpyTouchTableMap::COL_ITEM_ID,
-            Criteria::INNER_JOIN
-        );
-        $productQuery->condition(
-            self::JOIN_TOUCH_TABLE_CONDITION_NAME,
-            SpyTouchTableMap::COL_ITEM_TYPE . ' = ?',
-            self::TOUCH_ITEM_TYPE,
-            PDO::PARAM_STR
-        );
-        $productQuery->where([self::JOIN_TOUCH_TABLE_CONDITION_NAME]);
-
-        return $productQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProductQuery $entityQuery
-     * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function applyDateFilter(
-        SpyStockProductQuery $entityQuery,
+        SpyProductAbstractQuery $entityQuery,
         AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
     ) {
 
-        $entityQuery = $this->joinTouchTable($entityQuery);
-
-        if ($availabilityDataFeedTransfer->getUpdatedFrom() !== null) {
+        if ($availabilityDataFeedTransfer->getUpdatedFrom()) {
             $entityQuery->condition(
-                'updatedFromCondition',
-                SpyTouchTableMap::COL_TOUCHED . '> ?',
-                $availabilityDataFeedTransfer->getUpdatedFrom(),
-                PDO::PARAM_STR
-            );
-            $entityQuery->where(['updatedFromCondition']);
+                self::UPDATED_FROM_CONDITION,
+                SpyProductAbstractTableMap::COL_UPDATED_AT . ' > ?',
+                $availabilityDataFeedTransfer->getUpdatedFrom()
+            )->where([self::UPDATED_FROM_CONDITION]);
         }
 
-        if ($availabilityDataFeedTransfer->getUpdatedTo() !== null) {
+        if ($availabilityDataFeedTransfer->getUpdatedTo()) {
             $entityQuery->condition(
-                'updatedToCondition',
-                SpyTouchTableMap::COL_TOUCHED . '< ?',
-                $availabilityDataFeedTransfer->getUpdatedTo(),
-                PDO::PARAM_STR
-            );
-            $entityQuery->where(['updatedToCondition']);
+                self::UPDATED_TO_CONDITION,
+                SpyProductAbstractTableMap::COL_UPDATED_AT . ' < ?',
+                $availabilityDataFeedTransfer->getUpdatedTo()
+            )->where([self::UPDATED_TO_CONDITION]);
         }
 
         return $entityQuery;

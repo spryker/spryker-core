@@ -20,6 +20,6 @@ interface AvailabilityDataFeedQueryContainerInterface extends QueryContainerInte
      *
      * @return \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
-    public function getAvailabilityDataFeedQuery(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer);
+    public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer);
 
 }

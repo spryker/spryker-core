@@ -51,7 +51,7 @@ class PriceDataFeedQueryContainerTest extends Test
     public function testGetPriceDataFeedQuery()
     {
         $query = $this->priceDataFeedQueryContainer
-            ->getPriceDataFeedQuery($this->priceDataFeedTransfer);
+            ->queryPriceDataFeed($this->priceDataFeedTransfer);
 
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
@@ -65,9 +65,9 @@ class PriceDataFeedQueryContainerTest extends Test
      */
     public function testGetPriceDataFeedQueryWithJoinedTypes()
     {
-        $this->priceDataFeedTransfer->setIsJoinType(true);
+        $this->priceDataFeedTransfer->setIsJoinPriceType(true);
         $query = $this->priceDataFeedQueryContainer
-            ->getPriceDataFeedQuery($this->priceDataFeedTransfer);
+            ->queryPriceDataFeed($this->priceDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),

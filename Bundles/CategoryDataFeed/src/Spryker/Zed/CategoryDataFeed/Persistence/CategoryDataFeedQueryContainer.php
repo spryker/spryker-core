@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataFeed\Persistence;
 
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -20,10 +21,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements CategoryDataFeedQueryContainerInterface
 {
 
-    const CATEGORY_QUERY_SELECT_COLUMNS = 'CATEGORY_QUERY_SELECT_COLUMNS';
-    const PRODUCTS_COLUMNS = 'PRODUCTS_COLUMNS';
-    const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
-    const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
+    const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+    const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
@@ -47,12 +46,13 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function getCategoryDataFeedQuery(CategoryDataFeedTransfer $categoryDataFeedTransfer)
+    public function queryCategoryDataFeed(CategoryDataFeedTransfer $categoryDataFeedTransfer)
     {
         $categoryQuery = $this->categoryQueryContainer
             ->queryCategory($categoryDataFeedTransfer->getLocaleId());
 
         $categoryQuery = $this->applyJoins($categoryQuery, $categoryDataFeedTransfer);
+        $categoryQuery = $this->applyDateFilters($categoryQuery, $categoryDataFeedTransfer);
         $categoryQuery = $this->applyGroupings($categoryQuery);
 
         return $categoryQuery;
@@ -86,44 +86,19 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
         SpyCategoryQuery $categoryQuery,
         CategoryDataFeedTransfer $categoryDataFeedTransfer
     ) {
-        if ($categoryDataFeedTransfer->getIsJoinProduct()) {
-            $localeTransferConditions = $this->getIdLocaleFilterConditions($categoryDataFeedTransfer->getLocaleId());
-
-            $categoryQuery
-                ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
-                        ->useSpyProductAbstractLocalizedAttributesQuery()
-                            ->filterByFkLocale(
-                                $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                                $localeTransferConditions[self::LOCALE_FILTER_CRITERIA]
-                            )
-                        ->endUse()
-                    ->endUse()
-                ->endUse();
+        if (!$categoryDataFeedTransfer->getIsJoinAbstractProduct()) {
+            return $categoryQuery;
         }
+
+        $categoryQuery
+            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyProductAbstractLocalizedAttributesQuery()
+                    ->endUse()
+                ->endUse()
+            ->endUse();
 
         return $categoryQuery;
-    }
-
-    /**
-     * @param integer|null $localeId
-     *
-     * @return array
-     */
-    protected function getIdLocaleFilterConditions($localeId = null)
-    {
-        if ($localeId !== null) {
-            $filterCriteria = Criteria::EQUAL;
-            $filterValue = $localeId;
-        } else {
-            $filterCriteria = Criteria::NOT_EQUAL;
-            $filterValue = null;
-        }
-
-        return [
-            self::LOCALE_FILTER_VALUE => $filterValue,
-            self::LOCALE_FILTER_CRITERIA => $filterCriteria,
-        ];
     }
 
     /**
@@ -134,6 +109,35 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     protected function applyGroupings(SpyCategoryQuery $categoryQuery)
     {
         $categoryQuery->groupBy(SpyCategoryTableMap::COL_ID_CATEGORY);
+
+        return $categoryQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyDateFilters(
+        SpyCategoryQuery $categoryQuery,
+        CategoryDataFeedTransfer $categoryDataFeedTransfer
+    ) {
+        if ($categoryDataFeedTransfer->getUpdatedFrom()) {
+            $categoryQuery->condition(
+                self::UPDATED_FROM_CONDITION,
+                SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' > ?',
+                $categoryDataFeedTransfer->getUpdatedFrom()
+            )->where([self::UPDATED_FROM_CONDITION]);
+        }
+
+        if ($categoryDataFeedTransfer->getUpdatedTo()) {
+            $categoryQuery->condition(
+                self::UPDATED_TO_CONDITION,
+                SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' < ?',
+                $categoryDataFeedTransfer->getUpdatedTo()
+            )->where([self::UPDATED_TO_CONDITION]);
+        }
 
         return $categoryQuery;
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityDataFeed\Persistence;
 
-use Spryker\Zed\DataFeed\DataFeedDependencyProvider;
+use Spryker\Zed\AvailabilityDataFeed\AvailabilityDataFeedDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,11 +18,11 @@ class AvailabilityDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
+     * @return \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer
      */
     public function getStockQueryContainer()
     {
-        return $this->getProvidedDependency(DataFeedDependencyProvider::STOCK_QUERY_CONTAINER);
+        return $this->getProvidedDependency(AvailabilityDataFeedDependencyProvider::AVAILABILITY_QUERY_CONTAINER);
     }
 
 }
