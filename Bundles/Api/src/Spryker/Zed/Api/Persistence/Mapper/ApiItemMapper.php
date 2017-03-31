@@ -15,12 +15,14 @@ class ApiItemMapper implements ApiItemMapperInterface
 
     /**
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param int|null $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function toItem($data)
+    public function toItem($data, $id = null)
     {
         $apiItemTransfer = new ApiItemTransfer();
+        $apiItemTransfer->setId($id);
 
         $itemData = [];
         if ($data instanceof AbstractTransfer) {

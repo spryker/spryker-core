@@ -39,7 +39,7 @@ class Transformer
     public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
         $defaults = [
-            'Content-Type' => 'application/' . $apiRequestTransfer->getFormatType(),
+            'Content-Type' => 'application/' . ($apiRequestTransfer->getFormatType() ?: 'json'),
         ];
         $headers = $apiResponseTransfer->getHeaders() + $defaults;
 
@@ -79,6 +79,7 @@ class Transformer
             if ($meta->getSelf()) {
                 $content['links']['self'] = $meta->getSelf();
             }
+            $content['meta'] = $meta->getData();
         }
 
         if (Environment::isDevelopment()) {

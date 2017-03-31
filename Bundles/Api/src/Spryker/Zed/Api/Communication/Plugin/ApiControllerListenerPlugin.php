@@ -120,7 +120,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     }
 
     /**
-     * @param ApiRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
      *
      * @return void
      */
@@ -135,16 +135,18 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     }
 
     /**
-     * @param ApiResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      *
      * @return void
      */
     protected function logResponse(ApiResponseTransfer $responseTransfer)
     {
+        $array = $responseTransfer->toArray();
+        unset($array['request']);
         $this->getLogger()->info(sprintf(
             'API response [code %s]: %s',
             $responseTransfer->getCode(),
-            json_encode($responseTransfer->toArray())
+            json_encode($array)
         ));
     }
 

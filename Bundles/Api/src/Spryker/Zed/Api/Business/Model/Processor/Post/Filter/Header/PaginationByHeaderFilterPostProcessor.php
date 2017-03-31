@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header;
 
-use Generated\Shared\Transfer\ApiMetaTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
@@ -29,11 +28,6 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
         }
 
         $pagination = $apiResponseTransfer->getPagination();
-        // FIXME: FOR NOW (we need to map the find result into pagination object for returning!
-        if (!$pagination) {
-            $pagination = $apiRequestTransfer->getFilter()->getPagination();
-        }
-
         if (!$pagination) {
             return $apiResponseTransfer;
         }
@@ -48,28 +42,6 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
             $headers['Content-Range'] = $apiRequestTransfer->getResource() . ' ' . $from . '-' . $to . '/' . $total;
             $apiResponseTransfer->setHeaders($headers);
         }
-
-        // Return "Partial Content" as the result doesn't fit on a single page.
-        if ($pagination->getPages() > 1) {
-            $apiResponseTransfer->setCode(206);
-        }
-
-        // Add pagination to Meta links
-        //FIXME
-        $metaTransfer = $apiResponseTransfer->getMeta();
-        if (!$metaTransfer) {
-            $metaTransfer = new ApiMetaTransfer();
-            $apiResponseTransfer->setMeta($metaTransfer);
-        }
-        $links = $metaTransfer->getLinks();
-
-        $links['first'] = $pagination->getFirst();
-        $links['prev'] = $pagination->getPrev();
-        $links['next'] = $pagination->getNext();
-        $links['last'] = $pagination->getLast();
-        $links['page'] = $pagination->getPage();
-        $links['pages'] = $pagination->getPages();
-        $apiResponseTransfer->getMeta()->setLinks($links);
 
         return $apiResponseTransfer;
     }

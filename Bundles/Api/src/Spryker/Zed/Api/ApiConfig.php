@@ -32,4 +32,16 @@ class ApiConfig extends AbstractBundleConfig
         return 100;
     }
 
+    /**
+     * This returns the base URI to the API
+     *
+     * Modify if you want to include host and schema/protocol.
+     *
+     * @return int
+     */
+    public function getBaseUri()
+    {
+        return static::ROUTE_PREFIX_API_REST;
+    }
+
 }

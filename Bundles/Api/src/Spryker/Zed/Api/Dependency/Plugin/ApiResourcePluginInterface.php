@@ -10,8 +10,7 @@ namespace Spryker\Zed\Api\Dependency\Plugin;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
-//TODO rename it to ApiResourcePluginInterface
-interface ApiPluginInterface
+interface ApiResourcePluginInterface
 {
 
     /**
@@ -33,11 +32,11 @@ interface ApiPluginInterface
     /**
      * @api
      *
-     * @param int $idCustomer
+     * @param int $id
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer);
+    public function get($id, ApiFilterTransfer $apiFilterTransfer);
 
 }

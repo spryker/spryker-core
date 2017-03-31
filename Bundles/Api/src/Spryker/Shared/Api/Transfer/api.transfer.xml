@@ -65,15 +65,19 @@
 
     <transfer name="ApiCollection">
         <property name="data" type="array"/>
+        <property name="pagination" type="ApiPagination" />
     </transfer>
 
     <transfer name="ApiItem">
+        <property name="id" type="int"/>
         <property name="data" type="array"/>
     </transfer>
 
     <transfer name="ApiMeta">
+        <property name="resourceId" type="string" />
         <property name="self" type="string" />
         <property name="links" type="array" />
+        <property name="data" type="array" />
     </transfer>
 
 </transfers>

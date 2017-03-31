@@ -67,7 +67,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
             $page = 1;
         }
 
-        return $page;
+        return (int)$page;
     }
 
     /**
@@ -81,7 +81,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
             $limit = $this->apiConfig->getLimitPerPage();
         }
 
-        return $limit;
+        return (int)$limit;
     }
 
 }

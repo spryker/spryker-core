@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
+/**
+ * Successful delete requests result in a 204 response code.
+ * They also contain no body then.
+ */
 class DeleteActionPostProcessor implements PostProcessorInterface
 {
 

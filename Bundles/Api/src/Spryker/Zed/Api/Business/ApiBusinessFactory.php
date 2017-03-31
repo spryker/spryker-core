@@ -15,6 +15,7 @@ use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
@@ -137,7 +138,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
      */
     protected function getApiPlugins()
     {
@@ -178,6 +179,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createAddActionPostProcessor(),
             $this->createDeleteActionPostProcessor(),
+            $this->createFindActionPostProcessor(),
             $this->createPaginationByHeaderFilterPostProcessor(),
         ];
     }
@@ -325,7 +327,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function createAddActionPostProcessor()
     {
-        return new AddActionPostProcessor();
+        return new AddActionPostProcessor(
+            $this->getConfig()
+        );
     }
 
     /**
@@ -342,6 +346,16 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createPaginationByHeaderFilterPostProcessor()
     {
         return new PaginationByHeaderFilterPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor
+     */
+    protected function createFindActionPostProcessor()
+    {
+        return new FindActionPostProcessor(
+            $this->getConfig()
+        );
     }
 
 }

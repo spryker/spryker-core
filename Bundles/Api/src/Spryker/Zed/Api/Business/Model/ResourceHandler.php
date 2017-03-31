@@ -13,12 +13,12 @@ class ResourceHandler implements ResourceHandlerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[]
+     * @var \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
      */
     protected $pluginCollection;
 
     /**
-     * @param \Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface[] $pluginCollection
+     * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[] $pluginCollection
      */
     public function __construct(array $pluginCollection)
     {

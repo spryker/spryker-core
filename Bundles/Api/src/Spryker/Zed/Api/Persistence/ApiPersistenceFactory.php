@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Api\Persistence;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Persistence\Mapper\ApiCollectionMapper;
 use Spryker\Zed\Api\Persistence\Mapper\ApiItemMapper;
@@ -21,14 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ApiPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    public function createCustomerQuery()
-    {
-        return SpyCustomerQuery::create();
-    }
 
     /**
      * @return \Spryker\Zed\Api\Persistence\Mapper\PaginationQueryMapperInterface

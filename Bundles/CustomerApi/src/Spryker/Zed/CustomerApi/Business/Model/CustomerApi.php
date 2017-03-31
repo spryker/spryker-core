@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CustomerApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\Api\Business\Exception\OutOfBoundsException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
@@ -70,7 +71,7 @@ class CustomerApi implements CustomerApiInterface
         $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
         $customerApiTransfer = $this->persist($customerEntity);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
     }
 
     /**
@@ -82,9 +83,9 @@ class CustomerApi implements CustomerApiInterface
     public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
     {
         $customerData = $this->getCustomerData($idCustomer, $apiFilterTransfer);
-        $customerTransfer = $this->transferMapper->toTransfer($customerData);
+        $customerApiTransfer = $this->transferMapper->toTransfer($customerData);
 
-        return $this->apiQueryContainer->createApiItem($customerTransfer);
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
     }
 
     /**
@@ -97,8 +98,6 @@ class CustomerApi implements CustomerApiInterface
      */
     public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
     {
-        //$customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        //fetch from db
         $entityToUpdate = $this->queryContainer
             ->queryCustomer()
             ->filterByIdCustomer($idCustomer)
@@ -113,7 +112,7 @@ class CustomerApi implements CustomerApiInterface
 
         $customerApiTransfer = $this->persist($entityToUpdate);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
     }
 
     /**
@@ -146,11 +145,26 @@ class CustomerApi implements CustomerApiInterface
         $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
         $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
 
+        $count = $this->buildQueryCount($apiRequestTransfer, $criteriaTransfer)->count();
+
         $collection = $this->transferMapper->toTransferCollection(
             $query->find()->toArray()
         );
 
-        return $this->apiQueryContainer->createApiCollection($collection);
+        $apiCollectionTransfer = $this->apiQueryContainer->createApiCollection($collection);
+
+        $apiPaginationTransfer = $apiRequestTransfer->getFilter()->getPagination();
+        $apiPaginationTransfer->setTotal($count);
+        $limit = $apiRequestTransfer->getFilter()->getPagination()->getLimit();
+
+        $pages = (int)ceil($count/ $limit);
+        if ($pages < $apiPaginationTransfer->getPage()) {
+            throw new OutOfBoundsException();
+        }
+        $apiPaginationTransfer->setPages($pages);
+        $apiCollectionTransfer->setPagination($apiPaginationTransfer);
+
+        return $apiCollectionTransfer;
     }
 
     /**
@@ -203,6 +217,22 @@ class CustomerApi implements CustomerApiInterface
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
 
         return $criteriaTransfer;
+    }
+
+    /**
+     * TODO invert this, and put it into Api bundle
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function buildQueryCount(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
+    {
+        $query = $this->queryContainer->queryFind($apiRequestTransfer->getFilter()->getFields());
+        $query = $this->apiQueryContainer->createQuery($query, $criteriaTransfer);
+
+        return $query;
     }
 
     /**

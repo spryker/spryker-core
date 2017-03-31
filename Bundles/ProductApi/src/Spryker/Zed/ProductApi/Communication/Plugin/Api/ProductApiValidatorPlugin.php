@@ -14,7 +14,7 @@ use Spryker\Zed\ProductApi\ProductApiConfig;
 
 /**
  * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
- * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {

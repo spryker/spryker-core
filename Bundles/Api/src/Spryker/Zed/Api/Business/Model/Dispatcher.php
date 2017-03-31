@@ -9,6 +9,8 @@ namespace Spryker\Zed\Api\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
+use Generated\Shared\Transfer\ApiItemTransfer;
+use Generated\Shared\Transfer\ApiMetaTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
@@ -73,7 +75,20 @@ class Dispatcher implements DispatcherInterface
                 $apiCollectionOrItem = $this->callApiPlugin($resource, $method, $params);
                 $data = (array)$apiCollectionOrItem->getData();
                 $apiResponseTransfer->setData($data);
+
+                if ($apiCollectionOrItem instanceof ApiCollectionTransfer) {
+                    $apiResponseTransfer->setPagination($apiCollectionOrItem->getPagination());
+                    if (!$apiResponseTransfer->getMeta()) {
+                        $apiResponseTransfer->setMeta(new ApiMetaTransfer());
+                    }
+                } elseif ($apiCollectionOrItem instanceof ApiItemTransfer) {
+                    if (!$apiResponseTransfer->getMeta()) {
+                        $apiResponseTransfer->setMeta(new ApiMetaTransfer());
+                    }
+                    $apiResponseTransfer->getMeta()->setResourceId($apiCollectionOrItem->getId());
+                }
             }
+
         } catch (\Exception $e) {
             $apiResponseTransfer->setCode($e->getCode() ?: 500);
             $apiResponseTransfer->setMessage($e->getMessage());

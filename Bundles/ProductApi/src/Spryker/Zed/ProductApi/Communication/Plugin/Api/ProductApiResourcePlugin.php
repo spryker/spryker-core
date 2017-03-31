@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductApi\Communication\Plugin\Api;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Dependency\Plugin\ApiPluginInterface;
+use Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface;
 use Spryker\Zed\ProductApi\ProductApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
-class ProductApiPlugin extends AbstractPlugin implements ApiPluginInterface
+class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
 
     /**
