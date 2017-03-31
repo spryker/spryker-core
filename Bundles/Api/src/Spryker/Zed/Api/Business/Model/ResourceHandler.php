@@ -37,7 +37,7 @@ class ResourceHandler implements ResourceHandlerInterface
     public function execute($resource, $method, $params)
     {
         foreach ($this->pluginCollection as $plugin) {
-            if (mb_strtolower($plugin->getResourceType()) === mb_strtolower($resource)) {
+            if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resource)) {
                 return call_user_func_array([$plugin, $method], $params);
             }
         }

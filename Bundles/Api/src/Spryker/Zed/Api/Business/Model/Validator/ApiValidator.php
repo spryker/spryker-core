@@ -26,15 +26,15 @@ class ApiValidator implements ApiValidatorInterface
     }
 
     /**
-     * @param string $resourceType
+     * @param string $resourceName
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
-    public function validate($resourceType, ApiDataTransfer $apiDataTransfer)
+    public function validate($resourceName, ApiDataTransfer $apiDataTransfer)
     {
         foreach ($this->validatorPlugins as $plugin) {
-            if (mb_strtolower($plugin->getResourceType()) === mb_strtolower($resourceType)) {
+            if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resourceName)) {
                 return $plugin->validate($apiDataTransfer);
             }
         }

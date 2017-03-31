@@ -23,9 +23,9 @@ class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorP
      *
      * @return string
      */
-    public function getResourceType()
+    public function getResourceName()
     {
-        return CustomerApiConfig::RESOURCE_TYPE;
+        return CustomerApiConfig::RESOURCE_CUSTOMERS;
     }
 
     /**

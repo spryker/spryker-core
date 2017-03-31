@@ -18,7 +18,7 @@ interface ApiResourcePluginInterface
      *
      * @return string
      */
-    public function getResourceType();
+    public function getResourceName();
 
     /**
      * @api

@@ -12,6 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CustomerApiConfig extends AbstractBundleConfig
 {
 
-    const RESOURCE_TYPE = 'customers';
+    const RESOURCE_CUSTOMERS = 'customers';
 
 }

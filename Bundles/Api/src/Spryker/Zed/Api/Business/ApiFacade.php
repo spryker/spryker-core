@@ -52,16 +52,16 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     /**
      * @api
      *
-     * @param string $resourceType
+     * @param string $resourceName
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
-    public function validate($resourceType, ApiDataTransfer $apiDataTransfer)
+    public function validate($resourceName, ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
             ->createValidator()
-            ->validate($resourceType, $apiDataTransfer);
+            ->validate($resourceName, $apiDataTransfer);
     }
 
 }

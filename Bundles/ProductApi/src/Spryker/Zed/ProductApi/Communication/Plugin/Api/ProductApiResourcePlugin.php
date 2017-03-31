@@ -78,9 +78,9 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
      *
      * @return string
      */
-    public function getResourceType()
+    public function getResourceName()
     {
-        return ProductApiConfig::RESOURCE_TYPE;
+        return ProductApiConfig::RESOURCE_PRODUCTS;
     }
 
 }

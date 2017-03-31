@@ -13,11 +13,11 @@ interface ApiValidatorInterface
 {
 
     /**
-     * @param string $resourceType
+     * @param string $resourceName
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
-    public function validate($resourceType, ApiDataTransfer $apiDataTransfer);
+    public function validate($resourceName, ApiDataTransfer $apiDataTransfer);
 
 }

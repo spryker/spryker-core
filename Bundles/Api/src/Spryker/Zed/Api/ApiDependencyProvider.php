@@ -62,7 +62,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function provideApiPlugins(Container $container)
     {
         $container[static::PLUGINS_API] = function (Container $container) {
-            return $this->getApiPluginCollection();
+            return $this->getApiResourcePluginCollection();
         };
 
         return $container;
@@ -85,7 +85,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
      */
-    protected function getApiPluginCollection()
+    protected function getApiResourcePluginCollection()
     {
         return [];
     }
