@@ -10,7 +10,7 @@
         <property name="voucherCode" type="string"/>
         <property name="calculatorPlugin" type="string" />
         <property name="isExclusive" type="string" />
-        <property name="isActive" type="string" dataBuilderRule="=1" />
+        <property name="isActive" type="string" dataBuilderRule="=true" />
         <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
         <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
         <property name="collectorQueryString" type="string" />
@@ -34,14 +34,14 @@
         <property name="description" dataBuilderRule="sentence(10)" />
         <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
         <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
-        <property name="isExclusive" dataBuilderRule="=false" />
+        <property name="isExclusive" dataBuilderRule="=" />
         <property name="isActive" dataBuilderRule="=true" />
     </transfer>
 
     <transfer name="DiscountCalculator">
         <property name="amount" type="string" dataBuilderRule="=1" />
-        <property name="calculatorPlugin" dataBuilderRule="item-quantity > '1'" />
-        <property name="collectorQueryString" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED" />
+        <property name="calculatorPlugin" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED" />
+        <property name="collectorQueryString" dataBuilderRule="=item-quantity > '1'" />
     </transfer>
 
     <transfer name="DiscountCondition">

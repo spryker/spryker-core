@@ -15,33 +15,31 @@ class DiscountData extends Module
     /**
      * @param array $override
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
     public function haveDiscount($override = [])
     {
         $discountFacade = $this->getDiscountFacade();
 
-        (new DiscountConfiguratorBuilder())
+        $discountConfigurator = (new DiscountConfiguratorBuilder($override))
             ->withDiscountGeneral()
             ->withDiscountCondition()
+            ->withDiscountCalculator()
             ->build();
+        
 
-        $discountFacade->saveDiscount();
-
-
-
-
-        $this->debug("Inserted AbstractDiscount: $abstractDiscountId, Concrete Discount: " . $product->getIdDiscountConcrete());
+        $this->debugSection('Discount', $discountConfigurator->toArray());
+        $discountId = $discountFacade->saveDiscount($discountConfigurator);
+        $this->debugSection('Discount Id', $discountId);
 
         if ($this->hasModule('\\' . DataCleanup::class)) {
             $cleanupModule = $this->getDataCleanupModule();
-            $cleanupModule->_addCleanup(function () use ($product, $abstractDiscountId) {
-                $this->debug("Deleting AbstractDiscount: $abstractDiscountId, Concrete Discount: " . $product->getIdDiscountConcrete());
-                $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($product->getIdDiscountConcrete())->delete();
-                $this->getDiscountQuery()->queryDiscountAbstract()->findByIdDiscountAbstract($abstractDiscountId)->delete();
+            $cleanupModule->_addCleanup(function () use ($discountId) {
+                $this->debug("Deleting Discount: $discountId");
+                $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($discountId)->delete();
             });
         }
-        return $product;
+        return $discountConfigurator->getDiscountGeneral();
     }
 
     /**

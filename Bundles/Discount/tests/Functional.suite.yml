@@ -4,6 +4,4 @@ modules:
     - \Testify\Module\Environment
     - \Config\Module\ConfigInit
     - \Propel\Module\PropelInstall
-    - \Propel\Module\Database
-    - \Transfer\Module\TransferGenerate
-    - \Discount\Module\Functional
+    - \Propel\Helper\Transaction

@@ -1,7 +1,7 @@
 <?php
-namespace Acceptance\Discount\Zed\PageObject;
+namespace Discount\PageObject;
 
-use ZedAcceptanceTester;
+use Discount\ZedPresentationTester;
 
 class DiscountViewPage
 {
@@ -18,7 +18,7 @@ class DiscountViewPage
      */
     protected $createPage;
 
-    public function __construct(ZedAcceptanceTester $i)
+    public function __construct(ZedPresentationTester $i)
     {
         $this->tester = $i;
     }

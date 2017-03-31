@@ -7,7 +7,10 @@
 
 namespace ZedPresentation\Discount\Zed;
 
+use Codeception\Util\Locator;
+use Discount\PageObject\DiscountEditPage;
 use Discount\PageObject\DiscountListPage;
+use Discount\PageObject\DiscountViewPage;
 use Discount\ZedPresentationTester;
 
 /**
@@ -18,30 +21,32 @@ use Discount\ZedPresentationTester;
 class DiscountListCest
 {
     /**
-     * @param \ZedAcceptanceTester $i
-     *
+     * @param ZedPresentationTester$i
+     * @param DiscountEditPage $editPage
+     * @param DiscountViewPage $viewPage
      * @return void
      */
-    public function discountInList(ZedAcceptanceTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
+    public function showADiscountInList(ZedPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
     {
         $name = 'Works as test discount';
-        $discountId = $i->haveDiscount(['displayName' => $name]);
-        $firstTableRow = Locator::firstElement(DiscountListPage::DATA_TABLE_ROW);
+        $discount = $i->haveDiscount(['displayName' => $name]);
         $i->amOnPage(DiscountListPage::URL);
-        $i->waitForElementVisible($firstTableRow);
+
+        $firstTableRow = Locator::firstElement(DiscountListPage::DATA_TABLE_ROW);
+        $i->waitForElementVisible($firstTableRow,3);
         $i->see($name, $firstTableRow);
         $i->see('Edit', $firstTableRow);
         $i->see('View', $firstTableRow);
         $i->see('Deactivate', $firstTableRow);
         $i->amGoingTo('open edit page for discount');
         $i->click('Edit', $firstTableRow);
-        $i->seeInCurrentUrl($editPage->url($discountId));
+        $i->seeInCurrentUrl($editPage->url($discount->getIdDiscount()));
         $i->see('Edit discount', 'h2');
         $i->amGoingTo('open view page for discount');
         $i->amOnPage(DiscountListPage::URL);
         $i->waitForElementVisible($firstTableRow);
         $i->click('View', $firstTableRow);
-        $i->seeInCurrentUrl($viewPage->url($discountId));
+        $i->seeInCurrentUrl($viewPage->url($discount->getIdDiscount()));
         $i->see('View discount', 'h2');
         $i->see($name);
     }
@@ -54,9 +59,6 @@ class DiscountListCest
      */
     public function testPageShouldShowList(ZedPresentationTester $i)
     {
-        $i->wantTo('See a list of created discounts');
-        $i->expect('A grid with discounts is shown');
-
         $i->amOnPage(DiscountListPage::URL);
         $i->seeElement(DiscountListPage::SELECTOR_DATA_TABLE);
     }

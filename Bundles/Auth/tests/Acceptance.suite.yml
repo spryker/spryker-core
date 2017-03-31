@@ -7,3 +7,5 @@ modules:
 
         - \Application\Module\Yves
         - \Application\Module\Zed
+coverage:
+    enabled: false

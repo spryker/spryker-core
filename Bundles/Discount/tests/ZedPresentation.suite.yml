@@ -1,8 +1,9 @@
 class_name: ZedPresentationTester
 modules:
   enabled:
-    - \Testify\Module\Environment
+    - \Testify\Helper\Environment
     - \Config\Module\ConfigInit
+    - \Testify\Helper\Locator
     - \Propel\Module\PropelInstall
     - WebDriver:
         url: ''
@@ -10,7 +11,7 @@ modules:
         window_size: 1920x1080
         host: 0.0.0.0
         restart: false
-    - \Propel\Module\Database
-    - \Transfer\Module\TransferGenerate
+    - \Discount\Helper\DiscountData
+    - \Testify\Helper\DataCleanup
     - \Application\Module\Zed
 

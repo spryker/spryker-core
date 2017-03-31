@@ -1,5 +1,5 @@
 <?php
-namespace Acceptance\Discount\Zed\PageObject;
+namespace Discount\PageObject;
 
 class DiscountListPage
 {
