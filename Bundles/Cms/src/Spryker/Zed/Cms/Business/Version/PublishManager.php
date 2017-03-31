@@ -30,12 +30,11 @@ class PublishManager implements PublishManagerInterface
 
     /**
      * @param int $idCmsPage
-     * @param string $username
      *
      * @throws \Exception
      * @return CmsPageVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage, $username)
+    public function publishAndVersionCmsPage($idCmsPage)
     {
         $cmsPageArray = $this->queryContainer->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)->find()->getFirst();
 
@@ -45,7 +44,6 @@ class PublishManager implements PublishManagerInterface
 
         return $this->saveCmsPageVersion(
             $idCmsPage,
-            $username,
             json_encode($cmsPageArray),
             $this->generateCmsPageVersion($idCmsPage)
         );
@@ -69,18 +67,16 @@ class PublishManager implements PublishManagerInterface
 
     /**
      * @param int $idCmsPage
-     * @param string $username
      * @param string $data
      * @param int $versionNumber
      *
      * @return CmsPageVersionTransfer
      */
-    protected function saveCmsPageVersion($idCmsPage, $username, $data, $versionNumber)
+    protected function saveCmsPageVersion($idCmsPage, $data, $versionNumber)
     {
         $cmsPageVersionEntity = new SpyCmsPageVersion();
         $cmsPageVersionEntity->setFkCmsPage($idCmsPage);
         $cmsPageVersionEntity->setData($data);
-        $cmsPageVersionEntity->setUsername($username);
         $cmsPageVersionEntity->setVersion($versionNumber);
         $cmsPageVersionEntity->setVersionName(sprintf('v. %d', $versionNumber));
 

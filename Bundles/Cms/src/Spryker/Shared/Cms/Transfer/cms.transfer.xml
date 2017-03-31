@@ -104,7 +104,6 @@
         <property name="version" type="int" />
         <property name="versionName" type="string" />
         <property name="data" type="string" />
-        <property name="username" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
     </transfer>

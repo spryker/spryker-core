@@ -100,7 +100,6 @@
         <column name="version" type="INTEGER" required="true"/>
         <column name="version_name" type="VARCHAR" size="255"/>
         <column name="data" type="LONGVARCHAR"/>
-        <column name="username" type="VARCHAR" size="255" />
         <foreign-key name="spy_cms_page_version-fk_cms_page" foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_cms_page"/>
         </foreign-key>

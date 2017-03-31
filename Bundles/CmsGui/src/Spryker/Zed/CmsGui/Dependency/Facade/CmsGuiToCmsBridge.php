@@ -130,13 +130,12 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 
     /**
      * @param int $idCmsPage
-     * @param string $username
      *
      * @return CmsPageVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage, $username)
+    public function publishAndVersionCmsPage($idCmsPage)
     {
-        return $this->cmsFacade->publishAndVersionCmsPage($idCmsPage, $username);
+        return $this->cmsFacade->publishAndVersionCmsPage($idCmsPage);
     }
 
     /**

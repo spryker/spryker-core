@@ -410,10 +410,9 @@ interface CmsFacadeInterface
      * @api
      *
      * @param int $idCmsPage
-     * @param string $username
      *
      * @return CmsPageVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage, $username);
+    public function publishAndVersionCmsPage($idCmsPage);
 
 }
