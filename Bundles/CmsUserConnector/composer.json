@@ -1,0 +1,36 @@
+{
+  "name": "spryker/cms-user-connector",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/cms": "^5.0.0",
+    "spryker/user": "^3.0.0",
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "description": "CmsUserConnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  }
+}
