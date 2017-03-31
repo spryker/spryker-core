@@ -11,13 +11,13 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 
 /**
- * @group Spryker
- * @group Zed
- * @group Communication
+ * Auto-generated group annotations
+ * @group Discount
+ * @group ZedCommunication
  * @group Plugin
+ * @group Calculator
  * @group FixedPluginTest
- *
- * @group Functional
+ * Add your own group annotations below this line
  */
 class FixedPluginTest extends Test
 {

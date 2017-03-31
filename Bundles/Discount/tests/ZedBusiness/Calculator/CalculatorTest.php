@@ -8,43 +8,42 @@
 namespace ZedBusiness\Calculator;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
+use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Discount\DiscountDependencyProvider;
-use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
-use Spryker\Zed\Discount\Business\Exception\CalculatorException;
-use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 /**
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
  * @group Discount
- * @group Business
+ * @group ZedBusiness
  * @group Calculator
  * @group CalculatorTest
+ * Add your own group annotations below this line
  */
 class CalculatorTest extends Test
 {
@@ -289,7 +288,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPluginMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null $calculatorPluginMock
      *
      * @return array
      */
@@ -320,6 +319,7 @@ class CalculatorTest extends Test
     {
         return new LogicalComparators();
     }
+
     /**
      * @return void
      */

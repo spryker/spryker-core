@@ -1,10 +1,5 @@
 <?php
 
-/**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
-
 namespace ZedPresentation\Discount\Zed;
 
 use Codeception\Util\Locator;
@@ -14,16 +9,22 @@ use Discount\PageObject\DiscountViewPage;
 use Discount\ZedPresentationTester;
 
 /**
- * @group Acceptance
+ * Auto-generated group annotations
+ * @group Discount
+ * @group ZedPresentation
+ * @group Discount
  * @group Zed
  * @group DiscountListCest
+ * Add your own group annotations below this line
  */
 class DiscountListCest
 {
+
     /**
-     * @param ZedPresentationTester$i
-     * @param DiscountEditPage $editPage
-     * @param DiscountViewPage $viewPage
+     * @param \Discount\ZedPresentationTester $i
+     * @param \Discount\PageObject\DiscountEditPage $editPage
+     * @param \Discount\PageObject\DiscountViewPage $viewPage
+     *
      * @return void
      */
     public function showADiscountInList(ZedPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
@@ -33,7 +34,7 @@ class DiscountListCest
         $i->amOnPage(DiscountListPage::URL);
 
         $firstTableRow = Locator::firstElement(DiscountListPage::DATA_TABLE_ROW);
-        $i->waitForElementVisible($firstTableRow,3);
+        $i->waitForElementVisible($firstTableRow, 3);
         $i->see($name, $firstTableRow);
         $i->see('Edit', $firstTableRow);
         $i->see('View', $firstTableRow);
@@ -50,7 +51,6 @@ class DiscountListCest
         $i->see('View discount', 'h2');
         $i->see($name);
     }
-
 
     /**
      * @param \Discount\ZedPresentationTester $i

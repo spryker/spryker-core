@@ -2,10 +2,7 @@
 namespace Discount\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\DiscountAbstractBuilder;
-use Generated\Shared\DataBuilder\DiscountConcreteBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Testify\Helper\DataCleanup;
 use Testify\Helper\Locator;
 
@@ -26,7 +23,6 @@ class DiscountData extends Module
             ->withDiscountCondition()
             ->withDiscountCalculator()
             ->build();
-        
 
         $this->debugSection('Discount', $discountConfigurator->toArray());
         $discountId = $discountFacade->saveDiscount($discountConfigurator);

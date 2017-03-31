@@ -10,13 +10,12 @@ namespace ZedCommunication\Controller;
 use Discount\ZedCommunicationTester;
 
 /**
- * @group Spryker
- * @group Zed
- * @group Communication
+ * Auto-generated group annotations
+ * @group Discount
+ * @group ZedCommunication
  * @group Controller
  * @group IndexControllerCest
- *
- * @group Functional
+ * Add your own group annotations below this line
  */
 class IndexControllerCest
 {

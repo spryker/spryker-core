@@ -1,4 +1,5 @@
 <?php
+
 namespace Discount\PageObject;
 
 use Discount\ZedPresentationTester;
@@ -18,6 +19,10 @@ class DiscountEditPage
      */
     protected $createPage;
 
+    /**
+     * @param \Discount\ZedPresentationTester $i
+     * @param \Discount\PageObject\DiscountCreatePage $createPage
+     */
     public function __construct(ZedPresentationTester $i, DiscountCreatePage $createPage)
     {
         $this->tester = $i;
@@ -25,6 +30,8 @@ class DiscountEditPage
     }
 
     /**
+     * @param int|string $id
+     *
      * @return void
      */
     public function open($id)
@@ -32,6 +39,11 @@ class DiscountEditPage
         $this->tester->amOnPage($this->url($id));
     }
 
+    /**
+     * @param int|string $id
+     *
+     * @return string
+     */
     public function url($id)
     {
         return static::URL . "?id-discount=$id";

@@ -29,14 +29,13 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
  * @group Discount
+ * @group ZedBusiness
  * @group Business
  * @group Facade
  * @group DiscountFacadeTest
- *
- * @group Functional
+ * Add your own group annotations below this line
  */
 class DiscountFacadeTest extends Test
 {

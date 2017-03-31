@@ -9,15 +9,14 @@ namespace ZedCommunication\Plugin\Calculator;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 
-
 /**
- * @group Spryker
- * @group Zed
- * @group Communication
+ * Auto-generated group annotations
+ * @group Discount
+ * @group ZedCommunication
  * @group Plugin
- * @group FixedPluginTest
- *
- * @group Functional
+ * @group Calculator
+ * @group PercentagePluginTest
+ * Add your own group annotations below this line
  */
 class PercentagePluginTest extends Test
 {

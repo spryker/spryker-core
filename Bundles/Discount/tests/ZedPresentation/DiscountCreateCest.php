@@ -11,11 +11,11 @@ use Discount\PageObject\DiscountCreatePage;
 use Discount\ZedPresentationTester;
 
 /**
- * @group Acceptance
- * @group Zed
+ * Auto-generated group annotations
+ * @group Discount
+ * @group ZedPresentation
  * @group DiscountCreateCest
- *
- * @group ZedLogin
+ * Add your own group annotations below this line
  */
 class DiscountCreateCest
 {

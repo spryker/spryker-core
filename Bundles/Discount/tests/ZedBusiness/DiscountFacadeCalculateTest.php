@@ -22,14 +22,12 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
  * @group Discount
- * @group Business
+ * @group ZedBusiness
  * @group Facade
  * @group DiscountFacadeCalculateTest
- *
- * @group Functional
+ * Add your own group annotations below this line
  */
 class DiscountFacadeCalculateTest extends Test
 {

@@ -21,7 +21,12 @@ class Zed extends Infrastructure
      */
     private static $alreadyLoggedIn = false;
 
-    protected $config = ['login' => true];
+    /**
+     * @var array
+     */
+    protected $config = [
+        'login' => true,
+    ];
 
     /**
      * @param \Codeception\TestInterface $test
