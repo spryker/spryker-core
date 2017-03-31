@@ -10,3 +10,6 @@ modules:
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \ProductCategory\Module\Assign
+
+coverage:
+  enabled: false

@@ -10,3 +10,6 @@ modules:
         - \Application\Module\Yves
         - \Application\Module\Zed
         - Asserts
+
+coverage:
+  enabled: false

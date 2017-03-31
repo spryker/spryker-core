@@ -11,3 +11,6 @@ modules:
         - \Application\Module\Zed
         - \Sales\Helper\Sales
         - Asserts
+
+coverage:
+  enabled: false

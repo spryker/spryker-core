@@ -8,5 +8,6 @@ modules:
         - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
+
 coverage:
-    enabled: false
+  enabled: false

@@ -10,3 +10,6 @@ modules:
     - \Testify\Module\Environment
     - \Application\Module\Yves
     - \Application\Module\Zed
+
+coverage:
+  enabled: false

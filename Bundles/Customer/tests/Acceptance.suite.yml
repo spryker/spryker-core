@@ -9,3 +9,6 @@ modules:
         - \Propel\Helper\Connection
         - \Application\Module\Zed
         - Asserts
+
+coverage:
+  enabled: false

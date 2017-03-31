@@ -14,3 +14,6 @@ modules:
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database
         - Asserts
+
+coverage:
+  enabled: false
