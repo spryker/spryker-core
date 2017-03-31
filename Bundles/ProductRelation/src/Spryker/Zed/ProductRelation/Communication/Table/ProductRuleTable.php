@@ -15,14 +15,12 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
-use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
-class ProductRuleTable extends AbstractTable
+class ProductRuleTable extends AbstractProductTable
 {
 
     const COL_ACTION = 'action';
@@ -332,21 +330,6 @@ class ProductRuleTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             static::COL_CATEGORY_NAME,
         ]);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return string
-     */
-    protected function getStatusLabel(array $data)
-    {
-        $statusAggregation = explode(',', $data[ProductRelationQueryContainer::COL_IS_ACTIVE_AGGREGATION]);
-        if (in_array('false', $statusAggregation, true)) {
-            return '<span class="label label-danger">Inactive</span>';
-        }
-
-        return '<span class="label label-info">Active</span>';
     }
 
 }

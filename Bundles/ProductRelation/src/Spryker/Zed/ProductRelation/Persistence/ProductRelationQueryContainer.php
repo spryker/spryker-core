@@ -322,8 +322,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
         return $this->getRulePropelQuery($productRelationTransfer)
          ->clearSelectColumns()
          ->withColumn(
-            'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-            static::COL_IS_ACTIVE_AGGREGATION
+             'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+             static::COL_IS_ACTIVE_AGGREGATION
          )
          ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
          ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)

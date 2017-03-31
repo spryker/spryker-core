@@ -164,6 +164,9 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
         $productAbstractIds = [];
         $quoteTransfer = $this->extractQuoteTransfer($parameters);
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                continue;
+            }
             $productAbstractIds[$itemTransfer->getIdProductAbstract()] = $itemTransfer->getIdProductAbstract();
         }
 
