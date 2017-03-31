@@ -45,13 +45,12 @@ class ContainerGlobals
     {
         if ($onlyFor) {
             static::$onlyFor[$onlyFor] = [
-                $key => $value
+                $key => $value,
             ];
             return;
         }
 
         static::$containerGlobals[$key] = $value;
-
     }
 
     /**
