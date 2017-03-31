@@ -6,8 +6,9 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
-use Generated\Shared\Transfer\CmsPageVersionTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsPageVersion;
+use Generated\Shared\Transfer\CmsVersionTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PublishManager implements PublishManagerInterface
@@ -21,32 +22,45 @@ class PublishManager implements PublishManagerInterface
     protected $queryContainer;
 
     /**
-     * @param CmsQueryContainerInterface $queryContainer
+     * @var CmsVersionPostSavePluginInterface[]
      */
-    public function __construct(CmsQueryContainerInterface $queryContainer)
+    protected $postSavePlugins = [];
+
+    /**
+     * @param CmsQueryContainerInterface $queryContainer
+     * @param CmsVersionPostSavePluginInterface[] $userPlugins
+     */
+    public function __construct(CmsQueryContainerInterface $queryContainer, array $userPlugins)
     {
         $this->queryContainer = $queryContainer;
+        $this->postSavePlugins = $userPlugins;
     }
 
     /**
      * @param int $idCmsPage
      *
      * @throws \Exception
-     * @return CmsPageVersionTransfer
+     * @return CmsVersionTransfer
      */
     public function publishAndVersionCmsPage($idCmsPage)
     {
         $cmsPageArray = $this->queryContainer->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)->find()->getFirst();
 
         if ($cmsPageArray === null) {
-            throw new \Exception('There is no Cms page with this id:'. $idCmsPage);
+            throw new \Exception('There is no CMS page with this id:'. $idCmsPage);
         }
 
-        return $this->saveCmsPageVersion(
+        $cmsVersionTransfer = $this->saveCmsVersion(
             $idCmsPage,
             json_encode($cmsPageArray),
-            $this->generateCmsPageVersion($idCmsPage)
+            $this->generateCmsVersion($idCmsPage)
         );
+
+        foreach ($this->postSavePlugins as $userPlugin) {
+            $cmsVersionTransfer = $userPlugin->postSave($cmsVersionTransfer);
+        }
+
+        return $cmsVersionTransfer;
     }
 
     /**
@@ -54,15 +68,15 @@ class PublishManager implements PublishManagerInterface
      *
      * @return int
      */
-    protected function generateCmsPageVersion($idCmsPage)
+    protected function generateCmsVersion($idCmsPage)
     {
-        $cmsPageVersion = $this->queryContainer->queryCmsPageVersionByIdPage($idCmsPage)->findOne();
+        $cmsVersionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
 
-        if ($cmsPageVersion === null) {
+        if ($cmsVersionEntity === null) {
             return self::DEFAULT_VERSION_NUMBER;
         }
 
-        return $cmsPageVersion->getVersion() + 1;
+        return $cmsVersionEntity->getVersion() + 1;
     }
 
     /**
@@ -70,31 +84,31 @@ class PublishManager implements PublishManagerInterface
      * @param string $data
      * @param int $versionNumber
      *
-     * @return CmsPageVersionTransfer
+     * @return CmsVersionTransfer
      */
-    protected function saveCmsPageVersion($idCmsPage, $data, $versionNumber)
+    protected function saveCmsVersion($idCmsPage, $data, $versionNumber)
     {
-        $cmsPageVersionEntity = new SpyCmsPageVersion();
-        $cmsPageVersionEntity->setFkCmsPage($idCmsPage);
-        $cmsPageVersionEntity->setData($data);
-        $cmsPageVersionEntity->setVersion($versionNumber);
-        $cmsPageVersionEntity->setVersionName(sprintf('v. %d', $versionNumber));
+        $cmsVersionEntity = new SpyCmsVersion();
+        $cmsVersionEntity->setFkCmsPage($idCmsPage);
+        $cmsVersionEntity->setData($data);
+        $cmsVersionEntity->setVersion($versionNumber);
+        $cmsVersionEntity->setVersionName(sprintf('v. %d', $versionNumber));
 
-        $cmsPageVersionEntity->save();
+        $cmsVersionEntity->save();
 
-        return $this->convertToCmsPageVersionTransfer($cmsPageVersionEntity);
+        return $this->convertToCmsVersionTransfer($cmsVersionEntity);
     }
 
     /**
-     * @param SpyCmsPageVersion $cmsPageVersionEntity
+     * @param SpyCmsVersion $cmsVersionEntity
      *
-     * @return CmsPageVersionTransfer
+     * @return CmsVersionTransfer
      */
-    protected function convertToCmsPageVersionTransfer(SpyCmsPageVersion $cmsPageVersionEntity)
+    protected function convertToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
     {
-        $cmsPageVersionTransfer = new CmsPageVersionTransfer();
-        $cmsPageVersionTransfer->fromArray($cmsPageVersionEntity->toArray(), true);
+        $cmsVersionTransfer = new CmsVersionTransfer();
+        $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
 
-        return $cmsPageVersionTransfer;
+        return $cmsVersionTransfer;
     }
 }

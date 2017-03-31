@@ -98,8 +98,8 @@
         <property name="fkLocale" type="int" />
     </transfer>
 
-    <transfer name="CmsPageVersion">
-        <property name="idCmsPageVersion" type="int" />
+    <transfer name="CmsVersion">
+        <property name="idCmsVersion" type="int" />
         <property name="fkCmsPage" type="int" />
         <property name="version" type="int" />
         <property name="versionName" type="string" />

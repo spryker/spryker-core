@@ -194,7 +194,18 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createPublishManager()
     {
-        return new PublishManager($this->getQueryContainer());
+        return new PublishManager(
+            $this->getQueryContainer(),
+            $this->getCmsVersionPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[]
+     */
+    protected function getCmsVersionPostSavePlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_POST_SAVE);
     }
 
     /**

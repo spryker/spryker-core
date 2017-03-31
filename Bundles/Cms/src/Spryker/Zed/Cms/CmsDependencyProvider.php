@@ -28,6 +28,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_LOCALE = 'locale query container';
 
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const PLUGINS_CMS_VERSION_POST_SAVE = 'cms version post save plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -78,6 +79,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
+        $container[self::PLUGINS_CMS_VERSION_POST_SAVE] = function (Container $container) {
+            return $this->getPostSavePlugins($container);
+        };
+
         return $container;
     }
 
@@ -105,4 +110,13 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         };
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[]
+     */
+    protected function getPostSavePlugins(Container $container)
+    {
+        return [];
+    }
 }

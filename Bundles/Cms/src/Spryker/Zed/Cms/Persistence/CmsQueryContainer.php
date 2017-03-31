@@ -12,10 +12,10 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageVersionTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsPageVersionQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
@@ -657,7 +657,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idPage
      *
-     * @return SpyCmsPageQuery
+     * @return SpyCmsPageQuery|ModelCriteria
      */
     public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage)
     {
@@ -681,14 +681,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idPage
      *
-     * @return SpyCmsPageVersionQuery
+     * @return SpyCmsVersionQuery
      */
-    public function queryCmsPageVersionByIdPage($idPage)
+    public function queryCmsVersionByIdPage($idPage)
     {
         return $this->getFactory()
-            ->createSpyCmsPageVersionQuery()
+            ->createSpyCmsVersionQuery()
             ->filterByFkCmsPage($idPage)
-            ->orderBy(SpyCmsPageVersionTableMap::COL_VERSION,Criteria::DESC);
+            ->orderBy(SpyCmsVersionTableMap::COL_VERSION,Criteria::DESC);
     }
 
 }

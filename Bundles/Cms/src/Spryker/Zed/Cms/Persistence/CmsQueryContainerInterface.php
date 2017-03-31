@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
-use Orm\Zed\Cms\Persistence\SpyCmsPageVersionQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
@@ -261,10 +261,10 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage);
 
     /**
-     * @param $idPage
+     * @param int $idPage
      *
-     * @return SpyCmsPageVersionQuery
+     * @return SpyCmsVersionQuery
      */
-    public function queryCmsPageVersionByIdPage($idPage);
+    public function queryCmsVersionByIdPage($idPage);
 
 }

@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cms\Business\Version;
+namespace Spryker\Zed\Cms\Dependency;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 
-interface PublishManagerInterface
+interface CmsVersionPostSavePluginInterface
 {
 
     /**
-     * @param int $idCmsPage
+     * @param CmsVersionTransfer $cmsVersionTransfer
      *
      * @return CmsVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage);
-
+    public function postSave(CmsVersionTransfer $cmsVersionTransfer);
 }
