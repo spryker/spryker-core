@@ -84,8 +84,6 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @group current
-     *
      * @return void
      */
     public function testCheckoutSuccessfully()
@@ -107,8 +105,6 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @group current
-     *
      * @return void
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
@@ -133,8 +129,6 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @group current
-     *
      * @return void
      */
     public function testCheckoutCreatesOrderItems()
