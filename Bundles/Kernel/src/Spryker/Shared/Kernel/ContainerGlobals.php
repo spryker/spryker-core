@@ -196,12 +196,4 @@ class ContainerGlobals implements ArrayAccess
         return array_keys(self::$containerGlobals);
     }
 
-    /**
-     * @return void
-     */
-    public function reset()
-    {
-        static::$containerGlobals = [];
-    }
-
 }

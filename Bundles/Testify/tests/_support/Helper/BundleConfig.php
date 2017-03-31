@@ -22,7 +22,7 @@ class BundleConfig extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param null|array $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {

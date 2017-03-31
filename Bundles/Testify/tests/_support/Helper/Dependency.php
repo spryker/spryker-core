@@ -9,13 +9,13 @@ namespace Testify\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use Spryker\Shared\Kernel\ContainerGlobals;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 
 class Dependency extends Module
 {
 
     /**
-     * @var \Spryker\Shared\Kernel\ContainerGlobals
+     * @var \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
      */
     private $containerGlobals;
 
@@ -30,12 +30,13 @@ class Dependency extends Module
     /**
      * @param string $key
      * @param mixed $value
+     * @param null|string $onlyFor
      *
      * @return void
      */
-    public function setDependency($key, $value)
+    public function setDependency($key, $value, $onlyFor = null)
     {
-        $this->containerGlobals[$key] = $value;
+        $this->containerGlobals->set($key, $value, $onlyFor);
     }
 
     /**

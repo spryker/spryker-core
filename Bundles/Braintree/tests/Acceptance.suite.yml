@@ -6,6 +6,7 @@ modules:
             browser: chrome
             window_size: 1920x1080
 
+        - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Testify\Module\Environment

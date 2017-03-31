@@ -7,9 +7,7 @@
 
 namespace ZedCommunication\Controller;
 
-use Codeception\Util\Stub;
 use Customer\ZedCommunicationTester;
-use Spryker\Zed\Twig\TwigConfig;
 
 /**
  * Auto-generated group annotations

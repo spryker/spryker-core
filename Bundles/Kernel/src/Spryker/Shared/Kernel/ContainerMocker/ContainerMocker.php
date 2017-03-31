@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Kernel\ContainerMocker;
 
 use Spryker\Shared\Config\Environment;
-use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerInterface;
 
 trait ContainerMocker
@@ -26,7 +25,7 @@ trait ContainerMocker
         }
 
         $containerGlobals = new ContainerGlobals();
-        $containerMocks = $containerGlobals->getContainerGlobals();
+        $containerMocks = $containerGlobals->getContainerGlobals(get_class($this));
         if (count($containerMocks) === 0) {
             return $container;
         }
