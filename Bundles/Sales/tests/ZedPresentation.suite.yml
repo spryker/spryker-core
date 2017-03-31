@@ -13,3 +13,6 @@ modules:
         - \Application\Module\Zed
         - \Sales\Helper\ZedPresentation
         - \Sales\Helper\Sales
+
+coverage:
+  enabled: false
