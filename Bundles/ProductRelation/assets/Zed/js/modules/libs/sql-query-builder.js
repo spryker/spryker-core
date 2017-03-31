@@ -30,6 +30,7 @@ var SqlQueryBuilder = function(options) {
         );
         self.loadQuerySet();
         self.watchForQueryRuleUpdates();
+        self.updateTable()
         self.onFormSubmit();
     });
 };
@@ -107,15 +108,19 @@ SqlQueryBuilder.prototype.watchForQueryRuleUpdates = function()
 {
     var self = this;
 
-    this.queryBuilderElement.on('afterDevareGroup.queryBuilder afterDevareRule.queryBuilder afterUpdateRuleValue.queryBuilder	afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterApplyRuleFlags.queryBuilder afterUpdateGroupCondition.queryBuilder', function() {
-
-        var table = self.initializeRuleProductsTable();
-        var json = JSON.stringify(self.getQuerySet());
-
-        self.reloadQueryBuilderTable(table, json);
+    this.queryBuilderElement.on('afterAddGroup.queryBuilder afterAddRule.queryBuilder afterUpdateRuleValue.queryBuilder	afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterApplyRuleFlags.queryBuilder afterUpdateGroupCondition.queryBuilder', function() {
+        self.updateTable();
     });
 
 };
+
+SqlQueryBuilder.prototype.updateTable = function()
+{
+    var table = this.initializeRuleProductsTable();
+    var json = JSON.stringify(this.getQuerySet());
+
+    this.reloadQueryBuilderTable(table, json);
+}
 
 SqlQueryBuilder.prototype.initializeRuleProductsTable = function()
 {
