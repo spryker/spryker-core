@@ -31,7 +31,7 @@
  * THE SOFTWARE.
  */
 
-namespace Spryker\Shared\Kernel;
+namespace Spryker\Shared\Kernel\ContainerMocker;
 
 use ArrayAccess;
 use InvalidArgumentException;
@@ -194,6 +194,14 @@ class ContainerGlobals implements ArrayAccess
     public function keys()
     {
         return array_keys(self::$containerGlobals);
+    }
+
+    /**
+     * @return void
+     */
+    public function reset()
+    {
+        static::$containerGlobals = [];
     }
 
 }
