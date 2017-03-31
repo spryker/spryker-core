@@ -9,8 +9,7 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +22,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
+
+    use LoggerTrait;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
@@ -43,6 +44,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
         $apiController = function () use ($controller, $action, $request) {
             $requestTransfer = $this->getRequestTransfer($request);
+            $this->logRequest($requestTransfer);
 
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
@@ -57,6 +59,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
                 $responseTransfer->setMessage($e->getMessage());
                 $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
             }
+
+            $this->logResponse($responseTransfer);
 
             $responseObject = new Response();
             return $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
@@ -102,10 +106,44 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $headerData = $request->headers->all();
         $requestTransfer->setHeaderData($headerData);
 
+        if (strpos($request->headers->get('Content-Type'), 'application/json') === 0) {
+            $data = json_decode($request->getContent(), true);
+            $request->request->replace(is_array($data) && isset($data['data']) ? $data['data'] : []);
+        }
+
         $requestData = $request->request->all();
         $requestTransfer->setRequestData($requestData);
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param ApiRequestTransfer $requestTransfer
+     *
+     * @return void
+     */
+    protected function logRequest(ApiRequestTransfer $requestTransfer)
+    {
+        $this->getLogger()->info(sprintf(
+            'API request [%s %s]: %s',
+            $requestTransfer->getRequestType(),
+            $requestTransfer->getPath(),
+            print_r($requestTransfer, true)
+        ));
+    }
+
+    /**
+     * @param ApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function logResponse(ApiResponseTransfer $responseTransfer)
+    {
+        $this->getLogger()->info(sprintf(
+            'API response [code %s]: %s',
+            $responseTransfer->getCode(),
+            print_r($responseTransfer, true)
+        ));
     }
 
 }
