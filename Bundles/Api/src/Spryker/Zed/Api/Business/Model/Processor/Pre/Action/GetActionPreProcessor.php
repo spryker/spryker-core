@@ -21,7 +21,7 @@ class GetActionPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        $idResource = $apiRequestTransfer->getPath(); //TODO should be resource id
+        $idResource = $apiRequestTransfer->getPath();
 
         if ($action !== 'get') {
             return $apiRequestTransfer;

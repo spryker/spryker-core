@@ -114,6 +114,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestData = $request->request->all();
         $requestTransfer->setRequestData($requestData);
 
+        $requestTransfer->setRequestUri($serverData['REQUEST_URI']);
+
         return $requestTransfer;
     }
 
@@ -127,7 +129,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $this->getLogger()->info(sprintf(
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
-            $requestTransfer->getPath(),
+            $requestTransfer->getRequestUri(),
             print_r($requestTransfer, true)
         ));
     }
