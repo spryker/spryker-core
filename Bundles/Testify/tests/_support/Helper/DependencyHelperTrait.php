@@ -35,4 +35,5 @@ trait DependencyHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
+
 }

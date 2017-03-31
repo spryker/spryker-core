@@ -32,4 +32,5 @@ trait LocatorHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
+
 }
