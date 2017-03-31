@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Api\Communication\Controller;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 abstract class AbstractApiController extends AbstractController

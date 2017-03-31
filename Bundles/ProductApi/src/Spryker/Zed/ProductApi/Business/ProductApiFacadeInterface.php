@@ -18,7 +18,7 @@ interface ProductApiFacadeInterface
 {
 
     /**
-     * {@inheritdoc}
+     * Specification:
      *
      * @api
      *
@@ -29,7 +29,7 @@ interface ProductApiFacadeInterface
     public function addProduct(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * {@inheritdoc}
+     * Specification:
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface ProductApiFacadeInterface
     public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer);
 
     /**
-     * {@inheritdoc}
+     * Specification:
      *
      * @api
      *
@@ -52,7 +52,7 @@ interface ProductApiFacadeInterface
     public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer);
 
     /**
-     * {@inheritdoc}
+     * Specification:
      *
      * @api
      *
@@ -63,7 +63,7 @@ interface ProductApiFacadeInterface
     public function deleteProduct($idProduct);
 
     /**
-     * {@inheritdoc}
+     * Specification:
      *
      * @api
      *
@@ -72,6 +72,9 @@ interface ProductApiFacadeInterface
     public function findProducts(ApiRequestTransfer $apiRequestTransfer);
 
     /**
+     * Specification:
+     * - Validates the given API data and returns an array of errors if necessary.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer

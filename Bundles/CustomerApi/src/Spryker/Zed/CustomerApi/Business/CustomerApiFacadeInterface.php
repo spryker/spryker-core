@@ -81,4 +81,16 @@ interface CustomerApiFacadeInterface
      */
     public function findCustomers(ApiRequestTransfer $apiRequestTransfer);
 
+    /**
+     * Specification:
+     * - Validates the given API data and returns an array of errors if necessary.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return array
+     */
+    public function validate(ApiDataTransfer $apiDataTransfer);
+
 }

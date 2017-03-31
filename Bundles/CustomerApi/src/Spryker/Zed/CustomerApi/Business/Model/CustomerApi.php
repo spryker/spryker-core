@@ -138,6 +138,8 @@ class CustomerApi implements CustomerApiInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
+     * @throws \Spryker\Zed\Api\Business\Exception\OutOfBoundsException
+     *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
@@ -157,7 +159,7 @@ class CustomerApi implements CustomerApiInterface
         $apiPaginationTransfer->setTotal($count);
         $limit = $apiRequestTransfer->getFilter()->getPagination()->getLimit();
 
-        $pages = (int)ceil($count/ $limit);
+        $pages = (int)ceil($count / $limit);
         if ($pages < $apiPaginationTransfer->getPage()) {
             throw new OutOfBoundsException();
         }

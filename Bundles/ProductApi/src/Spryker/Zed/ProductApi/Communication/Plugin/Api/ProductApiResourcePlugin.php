@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface;
-use Spryker\Zed\ProductApi\ProductApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductApi\ProductApiConfig;
 
 /**
  * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
