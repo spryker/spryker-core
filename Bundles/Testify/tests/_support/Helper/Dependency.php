@@ -30,12 +30,13 @@ class Dependency extends Module
     /**
      * @param string $key
      * @param mixed $value
+     * @param null|string $onlyFor
      *
      * @return void
      */
-    public function setDependency($key, $value)
+    public function setDependency($key, $value, $onlyFor = null)
     {
-        $this->containerGlobals[$key] = $value;
+        $this->containerGlobals->set($key, $value, $onlyFor);
     }
 
     /**

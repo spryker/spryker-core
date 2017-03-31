@@ -25,7 +25,7 @@ trait ContainerMocker
         }
 
         $containerGlobals = new ContainerGlobals();
-        $containerMocks = $containerGlobals->getContainerGlobals();
+        $containerMocks = $containerGlobals->getContainerGlobals(get_class($this));
         if (count($containerMocks) === 0) {
             return $container;
         }
@@ -33,8 +33,6 @@ trait ContainerMocker
         foreach ($containerMocks as $key => $containerMock) {
             $container[$key] = $containerMock;
         }
-
-        $containerGlobals->reset();
 
         return $container;
     }

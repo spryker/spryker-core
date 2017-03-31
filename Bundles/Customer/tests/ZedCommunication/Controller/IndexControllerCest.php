@@ -6,8 +6,7 @@ use Codeception\Util\Stub;
 use Customer\ZedCommunicationTester;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
-use Spryker\Zed\Mail\Business\MailFacadeInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 
 /**
  * Auto-generated group annotations
@@ -26,17 +25,15 @@ class IndexControllerCest
      */
     public function _before(ZedCommunicationTester $i)
     {
-        $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
-
-        $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
+        $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $this->getMailFacadeMock());
     }
 
     /**
-     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface|object
+     * @return object|\Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
     private function getMailFacadeMock()
     {
-        return Stub::makeEmpty(MailFacadeInterface::class);
+        return Stub::makeEmpty(CustomerToMailInterface::class);
     }
 
     /**
