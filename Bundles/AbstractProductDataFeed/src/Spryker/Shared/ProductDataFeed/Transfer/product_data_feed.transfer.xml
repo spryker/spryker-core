@@ -3,11 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ProductDataFeed">
+    <transfer name="AbstractProductDataFeed">
         <property name="isJoinPrice" type="bool" />
         <property name="isJoinCategory" type="bool" />
         <property name="isJoinImage" type="bool" />
-        <property name="isJoinVariant" type="bool" />
+        <property name="isJoinProduct" type="bool" />
         <property name="isJoinOption" type="bool" />
         <property name="updatedFrom" type="string" />
         <property name="updatedTo" type="string" />

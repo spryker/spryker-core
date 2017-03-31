@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDataFeed;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
-class ProductDataFeedDependencyProvider extends AbstractBundleDependencyProvider
+class AbstractProductDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';

@@ -5,10 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDataFeed;
+namespace Spryker\Shared\AbstractProductDataFeed;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-
-class ProductDataFeedConfig extends AbstractBundleConfig
+interface AbstractProductDataFeedConstants
 {
 }

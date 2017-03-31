@@ -5,32 +5,32 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductDataFeed\Persistence;
+namespace Unit\Spryker\Zed\AbstractProductDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ProductDataFeedTransfer;
+use Generated\Shared\Transfer\AbstractProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer;
+use Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group ProductDataFeed
+ * @group AbstractProductDataFeed
  * @group Persistence
- * @group ProductDataFeedQueryContainerTest
+ * @group AbstractProductDataFeedQueryContainerTest
  */
-class ProductDataFeedQueryContainerTest extends Test
+class AbstractProductDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var \Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer
+     * @var \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer
      */
     protected $productDataFeedQueryContainer;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductDataFeedTransfer
+     * @var \Generated\Shared\Transfer\AbstractProductDataFeedTransfer
      */
     protected $productDataFeedTransfer;
 
@@ -51,7 +51,7 @@ class ProductDataFeedQueryContainerTest extends Test
     public function testGetProductDataFeedQuery()
     {
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
@@ -216,22 +216,22 @@ class ProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\ProductDataFeed\Persistence\ProductDataFeedQueryContainer
+     * @return \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer
      */
     protected function createProductDataFeedQueryContainer()
     {
         $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new ProductDataFeedQueryContainer($productQueryContainer);
+        $productDataFeedQueryContainer = new AbstractProductDataFeedQueryContainer($productQueryContainer);
 
         return $productDataFeedQueryContainer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductDataFeedTransfer
+     * @return \Generated\Shared\Transfer\AbstractProductDataFeedTransfer
      */
     protected function createProductDataFeedTransfer()
     {
-        $productDataFeedTransfer = new ProductDataFeedTransfer();
+        $productDataFeedTransfer = new AbstractProductDataFeedTransfer();
 
         return $productDataFeedTransfer;
     }
