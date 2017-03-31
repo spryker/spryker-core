@@ -130,7 +130,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
             $requestTransfer->getRequestUri(),
-            print_r($requestTransfer, true)
+            json_encode($requestTransfer->toArray())
         ));
     }
 
@@ -144,7 +144,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $this->getLogger()->info(sprintf(
             'API response [code %s]: %s',
             $responseTransfer->getCode(),
-            print_r($responseTransfer, true)
+            json_encode($responseTransfer->toArray())
         ));
     }
 
