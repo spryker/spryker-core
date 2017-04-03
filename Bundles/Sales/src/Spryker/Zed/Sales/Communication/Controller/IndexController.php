@@ -21,26 +21,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $result = (new \Spryker\Zed\DataFeed\Business\DataFeedFacade())
-            ->getPriceDataFeed(
-                (new \Generated\Shared\Transfer\DataFeedConditionTransfer())
-                    ->setLocale((new \Generated\Shared\Transfer\LocaleTransfer())->setIdLocale(46))
-                    ->setPagination((new \Generated\Shared\Transfer\DataFeedPaginationTransfer())->setLimit(20)->setOffset(0))
-                    ->setDateFilter((new \Generated\Shared\Transfer\DataFeedDateFilterTransfer()))
-                    ->setProductFeedJoin((new \Generated\Shared\Transfer\ProductFeedJoinTransfer())
-                        ->setIsJoinCategory(1)
-                        ->setIsJoinImage(1)
-                        ->setIsJoinOption(1)
-                        ->setIsJoinPrice(1)
-                        ->setIsJoinVariant(1)
-                    )
-                    ->setPriceFeedJoin((new \Generated\Shared\Transfer\PriceFeedJoinTransfer()))
-                    ->setStockFeedJoin((new \Generated\Shared\Transfer\StockFeedJoinTransfer()))
-                    ->setCategoryFeedJoin((new \Generated\Shared\Transfer\CategoryFeedJoinTransfer()))
-            );
-        var_dump(\GuzzleHttp\json_encode($result));
-        die;
-
         $table = $this->getFactory()->createOrdersTable();
 
         return [
