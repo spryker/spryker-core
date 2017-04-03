@@ -77,11 +77,11 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function deleteCustomer($idCustomer)
+    public function removeCustomer($idCustomer)
     {
         return $this->getFactory()
             ->createCustomerApi()
-            ->delete($idCustomer);
+            ->remove($idCustomer);
     }
 
     /**

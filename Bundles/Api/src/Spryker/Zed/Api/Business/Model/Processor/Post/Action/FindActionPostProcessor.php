@@ -17,6 +17,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 class FindActionPostProcessor implements PostProcessorInterface
 {
 
+    const QUERY_PAGE = 'page';
+
     /**
      * @var \Spryker\Zed\Api\ApiConfig
      */
@@ -39,7 +41,7 @@ class FindActionPostProcessor implements PostProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'find') {
+        if ($action !== ApiConfig::ACTION_INDEX) {
             return $apiResponseTransfer;
         }
         if ($apiResponseTransfer->getCode() !== null) {
@@ -66,7 +68,7 @@ class FindActionPostProcessor implements PostProcessorInterface
         $apiResponseTransfer->getMeta()->setLinks($links);
 
         $data = $apiResponseTransfer->getMeta()->getData();
-        $data['page'] = $pagination->getPage();
+        $data[self::QUERY_PAGE] = $pagination->getPage();
         $data['pages'] = $pagination->getPages();
         $data['records'] = count($apiResponseTransfer->getData());
         $data['records_per_page'] = $pagination->getLimit();
@@ -111,7 +113,7 @@ class FindActionPostProcessor implements PostProcessorInterface
      */
     protected function generateUri($resource, $page, $query)
     {
-        $query['page'] = $page;
+        $query[static::QUERY_PAGE] = $page;
         $url = (new Url())->generate($this->apiConfig->getBaseUri() . $resource, $query);
 
         return $url->build();

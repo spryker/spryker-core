@@ -40,7 +40,7 @@ class AddActionPostProcessor implements PostProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'add') {
+        if ($action !== ApiConfig::ACTION_CREATE) {
             return $apiResponseTransfer;
         }
         if ($apiResponseTransfer->getCode() !== null) {

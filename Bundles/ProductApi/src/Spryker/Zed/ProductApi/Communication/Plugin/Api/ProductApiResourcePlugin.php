@@ -58,9 +58,9 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idProduct)
+    public function remove($idProduct)
     {
-        return $this->getFacade()->deleteProduct($idProduct);
+        return $this->getFacade()->removeProduct($idProduct);
     }
 
     /**

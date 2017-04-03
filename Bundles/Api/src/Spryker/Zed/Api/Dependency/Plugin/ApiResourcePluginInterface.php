@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
@@ -21,13 +22,11 @@ interface ApiResourcePluginInterface
     public function getResourceName();
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function find(ApiRequestTransfer $apiRequestTransfer);
+    public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
      * @api
@@ -38,5 +37,29 @@ interface ApiResourcePluginInterface
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($id, ApiFilterTransfer $apiFilterTransfer);
+
+    /**
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function update($idCustomer, ApiDataTransfer $apiDataTransfer);
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function remove($idCustomer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function find(ApiRequestTransfer $apiRequestTransfer);
 
 }

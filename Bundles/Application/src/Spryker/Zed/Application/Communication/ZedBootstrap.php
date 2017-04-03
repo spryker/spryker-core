@@ -49,37 +49,33 @@ class ZedBootstrap
         }
 
         $this->enableHttpMethodParameterOverride();
+        $this->setUp();
 
-        $serviceProvider = $this->resolveUriToServiceProviderMap();
-        if ($serviceProvider) {
-            $this->registerServiceProvider($serviceProvider);
-            return $this->application;
-        }
+        return $this->application;
+    }
 
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
         $this->optimizeApp();
 
         // For BC
         if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
             $this->registerServiceProviderForInternalRequest();
 
-            return $this->application;
+            return;
         }
         // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
 
-            return $this->application;
+            return;
         }
 
         $this->registerServiceProvider();
         $this->addVariablesToTwig();
-
-        return $this->application;
-    }
-
-    protected function resolveUriToServiceProviderMap()
-    {
-        return null;
     }
 
     /**
@@ -123,6 +119,14 @@ class ZedBootstrap
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProvider()
     {
         return [];
     }

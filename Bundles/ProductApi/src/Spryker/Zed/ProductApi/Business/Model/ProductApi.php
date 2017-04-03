@@ -121,7 +121,7 @@ class ProductApi implements ProductApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idProductAbstract)
+    public function remove($idProductAbstract)
     {
         $deletedRows = $this->queryContainer
             ->queryProductAbstractById($idProductAbstract)

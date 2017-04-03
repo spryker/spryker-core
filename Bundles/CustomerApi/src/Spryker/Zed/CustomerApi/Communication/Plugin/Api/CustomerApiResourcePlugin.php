@@ -58,9 +58,9 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idCustomer)
+    public function remove($idCustomer)
     {
-        return $this->getFacade()->deleteCustomer($idCustomer);
+        return $this->getFacade()->removeCustomer($idCustomer);
     }
 
     /**

@@ -9,13 +9,14 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Post\Action;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 /**
  * Successful delete requests result in a 204 response code.
  * They also contain no body then.
  */
-class DeleteActionPostProcessor implements PostProcessorInterface
+class RemoveActionPostProcessor implements PostProcessorInterface
 {
 
     /**
@@ -27,7 +28,7 @@ class DeleteActionPostProcessor implements PostProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
         $action = $apiRequestTransfer->getResourceAction();
-        if ($action !== 'delete') {
+        if ($action !== ApiConfig::ACTION_DELETE) {
             return $apiResponseTransfer;
         }
         if ($apiResponseTransfer->getCode() !== null) {

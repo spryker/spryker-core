@@ -69,7 +69,7 @@
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="id" type="int"/>
+        <property name="id" type="string"/>
         <property name="data" type="array"/>
     </transfer>
 

@@ -16,6 +16,12 @@ class ApiConfig extends AbstractBundleConfig
 
     const FORMAT_TYPE = 'json';
 
+    const ACTION_CREATE = 'add';
+    const ACTION_READ = 'get';
+    const ACTION_UPDATE = 'update';
+    const ACTION_DELETE = 'remove';
+    const ACTION_INDEX = 'find';
+
     /**
      * @return int
      */

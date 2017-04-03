@@ -67,7 +67,7 @@ interface CustomerApiFacadeInterface
      *
      * @return void
      */
-    public function deleteCustomer($idCustomer);
+    public function removeCustomer($idCustomer);
 
     /**
      * Specification:

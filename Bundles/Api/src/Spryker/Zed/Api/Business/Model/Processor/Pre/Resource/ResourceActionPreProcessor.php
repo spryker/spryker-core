@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -35,15 +36,15 @@ class ResourceActionPreProcessor implements PreProcessorInterface
 
         $resourceAction = null;
         if ($identifier === '' && $requestType === 'GET') {
-            $resourceAction = 'find';
+            $resourceAction = ApiConfig::ACTION_INDEX;
         } if ($identifier !== '' && $requestType === 'GET') {
-            $resourceAction = 'get';
+            $resourceAction = ApiConfig::ACTION_READ;
         } elseif ($identifier === '' && $requestType === 'POST') {
-            $resourceAction = 'add';
+            $resourceAction = ApiConfig::ACTION_CREATE;
         } elseif ($identifier !== '' && $requestType === 'PATCH') {
-            $resourceAction = 'update';
+            $resourceAction = ApiConfig::ACTION_UPDATE;
         } elseif ($identifier !== '' && $requestType === 'DELETE') {
-            $resourceAction = 'delete';
+            $resourceAction = ApiConfig::ACTION_DELETE;
         }
         if ($resourceAction === null) {
             throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, 400);

@@ -45,11 +45,12 @@ interface ProductApiFacadeInterface
      *
      * @api
      *
-     * @param $idProductAbstract
+     * @param int $idProduct
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer);
+    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer);
 
     /**
      * Specification:
@@ -60,7 +61,7 @@ interface ProductApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function deleteProduct($idProduct);
+    public function removeProduct($idProduct);
 
     /**
      * Specification:
@@ -74,7 +75,7 @@ interface ProductApiFacadeInterface
     /**
      * Specification:
      * - Validates the given API data and returns an array of errors if necessary.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer

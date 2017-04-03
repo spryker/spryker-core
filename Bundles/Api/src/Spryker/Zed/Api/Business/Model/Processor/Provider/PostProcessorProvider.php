@@ -9,7 +9,7 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Provider;
 
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor;
 
 class PostProcessorProvider implements PostProcessorProviderInterface
 {
@@ -32,15 +32,17 @@ class PostProcessorProvider implements PostProcessorProviderInterface
      */
     public function buildAddActionPostProcessor()
     {
-        return new AddActionPostProcessor();
+        return new AddActionPostProcessor(
+            $this->apiConfig
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
      */
-    public function buildDeleteActionPostProcessor()
+    public function buildRemoveActionPostProcessor()
     {
-        return new DeleteActionPostProcessor();
+        return new RemoveActionPostProcessor();
     }
 
 }

@@ -44,7 +44,7 @@ interface ProductApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idProductAbstract);
+    public function remove($idProductAbstract);
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

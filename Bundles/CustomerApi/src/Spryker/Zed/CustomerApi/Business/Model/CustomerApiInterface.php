@@ -44,7 +44,7 @@ interface CustomerApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idCustomer);
+    public function remove($idCustomer);
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

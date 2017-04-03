@@ -25,6 +25,9 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
     use LoggerTrait;
 
+    const HTTP_CODE_SUCCESS = 200;
+    const HTTP_CODE_INTERNAL_ERROR = 500;
+
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
@@ -78,8 +81,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function resolveStatusCode($code)
     {
-        if ($code < 200 || $code > 500) {
-            return 500;
+        if ($code < static::HTTP_CODE_SUCCESS || $code > static::HTTP_CODE_INTERNAL_ERROR) {
+            return static::HTTP_CODE_INTERNAL_ERROR;
         }
 
         return $code;

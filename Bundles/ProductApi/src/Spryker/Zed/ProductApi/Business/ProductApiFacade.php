@@ -56,15 +56,17 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
+     * @param int $idProduct
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer)
+    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->update($idProductAbstract, $apiDataTransfer);
+            ->update($idProduct, $apiDataTransfer);
     }
 
     /**
@@ -76,11 +78,11 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function deleteProduct($idProduct)
+    public function removeProduct($idProduct)
     {
         return $this->getFactory()
             ->createProductApi()
-            ->delete($idProduct);
+            ->remove($idProduct);
     }
 
     /**

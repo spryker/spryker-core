@@ -17,6 +17,8 @@ use Spryker\Zed\Api\ApiConfig;
 class PathPreProcessor implements PreProcessorInterface
 {
 
+    const SERVER_DOCUMENT_URI = 'DOCUMENT_URI';
+
     /**
      * Maps the DOCUMENT_URI to the path omitting the base part.
      *
@@ -26,8 +28,7 @@ class PathPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        // PUT orders/1/events/foobar/item/5
-        $path = $apiRequestTransfer->getServerData()['DOCUMENT_URI'];
+        $path = $apiRequestTransfer->getServerData()[static::SERVER_DOCUMENT_URI];
         if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) === 0) {
             $path = substr($path, strlen(ApiConfig::ROUTE_PREFIX_API_REST));
         }

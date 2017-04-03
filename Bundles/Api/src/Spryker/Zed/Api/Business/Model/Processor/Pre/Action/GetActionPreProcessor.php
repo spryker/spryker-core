@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class GetActionPreProcessor implements PreProcessorInterface
@@ -23,7 +24,7 @@ class GetActionPreProcessor implements PreProcessorInterface
         $action = $apiRequestTransfer->getResourceAction();
         $idResource = $apiRequestTransfer->getPath();
 
-        if ($action !== 'get') {
+        if ($action !== ApiConfig::ACTION_READ) {
             return $apiRequestTransfer;
         }
 

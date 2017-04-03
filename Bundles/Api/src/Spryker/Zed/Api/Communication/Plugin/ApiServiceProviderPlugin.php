@@ -61,7 +61,6 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     public function boot(Application $app)
     {
         $app->before(function (Request $request) {
-            //TransferServer::getInstance()->setRequest($request);
         });
     }
 

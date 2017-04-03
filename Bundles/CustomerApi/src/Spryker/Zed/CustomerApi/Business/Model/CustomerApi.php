@@ -120,7 +120,7 @@ class CustomerApi implements CustomerApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function delete($idCustomer)
+    public function remove($idCustomer)
     {
         $deletedRows = $this->queryContainer
             ->queryCustomerById($idCustomer)

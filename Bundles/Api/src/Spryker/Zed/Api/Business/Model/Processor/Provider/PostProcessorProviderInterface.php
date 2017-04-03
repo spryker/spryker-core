@@ -16,8 +16,8 @@ interface PostProcessorProviderInterface
     public function buildAddActionPostProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
      */
-    public function buildDeleteActionPostProcessor();
+    public function buildRemoveActionPostProcessor();
 
 }

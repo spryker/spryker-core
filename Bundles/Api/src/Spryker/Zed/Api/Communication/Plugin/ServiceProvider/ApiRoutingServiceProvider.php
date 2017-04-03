@@ -13,7 +13,7 @@ use Silex\ServiceControllerResolver;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
 
-class ApiServiceProvider implements ServiceProviderInterface
+class ApiRoutingServiceProvider implements ServiceProviderInterface
 {
 
     /**
@@ -26,16 +26,6 @@ class ApiServiceProvider implements ServiceProviderInterface
         if (!($app['resolver'] instanceof ServiceControllerResolver)) {
             throw new RuntimeException('Register ServiceControllerServiceProvider first.');
         }
-
-        /*
-        foreach (array('cget', 'post', 'get', 'put', 'patch', 'delete') as $method) {
-            $app['rest.methods.'.$method] = $method;
-        }
-
-        $app['rest'] = $app->share(function ($app) {
-            return new RestService($app);
-        });
-        */
 
         $app->addRouter(new ApiRouter($app));
     }

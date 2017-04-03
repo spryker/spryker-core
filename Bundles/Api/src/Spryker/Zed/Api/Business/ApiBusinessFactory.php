@@ -14,8 +14,8 @@ use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
@@ -146,7 +146,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPreProcessorPluginInterface[]
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
      */
     protected function getPreProcessorStack()
     {
@@ -157,6 +157,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createResourcePreProcessor(),
             $this->createResourceActionPreProcessor(),
             $this->createResourceParametersPreProcessor(),
+
             $this->createFilterPreProcessor(),
             $this->createPaginationPreProcessor(),
             $this->createFieldsByQueryPreProcessor(),
@@ -172,13 +173,13 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiPostProcessorPluginInterface[]
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
      */
     protected function getPostProcessorStack()
     {
         return [
             $this->createAddActionPostProcessor(),
-            $this->createDeleteActionPostProcessor(),
+            $this->createRemoveActionPostProcessor(),
             $this->createFindActionPostProcessor(),
             $this->createPaginationByHeaderFilterPostProcessor(),
         ];
@@ -333,11 +334,11 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\DeleteActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
      */
-    protected function createDeleteActionPostProcessor()
+    protected function createRemoveActionPostProcessor()
     {
-        return new DeleteActionPostProcessor();
+        return new RemoveActionPostProcessor();
     }
 
     /**
