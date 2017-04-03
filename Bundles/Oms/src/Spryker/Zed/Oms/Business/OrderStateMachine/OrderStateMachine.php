@@ -12,6 +12,7 @@ use Exception;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -787,22 +788,50 @@ class OrderStateMachine implements OrderStateMachineInterface
         foreach ($orderItems as $orderItem) {
 
             $this->handleDatabaseTransaction(function () use ($orderItem, $processes, $sourceStateBuffer, $timeoutModel, $log, $currentTime) {
-
-                $process = $processes[$orderItem->getProcess()->getName()];
-
-                $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
-                $targetState = $orderItem->getState()->getName();
-
-                if ($sourceState !== $targetState) {
-                    $timeoutModel->dropOldTimeout($process, $sourceState, $orderItem);
-                    $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
-                }
-
-                $orderItem->save();
-                $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
-                $log->save($orderItem);
+                $this->executeSaveOrderItemTransaction(
+                    $orderItem,
+                    $processes,
+                    $sourceStateBuffer,
+                    $timeoutModel,
+                    $log,
+                    $currentTime
+                );
             });
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param array $processes
+     * @param array $sourceStateBuffer
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface $timeoutModel
+     * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
+     * @param \DateTime $currentTime
+     *
+     * @return void
+     */
+    protected function executeSaveOrderItemTransaction(
+        SpySalesOrderItem $orderItem,
+        array $processes,
+        array $sourceStateBuffer,
+        TimeoutInterface $timeoutModel,
+        TransitionLogInterface $log,
+        DateTime $currentTime
+    ) {
+
+        $process = $processes[$orderItem->getProcess()->getName()];
+
+        $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
+        $targetState = $orderItem->getState()->getName();
+
+        if ($sourceState !== $targetState) {
+            $timeoutModel->dropOldTimeout($process, $sourceState, $orderItem);
+            $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
+        }
+
+        $orderItem->save();
+        $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
+        $log->save($orderItem);
     }
 
     /**
