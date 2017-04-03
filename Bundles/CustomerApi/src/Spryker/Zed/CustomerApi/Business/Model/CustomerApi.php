@@ -196,7 +196,7 @@ class CustomerApi implements CustomerApiInterface
             ->findOne();
 
         if (!$customerEntity) {
-            throw new EntityNotFoundException('Customer not found: ' . $idCustomer);
+            throw new EntityNotFoundException(sprintf('Customer not found: %s',$idCustomer));
         }
 
         return $customerEntity;

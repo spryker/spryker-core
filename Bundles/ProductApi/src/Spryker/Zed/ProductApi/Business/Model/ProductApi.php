@@ -178,7 +178,7 @@ class ProductApi implements ProductApiInterface
             ->findOne();
 
         if (!$customerEntity) {
-            throw new EntityNotFoundException('Product not found: ' . $idProduct);
+            throw new EntityNotFoundException(sprintf('Product not found: %s', $idProduct));
         }
 
         return $customerEntity;
