@@ -17,7 +17,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 /**
  * @method \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedPersistenceFactory getFactory()
  */
-class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer implements ProductDataFeedQueryContainerInterface
+class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer implements AbstractProductDataFeedQueryContainerInterface
 {
 
     const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
@@ -41,22 +41,23 @@ class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
-     * @param AbstractProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer|null $productDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
-    public function queryAbstractProductDataFeed(AbstractProductDataFeedTransfer $productDataFeedTransfer)
+    public function queryAbstractProductDataFeed(AbstractProductDataFeedTransfer $productDataFeedTransfer = null)
     {
         $abstractProductQuery = $this->productQueryContainer
             ->queryProductAbstract();
 
-        $abstractProductQuery = $this->getFactory()
-            ->getAbstractProductJoinQuery()
-            ->applyJoins($abstractProductQuery, $productDataFeedTransfer);
+        if ($productDataFeedTransfer !== null) {
+            $abstractProductQuery = $this->getFactory()
+                ->getAbstractProductJoinQuery()
+                ->applyJoins($abstractProductQuery, $productDataFeedTransfer);
+            $abstractProductQuery = $this->filterByUpdatedAt($abstractProductQuery, $productDataFeedTransfer);
+        }
 
         $abstractProductQuery = $this->applyGroupings($abstractProductQuery);
-        $abstractProductQuery = $this->filterByUpdatedAt($abstractProductQuery, $productDataFeedTransfer);
-
 
         return $abstractProductQuery;
     }
@@ -74,10 +75,10 @@ class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function filterByUpdatedAt(
         SpyProductAbstractQuery $abstractProductQuery,

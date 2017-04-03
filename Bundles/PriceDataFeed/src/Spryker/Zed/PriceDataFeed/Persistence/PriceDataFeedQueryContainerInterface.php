@@ -16,10 +16,10 @@ interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
      *
      * @return \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
      */
-    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer);
+    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null);
 
 }

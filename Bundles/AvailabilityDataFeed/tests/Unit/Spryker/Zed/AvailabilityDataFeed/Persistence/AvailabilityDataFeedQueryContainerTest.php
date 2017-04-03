@@ -57,7 +57,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -74,7 +74,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -87,7 +87,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $query = $this->availabilityDataFeedQueryContainer
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 
@@ -107,7 +107,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
             $this->getParamsForDateFilter()
         );
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedParams, $query->getParams());
     }
 

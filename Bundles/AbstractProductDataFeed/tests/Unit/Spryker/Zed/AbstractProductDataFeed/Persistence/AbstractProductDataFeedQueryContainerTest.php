@@ -48,7 +48,7 @@ class AbstractProductDataFeedQueryContainerTest extends Test
     /**
      * @return void
      */
-    public function testGetProductDataFeedQuery()
+    public function testQueryAbstractProductDataFeed()
     {
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
@@ -56,18 +56,18 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedCategories()
+    public function testQueryAbstractProductDataFeedWithJoinedCategories()
     {
         $this->productDataFeedTransfer->setIsJoinCategory(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -76,18 +76,18 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedPrices()
+    public function testQueryAbstractProductDataFeedWithJoinedPrices()
     {
         $this->productDataFeedTransfer->setIsJoinPrice(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -96,18 +96,18 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedOptions()
+    public function testQueryAbstractProductDataFeedWithJoinedOptions()
     {
         $this->productDataFeedTransfer->setIsJoinOption(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -116,18 +116,18 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedImages()
+    public function testQueryAbstractProductDataFeedWithJoinedImages()
     {
         $this->productDataFeedTransfer->setIsJoinImage(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -136,42 +136,43 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedVariants()
+    public function testQueryAbstractProductDataFeedWithJoinedVariants()
     {
-        $this->productDataFeedTransfer->setIsJoinVariant(true);
+        $this->productDataFeedTransfer->setIsJoinProduct(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getVariantJoinedTables()
+            $this->getVariantJoinedTables(),
+            $this->getImageJoinedTables()
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithJoinedAll()
+    public function testQueryAbstractProductDataFeedWithJoinedAll()
     {
-        $this->productDataFeedTransfer->setIsJoinVariant(true);
+        $this->productDataFeedTransfer->setIsJoinProduct(true);
         $this->productDataFeedTransfer->setIsJoinCategory(true);
         $this->productDataFeedTransfer->setIsJoinImage(true);
         $this->productDataFeedTransfer->setIsJoinPrice(true);
         $this->productDataFeedTransfer->setIsJoinOption(true);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
@@ -184,34 +185,34 @@ class AbstractProductDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithLocaleId()
+    public function testQueryAbstractProductDataFeedWithLocaleId()
     {
         $this->productDataFeedTransfer->setLocaleId(46);
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 
     /**
      * @return void
      */
-    public function testGetProductDataFeedQueryWithDatesFilter()
+    public function testQueryAbstractProductDataFeedWithDatesFilter()
     {
         $this->productDataFeedTransfer->setUpdatedFrom('2017-01-01');
         $this->productDataFeedTransfer->setUpdatedTo('2017-12-01');
         $query = $this->productDataFeedQueryContainer
-            ->getProductDataFeedQuery($this->productDataFeedTransfer);
+            ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
-        $this->assertTrue($query instanceof SpyProductAbstractQuery);
+        $this->assertInstanceOf(SpyProductAbstractQuery::class, $query);
         $this->assertEquals($this->getParamsForDateFilter(), $query->getParams());
     }
 
@@ -275,7 +276,6 @@ class AbstractProductDataFeedQueryContainerTest extends Test
     {
         return [
             'spy_product_abstract_localized_attributes',
-            'spy_touch',
         ];
     }
 
@@ -348,16 +348,6 @@ class AbstractProductDataFeedQueryContainerTest extends Test
                 'column' => 'fk_locale',
                 'value' => 46,
             ],
-            [
-                'table' => 'spy_product_abstract_localized_attributes',
-                'column' => 'fk_locale',
-                'value' => 46,
-            ],
-            [
-                'table' => null,
-                'type' => 2,
-                'value' => 'product_abstract',
-            ],
         ];
     }
 
@@ -368,18 +358,13 @@ class AbstractProductDataFeedQueryContainerTest extends Test
     {
         return [
             [
-                'table' => null,
-                'type' => 2,
-                'value' => 'product_abstract',
-            ],
-            [
-                'table' => null,
-                'type' => 2,
+                'table' => 'spy_product_abstract_localized_attributes',
+                'column' => 'updated_at',
                 'value' => '2017-01-01',
             ],
             [
-                'table' => null,
-                'type' => 2,
+                'table' => 'spy_product_abstract_localized_attributes',
+                'column' => 'updated_at',
                 'value' => '2017-12-01',
             ],
         ];

@@ -36,11 +36,11 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer $priceDataFeedTransfer
+     * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer)
+    public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null)
     {
         $productPriceQuery = $this->priceQueryContainer
             ->queryPriceProduct();

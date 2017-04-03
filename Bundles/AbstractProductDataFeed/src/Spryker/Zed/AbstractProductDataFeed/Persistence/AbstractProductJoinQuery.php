@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AbstractProductDataFeed\Persistence;
 
-
 use Generated\Shared\Transfer\AbstractProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -18,6 +17,12 @@ class AbstractProductJoinQuery
     const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
     const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
 
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
     public function applyJoins(
         SpyProductAbstractQuery $abstractProductQuery,
         AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
@@ -33,10 +38,10 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinProductImages(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -62,10 +67,10 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinProductCategories(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -92,10 +97,10 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinProductPrices(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -113,10 +118,10 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinConcreteProducts(
         SpyProductAbstractQuery $abstractProductQuery,
@@ -146,16 +151,16 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinProductOptions(
         SpyProductAbstractQuery $abstractProductQuery,
         AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinProduct()) {
+        if (!$abstractProductDataFeedTransfer->getIsJoinOption()) {
             return $abstractProductQuery;
         }
         $abstractProductQuery
@@ -190,10 +195,10 @@ class AbstractProductJoinQuery
     }
 
     /**
-     * @param SpyProductAbstractQuery $abstractProductQuery
-     * @param AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function joinProductLocalizedAttributes(
         SpyProductAbstractQuery $abstractProductQuery,

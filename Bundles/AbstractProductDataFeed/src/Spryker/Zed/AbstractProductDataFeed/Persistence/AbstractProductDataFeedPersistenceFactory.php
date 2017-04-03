@@ -8,7 +8,7 @@
 namespace Spryker\Zed\AbstractProductDataFeed\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductDataFeed\AbstractProductDataFeedDependencyProvider;
+use Spryker\Zed\AbstractProductDataFeed\AbstractProductDataFeedDependencyProvider;
 
 /**
  * @method \Spryker\Zed\AbstractProductDataFeed\AbstractProductDataFeedConfig getConfig()
@@ -26,7 +26,7 @@ class AbstractProductDataFeedPersistenceFactory extends AbstractPersistenceFacto
     }
 
     /**
-     * @return AbstractProductJoinQuery
+     * @return \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductJoinQuery
      */
     public function getAbstractProductJoinQuery()
     {

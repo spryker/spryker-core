@@ -56,7 +56,7 @@ class CategoryDataFeedQueryContainerTest extends Test
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-        $this->assertTrue($query instanceof SpyCategoryQuery);
+        $this->assertInstanceOf(SpyCategoryQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -76,7 +76,7 @@ class CategoryDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyCategoryQuery);
+        $this->assertInstanceOf(SpyCategoryQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -90,7 +90,7 @@ class CategoryDataFeedQueryContainerTest extends Test
         $query = $this->categoryDataFeedQueryContainer
             ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
-        $this->assertTrue($query instanceof SpyCategoryQuery);
+        $this->assertInstanceOf(SpyCategoryQuery::class, $query);
         $this->assertEquals($this->getParamsForLocaleFilter(), $query->getParams());
     }
 

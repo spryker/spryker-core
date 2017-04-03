@@ -16,10 +16,10 @@ interface AbstractProductDataFeedQueryContainerInterface extends QueryContainerI
     /**
      * @api
      *
-     * @param AbstractProductDataFeedTransfer $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer|null $productDataFeedTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAbstractProductDataFeed(AbstractProductDataFeedTransfer $productDataFeedTransfer);
+    public function queryAbstractProductDataFeed(AbstractProductDataFeedTransfer $productDataFeedTransfer = null);
 
 }

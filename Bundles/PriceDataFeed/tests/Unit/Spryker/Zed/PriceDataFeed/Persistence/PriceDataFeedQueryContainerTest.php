@@ -56,7 +56,7 @@ class PriceDataFeedQueryContainerTest extends Test
         $expectedJoinedTables = $this->getDefaultJoinedTables();
         $joinedTables = $this->getJoinedTablesNames($query);
 
-        $this->assertTrue($query instanceof SpyPriceProductQuery);
+        $this->assertInstanceOf(SpyPriceProductQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
@@ -76,7 +76,7 @@ class PriceDataFeedQueryContainerTest extends Test
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);
 
-        $this->assertTrue($query instanceof SpyPriceProductQuery);
+        $this->assertInstanceOf(SpyPriceProductQuery::class, $query);
         $this->assertEquals($expectedJoinedTables, $joinedTables);
     }
 
