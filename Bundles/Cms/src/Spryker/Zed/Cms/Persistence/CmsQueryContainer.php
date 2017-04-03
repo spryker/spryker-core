@@ -691,4 +691,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->orderBy(SpyCmsVersionTableMap::COL_VERSION,Criteria::DESC);
     }
 
+    /**
+     * @param int $idCmsVersion
+     *
+     * @return SpyCmsVersionQuery
+     */
+    public function queryCmsVersionById($idCmsVersion)
+    {
+        return $this->getFactory()
+            ->createSpyCmsVersionQuery()
+            ->filterByIdCmsVersion($idCmsVersion);
+    }
+
 }

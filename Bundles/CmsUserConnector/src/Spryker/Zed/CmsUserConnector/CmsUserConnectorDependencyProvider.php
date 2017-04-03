@@ -2,23 +2,16 @@
 
 namespace Spryker\Zed\CmsUserConnector;
 
+use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge;
+use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainer;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        //TODO Provide dependencies
-
-        return $container;
-    }
+    const FACADE_USER = 'user facade';
+    const QUERY_CONTAINER_CMS = 'cms query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,21 +20,14 @@ class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        //TODO Provide dependencies
+        $container[self::FACADE_USER] = function (Container $container) {
+            return new CmsUserConnectorToUserBridge($container->getLocator()->user()->facade());
+        };
+
+        $container[self::QUERY_CONTAINER_CMS] = function (Container $container) {
+            return new CmsUserConnectorToCmsQueryContainer($container->getLocator()->cms()->queryContainer());
+        };
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        //TODO Provide dependencies
-
-        return $container;
-    }
-
 }

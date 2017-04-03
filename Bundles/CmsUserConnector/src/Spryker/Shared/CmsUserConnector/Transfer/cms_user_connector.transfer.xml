@@ -5,7 +5,7 @@
 
     <transfer name="CmsVersion">
         <property name="idCmsVersion" type="int" />
-        <property name="idUser" type="int" />
+        <property name="fkUser" type="int" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
     </transfer>

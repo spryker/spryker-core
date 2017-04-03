@@ -2,9 +2,15 @@
 
 namespace Spryker\Zed\CmsUserConnector\Business;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
+
 interface CmsUserConnectorFacadeInterface
 {
 
-    //TODO Add methods
-
+    /**
+     * @param CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return CmsVersionTransfer
+     */
+    public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer);
 }

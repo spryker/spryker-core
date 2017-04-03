@@ -93,7 +93,6 @@ class PublishManager implements PublishManagerInterface
         $cmsVersionEntity->setData($data);
         $cmsVersionEntity->setVersion($versionNumber);
         $cmsVersionEntity->setVersionName(sprintf('v. %d', $versionNumber));
-
         $cmsVersionEntity->save();
 
         return $this->convertToCmsVersionTransfer($cmsVersionEntity);

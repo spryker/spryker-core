@@ -10,7 +10,7 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBrige;
+use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -44,7 +44,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[static::QUERY_CONTAINER_CMS] = function (Container $container) {
-            return new CmsGuiToCmsQueryContainerBrige($container->getLocator()->cms()->queryContainer());
+            return new CmsGuiToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
         };
 
         $container[static::FACADE_URL] = function (Container $container) {

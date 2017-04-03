@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
-class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterface
+class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterface
 {
 
     /**

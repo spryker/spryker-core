@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\CmsUserConnector\Business;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -10,6 +11,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorFacadeInterface
 {
 
-    //TODO Implement CmsUserConnectorFacadeInterface
-
+    /**
+     * @param CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return CmsVersionTransfer
+     */
+    public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer)
+    {
+        return $this->getFactory()
+            ->createUserManager()
+            ->updateCmsVersion($cmsVersionTransfer);
+    }
 }

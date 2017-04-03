@@ -63,7 +63,7 @@
         <property name="data" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
-        <property name="idUser" type="int" />
+        <property name="fkUser" type="int" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
     </transfer>
