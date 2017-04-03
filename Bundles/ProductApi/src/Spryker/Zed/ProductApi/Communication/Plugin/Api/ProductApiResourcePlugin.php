@@ -32,35 +32,35 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer)
     {
-        return $this->getFacade()->getProduct($idProduct, $apiFilterTransfer);
+        return $this->getFacade()->getProduct($idProductAbstract, $apiFilterTransfer);
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update($idProduct, ApiDataTransfer $apiDataTransfer)
+    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)
     {
-        return $this->getFacade()->updateProduct($idProduct, $apiDataTransfer);
+        return $this->getFacade()->updateProduct($idProductAbstract, $apiDataTransfer);
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function remove($idProduct)
+    public function remove($idProductAbstract)
     {
-        return $this->getFacade()->removeProduct($idProduct);
+        return $this->getFacade()->removeProduct($idProductAbstract);
     }
 
     /**

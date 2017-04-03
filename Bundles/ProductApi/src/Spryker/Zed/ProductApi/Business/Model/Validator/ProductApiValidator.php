@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductApi\Business\Model\Validator;
 
+use Exception;
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ProductApiTransfer;
 
 class ProductApiValidator implements ProductApiValidatorInterface
 {
@@ -16,12 +16,13 @@ class ProductApiValidator implements ProductApiValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
+     * @throws \Exception
+     *
      * @return array
      */
     public function validate(ApiDataTransfer $apiDataTransfer)
     {
-        $t = new ProductApiTransfer();
-        die('validating');
+        throw new Exception('Implement similar to CustomerApi');
     }
 
 }

@@ -22,6 +22,8 @@ interface ApiResourcePluginInterface
     public function getResourceName();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -39,19 +41,23 @@ interface ApiResourcePluginInterface
     public function get($id, ApiFilterTransfer $apiFilterTransfer);
 
     /**
-     * @param int $idCustomer
+     * @api
+     *
+     * @param int $id
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update($idCustomer, ApiDataTransfer $apiDataTransfer);
+    public function update($id, ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param int $idCustomer
+     * @api
+     *
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function remove($idCustomer);
+    public function remove($id);
 
     /**
      * @api

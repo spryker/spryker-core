@@ -79,9 +79,9 @@ class ProductApi implements ProductApiInterface
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer)
     {
-        $customerData = $this->getProductData($idProduct, $apiFilterTransfer);
+        $customerData = $this->getProductData($idProductAbstract, $apiFilterTransfer);
         $customerTransfer = $this->transferMapper->toTransfer($customerData);
 
         return $this->apiQueryContainer->createApiItem($customerTransfer);
@@ -97,15 +97,13 @@ class ProductApi implements ProductApiInterface
      */
     public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)
     {
-        //$customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        //fetch from db
         $entityToUpdate = $this->queryContainer
             ->queryProductAbstract()
             ->filterByIdProductAbstract($idProductAbstract)
             ->findOne();
 
         if (!$entityToUpdate) {
-            throw new EntityNotFoundException('sdfsd');
+            throw new EntityNotFoundException(sprintf('Product not found: %s', $idProductAbstract));
         }
 
         $data = (array)$apiDataTransfer->getData();

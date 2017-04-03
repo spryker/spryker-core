@@ -33,35 +33,35 @@ interface ProductApiFacadeInterface
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function getProduct($idProduct, ApiFilterTransfer $apiFilterTransfer);
+    public function getProduct($idProductAbstract, ApiFilterTransfer $apiFilterTransfer);
 
     /**
      * Specification:
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function updateProduct($idProduct, ApiDataTransfer $apiDataTransfer);
+    public function updateProduct($idProductAbstract, ApiDataTransfer $apiDataTransfer);
 
     /**
      * Specification:
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function removeProduct($idProduct);
+    public function removeProduct($idProductAbstract);
 
     /**
      * Specification:

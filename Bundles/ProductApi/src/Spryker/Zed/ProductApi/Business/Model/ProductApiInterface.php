@@ -22,12 +22,12 @@ interface ProductApiInterface
     public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idProduct, ApiFilterTransfer $apiFilterTransfer);
+    public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer);
 
     /**
      * @param int $idProductAbstract

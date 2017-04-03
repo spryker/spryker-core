@@ -104,7 +104,7 @@ class CustomerApi implements CustomerApiInterface
             ->findOne();
 
         if (!$entityToUpdate) {
-            throw new EntityNotFoundException('sdfsd');
+            throw new EntityNotFoundException(sprintf('Customer not found: %s', $idCustomer));
         }
 
         $data = (array)$apiDataTransfer->getData();

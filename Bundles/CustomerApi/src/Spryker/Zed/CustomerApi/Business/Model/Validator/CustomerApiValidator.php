@@ -51,10 +51,6 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
      */
     protected function assertRequiredField(array $data, $field, array $errors)
     {
-        /*            $validationErrorTransfer = new ApiValidationErrorTransfer();
-            $validationErrorTransfer->setField($field);
-            $validationErrorTransfer->setMessages([$message]);*/
-
         if (!isset($data[$field]) || (array_key_exists($field, $data) && !$data[$field])) {
             $message = sprintf('Missing value for required field "%s"', $field);
             $errors[$field][] = $message;
