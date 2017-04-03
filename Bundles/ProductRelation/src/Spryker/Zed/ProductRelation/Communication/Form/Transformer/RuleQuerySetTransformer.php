@@ -50,7 +50,7 @@ class RuleQuerySetTransformer implements DataTransformerInterface
      *
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleQuerySetTransfer The value in the original representation
      *
-     * @return mixed The value in the transformed representation
+     * @return mixed|null The value in the transformed representation
      */
     public function transform($ruleQuerySetTransfer)
     {
@@ -58,7 +58,7 @@ class RuleQuerySetTransformer implements DataTransformerInterface
             return;
         }
 
-        if (count($ruleQuerySetTransfer->getRules()) == 0) {
+        if (count($ruleQuerySetTransfer->getRules()) === 0) {
             return;
         }
 

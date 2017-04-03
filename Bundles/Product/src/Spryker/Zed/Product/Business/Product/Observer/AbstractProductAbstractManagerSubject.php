@@ -169,7 +169,7 @@ abstract class AbstractProductAbstractManagerSubject
             $productAbstractTransfer = $observer->read($productAbstractTransfer);
         }
 
-        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_RED, $productAbstractTransfer);
+        $this->triggerEvent(ProductEvents::PRODUCT_ABSTRACT_READ, $productAbstractTransfer);
 
         return $productAbstractTransfer;
     }

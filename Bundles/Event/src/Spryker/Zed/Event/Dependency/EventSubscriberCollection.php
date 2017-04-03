@@ -33,14 +33,9 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
+     * @param mixed $offset
      *
      * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
      */
     public function offsetExists($offset)
     {
@@ -52,9 +47,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     * @param mixed $offset
      *
      * @return array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface
      */
@@ -68,12 +61,8 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $value <p>
-     * The value to set.
-     * </p>
+     * @param mixed $offset
+     * @param mixed|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $value
      *
      * @return void
      */
@@ -87,9 +76,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     * @param mixed $offset
      *
      * @return void
      */

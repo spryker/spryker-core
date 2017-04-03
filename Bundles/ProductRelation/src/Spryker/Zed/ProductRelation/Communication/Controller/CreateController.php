@@ -50,9 +50,9 @@ class CreateController extends BaseProductRelationController
                 )->build();
 
                 return $this->redirectResponse($editProductRelationUrl);
-            } else {
-                $this->addErrorMessage('Invalid data provided.');
             }
+
+            $this->addErrorMessage('Invalid data provided.');
         }
 
         $productTable = $this->getFactory()->createProductTable();

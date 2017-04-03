@@ -102,14 +102,9 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
+     * @param mixed $offset
      *
      * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
      */
     public function offsetExists($offset)
     {
@@ -121,9 +116,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     * @param mixed $offset
      *
      * @return array|\SplPriorityQueue
      */
@@ -137,12 +130,8 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
+     * @param mixed $offset
+     * @param mixed $value
      *
      * @return void
      */
@@ -156,9 +145,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     * @param mixed $offset
      *
      * @return void
      */
@@ -172,8 +159,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
      *
-     * @return \Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     * @return \Traversable
      */
     public function getIterator()
     {

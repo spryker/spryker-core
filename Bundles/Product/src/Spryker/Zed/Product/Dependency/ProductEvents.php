@@ -22,7 +22,7 @@ interface ProductEvents
     const PRODUCT_CONCRETE_AFTER_CREATE = 'Product.product_concrete.after.create';
     const PRODUCT_CONCRETE_AFTER_UPDATE = 'Product.product_concrete.after.update';
 
-    const PRODUCT_ABSTRACT_RED = 'Product.product_abstract.read';
+    const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
     const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
 
 }

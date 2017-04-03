@@ -85,11 +85,11 @@ class FilterProvider implements FilterProviderInterface
                 'type' => 'date',
                 'input' => 'text',
                 'validation' => [
-                    'format' => 'yyyy/mm/dd',
+                    'format' => 'yyyy-mm-dd',
                 ],
                 'plugin' => 'datepicker',
                 'plugin_config' => [
-                    'format' => 'yyyy/mm/dd',
+                    'format' => 'yyyy-mm-dd',
                     'todayBtn' => 'linked',
                     'todayHighlight' => true,
                     'autoclose' => true,
