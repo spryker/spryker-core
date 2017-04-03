@@ -142,7 +142,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createPathPreProcessor()
     {
@@ -150,7 +150,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createFormatTypeByHeaderPreProcessor()
     {
@@ -158,7 +158,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createFormatTypeByPathPreProcessor()
     {
@@ -166,7 +166,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createResourcePreProcessor()
     {
@@ -174,7 +174,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createResourceActionPreProcessor()
     {
@@ -182,7 +182,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createResourceParametersPreProcessor()
     {
@@ -190,7 +190,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createFilterPreProcessor()
     {
@@ -198,7 +198,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createPaginationPreProcessor()
     {
@@ -206,7 +206,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createFieldsByQueryPreProcessor()
     {
@@ -214,7 +214,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createSortByQueryFilterPreProcessor()
     {
@@ -222,7 +222,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createCriteriaByQueryFilterPreProcessor()
     {
@@ -230,7 +230,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createPaginationByQueryFilterPreProcessor()
     {
@@ -240,7 +240,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createPaginationByHeaderFilterPreProcessor()
     {
@@ -248,7 +248,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createAddActionPreProcessor()
     {
@@ -256,7 +256,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createUpdateActionPreProcessor()
     {
@@ -264,7 +264,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createGetActionPreProcessor()
     {
@@ -272,7 +272,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     protected function createFindActionPreProcessor()
     {
@@ -280,7 +280,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     protected function createAddActionPostProcessor()
     {
@@ -290,7 +290,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     protected function createRemoveActionPostProcessor()
     {
@@ -298,7 +298,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     protected function createPaginationByHeaderFilterPostProcessor()
     {
@@ -306,7 +306,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     protected function createFindActionPostProcessor()
     {

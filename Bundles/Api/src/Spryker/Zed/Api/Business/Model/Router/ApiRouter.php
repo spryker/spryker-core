@@ -81,7 +81,6 @@ class ApiRouter implements RouterInterface
 
     /**
      * {@inheritdoc}
-     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function match($pathinfo)
     {
@@ -89,11 +88,7 @@ class ApiRouter implements RouterInterface
         $request = $this->app['request_stack']->getCurrentRequest();
 
         $path = $request->getPathInfo();
-        if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) !== 0) {
-            throw new ResourceNotFoundException();
-        }
-
-        //$method = $this->context->getMethod();
+        $this->assertValidPath($path);
 
         $controllerResolver = new ControllerResolver();
         $routeNameResolver = new RouteNameResolver($request);
@@ -114,6 +109,24 @@ class ApiRouter implements RouterInterface
             '_controller' => $service,
             '_route' => 'Api/Rest/index',
         ];
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     *
+     * @return void
+     */
+    protected function assertValidPath($path)
+    {
+        if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) !== 0) {
+            throw new ResourceNotFoundException(sprintf(
+                'Invalid URI prefix, expected %s in path %s',
+                ApiConfig::ROUTE_PREFIX_API_REST,
+                $path
+            ));
+        }
     }
 
 }

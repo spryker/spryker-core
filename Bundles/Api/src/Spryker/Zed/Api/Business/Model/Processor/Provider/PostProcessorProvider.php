@@ -28,7 +28,7 @@ class PostProcessorProvider implements PostProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     public function buildAddActionPostProcessor()
     {
@@ -38,7 +38,7 @@ class PostProcessorProvider implements PostProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     public function buildRemoveActionPostProcessor()
     {

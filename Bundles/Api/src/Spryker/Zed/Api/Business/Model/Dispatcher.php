@@ -57,6 +57,24 @@ class Dispatcher implements DispatcherInterface
     {
         $apiRequestTransfer = $this->processor->preProcess($apiRequestTransfer);
 
+        $apiResponseTransfer = $this->dispatchToResource($apiRequestTransfer);
+
+        $apiResponseTransfer = $this->processor->postProcess($apiRequestTransfer, $apiResponseTransfer);
+
+        if ($apiResponseTransfer->getCode() === null) {
+            $apiResponseTransfer->setCode(200);
+        }
+
+        return $apiResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiResponseTransfer
+     */
+    protected function dispatchToResource(ApiRequestTransfer $apiRequestTransfer)
+    {
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
         $params = $apiRequestTransfer->getResourceParameters();
@@ -70,22 +88,21 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setCode(422);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
-                $apiResponseTransfer->setData($errors); //TODO remove
             } else {
-                $apiCollectionOrItem = $this->callApiPlugin($resource, $method, $params);
-                $data = (array)$apiCollectionOrItem->getData();
+                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $params);
+                $data = (array)$apiPluginCallResponseTransfer->getData();
                 $apiResponseTransfer->setData($data);
 
-                if ($apiCollectionOrItem instanceof ApiCollectionTransfer) {
-                    $apiResponseTransfer->setPagination($apiCollectionOrItem->getPagination());
+                if ($apiPluginCallResponseTransfer instanceof ApiCollectionTransfer) {
+                    $apiResponseTransfer->setPagination($apiPluginCallResponseTransfer->getPagination());
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
-                } elseif ($apiCollectionOrItem instanceof ApiItemTransfer) {
+                } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
-                    $apiResponseTransfer->getMeta()->setResourceId($apiCollectionOrItem->getId());
+                    $apiResponseTransfer->getMeta()->setResourceId($apiPluginCallResponseTransfer->getId());
                 }
             }
 
@@ -97,12 +114,6 @@ class Dispatcher implements DispatcherInterface
             $apiResponseTransfer->setCode($e->getCode() ?: 500);
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
-        }
-
-        $apiResponseTransfer = $this->processor->postProcess($apiRequestTransfer, $apiResponseTransfer);
-
-        if ($apiResponseTransfer->getCode() === null) {
-            $apiResponseTransfer->setCode(200);
         }
 
         return $apiResponseTransfer;

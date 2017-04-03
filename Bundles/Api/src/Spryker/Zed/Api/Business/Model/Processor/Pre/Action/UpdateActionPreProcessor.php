@@ -9,6 +9,7 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Action;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 /**
@@ -26,7 +27,7 @@ class UpdateActionPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $method = $apiRequestTransfer->getResourceAction();
-        if ($method !== 'update') {
+        if ($method !== ApiConfig::ACTION_UPDATE) {
             return $apiRequestTransfer;
         }
 

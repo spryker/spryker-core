@@ -11,87 +11,87 @@ interface PreProcessorProviderInterface
 {
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFilterPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPathPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildAddActionPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFindActionPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildGetActionPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildUpdateActionPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFieldsByQueryPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationByHeaderFilterPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildCriteriaByQueryFilterPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationByQueryFilterPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildSortByQueryFilterPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFormatTypeByHeaderPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFormatTypeByPathPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourceActionPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourceParamametersPreProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourcePreProcessor();
 

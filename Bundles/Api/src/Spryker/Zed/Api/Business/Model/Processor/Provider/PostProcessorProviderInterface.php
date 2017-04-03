@@ -11,12 +11,12 @@ interface PostProcessorProviderInterface
 {
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     public function buildAddActionPostProcessor();
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
     public function buildRemoveActionPostProcessor();
 

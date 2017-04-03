@@ -16,12 +16,12 @@ class Processor implements ProcessorInterface
     /**
      * @var \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
      */
-    protected $preProcessPluginStack;
+    protected $preProcessStack;
 
     /**
      * @var \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
      */
-    protected $postProcessPluginStack;
+    protected $postProcessStack;
 
     /**
      * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
@@ -29,8 +29,8 @@ class Processor implements ProcessorInterface
      */
     public function __construct(array $preProcessStack, array $postProcessStack)
     {
-        $this->preProcessPluginStack = $preProcessStack;
-        $this->postProcessPluginStack = $postProcessStack;
+        $this->preProcessStack = $preProcessStack;
+        $this->postProcessStack = $postProcessStack;
     }
 
     /**
@@ -40,7 +40,7 @@ class Processor implements ProcessorInterface
      */
     public function preProcess(ApiRequestTransfer $apiRequestTransfer)
     {
-        foreach ($this->preProcessPluginStack as $preProcessor) {
+        foreach ($this->preProcessStack as $preProcessor) {
             $apiRequestTransfer = $preProcessor->process($apiRequestTransfer);
         }
 
@@ -55,7 +55,7 @@ class Processor implements ProcessorInterface
      */
     public function postProcess(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
     {
-        foreach ($this->postProcessPluginStack as $postProcessor) {
+        foreach ($this->postProcessStack as $postProcessor) {
             $apiResponseTransfer = $postProcessor->process($apiRequestTransfer, $apiResponseTransfer);
         }
 

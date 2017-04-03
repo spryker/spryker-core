@@ -43,7 +43,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFilterPreProcessor()
     {
@@ -51,7 +51,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationPreProcessor()
     {
@@ -59,7 +59,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPathPreProcessor()
     {
@@ -67,7 +67,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildAddActionPreProcessor()
     {
@@ -75,7 +75,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFindActionPreProcessor()
     {
@@ -83,7 +83,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildGetActionPreProcessor()
     {
@@ -91,7 +91,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildUpdateActionPreProcessor()
     {
@@ -99,7 +99,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFieldsByQueryPreProcessor()
     {
@@ -107,7 +107,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationByHeaderFilterPreProcessor()
     {
@@ -115,7 +115,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildCriteriaByQueryFilterPreProcessor()
     {
@@ -123,7 +123,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildPaginationByQueryFilterPreProcessor()
     {
@@ -133,7 +133,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildSortByQueryFilterPreProcessor()
     {
@@ -141,7 +141,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFormatTypeByHeaderPreProcessor()
     {
@@ -149,7 +149,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildFormatTypeByPathPreProcessor()
     {
@@ -157,7 +157,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourceActionPreProcessor()
     {
@@ -165,7 +165,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourceParamametersPreProcessor()
     {
@@ -173,7 +173,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourcePreProcessor()
     {
