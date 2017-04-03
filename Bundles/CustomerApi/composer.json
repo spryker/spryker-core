@@ -3,10 +3,10 @@
   "description": "Customer Api bundle",
   "license": "proprietary",
   "require": {
+    "spryker/api": "^0.1",
     "spryker/customer": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
@@ -16,6 +16,7 @@
     "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
+    "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "minimum-stability": "dev",
