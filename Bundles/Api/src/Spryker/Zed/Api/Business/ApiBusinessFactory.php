@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Api\Business;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiDependencyProvider;
-use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
-use Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
@@ -35,7 +32,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProce
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
-use Spryker\Zed\Api\Business\Model\Transformer;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -59,26 +55,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $formatType
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\FormatterNotFoundException
-     *
-     * @return \Spryker\Zed\Api\Business\Model\Formatter\JsonFormatter
-     */
-    public function createFormatter($formatType)
-    {
-        if (!$formatType) {
-            $formatType = 'json';
-        }
-        switch ($formatType) {
-            case 'json':
-                return new JsonFormatter($this->getUtilEncoding());
-        }
-
-        throw new FormatterNotFoundException(sprintf('Formatter for type `%s` not found', $formatType));
-    }
-
-    /**
      * @return \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
     public function createResourceHandler()
@@ -96,26 +72,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
         return new Processor(
             $this->getPreProcessorStack(),
             $this->getPostProcessorStack()
-        );
-    }
-
-    /**
-     * @return \Spryker\Service\UtilEncoding\UtilEncodingService
-     */
-    protected function getUtilEncoding()
-    {
-        return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Spryker\Zed\Api\Business\Model\Transformer
-     */
-    public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return new Transformer(
-            $this->createFormatter($apiRequestTransfer->getFormatType())
         );
     }
 

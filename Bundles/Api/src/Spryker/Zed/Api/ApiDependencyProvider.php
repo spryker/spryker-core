@@ -24,13 +24,25 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
 
         $container[static::SERVICE_ENCODING] = function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->provideApiPlugins($container);
         $container = $this->provideApiValidatorPlugins($container);

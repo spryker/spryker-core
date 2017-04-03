@@ -66,12 +66,26 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $this->logResponse($responseTransfer);
 
             $responseObject = new Response();
-            return $this->getFacade()->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
+            return $this->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };
 
         $event->setController($apiController);
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
+     * @param \Symfony\Component\HttpFoundation\Response $responseObject
+     *
+     * @return \Symfony\Component\HttpFoundation\Response $responseObject
+     */
+    protected function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject)
+    {
+        return $this->getFactory()
+            ->createTransformer($requestTransfer)
+            ->transform($requestTransfer, $responseTransfer, $responseObject);
     }
 
     /**

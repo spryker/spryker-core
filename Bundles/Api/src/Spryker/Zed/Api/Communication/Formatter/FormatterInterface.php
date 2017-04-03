@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Formatter;
+namespace Spryker\Zed\Api\Communication\Formatter;
 
 interface FormatterInterface
 {

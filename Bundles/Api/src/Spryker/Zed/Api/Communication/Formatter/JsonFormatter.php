@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Formatter;
+namespace Spryker\Zed\Api\Communication\Formatter;
 
 use Silex\Application;
 use Spryker\Service\UtilEncoding\Model\Json;
@@ -25,12 +25,12 @@ class JsonFormatter implements FormatterInterface
 {
 
     /**
-     * @var UtilEncodingService
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected $service;
 
     /**
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingService $service
+     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $service
      */
     public function __construct(UtilEncodingService $service)
     {

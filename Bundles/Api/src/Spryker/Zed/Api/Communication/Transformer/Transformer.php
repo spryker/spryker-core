@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model;
+namespace Spryker\Zed\Api\Communication\Transformer;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Shared\Config\Environment;
-use Spryker\Zed\Api\Business\Model\Formatter\FormatterInterface;
+use Spryker\Zed\Api\Communication\Formatter\FormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class Transformer
+class Transformer implements TransformerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Api\Business\Model\Formatter\FormatterInterface
+     * @var \Spryker\Zed\Api\Communication\Formatter\FormatterInterface
      */
     protected $formatter;
 
     /**
-     * @param \Spryker\Zed\Api\Business\Model\Formatter\FormatterInterface $formatter
+     * @param \Spryker\Zed\Api\Communication\Formatter\FormatterInterface $formatter
      */
     public function __construct(FormatterInterface $formatter)
     {
