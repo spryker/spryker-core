@@ -8,29 +8,29 @@
 namespace Unit\Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\AbstractProductDataFeedTransfer;
+use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
+use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group AbstractProductDataFeed
+ * @group ProductAbstractDataFeed
  * @group Persistence
- * @group AbstractProductDataFeedQueryContainerTest
+ * @group ProductAbstractDataFeedQueryContainerTest
  */
 class ProductAbstractDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var \Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
+     * @var \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
     protected $productDataFeedQueryContainer;
 
     /**
-     * @var \Generated\Shared\Transfer\AbstractProductDataFeedTransfer
+     * @var \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer
      */
     protected $productDataFeedTransfer;
 
@@ -217,7 +217,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
+     * @return \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
     protected function createProductDataFeedQueryContainer()
     {
@@ -228,11 +228,11 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AbstractProductDataFeedTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer
      */
     protected function createProductDataFeedTransfer()
     {
-        $productDataFeedTransfer = new AbstractProductDataFeedTransfer();
+        $productDataFeedTransfer = new ProductAbstractDataFeedTransfer();
 
         return $productDataFeedTransfer;
     }

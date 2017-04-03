@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AbstractProductDataFeed;
+namespace Spryker\Zed\ProductAbstractDataFeed;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
-class AbstractProductDataFeedDependencyProvider extends AbstractBundleDependencyProvider
+class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';

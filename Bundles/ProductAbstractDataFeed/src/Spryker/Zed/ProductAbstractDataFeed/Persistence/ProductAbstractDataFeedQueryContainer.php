@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AbstractProductDataFeed\Persistence;
+namespace Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
- * @method \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedPersistenceFactory getFactory()
+ * @method \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedPersistenceFactory getFactory()
  */
 class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer implements ProductAbstractDataFeedQueryContainerInterface
 {
@@ -76,13 +76,13 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
-     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function filterByUpdatedAt(
         SpyProductAbstractQuery $abstractProductQuery,
-        AbstractProductDataFeedTransfer $abstractProductDataFeedTransfer
+        ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
         if ($abstractProductDataFeedTransfer->getUpdatedFrom()) {
             $abstractProductQuery->condition(
