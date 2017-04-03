@@ -558,10 +558,24 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @return CmsVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage)
+    public function publishAndVersion($idCmsPage)
     {
         return $this->getFactory()
             ->createPublishManager()
-            ->publishAndVersionCmsPage($idCmsPage);
+            ->publishAndVersion($idCmsPage);
     }
+
+    /**
+     * @param int $idCmsVersionOrigin
+     * @param int $idCmsVersionTarget
+     *
+     * @return bool
+     */
+    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget)
+    {
+        return $this->getFactory()
+            ->createRevertManager()
+            ->revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
+    }
+
 }

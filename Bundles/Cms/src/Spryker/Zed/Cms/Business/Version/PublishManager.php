@@ -7,14 +7,19 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PublishManager implements PublishManagerInterface
 {
 
-    const DEFAULT_VERSION_NUMBER = 1;
+    /**
+     * @var VersionGeneratorInterface
+     */
+    protected $versionGenerator;
 
     /**
      * @var CmsQueryContainerInterface
@@ -27,13 +32,15 @@ class PublishManager implements PublishManagerInterface
     protected $postSavePlugins = [];
 
     /**
+     * @param VersionGeneratorInterface $versionGenerator
      * @param CmsQueryContainerInterface $queryContainer
-     * @param CmsVersionPostSavePluginInterface[] $userPlugins
+     * @param CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
-    public function __construct(CmsQueryContainerInterface $queryContainer, array $userPlugins)
+    public function __construct(VersionGeneratorInterface $versionGenerator, CmsQueryContainerInterface $queryContainer, array $postSavePlugins)
     {
+        $this->versionGenerator = $versionGenerator;
         $this->queryContainer = $queryContainer;
-        $this->postSavePlugins = $userPlugins;
+        $this->postSavePlugins = $postSavePlugins;
     }
 
     /**
@@ -42,9 +49,15 @@ class PublishManager implements PublishManagerInterface
      * @throws \Exception
      * @return CmsVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage)
+    public function publishAndVersion($idCmsPage)
     {
-        $cmsPageArray = $this->queryContainer->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)->find()->getFirst();
+        $cmsPageArray = $this->queryContainer->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)
+            ->find()
+            ->toArray(
+                null,
+                false,
+                TableMap::TYPE_COLNAME
+            );
 
         if ($cmsPageArray === null) {
             throw new \Exception('There is no CMS page with this id:'. $idCmsPage);
@@ -52,8 +65,8 @@ class PublishManager implements PublishManagerInterface
 
         $cmsVersionTransfer = $this->saveCmsVersion(
             $idCmsPage,
-            json_encode($cmsPageArray),
-            $this->generateCmsVersion($idCmsPage)
+            json_encode(current($cmsPageArray)),
+            $this->versionGenerator->generateNewCmsVersion($idCmsPage)
         );
 
         foreach ($this->postSavePlugins as $userPlugin) {
@@ -63,21 +76,7 @@ class PublishManager implements PublishManagerInterface
         return $cmsVersionTransfer;
     }
 
-    /**
-     * @param $idCmsPage
-     *
-     * @return int
-     */
-    protected function generateCmsVersion($idCmsPage)
-    {
-        $cmsVersionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
 
-        if ($cmsVersionEntity === null) {
-            return self::DEFAULT_VERSION_NUMBER;
-        }
-
-        return $cmsVersionEntity->getVersion() + 1;
-    }
 
     /**
      * @param int $idCmsPage
@@ -92,7 +91,7 @@ class PublishManager implements PublishManagerInterface
         $cmsVersionEntity->setFkCmsPage($idCmsPage);
         $cmsVersionEntity->setData($data);
         $cmsVersionEntity->setVersion($versionNumber);
-        $cmsVersionEntity->setVersionName(sprintf('v. %d', $versionNumber));
+        $cmsVersionEntity->setVersionName($this->versionGenerator->generateNewCmsVersionName($versionNumber));
         $cmsVersionEntity->save();
 
         return $this->convertToCmsVersionTransfer($cmsVersionEntity);

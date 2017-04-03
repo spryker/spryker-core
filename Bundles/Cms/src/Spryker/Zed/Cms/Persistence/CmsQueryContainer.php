@@ -662,7 +662,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage)
     {
         return $this->getFactory()->createCmsPageQuery()
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
             ->filterByIdCmsPage($idPage)
             ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
             ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)

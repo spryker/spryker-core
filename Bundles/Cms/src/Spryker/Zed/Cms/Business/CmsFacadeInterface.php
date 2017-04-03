@@ -413,6 +413,14 @@ interface CmsFacadeInterface
      *
      * @return CmsVersionTransfer
      */
-    public function publishAndVersionCmsPage($idCmsPage);
+    public function publishAndVersion($idCmsPage);
+
+    /**
+     * @param int $idCmsVersionOrigin
+     * @param int $idCmsVersionTarget
+     *
+     * @return bool
+     */
+    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
 
 }

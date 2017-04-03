@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,16 +6,14 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
-use Generated\Shared\Transfer\CmsVersionTransfer;
-
-interface PublishManagerInterface
+interface RevertManagerInterface
 {
 
     /**
-     * @param int $idCmsPage
+     * @param int $idCmsVersionOrigin
+     * @param int $idCmsVersionTarget
      *
-     * @return CmsVersionTransfer
+     * @return bool
      */
-    public function publishAndVersion($idCmsPage);
-
+    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
 }
