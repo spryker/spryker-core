@@ -7,7 +7,6 @@
 
 namespace ProductApi\Module;
 
-use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
 use Codeception\TestCase;
 use Exception;
 use Propel\Runtime\Propel;
