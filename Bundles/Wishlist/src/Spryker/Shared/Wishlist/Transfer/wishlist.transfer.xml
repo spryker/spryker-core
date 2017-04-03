@@ -7,6 +7,13 @@
         <property name="idWishlist" type="int" />
         <property name="fkCustomer" type="int" />
         <property name="name" type="string" />
+        <property name="numberOfItems" type="int" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
+    </transfer>
+
+    <transfer name="WishlistCollection">
+        <property name="wishlists" type="Wishlist[]" singular="wishlist" />
     </transfer>
 
     <transfer name="WishlistItem">
@@ -16,11 +23,20 @@
         <property name="idProduct" type="int" />
         <property name="sku" type="string" />
         <property name="product" type="StorageProduct" />
+        <property name="isAvailable" type="bool" />
+    </transfer>
+
+    <transfer name="WishlistItemCollection">
+        <property name="items" type="WishlistItem[]" singular="item" />
     </transfer>
 
     <transfer name="WishlistMoveToCartRequest">
         <property name="sku" type="string" />
         <property name="wishlistItem" type="WishlistItem" />
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequestCollection">
+        <property name="requests" type="WishlistMoveToCartRequest[]" singular="request" />
     </transfer>
 
     <transfer name="WishlistOverviewRequest">
@@ -35,6 +51,8 @@
         <property name="wishlist" type="Wishlist" />
         <property name="items" type="WishlistItem[]" singular="item" />
         <property name="pagination" type="WishlistPagination" />
+        <property name="wishlistCollection" type="WishlistCollection" />
+        <property name="meta" type="WishlistOverviewMeta" />
     </transfer>
 
     <transfer name="StorageProduct">
@@ -47,6 +65,26 @@
         <property name="pagesTotal" type="int" />
         <property name="itemsPerPage" type="int" />
         <property name="itemsTotal" type="int" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int" />
+    </transfer>
+
+    <transfer name="WishlistResponse">
+        <property name="wishlist" type="Wishlist" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="array" singular="error" />
+    </transfer>
+
+    <transfer name="WishlistOverviewMeta">
+        <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta" />
+    </transfer>
+
+    <transfer name="WishlistItemMeta">
+        <property name="idProduct" type="int" />
+        <property name="sku" type="string" />
+        <property name="isAvailable" type="bool" />
     </transfer>
 
 </transfers>

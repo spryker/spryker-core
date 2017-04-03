@@ -5,6 +5,7 @@
  */
 namespace Spryker\Client\Wishlist\Cart;
 
+use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 
 interface CartHandlerInterface
@@ -16,5 +17,12 @@ interface CartHandlerInterface
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
      */
     public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     *
+     * @return void
+     */
+    public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
 
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -28,7 +29,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
-            $this->createTransferMapper()
+            $this->createTransferMapper(),
+            $this->getAvailabilityFacade()
         );
     }
 
@@ -67,6 +69,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getItemExpanderPlugins()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return WishlistToAvailabilityInterface
+     */
+    protected function getAvailabilityFacade()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_AVAILABILITY);
     }
 
 }

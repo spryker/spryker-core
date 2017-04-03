@@ -38,6 +38,19 @@ interface CartClientInterface
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
+     * Specification:
+     * - Adds multiple items (identified by SKU and quantity)
+     * - Makes zed request to stored cart into persistent store if used.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItems(array $itemTransfers);
+
+    /**
      * @api
      *
      * @param string $sku

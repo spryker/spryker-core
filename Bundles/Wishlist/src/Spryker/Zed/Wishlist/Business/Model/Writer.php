@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
@@ -65,6 +67,28 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        $wishlistResponseTransfer = new WishlistResponseTransfer();
+
+        if ($this->checkWishlistUniqueName($wishlistTransfer)) {
+            $wishlistResponseTransfer
+                ->setWishlist($this->createWishlist($wishlistTransfer))
+                ->setIsSuccess(true);
+        } else {
+            $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError('A wishlist with the same name already exists.');
+        }
+
+        return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
@@ -86,6 +110,28 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        $wishlistResponseTransfer = new WishlistResponseTransfer();
+
+        if ($this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
+            $wishlistResponseTransfer
+                ->setWishlist($this->updateWishlist($wishlistTransfer))
+                ->setIsSuccess(true);
+        } else {
+            $wishlistResponseTransfer
+                ->setIsSuccess(false)
+                ->addError('A wishlist with the same name already exists.');
+        }
+
+        return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
@@ -94,6 +140,33 @@ class Writer implements WriterInterface
 
         $wishlistTransfer->requireIdWishlist();
         $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
+
+        $this->emptyWishlist($wishlistTransfer);
+        $wishListEntity->delete();
+
+        $this->queryContainer->getConnection()->commit();
+
+        return $wishlistTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
+    {
+        $this->queryContainer->getConnection()->beginTransaction();
+
+        $wishlistTransfer
+            ->requireName()
+            ->requireFkCustomer();
+
+        $wishListEntity = $this->reader->getWishlistEntityByCustomerIdAndWishlistName(
+            $wishlistTransfer->getFkCustomer(),
+            $wishlistTransfer->getName()
+        );
+        $wishlistTransfer->fromArray($wishListEntity->toArray(), true);
 
         $this->emptyWishlist($wishlistTransfer);
         $wishListEntity->delete();
@@ -132,7 +205,7 @@ class Writer implements WriterInterface
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($wishlistTransfer->getIdWishlist())
-            ->deleteAll();
+            ->delete();
     }
 
     /**
@@ -149,12 +222,12 @@ class Writer implements WriterInterface
             $wishlistItemTransfer->getFkCustomer()
         );
 
-        $wishlistEntity = $this->queryContainer->queryWishlistItem()
+        $wishlistItemEntity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
             ->filterBySku($wishlistItemTransfer->getSku())
             ->findOneOrCreate();
 
-        $wishlistEntity->save();
+        $wishlistItemEntity->save();
 
         return $wishlistItemTransfer;
     }
@@ -179,6 +252,24 @@ class Writer implements WriterInterface
             ->delete();
 
         return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
+    {
+        $this->queryContainer->getConnection()->beginTransaction();
+
+        foreach ($wishlistItemTransferCollection->getItems() as $wishlistItemTransfer) {
+            $this->removeItem($wishlistItemTransfer);
+        }
+
+        $this->queryContainer->getConnection()->commit();
+
+        return $wishlistItemTransferCollection;
     }
 
     /**
@@ -278,11 +369,45 @@ class Writer implements WriterInterface
 
         if ($exists) {
             throw new WishlistExistsException(sprintf(
-                'Wishlist with name: %s for customer: %s already exists',
+                'Wishlist with name "%s" for customer "%s" already exists',
                 $wishlistTransfer->getName(),
                 $wishlistTransfer->getFkCustomer()
             ));
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return bool
+     */
+    protected function checkWishlistUniqueName(WishlistTransfer $wishlistTransfer)
+    {
+        $wishlistTransfer->requireName();
+        $wishlistTransfer->requireFkCustomer();
+
+        $query = $this->queryContainer->queryWishlist()
+            ->filterByName($wishlistTransfer->getName())
+            ->filterByFkCustomer($wishlistTransfer->getFkCustomer());
+
+        return $query->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return bool
+     */
+    protected function checkWishlistUniqueNameWhenUpdating(WishlistTransfer $wishlistTransfer)
+    {
+        $wishlistTransfer->requireName();
+        $wishlistTransfer->requireIdWishlist();
+
+        $query = $this->queryContainer->queryWishlist()
+            ->filterByName($wishlistTransfer->getName())
+            ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
+
+        return $query->count() === 0;
     }
 
 }

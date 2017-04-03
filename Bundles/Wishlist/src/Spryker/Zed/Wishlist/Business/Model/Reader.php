@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
@@ -15,6 +19,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface;
 use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
@@ -37,18 +42,26 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface
+     */
+    protected $availabilityFacade;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface $availabilityFacade
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         WishlistToProductInterface $productQueryContainer,
-        WishlistTransferMapperInterface $transferMapper
+        WishlistTransferMapperInterface $transferMapper,
+        WishlistToAvailabilityInterface $availabilityFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->transferMapper = $transferMapper;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -102,11 +115,13 @@ class Reader implements ReaderInterface
         );
 
         $wishlistItems = $this->expandProductId($wishlistItems);
+        $wishlistItems = $this->expandAvailability($wishlistItems);
 
         $wishlistOverviewResponseTransfer
             ->setWishlist($wishlistTransfer)
             ->setPagination($wishlistPaginationTransfer)
-            ->setItems(new ArrayObject($wishlistItems));
+            ->setItems(new ArrayObject($wishlistItems))
+            ->setMeta($this->getWishlistOverviewMeta($wishlistOverviewRequestTransfer));
 
         return $wishlistOverviewResponseTransfer;
     }
@@ -147,7 +162,8 @@ class Reader implements ReaderInterface
     {
         return (new WishlistOverviewResponseTransfer())
             ->setWishlist($wishlistTransfer)
-            ->setPagination($wishlistPaginationTransfer);
+            ->setPagination($wishlistPaginationTransfer)
+            ->setWishlistCollection($this->getCollectionByIdCustomer($wishlistTransfer->getFkCustomer()));
     }
 
     /**
@@ -213,23 +229,65 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewMetaTransfer
+     */
+    protected function getWishlistOverviewMeta(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        $wishlistOverviewMetaTransfer = new WishlistOverviewMetaTransfer();
+
+        $itemsQuery = $this->queryContainer->queryItemsByWishlistId(
+            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist()
+        );
+
+        foreach ($itemsQuery->find() as $wishlistItemEntity) {
+            $productEntity = $wishlistItemEntity->getSpyProduct();
+
+            $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
+            $wishlistItemMetaTransfer
+                ->setIdProduct($productEntity->getIdProduct())
+                ->setSku($wishlistItemEntity->getSku())
+                ->setIsAvailable($this->isProductAvailable($wishlistItemEntity->getSku()));
+
+            $wishlistOverviewMetaTransfer->addWishlistItemMeta($wishlistItemMetaTransfer);
+        }
+
+        return $wishlistOverviewMetaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
      */
-    protected function expandProductId(array $itemCollection)
+    protected function expandProductId(array $wishlistItemCollection)
     {
-        $productCollection = $this->getProductCollection($itemCollection);
+        $productCollection = $this->getProductCollection($wishlistItemCollection);
 
         foreach ($productCollection as $productEntity) {
-            foreach ($itemCollection as $itemTransfer) {
+            foreach ($wishlistItemCollection as $itemTransfer) {
                 if (mb_strtolower($itemTransfer->getSku()) === mb_strtolower($productEntity->getSku())) {
                     $itemTransfer->setIdProduct($productEntity->getIdProduct());
                 }
             }
         }
 
-        return $itemCollection;
+        return $wishlistItemCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     */
+    protected function expandAvailability(array $wishlistItemCollection)
+    {
+        foreach ($wishlistItemCollection as $wishlistItemTransfer) {
+            $wishlistItemTransfer->setIsAvailable($this->isProductAvailable($wishlistItemTransfer->getSku()));
+        }
+
+        return $wishlistItemCollection;
     }
 
     /**
@@ -324,6 +382,20 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
+    {
+        $idCustomer = $customerTransfer
+            ->requireIdCustomer()
+            ->getIdCustomer();
+
+        return $this->getCollectionByIdCustomer($idCustomer);
+    }
+
+    /**
      * @param int $idCustomer
      * @param string $name
      *
@@ -332,9 +404,42 @@ class Reader implements ReaderInterface
     protected function hasCustomerWishlist($idCustomer, $name)
     {
         return $this->queryContainer
+                ->queryWishlistByCustomerId($idCustomer)
+                ->filterByName($name)
+                ->count() > 0;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    protected function getCollectionByIdCustomer($idCustomer)
+    {
+        $wishlistCollection = new WishlistCollectionTransfer();
+        $wishlistEntities = $this->queryContainer
             ->queryWishlistByCustomerId($idCustomer)
-            ->filterByName($name)
-            ->count() > 0;
+            ->find();
+
+        if (!$wishlistEntities->count()) {
+            return $wishlistCollection;
+        }
+
+        foreach ($wishlistEntities as $wishlistEntity) {
+            $wishlistCollection->addWishlist($this->transferMapper->convertWishlist($wishlistEntity));
+        }
+
+        return $wishlistCollection;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    protected function isProductAvailable($sku)
+    {
+        return $this->availabilityFacade->isProductSellable($sku, 1);
     }
 
 }

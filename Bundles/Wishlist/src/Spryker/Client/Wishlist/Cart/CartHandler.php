@@ -8,6 +8,8 @@
 namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface;
 use Spryker\Client\Wishlist\WishlistClientInterface;
@@ -42,13 +44,42 @@ class CartHandler implements CartHandlerInterface
      */
     public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
     {
-        $wishlistMoveToCartRequestTransfer->requireSku();
-        $wishlistMoveToCartRequestTransfer->requireWishlistItem();
+        $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
 
         $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
         $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
 
         return $wishlistMoveToCartRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     *
+     * @return void
+     */
+    public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
+    {
+        $wishlistItemCollection = new WishlistItemCollectionTransfer();
+
+        foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
+            $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
+
+            $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
+            $wishlistItemCollection->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
+        }
+
+        $this->wishlistClient->removeItemCollection($wishlistItemCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertRequestTransfer(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
+    {
+        $wishlistMoveToCartRequestTransfer->requireSku();
+        $wishlistMoveToCartRequestTransfer->requireWishlistItem();
     }
 
     /**

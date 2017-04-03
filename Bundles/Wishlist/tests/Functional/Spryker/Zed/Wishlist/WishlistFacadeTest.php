@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Wishlist;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
@@ -164,13 +165,15 @@ class WishlistFacadeTest extends Test
     }
 
     /**
+     * @param string $name
+     *
      * @return void
      */
-    protected function setupWishlist()
+    protected function setupWishlist($name = self::DEFAULT_NAME)
     {
         $this->wishlist = (new SpyWishlist())
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setName(self::DEFAULT_NAME);
+            ->setName($name);
 
         $this->wishlist->save();
 
@@ -413,6 +416,22 @@ class WishlistFacadeTest extends Test
         $this->assertEquals($pageNumber, $wishlistOverviewResponse->getPagination()->getPage());
         $this->assertEquals($itemsPerPage, $wishlistOverviewResponse->getPagination()->getItemsPerPage());
         $this->assertEquals($itemsTotal, $wishlistOverviewResponse->getPagination()->getItemsTotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishlistsByCustomerReturnPersistedWishlists()
+    {
+        $this->setupWishlist('test-wishlist-1');
+        $this->setupWishlist('test-wishlist-2');
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($this->customer->toArray(), true);
+
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
+
+        $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
     /**

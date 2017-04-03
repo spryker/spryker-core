@@ -8,7 +8,6 @@
 namespace Spryker\Client\Wishlist\Product;
 
 use ArrayObject;
-use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
@@ -42,17 +41,19 @@ class ProductStorage implements ProductStorageInterface
             return $wishlistResponseTransfer;
         }
 
-        $wishlistResponseTransfer->setItems(new ArrayObject());
+        $validWishlistItems = new ArrayObject();
 
-        $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
-        foreach ($storageProductCollection as $storageProduct) {
-            $wishlistItem = (new WishlistItemTransfer())
-                ->setIdProduct($storageProduct->getIdProductConcrete())
-                ->setFkWishlist($wishlistResponseTransfer->getWishlist()->getIdWishlist())
-                ->setProduct($storageProduct);
+        $storageProductCollection = $this->getStorageProductCollection($idProductCollection);
+        foreach ($wishlistResponseTransfer->getItems() as $wishlistItemTransfer) {
+            if (!array_key_exists($wishlistItemTransfer->getIdProduct(), $storageProductCollection)) {
+                continue;
+            }
 
-            $wishlistResponseTransfer->addItem($wishlistItem);
+            $wishlistItemTransfer->setProduct($storageProductCollection[$wishlistItemTransfer->getIdProduct()]);
+            $validWishlistItems->append($wishlistItemTransfer);
         }
+
+        $wishlistResponseTransfer->setItems($validWishlistItems);
 
         return $wishlistResponseTransfer;
     }
@@ -70,6 +71,23 @@ class ProductStorage implements ProductStorageInterface
         }
 
         return $idProductCollection;
+    }
+
+    /**
+     * @param $idProductCollection
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     */
+    protected function getStorageProductCollection($idProductCollection)
+    {
+        $result = [];
+        $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
+
+        foreach ($storageProductCollection as $storageProductTransfer) {
+            $result[$storageProductTransfer->getIdProductConcrete()] = $storageProductTransfer;
+        }
+
+        return $result;
     }
 
 }
