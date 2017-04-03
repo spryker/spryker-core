@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AbstractProductDataFeed\Persistence;
 
-use Generated\Shared\Transfer\AbstractProductDataFeedTransfer;
+use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -17,7 +17,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 /**
  * @method \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedPersistenceFactory getFactory()
  */
-class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer implements AbstractProductDataFeedQueryContainerInterface
+class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer implements ProductAbstractDataFeedQueryContainerInterface
 {
 
     const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
@@ -41,11 +41,11 @@ class AbstractProductDataFeedQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\AbstractProductDataFeedTransfer|null $productDataFeedTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer|null $productDataFeedTransfer
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
-    public function queryAbstractProductDataFeed(AbstractProductDataFeedTransfer $productDataFeedTransfer = null)
+    public function queryAbstractProductDataFeed(ProductAbstractDataFeedTransfer $productDataFeedTransfer = null)
     {
         $abstractProductQuery = $this->productQueryContainer
             ->queryProductAbstract();

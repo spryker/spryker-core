@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\AbstractProductDataFeed\Persistence;
+namespace Unit\Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AbstractProductDataFeedTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer;
+use Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
 /**
@@ -21,11 +21,11 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainer;
  * @group Persistence
  * @group AbstractProductDataFeedQueryContainerTest
  */
-class AbstractProductDataFeedQueryContainerTest extends Test
+class ProductAbstractDataFeedQueryContainerTest extends Test
 {
 
     /**
-     * @var \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer
+     * @var \Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
     protected $productDataFeedQueryContainer;
 
@@ -217,12 +217,12 @@ class AbstractProductDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\AbstractProductDataFeed\Persistence\AbstractProductDataFeedQueryContainer
+     * @return \Spryker\Zed\AbstractProductDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
     protected function createProductDataFeedQueryContainer()
     {
         $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new AbstractProductDataFeedQueryContainer($productQueryContainer);
+        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer($productQueryContainer);
 
         return $productDataFeedQueryContainer;
     }

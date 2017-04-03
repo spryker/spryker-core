@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\AbstractProductDataFeed;
+namespace Spryker\Shared\ProductAbstractDataFeed;
 
-interface AbstractProductDataFeedConfig
+interface ProductAbstractDataFeedConfig
 {
 }

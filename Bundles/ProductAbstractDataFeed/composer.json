@@ -1,17 +1,19 @@
 {
-  "name": "spryker/abstract-product-data-feed",
+  "name": "spryker/product-abstract-data-feed",
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
-    "spryker/propel": "^2.0.0"
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/silex": "ˆ2.0.0",
     "spryker/testify": "*"
   },
   "description": "Abstract product DataFeed bundle",
