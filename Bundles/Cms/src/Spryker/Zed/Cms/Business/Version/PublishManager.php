@@ -45,28 +45,45 @@ class PublishManager implements PublishManagerInterface
 
     /**
      * @param int $idCmsPage
+     * @param string|null $versionName
      *
      * @throws \Exception
      * @return CmsVersionTransfer
      */
-    public function publishAndVersion($idCmsPage)
+    public function publishAndVersion($idCmsPage, $versionName = null)
     {
-        $cmsPageArray = $this->queryContainer->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)
+        $cmsPageArray = $this->queryContainer
+            ->queryCmsPageWithAllRelationsEntitiesByIdPage($idCmsPage)
             ->find()
-            ->toArray(
-                null,
-                false,
-                TableMap::TYPE_COLNAME
-            );
+            ->toArray(null, false, TableMap::TYPE_COLNAME);
 
-        if ($cmsPageArray === null) {
-            throw new \Exception('There is no CMS page with this id:'. $idCmsPage);
+        if (empty($cmsPageArray)) {
+            throw new \Exception('There is no draft for CMS page with this id:'. $idCmsPage);
+        }
+
+        return $this->createCmsVersion(current($cmsPageArray), $idCmsPage, $versionName);
+    }
+
+    /**
+     * @param array $data
+     * @param int $idCmsPage
+     * @param string|null $versionName
+     *
+     * @return CmsVersionTransfer
+     */
+    protected function createCmsVersion(array $data, $idCmsPage, $versionName = null)
+    {
+        $versionNumber = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
+
+        if ($versionName === null) {
+            $versionName = $this->versionGenerator->generateNewCmsVersionName($versionNumber);
         }
 
         $cmsVersionTransfer = $this->saveCmsVersion(
             $idCmsPage,
-            json_encode(current($cmsPageArray)),
-            $this->versionGenerator->generateNewCmsVersion($idCmsPage)
+            json_encode($data),
+            $versionNumber,
+            $versionName
         );
 
         foreach ($this->postSavePlugins as $userPlugin) {
@@ -76,22 +93,21 @@ class PublishManager implements PublishManagerInterface
         return $cmsVersionTransfer;
     }
 
-
-
     /**
      * @param int $idCmsPage
      * @param string $data
      * @param int $versionNumber
+     * @param string $versionName
      *
      * @return CmsVersionTransfer
      */
-    protected function saveCmsVersion($idCmsPage, $data, $versionNumber)
+    protected function saveCmsVersion($idCmsPage, $data, $versionNumber, $versionName)
     {
         $cmsVersionEntity = new SpyCmsVersion();
         $cmsVersionEntity->setFkCmsPage($idCmsPage);
         $cmsVersionEntity->setData($data);
         $cmsVersionEntity->setVersion($versionNumber);
-        $cmsVersionEntity->setVersionName($this->versionGenerator->generateNewCmsVersionName($versionNumber));
+        $cmsVersionEntity->setVersionName($versionName);
         $cmsVersionEntity->save();
 
         return $this->convertToCmsVersionTransfer($cmsVersionEntity);

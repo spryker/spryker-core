@@ -14,10 +14,12 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -639,6 +641,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @param int $idPage
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idPage, $idLocale)
+    {
+        return $this->queryCmsPageLocalizedAttributesByFkPage($idPage)
+            ->filterByFkLocale($idLocale);
+    }
+
+    /**
      * @api
      *
      * @param array $placeholders
@@ -702,4 +716,38 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIdCmsVersion($idCmsVersion);
     }
 
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->getGlossaryQueryContainer()
+            ->queryTranslations()
+            ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
+    }
+
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->getGlossaryQueryContainer()
+            ->queryKeys()
+            ->filterByIdGlossaryKey($idGlossaryKeys, Criteria::IN);
+    }
+
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->queryGlossaryKeyMappings()
+            ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
+    }
 }

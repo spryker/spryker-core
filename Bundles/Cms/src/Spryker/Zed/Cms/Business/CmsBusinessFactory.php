@@ -221,6 +221,9 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createRevertManager()
     {
         return new RevertManager(
+            $this->createPublishManager(),
+            $this->createVersionGenerator(),
+            $this->createCmsGlossarySaver(),
             $this->getQueryContainer()
         );
     }

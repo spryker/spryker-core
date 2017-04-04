@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
@@ -208,6 +211,16 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idPage
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idPage, $idLocale);
+
+    /**
+     * @api
+     *
      * @param string $key
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -273,5 +286,26 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return SpyCmsVersionQuery
      */
     public function queryCmsVersionById($idCmsVersion);
+
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys);
+
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys);
+
+    /**
+     * @param array $idGlossaryKeys
+     *
+     * @return SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
 
 }
