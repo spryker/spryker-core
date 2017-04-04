@@ -1,9 +1,9 @@
-# DataFeed Bundle
+# ProductAbstractDataFeed Bundle
 
 ## Installation
 
 ```
-composer require spryker/data-feed
+composer require spryker/product-abstract-data-feed
 ```
 
 ## Documentation

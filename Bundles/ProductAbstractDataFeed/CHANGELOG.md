@@ -1,3 +1,3 @@
-# DataFeed Changelog
+# ProductAbstractDataFeed Changelog
 
-[DataFeed Changelog](https://github.com/spryker/DataFeed/releases)
+[ProductAbstractDataFeed Changelog](https://github.com/spryker/ProductAbstractDataFeed/releases)

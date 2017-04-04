@@ -1,9 +1,9 @@
-# DataFeed Bundle
+# AvailabilityDataFeed Bundle
 
 ## Installation
 
 ```
-composer require spryker/data-feed
+composer require spryker/availability-data-feed
 ```
 
 ## Documentation

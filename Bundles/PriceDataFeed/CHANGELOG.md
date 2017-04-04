@@ -1,3 +1,3 @@
-# DataFeed Changelog
+# PriceDataFeed Changelog
 
-[DataFeed Changelog](https://github.com/spryker/DataFeed/releases)
+[PriceDataFeed Changelog](https://github.com/spryker/PriceDataFeed/releases)

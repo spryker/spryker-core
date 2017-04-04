@@ -1,9 +1,9 @@
-# DataFeed Bundle
+# CategoryDataFeed Bundle
 
 ## Installation
 
 ```
-composer require spryker/data-feed
+composer require spryker/category-data-feed
 ```
 
 ## Documentation

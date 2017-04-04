@@ -1,9 +1,9 @@
-# DataFeed Bundle
+# PriceDataFeed Bundle
 
 ## Installation
 
 ```
-composer require spryker/data-feed
+composer require spryker/price-data-feed
 ```
 
 ## Documentation
