@@ -55,11 +55,11 @@ class RuleQuerySetTransformer implements DataTransformerInterface
     public function transform($ruleQuerySetTransfer)
     {
         if (!$ruleQuerySetTransfer) {
-            return;
+            return null;
         }
 
         if (count($ruleQuerySetTransfer->getRules()) === 0) {
-            return;
+            return null;
         }
 
         return $this->utilEncodingService->encodeJson($ruleQuerySetTransfer->toArray());
