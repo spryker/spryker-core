@@ -8,4 +8,4 @@ composer require spryker/util-text
 
 ## Documentation
 
-[UtilText Documentation](http://spryker.github.io/core/bundles/util)
+[Documentation](http://spryker.github.io)

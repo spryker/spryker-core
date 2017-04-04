@@ -8,4 +8,4 @@ composer require spryker/util-network
 
 ## Documentation
 
-[UtilNetwork Documentation](http://spryker.github.io/core/bundles/util-network)
+[Documentation](http://spryker.github.io)
