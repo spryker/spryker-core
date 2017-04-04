@@ -48,7 +48,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
         $productOptionValueIds = $this->getAllProductOptionValueIds($quoteTransfer);
 
         if (!$countryIsoCode) {
-            $this->taxFacade->getDefaultTaxCountryIso2Code();
+            $countryIsoCode = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
         $taxRates = $this->findTaxRatesByIdOptionValueAndCountryIso2Code($productOptionValueIds, $countryIsoCode);
