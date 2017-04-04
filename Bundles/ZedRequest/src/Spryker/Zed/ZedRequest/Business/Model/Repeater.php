@@ -109,7 +109,7 @@ class Repeater implements RepeaterInterface
      */
     protected function getFilePath($fileName)
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getCurrentCountry() . '/logs/ZED/' . $fileName;
+        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/' . $fileName;
     }
 
 }
