@@ -1,10 +1,5 @@
 {
   "name": "spryker/product-relation-collector",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "spryker/collector": "^5.1.1",
     "spryker/kernel": "^3.0.0",
@@ -35,6 +30,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
   },
   "autoload-dev": {
     "psr-0": {

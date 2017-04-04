@@ -35,7 +35,7 @@
   },
   "suggest": {
     "spryker/event": "Event bundle is required to listen for changes affecting product relations.",
-    "spryker/silex": "Is required by product relation twig component.",
+    "spryker/silex": "Is required by product relation Twig component.",
     "spryker/twig": "Is required because of the product relation component."
   },
   "description": "ProductRelation bundle",
