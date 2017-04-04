@@ -18,6 +18,7 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
+    "spryker/stock": "4.0.0",
     "spryker/testify": "*"
   },
   "description": "Wishlist bundle",
