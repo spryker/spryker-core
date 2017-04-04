@@ -607,8 +607,8 @@ class WishlistFacadeTest extends Test
     }
 
     /**
-     * @param $sku
-     * @param $quantity
+     * @param string $sku
+     * @param int $quantity
      *
      * @return void
      */

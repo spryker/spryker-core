@@ -74,11 +74,11 @@ class ProductStorage implements ProductStorageInterface
     }
 
     /**
-     * @param $idProductCollection
+     * @param array $idProductCollection
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
-    protected function getStorageProductCollection($idProductCollection)
+    protected function getStorageProductCollection(array $idProductCollection)
     {
         $result = [];
         $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);

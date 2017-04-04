@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
-use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -72,7 +71,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WishlistToAvailabilityInterface
+     * @return \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface
      */
     protected function getAvailabilityFacade()
     {
