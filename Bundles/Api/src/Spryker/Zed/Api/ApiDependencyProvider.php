@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Api;
 
-use Spryker\Zed\Api\Dependency\QueryContainer\ApiToPropelQueryBuilderBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
     const PLUGINS_API = 'PLUGINS_API';
     const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
@@ -58,10 +56,6 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = parent::providePersistenceLayerDependencies($container);
-
-        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
-            return new ApiToPropelQueryBuilderBridge($container->getLocator()->propelQueryBuilder()->queryContainer());
-        };
 
         return $container;
     }

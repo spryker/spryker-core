@@ -27,11 +27,19 @@ class ProductApiPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface
+     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
      */
     public function getApiQueryContainer()
     {
         return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
+     */
+    public function getPropelQueryBuilderQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
     }
 
 }

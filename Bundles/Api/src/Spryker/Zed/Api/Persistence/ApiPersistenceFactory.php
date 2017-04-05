@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Api\Persistence;
 
-use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Persistence\Mapper\ApiCollectionMapper;
 use Spryker\Zed\Api\Persistence\Mapper\ApiItemMapper;
-use Spryker\Zed\Api\Persistence\Mapper\FieldMapper;
-use Spryker\Zed\Api\Persistence\Mapper\PaginationQueryMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -20,22 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ApiPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Api\Persistence\Mapper\PaginationQueryMapperInterface
-     */
-    public function createPaginationQueryMapper()
-    {
-        return new PaginationQueryMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Persistence\Mapper\FieldMapperInterface
-     */
-    public function createFieldMapper()
-    {
-        return new FieldMapper();
-    }
 
     /**
      * @return \Spryker\Zed\Api\Persistence\Mapper\ApiCollectionMapperInterface
@@ -51,14 +32,6 @@ class ApiPersistenceFactory extends AbstractPersistenceFactory
     public function createApiItemMapper()
     {
         return new ApiItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Dependency\QueryContainer\ApiToPropelQueryBuilderInterface
-     */
-    public function getPropelQueryBuilder()
-    {
-        return $this->getProvidedDependency(ApiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
     }
 
 }

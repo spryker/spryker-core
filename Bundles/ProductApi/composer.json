@@ -7,6 +7,7 @@
     "spryker/product": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-query-builder": "^1.0.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {

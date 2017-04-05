@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Dependency\QueryContainer;
+namespace Spryker\Zed\ProductApi\Dependency\QueryContainer;
 
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-interface ApiToPropelQueryBuilderInterface
+interface ProductApiToPropelQueryBuilderInterface
 {
 
     /**
