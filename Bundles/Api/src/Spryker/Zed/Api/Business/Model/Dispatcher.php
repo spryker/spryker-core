@@ -21,6 +21,7 @@ class Dispatcher implements DispatcherInterface
     //TODO DRY
     const HTTP_CODE_SUCCESS = 200;
     const HTTP_CODE_INTERNAL_ERROR = 500;
+    const HTTP_CODE_VALIDATION_ERRORS = 422;
 
     /**
      * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
@@ -66,7 +67,7 @@ class Dispatcher implements DispatcherInterface
         $apiResponseTransfer = $this->processor->postProcess($apiRequestTransfer, $apiResponseTransfer);
 
         if ($apiResponseTransfer->getCode() === null) {
-            $apiResponseTransfer->setCode(200);
+            $apiResponseTransfer->setCode(static::HTTP_CODE_SUCCESS);
         }
 
         return $apiResponseTransfer;
@@ -89,7 +90,7 @@ class Dispatcher implements DispatcherInterface
             $errors = $this->getValidationErrors($apiRequestTransfer);
 
             if ($errors) {
-                $apiResponseTransfer->setCode(422);
+                $apiResponseTransfer->setCode(static::HTTP_CODE_VALIDATION_ERRORS);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
             } else {
