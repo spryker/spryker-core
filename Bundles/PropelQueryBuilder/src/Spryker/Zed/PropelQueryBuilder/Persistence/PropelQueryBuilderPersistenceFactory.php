@@ -9,6 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence;
 
 use Exception;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\JsonCriterionMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\OperatorBuilder as QueryBuilderOperatorBuilder;
@@ -39,8 +40,17 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     public function createQueryBuilder()
     {
         return new QueryBuilder(
-            $this->createQueryBuilderCriteriaMapper()
+            $this->createQueryBuilderCriteriaMapper(),
+            $this->createPaginationQueryMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface
+     */
+    protected function createPaginationQueryMapper()
+    {
+        return new PaginationQueryMapper();
     }
 
     /**
@@ -49,6 +59,7 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     protected function createQueryBuilderCriteriaMapper()
     {
         return new CriteriaMapper(
+
             $this->createQueryBuilderOperatorBuilder(),
             $this->createAttributeCriterionMapper()
         );

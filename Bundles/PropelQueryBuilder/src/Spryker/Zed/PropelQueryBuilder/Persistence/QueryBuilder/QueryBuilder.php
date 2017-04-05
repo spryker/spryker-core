@@ -9,6 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface;
 
 class QueryBuilder implements QueryBuilderInterface
 {
@@ -19,11 +20,20 @@ class QueryBuilder implements QueryBuilderInterface
     protected $criteriaMapper;
 
     /**
-     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapperInterface $criteriaMapper
+     * @var \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface
      */
-    public function __construct(CriteriaMapperInterface $criteriaMapper)
-    {
+    protected $paginationMapper;
+
+    /**
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapperInterface $criteriaMapper
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface $paginationMapper
+     */
+    public function __construct(
+        CriteriaMapperInterface $criteriaMapper,
+        PaginationQueryMapperInterface $paginationMapper
+    ) {
         $this->criteriaMapper = $criteriaMapper;
+        $this->paginationMapper = $paginationMapper;
     }
 
     /**
@@ -36,6 +46,7 @@ class QueryBuilder implements QueryBuilderInterface
     {
         $propelQueryBuilderCriteriaTransfer->requireRuleSet();
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
+        $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }
@@ -50,6 +61,19 @@ class QueryBuilder implements QueryBuilderInterface
     {
         $criteria = $this->toCriteria($propelQueryBuilderCriteriaTransfer);
         $query->mergeWith($criteria, $propelQueryBuilderCriteriaTransfer->getRuleSet()->getCondition());
+
+        return $query;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function mergeQueryWithPagination(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
+    {
+        $query = $this->paginationMapper->mapPagination($query, $propelQueryBuilderCriteriaTransfer->getPagination());
 
         return $query;
     }

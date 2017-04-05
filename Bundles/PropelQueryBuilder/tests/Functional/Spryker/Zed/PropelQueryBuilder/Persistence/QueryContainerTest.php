@@ -10,6 +10,7 @@ namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -29,6 +30,9 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
 class QueryContainerTest extends Test
 {
 
+    const LIMIT = 10;
+    const PAGE = 2;
+
     const EXPECTED_SKU_COLLECTION = [
         '001_25904004',
         '019_30395396',
@@ -41,6 +45,7 @@ class QueryContainerTest extends Test
     ];
 
     const EXPECTED_COUNT = 8;
+    const EXPECTED_OFFSET = 10;
 
     /**
      * @var string
@@ -51,6 +56,11 @@ class QueryContainerTest extends Test
      * @var string
      */
     protected $jsonDataNoMappings = '{"condition":"OR","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"spy_product_abstract.sku","field":"spy_product.sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
+
+    /**
+     * @var string
+     */
+    protected $jsonDataForPagination = '{"condition":"OR","rules":[{"id":"spy_product_abstract.id_product_abstract","field":"spy_product_abstract.id_product_abstract","type":"number","input":"text","operator":"greater_or_equal","value":"1"}]}';
 
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
@@ -75,9 +85,9 @@ class QueryContainerTest extends Test
         $query = SpyProductQuery::create();
         $query->innerJoinSpyProductAbstract();
 
-        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
 
-        $this->queryContainer->createQuery($query, $ruleQueryTransfer);
+        $this->queryContainer->createQuery($query, $criteriaTransfer);
     }
 
     /**
@@ -90,10 +100,10 @@ class QueryContainerTest extends Test
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
-        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
 
-        $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
+        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
         $results = $query->find();
 
         $this->assertCount(static::EXPECTED_COUNT, $results);
@@ -110,8 +120,8 @@ class QueryContainerTest extends Test
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
-        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
 
         $skuMapping = new PropelQueryBuilderCriteriaMappingTransfer();
         $skuMapping->setAlias('product_sku');
@@ -119,9 +129,9 @@ class QueryContainerTest extends Test
             SpyProductAbstractTableMap::COL_SKU,
             SpyProductTableMap::COL_SKU,
         ]);
-        $ruleQueryTransfer->addMapping($skuMapping);
+        $criteriaTransfer->addMapping($skuMapping);
 
-        $query = $this->queryContainer->createQuery($query, $ruleQueryTransfer);
+        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
         $results = $query->find();
 
         $this->assertCount(static::EXPECTED_COUNT, $results);
@@ -138,13 +148,30 @@ class QueryContainerTest extends Test
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($this->getCriteriaDataNoMappings());
-        $ruleQueryTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $ruleQueryTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
 
         $ruleQuerySetTransfer = $this->queryContainer->createPropelQueryBuilderCriteriaFromJson($this->jsonDataWithMappings);
 
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, $ruleQuerySetTransfer);
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, current($ruleQuerySetTransfer->getRules()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testPropelCreateQueryWithoutMappingsWithPagination()
+    {
+        $query = SpyProductQuery::create();
+        $query->innerJoinSpyProductAbstract();
+
+        $criteriaTransfer = $this->getCriteriaForPagination();
+
+        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
+
+        $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
+        $this->assertEquals(self::LIMIT, $query->getLimit());
+        $this->assertEquals(self::LIMIT, $query->count());
     }
 
     /**
@@ -161,6 +188,27 @@ class QueryContainerTest extends Test
     protected function getCriteriaDataNoMappings()
     {
         return json_decode($this->jsonDataNoMappings, true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function getCriteriaForPagination()
+    {
+        $json = json_decode($this->jsonDataForPagination, true);
+
+        $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
+        $paginationTransfer->setPage(self::PAGE);
+        $paginationTransfer->setItemsPerPage(self::LIMIT);
+
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
+        $ruleQuerySetTransfer->fromArray($json);
+
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer->setPagination($paginationTransfer);
+
+        return $criteriaTransfer;
     }
 
     /**
