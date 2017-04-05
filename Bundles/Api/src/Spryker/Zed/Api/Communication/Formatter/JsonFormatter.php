@@ -7,19 +7,8 @@
 
 namespace Spryker\Zed\Api\Communication\Formatter;
 
-use Silex\Application;
 use Spryker\Service\UtilEncoding\Model\Json;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
-use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
-use Spryker\Zed\Api\ApiConfig;
-use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
-use Spryker\Zed\Kernel\Communication\BundleControllerAction;
-use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RouterInterface;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
 class JsonFormatter implements FormatterInterface
 {
@@ -32,13 +21,14 @@ class JsonFormatter implements FormatterInterface
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $service
      */
-    public function __construct(UtilEncodingService $service)
+    public function __construct(UtilEncodingServiceInterface $service)
     {
         $this->service = $service;
     }
 
     /**
      * @param mixed $value
+     *
      * @return string
      */
     public function format($value)
