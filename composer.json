@@ -22,6 +22,12 @@
       "Functional\\Spryker\\Shared\\Acl\\": "Bundles/Acl/tests",
       "Spryker\\Zed\\Acl\\": "Bundles/Acl/src",
       "Functional\\Spryker\\Zed\\Acl\\": "Bundles/Acl/tests",
+
+      "Spryker\\Shared\\Api\\": "Bundles/Api/src",
+      "Functional\\Spryker\\Shared\\Api\\": "Bundles/Api/tests",
+      "Spryker\\Zed\\Api\\": "Bundles/Api/src",
+      "Functional\\Spryker\\Zed\\Api\\": "Bundles/Api/tests",
+
       "Spryker\\Shared\\Application\\": "Bundles/Application/src",
       "Unit\\Spryker\\Shared\\Application\\": "Bundles/Application/tests",
       "Spryker\\Yves\\Application\\": "Bundles/Application/src",
@@ -144,6 +150,12 @@
       "Spryker\\Zed\\Customer\\": "Bundles/Customer/src",
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
+
+      "Spryker\\Shared\\CustomerApi\\": "Bundles/CustomerApi/src",
+      "Functional\\Spryker\\Shared\\CustomerApi\\": "Bundles/CustomerApi/tests",
+      "Acceptance\\CustomerApi\\": "Bundles/CustomerApi/tests",
+      "Spryker\\Zed\\CustomerApi\\": "Bundles/CustomerApi/src",
+      "Functional\\Spryker\\Zed\\CustomerApi\\": "Bundles/CustomerApi/tests",
 
       "Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/src",
       "Unit\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
@@ -391,6 +403,12 @@
       "Unit\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Acceptance\\ProductCategory\\": "Bundles/ProductCategory/tests",
+
+      "Spryker\\Shared\\ProductApi\\": "Bundles/ProductApi/src",
+      "Functional\\Spryker\\Shared\\ProductApi\\": "Bundles/ProductApi/tests",
+      "Acceptance\\ProductApi\\": "Bundles/ProductApi/tests",
+      "Spryker\\Zed\\ProductApi\\": "Bundles/ProductApi/src",
+      "Functional\\Spryker\\Zed\\ProductApi\\": "Bundles/ProductApi/tests",
 
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",
       "Spryker\\Client\\ProductOption\\": "Bundles/ProductOption/src",
