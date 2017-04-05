@@ -25,7 +25,7 @@ interface PaginationQueryMapperInterface
      */
     public function mapPagination(
         ModelCriteria $query,
-        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer = null
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     );
 
 }

@@ -31,12 +31,8 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
      */
     public function mapPagination(
         ModelCriteria $query,
-        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer = null
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     ) {
-        if (!$propelQueryBuilderPaginationTransfer) {
-            return $query;
-        }
-
         $query = $this->mapQueryLimit($query, $propelQueryBuilderPaginationTransfer);
         $query = $this->mapQueryOffset($query, $propelQueryBuilderPaginationTransfer);
         $query = $this->mapQuerySort($query, $propelQueryBuilderPaginationTransfer);

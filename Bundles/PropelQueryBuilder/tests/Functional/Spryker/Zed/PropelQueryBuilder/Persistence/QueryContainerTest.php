@@ -9,6 +9,7 @@ namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
@@ -19,6 +20,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
 
@@ -36,6 +38,8 @@ class QueryContainerTest extends Test
     const LIMIT = 10;
     const PAGE = 2;
 
+    const EXPECTED_COUNT = 8;
+    const EXPECTED_OFFSET = 10;
     const EXPECTED_SKU_COLLECTION = [
         '001_25904004',
         '019_30395396',
@@ -46,9 +50,6 @@ class QueryContainerTest extends Test
         '031_19618271',
         '031_21927455',
     ];
-
-    const EXPECTED_COUNT = 8;
-    const EXPECTED_OFFSET = 10;
 
     /**
      * @var string
@@ -118,18 +119,7 @@ class QueryContainerTest extends Test
         $query = SpyProductQuery::create();
         $query->innerJoinSpyProductAbstract();
 
-        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $ruleQuerySetTransfer->fromArray($this->getCriteriaData());
-        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
-
-        $skuMapping = new PropelQueryBuilderCriteriaMappingTransfer();
-        $skuMapping->setAlias('product_sku');
-        $skuMapping->setColumns([
-            SpyProductAbstractTableMap::COL_SKU,
-            SpyProductTableMap::COL_SKU,
-        ]);
-        $criteriaTransfer->addMapping($skuMapping);
+        $criteriaTransfer = $this->getCriteriaWithMappings();
 
         $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
         $results = $query->find();
@@ -173,11 +163,43 @@ class QueryContainerTest extends Test
     }
 
     /**
-     * @return array
+     * @return void
      */
-    protected function getCriteriaData()
+    public function testPropelCreateQueryWithoutMappingsWithoutPaginationWithSelectedColumns()
     {
-        return json_decode($this->jsonDataWithMappings, true);
+        $query = SpyProductQuery::create();
+        $query->innerJoinSpyProductAbstract();
+
+        $criteriaTransfer = $this->getCriteriaWithoutMappingsWithSelectedColumns();
+
+        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
+        $results = $query->find();
+
+        $this->assertCount(static::EXPECTED_COUNT, $results);
+        $this->assertSkuCollectionWithSelectedColumns($results, static::EXPECTED_SKU_COLLECTION);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function getCriteriaWithMappings()
+    {
+        $json = json_decode($this->jsonDataWithMappings, true);
+
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
+        $ruleQuerySetTransfer->fromArray($json);
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
+
+        $skuMapping = new PropelQueryBuilderCriteriaMappingTransfer();
+        $skuMapping->setAlias('product_sku');
+        $skuMapping->setColumns([
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductTableMap::COL_SKU,
+        ]);
+        $criteriaTransfer->addMapping($skuMapping);
+
+        return $criteriaTransfer;
     }
 
     /**
@@ -198,12 +220,32 @@ class QueryContainerTest extends Test
     /**
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
+    protected function getCriteriaWithoutMappingsWithSelectedColumns()
+    {
+        $criteriaTransfer = $this->getCriteriaWithoutMappings();
+
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
+        $columnSelectionTransfer->setTableName(SpyProductTableMap::TABLE_NAME);
+        $columnSelectionTransfer->setTableColumns(SpyProductTableMap::getFieldNames(TableMap::TYPE_COLNAME));
+        $columnSelectionTransfer->setSelectedColumns([
+            SpyProductTableMap::COL_ID_PRODUCT,
+            SpyProductTableMap::COL_SKU,
+        ]);
+
+        $criteriaTransfer->setColumnSelection($columnSelectionTransfer);
+
+        return $criteriaTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
     protected function getCriteriaForPagination()
     {
         $json = json_decode($this->jsonDataForPagination, true);
 
         $sortItems[] = (new PropelQueryBuilderSortTransfer())
-            ->setSortBy(SpyProductTableMap::COL_ID_PRODUCT)
+            ->setColumnName(SpyProductTableMap::COL_ID_PRODUCT)
             ->setSortDirection(Criteria::DESC);
 
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
@@ -249,6 +291,20 @@ class QueryContainerTest extends Test
         foreach ($collection as $productEntity) {
             $sku = $productEntity->getSku();
             $this->assertContains($sku, $expectedSkuCollection);
+        }
+    }
+
+    /**
+     * @param mixed $collection
+     * @param array $expectedSkuCollection
+     *
+     * @return void
+     */
+    protected function assertSkuCollectionWithSelectedColumns($collection, array $expectedSkuCollection)
+    {
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct|\Orm\Zed\Product\Persistence\SpyProduct $productData */
+        foreach ($collection as $productData) {
+            $this->assertContains($productData[SpyProductTableMap::COL_SKU], $expectedSkuCollection);
         }
     }
 

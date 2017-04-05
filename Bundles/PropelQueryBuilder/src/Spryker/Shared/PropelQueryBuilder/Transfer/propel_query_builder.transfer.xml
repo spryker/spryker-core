@@ -18,6 +18,7 @@
         <property name="ruleSet" type="PropelQueryBuilderRuleSet" />
         <property name="mappings" type="PropelQueryBuilderCriteriaMapping[]" singular="mapping"/>
         <property name="pagination" type="PropelQueryBuilderPagination"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderCriteriaMapping">
@@ -35,6 +36,17 @@
     <transfer name="PropelQueryBuilderSort">
         <property name="columnName" type="string" />
         <property name="sortDirection" type="string" />
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumnSelection">
+        <property name="tableName" type="string" />
+        <property name="tableColumns" type="array"/>
+        <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumn">
+        <property name="name" type="string" />
+        <property name="alias" type="string"/>
     </transfer>
 
 </transfers>

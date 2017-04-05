@@ -39,7 +39,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         $apiRequestTransfer->getFilter()->getPagination()->setPage(1);
-        $apiRequestTransfer->getFilter()->getPagination()->setLimit($this->apiConfig->getLimitPerPage());
+        $apiRequestTransfer->getFilter()->getPagination()->setItemsPerPage($this->apiConfig->getLimitPerPage());
 
         if (!empty($queryStrings[self::PAGE])) {
             $apiRequestTransfer->getFilter()->getPagination()->setPage(
@@ -48,7 +48,7 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
         }
 
         if (!empty($queryStrings[self::LIMIT])) {
-            $apiRequestTransfer->getFilter()->getPagination()->setLimit(
+            $apiRequestTransfer->getFilter()->getPagination()->setItemsPerPage(
                 $this->validateLimitRange($queryStrings[self::LIMIT])
             );
         }

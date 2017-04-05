@@ -7,17 +7,26 @@
 
 namespace Spryker\Zed\ProductApi\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ProductApiTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
 class ProductApi implements ProductApiInterface
 {
@@ -74,7 +83,7 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -98,7 +107,7 @@ class ProductApi implements ProductApiInterface
     public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)
     {
         $entityToUpdate = $this->queryContainer
-            ->queryProductAbstract()
+            ->queryFind()
             ->filterByIdProductAbstract($idProductAbstract)
             ->findOne();
 
@@ -122,7 +131,7 @@ class ProductApi implements ProductApiInterface
     public function remove($idProductAbstract)
     {
         $deletedRows = $this->queryContainer
-            ->queryProductAbstractById($idProductAbstract)
+            ->queryRemove($idProductAbstract)
             ->delete();
 
         $customerApiTransfer = new ProductApiTransfer();
@@ -173,8 +182,9 @@ class ProductApi implements ProductApiInterface
      */
     protected function getProductData($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
+        //TODO column filtering
         $customerEntity = (array)$this->queryContainer
-            ->queryProductAbstractById($idProduct, $apiFilterTransfer->getFields())
+            ->queryGet($idProduct)
             ->findOne();
 
         if (!$customerEntity) {
@@ -213,11 +223,69 @@ class ProductApi implements ProductApiInterface
      */
     protected function buildQuery(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
     {
-        $query = $this->queryContainer->queryFind($apiRequestTransfer->getFilter()->getFields());
+        $columnSelectionTransfer = $this->buildColumnSelection(
+            $apiRequestTransfer->getFilter()->getFields()
+        );
+
+        $paginationTransfer = $this->buildPagination(
+            $apiRequestTransfer->getFilter()->getPagination()
+        );
+
+        $criteriaTransfer->setPagination($paginationTransfer);
+        $criteriaTransfer->setColumnSelection($columnSelectionTransfer);
+
+        $query = $this->queryContainer->queryFind();
         $query = $this->apiQueryContainer->createQuery($query, $criteriaTransfer);
-        $query = $this->apiQueryContainer->mapPagination($query, $apiRequestTransfer->getFilter()->getPagination());
+        $query->setFormatter(new AssociativeArrayFormatter());
 
         return $query;
+    }
+
+    /**
+     * @param array $selectedColumns
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
+     */
+    protected function buildColumnSelection(array $selectedColumns)
+    {
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
+        $columnSelectionTransfer->setTableName(SpyProductAbstractTableMap::TABLE_NAME);
+        $columnSelectionTransfer->setTableColumns(SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_COLNAME));
+
+        $columns = [];
+        foreach ($selectedColumns as $columnAlias) {
+            $columnTransfer = new PropelQueryBuilderColumnTransfer();
+            $columnTransfer->setName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $columnAlias);
+            $columnTransfer->setAlias($columnAlias);
+
+            $columns[] = $columnTransfer;
+        }
+
+        $columnSelectionTransfer->setSelectedColumns(new ArrayObject($columns));
+
+        return $columnSelectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiPaginationTransfer $apiPaginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
+     */
+    protected function buildPagination(ApiPaginationTransfer $apiPaginationTransfer)
+    {
+        $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
+        $paginationTransfer->fromArray($apiPaginationTransfer->toArray(), true);
+
+        $sortItems = [];
+        foreach ($apiPaginationTransfer->getSort() as $column => $direction) {
+            $sortItems[] = (new PropelQueryBuilderSortTransfer())
+                ->setColumnName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $column)
+                ->setSortDirection($direction);
+        }
+
+        $paginationTransfer->setSortItems(new ArrayObject($sortItems));
+
+        return $paginationTransfer;
     }
 
 }

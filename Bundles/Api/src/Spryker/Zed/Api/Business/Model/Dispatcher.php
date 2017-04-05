@@ -18,6 +18,10 @@ use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
 class Dispatcher implements DispatcherInterface
 {
 
+    //TODO DRY
+    const HTTP_CODE_SUCCESS = 200;
+    const HTTP_CODE_INTERNAL_ERROR = 500;
+
     /**
      * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
@@ -107,16 +111,30 @@ class Dispatcher implements DispatcherInterface
             }
 
         } catch (\Exception $e) {
-            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         } catch (\Throwable $e) {
-            $apiResponseTransfer->setCode($e->getCode() ?: 500);
+            $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }
 
         return $apiResponseTransfer;
+    }
+
+    /**
+     * @param int $code
+     *
+     * @return int
+     */
+    protected function resolveStatusCode($code)
+    {
+        if ($code < static::HTTP_CODE_SUCCESS || $code > static::HTTP_CODE_INTERNAL_ERROR) {
+            return static::HTTP_CODE_INTERNAL_ERROR;
+        }
+
+        return $code;
     }
 
     /**

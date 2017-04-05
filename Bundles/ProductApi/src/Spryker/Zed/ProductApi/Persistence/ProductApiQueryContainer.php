@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductApi\Persistence;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -23,7 +20,7 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstract()
+    public function queryFind()
     {
         return $this->getFactory()->createProductAbstractQuery();
     }
@@ -31,46 +28,29 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
-     * @param array $fields
+     * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryFind(array $fields = [])
+    public function queryGet($idProductAbstract)
     {
-        $query = $this->mapQueryFields($this->queryProductAbstract(), $fields);
+        $query = $this->getFactory()->createProductAbstractQuery();
 
-        return $query;
+        return $query->filterByIdProductAbstract($idProductAbstract);
     }
 
     /**
      * @api
      *
      * @param int $idProductAbstract
-     * @param array $fields
      *
      * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractById($idProductAbstract, array $fields = [])
+    public function queryRemove($idProductAbstract)
     {
-        $query = $this->mapQueryFields($this->queryProductAbstract(), $fields);
+        $query = $this->getFactory()->createProductAbstractQuery();
 
         return $query->filterByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstract
-     * @param array $fields
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    protected function mapQueryFields(SpyProductAbstractQuery $queryProductAbstract, array $fields)
-    {
-        return $this->getFactory()->getApiQueryContainer()->mapFields(
-            SpyProductAbstractTableMap::TABLE_NAME,
-            SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME),
-            $queryProductAbstract,
-            $fields
-        );
     }
 
 }

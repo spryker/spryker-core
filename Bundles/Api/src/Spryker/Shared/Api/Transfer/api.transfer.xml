@@ -46,16 +46,14 @@
     </transfer>
 
     <transfer name="ApiPagination">
-        <property name="sort" type="array" />
-        <property name="page" type="int" />
-        <property name="pages" type="int" />
-        <property name="limit" type="int" />
-        <property name="offset" type="int" />
-        <property name="total" type="int" />
-        <property name="prev" type="string" />
-        <property name="next" type="string" />
-        <property name="first" type="string" />
-        <property name="last" type="string" />
+        <property name="page" type="int"/>
+        <property name="itemsPerPage" type="int"/>
+        <property name="total" type="int"/>
+        <property name="sort" type="array"/>
+        <property name="prev" type="string"/>
+        <property name="next" type="string"/>
+        <property name="first" type="string"/>
+        <property name="last" type="string"/>
     </transfer>
 
     <transfer name="ApiData">
