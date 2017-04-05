@@ -5,13 +5,16 @@
 {% block head_title widget_title | trans %}
 
 {% block action %}
-    {{ createActionButton('/api/', 'Nothing yet' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     <h2>API</h2>
     <p>This is a demo showcasing of the Zed REST API.</p>
+
+
+    <h3>Documentation</h3>
+    <a href="https://spryker.github.io/core/bundles/api/" target="_blank">Zed REST API</a>
 
 {% endblock %}
 
