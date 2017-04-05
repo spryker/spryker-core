@@ -1,22 +1,9 @@
 {
   "name": "spryker/category",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
-    "psr-4": {
-      "Category\\Module\\": "tests/",
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
-    }
-  },
+  "description": "Category bundle",
+  "license": "proprietary",
   "require": {
+    "spryker/event": "^1.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -33,10 +20,24 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "Category bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Category\\Module\\": "tests/",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
+    }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

@@ -13,4 +13,4 @@ Make sure you have latest changes for Yves side. There was issue when customer l
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Documentation](https://spryker.github.io)

@@ -13,6 +13,8 @@ use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParent
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
+use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class Category
@@ -49,6 +51,11 @@ class Category
     protected $deletePlugins;
 
     /**
+     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
@@ -56,6 +63,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
+     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
      */
     public function __construct(
         CategoryInterface $category,
@@ -64,7 +72,8 @@ class Category
         CategoryUrlInterface $categoryUrl,
         CategoryExtraParentsInterface $categoryExtraParents,
         CategoryQueryContainerInterface $queryContainer,
-        array $deletePlugins
+        array $deletePlugins,
+        CategoryToEventInterface $eventFacade = null
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;
@@ -73,6 +82,7 @@ class Category
         $this->categoryExtraParents = $categoryExtraParents;
         $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -101,11 +111,15 @@ class Category
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
+        $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_CREATE, $categoryTransfer);
+
         $this->category->create($categoryTransfer);
         $this->categoryNode->create($categoryTransfer);
         $this->categoryAttribute->create($categoryTransfer);
         $this->categoryUrl->create($categoryTransfer);
         $this->categoryExtraParents->create($categoryTransfer);
+
+        $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
     }
@@ -119,11 +133,15 @@ class Category
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
+        $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_UPDATE, $categoryTransfer);
+
         $this->category->update($categoryTransfer);
         $this->categoryNode->update($categoryTransfer);
         $this->categoryAttribute->update($categoryTransfer);
         $this->categoryUrl->update($categoryTransfer);
         $this->categoryExtraParents->update($categoryTransfer);
+
+        $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
     }
@@ -137,6 +155,10 @@ class Category
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
+        $categoryTransfer = $this->createCategoryTransfer($idCategory);
+
+        $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_DELETE, $categoryTransfer);
+
         $this->categoryAttribute->delete($idCategory);
         $this->categoryUrl->delete($idCategory);
         $this->categoryNode->delete($idCategory);
@@ -145,6 +167,8 @@ class Category
         $this->runDeletePlugins($idCategory);
 
         $this->category->delete($idCategory);
+
+        $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_DELETE, $categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
     }
@@ -159,6 +183,34 @@ class Category
         foreach ($this->deletePlugins as $deletePlugin) {
             $deletePlugin->delete($idCategory);
         }
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function triggerEvent($eventName, CategoryTransfer $categoryTransfer)
+    {
+        if ($this->eventFacade === null) {
+            return;
+        }
+
+        $this->eventFacade->trigger($eventName, $categoryTransfer);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function createCategoryTransfer($idCategory)
+    {
+        $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->setIdCategory($idCategory);
+
+        return $categoryTransfer;
     }
 
 }

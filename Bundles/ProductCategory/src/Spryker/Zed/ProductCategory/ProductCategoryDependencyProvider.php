@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategory;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventBridge;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleBridge;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge;
 use Spryker\Zed\ProductCategory\Dependency\QueryContainer\ProductCategoryToCategoryBridge as ProductCategoryToCategoryQueryContainerBridge;
@@ -21,6 +22,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_PRODUCT = 'product facade';
     const FACADE_CATEGORY = 'category facade';
+    const FACADE_EVENT = 'facade event';
 
     const CATEGORY_QUERY_CONTAINER = 'category query container';
 
@@ -43,6 +45,10 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
             return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
+        };
+
+        $container[self::FACADE_EVENT] = function (Container $container) {
+            return new ProductCategoryToEventBridge($container->getLocator()->event()->facade());
         };
 
         return $container;

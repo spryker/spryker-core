@@ -26,7 +26,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryManager(
             $this->getQueryContainer(),
             $this->getCategoryFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getEventFacade()
         );
     }
 
@@ -36,6 +37,14 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_EVENT);
     }
 
     /**

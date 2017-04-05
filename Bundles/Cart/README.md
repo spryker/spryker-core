@@ -8,4 +8,4 @@ composer require spryker/cart
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Documentation](https://spryker.github.io)

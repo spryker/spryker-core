@@ -625,10 +625,8 @@
       "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
       "Unit\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
 
-      "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
       "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilDataReader/tests",
 
-      "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
       "Spryker\\Shared\\UtilDateTime\\": "Bundles/UtilDateTime/src",
 
       "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
@@ -654,6 +652,13 @@
       "Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/src",
       "Unit\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
       "Functional\\Spryker\\Zed\\CustomerGroupDiscountConnector\\": "Bundles/CustomerGroupDiscountConnector/tests",
+
+      "Spryker\\Shared\\ProductRelation\\": "Bundles/ProductRelation/src",
+      "Spryker\\Zed\\ProductRelation\\": "Bundles/ProductRelation/src",
+      "Unit\\Spryker\\Zed\\ProductRelation\\": "Bundles/ProductRelation/tests",
+      "Functional\\Spryker\\Zed\\ProductRelation\\": "Bundles/ProductRelation/tests",
+      "Spryker\\Client\\ProductRelation\\": "Bundles/ProductRelation/src",
+      "Spryker\\Yves\\ProductRelation\\": "Bundles/ProductRelation/src",
 
       "Spryker\\Client\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Shared\\ProductBundle\\": "Bundles/ProductBundle/src",
@@ -682,7 +687,17 @@
       "Spryker\\Shared\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
       "Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/src",
       "Unit\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests",
-      "Functional\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests"
+      "Functional\\Spryker\\Zed\\PropelQueryBuilder\\": "Bundles/PropelQueryBuilder/tests",
+
+      "Spryker\\Shared\\Event\\": "Bundles/Event/src",
+      "Spryker\\Zed\\Event\\": "Bundles/Event/src",
+      "Unit\\Spryker\\Zed\\Event\\": "Bundles/Event/tests",
+      "Functional\\Spryker\\Zed\\Event\\": "Bundles/Event/tests",
+
+      "Spryker\\Shared\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
+      "Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
+      "Unit\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
+      "Functional\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

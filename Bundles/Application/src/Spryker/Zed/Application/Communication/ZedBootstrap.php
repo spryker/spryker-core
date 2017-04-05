@@ -45,7 +45,7 @@ class ZedBootstrap
         $this->application['locale'] = $store->getCurrentLocale();
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
-            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getCurrentCountry() . '/cache/profiler';
+            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getStoreName() . '/cache/profiler';
         }
 
         $this->enableHttpMethodParameterOverride();
