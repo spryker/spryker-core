@@ -1,0 +1,10 @@
+class_name: BusinessTester
+modules:
+    enabled:
+        - Asserts
+        - \Testify\Helper\Environment
+        - \Testify\Helper\Config
+        - \Testify\Helper\Dependency
+        - \Testify\Helper\Locator
+        - \Propel\Helper\Transaction
+        - \SprykerTest\Zed\Sales\Business\Helper\Business
