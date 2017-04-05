@@ -13,7 +13,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
 {
 
     /**
-     * @param $row
+     * @param array $row
      *
      * @return array
      */
