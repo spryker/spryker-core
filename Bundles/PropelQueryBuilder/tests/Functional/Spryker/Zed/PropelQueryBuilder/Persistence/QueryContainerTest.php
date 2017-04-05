@@ -10,6 +10,7 @@ namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
 use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
@@ -176,7 +177,7 @@ class QueryContainerTest extends Test
         $results = $query->find();
 
         $this->assertCount(static::EXPECTED_COUNT, $results);
-        $this->assertSkuCollectionWithSelectedColumns($results, static::EXPECTED_SKU_COLLECTION);
+        $this->assertSkuCollectionWithSelectedColumns($results->toArray(), static::EXPECTED_SKU_COLLECTION);
     }
 
     /**
@@ -227,10 +228,16 @@ class QueryContainerTest extends Test
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
         $columnSelectionTransfer->setTableName(SpyProductTableMap::TABLE_NAME);
         $columnSelectionTransfer->setTableColumns(SpyProductTableMap::getFieldNames(TableMap::TYPE_COLNAME));
-        $columnSelectionTransfer->setSelectedColumns([
-            SpyProductTableMap::COL_ID_PRODUCT,
-            SpyProductTableMap::COL_SKU,
-        ]);
+
+        $columnTransfer = new PropelQueryBuilderColumnTransfer();
+        $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
+        $columnTransfer->setAlias('id_product');
+        $columnSelectionTransfer->addSelectedColumn($columnTransfer);
+
+        $columnTransfer = new PropelQueryBuilderColumnTransfer();
+        $columnTransfer->setName(SpyProductTableMap::COL_SKU);
+        $columnTransfer->setAlias('sku');
+        $columnSelectionTransfer->addSelectedColumn($columnTransfer);
 
         $criteriaTransfer->setColumnSelection($columnSelectionTransfer);
 
@@ -304,7 +311,7 @@ class QueryContainerTest extends Test
     {
         /** @var \Orm\Zed\Product\Persistence\SpyProduct|\Orm\Zed\Product\Persistence\SpyProduct $productData */
         foreach ($collection as $productData) {
-            $this->assertContains($productData[SpyProductTableMap::COL_SKU], $expectedSkuCollection);
+            $this->assertContains($productData['sku'], $expectedSkuCollection);
         }
     }
 
