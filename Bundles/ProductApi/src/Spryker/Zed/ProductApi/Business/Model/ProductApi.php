@@ -85,10 +85,10 @@ class ProductApi implements ProductApiInterface
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        $customerApiTransfer = $this->persist($customerEntity);
+        $productEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
+        $productApiTransfer = $this->persist($productEntity);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer);
     }
 
     /**
@@ -99,10 +99,16 @@ class ProductApi implements ProductApiInterface
      */
     public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer)
     {
-        $customerData = $this->getProductData($idProductAbstract, $apiFilterTransfer);
-        $customerTransfer = $this->transferMapper->toTransfer($customerData);
+        $productData = $this->getProductData($idProductAbstract, $apiFilterTransfer);
+        foreach ($productData as $index => $value) {
+            $x = $index;
+            $x = str_replace("\x00*\x00", '', $x);
+            $productData[$x] = $value;
+        }
 
-        return $this->apiQueryContainer->createApiItem($customerTransfer);
+        $productTransfer = $this->transferMapper->toTransfer($productData);
+
+        return $this->apiQueryContainer->createApiItem($productTransfer);
     }
 
     /**
@@ -127,9 +133,9 @@ class ProductApi implements ProductApiInterface
         $data = (array)$apiDataTransfer->getData();
         $entityToUpdate->fromArray($data);
 
-        $customerApiTransfer = $this->persist($entityToUpdate);
+        $productApiTransfer = $this->persist($entityToUpdate);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer);
     }
 
     /**
@@ -143,13 +149,13 @@ class ProductApi implements ProductApiInterface
             ->queryRemove($idProductAbstract)
             ->delete();
 
-        $customerApiTransfer = new ProductApiTransfer();
+        $productApiTransfer = new ProductApiTransfer();
 
         if ($deletedRows > 0) {
-            $customerApiTransfer->setIdProductAbstract($idProductAbstract);
+            $productApiTransfer->setIdProductAbstract($idProductAbstract);
         }
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer);
     }
 
     /**
@@ -192,19 +198,19 @@ class ProductApi implements ProductApiInterface
     protected function getProductData($idProduct, ApiFilterTransfer $apiFilterTransfer)
     {
         //TODO column filtering
-        $customerEntity = (array)$this->queryContainer
+        $productArray = (array)$this->queryContainer
             ->queryGet($idProduct)
             ->findOne();
 
-        if (!$customerEntity) {
+        if (!$productArray) {
             throw new EntityNotFoundException(sprintf('Product not found: %s', $idProduct));
         }
 
-        return $customerEntity;
+        return $productArray;
     }
 
     /**
-     * TODO invert this, and put it into Api bundle
+     * TODO invert this, and put it into ApiQueryBuilder bundle
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -223,7 +229,7 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * TODO invert this, and put it into Api bundle
+     * TODO invert this, and put it into ApiQueryBuilder bundle
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
