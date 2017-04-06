@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-/**
- * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
- */
 abstract class AbstractCommand extends AbstractPlugin
 {
 }
