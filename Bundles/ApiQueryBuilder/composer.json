@@ -1,15 +1,15 @@
 {
-  "name": "spryker/customer-api",
-  "description": "CustomerApi bundle",
+  "name": "spryker/api-query-builder",
+  "description": "ApiQueryBuilder bundle",
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1",
-    "spryker/customer": "^4.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.2.0",
+    "spryker/propel-query-builder": "^0.2.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/assertion": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
@@ -28,9 +28,6 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
-    },
-    "psr-4": {
-      "Customer\\Module\\": "tests/"
     }
   },
   "autoload-dev": {
