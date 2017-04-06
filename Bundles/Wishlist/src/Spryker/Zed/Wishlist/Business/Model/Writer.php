@@ -14,11 +14,14 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     const DEFAULT_NAME = 'default';
 
@@ -49,17 +52,25 @@ class Writer implements WriterInterface
      */
     public function createWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $this->assertWishlistUniqueName($wishlistTransfer);
 
+        return $this->handleDatabaseTransaction(function () use ($wishlistTransfer) {
+            return $this->executeCreateWishlistTransaction($wishlistTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function executeCreateWishlistTransaction(WishlistTransfer $wishlistTransfer)
+    {
         $wishlistEntity = new SpyWishlist();
         $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
         $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
-
-        $this->queryContainer->getConnection()->commit();
 
         return $wishlistTransfer;
     }
@@ -93,16 +104,25 @@ class Writer implements WriterInterface
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $wishlistTransfer->requireIdWishlist();
+
+        return $this->handleDatabaseTransaction(function () use ($wishlistTransfer) {
+            return $this->executeUpdateWishlistTransaction($wishlistTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function executeUpdateWishlistTransaction(WishlistTransfer $wishlistTransfer)
+    {
         $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
         $this->assertWishlistUniqueNameWhenUpdating($wishlistTransfer);
 
         $wishListEntity->fromArray($wishlistTransfer->toArray());
         $wishListEntity->save();
-
-        $this->queryContainer->getConnection()->commit();
 
         return $wishlistTransfer;
     }
@@ -136,15 +156,24 @@ class Writer implements WriterInterface
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $wishlistTransfer->requireIdWishlist();
+
+        return $this->handleDatabaseTransaction(function () use ($wishlistTransfer) {
+            return $this->executeRemoveWishlistTransaction($wishlistTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function executeRemoveWishlistTransaction(WishlistTransfer $wishlistTransfer)
+    {
         $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
 
         $this->emptyWishlist($wishlistTransfer);
         $wishListEntity->delete();
-
-        $this->queryContainer->getConnection()->commit();
 
         return $wishlistTransfer;
     }
@@ -156,12 +185,22 @@ class Writer implements WriterInterface
      */
     public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $wishlistTransfer
             ->requireName()
             ->requireFkCustomer();
 
+        return $this->handleDatabaseTransaction(function () use ($wishlistTransfer) {
+            return $this->executeRemoveWishlistByNameTransaction($wishlistTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function executeRemoveWishlistByNameTransaction(WishlistTransfer $wishlistTransfer)
+    {
         $wishListEntity = $this->reader->getWishlistEntityByCustomerIdAndWishlistName(
             $wishlistTransfer->getFkCustomer(),
             $wishlistTransfer->getName()
@@ -170,8 +209,6 @@ class Writer implements WriterInterface
 
         $this->emptyWishlist($wishlistTransfer);
         $wishListEntity->delete();
-
-        $this->queryContainer->getConnection()->commit();
 
         return $wishlistTransfer;
     }
@@ -261,13 +298,21 @@ class Writer implements WriterInterface
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
+        return $this->handleDatabaseTransaction(function () use ($wishlistItemTransferCollection) {
+            return $this->executeRemoveItemCollectionTransaction($wishlistItemTransferCollection);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function executeRemoveItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
+    {
         foreach ($wishlistItemTransferCollection->getItems() as $wishlistItemTransfer) {
             $this->removeItem($wishlistItemTransfer);
         }
-
-        $this->queryContainer->getConnection()->commit();
 
         return $wishlistItemTransferCollection;
     }

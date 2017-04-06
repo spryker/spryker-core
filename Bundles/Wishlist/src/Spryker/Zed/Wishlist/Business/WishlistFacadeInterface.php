@@ -163,7 +163,7 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes itemm from wishlist
+     *  - Removes item from wishlist
      *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
      *    In case wishlist name is not provided the default value will be used
      *

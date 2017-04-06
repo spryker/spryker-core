@@ -21,6 +21,13 @@ interface WishlistToCartInterface
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItems(array $itemTransfers);
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

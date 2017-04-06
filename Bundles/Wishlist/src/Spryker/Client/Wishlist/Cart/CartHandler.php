@@ -18,7 +18,7 @@ class CartHandler implements CartHandlerInterface
 {
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
     protected $cartClient;
 
@@ -59,16 +59,19 @@ class CartHandler implements CartHandlerInterface
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
-        $wishlistItemCollection = new WishlistItemCollectionTransfer();
+        $itemTransfers = [];
+        $wishlistItemCollectionTransfer = new WishlistItemCollectionTransfer();
 
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
 
-            $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
-            $wishlistItemCollection->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
+            $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
+            $wishlistItemCollectionTransfer->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
         }
 
-        $this->wishlistClient->removeItemCollection($wishlistItemCollection);
+        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
+        $this->cartClient->storeQuote($quoteTransfer);
+        $this->wishlistClient->removeItemCollection($wishlistItemCollectionTransfer);
     }
 
     /**
@@ -89,12 +92,22 @@ class CartHandler implements CartHandlerInterface
      */
     protected function storeItemInQuote($sku)
     {
-        $cartItem = (new ItemTransfer())
-            ->setSku($sku)
-            ->setQuantity(1);
-
+        $cartItem = $this->createItemTransfer($sku);
         $quoteTransfer = $this->cartClient->addItem($cartItem);
         $this->cartClient->storeQuote($quoteTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer($sku, $quantity = 1)
+    {
+        return (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity);
     }
 
 }

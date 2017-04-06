@@ -23,7 +23,6 @@
         <property name="idProduct" type="int" />
         <property name="sku" type="string" />
         <property name="product" type="StorageProduct" />
-        <property name="isAvailable" type="bool" />
     </transfer>
 
     <transfer name="WishlistItemCollection">
@@ -51,7 +50,6 @@
         <property name="wishlist" type="Wishlist" />
         <property name="items" type="WishlistItem[]" singular="item" />
         <property name="pagination" type="WishlistPagination" />
-        <property name="wishlistCollection" type="WishlistCollection" />
         <property name="meta" type="WishlistOverviewMeta" />
     </transfer>
 
@@ -78,13 +76,14 @@
     </transfer>
 
     <transfer name="WishlistOverviewMeta">
+        <property name="wishlistCollection" type="WishlistCollection" />
         <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta" />
     </transfer>
 
     <transfer name="WishlistItemMeta">
+        <property name="idProductAbstract" type="int" />
         <property name="idProduct" type="int" />
         <property name="sku" type="string" />
-        <property name="isAvailable" type="bool" />
     </transfer>
 
 </transfers>

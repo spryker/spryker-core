@@ -28,8 +28,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
-            $this->createTransferMapper(),
-            $this->getAvailabilityFacade()
+            $this->createTransferMapper()
         );
     }
 
@@ -68,14 +67,6 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getItemExpanderPlugins()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ITEM_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToAvailabilityInterface
-     */
-    protected function getAvailabilityFacade()
-    {
-        return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_AVAILABILITY);
     }
 
 }
