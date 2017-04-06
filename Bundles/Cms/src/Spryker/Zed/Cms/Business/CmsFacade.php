@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -552,31 +553,41 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param $idCmsPage
      * @param string|null $versionName
+     *
+     * @throws MissingPageException
      *
      * @return CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null)
     {
         return $this->getFactory()
-            ->createPublishManager()
+            ->createVersionPublisher()
             ->publishAndVersion($idCmsPage, $versionName);
     }
 
     /**
-     * @param int $idCmsVersionOrigin
-     * @param int $idCmsVersionTarget
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @throws MissingPageException
      *
      * @return bool
      */
-    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget)
+    public function rollback($idCmsPage, $version)
     {
         return $this->getFactory()
-            ->createRevertManager()
-            ->revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
+            ->createVersionRollback()
+            ->rollback($idCmsPage, $version);
     }
 
 }

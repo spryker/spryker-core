@@ -53,14 +53,13 @@ class VersionGenerator implements VersionGeneratorInterface
     }
 
     /**
-     * @param int $idCmsVersionReference
+     * @param int $versionNumber
      *
      * @return string
      */
-    public function generateReferenceCmsVersionName($idCmsVersionReference)
+    public function generateReferenceCmsVersionName($versionNumber)
     {
-        $cmsVersionEntity = $this->queryContainer->queryCmsVersionById($idCmsVersionReference)->findOne();
 
-        return sprintf('Copied from v. %d', $cmsVersionEntity->getVersion());
+        return sprintf('Copied from v. %d', $versionNumber);
     }
 }

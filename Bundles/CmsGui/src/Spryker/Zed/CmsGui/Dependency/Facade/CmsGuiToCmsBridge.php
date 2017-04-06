@@ -140,14 +140,14 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     }
 
     /**
-     * @param int $idCmsVersionOrigin
-     * @param int $idCmsVersionTarget
+     * @param int $idCmsPage
+     * @param int $version
      *
      * @return bool
      */
-    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget)
+    public function rollback($idCmsPage, $version)
     {
-        return $this->cmsFacade->revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
+        return $this->cmsFacade->rollback($idCmsPage, $version);
     }
 
     /**

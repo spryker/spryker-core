@@ -717,6 +717,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @param int $idPage
+     * @param int $version
+     *
+     * @return SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPageAndVersion($idPage, $version)
+    {
+        return $this->queryCmsVersionByIdPage($idPage)
+            ->filterByVersion($version);
+    }
+
+    /**
      * @param array $idGlossaryKeys
      *
      * @return SpyGlossaryTranslationQuery

@@ -288,6 +288,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsVersionById($idCmsVersion);
 
     /**
+     * @param int $idPage
+     * @param int $version
+     *
+     * @return SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPageAndVersion($idPage, $version);
+
+    /**
      * @param array $idGlossaryKeys
      *
      * @return SpyGlossaryTranslationQuery

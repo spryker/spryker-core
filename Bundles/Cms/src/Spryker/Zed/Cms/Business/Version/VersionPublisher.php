@@ -10,16 +10,25 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
-class PublishManager implements PublishManagerInterface
+class VersionPublisher implements VersionPublisherInterface
 {
 
     /**
      * @var VersionGeneratorInterface
      */
     protected $versionGenerator;
+
+
+    /**
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     */
+    protected $touchFacade;
 
     /**
      * @var CmsQueryContainerInterface
@@ -33,12 +42,14 @@ class PublishManager implements PublishManagerInterface
 
     /**
      * @param VersionGeneratorInterface $versionGenerator
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param CmsQueryContainerInterface $queryContainer
      * @param CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
-    public function __construct(VersionGeneratorInterface $versionGenerator, CmsQueryContainerInterface $queryContainer, array $postSavePlugins)
+    public function __construct(VersionGeneratorInterface $versionGenerator, CmsToTouchInterface $touchFacade, CmsQueryContainerInterface $queryContainer, array $postSavePlugins)
     {
         $this->versionGenerator = $versionGenerator;
+        $this->touchFacade = $touchFacade;
         $this->queryContainer = $queryContainer;
         $this->postSavePlugins = $postSavePlugins;
     }
@@ -47,7 +58,8 @@ class PublishManager implements PublishManagerInterface
      * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @throws \Exception
+     * @throws MissingPageException
+     *
      * @return CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null)
@@ -58,7 +70,12 @@ class PublishManager implements PublishManagerInterface
             ->toArray(null, false, TableMap::TYPE_COLNAME);
 
         if (empty($cmsPageArray)) {
-            throw new \Exception('There is no draft for CMS page with this id:'. $idCmsPage);
+            throw new MissingPageException(
+                sprintf(
+                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
+                    $idCmsPage
+                )
+            );
         }
 
         return $this->createCmsVersion(current($cmsPageArray), $idCmsPage, $versionName);
@@ -89,6 +106,8 @@ class PublishManager implements PublishManagerInterface
         foreach ($this->postSavePlugins as $userPlugin) {
             $cmsVersionTransfer = $userPlugin->postSave($cmsVersionTransfer);
         }
+
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $idCmsPage);
 
         return $cmsVersionTransfer;
     }

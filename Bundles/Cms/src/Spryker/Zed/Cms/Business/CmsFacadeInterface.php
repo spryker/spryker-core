@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 
 interface CmsFacadeInterface
 {
@@ -406,22 +407,30 @@ interface CmsFacadeInterface
     /**
      * Specification:
      * - Creates a cms version for page and mark it for publishing
+     * - Creates a generated version name if $versionName is null
      *
      * @api
      *
      * @param $idCmsPage
      * @param string|null $versionName
      *
+     * @throws MissingPageException
+     *
      * @return CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null);
 
     /**
-     * @param int $idCmsVersionOrigin
-     * @param int $idCmsVersionTarget
+     * Specification:
+     * - Rollbacks latest CmsPageVersion to older version
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @throws MissingPageException
      *
      * @return bool
      */
-    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
+    public function rollback($idCmsPage, $version);
 
 }

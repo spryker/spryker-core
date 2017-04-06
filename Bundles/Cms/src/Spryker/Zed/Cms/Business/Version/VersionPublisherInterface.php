@@ -8,13 +8,16 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 
-interface PublishManagerInterface
+interface VersionPublisherInterface
 {
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @param string|null $versionName
+     *
+     * @throws MissingPageException
      *
      * @return CmsVersionTransfer
      */

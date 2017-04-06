@@ -24,9 +24,9 @@ interface VersionGeneratorInterface
     public function generateNewCmsVersionName($versionNumber);
 
     /**
-     * @param int $idCmsVersionReference
+     * @param int $versionNumber
      *
      * @return string
      */
-    public function generateReferenceCmsVersionName($idCmsVersionReference);
+    public function generateReferenceCmsVersionName($versionNumber);
 }

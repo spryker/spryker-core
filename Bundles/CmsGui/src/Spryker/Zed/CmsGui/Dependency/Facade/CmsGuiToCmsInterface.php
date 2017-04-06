@@ -95,12 +95,12 @@ interface CmsGuiToCmsInterface
     public function publishAndVersion($idCmsPage, $versionName = null);
 
     /**
-     * @param int $idCmsVersionOrigin
-     * @param int $idCmsVersionTarget
+     * @param int $idCmsPage
+     * @param int $version
      *
      * @return bool
      */
-    public function revertCmsVersion($idCmsVersionOrigin, $idCmsVersionTarget);
+    public function rollback($idCmsPage, $version);
 
     /**
      * @param string $cmsTemplateFolderPath

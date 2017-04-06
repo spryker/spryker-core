@@ -20,12 +20,18 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
-use Spryker\Zed\Cms\Business\Version\PublishManager;
-use Spryker\Zed\Cms\Business\Version\PublishManagerInterface;
-use Spryker\Zed\Cms\Business\Version\RevertManager;
-use Spryker\Zed\Cms\Business\Version\RevertManagerInterface;
+use Spryker\Zed\Cms\Business\Version\Handler\CmsTemplateMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface;
+use Spryker\Zed\Cms\Business\Version\Handler\CmsGlossaryKeyMappingMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\Handler\CmsPageLocalizedAttributesMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\VersionPublisher;
+use Spryker\Zed\Cms\Business\Version\VersionPublisherInterface;
+use Spryker\Zed\Cms\Business\Version\VersionMigration;
+use Spryker\Zed\Cms\Business\Version\VersionMigrationInterface;
 use Spryker\Zed\Cms\Business\Version\VersionGenerator;
 use Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface;
+use Spryker\Zed\Cms\Business\Version\VersionRollback;
+use Spryker\Zed\Cms\Business\Version\VersionRollbackInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
@@ -194,12 +200,13 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PublishManagerInterface
+     * @return VersionPublisherInterface
      */
-    public function createPublishManager()
+    public function createVersionPublisher()
     {
-        return new PublishManager(
+        return new VersionPublisher(
             $this->createVersionGenerator(),
+            $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->getCmsVersionPostSavePlugins()
         );
@@ -216,14 +223,58 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RevertManagerInterface
+     * @return VersionMigrationInterface
      */
-    public function createRevertManager()
+    public function createVersionMigration()
     {
-        return new RevertManager(
-            $this->createPublishManager(),
-            $this->createVersionGenerator(),
+        return new VersionMigration([
+            $this->createCmsTemplateMigrationHandler(),
+            $this->createCmsPageLocalizedAttributeMigrationHandler(),
+            $this->createCmsGlossaryKeyMappingMigrationHandler(),
+        ]);
+    }
+
+    /**
+     * @return MigrationHandlerInterface
+     */
+    public function createCmsTemplateMigrationHandler()
+    {
+        return new CmsTemplateMigrationHandler(
+            $this->createTemplateManager(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return MigrationHandlerInterface
+     */
+    public function createCmsPageLocalizedAttributeMigrationHandler()
+    {
+        return new CmsPageLocalizedAttributesMigrationHandler(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return MigrationHandlerInterface
+     */
+    public function createCmsGlossaryKeyMappingMigrationHandler()
+    {
+        return new CmsGlossaryKeyMappingMigrationHandler(
             $this->createCmsGlossarySaver(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return VersionRollbackInterface
+     */
+    public function createVersionRollback()
+    {
+        return new VersionRollback(
+            $this->createVersionPublisher(),
+            $this->createVersionGenerator(),
+            $this->createVersionMigration(),
             $this->getQueryContainer()
         );
     }
