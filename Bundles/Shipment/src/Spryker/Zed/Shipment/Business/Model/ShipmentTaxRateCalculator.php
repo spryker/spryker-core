@@ -94,18 +94,18 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     protected function findTaxSetByIdShipmentMethod(QuoteTransfer $quoteTransfer)
     {
-        $countryIsoCode = null;
+        $countryIso2Code = null;
         if ($quoteTransfer->getShippingAddress()) {
-            $countryIsoCode = $quoteTransfer->getShippingAddress()->getIso2Code();
+            $countryIso2Code = $quoteTransfer->getShippingAddress()->getIso2Code();
         }
 
-        if (!$countryIsoCode) {
-            $countryIsoCode = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        if (!$countryIso2Code) {
+            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
         return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-            $countryIsoCode
+            $countryIso2Code
         )->findOne();
     }
 
