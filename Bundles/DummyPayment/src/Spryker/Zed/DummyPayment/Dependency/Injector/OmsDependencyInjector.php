@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DummyPayment\Dependency\Injector;
 
-use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\ItemPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\PayPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlugin;
