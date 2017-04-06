@@ -44,7 +44,6 @@ class OmsDependencyInjector extends AbstractDependencyInjector
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
             $commandCollection->add(new PayPlugin(), 'DummyPayment/Pay');
-            $commandCollection->add(new ItemPlugin(), 'DummyPayment/Item');
 
             return $commandCollection;
         });
