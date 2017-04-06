@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface AS DependencyCommandByOrderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface as DependencyCommandByOrderInterface;
 
 /**
  * @deprecated use instead Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
