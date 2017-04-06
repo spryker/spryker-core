@@ -70,13 +70,15 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku);
         $quantityWithReservedItems = $this->getQuantity($this->sellable->calculateStockForProduct($sku));
 
-        $idAvailabilityAbstract = $this->saveCurrentAvailability($sku, $quantityWithReservedItems);
+        $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantityWithReservedItems);
+        $availabilityEntityModified = $spyAvailabilityEntity->isModified();
 
-        if ($this->isAvailabilityStatusChanged($currentQuantity, $quantityWithReservedItems)) {
-            $this->touchAvailabilityAbstract($idAvailabilityAbstract);
+        $spyAvailabilityEntity->save();
+
+        if ($availabilityEntityModified) {
+            $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
     }
 
@@ -111,6 +113,34 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function saveCurrentAvailability($sku, $quantity)
     {
+        $spyAvailabilityEntity = $this->saveCurrentAvailabilityEntity($sku, $quantity);
+        $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract());
+
+        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function saveCurrentAvailabilityEntity($sku, $quantity)
+    {
+        $spyAvailability = $this->prepareAvailabilityEntityForSave($sku, $quantity);
+        $spyAvailability->save();
+
+        return $spyAvailability;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $quantity
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function prepareAvailabilityEntityForSave($sku, $quantity)
+    {
         $spyAvailability = $this->querySpyAvailabilityBySku($sku)
             ->findOneOrCreate();
 
@@ -121,11 +151,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         $spyAvailability->setQuantity($quantity);
         $spyAvailability->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
-        $spyAvailability->save();
 
-        $this->updateAbstractAvailabilityQuantity($spyAvailability->getFkAvailabilityAbstract());
-
-        return $spyAvailability->getFkAvailabilityAbstract();
+        return $spyAvailability;
     }
 
     /**
