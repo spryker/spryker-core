@@ -36,16 +36,7 @@ class StateUpdaterTest extends StateMachineMocks
      */
     public function testStateUpdaterShouldUpdateStateInTransaction()
     {
-        $propelConnectionMock = $this->createPropelConnectionMock();
-        $propelConnectionMock->expects($this->once())->method('beginTransaction');
-        $propelConnectionMock->expects($this->once())->method('commit');
-
-        $stateUpdater = $this->createStateUpdater(
-            null,
-            null,
-            null,
-            $propelConnectionMock
-        );
+        $stateUpdater = $this->createStateUpdater();
 
         $stateUpdater->updateStateMachineItemState(
             [$this->createStateMachineItems()[0]],
