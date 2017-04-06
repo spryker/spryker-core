@@ -35,7 +35,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
 
         $this->getFactory()->getDiscountFacade()->releaseUsedVoucherCodes($voucherCodes);
 
-
+        return [];
     }
 
     /**
