@@ -697,7 +697,7 @@
       "Spryker\\Shared\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
       "Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/src",
       "Unit\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
-      "Functional\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests"
+      "Functional\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
 
       "Spryker\\Client\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Shared\\FactFinder\\": "Bundles/FactFinder/src",
