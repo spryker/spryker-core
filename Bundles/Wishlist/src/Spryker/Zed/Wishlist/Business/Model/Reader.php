@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
@@ -249,17 +250,27 @@ class Reader implements ReaderInterface
         $wishlistItemMetaTransfers = new ArrayObject();
         foreach ($wishlistItemEntities as $wishlistItemEntity) {
             $productEntity = $wishlistItemEntity->getSpyProduct();
-
-            $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
-            $wishlistItemMetaTransfer
-                ->setIdProductAbstract($productEntity->getFkProductAbstract())
-                ->setIdProduct($productEntity->getIdProduct())
-                ->setSku($wishlistItemEntity->getSku());
-
+            $wishlistItemMetaTransfer = $this->convertProductEntityToWishlistItemMetaTransfer($productEntity);
             $wishlistItemMetaTransfers->append($wishlistItemMetaTransfer);
         }
 
         return $wishlistItemMetaTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
+     */
+    protected function convertProductEntityToWishlistItemMetaTransfer(SpyProduct $productEntity)
+    {
+        $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
+        $wishlistItemMetaTransfer
+            ->setIdProductAbstract($productEntity->getFkProductAbstract())
+            ->setIdProduct($productEntity->getIdProduct())
+            ->setSku($productEntity->getSku());
+
+        return $wishlistItemMetaTransfer;
     }
 
     /**
