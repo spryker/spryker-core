@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -95,6 +96,8 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
         $this->criteriaBuilder
             ->setParameterCollection($touchParameters);
+
+        $this->criteriaBuilder->setOrderBy([CollectorConfig::COLLECTOR_TOUCH_ID => Criteria::ASC]);
 
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
