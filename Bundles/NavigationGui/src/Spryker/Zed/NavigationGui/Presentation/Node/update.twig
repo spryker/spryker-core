@@ -1,0 +1,45 @@
+{% extends '@Gui/Layout/iframe-layout.twig' %}
+
+{% block content %}
+
+    <div class="ibox float-e-margins">
+        {{ form_start(navigationNodeForm) }}
+
+            <div class="ibox-title">
+                <h5>{{ 'Update node' | trans }}</h5>
+
+                <div class="pull-right">
+                    <a href="{{ url('/navigation-gui/node/create', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}" id="add-child-node-btn" class="btn btn-xs btn-primary">
+                        <i class="fa fa-pencil-square-o"></i> {{ 'Add child node' | trans }}
+                    </a>
+
+                    {% if idNavigationNode %}
+                        <a href="{{ url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}"
+                           id="remove-selected-node-btn"
+                           class="btn btn-xs btn-danger"
+                           onclick="return confirm('{{ 'Are you sure you remove the selected node and all its children?' | trans }}')"
+                        >
+                            <i class="fa fa-trash"></i> {{ 'Remove selected node' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                {% include '@NavigationGui/Node/_partials/navigation-node-form-content.twig' %}
+            </div>
+
+            <div class="ibox-footer">
+                <input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            </div>
+        {{ form_end(navigationNodeForm) }}
+    </div>
+
+    {% include '@NavigationGui/Node/_partials/tree-reloader.twig' %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>
+{% endblock %}

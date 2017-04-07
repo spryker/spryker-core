@@ -15,21 +15,21 @@ class Json implements JsonInterface
 
     /**
      * @param mixed $value
-     * @param int $options
-     * @param int $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @throws \Exception
      *
      * @return string
      */
-    public function encode($value, $options = self::DEFAULT_OPTIONS, $depth = self::DEFAULT_DEPTH)
+    public function encode($value, $options = null, $depth = null)
     {
         if ($options === null) {
             $options = static::DEFAULT_OPTIONS;
         }
 
         if ($depth === null) {
-            $options = static::DEFAULT_DEPTH;
+            $depth = static::DEFAULT_DEPTH;
         }
 
         return json_encode($value, $options, $depth);
@@ -38,14 +38,14 @@ class Json implements JsonInterface
     /**
      * @param string $jsonString
      * @param bool $assoc
-     * @param int $depth
-     * @param int $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function decode($jsonString, $assoc = false, $depth = self::DEFAULT_DEPTH, $options = self::DEFAULT_OPTIONS)
+    public function decode($jsonString, $assoc = false, $depth = null, $options = null)
     {
         if ($options === null) {
             $options = static::DEFAULT_OPTIONS;

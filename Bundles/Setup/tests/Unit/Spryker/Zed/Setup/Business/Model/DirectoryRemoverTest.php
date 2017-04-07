@@ -47,8 +47,10 @@ class DirectoryRemoverTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->fixtureDirectory);
+        if (is_dir($this->fixtureDirectory)) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->fixtureDirectory);
+        }
     }
 
     /**

@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\Glossary;
 
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryConfig extends AbstractBundleConfig
 {
 
     /**
-     * TODO Document this feature
-     *
      * @return array
      */
     public function getGlossaryFilePaths()
     {
-        return glob(
-            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
+        $paths = array_merge(
+            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml'),
+            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml')
         );
+
+        return $paths;
     }
 
 }

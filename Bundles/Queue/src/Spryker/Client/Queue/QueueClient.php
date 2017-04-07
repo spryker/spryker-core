@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Queue;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
-use Generated\Shared\Transfer\QueueOptionTransfer;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -18,97 +18,151 @@ class QueueClient extends AbstractClient implements QueueClientInterface
 {
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @return bool
-     */
-    public function open()
-    {
-        return $this->getFactory()->createQueueProxy()->open();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
-     *
-     * @return void
-     */
-    public function createQueue(QueueOptionTransfer $queueOptionTransfer)
-    {
-        $this->getFactory()->createQueueProxy()->createQueue($queueOptionTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
-     */
-    public function encodeMessage(QueueMessageTransfer $queueMessageTransfer)
-    {
-        $this->getFactory()->createQueueProxy()->encodeMessage($queueMessageTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
-     */
-    public function decodeMessage(QueueMessageTransfer $queueMessageTransfer)
-    {
-        $this->getFactory()->createQueueProxy()->decodeMessage($queueMessageTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return void
-     */
-    public function acknowledge(QueueMessageTransfer $queueMessageTransfer)
-    {
-        $this->getFactory()->createQueueProxy()->acknowledge($queueMessageTransfer);
-    }
-
-    /**
      * @api
      *
      * @param string $queueName
-     * @param callable|null $callback
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     * @param array $options
      *
-     * @return mixed
+     * @return array
      */
-    public function consume($queueName, callable $callback, QueueOptionTransfer $queueOptionTransfer)
+    public function createQueue($queueName, array $options = [])
     {
-        $this->getFactory()->createQueueProxy()->consume($queueName, $callback, $queueOptionTransfer);
+        return $this->getFactory()->createQueueProxy()->createQueue($queueName, $options);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */
-    public function publish(QueueMessageTransfer $queueMessageTransfer)
+    public function sendMessage($queueName, QueueSendMessageTransfer $queueSendMessageTransfer)
     {
-        $this->getFactory()->createQueueProxy()->publish($queueMessageTransfer);
+        $this->getFactory()->createQueueProxy()->sendMessage($queueName, $queueSendMessageTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
+     *
+     * @return void
+     */
+    public function sendMessages($queueName, array $queueSendMessageTransfers)
+    {
+        $this->getFactory()->createQueueProxy()->sendMessages($queueName, $queueSendMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param int $chunkSize
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
+    {
+        return $this->getFactory()->createQueueProxy()->receiveMessages($queueName, $chunkSize, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
+     */
+    public function receiveMessage($queueName, array $options = [])
+    {
+        return $this->getFactory()->createQueueProxy()->receiveMessage($queueName, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
      * @return bool
      */
-    public function close()
+    public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
-        return $this->getFactory()->createQueueProxy()->close();
+        return $this->getFactory()->createQueueProxy()->acknowledge($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
+     * @return bool
+     */
+    public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
+    {
+        return $this->getFactory()->createQueueProxy()->reject($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
+     * @return bool
+     */
+    public function handleError(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
+    {
+        return $this->getFactory()->createQueueProxy()->handleError($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function purgeQueue($queueName, array $options = [])
+    {
+        return $this->getFactory()->createQueueProxy()->purgeQueue($queueName, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function deleteQueue($queueName, array $options = [])
+    {
+        return $this->getFactory()->createQueueProxy()->deleteQueue($queueName, $options);
     }
 
 }

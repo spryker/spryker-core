@@ -1,0 +1,28 @@
+{% extends '@Gui/Layout/iframe-layout.twig' %}
+
+{% block content %}
+    <div class="ibox float-e-margins">
+        {{ form_start(navigationNodeForm) }}
+            <div class="ibox-title">
+                <h5>{{ 'Create child node' | trans }}</h5>
+            </div>
+
+            <div class="ibox-content">
+                {% include '@NavigationGui/Node/_partials/navigation-node-form-content.twig' %}
+            </div>
+
+            <div class="ibox-footer">
+                <input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            </div>
+        {{ form_end(navigationNodeForm) }}
+    </div>
+
+    {% include '@NavigationGui/Node/_partials/tree-reloader.twig' %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>
+{% endblock %}
+

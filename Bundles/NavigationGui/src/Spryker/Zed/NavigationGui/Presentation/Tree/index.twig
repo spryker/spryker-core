@@ -1,0 +1,12 @@
+<div id="navigation-tree">
+    <ul>
+        <li id="navigation-node-0"
+            data-id-navigation="{{ navigationTree.navigation.idNavigation }}"
+            class="jstree-open {% if not navigationTree.navigation.isActive %}node-inactive{% endif %}"
+            data-jstree='{"type":"navigation"}'
+        >
+            {{ navigationTree.navigation.name }}
+            {% include '@NavigationGui/Tree/_partials/nodes.twig' with {nodes: navigationTree.nodes} %}
+        </li>
+    </ul>
+</div>

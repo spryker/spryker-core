@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Queue\Model\Adapter;
 
-use Spryker\Shared\Queue\ConnectionInterface;
-use Spryker\Shared\Queue\ConsumerInterface;
-use Spryker\Shared\Queue\PublisherInterface;
+use Spryker\Client\Queue\Model\Internal\ManagerInterface;
+use Spryker\Client\Queue\Model\Internal\ReceiverInterface;
+use Spryker\Client\Queue\Model\Internal\SenderInterface;
 
-interface AdapterInterface extends ConnectionInterface, ConsumerInterface, PublisherInterface
+interface AdapterInterface extends ReceiverInterface, SenderInterface, ManagerInterface
 {
 }

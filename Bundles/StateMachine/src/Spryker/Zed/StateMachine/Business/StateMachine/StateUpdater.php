@@ -7,12 +7,15 @@
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class StateUpdater implements StateUpdaterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
@@ -38,6 +41,7 @@ class StateUpdater implements StateUpdaterInterface
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainer
      */
     public function __construct(
         TimeoutInterface $timeout,
@@ -56,8 +60,6 @@ class StateUpdater implements StateUpdaterInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param string[] $sourceStates
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function updateStateMachineItemState(
@@ -70,27 +72,37 @@ class StateUpdater implements StateUpdaterInterface
             return;
         }
 
-        $this->getConnection()->beginTransaction();
-
-        try {
-            foreach ($stateMachineItems as $stateMachineItemTransfer) {
-                $this->assertStateMachineItemHaveRequiredData($stateMachineItemTransfer);
-
-                $process = $processes[$stateMachineItemTransfer->getProcessName()];
-
-                $this->assertSourceStateExists($sourceStates, $stateMachineItemTransfer);
-
-                $sourceState = $sourceStates[$stateMachineItemTransfer->getIdentifier()];
-                $targetState = $stateMachineItemTransfer->getStateName();
-
-                $this->transitionState($sourceState, $targetState, $stateMachineItemTransfer, $process);
-            }
-        } catch (\Exception $e) {
-            $this->getConnection()->rollBack();
-            throw $e;
+        foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $this->handleDatabaseTransaction(function () use ($processes, $sourceStates, $stateMachineItemTransfer) {
+                $this->executeUpdateItemStateTransaction($processes, $sourceStates, $stateMachineItemTransfer);
+            });
         }
 
-        $this->getConnection()->commit();
+    }
+
+    /**
+     * @param array|\Generated\Shared\Transfer\StateMachineItemTransfer[] $processes
+     * @param array|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $sourceStates
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateItemStateTransaction(
+        array $processes,
+        array $sourceStates,
+        StateMachineItemTransfer $stateMachineItemTransfer
+    ) {
+
+        $this->assertStateMachineItemHaveRequiredData($stateMachineItemTransfer);
+
+        $process = $processes[$stateMachineItemTransfer->getProcessName()];
+
+        $this->assertSourceStateExists($sourceStates, $stateMachineItemTransfer);
+
+        $sourceState = $sourceStates[$stateMachineItemTransfer->getIdentifier()];
+        $targetState = $stateMachineItemTransfer->getStateName();
+
+        $this->transitionState($sourceState, $targetState, $stateMachineItemTransfer, $process);
     }
 
     /**

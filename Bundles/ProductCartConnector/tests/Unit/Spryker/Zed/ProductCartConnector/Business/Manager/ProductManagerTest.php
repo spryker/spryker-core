@@ -137,7 +137,10 @@ class ProductManagerTest extends PHPUnit_Framework_TestCase
      */
     private function getMockProductFacade()
     {
-        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getProductConcrete', 'getLocalizedProductConcreteName'], [], '', false);
+        return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
+            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName'])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
@@ -145,7 +148,10 @@ class ProductManagerTest extends PHPUnit_Framework_TestCase
      */
     private function getMockLocaleFacade()
     {
-        return $this->getMock(ProductCartConnectorToLocaleInterface::class, ['getCurrentLocale'], [], '', false);
+        return $this->getMockBuilder(ProductCartConnectorToLocaleInterface::class)
+            ->setMethods(['getCurrentLocale'])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
 }

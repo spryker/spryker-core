@@ -64,8 +64,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
             return;
         }
 
-        // Can be changed to SAMEORIGIN to allow framing on the same domain.
-        $event->getResponse()->headers->set(static::HEADER_X_FRAME_OPTIONS, 'DENY');
+        $event->getResponse()->headers->set(static::HEADER_X_FRAME_OPTIONS, 'SAMEORIGIN');
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
     }

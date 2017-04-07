@@ -24,7 +24,7 @@ abstract class AbstractBundleConfig
     }
 
     /**
-     * @return \Spryker\Shared\Config
+     * @return \Spryker\Shared\Config\Config
      */
     protected function getConfig()
     {

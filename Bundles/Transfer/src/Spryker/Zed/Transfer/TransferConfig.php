@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Transfer;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
@@ -23,14 +21,12 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSourceDirectories()
     {
-        $globPatterns = [
-            $this->getSprykerCoreSourceDirectoryGlobPattern(),
-            $this->getApplicationSourceDirectoryGlobPattern(),
-        ];
+        $globPatterns = $this->getCoreSourceDirectoryGlobPatterns();
+        $globPatterns[] = $this->getApplicationSourceDirectoryGlobPattern();
 
         $globPatterns = array_merge($globPatterns, $this->getAdditionalSourceDirectoryGlobPatterns());
 
@@ -38,11 +34,28 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead
+     *
      * @return string
      */
     protected function getSprykerCoreSourceDirectoryGlobPattern()
     {
-        return Config::get(KernelConstants::SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/';
+        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Shared/*/Transfer/';
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCoreSourceDirectoryGlobPatterns()
+    {
+        /**
+         * This is added for keeping the BC and needs to be
+         * replaced with the actual return of
+         * getSprykerCoreSourceDirectoryGlobPattern() method
+         */
+        return [
+            $this->getSprykerCoreSourceDirectoryGlobPattern(),
+        ];
     }
 
     /**
@@ -54,6 +67,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead
+     *
      * This method can be used to extend the list of directories for transfer object
      * discovery in project implementations.
      *

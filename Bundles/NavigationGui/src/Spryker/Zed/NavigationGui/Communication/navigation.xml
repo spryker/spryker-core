@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <navigation>
+        <label>Navigation</label>
+        <title>Navigation</title>
+        <bundle>navigation-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <icon>fa-list</icon>
+        <pages>
+            <create>
+                <label>Create Navigation</label>
+                <title>Create Navigation</title>
+                <bundle>navigation-gui</bundle>
+                <controller>create</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </create>
+            <edit>
+                <label>Update Navigation</label>
+                <title>Update Navigation</title>
+                <bundle>navigation-gui</bundle>
+                <controller>update</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </edit>
+        </pages>
+    </navigation>
+</config>

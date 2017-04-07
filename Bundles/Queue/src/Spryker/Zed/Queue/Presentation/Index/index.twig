@@ -1,0 +1,14 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Running Queue Processes' } %}
+
+
+        {% block widget_content %}
+            {{ queueProcesses | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

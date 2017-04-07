@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category;
 
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
@@ -18,15 +19,16 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CATEGORY_QUERY_CONTAINER = 'category query container';
+
     const FACADE_TOUCH = 'touch facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const FACADE_EVENT = 'facade event';
 
     const PLUGIN_GRAPH = 'graph plugin';
-
     const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
     const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
+    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,6 +47,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_URL] = function (Container $container) {
             return new CategoryToUrlBridge($container->getLocator()->url()->facade());
+        };
+
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new CategoryToEventBridge($container->getLocator()->event()->facade());
         };
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {

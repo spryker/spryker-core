@@ -1,0 +1,54 @@
+{
+  "name": "spryker/product-api",
+  "description": "Product Api bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/api": "^0.1",
+    "spryker/product": "^5.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.2.0",
+    "spryker/propel-query-builder": "^0.2.0",
+    "spryker/util-date-time": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/application": "*",
+    "spryker/assertion": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/symfony": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    },
+    "psr-4": {
+      "Product\\Module\\": "tests/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  }
+}

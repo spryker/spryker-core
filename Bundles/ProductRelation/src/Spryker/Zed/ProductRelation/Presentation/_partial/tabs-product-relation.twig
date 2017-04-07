@@ -1,0 +1,12 @@
+{{ form_start(productRelationForm, {attr: {id : 'form-product-relation'}}) }}
+{{ form_errors(productRelationForm) }}
+
+{% set tabData =  {'productRelationForm' : productRelationForm, 'productRuleTable' : productRuleTable} %}
+
+{% if productTable is defined %}
+    {%  set tabData = tabData|merge({'productTable' : productTable}) %}
+{% endif %}
+
+{{ tabs(productRelationTabs, tabData ) }}
+
+{{ form_end(productRelationForm) }}
