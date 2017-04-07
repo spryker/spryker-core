@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
@@ -72,14 +73,66 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     {
         $quantityWithReservedItems = $this->getQuantity($this->sellable->calculateStockForProduct($sku));
 
-        $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantityWithReservedItems);
-        $availabilityEntityModified = $spyAvailabilityEntity->isModified();
+        $this->saveAndTouchAvailability($sku, $quantityWithReservedItems);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveCurrentAvailability($sku, $quantity)
+    {
+        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity);
+
+        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function saveAndTouchAvailability($sku, $quantity)
+    {
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku);
+        $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity);
+
+        $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
 
         $spyAvailabilityEntity->save();
 
-        if ($availabilityEntityModified) {
+        $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract());
+
+        if ($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) {
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
+
+        return $spyAvailabilityEntity;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $quantity
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function prepareAvailabilityEntityForSave($sku, $quantity)
+    {
+        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku)
+            ->findOneOrCreate();
+
+        if ($spyAvailabilityEntity->isNew()) {
+            $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku);
+            $spyAvailabilityEntity->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
+        }
+
+        $spyAvailabilityEntity->setQuantity($quantity);
+        $spyAvailabilityEntity->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
+
+        return $spyAvailabilityEntity;
     }
 
     /**
@@ -103,56 +156,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return int
-     */
-    public function saveCurrentAvailability($sku, $quantity)
-    {
-        $spyAvailabilityEntity = $this->saveCurrentAvailabilityEntity($sku, $quantity);
-        $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract());
-
-        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
-     */
-    protected function saveCurrentAvailabilityEntity($sku, $quantity)
-    {
-        $spyAvailability = $this->prepareAvailabilityEntityForSave($sku, $quantity);
-        $spyAvailability->save();
-
-        return $spyAvailability;
-    }
-
-    /**
-     * @param string $sku
-     * @param string $quantity
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
-     */
-    protected function prepareAvailabilityEntityForSave($sku, $quantity)
-    {
-        $spyAvailability = $this->querySpyAvailabilityBySku($sku)
-            ->findOneOrCreate();
-
-        if ($spyAvailability->isNew()) {
-            $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku);
-            $spyAvailability->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
-        }
-
-        $spyAvailability->setQuantity($quantity);
-        $spyAvailability->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
-
-        return $spyAvailability;
     }
 
     /**
