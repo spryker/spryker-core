@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Sales\Presentation;
 
-use SprykerTest\Zed\Sales\PageObject\SalesDetailPage;
-use SprykerTest\Zed\Sales\PageObject\SalesListPage;
+use SprykerTest\Zed\Sales\Presentation\PageObject\SalesDetailPage;
+use SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage;
 use SprykerTest\Zed\Sales\PresentationTester;
 
 /**
@@ -23,7 +23,7 @@ class SalesDetailCest
 
     /**
      * @param \SprykerTest\Zed\Sales\PresentationTester $i
-     * @param \Sales\PageObject\SalesListPage $salesListPage
+     * @param \SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */

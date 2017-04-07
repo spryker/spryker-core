@@ -1,15 +1,11 @@
-namespace: Sales
+namespace: SprykerTest
 actor: Tester
 include:
-#    - tests/SprykerTest/Zed/Sales
-#    - tests/SprykerTest/Zed/Sales/Business
-    - tests/SprykerTest/Zed/Sales/Communication
-#    - tests/SprykerTest/Zed/Sales/Presentation
+    - tests/SprykerTest/Shared/Sales
+    - tests/SprykerTest/Zed/Sales
 paths:
-#    tests: tests # TODO: check if we can have only these instead the
     log: tests/_output
     data: tests/_data
-#    support: tests/_support
     envs: tests/_envs
 settings:
     bootstrap: _bootstrap.php

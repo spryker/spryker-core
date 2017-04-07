@@ -11,5 +11,5 @@ modules:
         - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - SprykerTest\Zed\Sales\Presentation\Helper\Presentation
-        - SprykerTest\Zed\Sales\Helper\Sales
+        - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
+        - \SprykerTest\Shared\Sales\Helper\SalesHelper

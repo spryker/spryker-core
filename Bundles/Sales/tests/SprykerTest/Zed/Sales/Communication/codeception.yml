@@ -1,7 +1,0 @@
-namespace: SprykerTest\Zed\Sales\Communication
-actor: Tester
-paths:
-    tests: .
-    data: ../../../../_data
-    support: _support
-    log: ../../../../_output
