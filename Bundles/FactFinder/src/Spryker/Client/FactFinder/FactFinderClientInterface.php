@@ -10,6 +10,7 @@ namespace Spryker\Client\FactFinder;
 use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
+use Generated\Shared\Transfer\FactFinderTrackingRequestTransfer;
 
 interface FactFinderClientInterface
 {
@@ -59,5 +60,12 @@ interface FactFinderClientInterface
      * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
     public function getSuggestions(FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer);
+
+    /**
+     * @param FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
+     */
+    public function track(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer);
 
 }

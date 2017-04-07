@@ -41,6 +41,8 @@ class IndexController extends AbstractController
             'searchResponse' => $ffSearchResponseTransfer,
             'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
             'lang' => Store::getInstance()->getCurrentLanguage(),
+            'query' => $factFinderSearchRequestTransfer->getQuery(),
+            'page' => $factFinderSearchRequestTransfer->getPage(),
         ];
     }
 

@@ -13,9 +13,9 @@ use Spryker\Client\Kernel\Container;
 class FactFinderDependencyProvider extends AbstractDependencyProvider
 {
 
-    const SERVICE_ZED = 'ff zed service';
-    const CLIENT_SESSION = 'session client';
-    const CLIENT_KV_STORAGE = 'kv storage client';
+    const SERVICE_ZED = 'SERVICE_ZED';
+    const CLIENT_SESSION = 'CLIENT_SESSION';
+    const CLIENT_KV_STORAGE = 'CLIENT_KV_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

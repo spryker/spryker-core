@@ -13,13 +13,13 @@ interface FactFinderConstants
     const PROVIDER_NAME = 'FactFinder';
 
     const ENV = 'FF env';
-    const ENV_PRODUCTION = 'production';
-    const ENV_DEVELOPMENT = 'development';
-    const ENV_TEST = 'test';
-    const CSV_DIRECTORY = 'factfinder csv directory';
+    const ENV_PRODUCTION = 'ENV_PRODUCTION';
+    const ENV_DEVELOPMENT = 'ENV_DEVELOPMENT';
+    const ENV_TEST = 'ENV_TEST';
+    const CSV_DIRECTORY = 'CSV_DIRECTORY';
 
-    const CONFIG_BASIC_AUTH_USERNAME = 'fact_finder_basic_auth_username';
-    const CONFIG_BASIC_AUTH_PASSWORD = 'fact_finder_basic_auth_password';
+    const CONFIG_BASIC_AUTH_USERNAME = 'CONFIG_BASIC_AUTH_USERNAME';
+    const CONFIG_BASIC_AUTH_PASSWORD = 'CONFIG_BASIC_AUTH_PASSWORD';
 
     const ITEM_PRODUCT_NUMBER = 'ProductNumber';
     const ITEM_NAME = 'Name';

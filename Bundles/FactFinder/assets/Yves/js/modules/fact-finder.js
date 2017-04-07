@@ -8,6 +8,7 @@
 var $ = require('jquery');
 var factFinderSearch = require('./fact-finder-search');
 var suggestionsBox = require('./fact-finder-suggestions-box');
+var track = require('./fact-finder-track');
 
 function init(config) {
     $("#ffSortButton").click(function(){
@@ -39,6 +40,11 @@ function init(config) {
 
     $(document).click(function(){
         suggestionsBox.showSuggestionsBox(false);
+    });
+
+    $(document).on('click','.click-track',function(event) {
+        var data = $(event.currentTarget).data('tracking');
+        track.query(data);
     });
 }
 

@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
+use FACTFinder\Util\Parameters;
+use Generated\Shared\Transfer\FactFinderTrackingRequestTransfer;
+use Generated\Shared\Transfer\FactFinderTrackingResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
@@ -24,16 +27,37 @@ class TrackingRequest extends AbstractRequest implements RequestInterface
     {
         $trackingRequestTransfer = $quoteTransfer->getFactFinderTrackingRequest();
 
+        $parameters = new Parameters();
+        $parameters->setAll($this->getRequestData($trackingRequestTransfer));
+
+        $this->ffConnector->setRequestParameters($parameters);
+
         $trackingAdapter = $this->ffConnector->createTrackingAdapter();
+        $result = $trackingAdapter->applyTracking();
 
         $this->logInfo($quoteTransfer, $trackingAdapter);
 
-        // convert to FFSearchResponseTransfer
-        $responseTransfer = $this->converterFactory
-            ->createTrackingResponseConverter($trackingAdapter)
-            ->convert();
+        $responseTransfer = new FactFinderTrackingResponseTransfer();
+        $responseTransfer->setResult($result);
 
         return $responseTransfer;
+    }
+
+    protected function getRequestData(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
+    {
+        $data = $factFinderTrackingRequestTransfer->toArray();
+
+        foreach ($data as $key => $value) {
+            $newKey = str_replace('_', '', ucwords($key, '_'));
+            $newKey = lcfirst($newKey);
+
+            if ($newKey !== $key) {
+                $data[$newKey] = $value;
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
 }

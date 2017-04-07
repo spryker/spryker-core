@@ -33,6 +33,9 @@ class TrackingResponseConverter extends BaseConverter
     {
         $responseTransfer = new FactFinderTrackingResponseTransfer();
 
+        $esferf = $this->trackingAdapter->getError();
+//        $responseTransfer->setResult($this->trackingAdapter);
+
         return $responseTransfer;
     }
 

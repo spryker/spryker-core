@@ -10,6 +10,7 @@ namespace Spryker\Client\FactFinder;
 use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
+use Generated\Shared\Transfer\FactFinderTrackingRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -71,6 +72,23 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
+     * @param FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
+     */
+    public function track(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setFactFinderTrackingRequest($factFinderTrackingRequestTransfer);
+
+        $factFinderTrackingResponseTransfer = $this->getFactory()
+            ->createTrackingRequest()
+            ->request($quoteTransfer);
+
+        return $factFinderTrackingResponseTransfer;
+    }
+
+    /**
      * @param FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
@@ -107,19 +125,24 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSession()
+    {
+        return $this->getFactory()->getSession();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getQuote()
     {
-        return $this->getSession()->getQuote();
+        return $this->getQuoteSession()->getQuote();
     }
 
-    /**
-     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
-     */
-    protected function getSession()
+    protected function getQuoteSession()
     {
-        return $this->getFactory()->createSession();
+        return $this->getFactory()->createQuoteSession();
     }
 
 }

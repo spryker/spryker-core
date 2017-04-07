@@ -207,11 +207,43 @@
     </transfer>
 
     <transfer name="FactFinderTrackingRequest">
-        <property name="temp" type="string"/>
+        <property name="id" type="string"/>
+        <property name="masterId" type="string"/>
+        <property name="channel" type="string"/>
+        <property name="sid" type="string"/>
+        <property name="event" type="string"/>
+        <property name="title" type="string"/>
+        <property name="userId" type="string"/>
+        <property name="cookieId" type="string"/>
+        <property name="query" type="string"/>
+        <property name="pos" type="string"/>
+        <property name="pos" type="integer"/>
+        <property name="origPos" type="integer"/>
+        <property name="origPos" type="integer"/>
+        <property name="page" type="integer"/>
+        <property name="pageSize" type="integer"/>
+        <property name="origPageSize" type="integer"/>
+        <property name="simi" type="string"/>
+        <property name="campaign" type="string"/>
+        <property name="count" type="integer"/>
+        <property name="price" type="string"/>
+        <property name="mainId" type="string"/>
+        <property name="positive" type="boolean"/>
+        <property name="message" type="string"/>
+        <property name="hitCount" type="integer"/>
+        <property name="searchTime" type="string"/>
+        <property name="bestSimi" type="string"/>
+        <property name="minSimi" type="string"/>
+        <property name="filterFieldName" type="string"/>
+        <property name="searchField" type="string"/>
+        <property name="customSorting" type="string"/>
+        <property name="additionalInfo" type="string"/>
+        <property name="queryFromSuggest" type="string"/>
+        <property name="userInput" type="string"/>
     </transfer>
 
     <transfer name="FactFinderTrackingResponse">
-        <property name="temp" type="string"/>
+        <property name="result" type="boolean"/>
     </transfer>
 
     <transfer name="FactFinderSimilarRecordsRequest">

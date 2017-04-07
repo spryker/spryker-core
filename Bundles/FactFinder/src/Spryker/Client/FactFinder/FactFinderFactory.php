@@ -16,10 +16,12 @@ use Spryker\Client\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequest;
+use Spryker\Client\FactFinder\Business\Api\Handler\Request\TrackingRequest;
 use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Session\QuoteSession;
+use Spryker\Client\Session\SessionClientInterface;
 
 /**
  * @method \Spryker\Zed\FactFinder\FactFinderConfig getConfig()
@@ -60,6 +62,17 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
+     * @return TrackingRequest
+     */
+    public function createTrackingRequest()
+    {
+        return new TrackingRequest(
+            $this->createFactFinderConnector(),
+            $this->createConverterFactory()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest
      */
     public function createRecommendationsRequest()
@@ -89,9 +102,17 @@ class FactFinderFactory extends AbstractFactory
     /**
      * @return QuoteSession
      */
-    public function createSession()
+    public function createQuoteSession()
     {
         return new QuoteSession($this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_SESSION));
+    }
+
+    /**
+     * @return SessionClientInterface
+     */
+    public function getSession()
+    {
+        return $this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_SESSION);
     }
 
     /**

@@ -35,7 +35,7 @@
             </ul>
             <div class="large-3 columns show-for-large">
                 <h5>{{ 'global.social' | trans }}</h5>
-                {% include '@application/layout/partials/social-links.twig' %}
+                {{ spyNavigation('SOCIAL_LINKS', '@application/layout/navigation/social-links.twig') }}
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="row">
             <div class="small-12 columns text-center">
                 <h5>{{ 'global.social' | trans }}</h5>
-                {% include '@application/layout/partials/social-links.twig' %}
+                {{ spyNavigation('SOCIAL_LINKS', '@application/layout/navigation/social-links.twig') }}
                 <div class="clearfix"></div>
             </div>
         </div>

@@ -30,7 +30,16 @@
                         detailsUrl: record.fields.ProductURL,
                         name: record.fields.Name,
                         priceValue: record.fields.Price,
-                        imageUrl: record.fields.ImageURL
+                        imageUrl: record.fields.ImageURL,
+                        trackInfo: {
+                            id: record.id,
+                            event: 'click',
+                            query: query,
+                            pos: record.position,
+                            origPos: record.position,
+                            page: page != null ? page : 1,
+                            origPageSize: searchResponse.result.records | length
+                        }
                     } %}
                 </div>
             {% endfor %}
