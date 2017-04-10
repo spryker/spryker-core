@@ -29,6 +29,8 @@ class BundledProductTable extends AbstractTable
     const COL_PRICE = 'price';
     const COL_AVAILABILITY = 'availability';
     const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    const SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME = 'Name';
+    const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -153,11 +155,14 @@ class BundledProductTable extends AbstractTable
             ->leftJoinSpyProductBundleRelatedByFkProduct()
             ->joinSpyProductLocalizedAttributes()
             ->joinStockProduct()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, 'Name')
-            ->withColumn(SpyStockProductTableMap::COL_QUANTITY, 'stockQuantity')
-            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, 'isNeverOutOfStock')
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), 'stockQuantity')
+            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
-            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL);
+            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL)
+            ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
+            ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
 
         $queryResults = $this->runQuery($query, $config, true);
 
