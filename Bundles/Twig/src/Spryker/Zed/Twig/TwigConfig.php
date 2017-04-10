@@ -112,7 +112,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Please use `getZedDirectoryPathPatterns` instead.
+     * @deprecated Please use `getZedDirectoryPathPatterns()` instead.
      *
      * @return array
      */
@@ -133,7 +133,7 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Please use `getYvesDirectoryPathPatterns` instead.
+     * @deprecated Please use `getYvesDirectoryPathPatterns()` instead.
      *
      * @return array
      */
