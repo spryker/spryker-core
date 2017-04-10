@@ -139,10 +139,12 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getYvesDirectoryPathPattern()
     {
-        return [
-            'src/*/Yves/*/Theme',
-            'vendor/*/*/src/*/Yves/*/Theme',
-        ];
+        $currentThemeName = $this->get(TwigConstants::YVES_THEME);
+
+        return array_merge(
+            glob('src/*/Yves/*/Theme/' . $currentThemeName),
+            glob('vendor/*/*/src/*/Yves/*/Theme/' . $currentThemeName)
+        );
     }
 
 }
