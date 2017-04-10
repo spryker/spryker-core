@@ -36,7 +36,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
     protected $productDataFeedTransfer;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $idLocale;
 
@@ -245,7 +245,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return integer
+     * @return int
      */
     protected function getIdLocale()
     {

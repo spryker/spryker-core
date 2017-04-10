@@ -36,7 +36,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     protected $availabilityDataFeedTransfer;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $idLocale;
 
@@ -140,7 +140,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return integer
+     * @return int
      */
     protected function getIdLocale()
     {

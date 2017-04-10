@@ -36,7 +36,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     protected $categoryDataFeedTransfer;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $idLocale;
 
@@ -123,7 +123,7 @@ class CategoryDataFeedQueryContainerTest extends Test
     }
 
     /**
-     * @return integer
+     * @return int
      */
     protected function getIdLocale()
     {
