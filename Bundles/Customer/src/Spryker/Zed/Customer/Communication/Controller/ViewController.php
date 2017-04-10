@@ -30,22 +30,27 @@ class ViewController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
+        if(empty($idCustomer)){
+            return $this->redirectResponse('/customer');
+        }
+
+        $idCustomer = $this->castId($idCustomer);
+
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
 
-        $customerTransfer = $this->getFacade()
-            ->getCustomer($customerTransfer);
-        $addresses = $customerTransfer->getAddresses()->toArray();
-        $customerArray = $customerTransfer->toArray();
+        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+        $addresses = $customerTransfer->getAddresses();
 
-        if ($addresses[AddressesTransfer::ADDRESSES] instanceof ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
-            $addresses = [];
-        }
+        $table = $this->getFactory()
+            ->createCustomerAddressTable($idCustomer);
 
         return $this->viewResponse([
-            'customer' => $customerArray,
+            'customer' => $customerTransfer,
             'addresses' => $addresses,
             'idCustomer' => $idCustomer,
+            'addressTable' => $table->render(),
+
         ]);
     }
 
@@ -55,6 +60,21 @@ class ViewController extends AbstractController
     protected function createCustomerTransfer()
     {
         return new CustomerTransfer();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
+
+        $table = $this->getFactory()
+            ->createCustomerAddressTable($idCustomer);
+
+        return $this->jsonResponse($table->fetchData());
     }
 
 }
