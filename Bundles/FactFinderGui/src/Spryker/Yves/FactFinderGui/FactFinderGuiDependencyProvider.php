@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\Container;
 class FactFinderGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    const FACT_FINDER_CLIENT = 'FACT_FINDER_CLIENT';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -43,6 +45,10 @@ class FactFinderGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideClients(Container $container)
     {
+        $container[self::FACT_FINDER_CLIENT] = function () use ($container) {
+            return $container->getLocator()->factFinder()->client();
+        };
+
         return $container;
     }
 

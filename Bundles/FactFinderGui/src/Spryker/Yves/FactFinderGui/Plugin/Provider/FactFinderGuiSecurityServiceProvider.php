@@ -11,7 +11,7 @@ use Pyz\Yves\Application\Plugin\Provider\AbstractServiceProvider;
 use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\FactFinder\FactFinderConstants;
-use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
+use Spryker\Yves\FactFinderGui\Communication\Plugin\Provider\FactFinderGuiControllerProvider;
 
 class FactFinderGuiSecurityServiceProvider extends AbstractServiceProvider
 {
@@ -48,7 +48,7 @@ class FactFinderGuiSecurityServiceProvider extends AbstractServiceProvider
         $app['security.firewalls'] = array_merge(
             [
                 self::FIREWALL_FACT_FINDER => [
-                    'pattern' => '^.*/' . FactFinderControllerProvider::ROUTE_FACT_FINDER_CSV_PATH . '*',
+                    'pattern' => '^.*/' . FactFinderGuiControllerProvider::ROUTE_FACT_FINDER_CSV_PATH . '*',
                     'http' => true,
                     'users' => [
                         Config::get(FactFinderConstants::CONFIG_BASIC_AUTH_USERNAME) => [

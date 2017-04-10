@@ -1,6 +1,6 @@
 {% if searchResponse.paging.pageCount > 1 %}
     <div class="callout text-center">
-        {% include '@FactFinder/layout/partials/pagination.twig' with {
+        {% include '@FactFinderGui/layout/partials/pagination.twig' with {
         parameters: app.request.query.all()|merge({factfinder: pagingRote}),
         currentPage: searchResponse.paging.currentPage.pageNumber,
         paginationPath: 'fact-finder',

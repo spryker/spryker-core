@@ -7,17 +7,14 @@
 
 namespace Spryker\Yves\FactFinderGui\Controller;
 
-use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
-use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
-use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Yves\FactFinderGui\Communication\Plugin\Provider\FactFinderGuiControllerProvider;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Yves\FactFinder\FactFinderFactory getFactory()
- * @method \Spryker\Client\FactFinder\FactFinderClientInterface getClient()
+ * @method \Spryker\Yves\FactFinderGui\FactFinderGuiFactory getFactory()
+ * @method \Spryker\Client\FactFinderGui\FactFinderGuiClientInterface getClient()
  */
 class IndexController extends AbstractController
 {
@@ -29,17 +26,20 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
+        $factFinderSearchRequestTransfer = $this->getFactory()
+            ->createFactFinderSearchRequestTransfer();
         $factFinderSearchRequestTransfer->setQuery($request->query->get('query', '*'));
         $factFinderSearchRequestTransfer->setPage($request->query->get('page'));
         $factFinderSearchRequestTransfer->setSortName($request->query->get('sortName'));
         $factFinderSearchRequestTransfer->setSortPrice($request->query->get('sortPrice'));
 
-        $ffSearchResponseTransfer = $this->getClient()->search($factFinderSearchRequestTransfer);
+        $ffSearchResponseTransfer = $this->getFactory()
+            ->getFactFinderClient()
+            ->search($factFinderSearchRequestTransfer);
 
         return [
             'searchResponse' => $ffSearchResponseTransfer,
-            'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
+            'pagingRote' => FactFinderGuiControllerProvider::ROUTE_FACT_FINDER,
             'lang' => Store::getInstance()->getCurrentLanguage(),
             'query' => $factFinderSearchRequestTransfer->getQuery(),
             'page' => $factFinderSearchRequestTransfer->getPage(),
@@ -72,24 +72,39 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchAction(Request $request)
     {
-        $ffSuggestRequestTransfer = new FactFinderSuggestRequestTransfer();
-        $ffSuggestRequestTransfer->setQuery($request->query->get('query', '*'));
+        $ffSuggestRequestTransfer = $this->getFactory()
+            ->createFactFinderSuggestRequestTransfer();
+        $query = $request->query->get('query', '*');
 
-        $response = $this->getClient()->getSuggestions($ffSuggestRequestTransfer);
+        $ffSuggestRequestTransfer->setQuery($query);
+
+        $response = $this->getFactory()
+            ->getFactFinderClient()
+            ->getSuggestions($ffSuggestRequestTransfer);
 
         return $this->jsonResponse($response->getSuggestions());
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function recommendationsAction(Request $request)
     {
-        $ffSuggestRequestTransfer = new FactFinderRecommendationRequestTransfer();
-        $ffSuggestRequestTransfer->setId($request->query->get('id', ''));
+        $ffSuggestRequestTransfer = $this->getFactory()
+            ->createFactFinderRecommendationRequestTransfer();
+        $id = $request->query->get('id', '');
 
-        $response = $this->getClient()->getRecommendations($ffSuggestRequestTransfer);
+        $ffSuggestRequestTransfer->setId($id);
+
+        $response = $this->getFactory()
+            ->getFactFinderClient()
+            ->getRecommendations($ffSuggestRequestTransfer);
 
         return $this->jsonResponse($response->getSuggestions());
     }

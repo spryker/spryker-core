@@ -12,8 +12,8 @@ use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Yves\FactFinder\FactFinderFactory getFactory()
- * @method \Spryker\Client\FactFinder\FactFinderClientInterface getClient()
+ * @method \Spryker\Yves\FactFinderGui\FactFinderGuiFactory getFactory()
+ * @method \Spryker\Client\FactFinderGui\FactFinderGuiClientInterface getClient()
  */
 class TrackController extends AbstractController
 {
@@ -25,12 +25,14 @@ class TrackController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $factFinderTrackingRequestTransfer = new FactFinderTrackingRequestTransfer();
+        $factFinderTrackingRequestTransfer = $this->getFactory()
+            ->createFactFinderTrackingRequestTransfer();
         $factFinderTrackingRequestTransfer->fromArray($request->query->all());
 
         $factFinderTrackingRequestTransfer = $this->addSessionId($factFinderTrackingRequestTransfer);
 
-        $factFinderTrackingResponseTransfer = $this->getClient()
+        $factFinderTrackingResponseTransfer = $this->getFactory()
+            ->getFactFinderClient()
             ->track($factFinderTrackingRequestTransfer);
 
         if (!$factFinderTrackingResponseTransfer->getResult()) {
@@ -47,7 +49,10 @@ class TrackController extends AbstractController
      */
     protected function addSessionId(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
     {
-        $sessionId = $this->getClient()->getSession()->getId();
+        $sessionId = $this->getFactory()
+            ->getFactFinderClient()
+            ->getSession()
+            ->getId();
         $factFinderTrackingRequestTransfer->setSid($sessionId);
 
         return $factFinderTrackingRequestTransfer;
