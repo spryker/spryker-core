@@ -120,7 +120,7 @@ class Customer
             $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
             $customerTransfer->setAddresses($addressesTransfer);
 
-            $customerTransfer = $this->attachAddressEntityCollection($customerTransfer, $addressesTransfer);
+            $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
         }
 
         return $customerTransfer;
@@ -528,7 +528,7 @@ class Customer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function attachAddressEntityCollection(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer)
+    protected function attachAddressesTransfer(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer)
     {
         $billingAddresses = new AddressesTransfer();
         $shippingAddresses = new AddressesTransfer();
