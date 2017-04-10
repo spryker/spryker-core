@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PropelBatchIterator implements CountableIteratorInterface
 {
@@ -64,7 +65,11 @@ class PropelBatchIterator implements CountableIteratorInterface
         $this->query->setOffset($this->offset);
         $this->query->setLimit($this->chunkSize);
 
-        if ($this->orderBy && $this->orderByDirection) {
+        if ($this->orderBy) {
+            if (!$this->orderByDirection) {
+                $this->orderByDirection = Criteria::ASC;
+            }
+
             $this->query->orderBy($this->orderBy, $this->orderByDirection);
         }
 

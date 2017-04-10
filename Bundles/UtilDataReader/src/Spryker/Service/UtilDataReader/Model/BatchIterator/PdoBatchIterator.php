@@ -10,6 +10,7 @@ namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 use PDO;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PdoBatchIterator implements CountableIteratorInterface
 {
@@ -78,7 +79,10 @@ class PdoBatchIterator implements CountableIteratorInterface
         $this->criteriaBuilder->setOffset($this->offset);
         $this->criteriaBuilder->setLimit($this->chunkSize);
 
-        if ($this->orderBy && $this->orderByDirection) {
+        if ($this->orderBy) {
+            if (!$this->orderByDirection) {
+                $this->orderByDirection = Criteria::ASC;
+            }
             $this->criteriaBuilder->setOrderBy([$this->orderBy => $this->orderByDirection]);
         }
 
