@@ -59,7 +59,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     protected function getShippingCountryIsoCode(QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getShippingAddress() === null) {
+        if ($quoteTransfer->getShippingAddress() === null || !$quoteTransfer->getShippingAddress()->getIso2Code()) {
             return $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
