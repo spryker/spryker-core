@@ -122,4 +122,18 @@ interface UtilDataReaderServiceInterface
      */
     public function getPropelBatchIteratorOrdered(ModelCriteria $query, $chunkSize, $orderBy, $orderByDirection);
 
+    /**
+     * Specification:
+     * - Returns a CountableIteratorInterface
+     * - Reads a YAML file and make data available for batch processing
+     *
+     * @api
+     *
+     * @param string $fileName
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getYamlBatchIterator($fileName, $chunkSize = -1);
+
 }
