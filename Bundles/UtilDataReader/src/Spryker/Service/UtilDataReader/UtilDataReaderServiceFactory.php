@@ -56,23 +56,27 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
      * @param int $chunkSize
+     * @param string|null $orderBy
+     * @param string|null $orderByDirection
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator
      */
-    public function createPdoBatchIterator(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize)
+    public function createPdoBatchIterator(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
-        return new PdoBatchIterator($criteriaBuilder, $connection, $chunkSize);
+        return new PdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy, $orderByDirection);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
+     * @param string|null $orderBy
+     * @param string|null $orderByDirection
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator
      */
-    public function createPropelBatchIterator(ModelCriteria $query, $chunkSize)
+    public function createPropelBatchIterator(ModelCriteria $query, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
-        return new PropelBatchIterator($query, $chunkSize);
+        return new PropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection, $orderBy, $orderByDirection);
     }
 
     /**
