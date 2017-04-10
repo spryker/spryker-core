@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AttributeForm extends AbstractType
@@ -132,6 +133,11 @@ class AttributeForm extends AbstractType
             'url' => '/product-management/attribute/keys',
             'constraints' => [
                 new NotBlank(),
+                new Regex([
+                    'pattern' => '/^[a-z\-0-9_:]+$/',
+                    'message' => 'This field contains illegal characters. It should contain only lower case letters, ' .
+                        'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
+                ]),
                 new Callback([
                     'methods' => [
                         function ($key, ExecutionContextInterface $context) {
