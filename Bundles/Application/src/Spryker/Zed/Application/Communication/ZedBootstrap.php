@@ -126,14 +126,6 @@ class ZedBootstrap
     /**
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getApiServiceProvider()
-    {
-        return [];
-    }
-
-    /**
-     * @return \Silex\ServiceProviderInterface[]
-     */
     protected function getInternalCallServiceProvider()
     {
         return [];
