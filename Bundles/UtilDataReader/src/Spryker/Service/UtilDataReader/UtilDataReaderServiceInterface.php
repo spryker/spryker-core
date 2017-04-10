@@ -88,7 +88,7 @@ interface UtilDataReaderServiceInterface
     /**
      * Specification:
      * - Returns a CountableIteratorInterface
-     * - Reads a yaml file and make data available for batch processing
+     * - Reads a YAML file and make data available for batch processing
      *
      * @api
      *
