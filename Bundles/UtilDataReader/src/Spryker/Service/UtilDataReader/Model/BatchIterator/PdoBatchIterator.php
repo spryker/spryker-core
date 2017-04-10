@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
 use PDO;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -40,15 +41,34 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $batchData = [];
 
     /**
+     * @var string|null
+     */
+    protected $orderBy;
+
+    /**
+     * @var string|null
+     */
+    protected $orderByDirection;
+
+    /**
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
      * @param int $chunkSize
+     * @param string|null $orderBy
+     * @param string|null $orderByDirection
      */
-    public function __construct(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize = 100)
-    {
+    public function __construct(
+        CriteriaBuilderInterface $criteriaBuilder,
+        QueryContainerInterface $connection,
+        $chunkSize = 100,
+        $orderBy = null,
+        $orderByDirection = null
+    ) {
         $this->criteriaBuilder = $criteriaBuilder;
         $this->queryContainer = $connection;
         $this->chunkSize = $chunkSize;
+        $this->orderBy = $orderBy;
+        $this->orderByDirection = $orderByDirection;
     }
 
     /**
@@ -58,6 +78,10 @@ class PdoBatchIterator implements CountableIteratorInterface
     {
         $this->criteriaBuilder->setOffset($this->offset);
         $this->criteriaBuilder->setLimit($this->chunkSize);
+
+        if ($this->orderBy && $this->orderByDirection) {
+            $this->criteriaBuilder->setOrderBy([$this->orderBy => $this->orderByDirection]);
+        }
 
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 

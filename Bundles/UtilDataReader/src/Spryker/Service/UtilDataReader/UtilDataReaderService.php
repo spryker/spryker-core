@@ -19,8 +19,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
 {
 
     /**
-     * Specification:
-     * - Returns a CSV Reader
+     * {@inheritdoc}
      *
      * @api
      *
@@ -32,9 +31,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * Specification:
-     * - Returns a CsvBatchIterator
-     * - Uses CSV Reader to read csv files
+     * {@inheritdoc}
      *
      * @api
      *
@@ -49,9 +46,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * Specification:
-     * - Returns a XmlBatchIterator
-     * - Loads entries from given xml file
+     * {@inheritdoc}
      *
      * @api
      *
@@ -67,9 +62,9 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * Specification:
-     * - Returns a PdoBatchIterator
-     * - Loads a chunk of entities with given CriteriaBuilderInterface
+     * @deprecated use getBatchIteratorOrdered instead, getPdoBatchIterator does not work with sliced data
+     *
+     * {@inheritdoc}
      *
      * @api
      *
@@ -85,9 +80,27 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * Specification:
-     * - Returns a PropelBatchIterator
-     * - Loads a chunk of PropelEntities with given ModelCriteria
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
+     * @param int $chunkSize
+     * @param string $orderBy
+     * @param string $orderByDirection
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize = 100, $orderBy,  $orderByDirection)
+    {
+        return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy,  $orderByDirection);
+    }
+
+    /**
+     * @deprecated use getBatchIteratorOrdered instead, getPropelBatchIteratorOrdered does not work with sliced data
+     *
+     * {@inheritdoc}
      *
      * @api
      *
@@ -99,6 +112,21 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     public function getPropelBatchIterator(ModelCriteria $query, $chunkSize = 100)
     {
         return $this->getFactory()->createPropelBatchIterator($query, $chunkSize);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getPropelBatchIteratorOrdered(ModelCriteria $query, $chunkSize = 100, $orderBy,  $orderByDirection)
+    {
+        return $this->getFactory()->createPropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection);
     }
 
 }

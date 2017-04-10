@@ -76,11 +76,17 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
     }
 
     /**
-     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
-        return $this->utilDataReaderService->getPdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->chunkSize);
+        return $this->utilDataReaderService->getBatchIteratorOrdered(
+                $this->criteriaBuilder,
+                $this->touchQueryContainer,
+                $this->chunkSize,
+                CollectorConfig::COLLECTOR_TOUCH_ID,
+                Criteria::ASC
+        );
     }
 
     /**
@@ -94,10 +100,9 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $this->locale = $locale;
 
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
+
         $this->criteriaBuilder
             ->setParameterCollection($touchParameters);
-
-        $this->criteriaBuilder->setOrderBy([CollectorConfig::COLLECTOR_TOUCH_ID => Criteria::ASC]);
 
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
