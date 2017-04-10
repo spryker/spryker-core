@@ -147,7 +147,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function loadCustomerById($idCustomer)
+    public function getCustomerById($idCustomer)
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);

@@ -114,9 +114,10 @@ class Customer
     {
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerTransfer->fromArray($customerEntity->toArray(), true);
+
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
-            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
+            $customerTransfer = $this->attachAddressEntityCollection($customerTransfer, $addresses);
         }
 
         return $customerTransfer;
@@ -492,28 +493,38 @@ class Customer
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection $addressEntities
      *
-     * @return \Generated\Shared\Transfer\AddressesTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities, SpyCustomer $customer)
+    protected function attachAddressEntityCollection(CustomerTransfer $customerTransfer, ObjectCollection $addressEntities)
     {
         $addressCollection = new AddressesTransfer();
-        foreach ($entities->getData() as $address) {
+        $billingAddresses = new AddressesTransfer();
+        $shippingAddresses = new AddressesTransfer();
+
+        foreach ($addressEntities->getData() as $address) {
             $addressTransfer = $this->entityToTransfer($address);
 
-            if ($customer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
+            if ($customerTransfer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
                 $addressTransfer->setIsDefaultBilling(true);
+                $billingAddresses->addAddress($addressTransfer);
             }
-            if ($customer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
+
+            if ($customerTransfer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
                 $addressTransfer->setIsDefaultShipping(true);
+                $shippingAddresses->addAddress($addressTransfer);
             }
 
             $addressCollection->addAddress($addressTransfer);
         }
 
-        return $addressCollection;
+        $customerTransfer->setBillingAddress($billingAddresses->getAddresses());
+        $customerTransfer->setShippingAddress($shippingAddresses->getAddresses());
+        $customerTransfer->setAddresses($addressCollection);
+
+        return $customerTransfer;
     }
 
     /**
