@@ -1,0 +1,25 @@
+{
+  "name": "spryker/fact-finder",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "FACT-Finder/FACT-Finder-PHP-Library": "1.3.*"
+  },
+  "description": "fact-finder bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

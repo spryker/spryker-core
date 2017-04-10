@@ -699,6 +699,10 @@
       "Unit\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
       "Functional\\Spryker\\Zed\\ProductRelationCollector\\": "Bundles/ProductRelationCollector/tests",
 
+      "Spryker\\Yves\\FactFinderGui\\": "Bundles/FactFinderGui/src",
+      "Unit\\Spryker\\Zed\\FactFinderGui\\": "Bundles/FactFinderGui/tests",
+      "Functional\\Spryker\\Zed\\FactFinderGui\\": "Bundles/FactFinderGui/tests",
+
       "Spryker\\Client\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Shared\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Zed\\FactFinder\\": "Bundles/FactFinder/src",

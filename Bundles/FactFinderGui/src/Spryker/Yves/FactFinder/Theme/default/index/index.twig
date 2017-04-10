@@ -1,0 +1,11 @@
+{% extends "@FactFinder/layout/layout.twig" %}
+
+{% block content %}
+    {% include "@FactFinder/index/catalog.twig" %}
+{% endblock %}
+
+{% block breadcrumbItems %}
+    {% for breadcrumb in searchResponse.breadCrumbs %}
+        <li>{{ breadcrumb.item.label }}</li>
+    {% endfor %}
+{% endblock %}

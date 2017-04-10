@@ -1,0 +1,39 @@
+<form method="get">
+    {% for filterGroup in afterSearchNavigation.getFilterGroups %}
+        <div class="callout">
+            <h3>{{ filterGroup.name }}</h3>
+            <table class="table">
+                {% for filter in filterGroup.getFilters %}
+                    <tr {% if filter.item.selected %}style="background-color: #88f2a5;"{% endif %}>
+                        <td>
+                            <a href="{{ filter.item.url }}">
+                                {{ filter.item.label }}
+                                {% if filter.matchCount %}
+                                    ({{ filter.matchCount }})
+                                {% else %}
+                                    ({{ "catalog.filter.removeFilter" | trans }})
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+
+
+    {#<div class="callout">#}
+        {#{% include "@FactFinder/layout/catalog/filter-category-tree.twig" with {#}
+            {#filterName:'category',#}
+            {#selectedCategory:(category is defined ? category : null)#}
+        {#} %}#}
+    {#</div>#}
+
+    {#<div class="callout">#}
+        {#{% include "@FactFinder/layout/catalog/filter-range.twig" with {#}
+            {#filterName:'price',#}
+            {#min:(facets.price.min | default(0)) | priceRaw | floor,#}
+            {#max:(facets.price.max | default(0)) | priceRaw | ceil#}
+        {#} %}#}
+    {#</div>#}
+</form>
