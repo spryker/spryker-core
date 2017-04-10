@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
-class ProductAbstractJoinQuery
+class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 {
 
     const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
@@ -47,10 +47,10 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinImage()) {
+        if (!$abstractProductDataFeedTransfer->getJoinImage()) {
             return $abstractProductQuery;
         }
-        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getLocaleId());
+        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getIdLocale());
 
         $abstractProductQuery
             ->useSpyProductImageSetQuery(null, Criteria::LEFT_JOIN)
@@ -76,10 +76,10 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinCategory()) {
+        if (!$abstractProductDataFeedTransfer->getJoinCategory()) {
             return $abstractProductQuery;
         }
-        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getLocaleId());
+        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getIdLocale());
 
         $abstractProductQuery
             ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
@@ -106,7 +106,7 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinPrice()) {
+        if (!$abstractProductDataFeedTransfer->getJoinPrice()) {
             return $abstractProductQuery;
         }
         $abstractProductQuery
@@ -127,10 +127,10 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinProduct()) {
+        if (!$abstractProductDataFeedTransfer->getJoinProduct()) {
             return $abstractProductQuery;
         }
-        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getLocaleId());
+        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getIdLocale());
 
         $abstractProductQuery
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
@@ -160,7 +160,7 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        if (!$abstractProductDataFeedTransfer->getIsJoinOption()) {
+        if (!$abstractProductDataFeedTransfer->getJoinOption()) {
             return $abstractProductQuery;
         }
         $abstractProductQuery
@@ -204,7 +204,7 @@ class ProductAbstractJoinQuery
         SpyProductAbstractQuery $abstractProductQuery,
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
-        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getLocaleId());
+        $localeTransferConditions = $this->getIdLocaleFilterConditions($abstractProductDataFeedTransfer->getIdLocale());
 
         $abstractProductQuery
             ->useSpyProductAbstractLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)

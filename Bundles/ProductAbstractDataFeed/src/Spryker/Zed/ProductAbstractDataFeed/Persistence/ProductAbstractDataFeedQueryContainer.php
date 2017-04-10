@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedPersistenceFactory getFactory()
@@ -24,21 +23,6 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
     const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     */
-    protected $productQueryContainer;
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
-    {
-        $this->productQueryContainer = $productQueryContainer;
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer|null $productDataFeedTransfer
@@ -47,7 +31,8 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
      */
     public function queryAbstractProductDataFeed(ProductAbstractDataFeedTransfer $productDataFeedTransfer = null)
     {
-        $abstractProductQuery = $this->productQueryContainer
+        $abstractProductQuery = $this->getFactory()
+            ->getProductQueryContainer()
             ->queryProductAbstract();
 
         if ($productDataFeedTransfer !== null) {

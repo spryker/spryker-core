@@ -19,21 +19,6 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
 {
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
-     */
-    protected $priceQueryContainer;
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
-     */
-    public function __construct(PriceQueryContainerInterface $priceQueryContainer)
-    {
-        $this->priceQueryContainer = $priceQueryContainer;
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
@@ -42,7 +27,8 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
      */
     public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null)
     {
-        $productPriceQuery = $this->priceQueryContainer
+        $productPriceQuery = $this->getFactory()
+            ->getPriceQueryContainer()
             ->queryPriceProduct();
 
         $productPriceQuery = $this->applyJoins($productPriceQuery, $priceDataFeedTransfer);
@@ -79,7 +65,7 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         PriceDataFeedTransfer $priceDataFeedTransfer
     ) {
 
-        if ($priceDataFeedTransfer->getIsJoinPriceType()) {
+        if ($priceDataFeedTransfer->getJoinPriceType()) {
             $productPriceQuery->joinPriceType();
         }
 

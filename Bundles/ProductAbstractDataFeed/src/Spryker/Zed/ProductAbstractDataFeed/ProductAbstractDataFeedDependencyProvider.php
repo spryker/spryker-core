@@ -43,7 +43,6 @@ class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependency
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::PRODUCT_QUERY_CONTAINER] = function (Container $container) {
-            //todo: add bridge.
             return $container->getLocator()->product()->queryContainer();
         };
 

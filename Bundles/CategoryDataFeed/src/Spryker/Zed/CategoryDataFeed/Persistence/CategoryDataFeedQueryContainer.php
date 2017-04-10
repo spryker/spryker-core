@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -25,21 +24,6 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     */
-    protected $categoryQueryContainer;
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     */
-    public function __construct(CategoryQueryContainerInterface $categoryQueryContainer)
-    {
-        $this->categoryQueryContainer = $categoryQueryContainer;
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
@@ -48,8 +32,9 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
      */
     public function queryCategoryDataFeed(CategoryDataFeedTransfer $categoryDataFeedTransfer)
     {
-        $categoryQuery = $this->categoryQueryContainer
-            ->queryCategory($categoryDataFeedTransfer->getLocaleId());
+        $categoryQuery = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryCategory($categoryDataFeedTransfer->getIdLocale());
 
         $categoryQuery = $this->applyJoins($categoryQuery, $categoryDataFeedTransfer);
         $categoryQuery = $this->applyDateFilters($categoryQuery, $categoryDataFeedTransfer);
@@ -86,7 +71,7 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
         SpyCategoryQuery $categoryQuery,
         CategoryDataFeedTransfer $categoryDataFeedTransfer
     ) {
-        if (!$categoryDataFeedTransfer->getIsJoinAbstractProduct()) {
+        if (!$categoryDataFeedTransfer->getJoinAbstractProduct()) {
             return $categoryQuery;
         }
 

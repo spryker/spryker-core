@@ -65,7 +65,7 @@ class PriceDataFeedQueryContainerTest extends Test
      */
     public function testGetPriceDataFeedQueryWithJoinedTypes()
     {
-        $this->priceDataFeedTransfer->setIsJoinPriceType(true);
+        $this->priceDataFeedTransfer->setJoinPriceType(true);
         $query = $this->priceDataFeedQueryContainer
             ->queryPriceDataFeed($this->priceDataFeedTransfer);
 

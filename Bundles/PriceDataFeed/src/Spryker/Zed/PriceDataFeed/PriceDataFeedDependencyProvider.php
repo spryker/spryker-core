@@ -43,7 +43,6 @@ class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::PRICE_QUERY_CONTAINER] = function (Container $container) {
-            //todo: add bridge.
             return $container->getLocator()->price()->queryContainer();
         };
 

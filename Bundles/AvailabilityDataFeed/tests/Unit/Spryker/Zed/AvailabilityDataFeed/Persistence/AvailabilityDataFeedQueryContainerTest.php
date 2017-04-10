@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
+use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
@@ -35,6 +36,11 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     protected $availabilityDataFeedTransfer;
 
     /**
+     * @var integer
+     */
+    protected $idLocale;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -43,6 +49,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
 
         $this->availabilityDataFeedQueryContainer = $this->createAvailabilityDataFeedQueryContainer();
         $this->availabilityDataFeedTransfer = $this->createAvailabilityDataFeedTransfer();
+        $this->idLocale = $this->getIdLocale();
     }
 
     /**
@@ -50,7 +57,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQuery()
     {
-        $this->availabilityDataFeedTransfer->setLocaleId(46);
+        $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
@@ -66,7 +73,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQueryWithJoinedProducts()
     {
-        $this->availabilityDataFeedTransfer->setLocaleId(46);
+        $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
@@ -83,7 +90,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
      */
     public function testGetAvailabilityDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
-        $this->availabilityDataFeedTransfer->setLocaleId(46);
+        $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
 
@@ -98,7 +105,7 @@ class AvailabilityDataFeedQueryContainerTest extends Test
     {
         $this->availabilityDataFeedTransfer->setUpdatedFrom('2017-01-01');
         $this->availabilityDataFeedTransfer->setUpdatedTo('2017-12-01');
-        $this->availabilityDataFeedTransfer->setLocaleId(46);
+        $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
 
         $query = $this->availabilityDataFeedQueryContainer
             ->queryAvailabilityDataFeed($this->availabilityDataFeedTransfer);
@@ -130,6 +137,18 @@ class AvailabilityDataFeedQueryContainerTest extends Test
         $availabilityDataFeedTransfer = new AvailabilityDataFeedTransfer();
 
         return $availabilityDataFeedTransfer;
+    }
+
+    /**
+     * @return integer
+     */
+    protected function getIdLocale()
+    {
+        $locale = SpyLocaleQuery::create()
+            ->filterByLocaleName('de_DE')
+            ->findOne();
+
+        return $locale->getIdLocale();
     }
 
     /**
@@ -189,12 +208,12 @@ class AvailabilityDataFeedQueryContainerTest extends Test
             [
                 'table' => 'spy_product_abstract_localized_attributes',
                 'column' => 'fk_locale',
-                'value' => 46,
+                'value' => $this->idLocale,
             ],
             [
                 'table' => 'spy_product_localized_attributes',
                 'column' => 'fk_locale',
-                'value' => 46,
+                'value' => $this->idLocale,
             ],
         ];
     }

@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\CategoryDataFeed\Persistence;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryQuery;
+use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
@@ -35,6 +36,11 @@ class CategoryDataFeedQueryContainerTest extends Test
     protected $categoryDataFeedTransfer;
 
     /**
+     * @var integer
+     */
+    protected $idLocale;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -43,6 +49,7 @@ class CategoryDataFeedQueryContainerTest extends Test
 
         $this->categoryDataFeedQueryContainer = $this->createCategoryDataFeedQueryContainer();
         $this->categoryDataFeedTransfer = $this->createCategoryDataFeedTransfer();
+        $this->idLocale = $this->getIdLocale();
     }
 
     /**
@@ -65,7 +72,7 @@ class CategoryDataFeedQueryContainerTest extends Test
      */
     public function testGetCategoryDataFeedQueryWithJoinedProducts()
     {
-        $this->categoryDataFeedTransfer->setIsJoinAbstractProduct(true);
+        $this->categoryDataFeedTransfer->setJoinAbstractProduct(true);
         $query = $this->categoryDataFeedQueryContainer
             ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
@@ -85,8 +92,8 @@ class CategoryDataFeedQueryContainerTest extends Test
      */
     public function testGetCategoryDataFeedQueryWithJoinedProductsAndLocaleFilter()
     {
-        $this->categoryDataFeedTransfer->setIsJoinAbstractProduct(true);
-        $this->categoryDataFeedTransfer->setLocaleId(46);
+        $this->categoryDataFeedTransfer->setJoinAbstractProduct(true);
+        $this->categoryDataFeedTransfer->setIdLocale($this->getIdLocale());
         $query = $this->categoryDataFeedQueryContainer
             ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
 
@@ -113,6 +120,18 @@ class CategoryDataFeedQueryContainerTest extends Test
         $categoryDataFeedTransfer = new CategoryDataFeedTransfer();
 
         return $categoryDataFeedTransfer;
+    }
+
+    /**
+     * @return integer
+     */
+    protected function getIdLocale()
+    {
+        $locale = SpyLocaleQuery::create()
+            ->filterByLocaleName('de_DE')
+            ->findOne();
+
+        return $locale->getIdLocale();
     }
 
     /**
@@ -179,7 +198,7 @@ class CategoryDataFeedQueryContainerTest extends Test
             [
                 'table' => 'spy_category_attribute',
                 'column' => 'fk_locale',
-                'value' => 46,
+                'value' => $this->idLocale,
             ],
         ];
     }

@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -25,21 +24,6 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
-     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer
-     */
-    protected $availabilityQueryContainer;
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer $availabilityQueryContainer
-     */
-    public function __construct(AvailabilityQueryContainer $availabilityQueryContainer)
-    {
-        $this->availabilityQueryContainer = $availabilityQueryContainer;
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
@@ -48,8 +32,9 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      */
     public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer)
     {
-        $availabilityProductQuery = $this->availabilityQueryContainer
-            ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getLocaleId());
+        $availabilityProductQuery = $this->getFactory()
+            ->getAvailabilityQueryContainer()
+            ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getIdLocale());
 
         $availabilityProductQuery = $this->applyDateFilter($availabilityProductQuery, $availabilityDataFeedTransfer);
 

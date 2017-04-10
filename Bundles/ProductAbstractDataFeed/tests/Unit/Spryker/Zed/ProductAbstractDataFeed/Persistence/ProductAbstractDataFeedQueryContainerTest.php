@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
+use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
@@ -35,6 +36,11 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
     protected $productDataFeedTransfer;
 
     /**
+     * @var integer
+     */
+    protected $idLocale;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -43,6 +49,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
 
         $this->productDataFeedQueryContainer = $this->createProductDataFeedQueryContainer();
         $this->productDataFeedTransfer = $this->createProductDataFeedTransfer();
+        $this->idLocale = $this->getIdLocale();
     }
 
     /**
@@ -65,7 +72,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedCategories()
     {
-        $this->productDataFeedTransfer->setIsJoinCategory(true);
+        $this->productDataFeedTransfer->setJoinCategory(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -85,7 +92,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedPrices()
     {
-        $this->productDataFeedTransfer->setIsJoinPrice(true);
+        $this->productDataFeedTransfer->setJoinPrice(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -105,7 +112,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedOptions()
     {
-        $this->productDataFeedTransfer->setIsJoinOption(true);
+        $this->productDataFeedTransfer->setJoinOption(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -125,7 +132,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedImages()
     {
-        $this->productDataFeedTransfer->setIsJoinImage(true);
+        $this->productDataFeedTransfer->setJoinImage(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -145,7 +152,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedVariants()
     {
-        $this->productDataFeedTransfer->setIsJoinProduct(true);
+        $this->productDataFeedTransfer->setJoinProduct(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -166,11 +173,11 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithJoinedAll()
     {
-        $this->productDataFeedTransfer->setIsJoinProduct(true);
-        $this->productDataFeedTransfer->setIsJoinCategory(true);
-        $this->productDataFeedTransfer->setIsJoinImage(true);
-        $this->productDataFeedTransfer->setIsJoinPrice(true);
-        $this->productDataFeedTransfer->setIsJoinOption(true);
+        $this->productDataFeedTransfer->setJoinProduct(true);
+        $this->productDataFeedTransfer->setJoinCategory(true);
+        $this->productDataFeedTransfer->setJoinImage(true);
+        $this->productDataFeedTransfer->setJoinPrice(true);
+        $this->productDataFeedTransfer->setJoinOption(true);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -194,7 +201,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
      */
     public function testQueryAbstractProductDataFeedWithLocaleId()
     {
-        $this->productDataFeedTransfer->setLocaleId(46);
+        $this->productDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->productDataFeedQueryContainer
             ->queryAbstractProductDataFeed($this->productDataFeedTransfer);
 
@@ -235,6 +242,18 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
         $productDataFeedTransfer = new ProductAbstractDataFeedTransfer();
 
         return $productDataFeedTransfer;
+    }
+
+    /**
+     * @return integer
+     */
+    protected function getIdLocale()
+    {
+        $locale = SpyLocaleQuery::create()
+            ->filterByLocaleName('de_DE')
+            ->findOne();
+
+        return $locale->getIdLocale();
     }
 
     /**
@@ -346,7 +365,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
             [
                 'table' => 'spy_product_abstract_localized_attributes',
                 'column' => 'fk_locale',
-                'value' => 46,
+                'value' => $this->idLocale,
             ],
         ];
     }

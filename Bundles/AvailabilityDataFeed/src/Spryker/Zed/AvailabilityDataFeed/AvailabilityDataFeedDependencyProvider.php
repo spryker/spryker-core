@@ -43,7 +43,6 @@ class AvailabilityDataFeedDependencyProvider extends AbstractBundleDependencyPro
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::AVAILABILITY_QUERY_CONTAINER] = function (Container $container) {
-            //todo: add bridge.
             return $container->getLocator()->availability()->queryContainer();
         };
 
