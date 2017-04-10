@@ -104,10 +104,14 @@ class MenuFormatter implements MenuFormatterInterface
             }
             if (!empty($children)) {
                 unset($children[self::CHILD_IS_ACTIVE]);
-                $formattedPage[self::CHILDREN] = $children;
+                if (!empty($children)) {
+                    $formattedPage[self::CHILDREN] = $children;
+                }
                 $children = [];
             }
-            $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
+            if (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
+                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
+            }
         }
 
         return $formattedPages;
@@ -126,6 +130,10 @@ class MenuFormatter implements MenuFormatterInterface
 
         $action = $this->getPageAction($page);
         $controller = $this->getPageController($page, $action);
+
+        if (!isset($page[self::BUNDLE])) {
+            return '';
+        }
 
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
     }
