@@ -48,7 +48,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      * @param string|null $orderBy
      * @param string|null $orderByDirection
      */
-    public function __construct(ModelCriteria $query, $chunkSize = 100, $orderBy = null,  $orderByDirection = null)
+    public function __construct(ModelCriteria $query, $chunkSize = 100, $orderBy = null, $orderByDirection = null)
     {
         $this->query = $query;
         $this->chunkSize = $chunkSize;

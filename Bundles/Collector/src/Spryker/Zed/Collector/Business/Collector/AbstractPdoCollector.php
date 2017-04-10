@@ -81,11 +81,11 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
     protected function generateBatchIterator()
     {
         return $this->utilDataReaderService->getBatchIteratorOrdered(
-                $this->criteriaBuilder,
-                $this->touchQueryContainer,
-                $this->chunkSize,
-                CollectorConfig::COLLECTOR_TOUCH_ID,
-                Criteria::ASC
+            $this->criteriaBuilder,
+            $this->touchQueryContainer,
+            $this->chunkSize,
+            CollectorConfig::COLLECTOR_TOUCH_ID,
+            Criteria::ASC
         );
     }
 

@@ -57,13 +57,13 @@ interface UtilDataReaderServiceInterface
     public function getXmlBatchIterator($fileName, $rootNodeName, $chunkSize = -1);
 
     /**
+     * @api
+     *
      * @deprecated use getBatchIteratorOrdered instead, getPdoBatchIterator does not work with sliced data
      *
      * Specification:
      * - Returns a PdoBatchIterator
      * - Loads a chunk of entities with given CriteriaBuilderInterface
-     *
-     * @api
      *
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
@@ -88,16 +88,16 @@ interface UtilDataReaderServiceInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize = 100, $orderBy,  $orderByDirection);
+    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection);
 
     /**
+     * @api
+     *
      * @deprecated use getBatchIteratorOrdered instead, getPropelBatchIteratorOrdered does not work with sliced data
      *
      * Specification:
      * - Returns a PropelBatchIterator
      * - Loads a chunk of PropelEntities with given ModelCriteria
-     *
-     * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
@@ -120,6 +120,6 @@ interface UtilDataReaderServiceInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function getPropelBatchIteratorOrdered(ModelCriteria $query, $chunkSize = 100, $orderBy,  $orderByDirection);
+    public function getPropelBatchIteratorOrdered(ModelCriteria $query, $chunkSize, $orderBy, $orderByDirection);
 
 }

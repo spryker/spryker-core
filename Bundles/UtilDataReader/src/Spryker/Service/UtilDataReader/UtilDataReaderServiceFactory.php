@@ -60,7 +60,7 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator
      */
-    public function createPdoBatchIterator(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy = null,  $orderByDirection = null)
+    public function createPdoBatchIterator(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
         return new PdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy, $orderByDirection);
     }
@@ -73,7 +73,7 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator
      */
-    public function createPropelBatchIterator(ModelCriteria $query, $chunkSize, $orderBy = null,  $orderByDirection = null)
+    public function createPropelBatchIterator(ModelCriteria $query, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
         return new PropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection, $orderBy, $orderByDirection);
     }

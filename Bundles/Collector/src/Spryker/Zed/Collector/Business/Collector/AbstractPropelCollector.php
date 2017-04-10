@@ -59,10 +59,10 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
     protected function generateBatchIterator()
     {
         return $this->utilDataReaderService->getPropelBatchIteratorOrdered(
-                $this->queryBuilder->getTouchQuery(),
-                $this->chunkSize,
-                CollectorConfig::COLLECTOR_TOUCH_ID,
-                Criteria::ASC
+            $this->queryBuilder->getTouchQuery(),
+            $this->chunkSize,
+            CollectorConfig::COLLECTOR_TOUCH_ID,
+            Criteria::ASC
         );
     }
 

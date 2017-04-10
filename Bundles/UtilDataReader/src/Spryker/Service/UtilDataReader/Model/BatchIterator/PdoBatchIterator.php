@@ -8,7 +8,6 @@
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
 use PDO;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
