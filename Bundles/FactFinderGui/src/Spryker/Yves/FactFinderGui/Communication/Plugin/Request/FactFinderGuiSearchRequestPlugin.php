@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\FactFinder\Business\FactFinderFacade getFacade()
  * @method \Spryker\Zed\FactFinder\Communication\FactFinderCommunicationFactory getFactory()
  */
-class FactFinderSearchRequestPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
+class FactFinderGuiSearchRequestPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**

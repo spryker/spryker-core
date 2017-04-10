@@ -10,7 +10,7 @@ namespace Spryker\Yves\FactFinderGui\Communication\Plugin\Provider;
 use Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider;
 use Silex\Application;
 
-class FactFinderControllerProvider extends AbstractYvesControllerProvider
+class FactFinderGuiControllerProvider extends AbstractYvesControllerProvider
 {
 
     const ROUTE_FACT_FINDER = 'fact-finder';
@@ -29,27 +29,27 @@ class FactFinderControllerProvider extends AbstractYvesControllerProvider
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
-        $this->createController('/{factfinder}', self::ROUTE_FACT_FINDER, 'FactFinder', 'Index', 'index')
+        $this->createController('/{factfinder}', self::ROUTE_FACT_FINDER, 'FactFinderGui', 'Index', 'index')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
-        $this->createController('/{factfinder}/product/{sku}', self::ROUTE_FACT_FINDER_PRODUCT_DETAIL, 'FactFinder', 'Index', 'detail')
+        $this->createController('/{factfinder}/product/{sku}', self::ROUTE_FACT_FINDER_PRODUCT_DETAIL, 'FactFinderGui', 'Index', 'detail')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
-        $this->createController('/{factfinder}/search', self::ROUTE_FACT_FINDER_SEARCH, 'FactFinder', 'Index', 'search')
+        $this->createController('/{factfinder}/search', self::ROUTE_FACT_FINDER_SEARCH, 'FactFinderGui', 'Index', 'search')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
-        $this->createController('/{factfinder}/recommendations', self::ROUTE_FACT_FINDER_RECOMMEND, 'FactFinder', 'Index', 'recommendations')
+        $this->createController('/{factfinder}/recommendations', self::ROUTE_FACT_FINDER_RECOMMEND, 'FactFinderGui', 'Index', 'recommendations')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
-        $this->createController('/{factfinder}/csv/products.csv', self::ROUTE_FACT_FINDER_CSV_PATH . 'products', 'FactFinder', 'csv', 'products')
+        $this->createController('/{factfinder}/csv/products.csv', self::ROUTE_FACT_FINDER_CSV_PATH . 'products', 'FactFinderGui', 'csv', 'products')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder')
             ->value('factfinder', 'fact-finder');
 
-        $this->createController('/{factfinder}/csv/categories.csv', self::ROUTE_FACT_FINDER_CSV_PATH . 'categories', 'FactFinder', 'csv', 'categories')
+        $this->createController('/{factfinder}/csv/categories.csv', self::ROUTE_FACT_FINDER_CSV_PATH . 'categories', 'FactFinderGui', 'csv', 'categories')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder')
             ->value('factfinder', 'fact-finder');
 
-        $this->createController('/{factfinder}/track', self::ROUTE_FACT_FINDER_TRACK, 'FactFinder', 'Track', 'index')
+        $this->createController('/{factfinder}/track', self::ROUTE_FACT_FINDER_TRACK, 'FactFinderGui', 'Track', 'index')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
     }

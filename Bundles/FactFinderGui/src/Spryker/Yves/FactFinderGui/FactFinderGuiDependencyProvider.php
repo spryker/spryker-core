@@ -10,7 +10,7 @@ namespace Spryker\Yves\FactFinderGui;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
-class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
+class FactFinderGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     /**

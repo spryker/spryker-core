@@ -13,10 +13,10 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 
-class FactFinderSecurityServiceProvider extends AbstractServiceProvider
+class FactFinderGuiSecurityServiceProvider extends AbstractServiceProvider
 {
 
-    const FIREWALL_FACT_FINDER = 'fact_finder';
+    const FIREWALL_FACT_FINDER = 'FIREWALL_FACT_FINDER';
     const ROLE_FACT_FINDER = 'ROLE_FACT_FINDER';
 
     /**

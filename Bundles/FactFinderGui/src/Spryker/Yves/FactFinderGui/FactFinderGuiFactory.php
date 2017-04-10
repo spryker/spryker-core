@@ -12,6 +12,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 /**
  * @method \Spryker\Client\FactFinder\FactFinderClientInterface getClient()
  */
-class FactFinderFactory extends AbstractFactory
+class FactFinderGuiFactory extends AbstractFactory
 {
 }
