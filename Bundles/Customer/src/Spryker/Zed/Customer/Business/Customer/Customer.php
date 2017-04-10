@@ -117,25 +117,8 @@ class Customer
 
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
-            $addressTransfers = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
-            $customerTransfer->setAddresses($addressTransfers);
-
-            $billingAddresses = new AddressesTransfer();
-            $shippingAddresses = new AddressesTransfer();
-
-            /** @var AddressTransfer $address */
-            foreach ($addressTransfers as $addressTransfer) {
-                if ($addressTransfer->getIsDefaultBilling()) {
-                    $billingAddresses->addAddress($addressTransfer);
-                }
-
-                if ($addressTransfer->getIsDefaultShipping()) {
-                    $shippingAddresses->addAddress($addressTransfer);
-                }
-            }
-
-            $customerTransfer->setBillingAddress($billingAddresses->getAddresses());
-            $customerTransfer->setShippingAddress($shippingAddresses->getAddresses());
+            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
+            $customerTransfer = $this->attachAddressEntityCollection($customerTransfer, $addresses);
         }
 
         return $customerTransfer;
@@ -535,6 +518,37 @@ class Customer
         }
 
         return $addressCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection $addressEntities
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function attachAddressEntityCollection(CustomerTransfer $customerTransfer, ObjectCollection $addressEntities)
+    {
+        $billingAddresses = new AddressesTransfer();
+        $shippingAddresses = new AddressesTransfer();
+
+        foreach ($addressEntities->getData() as $address) {
+            $addressTransfer = $this->entityToTransfer($address);
+
+            if ($customerTransfer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
+                $addressTransfer->setIsDefaultBilling(true);
+                $billingAddresses->addAddress($addressTransfer);
+            }
+
+            if ($customerTransfer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
+                $addressTransfer->setIsDefaultBilling(true);
+                $shippingAddresses->addAddress($addressTransfer);
+            }
+        }
+
+        $customerTransfer->setBillingAddress($billingAddresses->getAddresses());
+        $customerTransfer->setShippingAddress($shippingAddresses->getAddresses());
+
+        return $customerTransfer;
     }
 
     /**
