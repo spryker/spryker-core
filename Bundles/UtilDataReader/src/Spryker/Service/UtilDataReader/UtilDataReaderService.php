@@ -66,7 +66,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      *
      * @api
      *
-     * @deprecated use getBatchIteratorOrdered instead, getPdoBatchIterator does not work with sliced data
+     * @deprecated Use getBatchIteratorOrdered() instead, getPdoBatchIterator() does not work with sliced data.
      *
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
@@ -102,7 +102,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      *
      * @api
      *
-     * @deprecated use getBatchIteratorOrdered instead, getPropelBatchIteratorOrdered does not work with sliced data
+     * @deprecated Use getBatchIteratorOrdered() instead, getPropelBatchIteratorOrdered() does not work with sliced data.
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
