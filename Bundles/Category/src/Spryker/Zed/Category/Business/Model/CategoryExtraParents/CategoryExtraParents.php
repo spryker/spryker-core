@@ -127,8 +127,13 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     protected function assignExtraParents(CategoryTransfer $categoryTransfer)
     {
         $extraParentNodesTransferCollection = $categoryTransfer->getExtraParents();
+        $idParentCategoryNode = $categoryTransfer->getParentCategoryNode()->getIdCategoryNode();
 
         foreach ($extraParentNodesTransferCollection as $extraParentNodeTransfer) {
+            if ($idParentCategoryNode === $extraParentNodeTransfer->getIdCategoryNode()) {
+                continue;
+            }
+
             $this->assignParent($categoryTransfer, $extraParentNodeTransfer);
         }
     }
