@@ -67,7 +67,7 @@ class YamlBatchIteratorTest extends PHPUnit_Framework_TestCase
     {
         $yamlBatchIterator = $this->getYamlBatchIterator();
 
-        $this->assertTrue($yamlBatchIterator->key() === 0, 'Initial offset is not zero');
+        $this->assertSame(0, $yamlBatchIterator->key(), 'Initial offset is not zero');
     }
 
     /**
@@ -100,7 +100,7 @@ class YamlBatchIteratorTest extends PHPUnit_Framework_TestCase
         $yamlBatchIterator->next();
         $yamlBatchIterator->rewind();
 
-        $this->assertTrue($yamlBatchIterator->key() === 0, 'Offset was not reset to zero');
+        $this->assertSame(0, $yamlBatchIterator->key(), 'Offset was not reset to zero');
     }
 
     /**
