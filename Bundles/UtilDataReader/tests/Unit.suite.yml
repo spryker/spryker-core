@@ -1,5 +1,4 @@
 class_name: UnitTester
 modules:
     enabled:
-        - Asserts
-        - \UtilDataReader\Module\Unit
+        - \UtilDataReader\Helper\Unit

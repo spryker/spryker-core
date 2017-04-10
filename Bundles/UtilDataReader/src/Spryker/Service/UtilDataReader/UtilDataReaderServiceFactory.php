@@ -13,6 +13,7 @@ use Spryker\Service\UtilDataReader\Model\BatchIterator\CsvBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\XmlBatchIterator;
+use Spryker\Service\UtilDataReader\Model\BatchIterator\YamlBatchIterator;
 use Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReader;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -72,6 +73,29 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
     public function createPropelBatchIterator(ModelCriteria $query, $chunkSize)
     {
         return new PropelBatchIterator($query, $chunkSize);
+    }
+
+    /**
+     * @param string $fileName
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\YamlBatchIterator|\Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function createYamlBatchIterator($fileName, $chunkSize)
+    {
+        return new YamlBatchIterator(
+            $this->getYamlReader(),
+            $fileName,
+            $chunkSize
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\UtilDataReader\Dependency\YamlReaderInterface
+     */
+    protected function getYamlReader()
+    {
+        return $this->getProvidedDependency(UtilDataReaderDependencyProvider::YAML_READER);
     }
 
 }

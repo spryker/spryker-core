@@ -101,4 +101,17 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
         return $this->getFactory()->createPropelBatchIterator($query, $chunkSize);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $fileName
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getYamlBatchIterator($fileName, $chunkSize = -1)
+    {
+        return $this->getFactory()->createYamlBatchIterator($fileName, $chunkSize);
+    }
+
 }
