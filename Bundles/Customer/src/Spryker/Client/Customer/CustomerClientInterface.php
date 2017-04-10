@@ -79,9 +79,22 @@ interface CustomerClientInterface
     /**
      * @api
      *
+     * Returns Customer data from session
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
+
+    /**
+     * @api
+     *
+     * Returns fresh Customer data from database by ID
+     *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function loadCustomerById($idCustomer);
 
     /**
      * @api

@@ -143,6 +143,25 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @api
      *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function loadCustomerById($idCustomer)
+    {
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+
+        $customerTransfer = $this->getFactory()
+            ->createZedCustomerStub()
+            ->get($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
