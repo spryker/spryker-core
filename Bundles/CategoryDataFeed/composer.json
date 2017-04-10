@@ -12,9 +12,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/locale": "ˆ3.0.0",
+    "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
-    "spryker/silex": "ˆ2.0.0",
+    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "DataFeed bundle",
@@ -23,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
