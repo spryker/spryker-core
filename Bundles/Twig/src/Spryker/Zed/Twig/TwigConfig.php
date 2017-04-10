@@ -106,6 +106,16 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @return array
      */
+    public function getZedDirectoryPathPatterns()
+    {
+        return $this->getZedDirectoryPathPattern();
+    }
+
+    /**
+     * @deprecated Please use `getZedDirectoryPathPatterns` instead.
+     *
+     * @return array
+     */
     public function getZedDirectoryPathPattern()
     {
         return [
@@ -117,14 +127,22 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @return array
      */
+    public function getYvesDirectoryPathPatterns()
+    {
+        return $this->getYvesDirectoryPathPattern();
+    }
+
+    /**
+     * @deprecated Please use `getYvesDirectoryPathPatterns` instead.
+     *
+     * @return array
+     */
     public function getYvesDirectoryPathPattern()
     {
-        $currentThemeName = $this->get(TwigConstants::YVES_THEME);
-
-        return array_merge(
-            glob('src/*/Yves/*/Theme/' . $currentThemeName),
-            glob('vendor/*/*/src/*/Yves/*/Theme/' . $currentThemeName)
-        );
+        return [
+            'src/*/Yves/*/Theme',
+            'vendor/*/*/src/*/Yves/*/Theme',
+        ];
     }
 
 }

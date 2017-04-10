@@ -59,7 +59,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
         $templatePathMapBuilder = new TemplatePathMapBuilder(
             $this->createFinder(),
             $this->createTemplateNameBuilderZed(),
-            $this->getConfig()->getZedDirectoryPathPattern()
+            $this->getConfig()->getZedDirectoryPathPatterns()
         );
 
         return $templatePathMapBuilder;
@@ -97,7 +97,7 @@ class TwigBusinessFactory extends AbstractBusinessFactory
         $templatePathMapBuilder = new TemplatePathMapBuilder(
             $this->createFinder(),
             $this->createTemplateNameBuilderYves(),
-            $this->getConfig()->getYvesDirectoryPathPattern()
+            $this->getConfig()->getYvesDirectoryPathPatterns()
         );
 
         return $templatePathMapBuilder;
