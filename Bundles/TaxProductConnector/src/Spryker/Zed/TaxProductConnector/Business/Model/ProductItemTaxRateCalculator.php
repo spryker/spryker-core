@@ -43,14 +43,14 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $countryIsoCode = $this->getShippingCountryIso2Code($quoteTransfer);
+        $countryIso2Code = $this->getShippingCountryIso2Code($quoteTransfer);
         $allIdProductAbstracts = $this->getAllIdAbstractProducts($quoteTransfer);
 
-        if (!$countryIsoCode) {
-            $countryIsoCode = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        if (!$countryIso2Code) {
+            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
-        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIsoCode);
+        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
         $this->setItemsTax($quoteTransfer, $taxRates);
     }
 
