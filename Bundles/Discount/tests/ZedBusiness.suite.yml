@@ -1,6 +1,6 @@
 class_name: ZedBusinessTester
 modules:
   enabled:
-    - \Testify\Helper\Environment
-    - \Testify\Helper\Locator
+    - \SprykerTest\Shared\Testify\Helper\Environment
+    - \SprykerTest\Shared\Testify\Helper\Locator
     - \Propel\Helper\Transaction

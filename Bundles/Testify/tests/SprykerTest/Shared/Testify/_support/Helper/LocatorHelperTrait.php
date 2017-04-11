@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
 trait LocatorHelperTrait
 {
@@ -19,7 +19,7 @@ trait LocatorHelperTrait
     }
 
     /**
-     * @return \Codeception\Module|\Testify\Helper\Locator
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\Locator
      */
     private function getLocatorHelper()
     {

@@ -2,5 +2,5 @@ class_name: CommunicationTester
 modules:
     enabled:
         - \SprykerTest\Zed\Sales\Communication\Helper\CommunicationHelper
-        - \Testify\Helper\ZedBootstrap:
-            depends: \Testify\Helper\BundleConfig
+        - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+            depends: \SprykerTest\Shared\Testify\Helper\BundleConfig

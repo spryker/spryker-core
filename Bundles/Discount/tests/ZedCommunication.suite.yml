@@ -1,9 +1,9 @@
 class_name: ZedCommunicationTester
 modules:
   enabled:
-    - \Testify\Helper\Environment
+    - \SprykerTest\Shared\Testify\Helper\Environment
     - \Propel\Helper\Transaction
-    - \Testify\Helper\ZedControllerTable:
-        depends: \Testify\Helper\ZedBootstrap
-    - \Testify\Helper\ZedBootstrap:
-        depends: \Testify\Helper\BundleConfig
+    - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
+        depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
+    - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+        depends: \SprykerTest\Shared\Testify\Helper\BundleConfig

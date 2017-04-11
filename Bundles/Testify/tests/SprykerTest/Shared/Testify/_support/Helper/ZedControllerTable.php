@@ -1,6 +1,6 @@
 <?php
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
@@ -40,7 +40,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     }
 
     /**
-     * @param \Testify\Helper\ZedBootstrap $bootstrap
+     * @param \SprykerTest\Shared\Testify\Helper\ZedBootstrap $bootstrap
      *
      * @return void
      */

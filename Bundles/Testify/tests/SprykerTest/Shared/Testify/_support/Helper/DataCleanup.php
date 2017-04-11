@@ -1,6 +1,6 @@
 <?php
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use Closure;
 use Codeception\Module;

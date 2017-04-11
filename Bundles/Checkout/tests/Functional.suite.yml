@@ -2,10 +2,10 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-        - \Testify\Module\Environment
-        - \Testify\Helper\Config
-        - \Testify\Helper\Dependency
-        - \Testify\Helper\Locator
+        - \SprykerTest\Shared\Testify\Helper\Environment
+        - \SprykerTest\Shared\Testify\Helper\Config
+        - \SprykerTest\Shared\Testify\Helper\Dependency
+        - \SprykerTest\Shared\Testify\Helper\Locator
         - \Checkout\Module\Functional
         - \Customer\Helper\CustomerData
         - \Product\Helper\ProductData

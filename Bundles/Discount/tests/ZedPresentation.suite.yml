@@ -1,9 +1,9 @@
 class_name: ZedPresentationTester
 modules:
   enabled:
-    - \Testify\Helper\Environment
+    - \SprykerTest\Shared\Testify\Helper\Environment
     - \Config\Module\ConfigInit
-    - \Testify\Helper\Locator
+    - \SprykerTest\Shared\Testify\Helper\Locator
     - \Propel\Module\PropelInstall
     - WebDriver:
         url: ''

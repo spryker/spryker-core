@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
@@ -49,7 +49,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @param \Testify\Helper\BundleConfig $bundleConfig
+     * @param \SprykerTest\Shared\Testify\Helper\BundleConfig $bundleConfig
      *
      * @return void
      */

@@ -9,7 +9,7 @@ modules:
         - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Testify\Module\Environment
+        - \SprykerTest\Shared\Testify\Helper\Environment
         - \Config\Module\ConfigInit
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database

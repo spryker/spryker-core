@@ -5,36 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
-trait ConfigHelperTrait
+trait DependencyHelperTrait
 {
 
     /**
      * @param string $key
-     * @param string|int|array|float|bool $value
+     * @param mixed $value
      *
      * @return void
      */
-    private function setConfig($key, $value)
+    private function setDependency($key, $value)
     {
-        $this->getConfigHelper()->setConfig($key, $value);
+        $this->getDependencyHelper()->setDependency($key, $value);
     }
 
     /**
-     * @param string $key
-     *
-     * @return void
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\Dependency
      */
-    private function removeConfig($key)
-    {
-        $this->getConfigHelper()->removeConfig($key);
-    }
-
-    /**
-     * @return \Codeception\Module|\Testify\Helper\Config
-     */
-    private function getConfigHelper()
+    private function getDependencyHelper()
     {
         return $this->getModule('\\' . Dependency::class);
     }

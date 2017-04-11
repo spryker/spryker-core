@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Testify\Helper;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use ArrayObject;
 use Codeception\Module;

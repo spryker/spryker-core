@@ -1,6 +1,6 @@
 <?php
 
-namespace Testify\Group;
+namespace SprykerTest\Shared\Testify\Group;
 
 use Codeception\Event\TestEvent;
 use Codeception\GroupObject;

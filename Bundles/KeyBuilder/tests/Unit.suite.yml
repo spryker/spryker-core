@@ -1,4 +1,4 @@
 class_name: UnitTester
 modules:
     enabled:
-        - \Testify\Module\Environment
+        - \SprykerTest\Shared\Testify\Helper\Environment
