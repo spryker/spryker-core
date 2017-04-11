@@ -9,7 +9,7 @@ modules:
         - \Propel\Helper\Connection
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Sales\Helper\Sales
+        - \SprykerTest\Shared\Sales\Helper\SalesHelper
         - Asserts
 
 coverage:

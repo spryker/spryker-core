@@ -15,7 +15,7 @@ modules:
         - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Braintree
-        - \Sales\Helper\Sales
+        - \SprykerTest\Shared\Sales\Helper\SalesHelper
         - \Oms\Module\Oms
         - Asserts
 
