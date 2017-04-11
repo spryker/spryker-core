@@ -16,7 +16,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollection;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -26,9 +25,9 @@ abstract class AbstractExporter implements ExporterInterface
 {
 
     /**
-     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
+     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
-    protected $collectorPlugins;
+    protected $collectorPlugins = [];
 
     /**
      * @var \Spryker\Zed\Collector\Business\Model\FailedResultInterface
@@ -73,7 +72,6 @@ abstract class AbstractExporter implements ExporterInterface
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface|array|null $collectorPlugins
      */
     public function __construct(
         TouchQueryContainerInterface $queryContainer,
@@ -82,8 +80,7 @@ abstract class AbstractExporter implements ExporterInterface
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype,
-        TouchUpdaterInterface $touchUpdater,
-        $collectorPlugins = null
+        TouchUpdaterInterface $touchUpdater
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
@@ -92,39 +89,9 @@ abstract class AbstractExporter implements ExporterInterface
         $this->failedResultPrototype = $failedResultPrototype;
         $this->batchResultPrototype = $batchResultPrototype;
         $this->touchUpdater = $touchUpdater;
-
-        // Added for BC, plugins should usually be injected and not added with `addCollectorPlugin()`
-        if ($collectorPlugins === null) {
-            $collectorPlugins = new CollectorPluginCollection();
-        }
-
-        if (is_array($collectorPlugins)) {
-            $collectorPlugins = $this->buildCollectorPluginCollection($collectorPlugins);
-        }
-
-        $this->collectorPlugins = $collectorPlugins;
     }
 
     /**
-     * Added for BC. Old CollectorDependencyProvider implementations return collectorPlugins as array
-     *
-     * @param array $collectorPlugins
-     *
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollection
-     */
-    private function buildCollectorPluginCollection(array $collectorPlugins)
-    {
-        $collectorPluginCollection = new CollectorPluginCollection();
-        foreach ($collectorPlugins as $type => $collectorPlugin) {
-            $collectorPluginCollection->addPlugin($collectorPlugin, $type);
-        }
-
-        return $collectorPluginCollection;
-    }
-
-    /**
-     * @deprecated, use CollectorPluginCollectionInterface and add all needed plugins to it. The optional CollectorPluginCollectionInterface will be mandatory in next major
-     *
      * @param string $touchItemType
      * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface $plugin
      *
@@ -136,7 +103,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
     public function getCollectorPlugins()
     {
@@ -169,7 +136,7 @@ abstract class AbstractExporter implements ExporterInterface
         $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
 
-        $collectorPlugin = $this->collectorPlugins->getPlugin($type);
+        $collectorPlugin = $this->collectorPlugins[$type];
         $collectorPlugin->run(
             $baseQuery,
             $locale,
@@ -218,7 +185,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     protected function isCollectorRegistered($type)
     {
-        return $this->collectorPlugins->hasPlugin($type);
+        return array_key_exists($type, $this->collectorPlugins);
     }
 
     /**
