@@ -28,7 +28,7 @@ class ViewController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
-        if(empty($idCustomer)){
+        if (empty($idCustomer)) {
             return $this->redirectResponse('/customer');
         }
 
@@ -74,7 +74,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @param $idCustomer
+     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
