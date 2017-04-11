@@ -43,7 +43,7 @@ $(document).ready( function () {
         });
     });
 
-    $('[name=cms_glossary]').on('submit', function(){
+    $('[name=cms_glossary]').on('submit', function() {
         var self = $(this);
 
         self.find('.html-editor').each(function (index, element) {
