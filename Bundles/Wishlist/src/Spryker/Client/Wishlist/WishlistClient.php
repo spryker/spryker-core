@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\Wishlist;
 
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -36,6 +38,18 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getZedStub()->validateAndCreateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
@@ -48,11 +62,35 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getZedStub()->validateAndUpdateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
         return $this->getZedStub()->removeWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getZedStub()->removeWishlistByName($wishlistTransfer);
     }
 
     /**
@@ -82,6 +120,18 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
+    {
+        return $this->getZedStub()->removeItemCollection($wishlistItemTransferCollection);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
@@ -89,6 +139,18 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
     {
         return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     *
+     * @return void
+     */
+    public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
+    {
+        $this->createCartHandler()->moveCollectionToCart($wishlistMoveToCartRequestCollectionTransfer);
     }
 
     /**
@@ -114,6 +176,20 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
         return $this->getFactory()->createProductStorage()->expandProductDetails($wishlistOverviewResponse);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection()
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        return $this->getZedStub()->getCustomerWishlistCollection($customerTransfer);
     }
 
     /**

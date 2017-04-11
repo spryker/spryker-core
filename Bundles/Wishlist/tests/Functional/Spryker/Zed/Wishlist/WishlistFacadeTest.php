@@ -8,6 +8,10 @@
 namespace Functional\Spryker\Zed\Wishlist;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\TypeTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
@@ -19,6 +23,7 @@ use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Wishlist\Business\WishlistFacade;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
@@ -75,14 +80,26 @@ class WishlistFacadeTest extends Test
     protected $wishlist;
 
     /**
+     * @var \Spryker\Zed\Stock\Business\StockFacade
+     */
+    protected $stockFacade;
+
+    /**
+     * @var \Generated\Shared\Transfer\TypeTransfer
+     */
+    protected $stockTypeTransfer;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
         $this->wishlistQueryContainer = new WishlistQueryContainer();
         $this->wishlistFacade = new WishlistFacade();
+        $this->stockFacade = new StockFacade();
 
         $this->setupCustomer();
+        $this->setupStockType();
         $this->setupProduct();
         $this->setupWishlist();
     }
@@ -112,18 +129,19 @@ class WishlistFacadeTest extends Test
 
         $this->productAbstract->save();
 
-        $this->product_1 = $this->createProduct('concrete_sku_1', $this->productAbstract->getIdProductAbstract());
-        $this->product_2 = $this->createProduct('concrete_sku_2', $this->productAbstract->getIdProductAbstract());
-        $this->product_3 = $this->createProduct('concrete_sku_3', $this->productAbstract->getIdProductAbstract());
+        $this->product_1 = $this->createProduct('concrete_sku_1', $this->productAbstract->getIdProductAbstract(), 10);
+        $this->product_2 = $this->createProduct('concrete_sku_2', $this->productAbstract->getIdProductAbstract(), 20);
+        $this->product_3 = $this->createProduct('concrete_sku_3', $this->productAbstract->getIdProductAbstract(), 30);
     }
 
     /**
      * @param string $sku
      * @param int $idProductAbstract
+     * @param int|null $quantity
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    protected function createProduct($sku, $idProductAbstract)
+    protected function createProduct($sku, $idProductAbstract, $quantity = null)
     {
         $productEntity = (new SpyProduct())
             ->setSku($sku)
@@ -131,6 +149,8 @@ class WishlistFacadeTest extends Test
             ->setFkProductAbstract($idProductAbstract);
 
         $productEntity->save();
+
+        $this->createStockProduct($sku, $quantity);
 
         return $productEntity;
     }
@@ -164,13 +184,15 @@ class WishlistFacadeTest extends Test
     }
 
     /**
+     * @param string $name
+     *
      * @return void
      */
-    protected function setupWishlist()
+    protected function setupWishlist($name = self::DEFAULT_NAME)
     {
         $this->wishlist = (new SpyWishlist())
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setName(self::DEFAULT_NAME);
+            ->setName($name);
 
         $this->wishlist->save();
 
@@ -304,6 +326,42 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    public function testValidateAndCreateWishlistShouldCreateWishlist()
+    {
+        $wishlistTransfer = new WishlistTransfer();
+        $wishlistTransfer
+            ->setName('foo')
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
+
+        $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
+
+        $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
+        $this->assertNotNull($wishlistTransfer->getIdWishlist());
+        $this->assertWishlistCount(2);
+        $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateAndCreateWishlistShouldFailWhenNameIsNotUnique()
+    {
+        $wishlistTransfer = new WishlistTransfer();
+        $wishlistTransfer
+            ->setName($this->wishlist->getName())
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
+
+        $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateWishlistShouldUpdateWishlist()
     {
         $wishlistTransfer = new WishlistTransfer();
@@ -324,6 +382,29 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    public function testValidateAndUpdateWishlistShouldUpdateWishlist()
+    {
+        $wishlistTransfer = new WishlistTransfer();
+        $wishlistTransfer->fromArray(
+            $this->wishlist->toArray(),
+            true
+        );
+
+        $wishlistTransfer->setName('new name');
+
+        $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
+
+        $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
+
+        $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
+        $this->assertEquals('new name', $wishlistTransfer->getName());
+        $this->assertEquals($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
+        $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveWishlistShouldRemoveItemsAsWell()
     {
         $wishlistTransfer = new WishlistTransfer();
@@ -333,6 +414,22 @@ class WishlistFacadeTest extends Test
         );
 
         $wishlistTransfer = $this->wishlistFacade->removeWishlist($wishlistTransfer);
+
+        $this->assertWishlistCount(0);
+        $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveWishlistByNameShouldRemoveItemsAsWell()
+    {
+        $wishlistTransfer = new WishlistTransfer();
+        $wishlistTransfer
+            ->setName($this->wishlist->getName())
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        $wishlistTransfer = $this->wishlistFacade->removeWishlistByName($wishlistTransfer);
 
         $this->assertWishlistCount(0);
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
@@ -383,6 +480,40 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    public function testRemoveItemCollectionShouldRemoveOnlySelectedItems()
+    {
+        $wishlistTransfer = (new WishlistTransfer())
+            ->fromArray($this->wishlist->toArray(), true);
+
+        $wishlistItemTransfer_1 = (new WishlistItemTransfer())
+            ->setWishlistName(self::DEFAULT_NAME)
+            ->setSku($this->product_1->getSku());
+
+        $wishlistItemTransfer_2 = (new WishlistItemTransfer())
+            ->setWishlistName(self::DEFAULT_NAME)
+            ->setSku($this->product_2->getSku());
+
+        $wishlistItemTransfer_3 = (new WishlistItemTransfer())
+            ->setWishlistName(self::DEFAULT_NAME)
+            ->setSku($this->product_3->getSku());
+
+        $this->wishlistFacade->addItemCollection($wishlistTransfer, [$wishlistItemTransfer_1, $wishlistItemTransfer_2, $wishlistItemTransfer_3]);
+
+        $this->assertWishlistItemCount(3);
+
+        $wishlistItemCollectionTransfer = new WishlistItemCollectionTransfer();
+        $wishlistItemCollectionTransfer
+            ->addItem($wishlistItemTransfer_1)
+            ->addItem($wishlistItemTransfer_2);
+
+        $this->wishlistFacade->removeItemCollection($wishlistItemCollectionTransfer);
+
+        $this->assertWishlistItemCount(1);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetWishlistOverviewShouldReturnPaginatedResult()
     {
         $this->setupBigWishlist();
@@ -413,6 +544,22 @@ class WishlistFacadeTest extends Test
         $this->assertEquals($pageNumber, $wishlistOverviewResponse->getPagination()->getPage());
         $this->assertEquals($itemsPerPage, $wishlistOverviewResponse->getPagination()->getItemsPerPage());
         $this->assertEquals($itemsTotal, $wishlistOverviewResponse->getPagination()->getItemsTotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishlistsByCustomerReturnPersistedWishlists()
+    {
+        $this->setupWishlist('test-wishlist-1');
+        $this->setupWishlist('test-wishlist-2');
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($this->customer->toArray(), true);
+
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
+
+        $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
     /**
@@ -447,6 +594,33 @@ class WishlistFacadeTest extends Test
             ->count();
 
         $this->assertEquals($expected, $count);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupStockType()
+    {
+        $this->stockTypeTransfer = new TypeTransfer();
+        $this->stockTypeTransfer->setName('Test stock type');
+        $this->stockTypeTransfer->setIdStock($this->stockFacade->createStockType($this->stockTypeTransfer));
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return void
+     */
+    protected function createStockProduct($sku, $quantity)
+    {
+        $stockProductTransfer = new StockProductTransfer();
+        $stockProductTransfer
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->setStockType($this->stockTypeTransfer->getName());
+
+        $this->stockFacade->createStockProduct($stockProductTransfer);
     }
 
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -19,10 +21,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
 
     /**
-     * Specification:
-     *  - Creates wishlist for a specific customer with given name
-     *  - Required values of WishlistTransfer: name, fkCustomer.
-     *  - Returns WishlistTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -38,10 +37,23 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Updates wishlist
-     *  - Required values of WishlistTransfer: idWishlist.
-     *  - Returns WishlistTransfer
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->validateAndCreateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -57,10 +69,23 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Removes wishlist and its items
-     *  - Required values of WishlistTransfer: idWishlist
-     *  - Returns WishlistTransfer
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->validateAndUpdateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -76,11 +101,22 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Adds collection of items to a wishlist
-     *  - Required values of WishlistTransfer: fkCustomer, name
-     *  - Required values of WishlistItemTransfer: fkProduct
+     * {@inheritdoc}
      *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->removeWishlistByName($wishlistTransfer);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -96,10 +132,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Removes all wishlist items
-     *  - Required values: idWishlist
-     *  - Returns WishlistTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -115,11 +148,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Adds item to wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
-     *  - Returns WishlistItemTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -135,11 +164,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
-     *  - Returns WishlistItemTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -155,10 +180,23 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns wishlist by specific name for a given customer
-     *  - Required values: fkCustomer, name
-     *  - Returns WishlistItemTransfer
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->removeItemCollection($wishlistItemTransferCollection);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -174,12 +212,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns wishlist by specific name for a given customer, with paginated items.
-     *  - Pagination is controlled with page, itemsPerPage, orderBy and orderDirection values of WishlistOverviewRequestTransfer.
-     *  - Required values of WishlistTransfer: fkCustomer, name.
-     *  - Required values of WishlistOverviewRequestTransfer: WishlistTransfer.
-     *  - Returns WishlistOverviewResponseTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -192,6 +225,22 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
         return $this->getFactory()
             ->createReader()
             ->getWishlistOverview($wishlistOverviewRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFactory()
+            ->createReader()
+            ->getCustomerWishlistCollection($customerTransfer);
     }
 
 }
