@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -77,6 +75,7 @@ class ViewController extends AbstractController
 
     /**
      * @param $idCustomer
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function loadCustomerTransfer($idCustomer)
