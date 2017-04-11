@@ -36,10 +36,8 @@ class ViewController extends AbstractController
 
         $idCustomer = $this->castId($idCustomer);
 
-        $customerTransfer = $this->createCustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
+        $customerTransfer = $this->loadCustomerTransfer($idCustomer);
 
-        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
         $addresses = $customerTransfer->getAddresses();
 
         $table = $this->getFactory()
@@ -75,6 +73,18 @@ class ViewController extends AbstractController
             ->createCustomerAddressTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param $idCustomer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function loadCustomerTransfer($idCustomer)
+    {
+        $customerTransfer = $this->createCustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+        return $customerTransfer;
     }
 
 }
