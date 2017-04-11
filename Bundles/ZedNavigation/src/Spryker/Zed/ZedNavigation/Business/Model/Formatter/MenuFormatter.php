@@ -181,8 +181,8 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return [
-            self::LABEL => $label ? $label : $title,
-            self::TITLE => $title ? $title : $label,
+            self::LABEL => $label !== null ? $label : $title,
+            self::TITLE => $title !== null ? $title : $label,
         ];
     }
 
