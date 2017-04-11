@@ -59,7 +59,7 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-xs-12 col-md-6">
                 <h2>{% block section_title %}{{ title|trans }}{% endblock %}</h2>
-                {% if navigation is defined and navigation.path|length > 0 %}
+                {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
                 <ol class="breadcrumb">
                     <li>
                         <a href="/">{{ 'Dashboard' | trans }}</a>
