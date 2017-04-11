@@ -53,6 +53,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
     const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
     const ALIAS_TRANSLATION = 'aliasTranslation';
+    const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
+    const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
 
     /**
      * @api
@@ -680,15 +682,24 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
             ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
                 ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
-                    ->innerJoinSpyGlossaryTranslation(self::ALIAS_TRANSLATION)
+                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
+                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
+                        ->endUse()
+                    ->endUse()
                 ->endUse()
             ->endUse()
-            ->leftJoinSpyCmsPageLocalizedAttributes(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->useSpyCmsPageLocalizedAttributesQuery(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+                ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
+                ->endUse()
+            ->endUse()
             ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->with(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
             ->with(self::ALIAS_CMS_PAGE_TEMPLATE)
             ->with(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
             ->with(self::ALIAS_GLOSSARY_KEY)
-            ->with(self::ALIAS_TRANSLATION);
+            ->with(self::ALIAS_TRANSLATION)
+            ->with(self::ALIAS_LOCALE_FOR_TRANSLATION)
+            ;
     }
 
     /**

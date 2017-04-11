@@ -7,8 +7,13 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -18,6 +23,12 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionPublisher implements VersionPublisherInterface
 {
+
+    const CMS_TEMPLATE = 'CmsTemplate';
+    const LOCALE = 'Locale';
+    const CMS_PAGE_LOCALIZED_ATTRIBUTES = 'SpyCmsPageLocalizedAttributess';
+    const CMS_GLOSSARY_KEY_MAPPINGS = 'SpyCmsGlossaryKeyMappings';
+    const GLOSSARY_KEY = 'GlossaryKey';
 
     /**
      * @var VersionGeneratorInterface
@@ -78,17 +89,152 @@ class VersionPublisher implements VersionPublisherInterface
             );
         }
 
-        return $this->createCmsVersion(current($cmsPageArray), $idCmsPage, $versionName);
+        return $this->createCmsVersion($this->encodeCmsData($cmsPageArray), $idCmsPage, $versionName);
     }
 
     /**
      * @param array $data
+     *
+     * @return string
+     */
+    protected function encodeCmsData(array $data)
+    {
+        $cmsVersionArray = current($data);
+
+        $cmsVersionArray[SpyCmsTemplateTableMap::TABLE_NAME] = $this->formatCmsTemplateData($cmsVersionArray);
+        $cmsVersionArray[SpyCmsPageLocalizedAttributesTableMap::TABLE_NAME] = $this->formatCmsPageLocalizedAttributesData($cmsVersionArray);
+        $cmsVersionArray[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME] = $this->formatCmsGlossaryKeyMappingsData($cmsVersionArray);
+
+        $cmsVersionArray = $this->unsetBadFormattedData($cmsVersionArray);
+
+        return json_encode($cmsVersionArray);
+    }
+
+    /**
+     * @param array $cmsVersionArray
+     *
+     * @return array
+     */
+    protected function unsetBadFormattedData(array $cmsVersionArray)
+    {
+        unset($cmsVersionArray[static::CMS_TEMPLATE]);
+        unset($cmsVersionArray[static::CMS_PAGE_LOCALIZED_ATTRIBUTES]);
+        unset($cmsVersionArray[static::CMS_GLOSSARY_KEY_MAPPINGS]);
+
+        return $cmsVersionArray;
+    }
+
+    /**
+     * @param array $cmsVersionArray
+     *
+     * @return array
+     */
+    protected function formatCmsTemplateData(array $cmsVersionArray)
+    {
+        $templateData = [];
+        $templateData[SpyCmsTemplateTableMap::COL_TEMPLATE_PATH] = $cmsVersionArray[static::CMS_TEMPLATE][SpyCmsTemplateTableMap::COL_TEMPLATE_PATH];
+        $templateData[SpyCmsTemplateTableMap::COL_TEMPLATE_NAME] = $cmsVersionArray[static::CMS_TEMPLATE][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME];
+
+        return $templateData;
+    }
+
+    /**
+     * @param array $cmsVersionArray
+     *
+     * @return array
+     */
+    protected function formatCmsPageLocalizedAttributesData(array $cmsVersionArray)
+    {
+        $mappedLocalizedAttributesByLocaleName = [];
+        $localizedAttributesItems = $cmsVersionArray[static::CMS_PAGE_LOCALIZED_ATTRIBUTES];
+        foreach ($localizedAttributesItems as $localizedAttributesItem) {
+            $formattedItem = [];
+            $formattedItem[SpyCmsPageLocalizedAttributesTableMap::COL_NAME] = $localizedAttributesItem[SpyCmsPageLocalizedAttributesTableMap::COL_NAME];
+            $formattedItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_TITLE] = $localizedAttributesItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_TITLE];
+            $formattedItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_KEYWORDS] = $localizedAttributesItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_KEYWORDS];
+            $formattedItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_DESCRIPTION] = $localizedAttributesItem[SpyCmsPageLocalizedAttributesTableMap::COL_META_DESCRIPTION];
+
+            $localeName = $localizedAttributesItem[static::LOCALE][SpyLocaleTableMap::COL_LOCALE_NAME];
+            $mappedLocalizedAttributesByLocaleName[$localeName] = $formattedItem;
+        }
+
+        return $mappedLocalizedAttributesByLocaleName;
+    }
+
+    /**
+     * @param array $cmsVersionArray
+     *
+     * @return array
+     */
+    protected function formatCmsGlossaryKeyMappingsData(array $cmsVersionArray)
+    {
+        $filteredGlossaryKeyMappings = [];
+        $glossaryKeyMappingItems = $cmsVersionArray[static::CMS_GLOSSARY_KEY_MAPPINGS];
+        foreach ($glossaryKeyMappingItems as $glossaryKeyMappingItem) {
+            $formattedSpyCmsGlossaryKeyMappingItem = [];
+            $formattedSpyCmsGlossaryKeyMappingItem[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER] = $glossaryKeyMappingItem[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
+            $formattedSpyCmsGlossaryKeyMappingItem = $this->extractGlossaryKey($glossaryKeyMappingItem, $formattedSpyCmsGlossaryKeyMappingItem);
+            $formattedSpyCmsGlossaryKeyMappingItem = $this->extractGlossaryTranslations($glossaryKeyMappingItem, $formattedSpyCmsGlossaryKeyMappingItem);
+            $filteredGlossaryKeyMappings[] = $formattedSpyCmsGlossaryKeyMappingItem;
+        }
+
+        return $filteredGlossaryKeyMappings;
+    }
+
+    /**
+     * @param array $glossaryKeyMappingItem
+     * @param array $formattedSpyCmsGlossaryKeyMappingItem
+     *
+     * @return array
+     */
+    protected function extractGlossaryKey(array $glossaryKeyMappingItem, array $formattedSpyCmsGlossaryKeyMappingItem)
+    {
+        $glossaryKey = $glossaryKeyMappingItem[static::GLOSSARY_KEY][SpyGlossaryKeyTableMap::COL_KEY];
+        $formattedSpyCmsGlossaryKeyMappingItem[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryKeyTableMap::COL_KEY] = $glossaryKey;
+
+        return $formattedSpyCmsGlossaryKeyMappingItem;
+    }
+
+    /**
+     * @param array $glossaryKeyMappingItem
+     * @param array $formattedSpyCmsGlossaryKeyMappingItem
+     *
+     * @return array
+     */
+    protected function extractGlossaryTranslations(array $glossaryKeyMappingItem, array $formattedSpyCmsGlossaryKeyMappingItem)
+    {
+        $glossaryTranslations = $this->mapGlossaryTranslationsToLocale($glossaryKeyMappingItem[static::GLOSSARY_KEY]['SpyGlossaryTranslations']);
+        $formattedSpyCmsGlossaryKeyMappingItem[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME] = $glossaryTranslations;
+
+        return $formattedSpyCmsGlossaryKeyMappingItem;
+    }
+
+    /**
+     * @param array $glossaryTranslationItems
+     *
+     * @return array
+     */
+    protected function mapGlossaryTranslationsToLocale(array $glossaryTranslationItems)
+    {
+        $mappedGlossaryTranslationsByLocaleName = [];
+        foreach ($glossaryTranslationItems as $glossaryTranslationItem) {
+            $formattedItem = [];
+            $formattedItem[SpyGlossaryTranslationTableMap::COL_VALUE] = $glossaryTranslationItem[SpyGlossaryTranslationTableMap::COL_VALUE];
+            $localeName = $glossaryTranslationItem[static::LOCALE][SpyLocaleTableMap::COL_LOCALE_NAME];
+            $mappedGlossaryTranslationsByLocaleName[$localeName] = $formattedItem;
+        }
+
+        return $mappedGlossaryTranslationsByLocaleName;
+    }
+
+    /**
+     * @param string $data
      * @param int $idCmsPage
      * @param string|null $versionName
      *
      * @return CmsVersionTransfer
      */
-    protected function createCmsVersion(array $data, $idCmsPage, $versionName = null)
+    protected function createCmsVersion($data, $idCmsPage, $versionName = null)
     {
         $versionNumber = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
 
@@ -98,7 +244,7 @@ class VersionPublisher implements VersionPublisherInterface
 
         $cmsVersionTransfer = $this->saveCmsVersion(
             $idCmsPage,
-            json_encode($data),
+            $data,
             $versionNumber,
             $versionName
         );

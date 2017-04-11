@@ -14,8 +14,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 class CmsTemplateMigrationHandler implements MigrationHandlerInterface
 {
 
-    const SPY_CMS_TEMPLATE_PHP_NAME = 'CmsTemplate';
-
     /**
      * @var TemplateManagerInterface
      */
@@ -45,8 +43,8 @@ class CmsTemplateMigrationHandler implements MigrationHandlerInterface
      */
     public function handle(array $originData, array $targetData)
     {
-        $templatePath = $targetData[static::SPY_CMS_TEMPLATE_PHP_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_PATH];
-        $templateName = $targetData[static::SPY_CMS_TEMPLATE_PHP_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME];
+        $templatePath = $targetData[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_PATH];
+        $templateName = $targetData[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME];
         $idCmsTemplate = $targetData[SpyCmsPageTableMap::COL_FK_TEMPLATE];
 
         if (!$this->templateManager->hasTemplatePath($templatePath)) {

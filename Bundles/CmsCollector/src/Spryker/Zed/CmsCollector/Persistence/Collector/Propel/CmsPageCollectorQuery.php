@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsCollector\Persistence\Collector\Propel;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
@@ -44,15 +44,24 @@ class CmsPageCollectorQuery extends AbstractPropelCollectorQuery
             Criteria::EQUAL
         );
 
-        $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA);
-        $this->touchQuery->withColumn(sprintf('max(%s)', SpyCmsVersionTableMap::COL_VERSION));
-        $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL);
+        $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, 'data');
+        $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, 'url');
+        $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_VERSION);
 
-        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ID_TOUCH);
-        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_EVENT);
-        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_TYPE);
-        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_ITEM_ID);
-        $this->touchQuery->addGroupByColumn(SpyTouchTableMap::COL_TOUCHED);
-        $this->touchQuery->addGroupByColumn(SpyUrlTableMap::COL_URL);
+        $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION ,$this->getMaxVersionSubQuery()));
+    }
+
+    protected function getMaxVersionSubQuery()
+    {
+        $maxVersionQuery = SpyCmsVersionQuery::create()
+            ->addSelfSelectColumns()
+            ->clearSelectColumns()
+            ->withColumn(sprintf('MAX(%s)', SpyCmsVersionTableMap::COL_VERSION))
+            ->where(sprintf('%s = %s', SpyCmsVersionTableMap::COL_FK_CMS_PAGE, SpyCmsPageTableMap::COL_ID_CMS_PAGE));
+
+        $queryParams = [];
+        $queryString = $maxVersionQuery->createSelectSql($queryParams);
+
+        return $queryString;
     }
 }

@@ -9,26 +9,27 @@ namespace Spryker\Zed\Cms\Business\Version\Handler;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
-use Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 {
-
-    const SPY_CMS_GLOSSARY_KEY_MAPPINGS_PHP_NAME = 'SpyCmsGlossaryKeyMappings';
-    const SPY_GLOSSARY_TRANSLATIONS_PHP_NAME = 'SpyGlossaryTranslations';
-    const SPY_CMS_TEMPLATE_PHP_NAME = 'CmsTemplate';
-    const SPY_GLOSSARY_KEY_PHP_NAME = 'GlossaryKey';
-
     /**
      * @var CmsGlossarySaverInterface
      */
     protected $cmsGlossarySaver;
+
+    /**
+     * @var CmsToLocaleInterface
+     */
+    protected $localeFacade;
 
     /**
      * @var CmsQueryContainerInterface
@@ -37,11 +38,13 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 
     /**
      * @param CmsGlossarySaverInterface $cmsGlossarySaver
+     * @param CmsToLocaleInterface $localeFacade
      * @param CmsQueryContainerInterface $queryContainer
      */
-    public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsQueryContainerInterface $queryContainer)
+    public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
         $this->cmsGlossarySaver = $cmsGlossarySaver;
+        $this->localeFacade = $localeFacade;
         $this->queryContainer = $queryContainer;
     }
 
@@ -58,8 +61,9 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
         );
 
         $this->createTargetGlossaryKeyMappings(
-            $targetData[static::SPY_CMS_GLOSSARY_KEY_MAPPINGS_PHP_NAME],
-            $targetData[static::SPY_CMS_TEMPLATE_PHP_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME]
+            $targetData[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME],
+            $originData[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            $targetData[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME]
         );
     }
 
@@ -86,33 +90,35 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 
     /**
      * @param array $glossaryKeyMappings
+     * @param int $idCmsPage
      * @param string $templateName
      *
      * @return void
      */
-    protected function createTargetGlossaryKeyMappings(array $glossaryKeyMappings, $templateName)
+    protected function createTargetGlossaryKeyMappings(array $glossaryKeyMappings, $idCmsPage, $templateName)
     {
-        $glossaryAttributeTransfers = $this->createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $templateName);
+        $glossaryAttributeTransfers = $this->createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $idCmsPage, $templateName);
         $this->cmsGlossarySaver->saveCmsGlossary((new CmsGlossaryTransfer())->setGlossaryAttributes($glossaryAttributeTransfers));
     }
 
     /**
      * @param $glossaryKeyMappings
+     * @param $idCmsPage
      * @param string $templateName
      *
      * @return \ArrayObject
      */
-    protected function createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $templateName)
+    protected function createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $idCmsPage, $templateName)
     {
         $glossaryAttributeTransfers = new \ArrayObject();
         foreach ($glossaryKeyMappings as $glossaryKeyMapping) {
             $translations = $this->createCmsPlaceholderTranslationTransfers(
-                $glossaryKeyMapping[static::SPY_GLOSSARY_KEY_PHP_NAME][static::SPY_GLOSSARY_TRANSLATIONS_PHP_NAME]
+                $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME]
             );
 
             $glossaryAttributeTransfers[] = $this->createGlossaryAttributeTransfer(
                 $translations,
-                $glossaryKeyMapping[SpyCmsGlossaryKeyMappingTableMap::COL_FK_PAGE],
+                $idCmsPage,
                 $glossaryKeyMapping[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
                 $templateName
             );
@@ -148,10 +154,11 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
     protected function createCmsPlaceholderTranslationTransfers(array $translations)
     {
         $newTranslation = new \ArrayObject();
-        foreach ($translations as $translation) {
+        foreach ($translations as $localeName => $translation) {
+            $localeTransfer = $this->localeFacade->getLocale($localeName);
             $newTranslation[] = $this->createCmsPlaceholderTranslationTransfer(
                 $translation[SpyGlossaryTranslationTableMap::COL_VALUE],
-                $translation[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]
+                $localeTransfer
             );
         }
 
@@ -160,28 +167,18 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 
     /**
      * @param string $value
-     * @param int $idLocale
+     * @param LocaleTransfer $localeTransfer
      *
      * @return CmsPlaceholderTranslationTransfer
      */
-    protected function createCmsPlaceholderTranslationTransfer($value, $idLocale)
+    protected function createCmsPlaceholderTranslationTransfer($value, LocaleTransfer $localeTransfer)
     {
         $cmsPlaceholderTranslation = new CmsPlaceholderTranslationTransfer();
         $cmsPlaceholderTranslation->setTranslation($value);
-        $cmsPlaceholderTranslation->setFkLocale($idLocale);
-        $cmsPlaceholderTranslation->setLocaleName($this->getLocalName($idLocale));
+        $cmsPlaceholderTranslation->setFkLocale($localeTransfer->getIdLocale());
+        $cmsPlaceholderTranslation->setLocaleName($localeTransfer->getLocaleName());
 
         return $cmsPlaceholderTranslation;
-    }
-
-    /**
-     * @param int $idLocale
-     *
-     * @return string
-     */
-    protected function getLocalName($idLocale)
-    {
-        return $this->queryContainer->queryLocaleById($idLocale)->findOne()->getLocaleName();
     }
 
 }

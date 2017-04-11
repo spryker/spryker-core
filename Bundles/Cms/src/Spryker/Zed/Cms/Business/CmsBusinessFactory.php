@@ -251,6 +251,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createCmsPageLocalizedAttributeMigrationHandler()
     {
         return new CmsPageLocalizedAttributesMigrationHandler(
+            $this->getLocaleFacade(),
             $this->getQueryContainer()
         );
     }
@@ -262,6 +263,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsGlossaryKeyMappingMigrationHandler(
             $this->createCmsGlossarySaver(),
+            $this->getLocaleFacade(),
             $this->getQueryContainer()
         );
     }

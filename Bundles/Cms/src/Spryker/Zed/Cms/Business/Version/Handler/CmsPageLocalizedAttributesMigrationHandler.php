@@ -7,13 +7,17 @@
 namespace Spryker\Zed\Cms\Business\Version\Handler;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
-use Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageLocalizedAttributesMigrationHandler implements MigrationHandlerInterface
 {
 
-    const SPY_CMS_PAGE_LOCALIZED_ATTRIBUTES_PHP_NAME = 'SpyCmsPageLocalizedAttributess';
+    /**
+     * @var CmsToLocaleInterface
+     */
+    protected $localeFacade;
 
     /**
      * @var CmsQueryContainerInterface
@@ -21,10 +25,12 @@ class CmsPageLocalizedAttributesMigrationHandler implements MigrationHandlerInte
     protected $queryContainer;
 
     /**
+     * @param CmsToLocaleInterface $localeFacade
      * @param CmsQueryContainerInterface $queryContainer
      */
-    public function __construct(CmsQueryContainerInterface $queryContainer)
+    public function __construct(CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
+        $this->localeFacade = $localeFacade;
         $this->queryContainer = $queryContainer;
     }
 
@@ -36,11 +42,12 @@ class CmsPageLocalizedAttributesMigrationHandler implements MigrationHandlerInte
      */
     public function handle(array $originData, array $targetData)
     {
-        foreach ($targetData[static::SPY_CMS_PAGE_LOCALIZED_ATTRIBUTES_PHP_NAME] as $cmsPageLocalizedAttributes) {
+        foreach ($targetData[SpyCmsPageLocalizedAttributesTableMap::TABLE_NAME] as $localeName => $cmsPageLocalizedAttributes) {
+            $localeTransfer = $this->localeFacade->getLocale($localeName);
             $cmsLocalizedAttributeEntity = $this->queryContainer
                 ->queryCmsPageLocalizedAttributesByFkPageAndFkLocale(
-                    $cmsPageLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_FK_CMS_PAGE],
-                    $cmsPageLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_FK_LOCALE]
+                    $originData[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                    $localeTransfer->getIdLocale()
                 )
                 ->findOneOrCreate();
 

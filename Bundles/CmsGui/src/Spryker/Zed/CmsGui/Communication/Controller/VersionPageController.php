@@ -20,7 +20,7 @@ class VersionPageController extends AbstractController
     public function publishAction()
     {
         $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(1);
-        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(2);
+//        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(2);
         dump($cmsPageTransfer);
         dump('Published');die;
     }
