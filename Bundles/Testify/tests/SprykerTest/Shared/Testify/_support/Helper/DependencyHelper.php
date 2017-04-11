@@ -11,7 +11,7 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 
-class Dependency extends Module
+class DependencyHelper extends Module
 {
 
     /**

@@ -78,7 +78,6 @@ class ConfigHelper extends Module
      */
     public function _after(TestCase $test)
     {
-        $projectNamespaces = $this->configCache[KernelConstants::PROJECT_NAMESPACES];
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }

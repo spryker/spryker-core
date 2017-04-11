@@ -3,8 +3,8 @@ modules:
     enabled:
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
-        - \SprykerTest\Shared\Testify\Helper\Config
-        - \SprykerTest\Shared\Testify\Helper\Dependency
-        - \SprykerTest\Shared\Testify\Helper\Locator
+        - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+        - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
         - \Propel\Helper\Transaction
         - \SprykerTest\Zed\Sales\Business\Helper\BusinessHelper

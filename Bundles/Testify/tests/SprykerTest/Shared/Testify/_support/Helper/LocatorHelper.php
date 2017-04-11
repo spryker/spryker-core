@@ -10,7 +10,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 use Codeception\Configuration;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
-class Locator extends Config
+class LocatorHelper extends ConfigHelper
 {
 
     /**

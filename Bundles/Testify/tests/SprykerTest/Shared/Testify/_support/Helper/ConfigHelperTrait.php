@@ -36,7 +36,7 @@ trait ConfigHelperTrait
      */
     private function getConfigHelper()
     {
-        return $this->getModule('\\' . Dependency::class);
+        return $this->getModule('\\' . DependencyHelper::class);
     }
 
     /**

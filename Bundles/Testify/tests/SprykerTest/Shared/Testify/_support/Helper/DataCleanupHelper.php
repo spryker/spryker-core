@@ -6,7 +6,7 @@ use Closure;
 use Codeception\Module;
 use Codeception\TestCase;
 
-class DataCleanup extends Module
+class DataCleanupHelper extends Module
 {
 
     /**

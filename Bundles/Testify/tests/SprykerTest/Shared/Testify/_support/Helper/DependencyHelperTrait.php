@@ -22,11 +22,11 @@ trait DependencyHelperTrait
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\Dependency
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\DependencyHelper
      */
     private function getDependencyHelper()
     {
-        return $this->getModule('\\' . Dependency::class);
+        return $this->getModule('\\' . DependencyHelper::class);
     }
 
     /**

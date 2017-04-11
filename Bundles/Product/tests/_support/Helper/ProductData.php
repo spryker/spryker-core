@@ -4,11 +4,15 @@ namespace Product\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Testify\Helper\DataCleanup;
-use Testify\Helper\Locator;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelper;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductData extends Module
 {
+
+    use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $override
@@ -27,14 +31,13 @@ class ProductData extends Module
         $productFacade->createProductConcrete($product);
         $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
 
-        if ($this->hasModule('\\' . DataCleanup::class)) {
-            $cleanupModule = $this->getDataCleanupModule();
-            $cleanupModule->_addCleanup(function () use ($product, $abstractProductId) {
-                $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
-                $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
-                $this->getProductQuery()->queryProductAbstract()->findByIdProductAbstract($abstractProductId)->delete();
-            });
-        }
+        $cleanupModule = $this->getDataCleanupHelper();
+        $cleanupModule->_addCleanup(function () use ($product, $abstractProductId) {
+            $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
+            $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
+            $this->getProductQuery()->queryProductAbstract()->findByIdProductAbstract($abstractProductId)->delete();
+        });
+
         return $product;
     }
 
@@ -43,7 +46,7 @@ class ProductData extends Module
      */
     private function getProductFacade()
     {
-        return $this->getModule('\\' . Locator::class)->getLocator()->product()->facade();
+        return $this->getLocator()->product()->facade();
     }
 
     /**
@@ -51,15 +54,7 @@ class ProductData extends Module
      */
     private function getProductQuery()
     {
-        return $this->getModule('\\' . Locator::class)->getLocator()->product()->queryContainer();
-    }
-
-    /**
-     * @return \Testify\Helper\DataCleanup
-     */
-    protected function getDataCleanupModule()
-    {
-        return $this->getModule('\\' . DataCleanup::class);
+        return $this->getLocator()->product()->queryContainer();
     }
 
 }

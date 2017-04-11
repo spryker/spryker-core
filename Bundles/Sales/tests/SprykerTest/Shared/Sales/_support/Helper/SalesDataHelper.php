@@ -10,10 +10,12 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Testify\Helper\Locator;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class SalesDataHelper extends Module
 {
+
+    use LocatorHelperTrait;
 
     /**
      * @param array $override
@@ -41,7 +43,7 @@ class SalesDataHelper extends Module
      */
     private function getSalesFacade()
     {
-        return $this->getModule('\\' . Locator::class)->getLocator()->sales()->facade();
+        return $this->getLocator()->sales()->facade();
     }
 
 }

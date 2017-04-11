@@ -13,11 +13,14 @@ use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use Testify\Helper\Dependency;
-use Testify\Helper\Locator;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerData extends Module
 {
+
+    use DependencyHelperTrait;
+    use LocatorHelperTrait;
 
     /**
      * @param array $override
@@ -53,22 +56,6 @@ class CustomerData extends Module
     private function getMailFacadeMock()
     {
         return Stub::makeEmpty(MailFacadeInterface::class);
-    }
-
-    /**
-     * @return \Testify\Helper\Locator|\Codeception\Module
-     */
-    private function getLocatorHelper()
-    {
-        return $this->getModule('\\' . Locator::class);
-    }
-
-    /**
-     * @return \Testify\Helper\Dependency|\Codeception\Module
-     */
-    private function getDependencyHelper()
-    {
-        return $this->getModule('\\' . Dependency::class);
     }
 
 }

@@ -19,11 +19,11 @@ trait LocatorHelperTrait
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\Locator
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\LocatorHelper
      */
     private function getLocatorHelper()
     {
-        return $this->getModule('\\' . Locator::class);
+        return $this->getModule('\\' . LocatorHelper::class);
     }
 
     /**

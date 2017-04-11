@@ -5,10 +5,12 @@ namespace Stock\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
-use Testify\Helper\Locator;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockData extends Module
 {
+
+    use LocatorHelperTrait;
 
     /**
      * @param array $override
@@ -28,7 +30,7 @@ class StockData extends Module
      */
     private function getStockFacade()
     {
-        return $this->getModule('\\' . Locator::class)->getLocator()->stock()->facade();
+        return $this->getLocator()->stock()->facade();
     }
 
 }
