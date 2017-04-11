@@ -30,11 +30,6 @@ class BundleProxy extends KernelBundleProxy
     private $locator;
 
     /**
-     * @var \Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface
-     */
-    private static $configurator;
-
-    /**
      * @var string
      */
     private $bundle;
