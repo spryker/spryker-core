@@ -90,13 +90,22 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
      */
     protected function findTaxSetByIdShipmentMethod(QuoteTransfer $quoteTransfer)
     {
+        $countryIso2Code = null;
+        if ($quoteTransfer->getShippingAddress()) {
+            $countryIso2Code = $quoteTransfer->getShippingAddress()->getIso2Code();
+        }
+
+        if (!$countryIso2Code) {
+            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        }
+
         return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-            $quoteTransfer->getShippingAddress()->getIso2Code()
+            $countryIso2Code
         )->findOne();
     }
 

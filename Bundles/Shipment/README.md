@@ -8,4 +8,4 @@ composer require spryker/shipment
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Documentation](https://spryker.github.io)

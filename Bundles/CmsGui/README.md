@@ -23,6 +23,6 @@ To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project a
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Documentation](https://spryker.github.io)
 
 

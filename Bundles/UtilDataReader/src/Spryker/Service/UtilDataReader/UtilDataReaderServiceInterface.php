@@ -57,11 +57,13 @@ interface UtilDataReaderServiceInterface
     public function getXmlBatchIterator($fileName, $rootNodeName, $chunkSize = -1);
 
     /**
+     * @api
+     *
      * Specification:
      * - Returns a PdoBatchIterator
      * - Loads a chunk of entities with given CriteriaBuilderInterface
      *
-     * @api
+     * @deprecated use getBatchIteratorOrdered instead, getPdoBatchIterator does not work with sliced data
      *
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
@@ -73,10 +75,29 @@ interface UtilDataReaderServiceInterface
 
     /**
      * Specification:
+     * - Returns a PdoBatchIterator
+     * - Loads a chunk of entities with given CriteriaBuilderInterface
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
+     * @param int $chunkSize
+     * @param string $orderBy
+     * @param string $orderByDirection
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection);
+
+    /**
+     * @api
+     *
+     * Specification:
      * - Returns a PropelBatchIterator
      * - Loads a chunk of PropelEntities with given ModelCriteria
      *
-     * @api
+     * @deprecated use getBatchIteratorOrdered instead, getPropelBatchIteratorOrdered does not work with sliced data
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
@@ -84,5 +105,35 @@ interface UtilDataReaderServiceInterface
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     public function getPropelBatchIterator(ModelCriteria $query, $chunkSize = 100);
+
+    /**
+     * Specification:
+     * - Returns a PropelBatchIterator
+     * - Loads a chunk of PropelEntities with given ModelCriteria
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param int $chunkSize
+     * @param string $orderBy
+     * @param string $orderByDirection
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getPropelBatchIteratorOrdered(ModelCriteria $query, $chunkSize, $orderBy, $orderByDirection);
+
+    /**
+     * Specification:
+     * - Returns a CountableIteratorInterface
+     * - Reads a YAML file and make data available for batch processing
+     *
+     * @api
+     *
+     * @param string $fileName
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getYamlBatchIterator($fileName, $chunkSize = -1);
 
 }

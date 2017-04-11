@@ -44,8 +44,10 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     {
         try {
             $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
+            $rootDefinition = clone $navigationDefinition;
         } catch (\Exception $e) {
             $navigationDefinition = new Config([]);
+            $rootDefinition = new Config([]);
         }
 
         foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
@@ -55,6 +57,8 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);
         }
+
+        $navigationDefinition->merge($rootDefinition);
 
         return $navigationDefinition->toArray();
     }

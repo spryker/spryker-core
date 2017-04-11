@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Product\Dependency\Facade\ProductToEventBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
@@ -22,6 +23,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_EVENT = 'FACADE_EVENT';
+
     const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -64,6 +67,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        $container[self::FACADE_EVENT] = function (Container $container) {
+            return new ProductToEventBridge($container->getLocator()->event()->facade());
         };
 
         $container[self::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE] = function (Container $container) {

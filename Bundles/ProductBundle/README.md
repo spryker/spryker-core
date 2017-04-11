@@ -208,4 +208,4 @@ Take the new implementation for listing order items, including bundles `src/Pyz/
 
 ## Documentation
 
-[Documentation](http://spryker.github.io)
+[Documentation](https://spryker.github.io)

@@ -50,7 +50,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getServiceProvider(Container $container)
+    protected function getServiceProviders(Container $container)
     {
         $providers = [
             new RequestServiceProvider(),
@@ -74,6 +74,18 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         }
 
         return $providers;
+    }
+
+    /**
+     * @deprecated Use getServiceProviders() instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getServiceProvider(Container $container)
+    {
+        return $this->getServiceProviders($container);
     }
 
 }

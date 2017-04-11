@@ -71,7 +71,7 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
     public function testGetZedDirectoryPathPattern()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('array', $twigConfig->getZedDirectoryPathPattern());
+        $this->assertInternalType('array', $twigConfig->getZedDirectoryPathPatterns());
     }
 
     /**
@@ -80,7 +80,7 @@ class TwigConfigTest extends PHPUnit_Framework_TestCase
     public function testGetYvesDirectoryPathPattern()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('array', $twigConfig->getYvesDirectoryPathPattern());
+        $this->assertInternalType('array', $twigConfig->getYvesDirectoryPathPatterns());
     }
 
 }

@@ -10,8 +10,11 @@ namespace Spryker\Zed\ProductCategory\Business\Manager;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
@@ -33,18 +36,26 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface $categoryFacade
      * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface|null $eventFacade
      */
     public function __construct(
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToCategoryInterface $categoryFacade,
-        ProductCategoryToProductInterface $productFacade
+        ProductCategoryToProductInterface $productFacade,
+        ProductCategoryToEventInterface $eventFacade = null
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->categoryFacade = $categoryFacade;
         $this->productFacade = $productFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -110,8 +121,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
     {
-        foreach ($productIdsToUnAssign as $idProduct) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+        foreach ($productIdsToUnAssign as $idProductAbstract) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProductAbstract)
                 ->findOne();
 
             if ($mapping === null) {
@@ -120,7 +131,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $mapping->delete();
 
-            $this->touchProductAbstractActive($idProduct);
+            $this->triggerEvent(ProductCategoryEvents::PRODUCT_CATEGORY_UNASSIGNED, $idCategory, $idProductAbstract);
+
+            $this->touchProductAbstractActive($idProductAbstract);
         }
 
         $this->touchCategoryActive($idCategory);
@@ -134,8 +147,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
-        foreach ($productIdsToAssign as $idProduct) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+        foreach ($productIdsToAssign as $idProductAbstract) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProductAbstract)
                 ->findOneOrCreate();
 
             if ($mapping === null) {
@@ -143,10 +156,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
 
             $mapping->setFkCategory($idCategory);
-            $mapping->setFkProductAbstract($idProduct);
+            $mapping->setFkProductAbstract($idProductAbstract);
             $mapping->save();
 
-            $this->touchProductAbstractActive($idProduct);
+            $this->triggerEvent(ProductCategoryEvents::PRODUCT_CATEGORY_ASSIGNED, $idCategory, $idProductAbstract);
+
+            $this->touchProductAbstractActive($idProductAbstract);
         }
 
         $this->touchCategoryActive($idCategory);
@@ -215,6 +230,38 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected function touchCategoryActive($idCategory)
     {
         $this->categoryFacade->touchCategoryActive($idCategory);
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer
+     */
+    protected function createProductCategoryTransfer($idCategory, $idProductAbstract)
+    {
+        $productCategoryTransfer = new ProductCategoryTransfer();
+        $productCategoryTransfer->setFkCategory($idCategory);
+        $productCategoryTransfer->setFkProductAbstract($idProductAbstract);
+
+        return $productCategoryTransfer;
+    }
+
+    /**
+     * @param string $eventName
+     * @param int $idCategory
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function triggerEvent($eventName, $idCategory, $idProductAbstract)
+    {
+        if ($this->eventFacade === null) {
+            return;
+        }
+
+        $productCategoryTransfer = $this->createProductCategoryTransfer($idCategory, $idProductAbstract);
+        $this->eventFacade->trigger($eventName, $productCategoryTransfer);
     }
 
 }

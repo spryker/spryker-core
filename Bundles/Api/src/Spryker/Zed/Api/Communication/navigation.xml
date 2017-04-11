@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <maintenance>
+        <pages>
+            <api>
+                <label>Api</label>
+                <title>Api</title>
+                <bundle>api</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <uri>/api</uri>
+                <icon>fa-object-group</icon>
+            </api>
+        </pages>
+    </maintenance>
+</config>

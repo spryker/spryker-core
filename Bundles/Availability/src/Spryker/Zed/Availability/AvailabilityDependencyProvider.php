@@ -11,7 +11,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
-use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge AS PersistenceAvailabilityToProductBridge;
+use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge as PersistenceAvailabilityToProductBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

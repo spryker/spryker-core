@@ -22,8 +22,8 @@ class ItemCountPlugin implements ItemCountPluginInterface
     {
         $uniqueBundleItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            if (!isset($uniqueBundleItems[$bundleItemTransfer->getSku()])) {
-                $uniqueBundleItems[$bundleItemTransfer->getSku()] = true;
+            if (!isset($uniqueBundleItems[$bundleItemTransfer->getGroupKey()])) {
+                $uniqueBundleItems[$bundleItemTransfer->getGroupKey()] = true;
             }
         }
 

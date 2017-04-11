@@ -53,7 +53,7 @@ abstract class AbstractProductTouch
         if ($this->productAbstractStatusChecker->isActive($idProductAbstract)) {
             $this->touchProductAbstractActive($idProductAbstract);
         } else {
-            $this->touchProductAbstractInactive($idProductAbstract);
+            $this->touchProductAbstractDeleted($idProductAbstract);
         }
     }
 
@@ -67,7 +67,7 @@ abstract class AbstractProductTouch
         if ($concreteProductEntity->getIsActive()) {
             $this->touchProductConcreteActive($concreteProductEntity->getIdProduct());
         } else {
-            $this->touchProductConcreteInactive($concreteProductEntity->getIdProduct());
+            $this->touchProductConcreteDeleted($concreteProductEntity->getIdProduct());
         }
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PropelBatchIterator implements CountableIteratorInterface
 {
@@ -33,13 +34,27 @@ class PropelBatchIterator implements CountableIteratorInterface
     protected $currentDataSet = [];
 
     /**
+     * @var string|null
+     */
+    protected $orderBy;
+
+    /**
+     * @var string|null
+     */
+    protected $orderByDirection;
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
+     * @param string|null $orderBy
+     * @param string|null $orderByDirection
      */
-    public function __construct(ModelCriteria $query, $chunkSize = 100)
+    public function __construct(ModelCriteria $query, $chunkSize = 100, $orderBy = null, $orderByDirection = null)
     {
         $this->query = $query;
         $this->chunkSize = $chunkSize;
+        $this->orderBy = $orderBy;
+        $this->orderByDirection = $orderByDirection;
     }
 
     /**
@@ -49,6 +64,15 @@ class PropelBatchIterator implements CountableIteratorInterface
     {
         $this->query->setOffset($this->offset);
         $this->query->setLimit($this->chunkSize);
+
+        if ($this->orderBy) {
+            if (!$this->orderByDirection) {
+                $this->orderByDirection = Criteria::ASC;
+            }
+
+            $this->query->orderBy($this->orderBy, $this->orderByDirection);
+        }
+
         $this->currentDataSet = $this->query->find();
 
         $this->offset += $this->chunkSize;
