@@ -12,14 +12,16 @@ $autoloader = function ($className) {
     ];
 
     $testingNamespaces = [
-        'Acceptance',
-        'Functional',
-        'Unit',
-        'ZedBusiness',
-        'ZedCommunication',
-        'ZedPresentation',
-        'Yves',
-        'Client',
+        'SprykerTest',
+        'Acceptance',           // old to be removed when all files moved
+        'Functional',           // old to be removed when all files moved
+        'Unit',                 // old to be removed when all files moved
+
+        'ZedBusiness',          // new-old to be removed when all files moved
+        'ZedCommunication',     // new-old to be removed when all files moved
+        'ZedPresentation',      // new-old to be removed when all files moved
+        'Yves',                 // new-old to be removed when all files moved
+        'Client',               // new-old to be removed when all files moved
     ];
 
     $className = ltrim($className, '\\');
@@ -49,6 +51,7 @@ $autoloader = function ($className) {
         $filePath .= $className;
     }
 
+    // This block can completely be removed when all bundles have the new test structure
     if (in_array($classNameParts[0], $testingNamespaces)) {
         if ($classNameParts[0] === 'Acceptance') {
             $bundle = $classNameParts[1];
@@ -62,6 +65,19 @@ $autoloader = function ($className) {
             $filePath = __DIR__ . '/Bundles/' . $bundle . '/tests/';
             $filePath .= $className;
         }
+    }
+    // This block can completely be removed when all bundles have the new test structure
+
+    // Helper in new structure
+    if ($classNameParts[0] === 'SprykerTest') {
+        $bundle = $classNameParts[2];
+        $filePath = __DIR__ . '/Bundles/' . $bundle . '/tests/SprykerTest/' . $classNameParts[1] . '/' . $classNameParts[2] . '/_support/';
+        // Zed's helper directory
+        if ($classNameParts[1] === 'Zed') {
+            $filePath .= $classNameParts[3] . '/';
+        }
+
+        $filePath .= 'Helper/' . array_pop($classNameParts) . '.php';
     }
 
     if (isset($filePath)) {
