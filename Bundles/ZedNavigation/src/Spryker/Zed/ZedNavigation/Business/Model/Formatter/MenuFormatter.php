@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ZedNavigation\Business\Model\Formatter;
 
 use Spryker\Shared\Url\UrlBuilderInterface;
+use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationXmlException;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidatorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidatorInterface;
 
@@ -94,7 +95,7 @@ class MenuFormatter implements MenuFormatterInterface
             }
             $formattedPage = $this->formatPage($page);
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
-                $this->menuLevelValidator->validate($currentLevel, $page[self::TITLE]);
+                $this->menuLevelValidator->validate($currentLevel, $formattedPage[self::TITLE]);
                 $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);
             }
 
@@ -104,10 +105,14 @@ class MenuFormatter implements MenuFormatterInterface
             }
             if (!empty($children)) {
                 unset($children[self::CHILD_IS_ACTIVE]);
-                $formattedPage[self::CHILDREN] = $children;
+                if (!empty($children)) {
+                    $formattedPage[self::CHILDREN] = $children;
+                }
                 $children = [];
             }
-            $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
+            if (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
+                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
+            }
         }
 
         return $formattedPages;
@@ -127,6 +132,10 @@ class MenuFormatter implements MenuFormatterInterface
         $action = $this->getPageAction($page);
         $controller = $this->getPageController($page, $action);
 
+        if (!isset($page[self::BUNDLE])) {
+            return '';
+        }
+
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
     }
 
@@ -141,8 +150,11 @@ class MenuFormatter implements MenuFormatterInterface
 
         $url = $this->getUri($page);
         $formattedPage[self::URI] = $url;
-        $formattedPage[self::LABEL] = $page[self::LABEL];
-        $formattedPage[self::TITLE] = $page[self::TITLE];
+        $label = $this->getPageLabel($page);
+        $title = $this->getPageTitle($page);
+        $pageTitleAndLabel = $this->formatTitleAndLabel($label, $title);
+        $formattedPage = array_merge($formattedPage, $pageTitleAndLabel);
+
         if (isset($page[self::ICON])) {
             $formattedPage[self::ICON] = $page[self::ICON];
         }
@@ -152,6 +164,46 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return $formattedPage;
+    }
+
+    /**
+     * @param string|null $label
+     * @param string|null $title
+     *
+     * @throws \Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationXmlException
+     *
+     * @return array
+     */
+    protected function formatTitleAndLabel($label, $title)
+    {
+        if ($label === null && $title === null) {
+            throw new ZedNavigationXmlException('"label" or "title" is missing for navigation menu item');
+        }
+
+        return [
+            self::LABEL => $label !== null ? $label : $title,
+            self::TITLE => $title !== null ? $title : $label,
+        ];
+    }
+
+    /**
+     * @param array $page
+     *
+     * @return string|null
+     */
+    protected function getPageLabel(array $page)
+    {
+        return isset($page[self::LABEL]) ? $page[self::LABEL] : null;
+    }
+
+    /**
+     * @param array $page
+     *
+     * @return string|null
+     */
+    protected function getPageTitle(array $page)
+    {
+        return isset($page[self::TITLE]) ? $page[self::TITLE] : null;
     }
 
     /**
