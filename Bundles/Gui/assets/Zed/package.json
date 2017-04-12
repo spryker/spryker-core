@@ -18,6 +18,7 @@
     "font-awesome": "~4.5.0",
     "jquery": "~2.2.0",
     "jquery-ui": "~1.10.5",
+    "jstree": "~3.3.3",
     "metismenu": "~2.2.0",
     "nestable": "git+https://git@github.com/ilmente/Nestable#v1.1.1",
     "pace": "git+https://git@github.com/hubspot/pace#v1.0.2",

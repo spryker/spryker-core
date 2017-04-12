@@ -17,7 +17,7 @@ use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\UrlActivatorInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
-class UrlDeleter implements UrlDeleterInterface
+class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterface
 {
 
     /**
@@ -58,7 +58,9 @@ class UrlDeleter implements UrlDeleterInterface
 
         $this->urlQueryContainer->getConnection()->beginTransaction();
 
+        $this->notifyBeforeDeleteObservers($urlTransfer);
         $this->deleteUrlEntity($urlEntity);
+        $this->notifyAfterDeleteObservers($urlTransfer);
 
         $this->urlQueryContainer->getConnection()->commit();
     }

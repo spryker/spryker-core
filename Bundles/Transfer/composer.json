@@ -17,7 +17,6 @@
     }
   },
   "require": {
-    "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
+use Spryker\Zed\Ratepay\Business\RatepayFacade;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainer;
 use Spryker\Zed\Ratepay\RatepayConfig;
 use Spryker\Zed\Ratepay\RatepayDependencyProvider;
@@ -43,10 +45,8 @@ class RatepayFacadeMockBuilder
 
         // Mock the facade to override getFactory() and have it return out
         // previously created mock.
-        $facade = $testCase->getMock(
-            'Spryker\Zed\Ratepay\Business\RatepayFacade',
-            ['getFactory']
-        );
+        $facade = $testCase->getMockBuilder(RatepayFacade::class)->setMethods(['getFactory'])->getMock();
+
         $facade->expects($testCase->any())
             ->method('getFactory')
             ->will($testCase->returnValue($businessFactoryMock));
@@ -62,10 +62,9 @@ class RatepayFacadeMockBuilder
      */
     protected function getBusinessFactoryMock(AdapterInterface $adapter, PHPUnit_Framework_TestCase $testCase)
     {
-        $businessFactoryMock = $testCase->getMock(
-            'Spryker\Zed\Ratepay\Business\RatepayBusinessFactory',
+        $businessFactoryMock = $testCase->getMockBuilder(RatepayBusinessFactory::class)->setMethods(
             ['createAdapter', 'createRequestTransfer']
-        );
+        )->getMock();
 
         $businessFactoryMock->setConfig(new RatepayConfig());
         $businessFactoryMock

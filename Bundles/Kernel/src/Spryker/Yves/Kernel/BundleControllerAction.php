@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Kernel;
 
+use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -32,6 +33,11 @@ class BundleControllerAction implements BundleControllerActionInterface
      * @var \Zend\Filter\Word\DashToCamelCase
      */
     private $filter;
+
+    /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected $bundleNameResolver;
 
     /**
      * @param string $bundle
@@ -72,7 +78,22 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getBundle()
     {
-        return $this->filter($this->bundle);
+        $bundleName = $this->filter($this->bundle);
+        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
+
+        return $bundleName;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected function getBundleNameResolver()
+    {
+        if (!$this->bundleNameResolver) {
+            $this->bundleNameResolver = new BundleNameResolver();
+        }
+
+        return $this->bundleNameResolver;
     }
 
     /**

@@ -12,25 +12,25 @@ interface JsonInterface
 
     /**
      * @param mixed $value
-     * @param int $options
-     * @param int $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @throws \Exception
      *
      * @return string
      */
-    public function encode($value, $options, $depth);
+    public function encode($value, $options = null, $depth = null);
 
     /**
      * @param string $jsonString
      * @param bool $assoc
-     * @param int $depth
-     * @param int $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function decode($jsonString, $assoc = false, $depth, $options);
+    public function decode($jsonString, $assoc = false, $depth = null, $options = null);
 
 }

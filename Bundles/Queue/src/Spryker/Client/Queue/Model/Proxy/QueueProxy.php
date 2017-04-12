@@ -7,109 +7,208 @@
 
 namespace Spryker\Client\Queue\Model\Proxy;
 
-use Generated\Shared\Transfer\QueueMessageTransfer;
-use Generated\Shared\Transfer\QueueOptionTransfer;
-use Spryker\Client\Queue\Exception\QueueAdapterMissingException;
-use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
+use Spryker\Client\Queue\Exception\MissingQueueAdapterException;
+use Spryker\Shared\Queue\QueueConfig;
 
 class QueueProxy implements QueueProxyInterface
 {
 
     /**
-     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
      */
-    protected $queueAdapter;
+    protected $queueAdapters;
 
     /**
-     * @param \Spryker\Client\Queue\Model\Adapter\AdapterInterface $queueAdapter
+     * @var array
      */
-    public function __construct(AdapterInterface $queueAdapter)
-    {
-        $this->queueAdapter = $queueAdapter;
-    }
+    protected $queueConfiguration;
 
     /**
-     * @throws \Spryker\Client\Queue\Exception\QueueAdapterMissingException
-     *
-     * @return mixed
+     * @param \Spryker\Client\Queue\Model\Adapter\AdapterInterface[] $queueAdapters
+     * @param array $queueConfiguration
      */
-    public function open()
+    public function __construct(array $queueAdapters, array $queueConfiguration)
     {
-        if (!$this->queueAdapter) {
-            throw new QueueAdapterMissingException(sprintf('Queue adapter was not found'));
-        }
-
-        return $this->queueAdapter->open();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
-     *
-     * @return void
-     */
-    public function createQueue(QueueOptionTransfer $queueOptionTransfer)
-    {
-        $this->queueAdapter->createQueue($queueOptionTransfer);
+        $this->queueAdapters = $queueAdapters;
+        $this->queueConfiguration = $queueConfiguration;
     }
 
     /**
      * @param string $queueName
-     * @param callable|null $callback
-     * @param \Generated\Shared\Transfer\QueueOptionTransfer $queueOptionTransfer
+     * @param array $options
      *
-     * @return mixed
+     * @return array
      */
-    public function consume($queueName, callable $callback, QueueOptionTransfer $queueOptionTransfer)
+    public function createQueue($queueName, array $options = [])
     {
-        $this->queueAdapter->consume($queueName, $callback, $queueOptionTransfer);
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        return $queueAdapter->createQueue($queueName, $options);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
-     */
-    public function encodeMessage(QueueMessageTransfer $queueMessageTransfer)
-    {
-        $this->queueAdapter->encodeMessage($queueMessageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueueMessageTransfer
-     */
-    public function decodeMessage(QueueMessageTransfer $queueMessageTransfer)
-    {
-        $this->queueAdapter->decodeMessage($queueMessageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
      *
      * @return void
      */
-    public function acknowledge(QueueMessageTransfer $queueMessageTransfer)
+    public function sendMessage($queueName, QueueSendMessageTransfer $queueSendMessageTransfer)
     {
-        $this->queueAdapter->acknowledge($queueMessageTransfer);
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        $queueAdapter->sendMessage($queueName, $queueSendMessageTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueMessageTransfer $queueMessageTransfer
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
      *
      * @return void
      */
-    public function publish(QueueMessageTransfer $queueMessageTransfer)
+    public function sendMessages($queueName, array $queueSendMessageTransfers)
     {
-        $this->queueAdapter->publish($queueMessageTransfer);
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        $queueAdapter->sendMessages($queueName, $queueSendMessageTransfers);
     }
 
     /**
+     * @param string $queueName
+     * @param int $chunkSize
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
+    {
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        return $queueAdapter->receiveMessages($queueName, $chunkSize, $options);
+    }
+
+    /**
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
+     */
+    public function receiveMessage($queueName, array $options = [])
+    {
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        return $queueAdapter->receiveMessage($queueName, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
      * @return bool
      */
-    public function close()
+    public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
-        return $this->queueAdapter->close();
+        $queueAdapter = $this->getQueueAdapter($queueReceiveMessageTransfer->getQueueName());
+
+        return $queueAdapter->acknowledge($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
+     * @return bool
+     */
+    public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
+    {
+        $queueAdapter = $this->getQueueAdapter($queueReceiveMessageTransfer->getQueueName());
+
+        return $queueAdapter->reject($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
+     *
+     * @return bool
+     */
+    public function handleError(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
+    {
+        $queueAdapter = $this->getQueueAdapter($queueReceiveMessageTransfer->getQueueName());
+
+        return $queueAdapter->handleError($queueReceiveMessageTransfer);
+    }
+
+    /**
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function purgeQueue($queueName, array $options = [])
+    {
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        return $queueAdapter->purgeQueue($queueName, $options);
+    }
+
+    /**
+     * @param string $queueName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function deleteQueue($queueName, array $options = [])
+    {
+        $queueAdapter = $this->getQueueAdapter($queueName);
+
+        return $queueAdapter->deleteQueue($queueName, $options);
+    }
+
+    /**
+     * @param string $queueName
+     *
+     * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
+     *
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     */
+    protected function getQueueAdapter($queueName)
+    {
+        if (!array_key_exists($queueName, $this->queueConfiguration)) {
+            throw new MissingQueueAdapterException(
+                sprintf(
+                    'There is no queue adapter configuration with this name: %s ,' .
+                    ' you can fix this by adding the queue adapter in ' .
+                    'QUEUE_ADAPTER_CONFIGURATION in the config_default.php',
+                    $queueName
+                )
+            );
+        }
+
+        return $this->getConfigQueueAdapter($this->queueConfiguration[$queueName]);
+    }
+
+    /**
+     * @param array $queueConfiguration
+     *
+     * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
+     *
+     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
+     */
+    protected function getConfigQueueAdapter(array $queueConfiguration)
+    {
+        foreach ($this->queueAdapters as $queueAdapter) {
+            if (get_class($queueAdapter) === $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]) {
+                return $queueAdapter;
+            }
+        }
+
+        throw new MissingQueueAdapterException(
+            sprintf(
+                'There is no such a queue adapter with this name: %s ,' .
+                ' you can fix this by adding the queue adapter in ' .
+                'QueueDependencyProvider::createQueueAdapters()',
+                $queueConfiguration[QueueConfig::CONFIG_QUEUE_ADAPTER]
+            )
+        );
     }
 
 }

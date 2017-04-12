@@ -28,6 +28,11 @@ class ClassInfo
     protected $callerClassParts;
 
     /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected $bundleNameResolver;
+
+    /**
      * @param object|string $callerClass
      *
      * @return $this
@@ -92,7 +97,22 @@ class ClassInfo
      */
     public function getBundle()
     {
-        return $this->callerClassParts[self::KEY_BUNDLE];
+        $bundleName = $this->callerClassParts[self::KEY_BUNDLE];
+        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
+
+        return $bundleName;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     */
+    protected function getBundleNameResolver()
+    {
+        if (!$this->bundleNameResolver) {
+            $this->bundleNameResolver = new BundleNameResolver();
+        }
+
+        return $this->bundleNameResolver;
     }
 
     /**

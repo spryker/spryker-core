@@ -3,7 +3,10 @@
   "description": "Generic queue bundle for Spryker",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "autoload": {
     "psr-0": {

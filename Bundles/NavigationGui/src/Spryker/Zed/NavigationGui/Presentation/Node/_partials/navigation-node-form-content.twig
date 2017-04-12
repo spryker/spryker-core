@@ -1,0 +1,49 @@
+{{ form_row(navigationNodeForm.node_type) }}
+
+<div class="form-group">
+    {% for localeTransfer in localeCollection %}
+        {% for navigationNodeLocalizedAttributes in navigationNodeForm.navigation_node_localized_attributes %}
+            {% if localeTransfer.idLocale == navigationNodeLocalizedAttributes.fk_locale.vars.value %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {
+                    'id': 'localized_attributes_container-' ~ localeTransfer.localeName,
+                    'localeName': localeTransfer.localeName,
+                    'collapsed': (not loop.parent.loop.first)
+                } %}
+                    {% block content %}
+                        <div class="form-group {% if navigationNodeLocalizedAttributes.title.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(navigationNodeLocalizedAttributes.title) }}
+                            {{ form_widget(navigationNodeLocalizedAttributes.title, {'attr': {'class': 'name-translation', 'data-translation-key': navigationNodeLocalizedAttributes.title.vars.name}}) }}
+                            {{ form_errors(navigationNodeLocalizedAttributes.title) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="link">
+                            {{ form_row(navigationNodeLocalizedAttributes.link) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="external_url">
+                            {{ form_row(navigationNodeLocalizedAttributes.external_url) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="cms_page">
+                            {{ form_row(navigationNodeLocalizedAttributes.cms_page_url, {'url': url('/navigation-gui/url-suggestion/cms-page', {'id-locale': localeTransfer.idLocale})}) }}
+                        </div>
+
+                        <div class="js-node-type-field hidden" data-node-type="category">
+                            {{ form_row(navigationNodeLocalizedAttributes.category_url, {'url': url('/navigation-gui/url-suggestion/category', {'id-locale': localeTransfer.idLocale})}) }}
+                        </div>
+
+                        <div class="form-group {% if navigationNodeLocalizedAttributes.css_class.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(navigationNodeLocalizedAttributes.css_class) }}
+                            {{ form_widget(navigationNodeLocalizedAttributes.css_class, {'attr': {'data-translation-key': navigationNodeLocalizedAttributes.css_class.vars.name}}) }}
+                            {{ form_errors(navigationNodeLocalizedAttributes.css_class) }}
+                        </div>
+
+                        {{ form_rest(navigationNodeLocalizedAttributes) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{{ form_widget(navigationNodeForm.is_active) }}

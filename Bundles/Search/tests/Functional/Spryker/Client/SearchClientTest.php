@@ -55,7 +55,7 @@ class SearchClientTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('createSearchConfig')
             ->willReturnCallback(function () {
-                return $this->getMockWithoutInvokingTheOriginalConstructor(SearchConfig::class);
+                return $this->getMockBuilder(SearchConfig::class)->disableOriginalConstructor()->getMock();
             });
 
         $this->searchClient->setFactory($searchFactoryMock);
@@ -77,7 +77,7 @@ class SearchClientTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $elasticaClientMock
             ->method('getStatus')
-            ->willReturn($this->getMockWithoutInvokingTheOriginalConstructor(Status::class));
+            ->willReturn($this->getMockBuilder(Status::class)->disableOriginalConstructor()->getMock());
 
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
@@ -194,7 +194,7 @@ class SearchClientTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $elasticsearchSearchHandlerMock->method('executeQuery')->willReturn(
-            $this->getMockWithoutInvokingTheOriginalConstructor(ResultSet::class)
+            $this->getMockBuilder(ResultSet::class)->disableOriginalConstructor()->getMock()
         );
 
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
