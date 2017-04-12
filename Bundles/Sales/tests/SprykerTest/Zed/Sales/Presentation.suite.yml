@@ -13,3 +13,4 @@ modules:
         - \Application\Module\Zed
         - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
+

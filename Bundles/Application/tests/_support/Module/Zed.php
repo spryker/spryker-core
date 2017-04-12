@@ -100,7 +100,7 @@ class Zed extends Infrastructure
     }
 
     /**
-     * @return \Codeception\Module\WebDriver
+     * @return \Codeception\Module\WebDriver|\Codeception\Module
      */
     protected function getWebDriver()
     {
