@@ -11,7 +11,6 @@ use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -109,7 +108,9 @@ class AbstractProductFormDataProvider
      */
     protected $imageUrlPrefix;
 
-    /** @var null|Store */
+    /**
+     * @var \Spryker\Shared\Kernel\Store|null
+     */
     protected $store;
 
     /**
@@ -125,7 +126,7 @@ class AbstractProductFormDataProvider
      * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
-     * @param Store $store
+     * @param \Spryker\Shared\Kernel\Store|null $store
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
