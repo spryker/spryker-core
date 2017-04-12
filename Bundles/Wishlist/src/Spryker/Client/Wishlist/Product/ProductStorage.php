@@ -8,7 +8,6 @@
 namespace Spryker\Client\Wishlist\Product;
 
 use ArrayObject;
-use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
@@ -42,17 +41,8 @@ class ProductStorage implements ProductStorageInterface
             return $wishlistResponseTransfer;
         }
 
-        $wishlistResponseTransfer->setItems(new ArrayObject());
-
-        $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
-        foreach ($storageProductCollection as $storageProduct) {
-            $wishlistItem = (new WishlistItemTransfer())
-                ->setIdProduct($storageProduct->getIdProductConcrete())
-                ->setFkWishlist($wishlistResponseTransfer->getWishlist()->getIdWishlist())
-                ->setProduct($storageProduct);
-
-            $wishlistResponseTransfer->addItem($wishlistItem);
-        }
+        $validWishlistItems = $this->getValidWishlistItems($wishlistResponseTransfer, $idProductCollection);
+        $wishlistResponseTransfer->setItems($validWishlistItems);
 
         return $wishlistResponseTransfer;
     }
@@ -70,6 +60,46 @@ class ProductStorage implements ProductStorageInterface
         }
 
         return $idProductCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
+     * @param array $idProductCollection
+     *
+     * @return \ArrayObject
+     */
+    protected function getValidWishlistItems(WishlistOverviewResponseTransfer $wishlistResponseTransfer, array $idProductCollection)
+    {
+        $validWishlistItems = new ArrayObject();
+
+        $storageProductCollection = $this->getStorageProductCollection($idProductCollection);
+        foreach ($wishlistResponseTransfer->getItems() as $wishlistItemTransfer) {
+            if (!array_key_exists($wishlistItemTransfer->getIdProduct(), $storageProductCollection)) {
+                continue;
+            }
+
+            $wishlistItemTransfer->setProduct($storageProductCollection[$wishlistItemTransfer->getIdProduct()]);
+            $validWishlistItems->append($wishlistItemTransfer);
+        }
+
+        return $validWishlistItems;
+    }
+
+    /**
+     * @param array $idProductCollection
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     */
+    protected function getStorageProductCollection(array $idProductCollection)
+    {
+        $result = [];
+        $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
+
+        foreach ($storageProductCollection as $storageProductTransfer) {
+            $result[$storageProductTransfer->getIdProductConcrete()] = $storageProductTransfer;
+        }
+
+        return $result;
     }
 
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -23,7 +25,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function createWishlist(WishlistTransfer $wishlistTransfer)
+    public function createWishlistAction(WishlistTransfer $wishlistTransfer)
     {
         return $this->getFacade()->createWishlist($wishlistTransfer);
     }
@@ -31,11 +33,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function updateWishlist(WishlistTransfer $wishlistTransfer)
+    public function validateAndCreateWishlistAction(WishlistTransfer $wishlistTransfer)
     {
-        return $this->getFacade()->updateWishlist($wishlistTransfer);
+        return $this->getFacade()->validateAndCreateWishlist($wishlistTransfer);
     }
 
     /**
@@ -43,9 +45,39 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function removeWishlist(WishlistTransfer $wishlistTransfer)
+    public function updateWishlistAction(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->updateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlistAction(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->validateAndUpdateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistAction(WishlistTransfer $wishlistTransfer)
     {
         return $this->getFacade()->removeWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByNameAction(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->removeWishlistByName($wishlistTransfer);
     }
 
     /**
@@ -69,6 +101,16 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollectionAction(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
+    {
+        return $this->getFacade()->removeItemCollection($wishlistItemTransferCollection);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -86,6 +128,16 @@ class GatewayController extends AbstractGatewayController
     public function getWishlistOverviewAction(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         return $this->getFacade()->getWishlistOverview($wishlistOverviewRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollectionAction(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFacade()->getCustomerWishlistCollection($customerTransfer);
     }
 
 }

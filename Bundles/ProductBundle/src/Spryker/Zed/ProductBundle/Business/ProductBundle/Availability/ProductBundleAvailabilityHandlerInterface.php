@@ -20,7 +20,7 @@ interface ProductBundleAvailabilityHandlerInterface
     /**
      * @param string $bundleProductSku
      *
-     * @return string
+     * @return void
      */
     public function updateBundleAvailability($bundleProductSku);
 

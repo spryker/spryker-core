@@ -37,6 +37,16 @@ class WishlistToCartBridge implements WishlistToCartInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItems(array $itemTransfers)
+    {
+        return $this->cartClient->addItems($itemTransfers);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

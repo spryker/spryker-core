@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -30,6 +32,21 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
+     *  - Validates if the wishlist has unique name for the customer.
+     *  - Creates wishlist for a specific customer with given name.
+     *  - Required values of WishlistTransfer: name, fkCustomer.
+     *  - Returns WishlistResponseTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * Specification:
      *  - Updates wishlist
      *  - Required values of WishlistTransfer: idWishlist.
      *  - Returns WishlistTransfer
@@ -44,6 +61,21 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
+     *  - Validates if the modified wishlist name is unique for the customer.
+     *  - Updates wishlist.
+     *  - Required values of WishlistTransfer: idWishlist.
+     *  - Returns WishlistResponseTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * Specification:
      *  - Removes wishlist and its items
      *  - Required values of WishlistTransfer: idWishlist
      *  - Returns WishlistTransfer
@@ -55,6 +87,20 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * Specification:
+     *  - Removes wishlist and its items
+     *  - Required values of WishlistTransfer: fkCustomer, name
+     *  - Returns WishlistTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByName(WishlistTransfer $wishlistTransfer);
 
     /**
      * Specification:
@@ -103,7 +149,7 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
+     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
      *    In case wishlist name is not provided the default value will be used
      *  - Returns WishlistItemTransfer
      *
@@ -114,6 +160,20 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
+
+    /**
+     * Specification:
+     *  - Removes item from wishlist
+     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
+     *    In case wishlist name is not provided the default value will be used
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 
     /**
      * Specification:
@@ -144,5 +204,19 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
+
+    /**
+     * Specification:
+     *  - Returns all wishlist entities for the given customer.
+     *  - Required values of CustomerTransfer: idCustomer.
+     *  - Returns WishlistCollectionTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
 
 }
