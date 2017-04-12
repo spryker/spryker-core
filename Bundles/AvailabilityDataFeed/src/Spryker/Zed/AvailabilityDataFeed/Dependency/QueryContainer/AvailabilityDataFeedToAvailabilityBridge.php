@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer;
 
-class AvailabilityDataFeedToAvailabilityBridgeToAvailability implements AvailabilityDataFeedToAvailabilityInterface
+class AvailabilityDataFeedToAvailabilityBridge implements AvailabilityDataFeedToAvailabilityInterface
 {
 
     /**
