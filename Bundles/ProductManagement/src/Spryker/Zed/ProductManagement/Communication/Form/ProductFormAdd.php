@@ -139,7 +139,7 @@ class ProductFormAdd extends AbstractType
                 return $validationGroups;
             },
             'compound' => true,
-            self::OPTION_CURRENCY_ISO_CODE => null,
+            static::OPTION_CURRENCY_ISO_CODE => null,
         ]);
     }
 
