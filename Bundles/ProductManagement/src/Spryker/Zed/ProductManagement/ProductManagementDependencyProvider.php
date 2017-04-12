@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
@@ -25,6 +26,7 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilText
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const STORE = 'STORE';
 
     const FACADE_CATEGORY = 'FACADE_LOCALE';
     const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -185,6 +187,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
+        };
+
+        $container[self::STORE] = function () {
+            return Store::getInstance();
         };
 
         return $container;

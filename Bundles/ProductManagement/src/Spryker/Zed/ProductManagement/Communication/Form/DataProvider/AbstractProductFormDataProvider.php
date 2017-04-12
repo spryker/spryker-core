@@ -11,6 +11,7 @@ use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -108,6 +109,9 @@ class AbstractProductFormDataProvider
      */
     protected $imageUrlPrefix;
 
+    /** @var null|Store */
+    protected $store;
+
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
@@ -121,6 +125,7 @@ class AbstractProductFormDataProvider
      * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
+     * @param Store $store
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -134,7 +139,8 @@ class AbstractProductFormDataProvider
         LocaleTransfer $currentLocale,
         array $attributeCollection,
         array $taxCollection,
-        $imageUrlPrefix
+        $imageUrlPrefix,
+        $store = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -148,6 +154,7 @@ class AbstractProductFormDataProvider
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
+        $this->store = $store;
     }
 
     /**
@@ -172,6 +179,10 @@ class AbstractProductFormDataProvider
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
+
+        if ($this->store) {
+            $formOptions[ProductFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
+        }
 
         return $formOptions;
     }
