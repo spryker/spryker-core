@@ -6,11 +6,11 @@
     "phpdocumentor/graphviz": "~1.0.4",
     "paragonie/random_compat": "~1.2.1",
     "everon/criteria-builder": "^1.1.0",
-    "moneyphp/money": "~3.0.0"
+    "moneyphp/money": "~3.0.0",
+    "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "fzaninotto/faker": "^1.6"
+    "spryker/code-sniffer": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
