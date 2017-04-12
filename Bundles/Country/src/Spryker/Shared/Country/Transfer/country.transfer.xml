@@ -5,9 +5,9 @@
 
     <transfer name="Country">
         <property name="idCountry" type="int" />
-        <property name="iso2Code" type="string" dataBuilderRule="=DE" />
-        <property name="iso3Code" type="string" dataBuilderRule="=DEU" />
-        <property name="name" type="string" dataBuilderRule="=Germany" />
+        <property name="iso2Code" type="string" />
+        <property name="iso3Code" type="string" />
+        <property name="name" type="string" />
         <property name="postalCodeMandatory" type="bool" />
         <property name="postalCodeRegex" type="string" />
     </transfer>

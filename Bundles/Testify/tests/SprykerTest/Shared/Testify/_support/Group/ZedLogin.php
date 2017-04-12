@@ -2,6 +2,7 @@
 
 namespace SprykerTest\Shared\Testify\Group;
 
+use Application\Module\Zed;
 use Codeception\Event\TestEvent;
 use Codeception\GroupObject;
 
@@ -26,7 +27,7 @@ class ZedLogin extends GroupObject
      */
     protected function getZedModule()
     {
-        return $this->getModule('\Application\Module\Zed');
+        return $this->getModule('\\' . Zed::class);
     }
 
 }
