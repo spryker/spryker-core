@@ -18,7 +18,7 @@ class Environment extends Module
 
     const MODE_ISOLATED = 'isolated';
 
-    const MODE_DEFAULT_ROOT = '../../../../../../../../..';
+    const MODE_DEFAULT_ROOT = '../../../../..';
     const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
 
     /**
