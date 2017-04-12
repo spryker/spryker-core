@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataFeed\Persistence;
 
 use Spryker\Zed\CategoryDataFeed\CategoryDataFeedDependencyProvider;
+use Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer\CategoryDataFeedToCategoryInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,7 +19,7 @@ class CategoryDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
+     * @return CategoryDataFeedToCategoryInterface
      */
     public function getCategoryQueryContainer()
     {

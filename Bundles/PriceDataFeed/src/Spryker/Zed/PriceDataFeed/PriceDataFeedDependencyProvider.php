@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceDataFeed;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceBridge;
 
 class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -43,7 +44,11 @@ class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::PRICE_QUERY_CONTAINER] = function (Container $container) {
-            return $container->getLocator()->price()->queryContainer();
+            $priceQueryContainer = $container->getLocator()
+                ->price()
+                ->queryContainer();
+
+            return new PriceDataFeedToPriceBridge($priceQueryContainer);
         };
 
         return $container;

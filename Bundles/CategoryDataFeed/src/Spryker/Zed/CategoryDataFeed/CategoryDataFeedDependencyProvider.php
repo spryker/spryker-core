@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryDataFeed;
 
+use Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer\CategoryDataFeedToCategoryBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -43,7 +44,11 @@ class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvide
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
-            return $container->getLocator()->category()->queryContainer();
+            $categoryQueryContainer = $container->getLocator()
+                ->category()
+                ->queryContainer();
+
+            return new CategoryDataFeedToCategoryBridge($categoryQueryContainer);
         };
 
         return $container;

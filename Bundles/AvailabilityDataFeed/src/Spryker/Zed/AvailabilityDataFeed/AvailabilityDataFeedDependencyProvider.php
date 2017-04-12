@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityDataFeed;
 
+use Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer\AvailabilityDataFeedToAvailabilityBridgeToAvailability;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -43,7 +44,11 @@ class AvailabilityDataFeedDependencyProvider extends AbstractBundleDependencyPro
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::AVAILABILITY_QUERY_CONTAINER] = function (Container $container) {
-            return $container->getLocator()->availability()->queryContainer();
+            $availabilityQueryContainer = $container->getLocator()
+                ->availability()
+                ->queryContainer();
+
+            return new AvailabilityDataFeedToAvailabilityBridgeToAvailability($availabilityQueryContainer);
         };
 
         return $container;

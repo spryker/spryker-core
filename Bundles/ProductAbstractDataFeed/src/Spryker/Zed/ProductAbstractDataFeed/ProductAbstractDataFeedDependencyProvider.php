@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAbstractDataFeed;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstractDataFeedToProductBridge;
 
 class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -43,7 +44,11 @@ class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependency
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::PRODUCT_QUERY_CONTAINER] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
+            $productQueryContainer = $container->getLocator()
+                ->product()
+                ->queryContainer();
+
+            return new ProductAbstractDataFeedToProductBridge($productQueryContainer);
         };
 
         return $container;
