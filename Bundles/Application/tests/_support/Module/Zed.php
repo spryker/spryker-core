@@ -14,6 +14,9 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 
+/**
+ * @deprecated Please use `SprykerTest\Shared\Application\Helper\ZedHelper` instead.
+ */
 class Zed extends Infrastructure
 {
 

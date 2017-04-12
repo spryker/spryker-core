@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Application\Module;
+namespace SprykerTest\Shared\Application\Helper;
 
 use Codeception\Module;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 
-/**
- * @deprecated Please use `SprykerTest\Shared\Application\Helper\ZedHelper` instead.
- */
-class Yves extends Module
+class YvesHelper extends Module
 {
 
     /**
