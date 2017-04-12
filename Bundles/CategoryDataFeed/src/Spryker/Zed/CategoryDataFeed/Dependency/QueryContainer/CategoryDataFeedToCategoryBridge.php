@@ -7,20 +7,18 @@
 
 namespace Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer;
 
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-
 class CategoryDataFeedToCategoryBridge implements CategoryDataFeedToCategoryInterface
 {
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
      * CategoryDataFeedToCategoryBridge constructor.
      *
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct($categoryQueryContainer)
     {
@@ -37,4 +35,5 @@ class CategoryDataFeedToCategoryBridge implements CategoryDataFeedToCategoryInte
         return $this->categoryQueryContainer
             ->queryCategory($idLocale);
     }
+
 }

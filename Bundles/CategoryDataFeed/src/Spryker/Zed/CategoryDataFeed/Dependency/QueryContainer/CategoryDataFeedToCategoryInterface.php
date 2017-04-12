@@ -9,10 +9,12 @@ namespace Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer;
 
 interface CategoryDataFeedToCategoryInterface
 {
+
     /**
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategory($idLocale);
+
 }

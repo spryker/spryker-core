@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityDataFeed\Persistence;
 
 use Spryker\Zed\AvailabilityDataFeed\AvailabilityDataFeedDependencyProvider;
-use Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer\AvailabilityDataFeedToAvailabilityInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -19,7 +18,7 @@ class AvailabilityDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return AvailabilityDataFeedToAvailabilityInterface
+     * @return \Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer\AvailabilityDataFeedToAvailabilityInterface
      */
     public function getAvailabilityQueryContainer()
     {

@@ -7,20 +7,18 @@
 
 namespace Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer;
 
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
-
 class AvailabilityDataFeedToAvailabilityBridgeToAvailability implements AvailabilityDataFeedToAvailabilityInterface
 {
 
     /**
-     * @var AvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
     protected $availabilityQueryContainer;
 
     /**
      * AvailabilityDataFeedBridge constructor.
      *
-     * @param AvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
      */
     public function __construct($availabilityQueryContainer)
     {

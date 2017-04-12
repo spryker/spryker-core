@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstractDataFeedToProductInterface;
 use Spryker\Zed\ProductAbstractDataFeed\ProductAbstractDataFeedDependencyProvider;
 
 /**
@@ -19,7 +18,7 @@ class ProductAbstractDataFeedPersistenceFactory extends AbstractPersistenceFacto
 {
 
     /**
-     * @return ProductAbstractDataFeedToProductInterface
+     * @return \Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstractDataFeedToProductInterface
      */
     public function getProductQueryContainer()
     {

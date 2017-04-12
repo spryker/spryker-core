@@ -34,5 +34,4 @@ class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
             ->queryPriceProduct();
     }
 
-
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceDataFeed\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceInterface;
 use Spryker\Zed\PriceDataFeed\PriceDataFeedDependencyProvider;
 
 /**
@@ -19,7 +18,7 @@ class PriceDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return PriceDataFeedToPriceInterface
+     * @return \Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceInterface
      */
     public function getPriceQueryContainer()
     {
