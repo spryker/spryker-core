@@ -113,6 +113,7 @@ class Finder
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
     }
 
