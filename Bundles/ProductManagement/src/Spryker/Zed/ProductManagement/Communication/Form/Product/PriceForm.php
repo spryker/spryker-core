@@ -61,7 +61,7 @@ class PriceForm extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
-            self::OPTION_CURRENCY_ISO_CODE => null,
+            static::OPTION_CURRENCY_ISO_CODE => null,
         ]);
     }
 

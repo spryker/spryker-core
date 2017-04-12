@@ -463,7 +463,7 @@ class ProductFormAdd extends AbstractType
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
                 ])],
                 PriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
-                PriceForm::OPTION_CURRENCY_ISO_CODE => $options[self::OPTION_CURRENCY_ISO_CODE],
+                PriceForm::OPTION_CURRENCY_ISO_CODE => $options[static::OPTION_CURRENCY_ISO_CODE],
             ]);
 
         return $this;
