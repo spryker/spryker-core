@@ -12,7 +12,6 @@ use Codeception\Module;
 use Codeception\TestCase;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 
 class ConfigHelper extends Module
 {

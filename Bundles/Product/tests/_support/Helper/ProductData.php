@@ -4,15 +4,14 @@ namespace Product\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductData extends Module
 {
 
-    use LocatorHelperTrait;
     use DataCleanupHelperTrait;
+    use LocatorHelperTrait;
 
     /**
      * @param array $override

@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Sales\Presentation;
 
+use SprykerTest\Zed\Sales\PresentationTester;
 use SprykerTest\Zed\Sales\Presentation\PageObject\SalesDetailPage;
 use SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage;
-use SprykerTest\Zed\Sales\PresentationTester;
 
 /**
  * Auto-generated group annotations
