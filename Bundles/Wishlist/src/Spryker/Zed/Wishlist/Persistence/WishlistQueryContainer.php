@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistPersistenceFactory getFactory()
@@ -46,7 +47,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     {
         return $this->getFactory()
             ->createWishlistQuery()
-            ->filterByFkCustomer($idCustomer);
+            ->filterByFkCustomer($idCustomer)
+            ->orderByName(Criteria::ASC);
     }
 
     /**

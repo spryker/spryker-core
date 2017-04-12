@@ -11,4 +11,4 @@ composer require spryker/new-relic-api
 
 ## Documentation
 
-[Spryker Documentation](http://spryker.github.io)
+[Spryker Documentation](https://spryker.github.io)

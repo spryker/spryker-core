@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business\Product\Observer;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 
 abstract class AbstractProductConcreteManagerSubject
 {
@@ -36,6 +38,11 @@ abstract class AbstractProductConcreteManagerSubject
      * @var \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteReadObserverInterface[]
      */
     protected $readObservers = [];
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     */
+    protected $eventFacade;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverInterface $productConcreteCreateObserver
@@ -98,6 +105,8 @@ abstract class AbstractProductConcreteManagerSubject
             $productConcreteTransfer = $observer->create($productConcreteTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_BEFORE_CREATE, $productConcreteTransfer);
+
         return $productConcreteTransfer;
     }
 
@@ -111,6 +120,8 @@ abstract class AbstractProductConcreteManagerSubject
         foreach ($this->afterCreateObservers as $observer) {
             $productConcreteTransfer = $observer->create($productConcreteTransfer);
         }
+
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_AFTER_CREATE, $productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
@@ -126,6 +137,8 @@ abstract class AbstractProductConcreteManagerSubject
             $productConcreteTransfer = $observer->update($productConcreteTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_BEFORE_UPDATE, $productConcreteTransfer);
+
         return $productConcreteTransfer;
     }
 
@@ -139,6 +152,8 @@ abstract class AbstractProductConcreteManagerSubject
         foreach ($this->afterUpdateObservers as $observer) {
             $productConcreteTransfer = $observer->update($productConcreteTransfer);
         }
+
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_AFTER_UPDATE, $productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
@@ -154,7 +169,33 @@ abstract class AbstractProductConcreteManagerSubject
             $productConcreteTransfer = $observer->read($productConcreteTransfer);
         }
 
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
+
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerEvent($eventName, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        if (!$this->eventFacade) {
+            return;
+        }
+        $this->eventFacade->trigger($eventName, $productConcreteTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface $eventFacade
+     *
+     * @return void
+     */
+    public function setEventFacade(ProductToEventInterface $eventFacade)
+    {
+        $this->eventFacade = $eventFacade;
     }
 
 }

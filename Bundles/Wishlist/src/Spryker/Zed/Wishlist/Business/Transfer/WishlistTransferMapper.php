@@ -37,7 +37,8 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     public function convertWishlist(SpyWishlist $wishlistEntity)
     {
         $wishlistTransfer = (new WishlistTransfer())
-            ->fromArray($wishlistEntity->toArray(), true);
+            ->fromArray($wishlistEntity->toArray(), true)
+            ->setNumberOfItems($wishlistEntity->getSpyWishlistItems()->count());
 
         return $wishlistTransfer;
     }

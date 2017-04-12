@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
@@ -76,6 +78,8 @@ use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Zend\Config\Reader\Xml;
+use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -1055,6 +1059,45 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionNamespaceExtractor()
     {
         return new NamespaceExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface
+     */
+    public function createArchitectureSniffer()
+    {
+        $xml = $this->getXmlReader();
+        $command = $this->getConfig()->getArchitectureSnifferCommand();
+        return new ArchitectureSniffer($xml, $command);
+    }
+
+    /**
+     * @return \Zend\Config\Reader\Xml
+     */
+    protected function getXmlReader()
+    {
+        return new Xml();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinderInterface
+     */
+    public function createArchitectureBundleFinder()
+    {
+        return new AllBundleFinder(
+            $this->createFinder(),
+            $this->getCamelCaseToDashFilter(),
+            $this->getConfig()->getProjectNamespaces(),
+            $this->getConfig()->getCoreNamespaces()
+        );
+    }
+
+    /**
+     * @return \Zend\Filter\Word\CamelCaseToDash
+     */
+    protected function getCamelCaseToDashFilter()
+    {
+        return new CamelCaseToDash();
     }
 
 }

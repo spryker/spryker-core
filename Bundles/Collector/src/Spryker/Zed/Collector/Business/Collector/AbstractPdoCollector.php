@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -75,11 +76,17 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
     }
 
     /**
-     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
-        return $this->utilDataReaderService->getPdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->chunkSize);
+        return $this->utilDataReaderService->getBatchIteratorOrdered(
+            $this->criteriaBuilder,
+            $this->touchQueryContainer,
+            $this->chunkSize,
+            CollectorConfig::COLLECTOR_TOUCH_ID,
+            Criteria::ASC
+        );
     }
 
     /**
@@ -93,6 +100,7 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $this->locale = $locale;
 
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
+
         $this->criteriaBuilder
             ->setParameterCollection($touchParameters);
 

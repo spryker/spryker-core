@@ -8,6 +8,8 @@
 namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface;
 use Spryker\Client\Wishlist\WishlistClientInterface;
@@ -16,7 +18,7 @@ class CartHandler implements CartHandlerInterface
 {
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
     protected $cartClient;
 
@@ -42,13 +44,45 @@ class CartHandler implements CartHandlerInterface
      */
     public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
     {
-        $wishlistMoveToCartRequestTransfer->requireSku();
-        $wishlistMoveToCartRequestTransfer->requireWishlistItem();
+        $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
 
         $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
         $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
 
         return $wishlistMoveToCartRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     *
+     * @return void
+     */
+    public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
+    {
+        $itemTransfers = [];
+        $wishlistItemCollectionTransfer = new WishlistItemCollectionTransfer();
+
+        foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
+            $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
+
+            $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
+            $wishlistItemCollectionTransfer->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
+        }
+
+        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
+        $this->cartClient->storeQuote($quoteTransfer);
+        $this->wishlistClient->removeItemCollection($wishlistItemCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertRequestTransfer(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
+    {
+        $wishlistMoveToCartRequestTransfer->requireSku();
+        $wishlistMoveToCartRequestTransfer->requireWishlistItem();
     }
 
     /**
@@ -58,12 +92,22 @@ class CartHandler implements CartHandlerInterface
      */
     protected function storeItemInQuote($sku)
     {
-        $cartItem = (new ItemTransfer())
-            ->setSku($sku)
-            ->setQuantity(1);
-
+        $cartItem = $this->createItemTransfer($sku);
         $quoteTransfer = $this->cartClient->addItem($cartItem);
         $this->cartClient->storeQuote($quoteTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer($sku, $quantity = 1)
+    {
+        return (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity);
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -45,5 +46,12 @@ interface ReaderInterface
      * @return \Orm\Zed\Wishlist\Persistence\Base\SpyWishlist
      */
     public function getWishlistEntityByCustomerIdAndWishlistName($idCustomer, $name);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
 
 }

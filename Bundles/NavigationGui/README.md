@@ -11,4 +11,4 @@ composer require spryker/navigation-gui
 
 ## Documentation
 
-[Spryker Documentation](http://spryker.github.io)
+[Spryker Documentation](https://spryker.github.io)

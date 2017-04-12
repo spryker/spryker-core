@@ -64,7 +64,7 @@ interface AvailabilityFacadeInterface
      *  - Calculates current item stock, take into account reserved items
      *  - Stores new stock for concrete product
      *  - Stores sum of all concrete product stocks for abstract product
-     *  - Touches availability abstract collector
+     *  - Touches availability abstract collector if data changed
      *
      * @api
      *

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -23,6 +24,13 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -32,11 +40,25 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlistByName(WishlistTransfer $wishlistTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -66,5 +88,12 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 
 }

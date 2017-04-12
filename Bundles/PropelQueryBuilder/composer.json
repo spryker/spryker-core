@@ -18,7 +18,7 @@
   },
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-orm": "^1.2.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {

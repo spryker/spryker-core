@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
@@ -14,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
+
+    const BUNDLE_PLACEHOLDER = '[BUNDLE]';
 
     /**
      * @return string
@@ -242,6 +245,51 @@ class DevelopmentConfig extends AbstractBundleConfig
         return [
             __DIR__ . '/Business/IdeAutoCompletion/Generator/Templates',
         ];
+    }
+
+    /**
+     * Returns CLI commmand to run the architecture sniffer with [BUNDLE] placeholder
+     *
+     * @return string
+     */
+    public function getArchitectureSnifferCommand()
+    {
+        return $this->getPhpMdCommand() . ' ' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
+    }
+
+    /**
+     * Either a relative or full path to the ruleset.xml
+     *
+     * @return string
+     */
+    public function getArchitectureSnifferRuleset()
+    {
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+        return $vendorDir . 'spryker/architecture-sniffer/src/ruleset.xml';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhpMdCommand()
+    {
+        return 'vendor/bin/phpmd';
+    }
+
+    /**
+     * @return array
+     */
+    public function getProjectNamespaces()
+    {
+        return $this->get(DevelopmentConstants::PROJECT_NAMESPACES);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCoreNamespaces()
+    {
+        return $this->get(DevelopmentConstants::CORE_NAMESPACES);
     }
 
 }

@@ -45,28 +45,37 @@ class ZedBootstrap
         $this->application['locale'] = $store->getCurrentLocale();
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
-            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getCurrentCountry() . '/cache/profiler';
+            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getStoreName() . '/cache/profiler';
         }
 
-        $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
+        $this->setUp();
 
+        return $this->application;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        $this->optimizeApp();
+
+        // For BC
         if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
             $this->registerServiceProviderForInternalRequest();
 
-            return $this->application;
+            return;
         }
-
+        // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
 
-            return $this->application;
+            return;
         }
 
         $this->registerServiceProvider();
         $this->addVariablesToTwig();
-
-        return $this->application;
     }
 
     /**

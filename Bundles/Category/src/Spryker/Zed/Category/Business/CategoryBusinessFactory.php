@@ -116,7 +116,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrl(),
             $this->createCategoryExtraParents(),
             $this->getQueryContainer(),
-            $this->getRelationDeletePluginStack()
+            $this->getRelationDeletePluginStack(),
+            $this->getEventFacade()
         );
     }
 
@@ -240,6 +241,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createUrlPathGenerator()
     {
         return new UrlPathGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_EVENT);
     }
 
     /**

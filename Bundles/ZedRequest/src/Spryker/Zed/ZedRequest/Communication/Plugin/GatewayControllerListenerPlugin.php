@@ -36,6 +36,10 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     public function onKernelController(FilterControllerEvent $event)
     {
         $currentController = $event->getController();
+        if (!is_array($currentController)) {
+            return $currentController;
+        }
+
         $controller = $currentController[0];
         $action = $currentController[1];
 

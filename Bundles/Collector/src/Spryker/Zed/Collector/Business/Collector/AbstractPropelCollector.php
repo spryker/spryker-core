@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 {
@@ -56,7 +58,12 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
      */
     protected function generateBatchIterator()
     {
-        return $this->utilDataReaderService->getPropelBatchIterator($this->queryBuilder->getTouchQuery(), $this->chunkSize);
+        return $this->utilDataReaderService->getPropelBatchIteratorOrdered(
+            $this->queryBuilder->getTouchQuery(),
+            $this->chunkSize,
+            CollectorConfig::COLLECTOR_TOUCH_ID,
+            Criteria::ASC
+        );
     }
 
     /**

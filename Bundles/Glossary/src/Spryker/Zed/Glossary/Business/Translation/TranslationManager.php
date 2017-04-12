@@ -102,8 +102,8 @@ class TranslationManager implements TranslationManagerInterface
             foreach ($availableLocales as $localeName) {
                 $localeTransfer = $this->localeFacade->getLocale($localeName);
 
-                if (isset($keyTranslationTransfer->getLocales()[$localeName])) {
-                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $keyTranslationTransfer->getLocales()[$localeName]);
+                if (array_key_exists($localeName, $keyTranslationTransfer->getLocales())) {
+                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, (string)$keyTranslationTransfer->getLocales()[$localeName]);
                     $this->saveAndTouchTranslation($translationTransfer);
                 }
             }

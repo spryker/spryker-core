@@ -8,10 +8,15 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
@@ -106,7 +111,8 @@ class Reader implements ReaderInterface
         $wishlistOverviewResponseTransfer
             ->setWishlist($wishlistTransfer)
             ->setPagination($wishlistPaginationTransfer)
-            ->setItems(new ArrayObject($wishlistItems));
+            ->setItems(new ArrayObject($wishlistItems))
+            ->setMeta($this->createWishlistOverviewMeta($wishlistOverviewRequestTransfer));
 
         return $wishlistOverviewResponseTransfer;
     }
@@ -213,23 +219,78 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewMetaTransfer
+     */
+    protected function createWishlistOverviewMeta(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        $wishlistOverviewMetaTransfer = new WishlistOverviewMetaTransfer();
+        $idCustomer = $wishlistOverviewRequestTransfer->getWishlist()->getFkCustomer();
+        $idWishlist = $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist();
+
+        $wishlistOverviewMetaTransfer
+            ->setWishlistCollection($this->getCollectionByIdCustomer($idCustomer))
+            ->setWishlistItemMetaCollection($this->createWishlistItemMetaCollection($idWishlist));
+
+        return $wishlistOverviewMetaTransfer;
+    }
+
+    /**
+     * @param int $idWishlist
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
+     */
+    protected function createWishlistItemMetaCollection($idWishlist)
+    {
+        $wishlistItemEntities = $this->queryContainer
+            ->queryItemsByWishlistId($idWishlist)
+            ->find();
+
+        $wishlistItemMetaTransfers = new ArrayObject();
+        foreach ($wishlistItemEntities as $wishlistItemEntity) {
+            $productEntity = $wishlistItemEntity->getSpyProduct();
+            $wishlistItemMetaTransfer = $this->convertProductEntityToWishlistItemMetaTransfer($productEntity);
+            $wishlistItemMetaTransfers->append($wishlistItemMetaTransfer);
+        }
+
+        return $wishlistItemMetaTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
+     */
+    protected function convertProductEntityToWishlistItemMetaTransfer(SpyProduct $productEntity)
+    {
+        $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
+        $wishlistItemMetaTransfer
+            ->setIdProductAbstract($productEntity->getFkProductAbstract())
+            ->setIdProduct($productEntity->getIdProduct())
+            ->setSku($productEntity->getSku());
+
+        return $wishlistItemMetaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
      */
-    protected function expandProductId(array $itemCollection)
+    protected function expandProductId(array $wishlistItemCollection)
     {
-        $productCollection = $this->getProductCollection($itemCollection);
+        $productCollection = $this->getProductCollection($wishlistItemCollection);
 
         foreach ($productCollection as $productEntity) {
-            foreach ($itemCollection as $itemTransfer) {
+            foreach ($wishlistItemCollection as $itemTransfer) {
                 if (mb_strtolower($itemTransfer->getSku()) === mb_strtolower($productEntity->getSku())) {
                     $itemTransfer->setIdProduct($productEntity->getIdProduct());
                 }
             }
         }
 
-        return $itemCollection;
+        return $wishlistItemCollection;
     }
 
     /**
@@ -324,6 +385,20 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
+    {
+        $idCustomer = $customerTransfer
+            ->requireIdCustomer()
+            ->getIdCustomer();
+
+        return $this->getCollectionByIdCustomer($idCustomer);
+    }
+
+    /**
      * @param int $idCustomer
      * @param string $name
      *
@@ -335,6 +410,29 @@ class Reader implements ReaderInterface
             ->queryWishlistByCustomerId($idCustomer)
             ->filterByName($name)
             ->count() > 0;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    protected function getCollectionByIdCustomer($idCustomer)
+    {
+        $wishlistCollection = new WishlistCollectionTransfer();
+        $wishlistEntities = $this->queryContainer
+            ->queryWishlistByCustomerId($idCustomer)
+            ->find();
+
+        if (!$wishlistEntities->count()) {
+            return $wishlistCollection;
+        }
+
+        foreach ($wishlistEntities as $wishlistEntity) {
+            $wishlistCollection->addWishlist($this->transferMapper->convertWishlist($wishlistEntity));
+        }
+
+        return $wishlistCollection;
     }
 
 }
