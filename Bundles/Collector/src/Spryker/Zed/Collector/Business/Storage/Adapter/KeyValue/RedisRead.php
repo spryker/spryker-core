@@ -26,7 +26,7 @@ class RedisRead extends Redis implements ReadInterface
 
         $result = json_decode($value, true);
 
-        if (json_last_error() === \JSON_ERROR_SYNTAX) {
+        if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $value;
         }
 

@@ -42,4 +42,16 @@ $(document).ready( function () {
             autocompleteElement: $(element)
         });
     });
+
+    $('[name=cms_glossary]').on('submit', function() {
+        var self = $(this);
+
+        self.find('.html-editor').each(function (index, element) {
+            var editor = $(element);
+
+            if (editor.summernote('isEmpty')) {
+                editor.val(null);
+            }
+        });
+    });
 });

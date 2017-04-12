@@ -92,7 +92,7 @@ class GuzzleBodyProcessor
     }
 
     /**
-     * @param mixed $data
+     * @param string $data
      *
      * @return bool
      */
