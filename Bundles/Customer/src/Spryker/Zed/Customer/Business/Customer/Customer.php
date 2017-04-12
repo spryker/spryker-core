@@ -505,7 +505,7 @@ class Customer
     {
         $addressCollection = new AddressesTransfer();
 
-        foreach ($addressEntities->getData() as $address) {
+        foreach ($addressEntities as $address) {
             $addressTransfer = $this->entityToTransfer($address);
 
             if ($customer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
@@ -530,22 +530,15 @@ class Customer
      */
     protected function attachAddressesTransfer(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer)
     {
-        $billingAddresses = new AddressesTransfer();
-        $shippingAddresses = new AddressesTransfer();
-
         foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-
             if ($addressTransfer->getIsDefaultBilling()) {
-                $billingAddresses->addAddress($addressTransfer);
+                $customerTransfer->addBillingAddress($addressTransfer);
             }
 
             if ($addressTransfer->getIsDefaultShipping()) {
-                $shippingAddresses->addAddress($addressTransfer);
+                $customerTransfer->addShippingAddress($addressTransfer);
             }
         }
-
-        $customerTransfer->setBillingAddress($billingAddresses->getAddresses());
-        $customerTransfer->setShippingAddress($shippingAddresses->getAddresses());
 
         return $customerTransfer;
     }

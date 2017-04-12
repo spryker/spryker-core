@@ -77,9 +77,10 @@ interface CustomerClientInterface
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 
     /**
-     * @api
+     * Specification:
+     * - Returns Customer data from session
      *
-     * Returns Customer data from session
+     * @api
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -127,9 +128,10 @@ interface CustomerClientInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
-     * @api
+     * Specification:
+     * - Returns fresh Customer data from database by ID
      *
-     * Returns fresh Customer data from database by ID
+     * @api
      *
      * @param int $idCustomer
      *
