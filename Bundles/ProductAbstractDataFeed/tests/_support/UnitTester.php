@@ -1,6 +1,8 @@
 <?php
 namespace ProductAbstractDataFeed;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace ProductAbstractDataFeed;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class UnitTester extends \Codeception\Actor
+ */
+class UnitTester extends Actor
 {
+
     use _generated\UnitTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }
