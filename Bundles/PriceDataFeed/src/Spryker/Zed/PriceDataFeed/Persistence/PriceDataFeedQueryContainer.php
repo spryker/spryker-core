@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceDataFeed\Persistence;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedPersistenceFactory getFactory()
