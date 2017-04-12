@@ -322,7 +322,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param mixed $value
+     * @param string $value
      *
      * @return mixed
      */
