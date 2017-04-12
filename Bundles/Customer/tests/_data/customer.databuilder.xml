@@ -18,15 +18,15 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" type="string" dataBuilderRule="email" />
-        <property name="firstName" type="string" dataBuilderRule="firstName" />
-        <property name="lastName" type="string" dataBuilderRule="lastName" />
-        <property name="company" type="string" dataBuilderRule="company" />
-        <property name="gender" type="string" dataBuilderRule="randomElement(['Male', 'Female'])" />
-        <property name="dateOfBirth" type="string" dataBuilderRule="date('Y-m-d', '-20 years')" />
-        <property name="salutation" type="string" dataBuilderRule="randomElement(['Mr', 'Mrs'])" />
-        <property name="isGuest" type="bool" dataBuilderRule="=false"/>
-        <property name="locale" type="Locale" dataBuilderRule="locale"/>
+        <property name="email" dataBuilderRule="email" />
+        <property name="firstName" dataBuilderRule="firstName" />
+        <property name="lastName" dataBuilderRule="lastName" />
+        <property name="company" dataBuilderRule="company" />
+        <property name="gender" dataBuilderRule="randomElement(['Male', 'Female'])" />
+        <property name="dateOfBirth" dataBuilderRule="date('Y-m-d', '-20 years')" />
+        <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])" />
+        <property name="isGuest" dataBuilderRule="=false"/>
+        <property name="locale" dataBuilderRule="locale"/>
     </transfer>
 
 </transfers>

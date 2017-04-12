@@ -7,33 +7,26 @@
         <property name="displayName" dataBuilderRule="unique()->sentence" />
         <property name="description" dataBuilderRule="sentence(10)" />
         <property name="amount" dataBuilderRule="=1"  />
-        <property name="voucherCode" type="string"/>
-        <property name="calculatorPlugin" type="string" />
-        <property name="isExclusive" type="string" />
         <property name="isActive" type="string" dataBuilderRule="=true" />
         <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
         <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
-        <property name="collectorQueryString" type="string" />
-        <property name="decisionRuleQueryString" type="string" />
     </transfer>
 
     <transfer name="CalculatedDiscount">
-        <property name="idDiscount" type="int" />
         <property name="displayName" dataBuilderRule="unique()->sentence" />
         <property name="description" dataBuilderRule="sentence(10)" />
-        <property name="voucherCode" type="string" dataBuilderRule="ean8" />
-        <property name="unitGrossAmount" type="int" dataBuilderRule="=1" />
-        <property name="sumGrossAmount" type="int" dataBuilderRule="=1" />
-        <property name="quantity" type="int" dataBuilderRule="=1" />
+        <property name="voucherCode" dataBuilderRule="ean8" />
+        <property name="unitGrossAmount" dataBuilderRule="=1" />
+        <property name="sumGrossAmount" dataBuilderRule="=1" />
+        <property name="quantity" dataBuilderRule="=1" />
     </transfer>
 
     <transfer name="DiscountGeneral">
-        <property name="idDiscount" type="int" />
         <property name="discountType" dataBuilderRule="=cart_rule" />
         <property name="displayName" dataBuilderRule="unique()->sentence" />
         <property name="description" dataBuilderRule="sentence(10)" />
-        <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
-        <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
+        <property name="validFrom" dataBuilderRule="=2016-01-01" />
+        <property name="validTo" dataBuilderRule="time('Y-m-d', '+10 years')" />
         <property name="isExclusive" dataBuilderRule="=" />
         <property name="isActive" dataBuilderRule="=true" />
     </transfer>
@@ -42,21 +35,6 @@
         <property name="amount" type="string" dataBuilderRule="=1" />
         <property name="calculatorPlugin" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED" />
         <property name="collectorQueryString" dataBuilderRule="=item-quantity > '1'" />
-    </transfer>
-
-    <transfer name="DiscountCondition">
-        <property name="decisionRuleQueryString" type="string" />
-    </transfer>
-
-    <transfer name="DiscountVoucher">
-        <property name="idDiscount" type="int" />
-        <property name="fkDiscountVoucherPool" type="int" />
-        <property name="voucherBatch" type="int" />
-        <property name="quantity" type="int" />
-        <property name="customCode" type="string" />
-        <property name="code" type="string" />
-        <property name="randomGeneratedCodeLength" type="int" />
-        <property name="maxNumberOfUses" type="int" />
     </transfer>
 
 </transfers>
