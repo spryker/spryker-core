@@ -1,4 +1,4 @@
-namespace: DataFeed
+namespace: PriceDataFeed
 actor: Tester
 paths:
     tests: tests

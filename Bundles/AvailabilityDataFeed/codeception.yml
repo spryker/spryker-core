@@ -1,4 +1,4 @@
-namespace: DataFeed
+namespace: AvailabilityDataFeed
 actor: Tester
 paths:
     tests: tests
