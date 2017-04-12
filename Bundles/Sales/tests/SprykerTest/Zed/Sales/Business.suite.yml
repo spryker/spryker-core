@@ -6,5 +6,7 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\ConfigHelper
         - \SprykerTest\Shared\Testify\Helper\DependencyHelper
         - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-        - \Propel\Helper\Transaction
+        - \SprykerTest\Shared\Propel\Helper\TransactionHelper
         - \SprykerTest\Zed\Sales\Business\Helper\BusinessHelper
+        - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+        - \SprykerTest\Shared\Stock\Helper\StockDataHelper

@@ -8,7 +8,7 @@ modules:
 
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
-        - \Propel\Helper\Connection
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper

@@ -9,5 +9,5 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\DependencyHelper
         - \SprykerTest\Shared\Testify\Helper\LocatorHelper
         - \SprykerTest\Shared\Testify\Helper\BundleConfig
-        - \Propel\Helper\Transaction
-        - \Customer\Helper\CustomerData
+        - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+        - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper

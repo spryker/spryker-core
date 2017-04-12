@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Customer\Helper;
+namespace SprykerTest\Shared\Customer\Helper;
 
 use Codeception\Module;
 use Codeception\Util\Stub;
@@ -16,7 +16,7 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
 
-class CustomerData extends Module
+class CustomerDataHelper extends Module
 {
 
     use DependencyHelperTrait;

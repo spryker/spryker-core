@@ -10,6 +10,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 
@@ -28,7 +29,7 @@ class SalesFacadeTest extends Test
     const DEFAULT_ITEM_STATE = 'test';
 
     /**
-     * @var \Sales\ZedBusinessTester
+     * @var \SprykerTest\Zed\Sales\BusinessTester
      */
     protected $tester;
 
@@ -40,11 +41,9 @@ class SalesFacadeTest extends Test
         $this->markTestSkipped();
 
         $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $productTransfer->getSku()]);
-        $this->tester->haveState();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
 
         $checkoutResponseTransfer = $this->tester->haveOrder();
-//        echo '<pre>' . PHP_EOL . VarDumper::dump($checkoutResponseTransfer) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 
         $salesOrderEntity = $this->tester->create();
 

@@ -11,6 +11,6 @@ modules:
         window_size: 1920x1080
         host: 0.0.0.0
         restart: false
-    - \Discount\Helper\DiscountData
+    - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
     - \Application\Module\Zed
 

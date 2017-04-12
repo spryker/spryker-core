@@ -6,7 +6,7 @@ modules:
             browser: chrome
             window_size: 1920x1080
 
-        - \Propel\Helper\Connection
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \SprykerTest\Shared\Testify\Helper\Environment

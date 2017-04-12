@@ -5,7 +5,7 @@ modules:
             url: ''
             browser: phantomjs
 
-        - \Propel\Helper\Connection
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
 

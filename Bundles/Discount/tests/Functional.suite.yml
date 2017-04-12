@@ -4,4 +4,4 @@ modules:
     - \SprykerTest\Shared\Testify\Helper\Environment
     - \Config\Module\ConfigInit
     - \Propel\Module\PropelInstall
-    - \Propel\Helper\Transaction
+    - \SprykerTest\Shared\Propel\Helper\TransactionHelper

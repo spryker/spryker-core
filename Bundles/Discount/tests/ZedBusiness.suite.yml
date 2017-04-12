@@ -3,4 +3,4 @@ modules:
   enabled:
     - \SprykerTest\Shared\Testify\Helper\Environment
     - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-    - \Propel\Helper\Transaction
+    - \SprykerTest\Shared\Propel\Helper\TransactionHelper

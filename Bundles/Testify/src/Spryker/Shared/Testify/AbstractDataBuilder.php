@@ -7,9 +7,11 @@
 
 namespace Spryker\Shared\Testify;
 
-use Exception;
 use Faker\Factory;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Testify\Exception\DependencyNotDefinedException;
+use Spryker\Shared\Testify\Exception\FieldNotDefinedException;
+use Spryker\Shared\Testify\Exception\RuleNotDefinedException;
 
 abstract class AbstractDataBuilder
 {
@@ -105,7 +107,7 @@ abstract class AbstractDataBuilder
     /**
      * @param array|string $rules
      *
-     * @throws \Exception
+     * @throws \Spryker\Shared\Testify\Exception\RuleNotDefinedException
      *
      * @return $this
      */
@@ -116,7 +118,7 @@ abstract class AbstractDataBuilder
         }
         foreach ($rules as $rule) {
             if (!isset($this->defaultRules[$rule])) {
-                throw new Exception("No rule for $rule is defined");
+                throw new RuleNotDefinedException(sprintf('No rule for "%s" defined', $rule));
             }
             $this->rules[$rule] = $this->defaultRules[$rule];
         }
@@ -184,14 +186,14 @@ abstract class AbstractDataBuilder
      * @param array $override
      * @param bool $randomize
      *
-     * @throws \Exception
+     * @throws \Spryker\Shared\Testify\Exception\FieldNotDefinedException
      *
      * @return void
      */
     protected function buildDependency($field, $override = [], $randomize = false)
     {
         if (!isset($this->dependencies[$field])) {
-            throw new Exception("No $field is dependencies list");
+            throw new FieldNotDefinedException(sprintf('Field "%s" not defined in dependencies list', $field));
         }
         $builder = $this->locateDataBuilder($this->dependencies[$field]);
         $builder->seed($override);
@@ -213,7 +215,7 @@ abstract class AbstractDataBuilder
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Shared\Testify\Exception\DependencyNotDefinedException
      *
      * @return void
      */
@@ -240,7 +242,7 @@ abstract class AbstractDataBuilder
                 call_user_func([$transfer, 'set' . $name], $nestedTransfer);
                 continue;
             }
-            throw new Exception("No such dependency: $name");
+            throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, get_class($this)));
         }
     }
 

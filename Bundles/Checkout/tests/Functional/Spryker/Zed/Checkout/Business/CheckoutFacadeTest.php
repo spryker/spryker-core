@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -89,10 +90,10 @@ class CheckoutFacadeTest extends Test
     public function testCheckoutSuccessfully()
     {
         $product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem(['sku' => $product->getSku()])
+            ->withItem([ItemTransfer::SKU => $product->getSku()])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
@@ -109,12 +110,12 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
-        $this->tester->haveCustomer(['email' => 'max@mustermann.de']);
+        $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
         $product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $product->getSku()]);
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
 
-        $quoteTransfer = (new QuoteBuilder(['email' => 'max@mustermann.de']))
-            ->withItem(['sku' => $product->getSku()])
+        $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
+            ->withItem([ItemTransfer::SKU => $product->getSku()])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
@@ -134,13 +135,13 @@ class CheckoutFacadeTest extends Test
     public function testCheckoutCreatesOrderItems()
     {
         $product1 = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $product1->getSku()]);
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product1->getSku()]);
         $product2 = $this->tester->haveProduct();
-        $this->tester->haveProductInStock(['sku' => $product2->getSku()]);
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product2->getSku()]);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem(['sku' => $product1->getSku()])
-            ->withAnotherItem(['sku' => $product2->getSku()])
+            ->withItem([ItemTransfer::SKU => $product1->getSku()])
+            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku()])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()

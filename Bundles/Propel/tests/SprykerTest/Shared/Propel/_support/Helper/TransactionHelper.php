@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Propel\Helper;
+namespace SprykerTest\Shared\Propel\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
@@ -13,7 +13,7 @@ use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
-class Transaction extends Module
+class TransactionHelper extends Module
 {
 
     /**

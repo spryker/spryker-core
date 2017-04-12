@@ -1,5 +1,6 @@
 <?php
-namespace Product\Helper;
+
+namespace SprykerTest\Shared\Product\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
@@ -7,7 +8,7 @@ use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
-class ProductData extends Module
+class ProductDataHelper extends Module
 {
 
     use DataCleanupHelperTrait;

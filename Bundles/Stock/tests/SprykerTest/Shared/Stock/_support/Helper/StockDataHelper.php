@@ -1,13 +1,13 @@
 <?php
 
-namespace Stock\Helper;
+namespace SprykerTest\Shared\Stock\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
-class StockData extends Module
+class StockDataHelper extends Module
 {
 
     use LocatorHelperTrait;

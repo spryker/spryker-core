@@ -8,6 +8,6 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\LocatorHelper
         - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
         - \Checkout\Module\Functional
-        - \Customer\Helper\CustomerData
-        - \Product\Helper\ProductData
-        - \Stock\Helper\StockData
+        - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+        - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+        - \SprykerTest\Shared\Stock\Helper\StockDataHelper

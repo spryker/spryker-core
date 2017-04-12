@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
   enabled:
     - \SprykerTest\Shared\Testify\Helper\Environment
-    - \Propel\Helper\Transaction
+    - \SprykerTest\Shared\Propel\Helper\TransactionHelper

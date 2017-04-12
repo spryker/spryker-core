@@ -1,12 +1,13 @@
 <?php
-namespace Discount\Helper;
+
+namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
-class DiscountData extends Module
+class DiscountDataHelper extends Module
 {
 
     use DataCleanupHelperTrait;
