@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Application\Module;
+namespace SprykerTest\Shared\Application\Helper;
 
-use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
+use Codeception\Module;
 use Codeception\TestInterface;
-use Exception;
-use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 
-class Zed extends Infrastructure
+class ZedHelper extends Module
 {
 
     /**
@@ -25,30 +23,11 @@ class Zed extends Infrastructure
     /**
      * @param \Codeception\TestInterface $test
      *
-     * @throws \Exception
-     *
-     * @return void
-     */
-    public function _before(TestInterface $test)
-    {
-        parent::_before($test);
-
-        $process = $this->runTestSetup('--restore');
-
-        if ($process->getExitCode() != 0) {
-            throw new Exception('An error in data restore occured: ' . $process->getErrorOutput());
-        }
-    }
-
-    /**
-     * @param \Codeception\TestInterface $test
-     *
      * @return void
      */
     public function _after(TestInterface $test)
     {
-        Propel::closeConnections();
-        static::$alreadyLoggedIn = false;
+         static::$alreadyLoggedIn = false;
     }
 
     /**
@@ -64,9 +43,6 @@ class Zed extends Infrastructure
     }
 
     /**
-     * Set cookie after login. When cookie given do not login in again.
-     * This currently does not work.
-     *
      * @param string $username
      * @param string $password
      *
@@ -80,11 +56,11 @@ class Zed extends Infrastructure
             return;
         }
 
-        $i->amOnPage(LoginPage::URL);
+        $i->amOnPage('/auth/login');
 
-        $i->fillField(LoginPage::SELECTOR_USERNAME_FIELD, $username);
-        $i->fillField(LoginPage::SELECTOR_PASSWORD_FIELD, $password);
-        $i->click(LoginPage::SELECTOR_SUBMIT_BUTTON);
+        $i->fillField('#auth_username', $username);
+        $i->fillField('#auth_password', $password);
+        $i->click('Login');
 
         static::$alreadyLoggedIn = true;
     }

@@ -37,7 +37,8 @@ interface TransferFacadeInterface
 
     /**
      * Specification:
-     * - Loads all *transfer.xml definitions
+     * - Loads all *databuilder.xml and *transfer.xml definitions
+     * - Merges definitions
      * - Generates transfer data builder objects
      *
      * @api

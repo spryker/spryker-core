@@ -10,7 +10,7 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
-        - \Application\Module\Zed
+        - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
 

@@ -18,7 +18,7 @@ class DataBuilderGeneratorConsole extends Console
 {
 
     const COMMAND_NAME = 'transfer:databuilder:generate';
-    const COMMAND_DESCRIPTION = 'Generates data builders from transfer XML definition files';
+    const COMMAND_DESCRIPTION = 'Generates data builders from databuilder XML definition files';
 
     /**
      * @return void
