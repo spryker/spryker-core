@@ -54,7 +54,7 @@ class DiscountDataHelper extends Module
      */
     private function getDiscountQuery()
     {
-        return $this->getLocator()->product()->queryContainer();
+        return $this->getLocator()->discount()->queryContainer();
     }
 
 }
