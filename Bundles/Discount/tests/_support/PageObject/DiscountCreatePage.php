@@ -83,9 +83,10 @@ class DiscountCreatePage
      */
     public function tab($tabName)
     {
-        // should be refactored to include proper tab locators
+        $xpath = sprintf('//div[@class="tabs-container"]/ul/li/a[contains(., "%s")]', $tabName);
+
         $this->tester->comment("At [$tabName] Tab");
-        $this->tester->click($tabName);
+        $this->tester->click($xpath);
 
         return $this;
     }
@@ -109,6 +110,8 @@ class DiscountCreatePage
     public function createDiscount($discountName, $override = [])
     {
         $i = $this->tester;
+        $i->amZed();
+        $i->amLoggedInUser();
 
         $dynamicData = [
             'name' => $this->discountData[$discountName]['name'] . ' ' . rand(1, 999),
@@ -121,7 +124,6 @@ class DiscountCreatePage
         $this->open();
 
         $data = array_merge($this->discountData[$discountName], $dynamicData, $override);
-
         !$data['type'] ?: $i->selectOption('#discount_discountGeneral_discount_type', $data['type']);
         !$data['name'] ?: $i->fillField('#discount_discountGeneral_display_name', $data['name']);
         !$data['description'] ?: $i->fillField('#discount_discountGeneral_description',  $data['description']);
@@ -178,6 +180,7 @@ class DiscountCreatePage
     {
         $i = $this->tester;
         $i->click(self::BTN_CALCULATION_GET);
+        $i->wait(2);
         $i->dontSeeElement(self::DISCOUNT_CALCULATION_GROUP);
         $i->seeElement(self::FIELD_DISCOUNT_QUERY);
         $i->seeInField(self::FIELD_DISCOUNT_QUERY, $query);

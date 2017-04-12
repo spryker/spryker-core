@@ -64,26 +64,4 @@ class DiscountCreateCest
         $i->see('This value should not be blank');
     }
 
-    /**
-     * @param \Discount\ZedPresentationTester $i
-     * @param \Discount\PageObject\DiscountCreatePage $createPage
-     *
-     * @return void
-     */
-    public function simpleDiscountComputation(ZedPresentationTester $i, DiscountCreatePage $createPage)
-    {
-        $createPage->open()->tab('Discount calculation');
-        $createPage->fillInDiscountRule(0, 'item-price', 'equal', '12');
-        $createPage->assertDiscountQuery("item-price = '12'");
-        $i->click('Add rule');
-        $createPage->fillInDiscountRule(1, 'item-quantity', 'greater', '2');
-        $createPage->assertDiscountQuery("item-price = '12' AND item-quantity > '2'");
-        $i->click('Delete', '#builder_calculation_rule_0');
-        $createPage->assertDiscountQuery("item-quantity > '2'");
-        $i->click('Add rule');
-        $createPage->fillInDiscountRule(1, 'attribute.width', 'less or equal', '500');
-        $createPage->changeDiscountGroupOperator('OR');
-        $createPage->assertDiscountQuery("item-quantity > '2' OR attribute.width <= '500'");
-    }
-
 }
