@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsCollector\Persistence\Collector\Propel;
+namespace Spryker\Zed\CmsCollector\Persistence\Collector;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
-class CmsPageCollectorQuery extends AbstractPropelCollectorQuery
+abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQuery
 {
 
     /**
@@ -28,21 +28,21 @@ class CmsPageCollectorQuery extends AbstractPropelCollectorQuery
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
             Criteria::INNER_JOIN
         )
-        ->addJoin(
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
-            Criteria::INNER_JOIN
-        )
-        ->addJoin(
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
-            Criteria::INNER_JOIN
-        )
-        ->addAnd(
-            SpyUrlTableMap::COL_FK_LOCALE,
-            $this->getLocale()->getIdLocale(),
-            Criteria::EQUAL
-        );
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+                Criteria::INNER_JOIN
+            )
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyUrlTableMap::COL_FK_LOCALE,
+                $this->getLocale()->getIdLocale(),
+                Criteria::EQUAL
+            );
 
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, 'data');
         $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, 'url');
@@ -51,6 +51,9 @@ class CmsPageCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION ,$this->getMaxVersionSubQuery()));
     }
 
+    /**
+     * @return string
+     */
     protected function getMaxVersionSubQuery()
     {
         $maxVersionQuery = SpyCmsVersionQuery::create()

@@ -16,7 +16,7 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
-class CmsPageCollector extends AbstractStoragePropelCollector
+class CmsVersionPageCollector extends AbstractStoragePropelCollector
 {
 
     /**
@@ -60,7 +60,7 @@ class CmsPageCollector extends AbstractStoragePropelCollector
      *
      * @return array
      */
-    protected function extractPlaceholders($glossaryKeyMappings, $localeName)
+    protected function extractPlaceholders(array $glossaryKeyMappings, $localeName)
     {
         $placeholders = [];
         foreach ($glossaryKeyMappings as $glossaryKeyMapping) {

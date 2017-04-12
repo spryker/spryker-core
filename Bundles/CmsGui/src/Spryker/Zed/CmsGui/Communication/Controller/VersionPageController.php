@@ -19,7 +19,7 @@ class VersionPageController extends AbstractController
      */
     public function publishAction()
     {
-        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(1);
+        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(3);
 //        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(2);
         dump($cmsPageTransfer);
         dump('Published');die;
@@ -31,7 +31,7 @@ class VersionPageController extends AbstractController
     public function rollbackAction()
     {
 
-        $this->getFactory()->getCmsFacade()->rollback(1,6);
+        $this->getFactory()->getCmsFacade()->rollback(1,2);
         dump('Revert');die;
     }
 }
