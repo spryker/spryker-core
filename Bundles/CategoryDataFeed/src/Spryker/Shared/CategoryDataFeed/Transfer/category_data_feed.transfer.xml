@@ -5,7 +5,7 @@
 
     <transfer name="CategoryDataFeed">
         <property name="joinAbstractProduct" type="bool" />
-        <property name="idLocale" type="integer" />
+        <property name="idLocale" type="int" />
         <property name="updatedFrom" type="string" />
         <property name="updatedTo" type="string" />
     </transfer>

@@ -11,7 +11,7 @@
         <property name="joinOption" type="bool" />
         <property name="updatedFrom" type="string" />
         <property name="updatedTo" type="string" />
-        <property name="idLocale" type="integer" />
+        <property name="idLocale" type="int" />
     </transfer>
 
 </transfers>
