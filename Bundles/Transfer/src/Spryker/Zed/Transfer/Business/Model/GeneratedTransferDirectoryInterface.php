@@ -7,15 +7,12 @@
 
 namespace Spryker\Zed\Transfer\Business\Model;
 
-/**
- * @deprecated Is replaced by \Spryker\Zed\Transfer\Business\Model\TransferGeneratedDirectoryInterface
- */
-interface TransferCleanerInterface
+interface GeneratedTransferDirectoryInterface
 {
 
     /**
      * @return void
      */
-    public function cleanDirectory();
+    public function clear();
 
 }

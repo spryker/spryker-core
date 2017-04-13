@@ -7,15 +7,12 @@
 
 namespace Spryker\Zed\Setup\Business\Model;
 
-/**
- * @deprecated Use \Spryker\Zed\Setup\Business\Model\GeneratedDirectoryInterface instead
- */
-interface DirectoryRemoverInterface
+interface GeneratedDirectoryInterface
 {
 
     /**
      * @return void
      */
-    public function execute();
+    public function clear();
 
 }

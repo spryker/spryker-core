@@ -10,6 +10,7 @@ namespace Spryker\Zed\Setup\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
+use Spryker\Zed\Setup\Business\Model\GeneratedDirectory;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
@@ -40,6 +41,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createGeneratedDirectoryModel() instead
+     *
      * @return \Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface
      */
     public function createModelGeneratedDirectoryRemover()
@@ -50,6 +53,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createGeneratedDirectoryModel() instead
+     *
      * @param string $path
      *
      * @return \Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface
@@ -197,6 +202,34 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     protected function createDeployPreparePropelConsole()
     {
         return new DeployPreparePropelConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Setup\Business\Model\GeneratedDirectoryInterface
+     */
+    public function createGeneratedDirectoryModel()
+    {
+        return new GeneratedDirectory(
+            $this->getConfig()->getGeneratedDirectory(),
+            $this->getFileSystem(),
+            $this->getFinder()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFileSystem()
+    {
+        return $this->getProvidedDependency(SetupDependencyProvider::SYMFONY_FILE_SYSTEM);
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder()
+    {
+        return $this->getProvidedDependency(SetupDependencyProvider::SYMFONY_FINDER);
     }
 
 }

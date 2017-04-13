@@ -50,11 +50,25 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use emptyGeneratedDirectory() instead
+     *
      * @return void
      */
     public function removeGeneratedDirectory()
     {
         $this->getFactory()->createModelGeneratedDirectoryRemover()->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function emptyGeneratedDirectory()
+    {
+        $this->getFactory()->createGeneratedDirectoryModel()->clear();
     }
 
     /**

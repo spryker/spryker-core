@@ -12,23 +12,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Please use \Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole instead
- *
- * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */
-class RemoveGeneratedDirectoryConsole extends Console
+class EmptyGeneratedDirectoryConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:remove-generated-directory';
-    const DESCRIPTION = 'Remove the directory where generated files are stored';
+    const COMMAND_NAME = 'setup:empty-generated-directory';
 
     /**
      * @return void
      */
-    protected function configure()
+    public function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setDescription('Empty the directory where generated files are stored');
 
         parent::configure();
     }
@@ -37,11 +34,11 @@ class RemoveGeneratedDirectoryConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->removeGeneratedDirectory();
+        $this->getFacade()->emptyGeneratedDirectory();
     }
 
 }
