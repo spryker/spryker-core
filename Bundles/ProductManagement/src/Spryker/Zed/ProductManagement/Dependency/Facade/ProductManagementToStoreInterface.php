@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToStoreInterface
 {
+
     /**
      * @return string
      */
     public function getCurrencyIsoCode();
+
 }

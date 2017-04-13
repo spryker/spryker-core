@@ -197,9 +197,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addStore(Container $container)
     {
@@ -209,4 +209,5 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         return $container;
     }
+
 }
