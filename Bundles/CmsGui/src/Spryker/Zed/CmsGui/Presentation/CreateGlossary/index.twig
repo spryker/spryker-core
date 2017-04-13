@@ -6,6 +6,8 @@
 {% block section_title widget_title %}
 
 {% block action %}
+    {% set redirectUrl = url('/cms-gui/create-glossary', {'id-cms-page' : idCmsPage}) %}
+    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
     {{ editActionButton(url('/cms-gui/edit-page', {'id-cms-page': idCmsPage}), 'Edit page' | trans) }}
 
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}

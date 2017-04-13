@@ -46,6 +46,7 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
 
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, 'data');
         $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, 'url');
+        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'is_active');
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_VERSION);
 
         $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION ,$this->getMaxVersionSubQuery()));

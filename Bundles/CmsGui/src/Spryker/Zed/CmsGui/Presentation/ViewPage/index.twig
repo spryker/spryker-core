@@ -12,10 +12,19 @@
 
     {{ editActionButton(url('/cms-gui/edit-page', { 'id-cms-page': cmsPage.fkPage }), 'Edit page' | trans) }}
     {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {{ viewActionButton(url('/cms-gui/version-page/history', {'id-cms-page': cmsPage.fkPage , 'redirect-url' : redirectUrl }), 'Version History' | trans) }}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
+    <div class="well">
+        {% filter trans|raw %}
+
+            <p><i class="fa fa-info-circle" aria-hidden="true"></i> You are viewing a published page. It was published by <b>Max Musermann</b> on <b>01/02/2017</b>.</p>
+            <p><i>Note: When editing a page you will be working on a draft, which you can then publish.</i></p>
+        {% endfilter %}
+    </div>
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
             <p>

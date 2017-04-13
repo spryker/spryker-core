@@ -48,6 +48,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const VALUE = 'value';
     const IS_ACTIVE = 'is_active';
     const CMS_URLS = 'cmsUrls';
+    const CMS_VERSION_COUNT = 'cmsVersionCount';
     const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
     const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
     const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
@@ -155,11 +156,29 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
                 Criteria::LEFT_JOIN
             )
-            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::CMS_URLS)
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyUrlTableMap::COL_URL), static::CMS_URLS)
             ->innerJoinCmsTemplate()
             ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
             ->groupBy(static::TEMPLATE_NAME)
             ->groupBy('name');
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale)
+    {
+        return $this->queryPagesWithTemplatesForSelectedLocale($idLocale)
+            ->addJoin(
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+            Criteria::LEFT_JOIN
+            )
+            ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT);
     }
 
     /**

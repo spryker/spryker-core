@@ -35,7 +35,7 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
             'url' => $collectItemData['url'],
             'valid_from' => $cmsDataArray[SpyCmsPageTableMap::COL_VALID_FROM],
             'valid_to' => $cmsDataArray[SpyCmsPageTableMap::COL_VALID_TO],
-            'is_active' => $cmsDataArray[SpyCmsPageTableMap::COL_IS_ACTIVE],
+            'is_active' => $collectItemData['is_active'],
             'id' => $cmsDataArray[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             'template' => $cmsDataArray[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_PATH],
             'placeholders' => $this->extractPlaceholders($cmsDataArray[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME], $localeName),

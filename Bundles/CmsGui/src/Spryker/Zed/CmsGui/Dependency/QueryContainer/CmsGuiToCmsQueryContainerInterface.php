@@ -35,6 +35,13 @@ interface CmsGuiToCmsQueryContainerInterface
     public function queryPagesWithTemplatesForSelectedLocale($idLocale);
 
     /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale);
+
+    /**
      * @param array $placeholders
      * @param int $idCmsPage
      *

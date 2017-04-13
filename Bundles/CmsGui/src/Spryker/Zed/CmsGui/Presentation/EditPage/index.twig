@@ -7,6 +7,7 @@
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : idCmsPage}) %}
+    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
     {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': pageForm.vars.data.isActive}) }}
 
     {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}

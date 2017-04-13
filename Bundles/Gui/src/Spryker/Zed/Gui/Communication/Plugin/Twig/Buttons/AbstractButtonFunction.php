@@ -28,9 +28,17 @@ abstract class AbstractButtonFunction extends TwigFunction
     protected function getFunction()
     {
         return function ($url, $title, $options = []) {
-            $options[ButtonUrlGenerator::ICON] = $this->getIcon();
-            $options[ButtonUrlGenerator::BUTTON_CLASS] = $this->getButtonClass();
-            $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
+            if (!array_key_exists(ButtonUrlGenerator::ICON, $options)) {
+                $options[ButtonUrlGenerator::ICON] = $this->getIcon();
+            }
+
+            if (!array_key_exists(ButtonUrlGenerator::BUTTON_CLASS, $options)) {
+                $options[ButtonUrlGenerator::BUTTON_CLASS] = $this->getButtonClass();
+            }
+
+            if (!array_key_exists(ButtonUrlGenerator::DEFAULT_CSS_CLASSES, $options)) {
+                $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
+            }
 
             $button = $this->createButtonUrlGenerator($url, $title, $options);
 
