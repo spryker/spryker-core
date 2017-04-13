@@ -9,6 +9,8 @@ namespace Spryker\Zed\Calculation\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Calculation\Business\Calculator\ItemGrossSumPriceCalculator;
+use Spryker\Zed\Calculation\Business\Calculator\ItemNetSumPriceCalculator;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -33,6 +35,123 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     {
         return $this->getFactory()->createStackExecutor()->recalculate($quoteTransfer);
     }
+
+    // START: new calculators
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateItemPrice(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createPriceCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductOptionPriceAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createProductOptionPriceAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemDiscountAmountAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createItemDiscountAmountAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemDiscountAmountFullAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createItemDiscountAmountFullAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     */
+    public function calculateItemTaxAmountFullAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createItemTaxAmountFullAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemSumAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createItemSumAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemPriceToPayAggregation(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createItemPriceToPayAggregator()
+            ->recalculate($quoteTransfer);
+    }
+
+
+    // END: new calculators
 
     /**
      * Specific calculator

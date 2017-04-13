@@ -29,6 +29,19 @@ interface CalculationFacadeInterface
     public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
+     *
+     * Specification
+     *  - Calculates item prices, based on store tax mode (gross/net)
+     *  - Calculates item sum (gross/net) price
+     *  - Calculate  item option sum (gross/net) price
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemPrice(QuoteTransfer $quoteTransfer);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -100,5 +113,75 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculates total item option amount uses ProductOption::getSumPrice()
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductOptionPriceAggregation(QuoteTransfer $quoteTransfer);
+
+
+    /**
+     *
+     * Specification:
+     *  - Calculates item total discount amount without additions (options, item expenses)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemDiscountAmountAggregation(QuoteTransfer $quoteTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculates item total discount amount with additions (options, item expenses)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemDiscountAmountFullAggregation(QuoteTransfer $quoteTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculates item total tax amount with additions (options, item expenses)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     */
+    public function calculateItemTaxAmountFullAggregation(QuoteTransfer $quoteTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculates item sum aggregation with item and additions (options, item expenses)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemSumAggregation(QuoteTransfer $quoteTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculate item price to pay with additions (options, item expenses) after discounts
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateItemPriceToPayAggregation(QuoteTransfer $quoteTransfer);
 
 }

@@ -14,4 +14,12 @@ class CalculationConfig extends AbstractBundleConfig
 
     const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
 
+    /**
+     * @return bool
+     */
+    public function enableNewCalculators()
+    {
+        return true;
+    }
+
 }

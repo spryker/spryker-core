@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossSumCalculator;
 
 /**
  * @group Unit
@@ -98,11 +98,11 @@ class ItemGrossAmountsCalculatorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossSumCalculator
      */
     protected function createItemGrossAmountsCalculator()
     {
-        return new ItemGrossAmountsCalculator();
+        return new ItemGrossSumCalculator();
     }
 
     /**

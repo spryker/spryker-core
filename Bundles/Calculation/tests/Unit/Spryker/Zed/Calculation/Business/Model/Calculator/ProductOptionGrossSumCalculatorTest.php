@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossSumCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
 
 /**
@@ -90,11 +90,11 @@ class ProductOptionGrossSumCalculatorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossSumCalculator
      */
     protected function createItemGrossAmountsCalculator()
     {
-        return new ItemGrossAmountsCalculator();
+        return new ItemGrossSumCalculator();
     }
 
     /**

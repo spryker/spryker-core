@@ -44,6 +44,10 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
+
+        <!-- START: new calculator fields -->
+        <property name="taxMode" type="string" />
+        <!-- END: new calculator fields -->
     </transfer>
 
     <transfer name="Item">
@@ -53,6 +57,34 @@
         <property name="unitItemTotal" type="int" />
         <property name="sumItemTotal" type="int" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
+
+        <!-- START: new calculator fields -->
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="taxAmountFullAggregation" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="sumDiscountAmount" type="int" />
+
+        <property name="sumAggregation" type="int" />
+
+        <property name="productOptionPriceAggregation" type="int" />
+        <property name="expensePriceAggregation" type="int" />
+
+        <property name="discountAmountAggregation" type="int" />
+        <property name="discountAmountFullAggregation" type="int" />
+
+        <property name="priceToPayAggregation" type="int" />
+
+        <!-- END: new calculator fields -->
+
     </transfer>
 
     <transfer name="ProductOption">
@@ -60,6 +92,22 @@
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+
+        <!-- START: new calculator fields -->
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="discountAmountAggregation" type="int" />
+
+        <!-- END: new calculator fields -->
+
     </transfer>
 
 </transfers>

@@ -22,6 +22,8 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 
     const CALCULATOR_STACK = 'calculator stack';
 
+    const CALCULATOR_PLUGIN_STACK = 'calculator plugin stack';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -31,6 +33,10 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CALCULATOR_STACK] = function (Container $container) {
             return $this->getCalculatorStack($container);
+        };
+
+        $container[static::CALCULATOR_PLUGIN_STACK] = function (Container $container) {
+            return $this->getCalculatorPluginStack($container);
         };
 
         return $container;
@@ -62,5 +68,16 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             new GrandTotalTotalsCalculatorPlugin(),
         ];
     }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     */
+    protected function getCalculatorPluginStack(Container $container)
+    {
+        return [];
+    }
+
 
 }
