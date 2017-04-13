@@ -15,7 +15,7 @@ class Environment extends Module
 
     const MODE_ISOLATED = 'isolated';
 
-    const MODE_DEFAULT_ROOT = '../../../../..';
+    const MODE_DEFAULT_ROOT = '../../../../../../../../..';
     const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
 
     /**
@@ -29,7 +29,7 @@ class Environment extends Module
             $path = self::MODE_ISOLATED_ROOT;
         }
 
-        $applicationRoot = Configuration::projectDir() . $path;
+        $applicationRoot = realpath(Configuration::projectDir() . $path);
 
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', 'DE');
