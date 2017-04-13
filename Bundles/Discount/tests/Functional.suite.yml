@@ -1,7 +1,0 @@
-class_name: FunctionalTester
-modules:
-  enabled:
-    - \SprykerTest\Shared\Testify\Helper\Environment
-    - \Config\Module\ConfigInit
-    - \Propel\Module\PropelInstall
-    - \SprykerTest\Shared\Propel\Helper\TransactionHelper
