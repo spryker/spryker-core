@@ -8,25 +8,25 @@
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
-use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
-use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
+use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 
 /**
  * Auto-generated group annotations

@@ -7,9 +7,9 @@
 namespace SprykerTest\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations

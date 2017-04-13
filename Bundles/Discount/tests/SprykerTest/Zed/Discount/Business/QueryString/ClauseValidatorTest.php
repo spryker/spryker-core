@@ -14,13 +14,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group ClauseValidatorTest
+ * Add your own group annotations below this line
  */
 class ClauseValidatorTest extends PHPUnit_Framework_TestCase
 {

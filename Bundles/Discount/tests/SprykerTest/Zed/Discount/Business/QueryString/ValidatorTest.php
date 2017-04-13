@@ -16,13 +16,14 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group ValidatorTest
+ * Add your own group annotations below this line
  */
 class ValidatorTest extends PHPUnit_Framework_TestCase
 {

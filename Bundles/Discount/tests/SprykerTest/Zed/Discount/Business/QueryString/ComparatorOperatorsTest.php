@@ -13,13 +13,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group ComparatorOperatorsTest
+ * Add your own group annotations below this line
  */
 class ComparatorOperatorsTest extends PHPUnit_Framework_TestCase
 {

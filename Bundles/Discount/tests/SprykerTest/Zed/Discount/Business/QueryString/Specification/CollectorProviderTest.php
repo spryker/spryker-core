@@ -17,14 +17,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Specification
  * @group CollectorProviderTest
+ * Add your own group annotations below this line
  */
 class CollectorProviderTest extends PHPUnit_Framework_TestCase
 {

@@ -14,8 +14,8 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
@@ -23,6 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  * @group Specification
  * @group CollectorSpecification
  * @group CollectorAndSpecificationTest
+ * Add your own group annotations below this line
  */
 class CollectorAndSpecificationTest extends PHPUnit_Framework_TestCase
 {

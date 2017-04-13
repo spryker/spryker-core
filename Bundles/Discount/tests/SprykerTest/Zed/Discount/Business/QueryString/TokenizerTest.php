@@ -11,13 +11,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group TokenizerTest
+ * Add your own group annotations below this line
  */
 class TokenizerTest extends PHPUnit_Framework_TestCase
 {

@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations

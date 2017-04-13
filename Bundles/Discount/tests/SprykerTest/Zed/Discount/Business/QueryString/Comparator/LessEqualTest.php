@@ -12,14 +12,15 @@ use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Comparator
  * @group LessEqualTest
+ * Add your own group annotations below this line
  */
 class LessEqualTest extends PHPUnit_Framework_TestCase
 {

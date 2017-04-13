@@ -12,14 +12,15 @@ use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Comparator
  * @group NotEqualTest
+ * Add your own group annotations below this line
  */
 class NotEqualTest extends PHPUnit_Framework_TestCase
 {

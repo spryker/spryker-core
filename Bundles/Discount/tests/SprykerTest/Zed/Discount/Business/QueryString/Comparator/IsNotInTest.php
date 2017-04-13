@@ -13,14 +13,15 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Comparator
  * @group IsNotInTest
+ * Add your own group annotations below this line
  */
 class IsNotInTest extends PHPUnit_Framework_TestCase
 {

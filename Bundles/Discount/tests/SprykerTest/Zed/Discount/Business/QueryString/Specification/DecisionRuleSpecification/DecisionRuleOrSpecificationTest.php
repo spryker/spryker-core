@@ -13,8 +13,8 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
@@ -22,6 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
  * @group Specification
  * @group DecisionRuleSpecification
  * @group DecisionRuleOrSpecificationTest
+ * Add your own group annotations below this line
  */
 class DecisionRuleOrSpecificationTest extends PHPUnit_Framework_TestCase
 {

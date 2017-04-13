@@ -13,14 +13,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Specification
  * @group MetaDataProviderTest
+ * Add your own group annotations below this line
  */
 class MetaDataProviderTest extends PHPUnit_Framework_TestCase
 {

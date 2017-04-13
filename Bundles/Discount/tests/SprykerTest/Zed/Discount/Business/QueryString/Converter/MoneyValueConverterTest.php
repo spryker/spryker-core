@@ -17,14 +17,15 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Money\Business\MoneyFacade;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group QueryString
  * @group Converter
  * @group MoneyValueConverterTest
+ * Add your own group annotations below this line
  */
 class MoneyValueConverterTest extends PHPUnit_Framework_TestCase
 {
