@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Transfer\Business\Model\DataBuilderCleaner;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
 use Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectory;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
@@ -147,7 +146,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /*
+    /**
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
     public function createTransferGeneratedDirectory()
