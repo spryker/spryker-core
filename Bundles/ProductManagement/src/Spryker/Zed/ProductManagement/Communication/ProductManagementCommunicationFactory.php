@@ -506,7 +506,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface
      */
     protected function getStore()
     {
