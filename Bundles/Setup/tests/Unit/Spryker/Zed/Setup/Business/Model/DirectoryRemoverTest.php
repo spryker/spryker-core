@@ -12,6 +12,8 @@ use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @deprecated
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderCleaner;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
+use Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectory;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
@@ -24,6 +25,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
+use Spryker\Zed\Transfer\TransferDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
@@ -134,6 +136,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createTransferGeneratedDirectory() instead
+     *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
     public function createTransferCleaner()
@@ -143,14 +147,32 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
+    /*
+     * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
-    public function createDataBuilderCleaner()
+    public function createTransferGeneratedDirectory()
     {
-        return new DataBuilderCleaner(
-            $this->getConfig()->getDataBuilderTargetDirectory()
+        return new GeneratedTransferDirectory(
+            $this->getConfig()->getClassTargetDirectory(),
+            $this->getFileSystem(),
+            $this->getFinder()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFileSystem()
+    {
+        return $this->getProvidedDependency(TransferDependencyProvider::SYMFONY_FILE_SYSTEM);
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder()
+    {
+        return $this->getProvidedDependency(TransferDependencyProvider::SYMFONY_FINDER);
     }
 
     /**

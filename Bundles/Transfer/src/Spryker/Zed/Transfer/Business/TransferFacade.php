@@ -53,7 +53,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
      */
     public function deleteGeneratedTransferObjects()
     {
-        $this->getFactory()->createTransferCleaner()->cleanDirectory();
+        $this->getFactory()->createTransferGeneratedDirectory()->clear();
     }
 
     /**
