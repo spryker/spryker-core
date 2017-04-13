@@ -33,7 +33,7 @@ class DiscountViewPage
     }
 
     /**
-     * @param $identifier
+     * @param string $identifier
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class DiscountViewPage
     }
 
     /**
-     * @param $identifier
+     * @param string $identifier
      *
      * @return string
      */

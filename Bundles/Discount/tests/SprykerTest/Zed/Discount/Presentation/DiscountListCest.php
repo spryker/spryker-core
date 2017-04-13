@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\Discount\Presentation;
 
 use Codeception\Util\Locator;
-use SprykerTest\Zed\Discount\PresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountEditPage;
 use SprykerTest\Zed\Discount\PageObject\DiscountListPage;
 use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
+use SprykerTest\Zed\Discount\PresentationTester;
 
 /**
  * Auto-generated group annotations

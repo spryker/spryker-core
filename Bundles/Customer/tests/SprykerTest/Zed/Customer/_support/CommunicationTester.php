@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 
 /**
  * Inherited Methods

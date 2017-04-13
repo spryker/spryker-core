@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Discount\Presentation;
 
-use SprykerTest\Zed\Discount\PresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
+use SprykerTest\Zed\Discount\PresentationTester;
 
 /**
  * Auto-generated group annotations

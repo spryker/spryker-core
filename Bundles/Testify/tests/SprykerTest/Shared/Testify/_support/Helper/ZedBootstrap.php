@@ -12,8 +12,6 @@ use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\TestInterface;
 use Codeception\Util\Stub;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Zed\Testify\Bootstrap\ZedBootstrap as TestifyBootstrap;
 use Spryker\Zed\Twig\TwigConfig;
 use Symfony\Component\HttpFoundation\Request;
