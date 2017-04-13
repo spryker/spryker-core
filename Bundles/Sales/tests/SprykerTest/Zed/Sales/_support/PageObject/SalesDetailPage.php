@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Sales\Presentation\PageObject;
+namespace SprykerTest\Zed\Sales\PageObject;
 
 use SprykerTest\Zed\Sales\PresentationTester;
 

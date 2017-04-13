@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Sales\Presentation;
 
 use SprykerTest\Zed\Sales\PresentationTester;
-use SprykerTest\Zed\Sales\Presentation\PageObject\SalesDetailPage;
-use SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage;
+use SprykerTest\Zed\Sales\PageObject\SalesDetailPage;
+use SprykerTest\Zed\Sales\PageObject\SalesListPage;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +25,7 @@ class SalesListCest
 
     /**
      * @param \SprykerTest\Zed\Sales\PresentationTester $i
-     * @param \SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage $salesListPage
+     * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class SalesListCest
 
     /**
      * @param \SprykerTest\Zed\Sales\PresentationTester $i
-     * @param \SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage $salesListPage
+     * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
