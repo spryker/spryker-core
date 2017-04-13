@@ -159,6 +159,18 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
+     */
+    public function createDataBuilderGeneratedDirectory()
+    {
+        return new GeneratedTransferDirectory(
+            $this->getConfig()->getDataBuilderTargetDirectory(),
+            $this->getFileSystem(),
+            $this->getFinder()
+        );
+    }
+
+    /**
      * @return \Symfony\Component\Filesystem\Filesystem
      */
     protected function getFileSystem()
