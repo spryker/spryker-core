@@ -94,10 +94,19 @@ $autoloader = function ($className) {
             'SprykerTest',
             $classNameParts[1],
             $classNameParts[2],
+            $className,
+        ];
+        $filePathPartsHelper = [
+            __DIR__,
+            'Bundles',
+            $bundle,
+            'tests',
+            'SprykerTest',
+            $classNameParts[1],
+            $classNameParts[2],
             '_support',
             $className,
         ];
-
     }
 
     if (isset($filePathParts)) {
@@ -106,6 +115,15 @@ $autoloader = function ($className) {
             require $filePath;
 
             return true;
+        }
+
+        if (isset($filePathPartsHelper)) {
+            $filePath = implode(DIRECTORY_SEPARATOR, $filePathPartsHelper);
+            if (file_exists($filePath)) {
+                require $filePath;
+
+                return true;
+            }
         }
     }
 

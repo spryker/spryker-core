@@ -6,3 +6,6 @@ modules:
             browser: phantomjs
 
         - \Application\Module\Zed
+
+coverage:
+  enabled: false
