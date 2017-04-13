@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Yves\FactFinderGui\FactFinderGuiFactory getFactory()
- * @method \Spryker\Client\FactFinderGui\FactFinderGuiClientInterface getClient()
  */
 class TrackController extends AbstractController
 {
@@ -25,8 +24,7 @@ class TrackController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $factFinderTrackingRequestTransfer = $this->getFactory()
-            ->createFactFinderTrackingRequestTransfer();
+        $factFinderTrackingRequestTransfer = new FactFinderTrackingRequestTransfer();
         $factFinderTrackingRequestTransfer->fromArray($request->query->all());
 
         $factFinderTrackingRequestTransfer = $this->addSessionId($factFinderTrackingRequestTransfer);

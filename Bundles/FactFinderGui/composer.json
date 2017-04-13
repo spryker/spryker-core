@@ -1,5 +1,5 @@
 {
-  "name": "spryker/fact-finder",
+  "name": "spryker/fact-finder-gui",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "FACT-Finder/FACT-Finder-PHP-Library": "1.3.*"
+    "spryker/fact-finder": "^1.0.0"
   },
-  "description": "fact-finder bundle",
+  "description": "FactFinder GUI bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -7,6 +7,9 @@
 
 namespace Spryker\Yves\FactFinderGui\Controller;
 
+use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
+use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\FactFinderGui\Communication\Plugin\Provider\FactFinderGuiControllerProvider;
 use Spryker\Yves\Kernel\Controller\AbstractController;
@@ -14,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Yves\FactFinderGui\FactFinderGuiFactory getFactory()
- * @method \Spryker\Client\FactFinderGui\FactFinderGuiClientInterface getClient()
  */
 class IndexController extends AbstractController
 {
@@ -26,8 +28,7 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $factFinderSearchRequestTransfer = $this->getFactory()
-            ->createFactFinderSearchRequestTransfer();
+        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
         $factFinderSearchRequestTransfer->setQuery($request->query->get('query', '*'));
         $factFinderSearchRequestTransfer->setPage($request->query->get('page'));
         $factFinderSearchRequestTransfer->setSortName($request->query->get('sortName'));
@@ -76,8 +77,7 @@ class IndexController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $ffSuggestRequestTransfer = $this->getFactory()
-            ->createFactFinderSuggestRequestTransfer();
+        $ffSuggestRequestTransfer = new FactFinderSuggestRequestTransfer();
         $query = $request->query->get('query', '*');
 
         $ffSuggestRequestTransfer->setQuery($query);
@@ -96,8 +96,7 @@ class IndexController extends AbstractController
      */
     public function recommendationsAction(Request $request)
     {
-        $ffSuggestRequestTransfer = $this->getFactory()
-            ->createFactFinderRecommendationRequestTransfer();
+        $ffSuggestRequestTransfer = new FactFinderRecommendationRequestTransfer();
         $id = $request->query->get('id', '');
 
         $ffSuggestRequestTransfer->setId($id);

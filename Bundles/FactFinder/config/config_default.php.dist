@@ -3,7 +3,6 @@
  * Fact Finder
  */
 use Spryker\Shared\FactFinder\FactFinderConstants;
-use FACTFinder\Core\ManualConfiguration as FFManualConfiguration;
 
 $config[FactFinderConstants::ENV] = FactFinderConstants::ENV_PRODUCTION;
 $config[FactFinderConstants::ENV . FactFinderConstants::ENV_PRODUCTION] = [
@@ -14,8 +13,8 @@ $config[FactFinderConstants::ENV . FactFinderConstants::ENV_PRODUCTION] = [
     'context' => 'Spryker',
     'channel' => 'test',
     'language' => 'de',
-    'authenticationType' => FFManualConfiguration::ADVANCED_AUTHENTICATION,
-//    'authenticationType' => FFManualConfiguration::SIMPLE_AUTHENTICATION,
+    'authenticationType' => 'advanced',
+//    'authenticationType' => 'manual',
     'userName' => 'campaignManager',
     'password' => 'change123',
     'authenticationPrefix' => 'FACT-FINDER',
