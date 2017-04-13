@@ -669,13 +669,11 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DiscountFacade
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     protected function createDiscountFacade()
     {
-        $discountFacade = new DiscountFacade();
-
-        return $discountFacade;
+        return $this->tester->getLocator()->discount()->facade();
     }
 
     /**

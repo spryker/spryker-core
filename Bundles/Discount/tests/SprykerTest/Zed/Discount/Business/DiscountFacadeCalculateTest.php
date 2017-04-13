@@ -20,6 +20,7 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -33,6 +34,8 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
  */
 class DiscountFacadeCalculateTest extends Test
 {
+
+    use LocatorHelperTrait;
 
     /**
      * @return void
@@ -60,7 +63,7 @@ class DiscountFacadeCalculateTest extends Test
 
         $quoteTransfer = $this->createQuoteTransfer();
 
-        $discountFacade = new DiscountFacade();
+        $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
@@ -83,7 +86,7 @@ class DiscountFacadeCalculateTest extends Test
 
         $quoteTransfer = $this->createQuoteTransfer();
 
-        $discountFacade = new DiscountFacade();
+        $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
@@ -106,7 +109,7 @@ class DiscountFacadeCalculateTest extends Test
 
         $quoteTransfer = $this->createQuoteTransfer();
 
-        $discountFacade = new DiscountFacade();
+        $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
@@ -141,7 +144,7 @@ class DiscountFacadeCalculateTest extends Test
         $discountTransfer->setVoucherCode($code2);
         $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-        $discountFacade = new DiscountFacade();
+        $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
         $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
@@ -223,6 +226,14 @@ class DiscountFacadeCalculateTest extends Test
         $voucherEntity->save();
 
         return $voucherEntity;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
+     */
+    protected function getFacade()
+    {
+        return $this->getLocator()->discount()->facade();
     }
 
 }
