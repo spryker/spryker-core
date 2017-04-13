@@ -10,6 +10,9 @@ namespace Spryker\Zed\Cache\Business\Model;
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @deprecated Use \Spryker\Zed\Cache\Business\Model\CacheClearer instead
+ */
 class AutoloaderCacheDelete
 {
 

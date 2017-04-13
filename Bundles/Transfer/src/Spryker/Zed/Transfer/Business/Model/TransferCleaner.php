@@ -10,6 +10,9 @@ namespace Spryker\Zed\Transfer\Business\Model;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Is replaced by \Spryker\Zed\Transfer\Business\Model\TransferGeneratedDirectory
+ */
 class TransferCleaner implements TransferCleanerInterface
 {
 
