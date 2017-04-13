@@ -5,14 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ZedCommunication\Controller;
+namespace SprykerTest\Zed\Customer\Communication\Controller;
 
-use Customer\ZedCommunicationTester;
+use SprykerTest\Zed\Customer\CommunicationTester;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Customer
- * @group ZedCommunication
+ * @group Communication
  * @group Controller
  * @group EditControllerCest
  * Add your own group annotations below this line
@@ -28,21 +30,21 @@ class EditControllerCest
     private $customer;
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function _before(ZedCommunicationTester $i)
+    public function _before(CommunicationTester $i)
     {
         $this->customer = $i->haveCustomer();
     }
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function testIndexAction(ZedCommunicationTester $i)
+    public function testIndexAction(CommunicationTester $i)
     {
         $url = '/customer/edit?id-customer=' . (int)$this->customer->getIdCustomer();
         $i->amOnPage($url);
@@ -51,11 +53,11 @@ class EditControllerCest
     }
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function testEditUser(ZedCommunicationTester $i)
+    public function testEditUser(CommunicationTester $i)
     {
         $email = $this->customer->getEmail();
 

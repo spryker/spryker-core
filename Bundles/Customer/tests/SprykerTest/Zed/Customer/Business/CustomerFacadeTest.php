@@ -10,21 +10,24 @@ namespace SprykerTest\Zed\Customer\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Customer\Address;
+use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Customer\Business\Customer\Address;
-use Spryker\Zed\Customer\Business\Customer\Customer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Customer
  * @group Business
+ * @group Facade
  * @group CustomerFacadeTest
+ * Add your own group annotations below this line
  */
 class CustomerFacadeTest extends Test
 {

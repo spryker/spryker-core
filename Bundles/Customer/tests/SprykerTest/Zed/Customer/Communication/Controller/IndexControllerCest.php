@@ -1,17 +1,26 @@
 <?php
 
-namespace ZedCommunication;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Customer\Communication\Controller;
 
 use Codeception\Util\Stub;
-use Customer\ZedCommunicationTester;
+
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use SprykerTest\Zed\Customer\CommunicationTester;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Customer
- * @group ZedCommunication
+ * @group Communication
+ * @group Controller
  * @group IndexControllerCest
  * Add your own group annotations below this line
  */
@@ -19,11 +28,11 @@ class IndexControllerCest
 {
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function _before(ZedCommunicationTester $i)
+    public function _before(CommunicationTester $i)
     {
         $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $this->getMailFacadeMock());
     }
@@ -37,11 +46,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function listCustomers(ZedCommunicationTester $i)
+    public function listCustomers(CommunicationTester $i)
     {
         $i->amOnPage('/customer');
         $i->seeResponseCodeIs(200);
@@ -49,11 +58,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function addCustomer(ZedCommunicationTester $i)
+    public function addCustomer(CommunicationTester $i)
     {
         $customerTransfer = $this->getCustomerTransfer();
 
@@ -76,11 +85,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \Customer\ZedCommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
      *
      * @return void
      */
-    public function addCustomerWithoutNameAndFail(ZedCommunicationTester $i)
+    public function addCustomerWithoutNameAndFail(CommunicationTester $i)
     {
         $customerTransfer = $this->getCustomerTransfer();
         $email = $customerTransfer->getEmail();

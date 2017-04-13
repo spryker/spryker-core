@@ -12,7 +12,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 
 /**
- * @deprecated Please use `SprykerTest\Shared\Application\Helper\ZedHelper` instead.
+ * @deprecated Please use `SprykerTest\Shared\Application\Helper\YvesHelper` instead.
  */
 class Yves extends Module
 {

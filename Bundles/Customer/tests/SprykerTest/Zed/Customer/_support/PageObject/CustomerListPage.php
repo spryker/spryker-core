@@ -5,10 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Customer\Customer\Zed\Tester;
+namespace SprykerTest\Zed\Customer\PageObject;
 
-use Customer\ZedAcceptanceTester;
-
-class CustomerTester extends ZedAcceptanceTester
+class CustomerListPage
 {
+
+    const URL = '/customer';
+
+    const SELECTOR_TABLE = '.dataTables_wrapper';
+
 }
