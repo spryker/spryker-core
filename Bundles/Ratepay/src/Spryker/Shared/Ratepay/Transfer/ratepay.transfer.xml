@@ -119,8 +119,6 @@
         <property name="deviceFingerprint" type="string"/>
         <property name="deviceIdentSId" type="string"/>
 
-        <property name="customer" type="RatepayPaymentCustomer"/>
-
         <!-- These should be here, because then they are easily mapped to Symfony forms data source -->
         <property name="dateOfBirth" type="string"/>
         <property name="phone" type="string"/>

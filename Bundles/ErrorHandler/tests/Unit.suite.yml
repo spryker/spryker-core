@@ -2,6 +2,6 @@ class_name: UnitTester
 modules:
   enabled:
     - Asserts
-    - \Testify\Module\Environment
+    - \SprykerTest\Shared\Testify\Helper\Environment
     - \Config\Module\ConfigInit
     - \ErrorHandler\Module\Unit

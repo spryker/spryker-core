@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Money\Business\Model\Mapper\MoneyToTransferMapper;
 use Spryker\Zed\Money\MoneyDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ */
 class MoneyBusinessFactory extends AbstractBusinessFactory
 {
 

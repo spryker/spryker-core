@@ -61,14 +61,13 @@ class BundleParser implements BundleParserInterface
         $this->bundleDependencyCollectionTransfer = $bundleDependencyCollectionTransfer;
 
         $allFileDependencies = $this->parseDependencies($bundleName);
-
         $this->addAllDependencies($allFileDependencies);
         $this->addExternalBundleDependencies($allFileDependencies);
         $this->addLocatorBundleDependencies($allFileDependencies);
         $this->addPersistenceLayerDependencies($bundleName);
 
-        $callback = function (DependencyBundleTransfer $a, DependencyBundleTransfer $b) {
-            return strcmp($a->getBundle(), $b->getBundle());
+        $callback = function (DependencyBundleTransfer $dependencyBundleTransferA, DependencyBundleTransfer $dependencyBundleTransferB) {
+            return strcmp($dependencyBundleTransferA->getBundle(), $dependencyBundleTransferB->getBundle());
         };
 
         $dependencyBundles = $this->bundleDependencyCollectionTransfer->getDependencyBundles()->getArrayCopy();

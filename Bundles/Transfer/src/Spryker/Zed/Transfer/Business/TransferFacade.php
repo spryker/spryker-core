@@ -17,9 +17,7 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Loads all *transfer.xml definitions
-     * - Generates transfer objects
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,8 +31,21 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all generated transfer objects
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateDataBuilders(LoggerInterface $messenger)
+    {
+        $this->getFactory()->createDataBuilderGenerator($messenger)->execute();
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -46,8 +57,19 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Validates all generated transfer objects
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteGeneratedDataBuilderObjects()
+    {
+        $this->getFactory()->createDataBuilderGeneratedDirectory()->clear();
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
