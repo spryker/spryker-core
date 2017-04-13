@@ -17,12 +17,12 @@ class SalesListPage
     const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
 
     /**
-     * @var \Sales\ZedPresentationTester
+     * @var \SprykerTest\Zed\Sales\PresentationTester
      */
     protected $tester;
 
     /**
-     * @param \Sales\ZedPresentationTester $i
+     * @param \SprykerTest\Zed\Sales\PresentationTester $i
      */
     public function __construct(PresentationTester $i)
     {

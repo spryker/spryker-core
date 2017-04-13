@@ -25,12 +25,12 @@ class SalesDetailPage
     const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
 
     /**
-     * @var \Sales\ZedPresentationTester
+     * @var \SprykerTest\Zed\Sales\PresentationTester
      */
     protected $tester;
 
     /**
-     * @param \Sales\ZedPresentationTester $i
+     * @param \SprykerTest\Zed\Sales\PresentationTester $i
      */
     public function __construct(PresentationTester $i)
     {
