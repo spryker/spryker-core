@@ -16,6 +16,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Propel\Runtime\Propel;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -121,6 +122,8 @@ class DiscountFacadeCalculateTest extends Test
      */
     public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce()
     {
+        Propel::disableInstancePooling();
+
         $discountEntity = $this->createDiscountEntity(
             '',
             'sku = "*"',
