@@ -14,3 +14,5 @@ modules:
         - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
 
+coverage:
+    enabled: false
