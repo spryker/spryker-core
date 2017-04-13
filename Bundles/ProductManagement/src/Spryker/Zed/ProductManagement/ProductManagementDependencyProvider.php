@@ -19,6 +19,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
@@ -190,11 +191,22 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
-        $container[self::STORE] = function () {
-            return Store::getInstance();
-        };
+        $container = $this->addStore($container);
 
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function () {
+            return new ProductManagementToStoreBridge(Store::getInstance());
+        };
+
+        return $container;
+    }
 }

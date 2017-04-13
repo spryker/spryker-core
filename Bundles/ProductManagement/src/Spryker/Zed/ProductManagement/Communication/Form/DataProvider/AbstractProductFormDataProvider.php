@@ -23,6 +23,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -109,7 +110,7 @@ class AbstractProductFormDataProvider
     protected $imageUrlPrefix;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store|null
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null
      */
     protected $store;
 
@@ -126,7 +127,7 @@ class AbstractProductFormDataProvider
      * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
-     * @param \Spryker\Shared\Kernel\Store|null $store
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -141,7 +142,7 @@ class AbstractProductFormDataProvider
         array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
-        $store = null
+        ProductManagementToStoreInterface $store = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
