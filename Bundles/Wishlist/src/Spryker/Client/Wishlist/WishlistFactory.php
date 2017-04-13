@@ -66,4 +66,12 @@ class WishlistFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToCustomerInterface
+     */
+    public function getCustomerClient()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
+    }
+
 }

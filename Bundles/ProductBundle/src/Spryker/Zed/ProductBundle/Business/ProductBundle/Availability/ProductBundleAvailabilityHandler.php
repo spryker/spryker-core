@@ -77,7 +77,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundleProductSku
      *
-     * @return string
+     * @return void
      */
     public function updateBundleAvailability($bundleProductSku)
     {
@@ -150,12 +150,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             }
         }
 
-        $idAvailabilityAbstract = $this->availabilityFacade->saveProductAvailability(
-            $bundleProductSku,
-            $bundleAvailabilityQuantity
-        );
-
-        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, $bundleAvailabilityQuantity);
     }
 
     /**

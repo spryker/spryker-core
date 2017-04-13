@@ -93,6 +93,25 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItems(array $itemTransfers)
+    {
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        foreach ($itemTransfers as $itemTransfer) {
+            $cartChangeTransfer->addItem($itemTransfer);
+        }
+
+        return $this->getZedStub()->addItem($cartChangeTransfer);
+    }
+
+    /**
      * Removes the item with the given SKU
      *
      * @api

@@ -70,7 +70,7 @@ class SetController extends AbstractController
 
             $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
             if ($rowsAffected > 0) {
-                $this->addSuccessMessage('Tax set succefully updated.');
+                $this->addSuccessMessage('Tax set successfully updated.');
             }
         }
 
