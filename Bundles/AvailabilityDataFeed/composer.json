@@ -6,12 +6,12 @@
     }
   },
   "require": {
-    "spryker/availability": "^5.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^5.0.0",
     "spryker/stock": "^4.0.0"
   },
   "require-dev": {
+    "spryker/availability": "^5.0.0",
     "spryker/code-sniffer": "*",
     "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
