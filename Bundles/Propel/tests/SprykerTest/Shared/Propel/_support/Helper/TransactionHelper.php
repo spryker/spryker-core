@@ -46,7 +46,7 @@ class TransactionHelper extends Module
     {
         parent::_after($test);
 
-        Propel::getWriteConnection('zed')->rollBack();
+        Propel::getWriteConnection('zed')->forceRollBack();
     }
 
     /**
