@@ -16,8 +16,10 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Sales
- * @group ZedBusiness
+ * @group Business
  * @group Facade
  * @group SalesFacadeTest
  * Add your own group annotations below this line

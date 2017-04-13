@@ -13,8 +13,10 @@ use SprykerTest\Zed\Sales\Presentation\PageObject\SalesListPage;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Sales
- * @group ZedPresentation
+ * @group Presentation
  * @group SalesDetailCest
  * Add your own group annotations below this line
  */

@@ -2,30 +2,30 @@
 
 namespace SprykerTest\Zed\Sales\Presentation\Helper;
 
-use Application\Module\Zed;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
+use SprykerTest\Shared\Application\Helper\ZedHelper;
 
 class PresentationHelper extends Module
 {
 
     /**
-     * @param \Codeception\TestCase $e
+     * @param \Codeception\TestInterface $e
      *
      * @return void
      */
-    public function _before(TestCase $e)
+    public function _before(TestInterface $e)
     {
         $this->getZedModule()->amZed();
         $this->getZedModule()->amLoggedInUser();
     }
 
     /**
-     * @return \Application\Module\Zed
+     * @return \Codeception\Module|\SprykerTest\Shared\Application\Helper\ZedHelper
      */
     protected function getZedModule()
     {
-        return $this->getModule('\\' . Zed::class);
+        return $this->getModule('\\' . ZedHelper::class);
     }
 
 }
