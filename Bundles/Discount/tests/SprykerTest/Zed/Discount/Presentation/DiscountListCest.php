@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Discount\Presentation;
 
 use Codeception\Util\Locator;
 use SprykerTest\Zed\Discount\PresentationTester;
-use SprykerTest\Zed\Discount\Presentation\PageObject\DiscountEditPage;
-use SprykerTest\Zed\Discount\Presentation\PageObject\DiscountListPage;
-use SprykerTest\Zed\Discount\Presentation\PageObject\DiscountViewPage;
+use SprykerTest\Zed\Discount\PageObject\DiscountEditPage;
+use SprykerTest\Zed\Discount\PageObject\DiscountListPage;
+use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
 
 /**
  * Auto-generated group annotations
- * @group Discount
- * @group ZedPresentation
- * @group Discount
+ * @group SprykerTest
  * @group Zed
+ * @group Discount
+ * @group Presentation
  * @group DiscountListCest
  * Add your own group annotations below this line
  */
@@ -22,8 +27,8 @@ class DiscountListCest
 
     /**
      * @param \SprykerTest\Zed\Discount\PresentationTester $i
-     * @param \SprykerTest\Zed\Discount\Presentation\PageObject\DiscountEditPage $editPage
-     * @param \SprykerTest\Zed\Discount\Presentation\PageObject\DiscountViewPage $viewPage
+     * @param \SprykerTest\Zed\Discount\PageObject\DiscountEditPage $editPage
+     * @param \SprykerTest\Zed\Discount\PageObject\DiscountViewPage $viewPage
      *
      * @return void
      */

@@ -30,8 +30,9 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Discount
- * @group ZedBusiness
  * @group Business
  * @group Facade
  * @group DiscountFacadeTest

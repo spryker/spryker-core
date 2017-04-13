@@ -39,8 +39,10 @@ use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Discount
- * @group ZedBusiness
+ * @group Business
  * @group Calculator
  * @group CalculatorTest
  * Add your own group annotations below this line

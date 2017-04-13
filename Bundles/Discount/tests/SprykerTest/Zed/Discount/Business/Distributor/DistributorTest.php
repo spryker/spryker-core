@@ -15,13 +15,14 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Discount
  * @group Business
  * @group Distributor
  * @group DistributorTest
+ * Add your own group annotations below this line
  */
 class DistributorTest extends Test
 {

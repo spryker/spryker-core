@@ -1,19 +1,21 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Discount\Presentation;
 
 use SprykerTest\Zed\Discount\PresentationTester;
-use SprykerTest\Zed\Discount\Presentation\PageObject\DiscountCreatePage;
+use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Discount
- * @group ZedPresentation
+ * @group Presentation
  * @group DiscountCreateCest
  * Add your own group annotations below this line
  */
@@ -22,7 +24,7 @@ class DiscountCreateCest
 
     /**
      * @param \SprykerTest\Zed\Discount\PresentationTester $i
-     * @param \SprykerTest\Zed\Discount\Presentation\PageObject\DiscountCreatePage $createPage
+     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
@@ -34,7 +36,7 @@ class DiscountCreateCest
 
     /**
      * @param \SprykerTest\Zed\Discount\PresentationTester $i
-     * @param \SprykerTest\Zed\Discount\Presentation\PageObject\DiscountCreatePage $createPage
+     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
@@ -46,7 +48,7 @@ class DiscountCreateCest
 
     /**
      * @param \SprykerTest\Zed\Discount\PresentationTester $i
-     * @param \SprykerTest\Zed\Discount\Presentation\PageObject\DiscountCreatePage $createPage
+     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */

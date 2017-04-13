@@ -11,8 +11,10 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 
 /**
  * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Discount
- * @group ZedCommunication
+ * @group Communication
  * @group Plugin
  * @group Calculator
  * @group PercentagePluginTest
