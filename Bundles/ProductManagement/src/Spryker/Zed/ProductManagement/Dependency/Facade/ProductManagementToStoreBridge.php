@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 class ProductManagementToStoreBridge implements ProductManagementToStoreInterface
 {
 
-    /** @var \Spryker\Shared\Kernel\Store */
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
     protected $store;
 
     /**
