@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductGroup\Persistence" package="src.Orm.Zed.ProductGroup.Persistence">
+
+    <table name="spy_product_group" idMethod="native" allowPkInsert="true">
+        <column name="id_product_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+
+        <id-method-parameter value="spy_product_group_pk_seq"/>
+    </table>
+
+    <table name="spy_product_abstract_group" idMethod="native" allowPkInsert="true">
+        <column name="fk_product_group" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="position" required="true" type="INTEGER" default="0"/>
+
+        <foreign-key name="spy_product_abstract_group-fk_product_group" foreignTable="spy_product_group">
+            <reference local="fk_product_group" foreign="id_product_group"/>
+        </foreign-key>
+        <foreign-key name="spy_product_abstract_group-fk_product_abstract" foreignTable="spy_product_abstract">
+            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
+        </foreign-key>
+    </table>
+
+</database>
