@@ -24,26 +24,55 @@ class ProductDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProduct($override = [])
+    public function haveProduct(array $override = [])
     {
-        $productFacade = $this->getProductFacade();
-        $abstractProductId = $productFacade->createProductAbstract((new ProductAbstractBuilder())->build());
+        $productAbstractTransfer = (new ProductAbstractBuilder())->build();
 
-        $product = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProductId]))
+        $productFacade = $this->getProductFacade();
+        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+
+        $productConcreteTransfer = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProductId]))
             ->seed($override)
             ->build();
 
-        $productFacade->createProductConcrete($product);
-        $this->debug("Inserted AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
+        $productFacade->createProductConcrete($productConcreteTransfer);
 
-        $cleanupModule = $this->getDataCleanupHelper();
-        $cleanupModule->_addCleanup(function () use ($product, $abstractProductId) {
-            $this->debug("Deleting AbstractProduct: $abstractProductId, Concrete Product: " . $product->getIdProductConcrete());
-            $this->getProductQuery()->queryProduct()->findByIdProduct($product->getIdProductConcrete())->delete();
-            $this->getProductQuery()->queryProductAbstract()->findByIdProductAbstract($abstractProductId)->delete();
+        $this->debug(sprintf(
+            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            $abstractProductId,
+            $productConcreteTransfer->getIdProductConcrete()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+            $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
         });
 
-        return $product;
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function haveProductAbstract(array $override = [])
+    {
+        $productAbstractTransfer = (new ProductAbstractBuilder($override))->build();
+
+        $productFacade = $this->getProductFacade();
+        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+
+        $this->debug(sprintf(
+            'Inserted AbstractProduct: %d',
+            $abstractProductId
+        ));
+
+//        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer) {
+//            $this->cleanupProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        });
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -60,6 +89,36 @@ class ProductDataHelper extends Module
     private function getProductQuery()
     {
         return $this->getLocator()->product()->queryContainer();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    private function cleanupProductConcrete($idProductConcrete)
+    {
+        $this->debug(sprintf('Deleting Concrete Product: %d', $idProductConcrete));
+
+        $this->getProductQuery()
+            ->queryProduct()
+            ->findByIdProduct($idProductConcrete)
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    private function cleanupProductAbstract($idProductAbstract)
+    {
+        $this->debug(sprintf('Deleting Abstract Product: %d', $idProductAbstract));
+
+        $this->getProductQuery()
+            ->queryProductAbstract()
+            ->findByIdProductAbstract($idProductAbstract)
+            ->delete();
     }
 
 }
