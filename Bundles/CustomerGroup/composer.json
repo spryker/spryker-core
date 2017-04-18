@@ -20,7 +20,6 @@
   "require-dev": {
     "spryker/assertion": "^3.0.0",
     "spryker/code-sniffer": "*",
-    "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/locale": "*",
     "spryker/propel": "*",

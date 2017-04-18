@@ -25,6 +25,22 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Discount\\": "tests/SprykerTest/Shared/Discount/_support/",
+      "SprykerTest\\Zed\\Discount\\": "tests/SprykerTest/Zed/Discount/_support/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    },
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"
@@ -32,23 +48,6 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
-    "psr-4": {
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
-      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module"
-    }
   },
   "repositories": [
     {

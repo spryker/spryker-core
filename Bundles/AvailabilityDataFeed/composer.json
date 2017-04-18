@@ -19,7 +19,7 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "description": "Availability DataFeed bundle",
+  "description": "AvailabilityDataFeed bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

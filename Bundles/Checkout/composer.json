@@ -24,8 +24,8 @@
     "spryker/propel": "*",
     "spryker/sales": "*",
     "spryker/sequence-number": "*",
-    "spryker/stock": "*",
     "spryker/silex": "*",
+    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "description": "Checkout bundle",
