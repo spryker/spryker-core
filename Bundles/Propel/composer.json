@@ -1,11 +1,11 @@
 {
   "name": "spryker/propel",
   "require": {
-    "spryker/propel-orm": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/monolog": "^2.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/util-text": "^1.1.0"
@@ -22,23 +22,25 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Propel\\": "tests/SprykerTest/Shared/Propel/_support/",
+      "Propel\\Module\\": "tests/_support/Module/"
     }
   },
   "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    },
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
-    },
-    "psr-4": {
-      "Propel\\Module\\": "tests/_support/Module"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
     }
   },
   "repositories": [

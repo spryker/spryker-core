@@ -16,7 +16,7 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "description": "Price DataFeed bundle",
+  "description": "PriceDataFeed bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -1,15 +1,7 @@
 {
   "name": "spryker/testify",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Generated": "src/",
-      "Orm": "src/"
-    },
-    "psr-4": {
-      "Testify\\Module\\": "tests/_support/Module"
-    }
-  },
+  "description": "Testify bundle",
+  "license": "proprietary",
   "require": {
     "codeception/codeception": "^2.2.10",
     "php-mock/php-mock": "^1.0.1",
@@ -29,15 +21,24 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
-  "description": "Testify bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"
     }
   },
-  "prefer-stable": true,
   "config": {
     "sort-packages": true
   }

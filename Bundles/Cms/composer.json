@@ -39,7 +39,8 @@
   },
   "autoload-dev": {
     "psr-0": {
-      "Functional": "tests/"
+      "Functional": "tests/",
+      "Unit": "tests/"
     }
   }
 }

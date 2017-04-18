@@ -1,11 +1,11 @@
 {
   "name": "spryker/product-api",
-  "description": "Product Api bundle",
+  "description": "ProductApi bundle",
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1",
-    "spryker/product": "^5.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.2.0",
     "spryker/propel-query-builder": "^0.2.0",
     "spryker/util-date-time": "^1.0.0"
