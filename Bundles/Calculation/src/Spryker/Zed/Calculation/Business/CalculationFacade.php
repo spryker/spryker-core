@@ -150,6 +150,104 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->recalculate($quoteTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateSubtotal(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createSubtotalCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateExpenseTotal(QuoteTransfer $quoteTransfer)
+    {
+       $this->getFactory()
+           ->createExpenseTotalCalculator()
+           ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateDiscountTotal(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createDiscountTotalCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateTaxTotal(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createTaxTotalCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateRefundTotal(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createRefundTotalCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateRefundableAmount(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createRefundableAmountCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateGrandTotal(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createGrandTotalCalculator()
+            ->recalculate($quoteTransfer);
+    }
+
 
     // END: new calculators
 

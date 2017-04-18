@@ -15,12 +15,10 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
-class ItemDiscountAmountAggregatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
+class RefundTotalCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * This plugin makes calculations based on the given quote. The result is added to the quote.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,6 +27,7 @@ class ItemDiscountAmountAggregatorPlugin extends AbstractPlugin implements Calcu
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $this->getFacade()->calculateItemDiscountAmountAggregation($quoteTransfer);
+        $this->getFacade()
+            ->calculateRefundTotal($quoteTransfer);
     }
 }

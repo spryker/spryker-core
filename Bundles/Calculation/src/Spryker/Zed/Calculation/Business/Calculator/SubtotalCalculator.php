@@ -4,13 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Calculation\Business\Aggregator;
+namespace Spryker\Zed\Calculation\Business\Calculator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
-class ItemPriceToPayAggregator implements CalculatorInterface
+class SubtotalCalculator implements CalculatorInterface
 {
 
     /**
@@ -20,12 +19,13 @@ class ItemPriceToPayAggregator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireSumAggregation();
+        $quoteTransfer->requireTotals();
 
-            $itemTransfer->setPriceToPayAggregation(
-                $itemTransfer->getSumAggregation() - $itemTransfer->getDiscountAmountFullAggregation()
-            );
+        $subtotal = 0;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $subtotal += $itemTransfer->getSumAggregation();
         }
+
+        $quoteTransfer->getTotals()->setSubtotal($subtotal) ;
     }
 }

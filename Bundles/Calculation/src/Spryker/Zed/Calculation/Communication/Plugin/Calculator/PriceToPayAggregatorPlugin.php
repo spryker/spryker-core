@@ -14,7 +14,7 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
-class ItemPriceToPayAggregatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
+class PriceToPayAggregatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**

@@ -21,6 +21,8 @@ class ItemSumAggregator implements CalculatorInterface
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->requireSumPrice();
+
             $productOptionSumPrice = $this->calculateProductOptionSumPrice($itemTransfer);
             $itemTransfer->setSumAggregation($itemTransfer->getSumPrice() + $productOptionSumPrice);
         }

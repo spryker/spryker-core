@@ -115,7 +115,6 @@ interface CalculationFacadeInterface
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates total item option amount uses ProductOption::getSumPrice()
      *
@@ -129,7 +128,6 @@ interface CalculationFacadeInterface
 
 
     /**
-     *
      * Specification:
      *  - Calculates item total discount amount without additions (options, item expenses)
      *
@@ -140,7 +138,6 @@ interface CalculationFacadeInterface
     public function calculateItemDiscountAmountAggregation(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates item total discount amount with additions (options, item expenses)
      *
@@ -151,7 +148,6 @@ interface CalculationFacadeInterface
     public function calculateItemDiscountAmountFullAggregation(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates item total tax amount with additions (options, item expenses)
      *
@@ -163,7 +159,6 @@ interface CalculationFacadeInterface
     public function calculateItemTaxAmountFullAggregation(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates item sum aggregation with item and additions (options, item expenses)
      *
@@ -174,7 +169,6 @@ interface CalculationFacadeInterface
     public function calculateItemSumAggregation(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate item price to pay with additions (options, item expenses) after discounts
      *
@@ -183,5 +177,75 @@ interface CalculationFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function calculateItemPriceToPayAggregation(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate order subtotal, sum of "setSumAggregation" for each item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateSubtotal(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate order expenses, sum of "sumPrice" for each order expense.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateExpenseTotal(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate total discount amount for given quote
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateDiscountTotal(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate tax total sum all item taxes
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateTaxTotal(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate total refund amount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateRefundTotal(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate refundable amount for items and order expenses
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateRefundableAmount(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate grandTotal amount to pay after discounts
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function calculateGrandTotal(QuoteTransfer $quoteTransfer);
 
 }

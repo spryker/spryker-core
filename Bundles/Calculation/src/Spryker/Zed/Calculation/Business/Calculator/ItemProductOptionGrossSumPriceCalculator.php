@@ -4,13 +4,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Calculation\Business\Calculator\ProductOption;
+namespace Spryker\Zed\Calculation\Business\Calculator;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
-class ProductOptionGrossSumPriceCalculator implements CalculatorInterface
+class ItemProductOptionGrossSumPriceCalculator implements CalculatorInterface
 {
 
     /**

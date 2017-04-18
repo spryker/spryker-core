@@ -8,19 +8,28 @@ namespace Functional\Spryker\Zed\Calculation\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Aggregator\ItemPriceToPayAggregator;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemPriceToPayAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSumAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemTaxAmountFullAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemPriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\SubtotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
 
@@ -42,7 +51,7 @@ class CalculationFacadeTest extends Test
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new ItemPriceCalculatorPlugin(),
+                new PriceCalculatorPlugin(),
             ]
         );
 
@@ -60,6 +69,12 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addItem($itemTransfer);
 
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setUnitGrossPrice(100);
+        $expenseTransfer->setQuantity(1);
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
         $calculationFacade->recalculate($quoteTransfer);
 
         //item
@@ -75,6 +90,13 @@ class CalculationFacadeTest extends Test
         $this->assertSame($calculatedItemProductOptionTransfer->getUnitPrice(), $productOptionTransfer->getUnitPrice());
         $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), "Product option sum price is not set.");
         $this->assertSame($calculatedItemProductOptionTransfer->getSumPrice(), $productOptionTransfer->getSumGrossPrice());
+
+        //order.expense
+        $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
+        $this->assertNotEmpty($calculatedExpenseTransfer->getSumGrossPrice());
+        $this->assertSame($calculatedExpenseTransfer->getUnitPrice(), $expenseTransfer->getUnitGrossPrice());
+        $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Item sum price is not set.');
+        $this->assertSame($calculatedExpenseTransfer->getSumPrice(), $expenseTransfer->getSumGrossPrice());
 
     }
 
@@ -116,7 +138,7 @@ class CalculationFacadeTest extends Test
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new ItemDiscountAmountAggregatorPlugin(),
+                new DiscountAmountAggregatorPlugin(),
             ]
         );
 
@@ -124,28 +146,43 @@ class CalculationFacadeTest extends Test
 
         $itemTransfer = new ItemTransfer();
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $quoteTransfer->addItem($itemTransfer);
 
+        $expenseTransfer = new ExpenseTransfer();
+
+        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
+        $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
         $calculationFacade->recalculate($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
+        $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
 
         $this->assertSame(80, $calculatedItemTransfer->getDiscountAmountAggregation());
+        $this->assertSame(20, $calculatedExpenseTransfer->getDiscountAmountAggregation());
 
     }
 
@@ -164,12 +201,14 @@ class CalculationFacadeTest extends Test
 
         $itemTransfer = new ItemTransfer();
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setQuantity(1);
         $productOptionTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $itemTransfer->addProductOption($productOptionTransfer);
@@ -252,7 +291,7 @@ class CalculationFacadeTest extends Test
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new ItemPriceToPayAggregatorPlugin(),
+                new PriceToPayAggregatorPlugin(),
             ]
         );
 
@@ -268,6 +307,240 @@ class CalculationFacadeTest extends Test
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $this->assertSame(35, $calculatedItemTransfer->getPriceToPayAggregation());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateSubtotalShouldSumAllItemsWithAdditions()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new SubtotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedTotalsTransfer = $quoteTransfer->getTotals();
+        $this->assertSame(20, $calculatedTotalsTransfer->getSubtotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateExpenseTotalShouldSumAllOrderExpenses()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new ExpenseTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPrice(10);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPrice(10);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedOrderExpenseTotal = $quoteTransfer->getTotals()->getExpenseTotal();
+        $this->assertSame(20, $calculatedOrderExpenseTotal);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountTotalShouldSumAllDiscounts()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new DiscountTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setDiscountAmountFullAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setDiscountAmountFullAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setDiscountAmountAggregation(10);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedTotalDiscountAmount = $quoteTransfer->getTotals()->getDiscountTotal();
+        $this->assertSame(30, $calculatedTotalDiscountAmount);
+
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testCalculateTaxTotalShouldSumAllTaxAmounts()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new TaxTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setTaxAmountFullAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setTaxAmountFullAggregation(10);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumTaxAmount(10);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedTaxAmount = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
+
+        $this->assertSame(30, $calculatedTaxAmount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateRefundTotalShouldSumAllRefundableAmounts()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new RefundTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setRefundableAmount(10);
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setRefundableAmount(10);
+
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setRefundableAmount(10);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedRefundTotal = $quoteTransfer->getTotals()->getRefundTotal();
+
+        $this->assertSame(30, $calculatedRefundTotal);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateRefundableAmount()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new RefundableAmountCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumAggregation(10);
+        $itemTransfer->setCanceledAmount(5);
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setCanceledAmount(2);
+
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPrice(10);
+        $expenseTransfer->setCanceledAmount(2);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedItemTransfer = $quoteTransfer->getItems()[0];
+
+        //@todo add expenses
+        $this->assertSame(3, $calculatedItemTransfer->getRefundableAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateGrandTotal()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new GrandTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $totalsTransfer =new TotalsTransfer();
+
+        $totalsTransfer->setSubtotal(200);
+        $totalsTransfer->setExpenseTotal(100);
+        $totalsTransfer->setDiscountTotal(50);
+
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculate($quoteTransfer);
+
+        $calculatedGrandTotal = $quoteTransfer->getTotals()->getGrandTotal();
+
+        $this->assertSame(250, $calculatedGrandTotal);
     }
 
 

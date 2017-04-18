@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Communication\Plugin\Calculator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
@@ -14,7 +15,8 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
-class ItemPriceCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
+
+class DiscountTotalCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
@@ -27,6 +29,6 @@ class ItemPriceCalculatorPlugin extends AbstractPlugin implements CalculatorPlug
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $this->getFacade()
-            ->calculateItemPrice($quoteTransfer);
+            ->calculateDiscountTotal($quoteTransfer);
     }
 }

@@ -7,6 +7,13 @@
 
 namespace Spryker\Zed\Calculation;
 
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSumAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemTaxAmountFullAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensesGrossSumAmountCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
@@ -76,7 +83,18 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCalculatorPluginStack(Container $container)
     {
-        return [];
+        return [
+            new PriceCalculatorPlugin(),
+            new ItemProductOptionPriceAggregatorPlugin(),
+
+            new DiscountAmountAggregatorPlugin(),
+            new ItemDiscountAmountFullAggregatorPlugin(),
+
+            new ItemSumAggregatorPlugin(),
+            new PriceToPayAggregatorPlugin(),
+
+            new ItemTaxAmountFullAggregatorPlugin(),
+        ];
     }
 
 

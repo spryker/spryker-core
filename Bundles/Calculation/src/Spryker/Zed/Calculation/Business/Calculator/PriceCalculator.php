@@ -6,12 +6,14 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\CalculationConfig;
 
-class ItemPriceCalculator implements CalculatorInterface
+class PriceCalculator implements CalculatorInterface
 {
 
     /**
@@ -40,6 +42,10 @@ class ItemPriceCalculator implements CalculatorInterface
             $this->setItemPriceBasedOnTaxMode($itemTransfer, $quoteTransfer->getTaxMode());
             $this->recalculateProductOptionPrices($itemTransfer, $quoteTransfer->getTaxMode());
         }
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $this->setExpensePriceBaseOnTaxMode($expenseTransfer, $quoteTransfer->getTaxMode());
+        }
     }
 
     /**
@@ -50,7 +56,7 @@ class ItemPriceCalculator implements CalculatorInterface
      */
     protected function setItemPriceBasedOnTaxMode(ItemTransfer $itemTransfer, $taxMode)
     {
-        if ($taxMode == 'net') {
+        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
             $itemTransfer->setUnitPrice($itemTransfer->getUnitNetPrice());
             $itemTransfer->setSumPrice($itemTransfer->getSumNetPrice());
         } else {
@@ -92,12 +98,29 @@ class ItemPriceCalculator implements CalculatorInterface
      */
     protected function setProductOptionPriceBasedOnTaxMode(ProductOptionTransfer $productOptionTransfer, $taxMode)
     {
-        if ($taxMode == 'net') {
+        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
             $productOptionTransfer->setUnitPrice($productOptionTransfer->getUnitNetPrice());
             $productOptionTransfer->setSumPrice($productOptionTransfer->getSumNetPrice());
         } else {
             $productOptionTransfer->setUnitPrice($productOptionTransfer->getUnitGrossPrice());
             $productOptionTransfer->setSumPrice($productOptionTransfer->getSumGrossPrice());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param string $taxMode
+     *
+     * @return void
+     */
+    protected function setExpensePriceBaseOnTaxMode(ExpenseTransfer $expenseTransfer, $taxMode)
+    {
+        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
+            $expenseTransfer->setUnitPrice($expenseTransfer->getUnitNetPrice());
+            $expenseTransfer->setSumPrice($expenseTransfer->getSumNetPrice());
+        } else {
+            $expenseTransfer->setUnitPrice($expenseTransfer->getUnitGrossPrice());
+            $expenseTransfer->setSumPrice($expenseTransfer->getSumGrossPrice());
         }
     }
 }

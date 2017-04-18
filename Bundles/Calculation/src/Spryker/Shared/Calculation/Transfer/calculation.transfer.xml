@@ -24,6 +24,24 @@
         <property name="sumItemTotal" type="int" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="quantity" type="int" />
+
+        <!-- START: new calculator fields -->
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="discountAmountAggregation" type="int" />
+
+        <property name="priceToPayAggregation" type="int" />
+
+        <!-- END: new calculator fields -->
+
     </transfer>
 
     <transfer name="TaxTotal">
@@ -101,7 +119,6 @@
         <property name="unitPrice" type="int" />
         <property name="sumPrice" type="int" />
 
-        <property name="refundableAmount" type="int" />
         <property name="canceledAmount" type="int" />
 
         <property name="discountAmountAggregation" type="int" />

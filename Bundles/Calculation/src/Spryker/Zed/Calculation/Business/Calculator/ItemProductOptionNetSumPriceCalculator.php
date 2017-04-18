@@ -4,13 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Calculation\Business\Aggregator;
+namespace Spryker\Zed\Calculation\Business\Calculator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
-class ItemPriceToPayAggregator implements CalculatorInterface
+class ItemProductOptionNetSumPriceCalculator implements CalculatorInterface
 {
 
     /**
@@ -21,11 +20,11 @@ class ItemPriceToPayAggregator implements CalculatorInterface
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireSumAggregation();
-
-            $itemTransfer->setPriceToPayAggregation(
-                $itemTransfer->getSumAggregation() - $itemTransfer->getDiscountAmountFullAggregation()
-            );
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                $productOptionTransfer->setSumNetPrice(
+                    $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity()
+                );
+            }
         }
     }
 }

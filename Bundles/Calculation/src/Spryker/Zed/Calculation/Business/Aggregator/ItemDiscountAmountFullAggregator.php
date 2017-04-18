@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Business\Aggregator;
 
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
@@ -52,11 +53,21 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
     {
         $productOptionDiscountAmountAggregation = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            foreach ($productOptionTransfer->getCalculatedDiscounts() as $discountTransfer) {
-                $productOptionDiscountAmountAggregation += $discountTransfer->getSumGrossAmount();
+            foreach ($productOptionTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+                $this->setCalculatedDiscountsSumGrossAmount($calculatedDiscountTransfer);
+                $productOptionDiscountAmountAggregation += $calculatedDiscountTransfer->getSumGrossAmount();
             }
         }
 
         return $productOptionDiscountAmountAggregation;
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     */
+    protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    {
+        $calculatedDiscountTransfer->setSumGrossAmount($calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity());
     }
 }
