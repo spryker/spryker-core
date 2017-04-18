@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,24 +32,22 @@ class ViewPageController extends AbstractController
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
-        $cmsPageTransfer = $this->getFactory()
+        $cmsVersionTransfer = $this->getFactory()
             ->getCmsFacade()
-            ->findCmsPageById($idCmsPage);
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
 
-        if ($cmsPageTransfer === null) {
+        if ($cmsVersionTransfer === null) {
             throw new NotFoundHttpException(
-                sprintf('Cms page with id "%d" not found.', $idCmsPage)
+                sprintf('Cms published page with id "%d" not found.', $idCmsPage)
             );
         }
 
-        $cmsGlossaryTransfer = $this->getFactory()
-            ->getCmsFacade()
-            ->findPageGlossaryAttributes($idCmsPage);
+        $cmsVersionDataHelper = $this->getFactory()->createCmsVersionDataHelper();
 
         return [
-            'cmsPage' => $cmsPageTransfer,
-            'cmsGlossary' => $cmsGlossaryTransfer,
-            'cmsVersion' => new CmsVersionTransfer()
+            'cmsPage' => $cmsVersionDataHelper->extractCmsPageTransfer($cmsVersionTransfer),
+            'cmsGlossary' => $cmsVersionDataHelper->extractCmsGlossaryPageTransfer($cmsVersionTransfer),
+            'cmsVersion' => $cmsVersionTransfer
         ];
     }
 

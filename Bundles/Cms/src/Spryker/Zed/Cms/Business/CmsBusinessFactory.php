@@ -24,6 +24,8 @@ use Spryker\Zed\Cms\Business\Version\Handler\CmsTemplateMigrationHandler;
 use Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface;
 use Spryker\Zed\Cms\Business\Version\Handler\CmsGlossaryKeyMappingMigrationHandler;
 use Spryker\Zed\Cms\Business\Version\Handler\CmsPageLocalizedAttributesMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\VersionFinder;
+use Spryker\Zed\Cms\Business\Version\VersionFinderInterface;
 use Spryker\Zed\Cms\Business\Version\VersionPublisher;
 use Spryker\Zed\Cms\Business\Version\VersionPublisherInterface;
 use Spryker\Zed\Cms\Business\Version\VersionMigration;
@@ -200,6 +202,17 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return VersionFinderInterface
+     */
+    public function createVersionFinder()
+    {
+        return new VersionFinder(
+            $this->getQueryContainer(),
+            $this->getCmsVersionTransferExpanderPlugins()
+        );
+    }
+
+    /**
      * @return VersionPublisherInterface
      */
     public function createVersionPublisher()
@@ -286,7 +299,15 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCmsVersionPostSavePlugins()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_POST_SAVE);
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[]
+     */
+    protected function getCmsVersionTransferExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS);
     }
 
     /**

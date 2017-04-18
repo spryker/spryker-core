@@ -135,9 +135,9 @@ class CmsPageTable extends AbstractTable
     {
         $buttons = [];
 
+        $buttons[] = $this->createPublishButton($item);
         $buttons[] = $this->createViewButton($item);
         $buttons[] = $this->createViewInShopButton($item, $urlPrefix);
-        $buttons[] = $this->createPublishButton($item);
         $buttons[] = $this->createVersionHistoryButton($item);
         $buttons[] = $this->createEditGlossaryButton($item);
         $buttons[] = $this->createEditPageButton($item);
@@ -154,6 +154,10 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewInShopButton(array $item, $urlPrefix)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         $yvesHost = $this->cmsGuiConfig->findYvesHost();
         if ($yvesHost === null) {
             return '';
@@ -202,6 +206,10 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewButton(array $item)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         return $this->generateViewButton(
             Url::generate('/cms-gui/view-page/index', [
                 ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
@@ -251,6 +259,10 @@ class CmsPageTable extends AbstractTable
      */
     protected function createVersionHistoryButton(array $item)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         return $this->generateViewButton(
             Url::generate('/cms-gui/view-page/history', [
                 VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
@@ -282,6 +294,10 @@ class CmsPageTable extends AbstractTable
      */
     protected function createCmsStateChangeButton(array $item)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         if ($item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
                 Url::generate(static::URL_CMS_PAGE_DEACTIVATE, [
@@ -425,6 +441,16 @@ class CmsPageTable extends AbstractTable
             static::COL_STATUS => $this->getStatusLabel($item),
             static::ACTIONS => $actions,
         ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return bool
+     */
+    protected function isDraft(array $item)
+    {
+        return $item[static::COL_CMS_VERSION_COUNT] <= 0;
     }
 
 }

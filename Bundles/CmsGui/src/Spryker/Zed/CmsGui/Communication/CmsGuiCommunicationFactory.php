@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
@@ -22,6 +23,7 @@ use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -200,6 +202,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createAutocompleteDataProvider()
     {
         return new AutocompleteDataProvider($this->getCmsQueryContainer());
+    }
+
+    /**
+     * @return CmsVersionDataHelper
+     */
+    public function createCmsVersionDataHelper()
+    {
+        return new CmsVersionDataHelper($this->getCmsQueryContainer());
     }
 
     /**

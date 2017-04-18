@@ -248,6 +248,16 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
+
+    /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

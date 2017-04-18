@@ -103,6 +103,21 @@ interface CmsGuiToCmsInterface
     public function rollback($idCmsPage, $version);
 
     /**
+     * @param int $idCmsPage
+     *
+     * @return CmsVersionTransfer
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return CmsVersionTransfer
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
+    /**
      * @param string $cmsTemplateFolderPath
      *
      * @return bool

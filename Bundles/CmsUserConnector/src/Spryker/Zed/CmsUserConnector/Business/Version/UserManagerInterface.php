@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsUserConnector\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Orm\Zed\User\Persistence\SpyUser;
 
 interface UserManagerInterface
 {
@@ -18,4 +19,11 @@ interface UserManagerInterface
      * @return CmsVersionTransfer
      */
     public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer);
+
+    /**
+     * @param CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return CmsVersionTransfer
+     */
+    public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer);
 }

@@ -166,6 +166,32 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName)
+    {
+        return $this->queryPages()
+            ->filterByIdCmsPage($idCmsPage)
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyUrlTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(SpyLocaleTableMap::COL_LOCALE_NAME, $localName, Criteria::EQUAL)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::URL);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

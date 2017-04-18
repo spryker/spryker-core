@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsUserConnector\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface;
 use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface;
 
@@ -45,6 +46,20 @@ class UserManager implements UserManagerInterface
         $idUser = $this->userFacade->getCurrentUser()->getIdUser();
         $cmsVersionEntity = $this->updateCmsVersionUserId($cmsVersionTransfer, $idUser);
         $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
+
+        return $cmsVersionTransfer;
+    }
+
+    /**
+     * @param CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return CmsVersionTransfer
+     */
+    public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer)
+    {
+        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());
+        $cmsVersionTransfer->setFirstName($userTransfer->getFirstName());
+        $cmsVersionTransfer->setLastName($userTransfer->getLastName());
 
         return $cmsVersionTransfer;
     }

@@ -32,4 +32,15 @@ class CmsUserConnectorToUserBridge implements CmsUserConnectorToUserInterface
     {
         return $this->userFacade->getCurrentUser();
     }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserById($idUser)
+    {
+        return $this->userFacade->getUserById($idUser);
+    }
+
 }

@@ -35,6 +35,14 @@ interface CmsGuiToCmsQueryContainerInterface
     public function queryPagesWithTemplatesForSelectedLocale($idLocale);
 
     /**
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
+
+    /**
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

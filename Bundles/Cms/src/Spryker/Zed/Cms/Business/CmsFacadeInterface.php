@@ -433,4 +433,25 @@ interface CmsFacadeInterface
      */
     public function rollback($idCmsPage, $version);
 
+    /**
+     * Specification:
+     * - Returns the latest CmsPageVersionTransfer by IdCmsPage
+     *
+     * @param int $idCmsPage
+     *
+     * @return CmsVersionTransfer
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Returns the CmsPageVersionTransfer by IdCmsPage and specific version
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return CmsVersionTransfer
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
 }

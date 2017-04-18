@@ -35,7 +35,6 @@ class VersionPublisher implements VersionPublisherInterface
      */
     protected $versionGenerator;
 
-
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
      */

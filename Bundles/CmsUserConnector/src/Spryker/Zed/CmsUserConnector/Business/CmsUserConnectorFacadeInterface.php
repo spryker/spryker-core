@@ -18,4 +18,11 @@ interface CmsUserConnectorFacadeInterface
      * @return CmsVersionTransfer
      */
     public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer);
+
+    /**
+     * @param CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return CmsVersionTransfer
+     */
+    public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer);
 }
