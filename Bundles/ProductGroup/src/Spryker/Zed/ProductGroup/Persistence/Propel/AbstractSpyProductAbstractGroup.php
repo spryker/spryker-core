@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductGroup\Persistence;
+namespace Spryker\Zed\ProductGroup\Persistence\Propel;
 
 use Orm\Zed\ProductGroup\Persistence\Base\SpyProductAbstractGroup as BaseSpyProductAbstractGroup;
 

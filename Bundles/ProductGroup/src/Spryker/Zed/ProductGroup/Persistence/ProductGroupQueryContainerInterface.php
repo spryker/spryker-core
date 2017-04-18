@@ -9,4 +9,23 @@ namespace Spryker\Zed\ProductGroup\Persistence;
 
 interface ProductGroupQueryContainerInterface
 {
+
+    /**
+     * @api
+     *
+     * @param int $idProductGroup
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     */
+    public function queryProductGroupById($idProductGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductGroup
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryProductAbstractGroupsById($idProductGroup);
+
 }

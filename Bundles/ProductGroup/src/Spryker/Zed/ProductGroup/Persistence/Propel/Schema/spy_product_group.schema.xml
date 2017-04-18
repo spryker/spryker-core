@@ -15,7 +15,7 @@
         <foreign-key name="spy_product_abstract_group-fk_product_group" foreignTable="spy_product_group">
             <reference local="fk_product_group" foreign="id_product_group"/>
         </foreign-key>
-        <foreign-key name="spy_product_abstract_group-fk_product_abstract" foreignTable="spy_product_abstract">
+        <foreign-key name="spy_product_abstract_group-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
     </table>
