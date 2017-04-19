@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductGroup\Business\Model;
 
 use Generated\Shared\Transfer\ProductGroupTransfer;
+use Orm\Zed\ProductGroup\Persistence\SpyProductGroup;
 use Spryker\Zed\ProductGroup\Business\Exception\ProductGroupNotFoundException;
 use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -23,11 +24,18 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
     protected $productGroupQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface $productGroupQueryContainer
+     * @var \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface
      */
-    public function __construct(ProductGroupQueryContainerInterface $productGroupQueryContainer)
+    protected $productGroupTouch;
+
+    /**
+     * @param \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface $productGroupQueryContainer
+     * @param \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface $productGroupTouch
+     */
+    public function __construct(ProductGroupQueryContainerInterface $productGroupQueryContainer, ProductGroupTouchInterface $productGroupTouch)
     {
         $this->productGroupQueryContainer = $productGroupQueryContainer;
+        $this->productGroupTouch = $productGroupTouch;
     }
 
     /**
@@ -63,8 +71,8 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
     {
         $productGroupEntity = $this->findProductGroupEntity($productGroupTransfer);
 
-        $productGroupEntity->getSpyProductAbstractGroups()->delete();
-        $productGroupEntity->delete();
+        $this->deleteProductGroupEntity($productGroupEntity);
+        $this->touchProductGroup($productGroupTransfer);
     }
 
     /**
@@ -88,6 +96,27 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
         }
 
         return $productGroupEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductGroup\Persistence\SpyProductGroup $productGroupEntity
+     *
+     * @return void
+     */
+    protected function deleteProductGroupEntity(SpyProductGroup $productGroupEntity)
+    {
+        $productGroupEntity->getSpyProductAbstractGroups()->delete();
+        $productGroupEntity->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
+    {
+        $this->productGroupTouch->touchDeleted($productGroupTransfer);
     }
 
 }

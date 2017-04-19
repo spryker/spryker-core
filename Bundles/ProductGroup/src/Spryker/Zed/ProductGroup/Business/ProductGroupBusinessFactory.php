@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupCreator;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupDeleter;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupReader;
+use Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouch;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupUpdater;
+use Spryker\Zed\ProductGroup\ProductGroupDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductGroup\ProductGroupConfig getConfig()
@@ -25,7 +27,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupCreator()
     {
-        return new ProductGroupCreator();
+        return new ProductGroupCreator($this->createProductGroupTouch());
     }
 
     /**
@@ -41,7 +43,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupUpdater()
     {
-        return new ProductGroupUpdater($this->getQueryContainer());
+        return new ProductGroupUpdater($this->getQueryContainer(), $this->createProductGroupTouch());
     }
 
     /**
@@ -49,7 +51,23 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupDeleter()
     {
-        return new ProductGroupDeleter($this->getQueryContainer());
+        return new ProductGroupDeleter($this->getQueryContainer(), $this->createProductGroupTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface
+     */
+    public function createProductGroupTouch()
+    {
+        return new ProductGroupTouch($this->getTouchFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Dependency\Facade\ProductGroupToTouchInterface
+     */
+    public function getTouchFacade()
+    {
+        return $this->getProvidedDependency(ProductGroupDependencyProvider::FACADE_TOUCH);
     }
 
 }

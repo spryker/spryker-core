@@ -10,9 +10,25 @@ namespace Spryker\Zed\ProductGroup\Business\Model;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup;
 use Orm\Zed\ProductGroup\Persistence\SpyProductGroup;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductGroupCreator implements ProductGroupCreatorInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface
+     */
+    protected $productGroupTouch;
+
+    /**
+     * @param \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface $productGroupTouch
+     */
+    public function __construct(ProductGroupTouchInterface $productGroupTouch)
+    {
+        $this->productGroupTouch = $productGroupTouch;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
@@ -27,10 +43,9 @@ class ProductGroupCreator implements ProductGroupCreatorInterface
             return $productGroupTransfer;
         }
 
-        $productGroupEntity = $this->createProductGroupEntity($productGroupTransfer);
-        $productGroupTransfer->setIdProductGroup($productGroupEntity->getIdProductGroup());
-
-        return $productGroupTransfer;
+        return $this->handleDatabaseTransaction(function () use ($productGroupTransfer) {
+            return $this->executeCreateProductGroupTransaction($productGroupTransfer);
+        });
     }
 
     /**
@@ -41,6 +56,21 @@ class ProductGroupCreator implements ProductGroupCreatorInterface
     protected function assertProductGroupForCreate(ProductGroupTransfer $productGroupTransfer)
     {
         $productGroupTransfer->requireIdProductAbstracts();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    protected function executeCreateProductGroupTransaction(ProductGroupTransfer $productGroupTransfer)
+    {
+        $productGroupEntity = $this->createProductGroupEntity($productGroupTransfer);
+        $productGroupTransfer->setIdProductGroup($productGroupEntity->getIdProductGroup());
+
+        $this->touchProductGroup($productGroupTransfer);
+
+        return $productGroupTransfer;
     }
 
     /**
@@ -76,6 +106,16 @@ class ProductGroupCreator implements ProductGroupCreatorInterface
             ->setPosition($position);
 
         return $productAbstractGroupEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
+    {
+        $this->productGroupTouch->touchActive($productGroupTransfer);
     }
 
 }

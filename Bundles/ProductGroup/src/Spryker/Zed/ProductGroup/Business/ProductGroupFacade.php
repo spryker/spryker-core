@@ -16,8 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductGroupFacade extends AbstractFacade implements ProductGroupFacadeInterface
 {
 
-    // TODO: we'll need add new touch entry for groups and on CUD events only extend existing search documents and create new redis entries (OR just touch related products?)
-
     /**
      * {@inheritdoc}
      *

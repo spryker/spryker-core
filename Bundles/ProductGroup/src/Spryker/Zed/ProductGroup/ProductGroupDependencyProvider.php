@@ -8,7 +8,36 @@
 namespace Spryker\Zed\ProductGroup;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductGroup\Dependency\Facade\ProductGroupToTouchBridge;
 
 class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
+
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $this->provideTouchFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideTouchFacade(Container $container)
+    {
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new ProductGroupToTouchBridge($container->getLocator()->touch()->facade());
+        };
+    }
+
 }
