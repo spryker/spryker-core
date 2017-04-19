@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Exception;
+namespace Spryker\Service\FileSystem\Exception;
 
 use Exception;
 
-class FileSystemStorageBuilderNotFoundException extends Exception
+class FileSystemInvalidFilenameException extends Exception
 {
 }

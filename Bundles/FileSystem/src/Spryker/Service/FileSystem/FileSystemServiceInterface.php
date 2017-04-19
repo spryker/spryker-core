@@ -29,22 +29,4 @@ interface FileSystemServiceInterface
      */
     public function getStorageCollection();
 
-    /**
-     * @api
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function getMimeTypeByFilename($filename);
-
-    /**
-     * @api
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function getExtensionByFilename($filename);
-
 }

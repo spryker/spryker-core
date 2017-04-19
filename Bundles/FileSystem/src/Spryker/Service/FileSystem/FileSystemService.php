@@ -45,36 +45,4 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
             ->getStorageCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function getMimeTypeByFilename($filename)
-    {
-        return $this->getFactory()
-            ->createMimeTypeManager()
-            ->getMimeTypeByFilename($filename);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function getExtensionByFilename($filename)
-    {
-        return $this->getFactory()
-            ->createMimeTypeManager()
-            ->getExtensionByFilename($filename);
-    }
-
 }

@@ -13,7 +13,7 @@ interface FileSystemStorageProviderInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemStorageNotFoundException
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException
      *
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */

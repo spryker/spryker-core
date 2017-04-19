@@ -23,7 +23,7 @@ abstract class AbstractStorageBuilder implements BuilderInterface
     abstract protected function buildStorage();
 
     /**
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidConfigurationException
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemInvalidConfigurationException
      *
      * @return void
      */

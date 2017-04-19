@@ -8,7 +8,8 @@
 namespace Spryker\Service\FileSystem\Model\Storage\Provider;
 
 use Generated\Shared\Transfer\FileSystemStorageConfigTransfer;
-use Spryker\Service\FileSystem\Model\Exception\FileSystemStorageBuilderNotFoundException;
+use Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException;
+use Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException;
 
 class FileSystemStorageProvider implements FileSystemStorageProviderInterface
 {
@@ -34,7 +35,7 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemStorageNotFoundException
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException
      *
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */
@@ -100,7 +101,7 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemStorageConfigTransfer $storageConfig
      *
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemStorageBuilderNotFoundException
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException
      *
      * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface
      */

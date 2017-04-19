@@ -11,7 +11,7 @@ interface BuilderInterface
 {
 
     /**
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidConfigurationException
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemInvalidConfigurationException
      *
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */

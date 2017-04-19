@@ -70,26 +70,6 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetMimeTypeByFilename()
-    {
-        $mimeType = $this->fileSystemService->getMimeTypeByFilename(static::RESOURCE_FILE_NAME);
-
-        $this->assertSame('image/jpeg', $mimeType);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetExtensionByFilename()
-    {
-        $extension = $this->fileSystemService->getExtensionByFilename(static::RESOURCE_FILE_NAME);
-
-        $this->assertSame('jpg', $extension);
-    }
-
-    /**
-     * @return void
-     */
     public function testGetStorageByNameWithProduct()
     {
         $storage = $this->fileSystemService->getStorageByName(static::STORAGE_PRODUCT);
