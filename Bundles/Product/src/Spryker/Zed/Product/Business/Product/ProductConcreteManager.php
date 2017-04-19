@@ -315,7 +315,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->findOneOrCreate();
 
         $productConcreteData = $productConcreteTransfer->modifiedToArray();
-
         if (isset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES])) {
             unset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES]);
         }

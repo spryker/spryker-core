@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
@@ -306,7 +305,6 @@ class Writer implements WriterInterface
         }
 
         $this->deleteMissingProductImageSetInProductAbstract($productAbstractTransfer);
-
         return $productAbstractTransfer;
     }
 
@@ -348,7 +346,6 @@ class Writer implements WriterInterface
         }
 
         $this->deleteMissingProductImageSetInProductConcrete($productConcreteTransfer);
-
         return $productConcreteTransfer;
     }
 

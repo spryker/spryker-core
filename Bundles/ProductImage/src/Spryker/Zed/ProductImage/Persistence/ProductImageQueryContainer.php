@@ -162,6 +162,6 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
             ->useSpyProductImageQuery()
                 ->filterByIdProductImage($excludeIdProductImage, Criteria::NOT_IN)
                 ->endUse()
-                ->filterByFkProductImageSet($idProductImageSet);
+            ->filterByFkProductImageSet($idProductImageSet);
     }
 }
