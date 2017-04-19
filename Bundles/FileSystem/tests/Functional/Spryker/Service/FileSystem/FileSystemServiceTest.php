@@ -34,7 +34,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     const PATH_STORAGE_PRODUCT = 'images/product/';
 
     const FILE_STORAGE_CUSTOMER = 'customer.txt';
-    const FILE_STORAGE_PRODUCT = 'image.png.txt';
+    const FILE_STORAGE_PRODUCT = 'image.png';
 
     const FILE_CONTENT = 'Hello World';
 
