@@ -3,3 +3,4 @@ modules:
     enabled:
         - Asserts
         - \Product\Module\Unit
+        - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

@@ -1,22 +1,7 @@
 {
   "name": "spryker/transfer",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
-    "psr-4": {
-      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
-      "Transfer\\Module\\": "tests/_support/Module"
-    }
-  },
   "require": {
+    "fzaninotto/faker": "^1.6",
     "spryker/kernel": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
@@ -31,6 +16,18 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "Transfer\\Module\\": "tests/_support/Module/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

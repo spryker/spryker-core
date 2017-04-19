@@ -23,7 +23,7 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "description": "Navigation GUI bundle",
+  "description": "NavigationGui bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

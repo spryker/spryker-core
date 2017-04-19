@@ -5,7 +5,7 @@
       "Spryker": "src/"
     },
     "psr-4": {
-      "Config\\Module\\": "tests/_support/Module"
+      "Config\\Module\\": "tests/_support/Module/"
     },
     "files": [
       "src/Spryker/Shared/Config.php"

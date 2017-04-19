@@ -6,6 +6,10 @@ modules:
             browser: phantomjs
             window_size: 1920x1080
 
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
         - Asserts
+
+coverage:
+  enabled: false

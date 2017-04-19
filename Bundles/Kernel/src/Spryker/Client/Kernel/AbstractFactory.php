@@ -10,11 +10,13 @@ namespace Spryker\Client\Kernel;
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Shared\Kernel\ContainerGlobals;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 
 abstract class AbstractFactory
 {
 
     use BundleConfigResolverAwareTrait;
+    use ContainerMocker;
 
     /**
      * @var \Spryker\Client\Kernel\Container
@@ -54,7 +56,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -62,11 +64,13 @@ abstract class AbstractFactory
         $dependencyProvider = $this->resolveDependencyProvider();
         $this->provideExternalDependencies($dependencyProvider, $container);
 
+        $container = $this->overwriteForTesting($container);
+
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainer()
     {

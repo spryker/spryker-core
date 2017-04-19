@@ -6,10 +6,14 @@ modules:
             browser: chrome
             window_size: 1920x1080
 
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Testify\Module\Environment
+        - \SprykerTest\Shared\Testify\Helper\Environment
         - \Config\Module\ConfigInit
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database
         - Asserts
+
+coverage:
+  enabled: false

@@ -78,4 +78,12 @@ class TransferConfigTest extends PHPUnit_Framework_TestCase
         $filesystem->remove($directory);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetDataBuilderFileNamePatternReturnsString()
+    {
+        $this->assertInternalType('string', $this->getConfig()->getDataBuilderFileNamePattern());
+    }
+
 }

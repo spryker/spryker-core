@@ -4,11 +4,11 @@
     "spryker/availability": "^5.0.1",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/price": "^4.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/price": "^4.0.0",
-    "spryker/stock": "^4.0.0",
-    "spryker/sales": "^5.0.0"
+    "spryker/sales": "^5.0.0",
+    "spryker/stock": "^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
