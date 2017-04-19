@@ -115,6 +115,10 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($hasFoo);
         $this->assertFalse($hasBar);
+
+        $storageDirectory = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo/';
+        $rootDirectoryExists = is_dir($storageDirectory);
+        $this->assertTrue($rootDirectoryExists);
     }
 
     /**
@@ -133,6 +137,10 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($hasBar);
         $this->assertFalse($hasFoo);
+
+        $storageDirectory = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'bar/';
+        $rootDirectoryExists = is_dir($storageDirectory);
+        $this->assertTrue($rootDirectoryExists);
     }
 
     /**
