@@ -7,17 +7,10 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage\Provider;
 
-use Generated\Shared\Transfer\FileSystemStorageConfigTransfer;
-use Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException;
 use Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException;
 
 class FileSystemStorageProvider implements FileSystemStorageProviderInterface
 {
-
-    /**
-     * @var array
-     */
-    protected $configurationData;
 
     /**
      * @var \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
@@ -25,11 +18,11 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     protected $storageCollection;
 
     /**
-     * @param array $configurationData
+     * @param \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[] $storageCollection
      */
-    public function __construct(array $configurationData)
+    public function __construct(array $storageCollection)
     {
-        $this->configurationData = $configurationData;
+        $this->storageCollection = $storageCollection;
     }
 
     /**
@@ -41,10 +34,6 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
      */
     public function getStorageByName($name)
     {
-        if (!$this->storageCollection) {
-            $this->storageCollection = $this->createCollection();
-        }
-
         if (!array_key_exists($name, $this->storageCollection)) {
             throw new FileSystemStorageNotFoundException(
                 sprintf('FileSystemStorage "%s" was not found', $name)
@@ -60,65 +49,6 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     public function getStorageCollection()
     {
         return $this->storageCollection;
-    }
-
-    /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface[]
-     */
-    protected function createCollection()
-    {
-        $storageCollection = [];
-        foreach ($this->configurationData as $storageName => $storageConfigData) {
-            $storageConfig = $this->createStorageConfig($storageName, $storageConfigData);
-
-            $builder = $this->createBuilder($storageConfig);
-            $storageCollection[$storageName] = $builder->build();
-        }
-
-        return $storageCollection;
-    }
-
-    /**
-     * @param string $storageName
-     * @param array $storageConfigData
-     *
-     * @return \Generated\Shared\Transfer\FileSystemStorageConfigTransfer
-     */
-    protected function createStorageConfig($storageName, array $storageConfigData)
-    {
-        $configTransfer = new FileSystemStorageConfigTransfer();
-        $configTransfer->setName($storageName);
-
-        $type = $storageConfigData[FileSystemStorageConfigTransfer::TYPE];
-        $configTransfer->setType($type);
-        unset($storageConfigData[FileSystemStorageConfigTransfer::TYPE]);
-
-        $configTransfer->setData($storageConfigData);
-
-        return $configTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStorageConfigTransfer $storageConfig
-     *
-     * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException
-     *
-     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface
-     */
-    protected function createBuilder(FileSystemStorageConfigTransfer $storageConfig)
-    {
-        $storageConfig->requireName();
-
-        $builderClass = $storageConfig->getType();
-        if (!$builderClass) {
-            throw new FileSystemStorageBuilderNotFoundException(
-                sprintf('FileSystemStorageBuilder "%s" was not found', $storageConfig->getName())
-            );
-        }
-
-        $builder = new $builderClass($storageConfig);
-
-        return $builder;
     }
 
 }

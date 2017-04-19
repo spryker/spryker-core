@@ -28,6 +28,17 @@ class LocalStorageBuilder extends AbstractStorageBuilder
     }
 
     /**
+     * @return void
+     */
+    protected function validateStorageConfig()
+    {
+        $storageConfigTransfer = $this->buildStorageConfig();
+
+        $storageConfigTransfer->requirePath();
+        $storageConfigTransfer->requireRoot();
+    }
+
+    /**
      * Sample config
      * 'root' => '/data/uploads/',
      * 'path' => 'customers/pds/',
@@ -35,6 +46,18 @@ class LocalStorageBuilder extends AbstractStorageBuilder
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */
     protected function buildStorage()
+    {
+        $path = $this->buildPath();
+        $adapter = $this->buildAdapter($path);
+        $fileSystem = $this->buildFileSystem($adapter);
+
+        return new FileSystemStorage($this->config, $fileSystem);
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildPath()
     {
         $storageConfigTransfer = $this->buildStorageConfig();
 
@@ -45,25 +68,31 @@ class LocalStorageBuilder extends AbstractStorageBuilder
             $storageConfigTransfer->getPath()
         );
 
-        $adapter = new LocalAdapter($path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
-        $fileSystem = new Filesystem($adapter);
-
-        if (!$fileSystem->has('/')) {
-            $fileSystem->createDir('/');
-        }
-
-        return new FileSystemStorage($this->config, $fileSystem);
+        return $path;
     }
 
     /**
-     * @return void
+     * @param string $path
+     *
+     * @return \League\Flysystem\Adapter\Local
      */
-    protected function validateStorageConfig()
+    protected function buildAdapter($path)
     {
-        $storageConfigTransfer = $this->buildStorageConfig();
+        $adapter = new LocalAdapter($path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
 
-        $storageConfigTransfer->requirePath();
-        $storageConfigTransfer->requireRoot();
+        return $adapter;
+    }
+
+    /**
+     * @param \League\Flysystem\Adapter\Local $adapter
+     *
+     * @return \League\Flysystem\Filesystem
+     */
+    protected function buildFileSystem(LocalAdapter $adapter)
+    {
+        $fileSystem = new Filesystem($adapter);
+
+        return $fileSystem;
     }
 
 }

@@ -35,6 +35,20 @@ class AwsS3StorageBuilder extends AbstractStorageBuilder
     }
 
     /**
+     * @return void
+     */
+    protected function validateStorageConfig()
+    {
+        $storageConfigTransfer = $this->buildStorageConfig();
+
+        $storageConfigTransfer->requireKey();
+        $storageConfigTransfer->requireSecret();
+        $storageConfigTransfer->requireBucket();
+        $storageConfigTransfer->requireVersion();
+        $storageConfigTransfer->requireRegion();
+    }
+
+    /**
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      *
      * Sample config
@@ -52,20 +66,6 @@ class AwsS3StorageBuilder extends AbstractStorageBuilder
         $fileSystem = $this->buildFlySystem($adapter);
 
         return new FileSystemStorage($this->config, $fileSystem);
-    }
-
-    /**
-     * @return void
-     */
-    protected function validateStorageConfig()
-    {
-        $storageConfigTransfer = $this->buildStorageConfig();
-
-        $storageConfigTransfer->requireKey();
-        $storageConfigTransfer->requireSecret();
-        $storageConfigTransfer->requireBucket();
-        $storageConfigTransfer->requireVersion();
-        $storageConfigTransfer->requireRegion();
     }
 
     /**

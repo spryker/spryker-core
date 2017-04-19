@@ -8,28 +8,16 @@
 namespace Spryker\Service\FileSystem;
 
 use Generated\Shared\Transfer\FileSystemResourceTransfer;
-use League\Flysystem\Filesystem;
-use Spryker\Service\FileSystem\Model\MimeType\MimeTypeManager;
-use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
+use Generated\Shared\Transfer\FileSystemStorageConfigTransfer;
+use Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException;
 use Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
- * @method \Spryker\Service\FileSystem\StorageConfig getConfig()
+ * @method \Spryker\Service\FileSystem\FileSystemConfig getConfig()
  */
 class FileSystemServiceFactory extends AbstractServiceFactory
 {
-
-    /**
-     * @param array $config
-     * @param \League\Flysystem\Filesystem $fileSystem
-     *
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
-     */
-    public function createFileSystemStorage(array $config, Filesystem $fileSystem)
-    {
-        return new FileSystemStorage($config, $fileSystem);
-    }
 
     /**
      * @param array $data
@@ -43,21 +31,86 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\MimeType\MimeTypeManagerInterface
-     */
-    public function createMimeTypeManager()
-    {
-        return new MimeTypeManager();
-    }
-
-    /**
      * @return \Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProviderInterface
      */
     public function createStorageProvider()
     {
         return new FileSystemStorageProvider(
-            $this->getConfig()->getStorageConfig()
+            $this->createFileSystemStorageCollection()
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileSystemStorageConfigTransfer[]
+     */
+    protected function createStorageConfigCollection()
+    {
+        $storageCollection = [];
+        foreach ($this->getConfig()->getStorageConfig() as $storageName => $storageConfigData) {
+            $storageConfig = $this->createStorageConfig($storageName, $storageConfigData);
+            $storageCollection[$storageName] = $storageConfig;
+        }
+
+        return $storageCollection;
+    }
+
+    /**
+     * @param string $storageName
+     * @param array $storageConfigData
+     *
+     * @return \Generated\Shared\Transfer\FileSystemStorageConfigTransfer
+     */
+    protected function createStorageConfig($storageName, array $storageConfigData)
+    {
+        $configTransfer = new FileSystemStorageConfigTransfer();
+        $configTransfer->setName($storageName);
+
+        $type = $storageConfigData[FileSystemStorageConfigTransfer::TYPE];
+        $configTransfer->setType($type);
+        unset($storageConfigData[FileSystemStorageConfigTransfer::TYPE]);
+
+        $configTransfer->setData($storageConfigData);
+
+        return $configTransfer;
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     */
+    protected function createFileSystemStorageCollection()
+    {
+        $configCollection = $this->createStorageConfigCollection();
+
+        $storageCollection = [];
+        foreach ($configCollection as $storageName => $configStorageTransfer) {
+            $builder = $this->createFileSystemStorageBuilder($configStorageTransfer);
+            $storageCollection[$storageName] = $builder->build();
+        }
+
+        return $storageCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemStorageConfigTransfer $storageConfigTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException
+     *
+     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface
+     */
+    protected function createFileSystemStorageBuilder(FileSystemStorageConfigTransfer $storageConfigTransfer)
+    {
+        $storageConfigTransfer->requireName();
+
+        $builderClass = $storageConfigTransfer->getType();
+        if (!$builderClass) {
+            throw new FileSystemStorageBuilderNotFoundException(
+                sprintf('FileSystemStorageBuilder "%s" was not found', $storageConfigTransfer->getName())
+            );
+        }
+
+        $builder = new $builderClass($storageConfigTransfer);
+
+        return $builder;
     }
 
 }
