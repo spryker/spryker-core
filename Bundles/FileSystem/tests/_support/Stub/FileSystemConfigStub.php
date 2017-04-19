@@ -7,6 +7,7 @@
 
 namespace FileSystem\Stub;
 
+use Functional\Spryker\Service\FileSystem\FileSystemServiceTest;
 use Spryker\Service\FileSystem\FileSystemConfig as SprykerFileSystemConfig;
 use Spryker\Service\FileSystem\Model\Storage\Builder\LocalStorageBuilder;
 
@@ -19,15 +20,15 @@ class FileSystemConfigStub extends SprykerFileSystemConfig
     public function getStorageConfig()
     {
         return [
-            'productImage' => [
+            FileSystemServiceTest::STORAGE_PRODUCT => [
                 'type' => LocalStorageBuilder::class,
-                'root' => 'data/DE/uploads/',
-                'path' => 'images/product/',
+                'root' => FileSystemServiceTest::ROOT_DIRECTORY,
+                'path' => FileSystemServiceTest::PATH_STORAGE_PRODUCT,
             ],
-            'customerImage' => [
+            FileSystemServiceTest::STORAGE_CUSTOMER => [
                 'type' => LocalStorageBuilder::class,
-                'root' => 'data/DE/uploads/',
-                'path' => 'customer/',
+                'root' => FileSystemServiceTest::ROOT_DIRECTORY,
+                'path' => FileSystemServiceTest::PATH_STORAGE_CUSTOMER,
             ],
         ];
     }
