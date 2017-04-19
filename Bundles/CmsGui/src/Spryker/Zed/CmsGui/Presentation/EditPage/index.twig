@@ -17,6 +17,8 @@
 
 {% block content %}
 
+    {{ include ('@CmsGui/_template/edit-notes.twig') }}
+
     {{ form_start(pageForm) }}
 
     {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}

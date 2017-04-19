@@ -433,6 +433,19 @@ interface CmsFacadeInterface
      */
     public function rollback($idCmsPage, $version);
 
+
+    /**
+     * Specification:
+     * - Revert all cms changes to the latest CmsPageVersion
+     *
+     * @param int $idCmsPage
+     *
+     * @throws MissingPageException
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage);
+
     /**
      * Specification:
      * - Returns the latest CmsPageVersionTransfer by IdCmsPage

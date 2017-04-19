@@ -153,6 +153,16 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
+     * @return bool
+     */
+    public function revert($idCmsPage)
+    {
+        return $this->cmsFacade->revert($idCmsPage);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
      * @return CmsVersionTransfer
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage)

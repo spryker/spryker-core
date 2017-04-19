@@ -83,4 +83,33 @@ class VersionRollback implements VersionRollbackInterface
 
         return true;
     }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws MissingPageException
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage)
+    {
+        $versionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
+
+        if ($versionEntity === null) {
+            throw new MissingPageException(
+                sprintf(
+                    "There is no valid Cms version with this id: %d for reverting",
+                    $idCmsPage
+                ));
+        }
+
+        $latestVersionData = $versionEntity->getData();
+
+        if (!$this->versionMigration->migrate($latestVersionData, $latestVersionData)) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

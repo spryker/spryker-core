@@ -1,3 +1,6 @@
 {{ createActionButton(url('/cms-gui/version-page/publish', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Publish' | trans, {'icon' : '<i class="fa fa-upload"></i> '}) }}
-{{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
-{{ viewActionButton(url('/cms-gui/version-page/view', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'View Original' | trans) }}
+
+{% if cmsVersion is not null %}
+    {{ viewActionButton(url('/cms-gui/view-page/index', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'View' | trans) }}
+    {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
+{% endif %}

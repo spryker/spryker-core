@@ -8,6 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,10 +42,29 @@ class VersionPageController extends AbstractController
             $this->addSuccessMessage('Page successfully published.');
 
         } catch (CannotActivatePageException $exception) {
-            $this->addErrorMessage($exception->getMessage());
+            $this->addErrorMessage('Cannot publish the CMS page, placeholders do not exist for this page Please go to "Edit Placeholders" and provide them.');
         } finally {
             return $this->redirectResponse($redirectUrl);
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function discardAction(Request $request)
+    {
+        $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+
+        $this->getFactory()
+            ->getCmsFacade()
+            ->revert($idCmsPage);
+
+        $this->addSuccessMessage('Draft data successfully discarded.');
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

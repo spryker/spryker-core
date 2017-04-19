@@ -19,4 +19,13 @@ interface VersionRollbackInterface
      * @return bool
      */
     public function rollback($idCmsPage, $version);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws MissingPageException
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage);
 }

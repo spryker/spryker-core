@@ -74,11 +74,16 @@ class CreateGlossaryController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $cmsVersion = $this->getFactory()
+            ->getCmsFacade()
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
             'availableLocales' => $availableLocales,
             'idCmsPage' => $idCmsPage,
+            'cmsVersion' => $cmsVersion,
         ];
     }
 

@@ -62,12 +62,22 @@ class EditPageController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $cmsVersion = $this->getFactory()
+            ->getCmsFacade()
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+        $cmsPageTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->findCmsPageById($idCmsPage);
+
         $pageTabs = $this->getFactory()->createPageTabs();
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
             'availableLocales' => $availableLocales,
             'idCmsPage' => $idCmsPage,
+            'cmsVersion' => $cmsVersion,
+            'cmsPage' => $cmsPageTransfer,
         ];
     }
 
