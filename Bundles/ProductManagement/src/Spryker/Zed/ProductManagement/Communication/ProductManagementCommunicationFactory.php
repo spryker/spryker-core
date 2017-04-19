@@ -116,7 +116,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
-            $this->getConfig()->getImageUrlPrefix()
+            $this->getConfig()->getImageUrlPrefix(),
+            $this->getStore()
         );
     }
 
@@ -139,7 +140,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
-            $this->getConfig()->getImageUrlPrefix()
+            $this->getConfig()->getImageUrlPrefix(),
+            $this->getStore()
         );
     }
 
@@ -162,7 +164,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
-            $this->getConfig()->getImageUrlPrefix()
+            $this->getConfig()->getImageUrlPrefix(),
+            $this->getStore()
         );
     }
 
@@ -500,6 +503,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
     }
 
 }
