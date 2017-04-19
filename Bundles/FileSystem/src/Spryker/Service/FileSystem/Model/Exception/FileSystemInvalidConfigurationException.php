@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\FileSystem;
+namespace Spryker\Service\FileSystem\Model\Exception;
 
-interface FileSystemConfig
+use Exception;
+
+class FileSystemInvalidConfigurationException extends Exception
 {
-
-    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
-    const FILESYSTEM_STORAGE_ROOT = 'FILESYSTEM_STORAGE_ROOT';
-
 }
