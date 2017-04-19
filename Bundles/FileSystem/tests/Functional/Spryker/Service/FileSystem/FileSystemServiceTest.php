@@ -128,7 +128,10 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystem->rename('/foo', '/bar');
 
         $hasBar = $fileSystem->has('/bar');
+        $hasFoo = $fileSystem->has('/foo');
+
         $this->assertTrue($hasBar);
+        $this->assertFalse($hasFoo);
     }
 
     /**
@@ -138,8 +141,6 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $storage = $this->fileSystemService->getStorageByName(static::STORAGE_CUSTOMER);
         $fileSystem = $storage->getFileSystem();
-
-        $fileSystem->createDir('/foo');
 
         $uploadedFilename = static::ROOT_DIRECTORY . static::FILE_STORAGE_CUSTOMER;
         $storageFilename = '/foo/' . static::FILE_STORAGE_CUSTOMER;
