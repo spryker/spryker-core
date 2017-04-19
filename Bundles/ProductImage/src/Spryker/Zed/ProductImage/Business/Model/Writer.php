@@ -73,7 +73,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
      */
     protected function deleteMissingProductImageSetInProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -91,7 +93,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
      */
     protected function deleteMissingProductImageSetInProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -109,7 +113,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param ProductImageSetTransfer $productImageSetTransfer
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return void
      */
     protected function deleteMissingProductImageInProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
@@ -129,7 +135,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyProductImageSet[] $productImageSets
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSets
+     *
+     * @return void
      */
     protected function deleteProductImageSets(array $productImageSets)
     {
@@ -143,7 +151,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyProductImageSetToProductImage $productImageSetToProductImage
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage $productImageSetToProductImage
+     *
+     * @return void
      */
     protected function deleteProductImageSetToProductImage(SpyProductImageSetToProductImage $productImageSetToProductImage)
     {

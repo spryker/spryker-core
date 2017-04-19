@@ -31,6 +31,7 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
     /**
      * @param string $directoryPath
      * @param \Symfony\Component\Filesystem\Filesystem $fileSystem
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct($directoryPath, Filesystem $fileSystem, Finder $finder)
     {

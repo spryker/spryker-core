@@ -38,11 +38,18 @@ class TransferDefinitionFinder implements FinderInterface
     protected $sourceDirectories;
 
     /**
-     * @param array $sourceDirectories
+     * @var string
      */
-    public function __construct(array $sourceDirectories)
+    protected $fileNamePattern;
+
+    /**
+     * @param array $sourceDirectories
+     * @param string $fileNamePattern
+     */
+    public function __construct(array $sourceDirectories, $fileNamePattern = '*.transfer.xml')
     {
         $this->sourceDirectories = $sourceDirectories;
+        $this->fileNamePattern = $fileNamePattern;
     }
 
     /**
@@ -51,7 +58,7 @@ class TransferDefinitionFinder implements FinderInterface
     public function getXmlTransferDefinitionFiles()
     {
         $finder = new Finder();
-        $finder->in($this->getExistingSourceDirectories())->name('*.transfer.xml')->depth('< 1');
+        $finder->in($this->getExistingSourceDirectories())->name($this->fileNamePattern)->depth('< 1');
 
         return $finder;
     }

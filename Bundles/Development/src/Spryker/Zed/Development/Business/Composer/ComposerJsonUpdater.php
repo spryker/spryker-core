@@ -78,6 +78,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = $this->clean($composerJson);
 
+        $composerJson = $this->order($composerJson);
+
         $composerJson = json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
         $composerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $composerJson) . PHP_EOL;
@@ -106,7 +108,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      *
      * @return array
      */
-    protected function clean($composerJson)
+    protected function clean(array $composerJson)
     {
         if  (!empty($composerJson[static::KEY_REQUIRE])) {
             ksort($composerJson[static::KEY_REQUIRE]);
@@ -121,6 +123,47 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         }
 
         $composerJson['config']['sort-packages'] = true;
+
+        return $composerJson;
+    }
+
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function order(array $composerJson)
+    {
+        $map = [
+            'name',
+            'type',
+            'description',
+            'homepage',
+            'license',
+            'require',
+            'require-dev',
+            'suggest',
+            'autoload',
+            'autoload-dev',
+            'minimum-stability',
+            'prefer-stable',
+            'scripts',
+            'repositories',
+            'extra',
+            'config',
+        ];
+
+        $callable = function($a, $b) use ($map) {
+            $keyA = in_array($a, $map) ? array_search($a, $map) : 999;
+            $keyB = in_array($b, $map) ? array_search($b, $map) : 999;
+
+            if ($keyA === $keyB) {
+                return 0;
+            }
+            return $keyA > $keyB;
+        };
+
+        uksort($composerJson, $callable);
 
         return $composerJson;
     }

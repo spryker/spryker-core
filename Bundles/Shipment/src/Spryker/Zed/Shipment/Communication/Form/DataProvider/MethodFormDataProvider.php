@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -37,21 +38,29 @@ class MethodFormDataProvider
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param array $plugins
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null $store
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
         ShipmentToTaxInterface $taxFacade,
         array $plugins,
-        ShipmentToMoneyInterface $moneyFacade
+        ShipmentToMoneyInterface $moneyFacade,
+        ShipmentToStoreInterface $store = null
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->taxFacade = $taxFacade;
         $this->plugins = $plugins;
         $this->moneyFacade = $moneyFacade;
+        $this->store = $store;
     }
 
     /**
@@ -96,6 +105,10 @@ class MethodFormDataProvider
         ];
 
         $options[MethodForm::OPTION_MONEY_FACADE] = $this->moneyFacade;
+
+        if ($this->store) {
+            $options[MethodForm::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
+        }
 
         return $options;
     }

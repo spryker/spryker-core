@@ -8,12 +8,15 @@
 namespace Application\Module;
 
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Exception;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 
+/**
+ * @deprecated Please use `SprykerTest\Shared\Application\Helper\ZedHelper` instead.
+ */
 class Zed extends Infrastructure
 {
 
@@ -23,13 +26,13 @@ class Zed extends Infrastructure
     private static $alreadyLoggedIn = false;
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -41,14 +44,14 @@ class Zed extends Infrastructure
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
     {
-         Propel::closeConnections();
-         static::$alreadyLoggedIn = false;
+        Propel::closeConnections();
+        static::$alreadyLoggedIn = false;
     }
 
     /**
@@ -90,7 +93,7 @@ class Zed extends Infrastructure
     }
 
     /**
-     * @return \Codeception\Module\WebDriver
+     * @return \Codeception\Module\WebDriver|\Codeception\Module
      */
     protected function getWebDriver()
     {

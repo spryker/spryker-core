@@ -9,6 +9,7 @@ namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\ContainerGlobals;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
@@ -19,6 +20,7 @@ abstract class AbstractFactory implements FactoryInterface
 {
 
     use BundleConfigResolverAwareTrait;
+    use ContainerMocker;
 
     /**
      * @var \Spryker\Yves\Kernel\Container $container
@@ -110,7 +112,7 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -121,6 +123,8 @@ abstract class AbstractFactory implements FactoryInterface
 
         $container = $this->provideDependencies($dependencyProvider, $container);
         $container = $dependencyInjector->inject($container);
+
+        $container = $this->overwriteForTesting($container);
 
         return $container;
     }

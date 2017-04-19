@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -15,9 +16,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -66,6 +67,11 @@ class CheckoutFacadeTest extends Test
     protected $checkoutFacade;
 
     /**
+     * @var \Checkout\FunctionalTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -76,6 +82,82 @@ class CheckoutFacadeTest extends Test
 
         $factoryMock = $this->getFactory();
         $this->checkoutFacade->setFactory($factoryMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutSuccessfully()
+    {
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        $this->assertTrue($result->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
+    {
+        $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
+
+        $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
+            ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        $this->assertFalse($result->getIsSuccess());
+        $this->assertEquals(1, count($result->getErrors()));
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutCreatesOrderItems()
+    {
+        $product1 = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product1->getSku()]);
+        $product2 = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product2->getSku()]);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([ItemTransfer::SKU => $product1->getSku()])
+            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku()])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+
+        $this->assertTrue($result->getIsSuccess());
+        $this->assertEquals(0, count($result->getErrors()));
+
+        $salesFacade = $this->tester->getLocator()->sales()->facade();
+        $order = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
+        $this->assertEquals(2, $order->getItems()->count());
+        $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
+        $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
     }
 
     /**
@@ -115,50 +197,6 @@ class CheckoutFacadeTest extends Test
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
         $this->assertEquals(0, $customerQuery->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
-    {
-        $customer = new SpyCustomer();
-        $customer
-            ->setCustomerReference('TestCustomer1')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setPassword('MyPass')
-            ->save();
-
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
-
-        $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckoutCreatesOrderItems()
-    {
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
-
-        $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
-
-        $orderItem1Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337');
-        $orderItem2Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338');
-
-        $this->assertEquals(1, $orderItem1Query->count());
-        $this->assertEquals(1, $orderItem2Query->count());
     }
 
     /**

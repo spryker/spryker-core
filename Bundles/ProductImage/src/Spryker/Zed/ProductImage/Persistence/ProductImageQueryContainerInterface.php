@@ -80,7 +80,6 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      */
     public function queryImageSetByProductId($idProduct, array $excludeIdProductImageSets = []);
 
-
     /**
      * @api
      *

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -164,4 +163,5 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->endUse()
             ->filterByFkProductImageSet($idProductImageSet);
     }
+
 }

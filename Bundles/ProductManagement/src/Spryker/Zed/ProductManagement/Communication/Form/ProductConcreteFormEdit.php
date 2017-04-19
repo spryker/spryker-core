@@ -154,6 +154,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
                 ])],
                 ConcretePriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
+                ConcretePriceForm::OPTION_CURRENCY_ISO_CODE => $options[static::OPTION_CURRENCY_ISO_CODE],
             ]);
 
         return $this;

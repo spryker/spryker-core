@@ -1,13 +1,7 @@
 {
   "name": "spryker/sales",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    },
-    "psr-4": {
-      "Sales\\Module\\": "tests/"
-    }
-  },
+  "description": "Sales bundle",
+  "license": "proprietary",
   "require": {
     "spryker/country": "^3.0.0",
     "spryker/customer": "^4.0.0",
@@ -22,7 +16,6 @@
     "spryker/sales-split": "^3.0.0",
     "spryker/sequence-number": "^3.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/util-sanitize": "^2.0.0",
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-sanitize": "^2.0.0",
@@ -38,8 +31,23 @@
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
-  "description": "Sales bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Sales\\": "tests/SprykerTest/Shared/Sales/_support/",
+      "SprykerTest\\Zed\\Sales\\": "tests/SprykerTest/Zed/Sales/_support/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    },
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -49,12 +57,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

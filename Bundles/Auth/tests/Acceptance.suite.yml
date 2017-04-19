@@ -5,5 +5,9 @@ modules:
             url: ''
             browser: phantomjs
 
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \Application\Module\Yves
         - \Application\Module\Zed
+
+coverage:
+  enabled: false

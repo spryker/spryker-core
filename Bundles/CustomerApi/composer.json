@@ -1,6 +1,6 @@
 {
   "name": "spryker/customer-api",
-  "description": "Customer Api bundle",
+  "description": "CustomerApi bundle",
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1",

@@ -22,6 +22,7 @@ class PriceForm extends AbstractType
     const FIELD_TAX_RATE = 'tax_rate';
 
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
+    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -60,6 +61,7 @@ class PriceForm extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
+            static::OPTION_CURRENCY_ISO_CODE => null,
         ]);
     }
 
@@ -83,10 +85,16 @@ class PriceForm extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PRICE, 'money', [
+        $fieldOptions = [
             'label' => 'Price',
             'required' => true,
-        ]);
+        ];
+
+        if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
+            $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
+        }
+
+        $builder->add(self::FIELD_PRICE, 'money', $fieldOptions);
 
         $builder->get(self::FIELD_PRICE)->addModelTransformer(new CallbackTransformer(
             function ($originalPrice) {

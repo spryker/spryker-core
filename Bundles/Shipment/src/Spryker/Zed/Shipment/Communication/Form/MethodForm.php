@@ -34,6 +34,7 @@ class MethodForm extends AbstractType
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     const OPTION_TAX_SETS = 'option_tax_sets';
     const OPTION_MONEY_FACADE = 'money facade';
+    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
 
     /**
      * @return string
@@ -80,6 +81,10 @@ class MethodForm extends AbstractType
         $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, 'array');
+
+        $resolver->setDefaults([
+            static::OPTION_CURRENCY_ISO_CODE => null,
+        ]);
     }
 
     /**
@@ -123,10 +128,16 @@ class MethodForm extends AbstractType
      */
     protected function addDefaultPriceField(FormBuilderInterface $builder, $options)
     {
-        $builder->add(self::FIELD_DEFAULT_PRICE, 'money', [
+        $fieldOptions = [
             'label' => 'Default price',
             'required' => false,
-        ]);
+        ];
+
+        if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
+            $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
+        }
+
+        $builder->add(self::FIELD_DEFAULT_PRICE, 'money', $fieldOptions);
 
         $moneyFacade = $this->getMoneyFacade($options);
 
