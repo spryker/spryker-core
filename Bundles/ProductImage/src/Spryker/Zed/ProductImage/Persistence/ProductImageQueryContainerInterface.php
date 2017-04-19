@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductImageQueryContainerInterface extends QueryContainerInterface
@@ -65,28 +64,31 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProductAbstract
+     * @param array $excludeIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryImageSetByProductAbstractId($idProductAbstract);
+    public function queryImageSetByProductAbstractId($idProductAbstract, array $excludeIdProductImageSets = []);
 
     /**
      * @api
      *
      * @param int $idProduct
+     * @param array $excludeIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryImageSetByProductId($idProduct);
+    public function queryImageSetByProductId($idProduct, array $excludeIdProductImageSets = []);
 
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     * @param int $idProductImageSet
+     * @param array $excludeIdProductImage
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
-    public function queryMissingProductImageInProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+    public function queryProductImageSetToProductImageByProductImageSetId($idProductImageSet, array $excludeIdProductImage = []);
 
 }
