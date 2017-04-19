@@ -1,36 +1,18 @@
 {
   "name": "spryker/file-system",
-  "require": {
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
-  },
   "description": "FileSystem bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Customer\\": "tests/SprykerTest/Shared/FileSystem/_support/"
+    "psr-0": {
+      "Spryker": "src/"
     }
   },
   "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    },
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "5.0.x-dev"
     }
   },
   "config": {

@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Service\FileSystem;
 
+use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use League\Flysystem\Filesystem;
 use PHPUnit_Framework_TestCase;
@@ -29,7 +30,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     const STORAGE_CUSTOMER = 'customerStorage';
     const STORAGE_PRODUCT = 'productStorage';
 
-    const ROOT_DIRECTORY = APPLICATION_ROOT_DIR . '/data/DE/uploads/';
+    const ROOT_DIRECTORY = 'data/DE/uploads/';
     const PATH_STORAGE_CUSTOMER = 'documents/';
     const PATH_STORAGE_PRODUCT = 'images/product/';
 
@@ -44,6 +45,11 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     protected $fileSystemService;
 
     /**
+     * @var string
+     */
+    protected $testDataFileSystemRootDirectory;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -51,6 +57,8 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $config = new FileSystemConfigStub();
+
+        $this->testDataFileSystemRootDirectory = Configuration::dataDir() . '/fileSystemRoot/';
 
         $factory = new FileSystemServiceFactory();
         $factory->setConfig($config);
@@ -78,7 +86,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
         $this->assertSame(static::STORAGE_PRODUCT, $storage->getName());
 
-        $storageDirectory = static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT;
+        $storageDirectory = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT;
         $rootDirectoryExists = is_dir($storageDirectory);
         $this->assertTrue($rootDirectoryExists);
     }
@@ -94,7 +102,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
         $this->assertSame(static::STORAGE_CUSTOMER, $storage->getName());
 
-        $storageDirectory = static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER;
+        $storageDirectory = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER;
         $rootDirectoryExists = is_dir($storageDirectory);
         $this->assertTrue($rootDirectoryExists);
     }
@@ -142,7 +150,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $storage = $this->fileSystemService->getStorageByName(static::STORAGE_CUSTOMER);
         $fileSystem = $storage->getFileSystem();
 
-        $uploadedFilename = static::ROOT_DIRECTORY . static::FILE_STORAGE_CUSTOMER;
+        $uploadedFilename = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::FILE_STORAGE_CUSTOMER;
         $storageFilename = '/foo/' . static::FILE_STORAGE_CUSTOMER;
 
         $h = fopen($uploadedFilename, 'w');
@@ -176,42 +184,42 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     protected function directoryCleanup()
     {
         try {
-            $file = static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'foo/' . static::FILE_STORAGE_CUSTOMER;
+            $file = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'foo/' . static::FILE_STORAGE_CUSTOMER;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'bar';
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'bar';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'foo';
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER . 'foo';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER;
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_CUSTOMER;
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $file = static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT . static::FILE_STORAGE_PRODUCT;
+            $file = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT . static::FILE_STORAGE_PRODUCT;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT;
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . static::PATH_STORAGE_PRODUCT;
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = static::ROOT_DIRECTORY . 'images/';
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY . 'images/';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = static::ROOT_DIRECTORY;
+            $dir = $this->testDataFileSystemRootDirectory . static::ROOT_DIRECTORY;
             if (is_dir($dir)) {
                 rmdir($dir);
             }
