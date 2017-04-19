@@ -9,18 +9,15 @@ namespace Spryker\Service\FileSystem\Model\Storage;
 
 use League\Flysystem\Filesystem;
 use Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidFilenameException;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class FileSystemStorage implements FileSystemStorageInterface
 {
 
-    const NAME = 'name';
-    const TITLE = 'title';
-    const ICON = 'icon';
-
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\FileSystemStorageConfigTransfer
      */
-    protected $config;
+    protected $storageConfig;
 
     /**
      * @var \League\Flysystem\Filesystem
@@ -28,21 +25,13 @@ class FileSystemStorage implements FileSystemStorageInterface
     protected $fileSystem;
 
     /**
-     * @param array $config
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $storageConfigTransfer
      * @param \League\Flysystem\Filesystem $fileSystem
      */
-    public function __construct(array $config, Filesystem $fileSystem)
+    public function __construct(AbstractTransfer $storageConfigTransfer, Filesystem $fileSystem)
     {
-        $this->config = $config;
+        $this->storageConfig = $storageConfigTransfer;
         $this->fileSystem = $fileSystem;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
     }
 
     /**
@@ -58,23 +47,9 @@ class FileSystemStorage implements FileSystemStorageInterface
      */
     public function getName()
     {
-        return $this->config[self::NAME];
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->config[self::TITLE];
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcon()
-    {
-        return $this->config[self::ICON];
+        return $this->storageConfig
+            ->requireName()
+            ->getName();
     }
 
     /**

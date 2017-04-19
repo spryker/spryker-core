@@ -7,23 +7,23 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage;
 
-use Spryker\Service\FileSystem\StorageConfig;
 use Spryker\Service\FileSystem\Model\Exception\FileSystemStorageBuilderNotFoundException;
+use Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProviderInterface;
 
-class BuilderCollection implements BuilderCollectionInterface
+class StorageBuilderProvider implements StorageBuilderProviderInterface
 {
 
     /**
-     * @var \Spryker\Service\FileSystem\StorageConfig
+     * @var \Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProviderInterface
      */
-    protected $config;
+    protected $configProvider;
 
     /**
-     * @param \Spryker\Service\FileSystem\StorageConfig $config
+     * @param \Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProviderInterface $configProvider
      */
-    public function __construct(StorageConfig $config)
+    public function __construct(StorageConfigProviderInterface $configProvider)
     {
-        $this->config = $config;
+        $this->configProvider = $configProvider;
     }
 
     /**
@@ -32,7 +32,7 @@ class BuilderCollection implements BuilderCollectionInterface
     public function createCollection()
     {
         $storageCollection = [];
-        foreach ($this->config->getStorageDefinitionCollection() as $storageName => $storageConfig) {
+        foreach ($this->configProvider->getStorageDefinitionCollection() as $storageName => $storageConfig) {
             $builder = $this->createBuilder($storageName, $storageConfig);
             $storageCollection[$storageName] = $builder->build();
         }
@@ -72,7 +72,7 @@ class BuilderCollection implements BuilderCollectionInterface
     {
         return sprintf(
             'Spryker\Service\FileSystem\Model\Storage\Builder\%sBuilder',
-            $this->config->getBuilderTypFromConfig($name)
+            $this->configProvider->getBuilderTypFromConfig($name)
         );
     }
 

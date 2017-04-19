@@ -32,15 +32,6 @@ interface FileSystemServiceInterface
     /**
      * @api
      *
-     * @param array $data
-     *
-     * @return \Spryker\Service\FileSystem\Model\Flysystem\ResourceInterface
-     */
-    public function getFlySystemResource(array $data);
-
-    /**
-     * @api
-     *
      * @param string $filename
      *
      * @return string

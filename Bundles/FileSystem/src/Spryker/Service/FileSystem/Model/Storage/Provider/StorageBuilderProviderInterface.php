@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage;
 
-interface BuilderCollectionInterface
+interface StorageBuilderProviderInterface
 {
 
     /**

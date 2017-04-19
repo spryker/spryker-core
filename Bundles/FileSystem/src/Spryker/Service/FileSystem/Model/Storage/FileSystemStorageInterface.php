@@ -11,11 +11,6 @@ interface FileSystemStorageInterface
 {
 
     /**
-     * @return array
-     */
-    public function getConfig();
-
-    /**
      * @return \League\Flysystem\Filesystem
      */
     public function getFileSystem();
@@ -24,16 +19,6 @@ interface FileSystemStorageInterface
      * @return string
      */
     public function getName();
-
-    /**
-     * @return string
-     */
-    public function getTitle();
-
-    /**
-     * @return string
-     */
-    public function getIcon();
 
     /**
      * @param array $nameTokens

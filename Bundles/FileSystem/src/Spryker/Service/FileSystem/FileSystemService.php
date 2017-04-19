@@ -50,21 +50,6 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @api
      *
-     * @param array $data
-     *
-     * @return \Spryker\Service\FileSystem\Model\Flysystem\ResourceInterface
-     */
-    public function getFlySystemResource(array $data)
-    {
-        return $this->getFactory()
-            ->createFlysystemResource($data);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $filename
      *
      * @return string

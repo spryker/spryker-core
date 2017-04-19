@@ -7,52 +7,15 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage;
 
-use Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidConfigurationException;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractBuilder implements BuilderInterface
 {
 
-    const NAME = 'name';
-    const TYPE = 'type';
-    const ROOT = 'root';
-    const TITLE = 'title';
-    const ICON = 'icon';
-
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\FileSystemStorageConfigTransfer
      */
-    protected $mandatoryConfigFields = [
-        self::NAME,
-        self::TYPE,
-        self::ROOT,
-        self::TITLE,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $optionalConfigFields = [
-        self::ICON,
-    ];
-
-    /**
-     * Builder specific mandatory config
-     *
-     * @var array
-     */
-    protected $builderMandatoryConfigFields = [];
-
-    /**
-     * Builder specific optional config
-     *
-     * @var array
-     */
-    protected $builderOptionalConfigFields = [];
-
-    /**
-     * @var array
-     */
-    protected $config;
+    protected $configTransfer;
 
     /**
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
@@ -60,58 +23,18 @@ abstract class AbstractBuilder implements BuilderInterface
     abstract protected function buildStorage();
 
     /**
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
      * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidConfigurationException
      *
      * @return void
      */
-    protected function validateConfig()
-    {
-        $fieldsToCheck = array_merge($this->mandatoryConfigFields, $this->builderMandatoryConfigFields);
-        $missing = array_diff_key(array_flip($fieldsToCheck), $this->config);
-
-        if (count($missing)) {
-            throw new FileSystemInvalidConfigurationException(
-                sprintf(
-                    'Missing required config values for: "%s" in FileSystemStorage:%s "%s"',
-                    implode(', ', array_keys($missing)),
-                    $this->config[self::TYPE],
-                    $this->config[self::NAME]
-                )
-            );
-        }
-    }
+    abstract protected function validateConfig();
 
     /**
-     * @return void
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $configTransfer
      */
-    protected function mergeConfigWithOptionalKeys($configToMerge)
+    public function __construct(AbstractTransfer $configTransfer)
     {
-        $configDataWithOptionalKeys = array_merge(
-            $this->config,
-            array_combine(
-                array_values($configToMerge),
-                array_fill(0, count($configToMerge), '')
-            )
-        );
-
-        $this->config = array_merge($configDataWithOptionalKeys, $this->config);
-    }
-
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this->mergeConfigWithOptionalKeys($this->optionalConfigFields);
-        $this->mergeConfigWithOptionalKeys($this->builderOptionalConfigFields);
+        $this->configTransfer = $configTransfer;
     }
 
     /**
@@ -119,10 +42,20 @@ abstract class AbstractBuilder implements BuilderInterface
      */
     public function build()
     {
-        $this->configure();
+        $this->assertMandatoryConfigFields();
         $this->validateConfig();
 
         return $this->buildStorage();
+    }
+
+    /**
+     * @return void
+     */
+    protected function assertMandatoryConfigFields()
+    {
+        $this->configTransfer->requireName();
+        $this->configTransfer->requireType();
+        $this->configTransfer->requireData();
     }
 
 }

@@ -7,11 +7,11 @@
 
 namespace Spryker\Service\FileSystem;
 
+use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use League\Flysystem\Filesystem;
-use Spryker\Service\FileSystem\Model\Flysystem\Resource;
 use Spryker\Service\FileSystem\Model\Manager\FileSystemManager;
 use Spryker\Service\FileSystem\Model\MimeType\MimeTypeManager;
-use Spryker\Service\FileSystem\Model\Storage\BuilderCollection;
+use Spryker\Service\FileSystem\Model\Storage\FileSystemBuilderProvider;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
@@ -47,7 +47,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
      */
     protected function createStorageBuilderCollection()
     {
-        $factory = new BuilderCollection($this->getConfig());
+        $factory = new FileSystemBuilderProvider($this->getConfig());
 
         return $factory->createCollection();
     }
@@ -55,11 +55,11 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     /**
      * @param array $data
      *
-     * @return \Spryker\Service\FileSystem\Model\Flysystem\ResourceInterface
+     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer
      */
-    public function createFlysystemResource(array $data)
+    public function createFileSystemResource(array $data)
     {
-        return new Resource($data);
+        return (new FileSystemResourceTransfer())->fromArray($data, true);
     }
 
     /**

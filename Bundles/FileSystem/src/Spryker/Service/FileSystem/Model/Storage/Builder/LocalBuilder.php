@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage\Builder;
 
+use Generated\Shared\Transfer\FileSystemStorageConfigLocalTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\FileSystem\Model\Storage\AbstractBuilder;
@@ -15,26 +16,35 @@ use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
 class LocalBuilder extends AbstractBuilder
 {
 
-    const PATH = 'path';
-
     /**
-     * @var array
+     * @return \Generated\Shared\Transfer\FileSystemStorageConfigLocalTransfer
      */
-    protected $builderMandatoryConfigFields = [
-        self::PATH,
-    ];
+    protected function buildStorageConfig()
+    {
+        $configTransfer = new FileSystemStorageConfigLocalTransfer();
+        $configTransfer->fromArray($this->configTransfer->getData(), true);
+
+        return $configTransfer;
+    }
 
     /**
      * Sample config
-     * 'title' => 'Customer Data',
-     * 'path' => 'customer/',
-     * 'icon' => 'fa fa-archive',
+     * 'root' => '/data/uploads/',
+     * 'path' => 'customers/pds/',
      *
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */
     protected function buildStorage()
     {
-        $path = sprintf('%s%s%s', $this->config[self::ROOT], DIRECTORY_SEPARATOR, $this->config[self::PATH]);
+        $storageConfigTransfer = $this->buildStorageConfig();
+
+        $path = sprintf(
+            '%s%s%s',
+            $storageConfigTransfer->getRoot(),
+            DIRECTORY_SEPARATOR,
+            $storageConfigTransfer->getPath()
+        );
+
         $adapter = new LocalAdapter($path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
         $fileSystem = new Filesystem($adapter);
 
@@ -42,7 +52,18 @@ class LocalBuilder extends AbstractBuilder
             $fileSystem->createDir('/');
         }
 
-        return new FileSystemStorage($this->config, $fileSystem);
+        return new FileSystemStorage($this->configTransfer, $fileSystem);
+    }
+
+    /**
+     * @return void
+     */
+    protected function validateConfig()
+    {
+        $storageConfigTransfer = $this->buildStorageConfig();
+
+        $storageConfigTransfer->requirePath();
+        $storageConfigTransfer->requireRoot();
     }
 
 }

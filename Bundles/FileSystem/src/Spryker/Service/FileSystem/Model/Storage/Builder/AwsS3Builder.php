@@ -8,6 +8,7 @@
 namespace Spryker\Service\FileSystem\Model\Storage\Builder;
 
 use Aws\S3\S3Client;
+use Generated\Shared\Transfer\FileSystemStorageConfigAwsTransfer;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\FileSystem\Model\Storage\AbstractBuilder;
@@ -18,28 +19,25 @@ class AwsS3Builder extends AbstractBuilder
 
     const KEY = 'key';
     const SECRET = 'secret';
-    const BUCKET = 'bucket';
     const REGION = 'region';
     const VERSION = 'version';
     const CREDENTIALS = 'credentials';
 
     /**
-     * @var array
+     * @return \Generated\Shared\Transfer\FileSystemStorageConfigAwsTransfer
      */
-    protected $builderMandatoryConfigFields = [
-        self::KEY,
-        self::SECRET,
-        self::BUCKET,
-        self::REGION,
-        self::VERSION,
-    ];
+    protected function buildStorageConfig()
+    {
+        $configTransfer = new FileSystemStorageConfigAwsTransfer();
+        $configTransfer->fromArray($this->configTransfer->getData(), true);
+
+        return $configTransfer;
+    }
 
     /**
      * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      *
      * Sample config
-     * 'title' => 'Invoices',
-     * 'icon' => 'fa fa-archive',
      * 'key' => ' key',
      * 'secret' => 'secret',
      * 'bucket' => 'bucket',
@@ -48,19 +46,35 @@ class AwsS3Builder extends AbstractBuilder
      */
     protected function buildStorage()
     {
+        $storageConfigTransfer = $this->buildStorageConfig();
+
         $client = new S3Client([
             self::CREDENTIALS => [
-                self::KEY => $this->config[self::KEY],
-                self::SECRET => $this->config[self::SECRET],
+                self::KEY => $storageConfigTransfer->getKey(),
+                self::SECRET => $storageConfigTransfer->getSecret(),
             ],
-            self::REGION => $this->config[self::REGION],
-            self::VERSION => $this->config[self::VERSION],
+            self::REGION => $storageConfigTransfer->getRegion(),
+            self::VERSION => $storageConfigTransfer->getVersion(),
         ]);
 
-        $adapter = new AwsS3Adapter($client, $this->config[self::BUCKET]);
+        $adapter = new AwsS3Adapter($client, $storageConfigTransfer->getBucket());
         $fileSystem = new Filesystem($adapter);
 
-        return new FileSystemStorage($this->config, $fileSystem);
+        return new FileSystemStorage($this->configTransfer, $fileSystem);
+    }
+
+    /**
+     * @return void
+     */
+    protected function validateConfig()
+    {
+        $storageConfigTransfer = $this->buildStorageConfig();
+
+        $storageConfigTransfer->requireKey();
+        $storageConfigTransfer->requireSecret();
+        $storageConfigTransfer->requireBucket();
+        $storageConfigTransfer->requireVersion();
+        $storageConfigTransfer->requireRegion();
     }
 
 }
