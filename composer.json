@@ -65,6 +65,7 @@
     "spryker/error-handler": "*",
     "spryker/event-journal": "*",
     "spryker/glossary": "*",
+    "spryker/file-system": "*",
     "spryker/graph": "*",
     "spryker/graphviz": "*",
     "spryker/gui": "*",
