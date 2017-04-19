@@ -72,6 +72,64 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param ProductConcreteTransfer $productConcreteTransfer
+     */
+    protected function deleteMissingProductImageSetInProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    {
+//        $excludeIdProductImageSet = [];
+//
+//        foreach ($productConcreteTransfer->getImageSets() as $productImageSetTransfer) {
+//            $excludeIdProductImageSet[] = $productImageSetTransfer->getIdProductImageSet();
+//        }
+//
+//        $this->productImageQueryContainer
+//            ->queryProductImageSet()
+//            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
+//            ->filterByIdProductImageSet($excludeIdProductImageSet, ' NOT IN ')
+//            ->deleteAll();
+    }
+
+    /**
+     * @param ProductAbstractTransfer $productConcreteTransfer
+     */
+    protected function deleteMissingProductImageSetInProductAbstract(ProductAbstractTransfer $productConcreteTransfer)
+    {
+//        $excludeIdProductImageSet = [];
+//
+//        foreach ($productConcreteTransfer->getImageSets() as $productImageSetTransfer) {
+//            $excludeIdProductImageSet[] = $productImageSetTransfer->getIdProductImageSet();
+//        }
+
+//        $this->productImageQueryContainer
+//            ->queryProductImageSet()
+//            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
+//            ->filterByIdProductImageSet($excludeIdProductImageSet, ' NOT IN ')
+//            ->deleteAll();
+    }
+
+    /**
+     * @param ProductImageSetTransfer $productImageSetTransfer
+     */
+    protected function deleteMissingProductImageInProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        $missingProductImage = $this->productImageQueryContainer
+            ->queryMissingProductImageInProductImageSet($productImageSetTransfer)
+            ->find();
+
+        foreach ($missingProductImage as $productImage) {
+            foreach ($productImage->getSpyProductImageSetToProductImages() as $productImageSetToProductImage) {
+                $productImage->removeSpyProductImageSetToProductImage($productImageSetToProductImage);
+            }
+
+            $productImage->save();
+
+            if ($productImage->getSpyProductImageSetToProductImages()->isEmpty()) {
+                $productImage->delete();
+            }
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
@@ -157,6 +215,8 @@ class Writer implements WriterInterface
             );
         }
 
+        $this->deleteMissingProductImageInProductImageSet($productImageSetTransfer);
+
         return $productImageSetTransfer;
     }
 
@@ -218,6 +278,8 @@ class Writer implements WriterInterface
             $this->updateProductImageSet($imageSetTransfer);
         }
 
+        $this->deleteMissingProductImageSetInProductAbstract($productAbstractTransfer);
+
         return $productAbstractTransfer;
     }
 
@@ -257,6 +319,8 @@ class Writer implements WriterInterface
 
             $this->updateProductImageSet($imageSetTransfer);
         }
+
+        $this->deleteMissingProductImageSetInProductConcrete($productConcreteTransfer);
 
         return $productConcreteTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductImageQueryContainerInterface extends QueryContainerInterface
@@ -77,5 +78,15 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryImageSetByProductId($idProduct);
+
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function queryMissingProductImageInProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
 }

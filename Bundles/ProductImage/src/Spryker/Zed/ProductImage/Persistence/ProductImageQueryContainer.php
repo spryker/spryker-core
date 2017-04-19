@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -142,4 +143,26 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->endUse();
     }
 
+    /**
+     * @api
+     *
+     * @param ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function queryMissingProductImageInProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        $excludeIdProductImage = [];
+
+        foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $excludeIdProductImage[] = $productImageTransfer->getIdProductImage();
+        }
+
+        return $this
+            ->queryProductImage()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->filterByFkProductImageSet($productImageSetTransfer->getIdProductImageSet())
+                ->endUse()
+            ->filterByIdProductImage($excludeIdProductImage, Criteria::NOT_IN);
+    }
 }
