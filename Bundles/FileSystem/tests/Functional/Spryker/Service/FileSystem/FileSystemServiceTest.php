@@ -31,4 +31,15 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $this->assertSame('image/jpeg', $mimeType);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetExtensionByFilename()
+    {
+        $fileSystemService = new FileSystemService();
+        $extension = $fileSystemService->getExtensionByFilename('fileName.jpg');
+
+        $this->assertSame('jpg', $extension);
+    }
+
 }
