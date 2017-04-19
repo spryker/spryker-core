@@ -11,8 +11,17 @@ interface FileSystemStorageProviderInterface
 {
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface[]
+     * @param string $name
+     *
+     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemStorageNotFoundException
+     *
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
      */
-    public function createCollection();
+    public function getStorageByName($name);
+
+    /**
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     */
+    public function getStorageCollection();
 
 }

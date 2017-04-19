@@ -19,6 +19,11 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     protected $configurationData;
 
     /**
+     * @var \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     */
+    protected $storageCollection;
+
+    /**
      * @param array $configurationData
      */
     public function __construct(array $configurationData)
@@ -27,9 +32,39 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     }
 
     /**
+     * @param string $name
+     *
+     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemStorageNotFoundException
+     *
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
+     */
+    public function getStorageByName($name)
+    {
+        if (!$this->storageCollection) {
+            $this->storageCollection = $this->createCollection();
+        }
+
+        if (!array_key_exists($name, $this->storageCollection)) {
+            throw new FileSystemStorageNotFoundException(
+                sprintf('FileSystemStorage "%s" was not found', $name)
+            );
+        }
+
+        return $this->storageCollection[$name];
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     */
+    public function getStorageCollection()
+    {
+        return $this->storageCollection;
+    }
+
+    /**
      * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface[]
      */
-    public function createCollection()
+    protected function createCollection()
     {
         $storageCollection = [];
         foreach ($this->configurationData as $storageName => $storageConfigData) {

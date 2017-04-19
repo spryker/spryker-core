@@ -27,7 +27,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getStorageByName($name)
     {
         return $this->getFactory()
-            ->createFileSystemManager()
+            ->createStorageProvider()
             ->getStorageByName($name);
     }
 
@@ -41,7 +41,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getStorageCollection()
     {
         return $this->getFactory()
-            ->createFileSystemManager()
+            ->createStorageProvider()
             ->getStorageCollection();
     }
 

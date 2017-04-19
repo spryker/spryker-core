@@ -9,10 +9,8 @@ namespace Spryker\Service\FileSystem;
 
 use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use League\Flysystem\Filesystem;
-use Spryker\Service\FileSystem\Model\Manager\FileSystemManager;
 use Spryker\Service\FileSystem\Model\MimeType\MimeTypeManager;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
-use Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProvider;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorageProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
@@ -23,16 +21,6 @@ class FileSystemServiceFactory extends AbstractServiceFactory
 {
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Manager\FileSystemManagerInterface
-     */
-    public function createFileSystemManager()
-    {
-        return new FileSystemManager(
-            $this->createStorageBuilderCollection()
-        );
-    }
-
-    /**
      * @param array $config
      * @param \League\Flysystem\Filesystem $fileSystem
      *
@@ -41,18 +29,6 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     public function createFileSystemStorage(array $config, Filesystem $fileSystem)
     {
         return new FileSystemStorage($config, $fileSystem);
-    }
-
-    /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface[]
-     */
-    protected function createStorageBuilderCollection()
-    {
-        $provider = new FileSystemStorageProvider(
-            $this->createStorageConfigProvider()
-        );
-
-        return $provider->createCollection();
     }
 
     /**
@@ -75,11 +51,11 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProviderInterface
+     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageProviderInterface
      */
-    protected function createStorageConfigProvider()
+    public function createStorageProvider()
     {
-        return new StorageConfigProvider(
+        return new FileSystemStorageProvider(
             $this->getConfig()->getStorageConfig()
         );
     }
