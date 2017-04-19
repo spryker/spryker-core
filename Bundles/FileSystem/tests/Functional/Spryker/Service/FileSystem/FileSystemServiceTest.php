@@ -50,8 +50,6 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->directoryCleanup();
-
         $config = new FileSystemConfigStub();
 
         $factory = new FileSystemServiceFactory();
