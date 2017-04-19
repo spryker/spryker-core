@@ -69,7 +69,7 @@ class AwsS3StorageBuilder extends AbstractStorageBuilder
     }
 
     /**
-     * @param $storageConfigTransfer
+     * @param \Generated\Shared\Transfer\FileSystemStorageConfigAwsTransfer $storageConfigTransfer
      *
      * @return \Aws\S3\S3Client
      */
@@ -101,7 +101,7 @@ class AwsS3StorageBuilder extends AbstractStorageBuilder
     }
 
     /**
-     * @param $adapter
+     * @param \League\Flysystem\AwsS3v3\AwsS3Adapter $adapter
      *
      * @return \League\Flysystem\Filesystem
      */

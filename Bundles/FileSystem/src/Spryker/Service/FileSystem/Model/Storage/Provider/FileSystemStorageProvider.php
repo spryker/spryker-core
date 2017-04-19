@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Storage;
+namespace Spryker\Service\FileSystem\Model\Storage\Provider;
 
 use Generated\Shared\Transfer\FileSystemStorageConfigTransfer;
 use Spryker\Service\FileSystem\Model\Exception\FileSystemStorageBuilderNotFoundException;

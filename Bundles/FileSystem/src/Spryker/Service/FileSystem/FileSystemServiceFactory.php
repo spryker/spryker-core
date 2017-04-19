@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use League\Flysystem\Filesystem;
 use Spryker\Service\FileSystem\Model\MimeType\MimeTypeManager;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
-use Spryker\Service\FileSystem\Model\Storage\FileSystemStorageProvider;
+use Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -51,7 +51,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageProviderInterface
+     * @return \Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProviderInterface
      */
     public function createStorageProvider()
     {
