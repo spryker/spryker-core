@@ -1,0 +1,14 @@
+{% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+    {% for translation in glossaryAttribute.translations %}
+        {% if translation.localeName == localeName %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <strong>{{ glossaryAttribute.placeholder }}:</strong>
+                </div>
+                <div class="col-lg-8">
+                    {{ translation.translation | raw }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

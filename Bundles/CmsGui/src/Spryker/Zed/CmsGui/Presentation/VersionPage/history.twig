@@ -1,0 +1,53 @@
+{% extends '@Cms/Layout/layout.twig' %}
+
+{% set widget_title = 'Version History' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+
+    {% set redirectUrl = url('/cms-gui/version-page/history', {'id-cms-page' : cmsCurrentPage.fkPage }) %}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Current Version' }  %}
+                {% block widget_content %}
+                    Page Version is 4 and it has published on 02/02/2017 by Max Musterman
+                {% endblock %}
+            {% endembed %}
+
+            {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsCurrentPage, 'cmsGlossary' : cmsCurrentGlossary}) }}
+        </div>
+        <div class="col-lg-6">
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Selected Version' }  %}
+                {% block widget_content %}
+                    {{ form_start(versionForm) }}
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-view" value="{{ 'Rollback to Selected Version' | trans }}" name="rollback"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <p>
+                                {{ form_widget(versionForm.version) }}
+                            </p>
+                        </div>
+                        <div class="col-lg-2 text-right">
+                            <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-edit" value="{{ 'Compare' | trans }}" name="compare" />
+                        </div>
+                    </div>
+                    {{ form_end(versionForm) }}
+                {% endblock %}
+            {% endembed %}
+
+            {% if (cmsTargetPage is not null) %}
+                {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsTargetPage, 'cmsGlossary' : cmsTargetGlossary}) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

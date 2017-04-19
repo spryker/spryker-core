@@ -1,0 +1,61 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
+{% block widget_content %}
+        <p>
+                <strong>{{ 'Template:' | trans }}</strong> {{ cmsPage.templateName }}
+        </p>
+
+        <p>
+                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}
+        </p>
+
+        <p>
+                <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}
+        </p>
+
+        <p>
+            {% for pageAttribute in cmsPage.pageAttributes %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+                    {% block content %}
+                            <strong>{{ 'Name:' | trans }}</strong>  {{ pageAttribute.name }}
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </p>
+{% endblock %}
+{% endembed %}
+
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO' } %}
+{% block widget_content %}
+        <p>
+    {% for pageMetaAttribute in cmsPage.metaAttributes %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageMetaAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+            {% block content %}
+                    <p><strong>{{ 'Title:' | trans }}</strong>  {{ pageMetaAttribute.metaTitle }} </p>
+                    <p><strong>{{ 'Keywords:' | trans }}</strong>  {{ pageMetaAttribute.metaKeywords }} </p>
+                    <p><strong>{{ 'Description:' | trans }}</strong>  {{ pageMetaAttribute.metaDescription }} </p>
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+        </p>
+{% endblock %}
+{% endembed %}
+
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+{% block widget_content %}
+    {% set locales = [] %}
+    {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+        {% for translation in glossaryAttribute.translations %}
+            {% set locales = locales|merge({(translation.localeName) : ''}) %}
+        {% endfor %}
+    {% endfor %}
+
+    {% for localeName,value in locales %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localeName, 'collapsed': false , 'hasError': false} %}
+            {% block content %}
+                {{ include ('@CmsGui/_partial/placeholders.twig') }}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+{% endblock %}
+{% endembed %}

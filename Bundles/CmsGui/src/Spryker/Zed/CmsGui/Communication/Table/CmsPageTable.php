@@ -264,7 +264,7 @@ class CmsPageTable extends AbstractTable
         }
 
         return $this->generateViewButton(
-            Url::generate('/cms-gui/view-page/history', [
+            Url::generate('/cms-gui/version-page/history', [
                 VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Version History'

@@ -457,6 +457,13 @@ interface CmsFacadeInterface
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
     /**
+     * @param int $idCmsPage
+     *
+     * @return CmsVersionTransfer[]
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
      * Specification:
      * - Returns the CmsPageVersionTransfer by IdCmsPage and specific version
      *

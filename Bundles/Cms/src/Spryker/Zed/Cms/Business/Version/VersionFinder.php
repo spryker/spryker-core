@@ -49,6 +49,23 @@ class VersionFinder implements VersionFinderInterface
 
     /**
      * @param int $idCmsPage
+     *
+     * @return array
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage)
+    {
+        $cmsVersionEntities = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->find();
+
+        $cmsVersionTransfers = [];
+        foreach ($cmsVersionEntities as $cmsVersionEntity) {
+            $cmsVersionTransfers[] = $this->getCmsVersionTransfer($cmsVersionEntity);
+        }
+
+        return $cmsVersionTransfers;
+    }
+
+    /**
+     * @param int $idCmsPage
      * @param int $version
      *
      * @return CmsVersionTransfer|null
