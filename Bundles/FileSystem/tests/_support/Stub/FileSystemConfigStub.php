@@ -20,7 +20,7 @@ class FileSystemConfigStub extends SprykerFileSystemConfig
      */
     public function getStorageConfig()
     {
-        $testDataFileSystemRootDirectory = Configuration::dataDir() . 'fileSystemRoot/uploads/';
+        $testDataFileSystemRootDirectory = Configuration::dataDir() . FileSystemServiceTest::ROOT_DIRECTORY;
 
         return [
             FileSystemServiceTest::STORAGE_PRODUCT_IMAGE => [

@@ -30,6 +30,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     const STORAGE_DOCUMENT = 'customerStorage';
     const STORAGE_PRODUCT_IMAGE = 'productStorage';
 
+    const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
     const PATH_STORAGE_DOCUMENT = 'documents/';
     const PATH_STORAGE_PRODUCT_IMAGE = 'images/product/';
 
@@ -57,7 +58,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 
         $config = new FileSystemConfigStub();
 
-        $this->testDataFileSystemRootDirectory = Configuration::dataDir() . 'fileSystemRoot/uploads/';
+        $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
         $factory = new FileSystemServiceFactory();
         $factory->setConfig($config);
