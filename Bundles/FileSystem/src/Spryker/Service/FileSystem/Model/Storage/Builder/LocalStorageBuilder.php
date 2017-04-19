@@ -10,10 +10,10 @@ namespace Spryker\Service\FileSystem\Model\Storage\Builder;
 use Generated\Shared\Transfer\FileSystemStorageConfigLocalTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
-use Spryker\Service\FileSystem\Model\Storage\AbstractBuilder;
+use Spryker\Service\FileSystem\Model\Storage\AbstractStorageBuilder;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
 
-class LocalBuilder extends AbstractBuilder
+class LocalStorageBuilder extends AbstractStorageBuilder
 {
 
     /**
@@ -22,7 +22,7 @@ class LocalBuilder extends AbstractBuilder
     protected function buildStorageConfig()
     {
         $configTransfer = new FileSystemStorageConfigLocalTransfer();
-        $configTransfer->fromArray($this->configTransfer->getData(), true);
+        $configTransfer->fromArray($this->config->getData(), true);
 
         return $configTransfer;
     }
@@ -52,13 +52,13 @@ class LocalBuilder extends AbstractBuilder
             $fileSystem->createDir('/');
         }
 
-        return new FileSystemStorage($this->configTransfer, $fileSystem);
+        return new FileSystemStorage($this->config, $fileSystem);
     }
 
     /**
      * @return void
      */
-    protected function validateConfig()
+    protected function validateStorageConfig()
     {
         $storageConfigTransfer = $this->buildStorageConfig();
 

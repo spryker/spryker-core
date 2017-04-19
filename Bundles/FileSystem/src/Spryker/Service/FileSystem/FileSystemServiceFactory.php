@@ -11,8 +11,9 @@ use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use League\Flysystem\Filesystem;
 use Spryker\Service\FileSystem\Model\Manager\FileSystemManager;
 use Spryker\Service\FileSystem\Model\MimeType\MimeTypeManager;
-use Spryker\Service\FileSystem\Model\Storage\FileSystemBuilderProvider;
 use Spryker\Service\FileSystem\Model\Storage\FileSystemStorage;
+use Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProvider;
+use Spryker\Service\FileSystem\Model\Storage\FileSystemStorageProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -47,9 +48,11 @@ class FileSystemServiceFactory extends AbstractServiceFactory
      */
     protected function createStorageBuilderCollection()
     {
-        $factory = new FileSystemBuilderProvider($this->getConfig());
+        $provider = new FileSystemStorageProvider(
+            $this->createStorageConfigProvider()
+        );
 
-        return $factory->createCollection();
+        return $provider->createCollection();
     }
 
     /**
@@ -59,7 +62,8 @@ class FileSystemServiceFactory extends AbstractServiceFactory
      */
     public function createFileSystemResource(array $data)
     {
-        return (new FileSystemResourceTransfer())->fromArray($data, true);
+        return (new FileSystemResourceTransfer())
+            ->fromArray($data, true);
     }
 
     /**
@@ -68,6 +72,16 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     public function createMimeTypeManager()
     {
         return new MimeTypeManager();
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\Model\Storage\Provider\StorageConfigProviderInterface
+     */
+    protected function createStorageConfigProvider()
+    {
+        return new StorageConfigProvider(
+            $this->getConfig()->getStorageConfig()
+        );
     }
 
 }

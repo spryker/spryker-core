@@ -8,7 +8,17 @@
 namespace Spryker\Service\FileSystem;
 
 use Spryker\Service\Kernel\AbstractBundleConfig;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 
 class FileSystemConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return array
+     */
+    public function getStorageConfig()
+    {
+        return $this->get(FileSystemConstants::FILESYSTEM_STORAGE);
+    }
+
 }

@@ -10,7 +10,4 @@ namespace Spryker\Shared\FileSystem;
 interface FileSystemConfig
 {
 
-    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
-    const FILESYSTEM_STORAGE_ROOT = 'FILESYSTEM_STORAGE_ROOT';
-
 }

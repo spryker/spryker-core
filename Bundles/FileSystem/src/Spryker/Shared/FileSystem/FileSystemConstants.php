@@ -10,7 +10,7 @@ namespace Spryker\Shared\FileSystem;
 interface FileSystemConstants
 {
 
-    const FILESYSTEM_STORAGE_TYPE_LOCAL = 'Local';
-    const FILESYSTEM_STORAGE_TYPE_AWSS3 = 'AwsS3';
+    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
+    const FILESYSTEM_STORAGE_ROOT = 'FILESYSTEM_STORAGE_ROOT';
 
 }
