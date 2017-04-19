@@ -26,8 +26,8 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';
 
-    const STORAGE_CUSTOMER = 'customerImage';
-    const STORAGE_PRODUCT = 'productImage';
+    const STORAGE_CUSTOMER = 'customerStorage';
+    const STORAGE_PRODUCT = 'productStorage';
 
     const ROOT_DIRECTORY = APPLICATION_ROOT_DIR . '/data/DE/uploads/';
     const PATH_STORAGE_CUSTOMER = 'documents/';
