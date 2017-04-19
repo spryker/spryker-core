@@ -21,26 +21,8 @@ interface FileSystemStorageInterface
     public function getName();
 
     /**
-     * @param array $nameTokens
-     *
      * @return string
      */
-    public function generateValidName(array $nameTokens);
-
-    /**
-     * @param array $pathTokens
-     *
-     * @return string
-     */
-    public function generateValidPath(array $pathTokens);
-
-    /**
-     * @param string $name
-     *
-     * @throws \Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidFilenameException
-     *
-     * @return void
-     */
-    public function validateName($name);
+    public function getType();
 
 }

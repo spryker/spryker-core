@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\FileSystem\Model\Storage;
 
+use Spryker\Service\FileSystem\Model\Exception\FileSystemInvalidFilenameException;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractBuilder implements BuilderInterface
@@ -42,7 +43,7 @@ abstract class AbstractBuilder implements BuilderInterface
      */
     public function build()
     {
-        $this->assertMandatoryConfigFields();
+        $this->validateMandatoryConfigFields();
         $this->validateConfig();
 
         return $this->buildStorage();
@@ -51,7 +52,7 @@ abstract class AbstractBuilder implements BuilderInterface
     /**
      * @return void
      */
-    protected function assertMandatoryConfigFields()
+    protected function validateMandatoryConfigFields()
     {
         $this->configTransfer->requireName();
         $this->configTransfer->requireType();
