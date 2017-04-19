@@ -212,7 +212,6 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
                 rmdir($dir);
             }
 
-
         } catch (\Exception $e) {
 
         } catch (\Throwable $e) {
