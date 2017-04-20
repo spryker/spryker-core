@@ -115,7 +115,8 @@ class ProductGroupCreator implements ProductGroupCreatorInterface
      */
     protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
     {
-        $this->productGroupTouch->touchActive($productGroupTransfer);
+        $this->productGroupTouch->touchProductGroupActive($productGroupTransfer);
+        $this->productGroupTouch->touchProductAbstractGroupsActive($productGroupTransfer);
     }
 
 }

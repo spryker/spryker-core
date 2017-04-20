@@ -40,7 +40,7 @@ class ProductGroupTouch implements ProductGroupTouchInterface
      *
      * @return bool
      */
-    public function touchActive(ProductGroupTransfer $productGroupTransfer)
+    public function touchProductGroupActive(ProductGroupTransfer $productGroupTransfer)
     {
         $idProductGroup = $productGroupTransfer
             ->requireIdProductGroup()
@@ -52,15 +52,64 @@ class ProductGroupTouch implements ProductGroupTouchInterface
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
+     * @return void
+     */
+    public function touchProductAbstractGroupsActive(ProductGroupTransfer $productGroupTransfer)
+    {
+        $productGroupTransfer->requireIdProductAbstracts();
+
+        foreach ($productGroupTransfer->getIdProductAbstracts() as $idProductAbstract) {
+            $this->touchFacade->touchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $idProductAbstract);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
      * @return bool
      */
-    public function touchDeleted(ProductGroupTransfer $productGroupTransfer)
+    public function touchProductGroupDeleted(ProductGroupTransfer $productGroupTransfer)
     {
         $idProductGroup = $productGroupTransfer
             ->requireIdProductGroup()
             ->getIdProductGroup();
 
         return $this->touchFacade->touchDeleted(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_GROUP, $idProductGroup);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractGroupsDeleted(ProductGroupTransfer $productGroupTransfer)
+    {
+        $productGroupTransfer
+            ->requireIdProductGroup()
+            ->requireIdProductAbstracts();
+
+        foreach ($productGroupTransfer->getIdProductAbstracts() as $idProductAbstract) {
+            if ($this->hasProductAbstractOtherGroup($idProductAbstract, $productGroupTransfer->getIdProductGroup())) {
+                $this->touchFacade->touchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $idProductAbstract);
+            } else {
+                $this->touchFacade->touchDeleted(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $idProductAbstract);
+            }
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idProductGroup
+     *
+     * @return bool
+     */
+    protected function hasProductAbstractOtherGroup($idProductAbstract, $idProductGroup)
+    {
+        $count = $this->productGroupQueryContainer
+            ->queryProductAbstractGroupsByIdProductAbstract($idProductAbstract, $idProductGroup)
+            ->count();
+
+        return $count > 0;
     }
 
 }

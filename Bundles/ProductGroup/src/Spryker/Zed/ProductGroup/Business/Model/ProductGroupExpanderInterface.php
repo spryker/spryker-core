@@ -9,15 +9,8 @@ namespace Spryker\Zed\ProductGroup\Business\Model;
 
 use Generated\Shared\Transfer\ProductGroupTransfer;
 
-interface ProductGroupUpdaterInterface
+interface ProductGroupExpanderInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer
-     */
-    public function updateProductGroup(ProductGroupTransfer $productGroupTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer

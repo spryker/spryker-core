@@ -55,6 +55,30 @@ interface ProductGroupFacadeInterface
 
     /**
      * Specification:
+     * - FIXME
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    public function extendProductGroup(ProductGroupTransfer $productGroupTransfer);
+
+    /**
+     * Specification:
+     * - FIXME
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    public function removeFromProductGroup(ProductGroupTransfer $productGroupTransfer);
+
+    /**
+     * Specification:
      * - Removes existing product group from database.
      *
      * @api

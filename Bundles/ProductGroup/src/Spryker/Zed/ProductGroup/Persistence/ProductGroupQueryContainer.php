@@ -45,4 +45,26 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
             ->orderByPosition(Criteria::ASC);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $excludedIdProductGroup
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryProductAbstractGroupsByIdProductAbstract($idProductAbstract, $excludedIdProductGroup = null)
+    {
+        $query = $this->getFactory()
+            ->createProductAbstractGroupQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->orderByFkProductGroup();
+
+        if ($excludedIdProductGroup) {
+            $query->filterByFkProductGroup($excludedIdProductGroup, Criteria::NOT_EQUAL);
+        }
+
+        return $query;
+    }
+
 }

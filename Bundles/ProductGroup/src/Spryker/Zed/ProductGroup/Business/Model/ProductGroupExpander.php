@@ -14,7 +14,7 @@ use Spryker\Zed\ProductGroup\Business\Exception\ProductGroupNotFoundException;
 use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class ProductGroupUpdater implements ProductGroupUpdaterInterface
+class ProductGroupExpander implements ProductGroupExpanderInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -44,26 +44,12 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
-    public function updateProductGroup(ProductGroupTransfer $productGroupTransfer)
-    {
-        $this->assertProductGroupForUpdate($productGroupTransfer);
-
-        return $this->handleDatabaseTransaction(function () use ($productGroupTransfer) {
-            return $this->executeUpdateProductGroupTransaction($productGroupTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer
-     */
     public function extendProductGroup(ProductGroupTransfer $productGroupTransfer)
     {
-        $this->assertProductGroupForUpdate($productGroupTransfer);
+        $this->assertProductGroupForExtension($productGroupTransfer);
 
         return $this->handleDatabaseTransaction(function () use ($productGroupTransfer) {
-            return $this->executeUpdateProductGroupTransaction($productGroupTransfer);
+            return $this->executeExtendProductGroupTransaction($productGroupTransfer);
         });
     }
 
@@ -72,7 +58,7 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
      *
      * @return void
      */
-    protected function assertProductGroupForUpdate(ProductGroupTransfer $productGroupTransfer)
+    protected function assertProductGroupForExtension(ProductGroupTransfer $productGroupTransfer)
     {
         $productGroupTransfer->requireIdProductGroup();
     }
@@ -82,15 +68,13 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
-    protected function executeUpdateProductGroupTransaction(ProductGroupTransfer $productGroupTransfer)
+    protected function executeExtendProductGroupTransaction(ProductGroupTransfer $productGroupTransfer)
     {
         $productGroupEntity = $this->findProductGroupEntity($productGroupTransfer);
 
-        $this->cleanProductGroupEntity($productGroupEntity);
-        $this->saveProductGroupEntity($productGroupEntity, $productGroupTransfer);
         $this->touchProductGroup($productGroupTransfer);
 
-        return $productGroupTransfer;
+        return $this->saveProductGroupEntity($productGroupEntity, $productGroupTransfer);
     }
 
     /**
@@ -117,47 +101,59 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductGroup\Persistence\SpyProductGroup $productGroupEntity
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return void
      */
-    protected function cleanProductGroupEntity(SpyProductGroup $productGroupEntity)
+    protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
     {
-        $this->touchProductAbstractGroupsDeleted($productGroupEntity);
-        $productGroupEntity->getSpyProductAbstractGroups()->delete();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductGroup\Persistence\SpyProductGroup $productGroupEntity
-     *
-     * @return void
-     */
-    protected function touchProductAbstractGroupsDeleted(SpyProductGroup $productGroupEntity)
-    {
-        $productGroupTransfer = new ProductGroupTransfer();
-        $productGroupTransfer->setIdProductGroup($productGroupEntity->getIdProductGroup());
-
-        foreach ($productGroupEntity->getSpyProductAbstractGroups() as $productAbstractGroupEntity) {
-            $productGroupTransfer->addIdProductAbstract($productAbstractGroupEntity->getFkProductAbstract());
-        }
-
-        $this->productGroupTouch->touchProductAbstractGroupsDeleted($productGroupTransfer);
+        $this->productGroupTouch->touchProductGroupActive($productGroupTransfer);
+        $this->productGroupTouch->touchProductAbstractGroupsActive($productGroupTransfer);
     }
 
     /**
      * @param \Orm\Zed\ProductGroup\Persistence\SpyProductGroup $productGroupEntity
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
     protected function saveProductGroupEntity(SpyProductGroup $productGroupEntity, ProductGroupTransfer $productGroupTransfer)
     {
-        foreach ($productGroupTransfer->getIdProductAbstracts() as $position => $idProductAbstract) {
+        $idProductAbstracts = $productGroupTransfer->getIdProductAbstracts();
+        $existingProductAbstractGroups = $this->getExistingIdProductAbstracts($productGroupEntity);
+        $productGroupTransfer->setIdProductAbstracts($existingProductAbstractGroups);
+
+        $position = count($existingProductAbstractGroups);
+        foreach ($idProductAbstracts as $idProductAbstract) {
+            if (in_array($idProductAbstract, $existingProductAbstractGroups)) {
+                continue;
+            }
+
             $productAbstractGroupEntity = $this->createProductAbstractGroupEntity($idProductAbstract, $position);
             $productGroupEntity->addSpyProductAbstractGroup($productAbstractGroupEntity);
+            $productGroupTransfer->addIdProductAbstract($idProductAbstract);
+            $position++;
         }
 
         $productGroupEntity->save();
+
+        return $productGroupTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductGroup\Persistence\SpyProductGroup $productGroupEntity
+     *
+     * @return array
+     */
+    protected function getExistingIdProductAbstracts(SpyProductGroup $productGroupEntity)
+    {
+        $existingProductAbstractGroups = [];
+
+        foreach ($productGroupEntity->getSpyProductAbstractGroups() as $productAbstractGroupEntity) {
+            $existingProductAbstractGroups[] = $productAbstractGroupEntity->getFkProductAbstract();
+        }
+
+        return $existingProductAbstractGroups;
     }
 
     /**
@@ -174,17 +170,6 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
             ->setPosition($position);
 
         return $productAbstractGroupEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
-     *
-     * @return void
-     */
-    protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
-    {
-        $this->productGroupTouch->touchProductGroupActive($productGroupTransfer);
-        $this->productGroupTouch->touchProductAbstractGroupsActive($productGroupTransfer);
     }
 
 }

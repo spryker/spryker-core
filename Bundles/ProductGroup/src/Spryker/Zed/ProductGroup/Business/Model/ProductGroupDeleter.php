@@ -116,7 +116,8 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
      */
     protected function touchProductGroup(ProductGroupTransfer $productGroupTransfer)
     {
-        $this->productGroupTouch->touchDeleted($productGroupTransfer);
+        $this->productGroupTouch->touchProductGroupDeleted($productGroupTransfer);
+        $this->productGroupTouch->touchProductAbstractGroupsDeleted($productGroupTransfer);
     }
 
 }

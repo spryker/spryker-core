@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductGroupCollector\Business;
 
-use Spryker\Shared\ProductGroup\KeyBuilder\ProductGroupKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductAbstractGroupsCollector;
 use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductGroupCollector;
-use Spryker\Zed\ProductGroupCollector\ProductGroupCollectorDependencyProvider;
 use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupCollectorQuery;
+use Spryker\Zed\ProductGroupCollector\ProductGroupCollectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductGroupCollector\ProductGroupCollectorConfig getConfig()
@@ -35,11 +35,18 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductAbstractGroupsCollector
      */
-    protected function createProductGroupKeyBuilder()
+    public function createStorageProductAbstractGroupsCollector()
     {
-        return new ProductGroupKeyBuilder();
+        $storageProductGroupCollector = new ProductAbstractGroupsCollector(
+            $this->getUtilDataReaderService()
+        );
+
+        $storageProductGroupCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $storageProductGroupCollector->setQueryBuilder($this->createProductGroupCollectorQuery());
+
+        return $storageProductGroupCollector;
     }
 
     /**

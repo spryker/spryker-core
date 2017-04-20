@@ -28,4 +28,14 @@ interface ProductGroupQueryContainerInterface
      */
     public function queryProductAbstractGroupsById($idProductGroup);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $excludedIdProductGroup
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryProductAbstractGroupsByIdProductAbstract($idProductAbstract, $excludedIdProductGroup = null);
+
 }

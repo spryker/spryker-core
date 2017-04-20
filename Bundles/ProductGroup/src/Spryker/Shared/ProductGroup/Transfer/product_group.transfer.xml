@@ -8,5 +8,9 @@
         <property name="idProductAbstracts" type="array" singular="idProductAbstract" />
     </transfer>
 
-</transfers>
+    <transfer name="ProductAbstractGroups">
+        <property name="idProductAbstract" type="int" />
+        <property name="idProductGroups" type="array" singular="idProductGroup" />
+    </transfer>
 
+</transfers>

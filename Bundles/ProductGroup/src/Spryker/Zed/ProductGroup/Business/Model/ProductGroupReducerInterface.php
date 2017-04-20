@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductGroup\Business\Model;
 
 use Generated\Shared\Transfer\ProductGroupTransfer;
 
-interface ProductGroupUpdaterInterface
+interface ProductGroupReducerInterface
 {
 
     /**
@@ -17,13 +17,6 @@ interface ProductGroupUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
-    public function updateProductGroup(ProductGroupTransfer $productGroupTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer
-     */
-    public function extendProductGroup(ProductGroupTransfer $productGroupTransfer);
+    public function removeFromProductGroup(ProductGroupTransfer $productGroupTransfer);
 
 }

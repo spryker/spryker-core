@@ -12,11 +12,11 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
-class ProductGroupCollectorQuery extends AbstractPropelCollectorQuery
+class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
 {
 
-    const FIELD_ID_PRODUCT_GROUP = 'id_product_group';
-    const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    const FIELD_ID_PRODUCT_GROUPS = 'id_product_groups';
 
     /**
      * @return void
@@ -25,18 +25,18 @@ class ProductGroupCollectorQuery extends AbstractPropelCollectorQuery
     {
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
-            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP,
+            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT,
             Criteria::INNER_JOIN
         );
 
-        $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP, self::FIELD_ID_PRODUCT_GROUP);
+        $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT, self::FIELD_ID_PRODUCT_ABSTRACT);
         $this->touchQuery->withColumn(sprintf(
             'GROUP_CONCAT(%s ORDER BY %s)',
-            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT,
-            SpyProductAbstractGroupTableMap::COL_POSITION
-        ), self::FIELD_ID_PRODUCT_ABSTRACTS);
+            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP,
+            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP
+        ), self::FIELD_ID_PRODUCT_GROUPS);
 
-        $this->touchQuery->groupBy(self::FIELD_ID_PRODUCT_GROUP);
+        $this->touchQuery->groupBy(self::FIELD_ID_PRODUCT_ABSTRACT);
     }
 
 }

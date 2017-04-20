@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductGroup\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupCreator;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupDeleter;
+use Spryker\Zed\ProductGroup\Business\Model\ProductGroupExpander;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupReader;
+use Spryker\Zed\ProductGroup\Business\Model\ProductGroupReducer;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouch;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupUpdater;
 use Spryker\Zed\ProductGroup\ProductGroupDependencyProvider;
@@ -44,6 +46,22 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
     public function createProductGroupUpdater()
     {
         return new ProductGroupUpdater($this->getQueryContainer(), $this->createProductGroupTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupExpanderInterface
+     */
+    public function createProductGroupExpander()
+    {
+        return new ProductGroupExpander($this->getQueryContainer(), $this->createProductGroupTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupReducerInterface
+     */
+    public function createProductGroupReducer()
+    {
+        return new ProductGroupReducer($this->getQueryContainer(), $this->createProductGroupTouch());
     }
 
     /**

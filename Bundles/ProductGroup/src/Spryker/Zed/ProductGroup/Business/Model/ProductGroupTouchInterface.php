@@ -17,13 +17,27 @@ interface ProductGroupTouchInterface
      *
      * @return bool
      */
-    public function touchActive(ProductGroupTransfer $productGroupTransfer);
+    public function touchProductGroupActive(ProductGroupTransfer $productGroupTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractGroupsActive(ProductGroupTransfer $productGroupTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return bool
      */
-    public function touchDeleted(ProductGroupTransfer $productGroupTransfer);
+    public function touchProductGroupDeleted(ProductGroupTransfer $productGroupTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractGroupsDeleted(ProductGroupTransfer $productGroupTransfer);
 
 }

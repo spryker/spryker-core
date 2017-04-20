@@ -6,3 +6,4 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\LocatorHelper
         - \SprykerTest\Shared\Propel\Helper\TransactionHelper
         - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+        - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper

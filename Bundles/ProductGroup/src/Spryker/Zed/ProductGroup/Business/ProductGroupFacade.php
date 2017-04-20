@@ -71,6 +71,38 @@ class ProductGroupFacade extends AbstractFacade implements ProductGroupFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    public function extendProductGroup(ProductGroupTransfer $productGroupTransfer)
+    {
+        return $this->getFactory()
+            ->createProductGroupExpander()
+            ->extendProductGroup($productGroupTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    public function removeFromProductGroup(ProductGroupTransfer $productGroupTransfer)
+    {
+        return $this->getFactory()
+            ->createProductGroupReducer()
+            ->removeFromProductGroup($productGroupTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
+     *
      * @return void
      */
     public function deleteProductGroup(ProductGroupTransfer $productGroupTransfer)
@@ -79,7 +111,5 @@ class ProductGroupFacade extends AbstractFacade implements ProductGroupFacadeInt
             ->createProductGroupDeleter()
             ->deleteProductGroup($productGroupTransfer);
     }
-
-    // TODO: Add facade method to get all groups of a product
 
 }
