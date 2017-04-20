@@ -14,7 +14,7 @@ class ReadProductGroupTest extends Test
 {
 
     /**
-     * @var \SprykerTest\Zed\ProductGroup\BusinessTester
+     * @var \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester
      */
     protected $tester;
 

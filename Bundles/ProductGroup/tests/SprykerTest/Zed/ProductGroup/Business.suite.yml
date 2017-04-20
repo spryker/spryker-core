@@ -1,4 +1,4 @@
-class_name: BusinessTester
+class_name: ProductGroupBusinessTester
 modules:
     enabled:
         - Asserts
