@@ -20,7 +20,7 @@ class AddressController extends AbstractController
 {
 
     /**
-     * @deprecated
+     * @deprecated moved to Customer view page ViewController->indexAction()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -46,7 +46,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @deprecated
+     * @deprecated moved to Customer view page ViewController->indexAction()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -63,7 +63,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @deprecated
+     * @deprecated Address has no detail page anymore
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
