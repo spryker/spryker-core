@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Please use \Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole instead
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
  */
 class RemoveGeneratedDirectoryConsole extends Console

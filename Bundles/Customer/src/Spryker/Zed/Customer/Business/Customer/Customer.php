@@ -114,9 +114,13 @@ class Customer implements CustomerInterface
     {
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerTransfer->fromArray($customerEntity->toArray(), true);
+
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
-            $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
+            $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
+            $customerTransfer->setAddresses($addressesTransfer);
+
+            $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
         }
 
         return $customerTransfer;
@@ -492,20 +496,22 @@ class Customer implements CustomerInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection $addressEntities
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities, SpyCustomer $customer)
+    protected function entityCollectionToTransferCollection(ObjectCollection $addressEntities, SpyCustomer $customer)
     {
         $addressCollection = new AddressesTransfer();
-        foreach ($entities->getData() as $address) {
+
+        foreach ($addressEntities as $address) {
             $addressTransfer = $this->entityToTransfer($address);
 
             if ($customer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
                 $addressTransfer->setIsDefaultBilling(true);
             }
+
             if ($customer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
                 $addressTransfer->setIsDefaultShipping(true);
             }
@@ -514,6 +520,27 @@ class Customer implements CustomerInterface
         }
 
         return $addressCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function attachAddressesTransfer(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer)
+    {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getIsDefaultBilling()) {
+                $customerTransfer->addBillingAddress($addressTransfer);
+            }
+
+            if ($addressTransfer->getIsDefaultShipping()) {
+                $customerTransfer->addShippingAddress($addressTransfer);
+            }
+        }
+
+        return $customerTransfer;
     }
 
     /**

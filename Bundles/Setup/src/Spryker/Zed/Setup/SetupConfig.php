@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Setup;
 
 use Spryker\Shared\Setup\SetupConstants;
-use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
+use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
-use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
+use Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole;
 use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
@@ -88,8 +88,8 @@ class SetupConfig extends AbstractBundleConfig
     private function getDefaultSetupInstallCommandNames()
     {
         return [
-            DeleteAllCachesConsole::COMMAND_NAME,
-            RemoveGeneratedDirectoryConsole::COMMAND_NAME,
+            EmptyAllCachesConsole::COMMAND_NAME,
+            EmptyGeneratedDirectoryConsole::COMMAND_NAME,
             PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,

@@ -11,6 +11,8 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
+ * @deprecated
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

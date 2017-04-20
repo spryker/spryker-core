@@ -2,7 +2,7 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \Testify\Module\Environment
+        - \SprykerTest\Shared\Testify\Helper\Environment
         - \Config\Module\ConfigInit
         - \Propel\Module\PropelInstall
         - \Transfer\Module\TransferGenerate
