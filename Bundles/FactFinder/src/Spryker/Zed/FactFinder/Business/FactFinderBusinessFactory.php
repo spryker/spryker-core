@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\FactFinder\Business;
 
-use Spryker\Shared\Library\Reader\Csv\CsvReader;
-use Spryker\Zed\FactFinder\FactFinderDependencyProvider;
+use Orm\Zed\Locale\Persistence\Base\SpyLocale;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporterPlugin;
+use Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter;
+use Spryker\Zed\FactFinder\Business\Writer\CsvFileWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -19,21 +22,12 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Shared\Library\Reader\Csv\CsvReader
+     * @param SpyLocale $locale
      */
-    public function createFileReader()
+    public function createCsvFile(SpyLocale $locale)
     {
-        return new CsvReader();
-    }
-
-    /**
-     * @return \Pyz\Zed\Collector\Business\CollectorFacade
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     */
-    public function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(FactFinderDependencyProvider::COLLECTOR_FACADE);
+        return $this->createFactFinderProductExporter(new CsvFileWriter(), $locale)
+            ->export();
     }
 
     /**
@@ -45,19 +39,39 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\FactFinder\Persistence\FactFinderQueryContainerInterface
      */
-    public function getFactFinderCategoryCollectorClassName()
+    public function getFactFinderQueryContainer()
     {
-        return '\Spryker\Zed\FactFinder\Business\Collector\File\FactFinderCategoryCollector';
+        return $this->getQueryContainer();
     }
 
     /**
-     * @return string
+     * @return SpyLocaleQuery
      */
-    public function getFactFinderProductCollectorClassName()
+    public function getLocaleQuery()
     {
-        return '\Spryker\Zed\FactFinder\Business\Collector\File\FactFinderProductCollector';
+        return SpyLocaleQuery::create()->addSelfSelectColumns();
+    }
+
+    /**
+     * @param $filePath
+     *
+     * @return CsvFileWriter
+     */
+    public function createCsvWriter($filePath)
+    {
+        return new CsvFileWriter($filePath);
+    }
+
+    /**
+     * @param AbstractFileWriter $fileWriter
+     *
+     * @return FactFinderProductExporterPlugin
+     */
+    protected function createFactFinderProductExporter(AbstractFileWriter $fileWriter, SpyLocale $locale)
+    {
+        return new FactFinderProductExporterPlugin($fileWriter, $locale);
     }
 
 }

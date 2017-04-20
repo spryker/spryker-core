@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\FactFinderGui\Controller;
 
+use Generated\Shared\Transfer\FactFinderCsvTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;use Symfony\Component\HttpFoundation\StreamedResponse;
 use \Symfony\Component\HttpFoundation\Request;
 
@@ -23,19 +24,16 @@ class CsvController extends AbstractController
      */
     public function productsAction(Request $request)
     {
-        $locale = $request->get('locale', $this->getLocale());
-        $number = $request->get('number', '');
-        $response = $this->getClient()
-            ->getProductCsv($locale, $number)
-            ->getContents();
 
-        return $this->streamedResponse(
-            function () use ($response) {
-                echo $response;
-            },
-            200,
-            ["Content-type" => "text/csv"]
-        );
+        $fileName = $request->attributes->get('fileName');
+
+//        return $this->streamedResponse(
+//            function () use ($response) {
+//                 echo $response;
+//            },
+//            200,
+//            ["Content-type" => "text/csv"]
+//        );
     }
 
     /**

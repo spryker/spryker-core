@@ -7,14 +7,18 @@
 
 namespace Spryker\Zed\FactFinder;
 
-use Spryker\Zed\FactFinder\Dependency\Facade\FactFinderToCollectorBridge;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToCategoryDataFeedBridge;
+use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToProductAbstractDataFeedBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const COLLECTOR_FACADE = 'collector facade';
+    const PRODUCT_ABSTRACT_DATA_FEED = 'PRODUCT_ABSTRACT_DATA_FEED';
+    const CATEGORY_DATA_FEED = 'CATEGORY_DATA_FEED';
+    const LOCALE_QUERY = 'LOCALE_QUERY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,14 +31,30 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::COLLECTOR_FACADE] = function (Container $container) {
-            return new FactFinderToCollectorBridge($container->getLocator()->collector()->facade());
+        $container[self::PRODUCT_ABSTRACT_DATA_FEED] = function (Container $container) {
+            $productAbstractDataFeedQueryContainer = $container->getLocator()
+                ->productAbstractDataFeed()
+                ->queryContainer();
+
+            return new FactFinderToProductAbstractDataFeedBridge($productAbstractDataFeedQueryContainer);
+        };
+
+        $container[self::CATEGORY_DATA_FEED] = function (Container $container) {
+            $categoryDataFeedQueryContainer = $container->getLocator()
+                ->categoryDataFeed()
+                ->queryContainer();
+
+            return new FactFinderToCategoryDataFeedBridge($categoryDataFeedQueryContainer);
+        };
+
+        $container[self::LOCALE_QUERY] = function (Container $container) {
+            return new SpyLocaleQuery();
         };
 
         return $container;

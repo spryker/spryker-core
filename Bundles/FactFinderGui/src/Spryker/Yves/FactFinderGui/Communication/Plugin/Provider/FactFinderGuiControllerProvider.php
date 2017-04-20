@@ -41,7 +41,7 @@ class FactFinderGuiControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{factfinder}/recommendations', self::ROUTE_FACT_FINDER_RECOMMEND, 'FactFinderGui', 'Index', 'recommendations')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
 
-        $this->createController('/{factfinder}/csv/products.csv', self::ROUTE_FACT_FINDER_CSV_PATH . 'products', 'FactFinderGui', 'csv', 'products')
+        $this->createController('/{factfinder}/csv/products/{fileName}', self::ROUTE_FACT_FINDER_CSV_PATH . 'products', 'FactFinderGui', 'csv', 'products')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder')
             ->value('factfinder', 'fact-finder');
 

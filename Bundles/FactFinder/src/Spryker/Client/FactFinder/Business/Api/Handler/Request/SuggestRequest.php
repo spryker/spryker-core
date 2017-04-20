@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
+use FACTFinder\Util\Parameters;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
@@ -22,7 +23,8 @@ class SuggestRequest extends AbstractRequest implements RequestInterface
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
+        $requestParameters = new Parameters();
+        $requestParameters->setAll($quoteTransfer->getFactFinderSuggestRequest()->toArray());
         $this->ffConnector->setRequestParameters($requestParameters);
 
         $suggestAdapter = $this->ffConnector->createSuggestAdapter();

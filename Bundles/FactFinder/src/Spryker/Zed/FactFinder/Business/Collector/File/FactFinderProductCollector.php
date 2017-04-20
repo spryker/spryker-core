@@ -8,17 +8,13 @@
 namespace Spryker\Zed\FactFinder\Business\Collector\File;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Pyz\Zed\Collector\Business\Storage\ProductCollector as StorageProductCollector;
 use Pyz\Zed\Collector\CollectorConfig;
 use Spryker\Shared\FactFinder\FactFinderConstants;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
 
-class FactFinderProductCollector extends StorageProductCollector
+/**
+ *
+ */
+class FactFinderProductCollector
 {
 
     const ABSTRACT_ATTRIBUTES_LONG_DESCRIPTION = 'long_description';
@@ -28,29 +24,6 @@ class FactFinderProductCollector extends StorageProductCollector
      * @var int
      */
     protected $chunkSize = 50000;
-
-    /**
-     * @var \Pyz\Zed\Collector\CollectorConfig
-     */
-    protected $config;
-
-    /**
-     * @param \Pyz\Zed\Collector\CollectorConfig $config
-     *
-     * @return void
-     */
-    public function setConfig(CollectorConfig $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @return \Pyz\Zed\Collector\CollectorConfig
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * @param string $touchKey

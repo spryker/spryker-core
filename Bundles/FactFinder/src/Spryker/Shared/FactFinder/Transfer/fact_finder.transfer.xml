@@ -124,7 +124,6 @@
 
     <transfer name="FactFinderDataPage">
         <property name="item" type="FactFinderDataItem"/>
-
         <property name="pageNumber" type="int"/>
     </transfer>
 
@@ -139,35 +138,30 @@
 
     <transfer name="FactFinderDataAdvisorQuestion">
         <property name="advisorAnswers" type="FactFinderDataAdvisorAnswer[]"/>
-
         <property name="text" type="string"/>
         <property name="hasAnswers" type="bool"/>
     </transfer>
 
     <transfer name="FactFinderDataAdvisorAnswer">
         <property name="item" type="FactFinderDataItem"/>
-
         <property name="text" type="string"/>
         <property name="followUpQuestions" type="FactFinderDataAdvisorQuestion[]"/>
     </transfer>
 
     <transfer name="FactFinderDataResult">
         <property name="records" type="FactFinderDataRecord[]"/>
-
         <property name="fieldNames" type="array"/>
         <property name="foundRecordsCount" type="int"/>
     </transfer>
 
     <transfer name="FactFinderDataResultsPerPageOptions">
         <property name="items" type="FactFinderDataItem[]"/>
-
         <property name="defaultOption" type="FactFinderDataItem"/>
         <property name="selectedOption" type="FactFinderDataItem"/>
     </transfer>
 
     <transfer name="FactFinderDataSuggestQuery">
         <property name="item" type="FactFinderDataItem"/>
-
         <property name="hitCount" type="int"/>
         <property name="type" type="string"/>
         <property name="imageUrl" type="string"/>
@@ -176,7 +170,6 @@
 
     <transfer name="FactFinderDataSingleWordSearchItem">
         <property name="suggestQuery" type="FactFinderDataSuggestQuery"/>
-
         <property name="previewRecords" type="FactFinderDataRecord[]"/>
     </transfer>
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\FactFinder\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Locale\Persistence\Base\SpyLocale;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -22,57 +23,27 @@ interface FactFinderFacadeInterface
     /**
      * @api
      *
-     * @param string $locale
-     * @param string $type
-     * @param string $number
+     * @param SpyLocale $locale
      *
      * @return mixed
      */
-    public function getFactFinderCsv($locale, $type, $number = '');
+    public function createFactFinderCsv(SpyLocale $locale);
 
     /**
      * @api
      *
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function runFactFinderCategoryCollector(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
-        BatchResultInterface $result,
-        ReaderInterface $dataReader,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    );
+    public function getLocaleQuery();
 
     /**
      * @api
      *
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param $idLocale int
+     * @param $rootCategoryNodeId int
      *
-     * @return void
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function runFactFinderProductCollector(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
-        BatchResultInterface $result,
-        ReaderInterface $dataReader,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    );
+    public function getParentCategoryQuery($idLocale, $rootCategoryNodeId);
 
 }

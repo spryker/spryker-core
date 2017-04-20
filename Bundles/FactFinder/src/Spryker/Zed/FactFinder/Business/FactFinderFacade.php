@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Locale\Persistence\Base\SpyLocale;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -25,105 +26,36 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
     /**
      * @api
      *
-     * @param string $locale
-     * @param string $type
-     * @param string $number
+     * @param SpyLocale $locale
      *
      * @return mixed
      */
-    public function getFactFinderCsv($locale, $type, $number = '')
+    public function createFactFinderCsv(SpyLocale $locale)
     {
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($locale);
-
-        $fileName = $this->getFactory()
-            ->getCollectorFacade()
-            ->getCsvFileName($type, $localeTransfer, $number);
-
-        $directory = $this->getFactory()
-            ->getFactFinderConfig()
-            ->getCsvDirectory();
-
-        return file_get_contents(
-            $directory . '/' . $fileName
-        );
+        $this->getFactory()
+            ->createCsvFile($locale);
     }
 
     /**
-     * @api
-     *
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function runFactFinderCategoryCollector(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
-        BatchResultInterface $result,
-        ReaderInterface $dataReader,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    ) {
-
-        $collectorClass = $this->getFactory()
-            ->getFactFinderCategoryCollectorClassName();
-
-        $this->getFactory()->getCollectorFacade()
-            ->runFileCategoryCollector(
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output,
-                $collectorClass
-            );
+    public function getLocaleQuery()
+    {
+        return $this->getFactory()
+            ->getLocaleQuery();
     }
 
     /**
-     * @api
+     * @param $idLocale int
+     * @param $rootCategoryNodeId int
      *
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     *
-     * @return void
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function runFactFinderProductCollector(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
-        BatchResultInterface $result,
-        ReaderInterface $dataReader,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    ) {
-
-        $collectorClass = $this->getFactory()
-            ->getFactFinderProductCollectorClassName();
-
-        $this->getFactory()->getCollectorFacade()
-            ->runFileProductCollector(
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output,
-                $collectorClass
-            );
+    public function getParentCategoryQuery($idLocale, $rootCategoryNodeId)
+    {
+        return $this->getFactory()
+            ->getFactFinderQueryContainer()
+            ->getParentCategoryQuery($idLocale, $rootCategoryNodeId);
     }
 
 }

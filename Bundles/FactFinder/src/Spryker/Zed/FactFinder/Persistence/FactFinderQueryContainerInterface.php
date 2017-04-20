@@ -11,4 +11,21 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface FactFinderQueryContainerInterface extends QueryContainerInterface
 {
+
+    /**
+     * @param $IdLocale string
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function getExportDataQuery($IdLocale);
+
+    /**
+     * @param $IdLocale
+     * @param $rootCategoryNodeId
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function getParentCategoryQuery($IdLocale, $rootCategoryNodeId);
+
 }
+

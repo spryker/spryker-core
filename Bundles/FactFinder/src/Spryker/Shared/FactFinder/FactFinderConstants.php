@@ -17,6 +17,10 @@ interface FactFinderConstants
     const ENV_DEVELOPMENT = 'ENV_DEVELOPMENT';
     const ENV_TEST = 'ENV_TEST';
     const CSV_DIRECTORY = 'CSV_DIRECTORY';
+    const EXPORT_QUERY_LIMIT = 'EXPORT_QUERY_LIMIT';
+    const EXPORT_FILE_NAME_PREFIX = 'EXPORT_FILE_NAME_PREFIX';
+    const EXPORT_FILE_NAME_DELIMITER = 'EXPORT_FILE_NAME_DELIMITER';
+    const EXPORT_FILE_EXTENSION = 'EXPORT_FILE_EXTENSION';
 
     const CONFIG_BASIC_AUTH_USERNAME = 'CONFIG_BASIC_AUTH_USERNAME';
     const CONFIG_BASIC_AUTH_PASSWORD = 'CONFIG_BASIC_AUTH_PASSWORD';
@@ -31,11 +35,14 @@ interface FactFinderConstants
     const ITEM_PRODUCT_URL = 'ProductURL';
     const ITEM_IMAGE_URL = 'ImageURL';
     const ITEM_DESCRIPTION = 'Description';
+    const ITEM_CATEGORY_ID = 'CategoryId';
+    const ITEM_PARENT_CATEGORY_NAME = 'ParentCategoryName';
+    const ITEM_PARENT_CATEGORY_NODE_ID = 'ParentCategoryNodeId';
 
     const ITEM_FIELDS = [
         self::ITEM_PRODUCT_NUMBER,
         self::ITEM_NAME,
-        self::ABSTRACT_URL,
+//        self::ABSTRACT_URL,
         self::ITEM_PRICE,
         self::ITEM_STOCK,
         self::ITEM_CATEGORY,
