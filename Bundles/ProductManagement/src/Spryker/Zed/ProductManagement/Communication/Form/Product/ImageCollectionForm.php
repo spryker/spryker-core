@@ -124,9 +124,9 @@ class ImageCollectionForm extends AbstractSubForm
                 'constraints' => [
                     new Length([
                         'min' => 0,
-                        'max' => 1024
+                        'max' => 1024,
                     ])
-                ]
+                ],
             ]);
 
         return $this;
@@ -146,9 +146,9 @@ class ImageCollectionForm extends AbstractSubForm
                 'constraints' => [
                     new Length([
                         'min' => 0,
-                        'max' => 1024
+                        'max' => 1024,
                     ])
-                ]
+                ],
             ]);
 
         return $this;
