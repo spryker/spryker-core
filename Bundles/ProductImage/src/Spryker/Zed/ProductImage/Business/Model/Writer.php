@@ -127,7 +127,7 @@ class Writer implements WriterInterface
 
         $missingProductImageSeToProductImage = $this->productImageQueryContainer
             ->queryProductImageSetToProductImageByProductImageSetId($productImageSetTransfer->getIdProductImageSet(), $excludeIdProductImage)
-            ->find();
+            ->find()->toKeyIndex();
 
         foreach ($missingProductImageSeToProductImage as $productImageSetToProductImage) {
             $this->deleteProductImageSetToProductImage($productImageSetToProductImage);
