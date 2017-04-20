@@ -3,6 +3,7 @@
     <customer>
         <label>Customers</label>
         <title>Customers</title>
+        <icon>fa-users</icon>
         <bundle>customer</bundle>
         <controller>index</controller>
         <action>index</action>
