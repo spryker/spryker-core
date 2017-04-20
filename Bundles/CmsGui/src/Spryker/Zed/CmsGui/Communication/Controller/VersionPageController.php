@@ -139,6 +139,7 @@ class VersionPageController extends AbstractController
             'cmsTargetPage' => $cmsTargetPage,
             'cmsTargetGlossary' => $cmsTargetGlossary,
             'versionForm' => $versionForm->createView(),
+            'cmsVersion' => $cmsCurrentVersionTransfer,
         ];
     }
 }

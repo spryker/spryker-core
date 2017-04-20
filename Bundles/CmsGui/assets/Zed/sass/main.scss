@@ -51,6 +51,18 @@
     }
 }
 
+.has-original, .has-diff {
+    td {
+        padding: 5px;
+    }
+}
+
+.current-version-box {
+    height: 80px;
+    padding: 22px;
+    font-size: 16px;
+}
+
 select.key-list {
     border: 1px solid #999;
 

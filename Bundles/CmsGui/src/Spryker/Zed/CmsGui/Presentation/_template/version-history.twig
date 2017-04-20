@@ -1,26 +1,46 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
 {% block widget_content %}
-        <p>
-                <strong>{{ 'Template:' | trans }}</strong> {{ cmsPage.templateName }}
-        </p>
 
-        <p>
-                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}
-        </p>
+        <table class="has-{{ versionDiffClass }}">
+            <tr>
+                <td><strong>{{ 'Template:' | trans }}</strong></td>
+                <td class="{{ prettyDiffClass }}">{{ cmsPage.templateName }}</td>
+                {% if prettyDiffClass != 'original' %}
+                    <td class="original hidden"></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td><strong>{{ 'Valid from:' | trans }}</strong></td>
+                <td class="{{ prettyDiffClass }}">{{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}</td>
+                {% if prettyDiffClass != 'original' %}
+                    <td class="original hidden"></td>
+                {% endif %}
+            </tr>
 
-        <p>
-                <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}
-        </p>
-
-        <p>
-            {% for pageAttribute in cmsPage.pageAttributes %}
-                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
-                    {% block content %}
-                            <strong>{{ 'Name:' | trans }}</strong>  {{ pageAttribute.name }}
-                    {% endblock %}
-                {% endembed %}
-            {% endfor %}
-        </p>
+            <tr>
+                <td><strong>{{ 'Valid to:' | trans }}</strong></td>
+                <td class="{{ prettyDiffClass }}">{{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}</td>
+                {% if prettyDiffClass != 'original' %}
+                    <td class="original hidden"></td>
+                {% endif %}
+            </tr>
+        </table>
+        <p></p>
+                {% for pageAttribute in cmsPage.pageAttributes %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+                        {% block content %}
+                            <table class="has-{{ versionDiffClass }}">
+                                <tr>
+                                    <td><strong>{{ 'Name:' | trans }}</strong> </td>
+                                    <td class="{{ prettyDiffClass }}">{{ pageAttribute.name }}</td>
+                                    {% if prettyDiffClass != 'original' %}
+                                        <td class="original hidden"></td>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
 {% endblock %}
 {% endembed %}
 
@@ -30,9 +50,29 @@
     {% for pageMetaAttribute in cmsPage.metaAttributes %}
         {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageMetaAttribute.localeName, 'collapsed': false , 'hasError': false} %}
             {% block content %}
-                    <p><strong>{{ 'Title:' | trans }}</strong>  {{ pageMetaAttribute.metaTitle }} </p>
-                    <p><strong>{{ 'Keywords:' | trans }}</strong>  {{ pageMetaAttribute.metaKeywords }} </p>
-                    <p><strong>{{ 'Description:' | trans }}</strong>  {{ pageMetaAttribute.metaDescription }} </p>
+                <table class="has-{{ versionDiffClass }}">
+                    <tr>
+                        <td><strong>{{ 'Title:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }} text-left">{{ pageMetaAttribute.metaTitle }}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><strong>{{ 'Keywords:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }}">{{ pageMetaAttribute.metaKeywords }}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><strong>{{ 'Description:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }}">{{ pageMetaAttribute.metaDescription}}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                </table>
             {% endblock %}
         {% endembed %}
     {% endfor %}

@@ -12,15 +12,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg-6">
+    <div id="version-diff" class="row">
+        <div class="col-lg-6 current-version">
             {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Current Version' }  %}
                 {% block widget_content %}
-                    Page Version is 4 and it has published on 02/02/2017 by Max Musterman
+                    <div class="current-version-box">
+                            Page Version is <b>{{ cmsVersion.version }}</b> and it has published on <b>{{ cmsVersion.createdAt|date }}</b>
+                            {% if cmsVersion.firstName is not null %}
+                                by <b>{{ cmsVersion.firstName ~ ' ' ~ cmsVersion.lastName }}</b>
+                            {% endif %}
+                    </div>
                 {% endblock %}
             {% endembed %}
 
-            {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsCurrentPage, 'cmsGlossary' : cmsCurrentGlossary}) }}
+            {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsCurrentPage, 'cmsGlossary' : cmsCurrentGlossary , 'prettyDiffClass' : 'original', 'versionDiffClass' : 'original'}) }}
         </div>
         <div class="col-lg-6">
             {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Selected Version' }  %}
@@ -46,8 +51,20 @@
             {% endembed %}
 
             {% if (cmsTargetPage is not null) %}
-                {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsTargetPage, 'cmsGlossary' : cmsTargetGlossary}) }}
+                {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsTargetPage, 'cmsGlossary' : cmsTargetGlossary, 'prettyDiffClass' : 'changed diff', 'versionDiffClass' : 'diff'}) }}
             {% endif %}
         </div>
     </div>
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+{% endblock %}
+

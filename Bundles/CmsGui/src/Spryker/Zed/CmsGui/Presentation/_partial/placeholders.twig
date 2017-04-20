@@ -1,14 +1,15 @@
+<table class="has-{{ versionDiffClass }}">
 {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
-    {% for translation in glossaryAttribute.translations %}
-        {% if translation.localeName == localeName %}
-            <div class="row">
-                <div class="col-lg-4">
-                    <strong>{{ glossaryAttribute.placeholder }}:</strong>
-                </div>
-                <div class="col-lg-8">
-                    {{ translation.translation | raw }}
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
+        <tr>
+        {% for translation in glossaryAttribute.translations %}
+                {% if translation.localeName == localeName %}
+                            <td><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
+                            <td class="{{ prettyDiffClass }}">{{ translation.translation | raw }}</td>
+                            {% if prettyDiffClass != 'original' %}
+                                <td class="original hidden"></td>
+                            {% endif %}
+                {% endif %}
+        {% endfor %}
+        </tr>
 {% endfor %}
+</table>

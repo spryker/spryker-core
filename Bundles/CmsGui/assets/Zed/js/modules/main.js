@@ -6,6 +6,7 @@
 'use strict';
 
 require('ZedGui');
+require('./jquery-prettytextdiff');
 var CmsGlossaryAutocomplete = require('./cms-glossary-autocomplete');
 require('../../sass/main.scss');
 require('../../img/cms-loader.gif');
@@ -41,6 +42,17 @@ $(document).ready( function () {
         new CmsGlossaryAutocomplete({
             autocompleteElement: $(element)
         });
+    });
+
+    var originalText = $('#version-diff .has-original .original');
+    originalText.each(function(index, element){
+        var targets = $('#version-diff .has-diff .original');
+        targets[index].innerText = element.innerText;
+    });
+
+
+    $("#version-diff .has-diff tr").prettyTextDiff({
+        cleanup: true
     });
 
     $('[name=cms_glossary]').on('submit', function() {
