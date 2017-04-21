@@ -37,6 +37,21 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @return bool
      */
+    public function delete($fileSystemName, $path)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->delete($fileSystemName, $path);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return bool
+     */
     public function has($fileSystemName, $path)
     {
         return $this->getFactory()

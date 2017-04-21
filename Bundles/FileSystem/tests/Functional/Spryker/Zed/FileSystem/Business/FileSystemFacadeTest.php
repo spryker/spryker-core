@@ -185,6 +185,21 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testDelete()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->fileSystemFacade->delete(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
      * @param string|null $content
      *
      * @return void

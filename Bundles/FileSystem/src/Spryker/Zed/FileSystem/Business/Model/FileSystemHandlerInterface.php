@@ -14,6 +14,14 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
+     * @return string|false The file contents or false on failure.
+     */
+    public function delete($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
      * @return bool
      */
     public function has($fileSystemName, $path);

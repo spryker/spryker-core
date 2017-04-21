@@ -22,6 +22,16 @@ interface FileSystemFacadeInterface
      *
      * @return bool
      */
+    public function delete($fileSystemName, $path);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return bool
+     */
     public function has($fileSystemName, $path);
 
     /**
