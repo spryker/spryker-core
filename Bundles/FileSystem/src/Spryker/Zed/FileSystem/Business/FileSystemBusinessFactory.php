@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Business\FileSystem;
+namespace Spryker\Zed\FileSystem\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Business\FileSystem\FileSystemConfig getConfig()
+ * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
  */
 class FileSystemBusinessFactory extends AbstractBusinessFactory
 {

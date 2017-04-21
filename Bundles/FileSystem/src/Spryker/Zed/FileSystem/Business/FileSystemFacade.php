@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Business\FileSystem;
+namespace Spryker\Zed\FileSystem\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Business\FileSystem\FileSystemServiceFactory getFactory()
+ * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
+ * @method \Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory getFactory()
  */
 class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterface
 {
@@ -27,12 +28,12 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
-     * @param string $storageName
+     * @param string $filesystem
      * @param string $filename
      *
-     * @return void
+     * @return string|false The file contents or false on failure.
      */
-    public function read($storageName, $filename)
+    public function read($filesystem, $filename)
     {
     }
 

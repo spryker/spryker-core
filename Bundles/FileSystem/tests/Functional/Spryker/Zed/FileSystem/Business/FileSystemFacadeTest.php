@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\FileSystem;
+namespace Functional\Spryker\Zed\FileSystem\Business;
 
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
-use League\Flysystem\Filesystem;
 use PHPUnit_Framework_TestCase;
-use Spryker\Business\FileSystem\FileSystemBusinessFactory;
-use Spryker\Business\FileSystem\FileSystemFacade;
+use Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory;
+use Spryker\Zed\FileSystem\Business\FileSystemFacade;
 
 /**
  * @group Functional
  * @group Spryker
- * @group Service
+ * @group Zed
  * @group FileSystem
+ * @group Business
  * @group FileSystemFacadeTest
  */
 class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
@@ -39,7 +39,7 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     const FILE_CONTENT = 'Hello World';
 
     /**
-     * @var \Spryker\Business\FileSystem\FileSystemFacadeInterface
+     * @var \Spryker\Zed\FileSystem\Business\FileSystemFacadeInterface
      */
     protected $fileSystemFacade;
 
@@ -77,25 +77,14 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetStorageByNameWithProduct()
+    public function testReadShouldReturnNullWithNonExistentFile()
     {
-        $storage = $this->fileSystemFacade->getStorageByName(static::STORAGE_PRODUCT_IMAGE);
-
-        $this->assertInstanceOf(FileSystemStorageInterface::class, $storage);
-        $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
-        $this->assertSame(static::STORAGE_PRODUCT_IMAGE, $storage->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetStorageByNameWithCustomer()
-    {
-        $storage = $this->fileSystemFacade->getStorageByName(static::STORAGE_DOCUMENT);
-
-        $this->assertInstanceOf(FileSystemStorageInterface::class, $storage);
-        $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
-        $this->assertSame(static::STORAGE_DOCUMENT, $storage->getName());
+        $contents = $this->fileSystemFacade->read(
+            static::STORAGE_PRODUCT_IMAGE,
+            static::RESOURCE_FILE_NAME
+        );
+        
+        $this->assertNull($contents);
     }
 
     /**

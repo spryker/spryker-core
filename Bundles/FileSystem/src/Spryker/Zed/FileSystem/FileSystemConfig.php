@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Business\FileSystem;
+namespace Spryker\Zed\FileSystem;
 
 use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;

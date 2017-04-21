@@ -5,23 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Glossary\Dependency\Facade;
+namespace Spryker\Zed\FileSystem\Dependency\Facade;
 
-class FileSystemToFlysystemBridge implements GlossaryToLocaleInterface
+class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
 {
 
     /**
-     * @var
+     * @var \Spryker\Service\Flysystem\FlysystemServiceInterface
      */
     protected $flysystemService;
 
     /**
-     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Service\Flysystem\FlysystemServiceInterface $flysystemService
      */
-    public function __construct($localeFacade)
+    public function __construct($flysystemService)
     {
-        $this->flysystemService = $localeFacade;
+        $this->flysystemService = $flysystemService;
     }
 
+    /**
+     * @param string $filesystem
+     * @param string $filename
+     *
+     * @return string|false The file contents or false on failure.
+     */
+    public function read($filesystem, $filename)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($filesystem)
+            ->read($filename);
+    }
 
 }

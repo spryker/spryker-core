@@ -5,28 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Business\FileSystem;
+namespace Spryker\Zed\FileSystem\Business;
 
 /**
- * @method \Spryker\Business\FileSystem\FileSystemServiceFactory getFactory()
+ * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
+ * @method \Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory getFactory()
  */
 interface FileSystemFacadeInterface
 {
 
     /**
-     * @api
+     * @param string $filesystem
+     * @param string $filename
      *
-     * @param string $name
-     *
-     * @return \Spryker\Business\FileSystem\Model\FileSystemStorageInterface
+     * @return string
      */
-    public function getStorageByName($name);
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Business\FileSystem\Model\FileSystemStorageInterface[]
-     */
-    public function getStorageCollection();
+    public function read($filesystem, $filename);
 
 }

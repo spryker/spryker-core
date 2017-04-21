@@ -5,37 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Glossary\Dependency\Facade;
+namespace Spryker\Zed\FileSystem\Dependency\Facade;
 
-interface GlossaryToLocaleInterface
+interface FileSystemToFlysystemInterface
 {
-
-    /**
-     * @param string $localeName
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName);
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale();
-
-    /**
-     * @return array
-     */
-    public function getAvailableLocales();
-
-    /**
-     * @param string $localeName
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function createLocale($localeName);
-
 }
