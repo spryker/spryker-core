@@ -242,6 +242,21 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testGetMimeType()
+    {
+        $this->createDocumentFile();
+
+        $mimeType = $this->fileSystemFacade->getMimetype(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame('text/plain', $mimeType);
+    }
+
+    /**
      * @param string|null $content
      *
      * @return void
