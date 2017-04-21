@@ -30,6 +30,20 @@ class FileSystemHandler implements FileSystemHandlerInterface
     /**
      * @param string $fileSystemName
      * @param string $path
+     * @param string $newpath
+     *
+     * @return string|false The file contents or false on failure.
+     */
+    public function copy($fileSystemName, $path, $newpath)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->copy($path, $newpath);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
      *
      * @return string|false The file contents or false on failure.
      */

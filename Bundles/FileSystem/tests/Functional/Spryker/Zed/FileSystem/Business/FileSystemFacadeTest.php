@@ -212,10 +212,33 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
             'foo/' . 'NEW_' . static::FILE_DOCUMENT
         );
 
-        $isFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
+        $isRenamedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
 
         $this->assertTrue($result);
-        $this->assertTrue($isFile);
+        $this->assertFalse($isOriginalFile);
+        $this->assertTrue($isRenamedFile);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCopy()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->fileSystemFacade->copy(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+        );
+
+        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
+        $isCopiedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isOriginalFile);
+        $this->assertTrue($isCopiedFile);
     }
 
     /**

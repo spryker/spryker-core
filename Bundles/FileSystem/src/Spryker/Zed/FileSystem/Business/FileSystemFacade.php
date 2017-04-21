@@ -20,13 +20,16 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @api
      *
      * @param string $fileSystemName
-     * @param string $source
-     * @param string $destination
+     * @param string $path
+     * @param string $newpath
      *
-     * @return void
+     * @return string|false The file contents or false on failure.
      */
-    public function copy($fileSystemName, $source, $destination)
+    public function copy($fileSystemName, $path, $newpath)
     {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->copy($fileSystemName, $path, $newpath);
     }
 
     /**
