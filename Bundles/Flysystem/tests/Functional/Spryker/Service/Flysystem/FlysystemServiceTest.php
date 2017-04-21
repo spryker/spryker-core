@@ -41,7 +41,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @var \Spryker\Service\Flysystem\FlysystemServiceInterface
      */
-    protected $fileSystemService;
+    protected $flysystemService;
 
     /**
      * @var string
@@ -62,8 +62,8 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $factory = new FlysystemServiceFactory();
         $factory->setConfig($config);
 
-        $this->fileSystemService = new FlysystemService();
-        $this->fileSystemService->setFactory($factory);
+        $this->flysystemService = new FlysystemService();
+        $this->flysystemService->setFactory($factory);
     }
 
     /**
@@ -79,7 +79,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithProduct()
     {
-        $flysystem = $this->fileSystemService->getFilesystemByName(static::STORAGE_PRODUCT_IMAGE);
+        $flysystem = $this->flysystemService->getFilesystemByName(static::STORAGE_PRODUCT_IMAGE);
 
         $this->assertInstanceOf(Filesystem::class, $flysystem);
     }
@@ -89,7 +89,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithCustomer()
     {
-        $flysystem = $this->fileSystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $flysystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
 
         $this->assertInstanceOf(Filesystem::class, $flysystem);
     }
@@ -99,7 +99,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationCreateDir()
     {
-        $fileSystem = $this->fileSystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
 
         $fileSystem->createDir('/foo');
 
@@ -119,7 +119,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationRename()
     {
-        $fileSystem = $this->fileSystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
 
         $fileSystem->createDir('/foo');
         $fileSystem->rename('/foo', '/bar');
@@ -140,7 +140,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationUpload()
     {
-        $fileSystem = $this->fileSystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
 
         $uploadedFilename = $this->testDataFlysystemRootDirectory . static::FILE_STORAGE_DOCUMENT;
         $storageFilename = '/foo/' . static::FILE_STORAGE_DOCUMENT;
