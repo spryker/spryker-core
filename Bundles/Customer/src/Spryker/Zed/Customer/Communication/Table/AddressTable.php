@@ -54,7 +54,6 @@ class AddressTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS => '#',
             SpyCustomerAddressTableMap::COL_SALUTATION => 'Salutation',
             SpyCustomerAddressTableMap::COL_FIRST_NAME => 'First Name',
-            SpyCustomerAddressTableMap::COL_FIRST_NAME => 'First Name',
             SpyCustomerAddressTableMap::COL_LAST_NAME => 'Last Name',
             SpyCustomerAddressTableMap::COL_ADDRESS1 => 'Address ',
             SpyCustomerAddressTableMap::COL_ADDRESS2 => 'Address (2nd line)',
