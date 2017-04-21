@@ -56,6 +56,21 @@ class FileSystemHandler implements FileSystemHandlerInterface
     /**
      * @param string $fileSystemName
      * @param string $path
+     * @param string $content
+     * @param array $config
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function put($fileSystemName, $path, $content, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->put($path, $content, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
      *
      * @return string|false The file contents or false on failure.
      */
@@ -68,17 +83,16 @@ class FileSystemHandler implements FileSystemHandlerInterface
 
     /**
      * @param string $fileSystemName
+     * @param string $newpath
      * @param string $path
-     * @param string $content
-     * @param array $config
      *
-     * @return bool True on success, false on failure.
+     * @return string|false The file contents or false on failure.
      */
-    public function put($fileSystemName, $path, $content, array $config = [])
+    public function rename($fileSystemName, $path, $newpath)
     {
         return $this->flysystemService
             ->getFilesystemByName($fileSystemName)
-            ->put($path, $content, $config);
+            ->rename($path, $newpath);
     }
 
     /**

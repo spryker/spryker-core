@@ -200,6 +200,25 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testRename()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->fileSystemFacade->rename(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+        );
+
+        $isFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isFile);
+    }
+
+    /**
      * @param string|null $content
      *
      * @return void
@@ -238,6 +257,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     {
         try {
             $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+            if (is_file($file)) {
+                unlink($file);
+            }
+
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
             if (is_file($file)) {
                 unlink($file);
             }

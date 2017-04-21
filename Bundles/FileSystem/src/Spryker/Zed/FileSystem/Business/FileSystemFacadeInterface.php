@@ -39,6 +39,17 @@ interface FileSystemFacadeInterface
      *
      * @param string $fileSystemName
      * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function put($fileSystemName, $path, $content);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
      *
      * @return string|false
      */
@@ -48,12 +59,12 @@ interface FileSystemFacadeInterface
      * @api
      *
      * @param string $fileSystemName
+     * @param string $newpath
      * @param string $path
-     * @param string $content
      *
-     * @return bool True on success, false on failure.
+     * @return string|false
      */
-    public function put($fileSystemName, $path, $content);
+    public function rename($fileSystemName, $path, $newpath);
 
     /**
      * @api
