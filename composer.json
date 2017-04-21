@@ -66,6 +66,7 @@
     "spryker/event-journal": "*",
     "spryker/glossary": "*",
     "spryker/file-system": "*",
+    "spryker/flysystem": "*",
     "spryker/graph": "*",
     "spryker/graphviz": "*",
     "spryker/gui": "*",
