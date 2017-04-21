@@ -597,59 +597,59 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
-     * @param int $howMany
+     * @param int $expectedCount
      *
      * @return void
      */
-    protected function assertConcreteHasNumberOfProductImageSet($howMany)
+    protected function assertConcreteHasNumberOfProductImageSet($expectedCount)
     {
         $imageSetCollection = $this->queryContainer->queryImageSetByProductId(
             $this->productConcreteEntity->getIdProduct()
         );
 
-        $this->assertCount($howMany, $imageSetCollection);
+        $this->assertCount($expectedCount, $imageSetCollection);
     }
 
     /**
-     * @param int $howMany
+     * @param int $expectedCount
      *
      * @return void
      */
-    protected function assertAbstractHasNumberOfProductImageSet($howMany)
+    protected function assertAbstractHasNumberOfProductImageSet($expectedCount)
     {
         $imageSetCollection = $this->queryContainer->queryImageSetByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
         );
 
-        $this->assertCount($howMany, $imageSetCollection);
+        $this->assertCount($expectedCount, $imageSetCollection);
     }
 
     /**
-     * @param $howMany
+     * @param int $expectedCount
      *
      * @return void
      */
-    protected function assertAbstractHasNumberOfProductImage($howMany)
+    protected function assertAbstractHasNumberOfProductImage($expectedCount)
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
         );
 
-        $this->assertCount($howMany, $imageCollection);
+        $this->assertCount($expectedCount, $imageCollection);
     }
 
     /**
-     * @param $howMany
+     * @param int $expectedCount
      *
      * @return void
      */
-    protected function assertConcreteHasNumberOfProductImage($howMany)
+    protected function assertConcreteHasNumberOfProductImage($expectedCount)
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductId(
             $this->productConcreteEntity->getIdProduct()
         );
 
-        $this->assertCount($howMany, $imageCollection);
+        $this->assertCount($expectedCount, $imageCollection);
     }
 
     /**
