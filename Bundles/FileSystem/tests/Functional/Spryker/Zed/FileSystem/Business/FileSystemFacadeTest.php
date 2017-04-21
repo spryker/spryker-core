@@ -11,13 +11,15 @@ use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use League\Flysystem\Filesystem;
 use PHPUnit_Framework_TestCase;
+use Spryker\Business\FileSystem\FileSystemBusinessFactory;
+use Spryker\Business\FileSystem\FileSystemFacade;
 
 /**
  * @group Functional
  * @group Spryker
  * @group Service
  * @group FileSystem
- * @group FileSystemServiceTest
+ * @group FileSystemFacadeTest
  */
 class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
 {
@@ -37,9 +39,9 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     const FILE_CONTENT = 'Hello World';
 
     /**
-     * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
+     * @var \Spryker\Business\FileSystem\FileSystemFacadeInterface
      */
-    protected $fileSystemService;
+    protected $fileSystemFacade;
 
     /**
      * @var string
@@ -57,11 +59,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
 
         $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
-        $factory = new FileSystemServiceFactory();
+        $factory = new FileSystemBusinessFactory();
         $factory->setConfig($config);
 
-        $this->fileSystemService = new FileSystemService();
-        $this->fileSystemService->setFactory($factory);
+        $this->fileSystemFacade = new FileSystemFacade();
+        $this->fileSystemFacade->setFactory($factory);
     }
 
     /**
@@ -77,7 +79,7 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithProduct()
     {
-        $storage = $this->fileSystemService->getStorageByName(static::STORAGE_PRODUCT_IMAGE);
+        $storage = $this->fileSystemFacade->getStorageByName(static::STORAGE_PRODUCT_IMAGE);
 
         $this->assertInstanceOf(FileSystemStorageInterface::class, $storage);
         $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
@@ -89,91 +91,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithCustomer()
     {
-        $storage = $this->fileSystemService->getStorageByName(static::STORAGE_DOCUMENT);
+        $storage = $this->fileSystemFacade->getStorageByName(static::STORAGE_DOCUMENT);
 
         $this->assertInstanceOf(FileSystemStorageInterface::class, $storage);
         $this->assertInstanceOf(Filesystem::class, $storage->getFileSystem());
         $this->assertSame(static::STORAGE_DOCUMENT, $storage->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFileSystemImplementationCreateDir()
-    {
-        $storage = $this->fileSystemService->getStorageByName(static::STORAGE_DOCUMENT);
-
-        $fileSystem = $storage->getFileSystem();
-
-        $fileSystem->createDir('/foo');
-
-        $hasFoo = $fileSystem->has('/foo');
-        $hasBar = $fileSystem->has('/bar');
-
-        $this->assertTrue($hasFoo);
-        $this->assertFalse($hasBar);
-
-        $storageDirectory = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo/';
-        $rootDirectoryExists = is_dir($storageDirectory);
-        $this->assertTrue($rootDirectoryExists);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFileSystemImplementationRename()
-    {
-        $storage = $this->fileSystemService->getStorageByName(static::STORAGE_DOCUMENT);
-        $fileSystem = $storage->getFileSystem();
-
-        $fileSystem->createDir('/foo');
-        $fileSystem->rename('/foo', '/bar');
-
-        $hasBar = $fileSystem->has('/bar');
-        $hasFoo = $fileSystem->has('/foo');
-
-        $this->assertTrue($hasBar);
-        $this->assertFalse($hasFoo);
-
-        $storageDirectory = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'bar/';
-        $rootDirectoryExists = is_dir($storageDirectory);
-        $this->assertTrue($rootDirectoryExists);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFileSystemImplementationUpload()
-    {
-        $storage = $this->fileSystemService->getStorageByName(static::STORAGE_DOCUMENT);
-        $fileSystem = $storage->getFileSystem();
-
-        $uploadedFilename = $this->testDataFileSystemRootDirectory . static::FILE_STORAGE_DOCUMENT;
-        $storageFilename = '/foo/' . static::FILE_STORAGE_DOCUMENT;
-
-        $h = fopen($uploadedFilename, 'w');
-        fwrite($h, static::FILE_CONTENT);
-        fclose($h);
-
-        $stream = fopen($uploadedFilename, 'r+');
-        try {
-            if ($fileSystem->has($storageFilename)) {
-                $fileSystem->updateStream($storageFilename, $stream);
-            } else {
-                $fileSystem->writeStream($storageFilename, $stream);
-            }
-            fclose($stream);
-        } finally {
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
-
-            unlink($uploadedFilename);
-        }
-
-        $content = $fileSystem->read($storageFilename);
-
-        $this->assertSame(static::FILE_CONTENT, $content);
     }
 
     /**
