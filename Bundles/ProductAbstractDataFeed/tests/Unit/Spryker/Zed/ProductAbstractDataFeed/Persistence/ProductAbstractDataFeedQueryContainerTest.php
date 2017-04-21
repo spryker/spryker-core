@@ -307,6 +307,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
             'spy_product_category',
             'spy_category',
             'spy_category_attribute',
+            'spy_category_node',
         ];
     }
 
@@ -353,6 +354,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Test
         return [
             'spy_product',
             'spy_product_localized_attributes',
+            'spy_stock_product',
         ];
     }
 
