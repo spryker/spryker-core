@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductImage\Business\Model;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -417,7 +418,7 @@ class ProductImageFacadeTest extends Test
     public function testRemovalProductImageSetFromProductConcrete()
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
-        $productImageSetTransfers = new \ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductId(
+        $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductId(
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
@@ -451,7 +452,7 @@ class ProductImageFacadeTest extends Test
     public function testRemovalProductImageSetFromProductAbstract()
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
-        $productImageSetTransfers = new \ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
+        $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
             $productAbstractTransfer->getIdProductAbstract()
         ));
 
@@ -485,7 +486,7 @@ class ProductImageFacadeTest extends Test
     public function testRemovalProductImageFromProductConcrete()
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
-        $productImageSetTransfers = new \ArrayObject();
+        $productImageSetTransfers = new ArrayObject();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -515,7 +516,7 @@ class ProductImageFacadeTest extends Test
     public function testRemovalProductImageFromProductAbstract()
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
-        $productImageSetTransfers = new \ArrayObject();
+        $productImageSetTransfers = new ArrayObject();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -636,7 +637,6 @@ class ProductImageFacadeTest extends Test
 
         $this->assertCount($howMany, $imageCollection);
     }
-
 
     /**
      * @param $howMany
