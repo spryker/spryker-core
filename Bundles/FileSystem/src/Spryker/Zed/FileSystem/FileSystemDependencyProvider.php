@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\FileSystem;
+namespace Spryker\Business\FileSystem;
 
-interface FileSystemConstants
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+
+class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
-
 }

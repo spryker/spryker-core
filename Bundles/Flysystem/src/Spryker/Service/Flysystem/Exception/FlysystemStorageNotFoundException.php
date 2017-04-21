@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\FileSystem;
+namespace Spryker\Service\Flysystem\Exception;
 
-interface FileSystemConstants
+use Exception;
+
+class FlysystemStorageNotFoundException extends Exception
 {
-
-    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
-
 }

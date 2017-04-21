@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\FileSystem;
+namespace Spryker\Shared\Flysystem;
 
-interface FileSystemConstants
+interface FlysystemConstants
 {
 
     const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
+    const FILESYSTEM_SERVICE = 'FILESYSTEM_SERVICE';
 
 }
