@@ -68,6 +68,22 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @return bool True on success, false on failure.
      */
+    public function put($fileSystemName, $path, $content)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->put($fileSystemName, $path, $content);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
     public function write($fileSystemName, $path, $content)
     {
         return $this->getFactory()

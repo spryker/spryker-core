@@ -43,6 +43,17 @@ interface FileSystemFacadeInterface
      *
      * @return bool True on success, false on failure.
      */
+    public function put($fileSystemName, $path, $content);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
     public function write($fileSystemName, $path, $content);
 
 }

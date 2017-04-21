@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileSystem\Business\Model;
 
 use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface;
 
+//TODO replace parameters with transfer
 class FileSystemHandler implements FileSystemHandlerInterface
 {
 
@@ -56,14 +57,45 @@ class FileSystemHandler implements FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      * @param string $content
+     * @param array $config
      *
      * @return bool True on success, false on failure.
      */
-    public function write($fileSystemName, $path, $content)
+    public function put($fileSystemName, $path, $content, array $config = [])
     {
         return $this->flysystemService
             ->getFilesystemByName($fileSystemName)
-            ->write($path, $content);
+            ->put($path, $content, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     * @param array $config
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function update($fileSystemName, $path, $content, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->update($path, $content, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     * @param array $config
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function write($fileSystemName, $path, $content, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->write($path, $content, $config);
     }
 
 }

@@ -154,6 +154,25 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testPut()
+    {
+        $this->createDocumentFile('Lorem Ipsum');
+
+        $result = $this->fileSystemFacade->put(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            static::FILE_CONTENT
+        );
+
+        $content = $this->getDocumentFileContent();
+
+        $this->assertTrue($result);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
     public function testWrite()
     {
         $result = $this->fileSystemFacade->write(
@@ -166,9 +185,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string|null $content
+     *
      * @return void
      */
-    protected function createDocumentFile()
+    protected function createDocumentFile($content = null)
     {
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
         if (!is_dir($dir)) {
@@ -178,8 +199,21 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
 
         $h = fopen($file, 'w');
-        fwrite($h, static::FILE_CONTENT);
+        fwrite($h, $content ?: static::FILE_CONTENT);
         fclose($h);
+    }
+
+    /**
+     * @return bool|string
+     */
+    protected function getDocumentFileContent()
+    {
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        if (!is_file($file)) {
+            return false;
+        }
+
+        return file_get_contents($file);
     }
 
     /**

@@ -30,9 +30,30 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      * @param string $content
+     * @param array $config
      *
      * @return bool True on success, false on failure.
      */
-    public function write($fileSystemName, $path, $content);
+    public function put($fileSystemName, $path, $content, array $config = []);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     * @param array $config
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function update($fileSystemName, $path, $content, array $config = []);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     * @param array $config
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function write($fileSystemName, $path, $content, array $config = []);
 
 }
