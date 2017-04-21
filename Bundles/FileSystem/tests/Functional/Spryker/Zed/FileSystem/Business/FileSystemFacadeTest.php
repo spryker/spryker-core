@@ -273,6 +273,23 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testGetSize()
+    {
+        $this->createDocumentFile();
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $sizeExpected = filesize($file);
+
+        $size = $this->fileSystemFacade->getSize(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame($sizeExpected, $size);
+    }
+
+    /**
      * @param string|null $content
      *
      * @return void

@@ -56,6 +56,19 @@ class FileSystemHandler implements FileSystemHandlerInterface
     /**
      * @param string $fileSystemName
      * @param string $path
+     *
+     * @return string|false The file contents or false on failure.
+     */
+    public function getSize($fileSystemName, $path)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->getSize($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
      * @param string $newpath
      *
      * @return string|false The file contents or false on failure.
