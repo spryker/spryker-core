@@ -7,8 +7,6 @@
 
 namespace Functional\Spryker\Zed\FileSystem\Business;
 
-require_once('vendor/spryker/spryker/Bundles/Flysystem/tests/_support/Stub/FlysystemConfigStub.php');
-
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use FileSystem\Stub\FlysystemConfigStub;
@@ -98,6 +96,34 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testHasShouldReturnFalseWithNonExistingFile()
+    {
+        $result = $this->fileSystemFacade->has(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasShouldReturnTrueWithExistingFile()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->fileSystemFacade->has(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testReadWithNonExistingFileShouldThrowException()
     {
         $this->expectException(FileNotFoundException::class);
@@ -123,6 +149,20 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(static::FILE_CONTENT, $contents);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWrite()
+    {
+        $result = $this->fileSystemFacade->write(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            static::FILE_CONTENT
+        );
+
+        $this->assertTrue($result);
     }
 
     /**

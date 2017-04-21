@@ -20,8 +20,29 @@ interface FileSystemFacadeInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|null|false
+     * @return bool
+     */
+    public function has($fileSystemName, $path);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
      */
     public function read($fileSystemName, $path);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function write($fileSystemName, $path, $content);
 
 }

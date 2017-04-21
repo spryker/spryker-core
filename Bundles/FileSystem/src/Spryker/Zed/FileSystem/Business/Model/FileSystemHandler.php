@@ -30,6 +30,19 @@ class FileSystemHandler implements FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
+     * @return bool
+     */
+    public function has($fileSystemName, $path)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->has($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
      * @return string|false The file contents or false on failure.
      */
     public function read($fileSystemName, $path)
@@ -37,6 +50,20 @@ class FileSystemHandler implements FileSystemHandlerInterface
         return $this->flysystemService
             ->getFilesystemByName($fileSystemName)
             ->read($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function write($fileSystemName, $path, $content)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->write($path, $content);
     }
 
 }

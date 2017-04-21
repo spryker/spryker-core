@@ -14,8 +14,25 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
+     * @return bool
+     */
+    public function has($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
      * @return string|false The file contents or false on failure.
      */
     public function read($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function write($fileSystemName, $path, $content);
 
 }

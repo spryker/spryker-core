@@ -35,7 +35,22 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|null|false
+     * @return bool
+     */
+    public function has($fileSystemName, $path)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->has($fileSystemName, $path);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
      */
     public function read($fileSystemName, $path)
     {
@@ -48,13 +63,16 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @api
      *
      * @param string $fileSystemName
-     * @param string $filename
-     * @param string content
+     * @param string $path
+     * @param string $content
      *
-     * @return void
+     * @return bool True on success, false on failure.
      */
-    public function write($fileSystemName, $filename, $content)
+    public function write($fileSystemName, $path, $content)
     {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->write($fileSystemName, $path, $content);
     }
 
 }
