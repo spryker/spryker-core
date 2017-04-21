@@ -18,14 +18,14 @@ interface FlysystemServiceInterface
      *
      * @param string $name
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function getStorageByName($name);
 
     /**
      * @api
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[]
+     * @return \League\Flysystem\Filesystem[]
      */
     public function getStorageCollection();
 

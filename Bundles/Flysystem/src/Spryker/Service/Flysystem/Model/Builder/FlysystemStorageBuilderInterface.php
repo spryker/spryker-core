@@ -11,7 +11,7 @@ interface FlysystemStorageBuilderInterface
 {
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function build();
 

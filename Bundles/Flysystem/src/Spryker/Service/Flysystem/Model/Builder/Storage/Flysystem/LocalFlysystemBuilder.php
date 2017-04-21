@@ -59,7 +59,7 @@ class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
      * 'root' => '/data/uploads/',
      * 'path' => 'customers/pds/',
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function build()
     {
@@ -68,7 +68,7 @@ class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
             ->buildAdapter()
             ->buildFlysystem();
 
-        return new FlysystemStorage($this->fileSystemConfig, $this->filesystem);
+        return $this->filesystem;
     }
 
     /**

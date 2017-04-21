@@ -74,7 +74,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[]
+     * @return \League\Flysystem\Filesystem[]
      */
     protected function createFlysystemStorageCollection()
     {
@@ -107,6 +107,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
             );
         }
 
+        //TODO remove magic
         $builder = new $builderClass($storageConfigTransfer);
 
         return $builder;

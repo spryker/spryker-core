@@ -13,12 +13,12 @@ class FlysystemStorageProvider implements FlysystemStorageProviderInterface
 {
 
     /**
-     * @var \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[]
+     * @var \League\Flysystem\Filesystem
      */
     protected $storageCollection;
 
     /**
-     * @param \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[] $storageCollection
+     * @param \League\Flysystem\Filesystem[] $storageCollection
      */
     public function __construct(array $storageCollection)
     {
@@ -30,7 +30,7 @@ class FlysystemStorageProvider implements FlysystemStorageProviderInterface
      *
      * @throws \Spryker\Service\Flysystem\Exception\FlysystemStorageNotFoundException
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function getStorageByName($name)
     {
@@ -44,7 +44,7 @@ class FlysystemStorageProvider implements FlysystemStorageProviderInterface
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[]
+     * @return \League\Flysystem\Filesystem[]
      */
     public function getStorageCollection()
     {

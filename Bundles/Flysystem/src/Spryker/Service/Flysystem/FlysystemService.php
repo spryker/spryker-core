@@ -22,7 +22,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $name
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function getStorageByName($name)
     {
@@ -36,7 +36,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @api
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface[]
+     * @return \League\Flysystem\Filesystem[]
      */
     public function getStorageCollection()
     {

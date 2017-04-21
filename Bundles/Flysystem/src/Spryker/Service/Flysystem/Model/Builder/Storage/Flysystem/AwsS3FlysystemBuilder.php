@@ -69,7 +69,7 @@ class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
      * 'version' => 'version',
      * 'region' => 'region',
      *
-     * @return \Spryker\Service\Flysystem\Model\FlysystemStorageInterface
+     * @return \League\Flysystem\Filesystem
      */
     public function build()
     {
@@ -78,7 +78,7 @@ class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
             ->buildAdapter()
             ->buildFlySystem();
 
-        return new FlysystemStorage($this->fileSystemConfig, $this->filesystem);
+        return $this->filesystem;
     }
 
     /**
