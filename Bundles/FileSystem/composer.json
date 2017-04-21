@@ -4,6 +4,9 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "require": {
+    "spryker/flysystem": "*",
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
