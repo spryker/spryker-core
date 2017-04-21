@@ -21,6 +21,14 @@ interface FileSystemHandlerInterface
     /**
      * @param string $fileSystemName
      * @param string $path
+     *
+     * @return string|false The file contents or false on failure.
+     */
+    public function getTimestamp($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
      * @param string $newpath
      *
      * @return string|false The file contents or false on failure.

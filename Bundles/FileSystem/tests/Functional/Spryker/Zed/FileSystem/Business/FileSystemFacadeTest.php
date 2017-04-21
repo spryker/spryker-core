@@ -257,11 +257,27 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testGetTimestamp()
+    {
+        $timestampExpected = time();
+        $this->createDocumentFile(null, $timestampExpected);
+
+        $timestamp = $this->fileSystemFacade->getTimestamp(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame($timestamp, $timestampExpected);
+    }
+
+    /**
      * @param string|null $content
      *
      * @return void
      */
-    protected function createDocumentFile($content = null)
+    protected function createDocumentFile($content = null, $modifiedTimestamp = null)
     {
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
         if (!is_dir($dir)) {
@@ -273,6 +289,10 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         $h = fopen($file, 'w');
         fwrite($h, $content ?: static::FILE_CONTENT);
         fclose($h);
+
+        if ($modifiedTimestamp) {
+            touch($file, $modifiedTimestamp);
+        }
     }
 
     /**
