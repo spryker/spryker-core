@@ -9,6 +9,7 @@ namespace Spryker\Service\Flysystem\Exception;
 
 use Exception;
 
-class FlysystemInvalidConfigurationException extends Exception
+//TODO implement name validation
+class InvalidFilenameException extends Exception
 {
 }

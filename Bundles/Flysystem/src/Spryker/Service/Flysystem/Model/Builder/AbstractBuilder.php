@@ -24,7 +24,7 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     protected $builder;
 
     /**
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemInvalidConfigurationException
+     * @throws \Spryker\Service\Flysystem\Exception\InvalidConfigurationException
      *
      * @return void
      */

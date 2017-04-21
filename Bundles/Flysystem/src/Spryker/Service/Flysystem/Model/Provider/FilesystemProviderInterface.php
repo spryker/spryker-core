@@ -7,13 +7,13 @@
 
 namespace Spryker\Service\Flysystem\Model\Provider;
 
-interface FlysystemProviderInterface
+interface FilesystemProviderInterface
 {
 
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\FilesystemNotFoundException
      *
      * @return \League\Flysystem\Filesystem
      */

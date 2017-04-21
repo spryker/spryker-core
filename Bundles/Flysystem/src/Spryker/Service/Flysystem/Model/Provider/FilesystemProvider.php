@@ -7,40 +7,40 @@
 
 namespace Spryker\Service\Flysystem\Model\Provider;
 
-use Spryker\Service\Flysystem\Exception\FlysystemNotFoundException;
+use Spryker\Service\Flysystem\Exception\FilesystemNotFoundException;
 
-class FlysystemProvider implements FlysystemProviderInterface
+class FilesystemProvider implements FilesystemProviderInterface
 {
 
     /**
      * @var \League\Flysystem\Filesystem
      */
-    protected $storageCollection;
+    protected $filesystemCollection;
 
     /**
-     * @param \League\Flysystem\Filesystem[] $storageCollection
+     * @param \League\Flysystem\Filesystem[] $filesystemCollection
      */
-    public function __construct(array $storageCollection)
+    public function __construct(array $filesystemCollection)
     {
-        $this->storageCollection = $storageCollection;
+        $this->filesystemCollection = $filesystemCollection;
     }
 
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\FilesystemNotFoundException
      *
      * @return \League\Flysystem\Filesystem
      */
     public function getFilesystemByName($name)
     {
-        if (!array_key_exists($name, $this->storageCollection)) {
-            throw new FlysystemNotFoundException(
+        if (!array_key_exists($name, $this->filesystemCollection)) {
+            throw new FilesystemNotFoundException(
                 sprintf('Flysystem "%s" was not found', $name)
             );
         }
 
-        return $this->storageCollection[$name];
+        return $this->filesystemCollection[$name];
     }
 
     /**
@@ -48,7 +48,7 @@ class FlysystemProvider implements FlysystemProviderInterface
      */
     public function getFilesystemCollection()
     {
-        return $this->storageCollection;
+        return $this->filesystemCollection;
     }
 
 }

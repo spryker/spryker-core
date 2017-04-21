@@ -9,8 +9,8 @@ namespace Spryker\Service\Flysystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
-use Spryker\Service\Flysystem\Exception\FlysystemBuilderNotFoundException;
-use Spryker\Service\Flysystem\Model\Provider\FlysystemProvider;
+use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
+use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -31,11 +31,11 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Provider\FlysystemProviderInterface
+     * @return \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
      */
     public function createFilesystemProvider()
     {
-        return new FlysystemProvider(
+        return new FilesystemProvider(
             $this->createFilesystemCollection()
         );
     }
@@ -43,11 +43,11 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     /**
      * @return \Generated\Shared\Transfer\FlysystemConfigTransfer[]
      */
-    protected function createFilesystemConfigCollection()
+    protected function createConfigCollection()
     {
         $configCollection = [];
         foreach ($this->getConfig()->getFilesystemConfig() as $name => $configData) {
-            $config = $this->createFilesystemConfig($name, $configData);
+            $config = $this->createConfig($name, $configData);
             $configCollection[$name] = $config;
         }
 
@@ -60,7 +60,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @return \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
-    protected function createFilesystemConfig($name, array $configData)
+    protected function createConfig($name, array $configData)
     {
         $type = $configData[FlysystemConfigTransfer::TYPE];
         unset($configData[FlysystemConfigTransfer::TYPE]);
@@ -78,11 +78,11 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      */
     protected function createFilesystemCollection()
     {
-        $configCollection = $this->createFilesystemConfigCollection();
+        $configCollection = $this->createConfigCollection();
 
         $filesystemCollection = [];
         foreach ($configCollection as $name => $configTransfer) {
-            $builder = $this->createFlysystemBuilder($configTransfer);
+            $builder = $this->createFilesystemBuilder($configTransfer);
             $filesystemCollection[$name] = $builder->build();
         }
 
@@ -92,17 +92,17 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemBuilderNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
      *
      * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
-    protected function createFlysystemBuilder(FlysystemConfigTransfer $configTransfer)
+    protected function createFilesystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
         $configTransfer->requireName();
 
         $builderClass = $configTransfer->getType();
         if (!$builderClass) {
-            throw new FlysystemBuilderNotFoundException(
+            throw new BuilderNotFoundException(
                 sprintf('FlysystemBuilder "%s" was not found', $configTransfer->getName())
             );
         }
