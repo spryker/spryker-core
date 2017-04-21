@@ -117,12 +117,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
         return $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN)
-            ->useSpyProductImageSetToProductImageQuery()
-                ->useSpyProductImageQuery()
-                ->endUse()
-            ->orderBySortOrder(Criteria::DESC)
-            ->endUse();
+            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN);
     }
 
     /**
@@ -138,12 +133,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
         return $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByFkProduct($idProduct)
-            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN)
-            ->useSpyProductImageSetToProductImageQuery()
-                ->useSpyProductImageQuery()
-                ->endUse()
-            ->orderBySortOrder(Criteria::DESC)
-            ->endUse();
+            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN);
     }
 
     /**
