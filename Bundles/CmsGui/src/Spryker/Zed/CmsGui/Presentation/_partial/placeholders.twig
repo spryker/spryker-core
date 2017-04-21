@@ -4,7 +4,7 @@
         {% for translation in glossaryAttribute.translations %}
                 {% if translation.localeName == localeName %}
                             <td><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
-                            <td class="{{ prettyDiffClass }}">{{ translation.translation | raw }}</td>
+                            <td class="{{ prettyDiffClass }}">{{ translation.translation | trim }}</td>
                             {% if prettyDiffClass != 'original' %}
                                 <td class="original hidden"></td>
                             {% endif %}

@@ -41,8 +41,12 @@ var DIFF_EQUAL = 0;
         }
         $.fn.prettyTextDiff.debug("Original text found: ", original, settings);
         $.fn.prettyTextDiff.debug("Changed  text found: ", changed, settings);
-        diffs = dmp.diff_main(original, changed);
-        if (settings.cleanup) {
+        diffs = dmp.diff_main(
+            original.replace(/(\r\n|\n|\r)/gm,"").replace(/\>\s+\</g,'').replace(/\s+/g, ' ').trim(),
+            changed.replace(/(\r\n|\n|\r)/gm,"").replace(/\>\s+\</g,'').replace(/\s+/g, ' ').trim()
+        );
+
+          if (settings.cleanup) {
           dmp.diff_cleanupSemantic(diffs);
         }
         $.fn.prettyTextDiff.debug("Diffs: ", diffs, settings);
@@ -62,14 +66,12 @@ var DIFF_EQUAL = 0;
   };
 
   $.fn.prettyTextDiff.createHTML = function(diff) {
-    var data, html, operation, pattern_amp, pattern_gt, pattern_lt, pattern_para, text;
-    html = [];
+    var data, operation, pattern_amp, pattern_gt, pattern_lt, text;
     pattern_amp = /&/g;
     pattern_lt = /</g;
     pattern_gt = />/g;
-    pattern_para = /\n/g;
     operation = diff[0], data = diff[1];
-    text = data.replace(pattern_amp, '&amp;').replace(pattern_lt, '&lt;').replace(pattern_gt, '&gt;').replace(pattern_para, '<br>');
+    text = data.replace(pattern_amp, '&amp;').replace(pattern_lt, '&lt;').replace(pattern_gt, '&gt;');
     switch (operation) {
       case DIFF_INSERT:
         return '<ins>' + text + '</ins>';
