@@ -82,7 +82,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
             ->getFactFinderQueryContainer()
             ->getExportDataQuery($this->locale->getIdLocale());
 
-        if (!$this->isProductExist($query)) {
+        if (!$this->productsExists($query)) {
             return;
         }
         $filePath = $this->getFilePath($this->locale->getLocaleName());
@@ -118,7 +118,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
      *
      * @return bool
      */
-    protected function isProductExist(SpyProductAbstractQuery $query)
+    protected function productsExists(SpyProductAbstractQuery $query)
     {
         $productsCount = $query->limit($this->queryLimit)
             ->count();

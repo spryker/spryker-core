@@ -124,7 +124,7 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     {
         $productsAbstractQuery->condition(
             self::STOCK_QUANTITY_CONDITION,
-            SpyStockProductTableMap::COL_QUANTITY . ' >0 '
+            SpyStockProductTableMap::COL_QUANTITY . ' > 0 '
         );
         $productsAbstractQuery->condition(
             self::STOCK_NEVER_OUTOFSTOCK_CONDITION,
