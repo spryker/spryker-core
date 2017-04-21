@@ -26,15 +26,15 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';
 
-    const STORAGE_DOCUMENT = 'customerStorage';
-    const STORAGE_PRODUCT_IMAGE = 'productStorage';
+    const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
-    const PATH_STORAGE_DOCUMENT = 'documents/';
-    const PATH_STORAGE_PRODUCT_IMAGE = 'images/product/';
+    const PATH_DOCUMENT = 'documents/';
+    const PATH_PRODUCT_IMAGE = 'images/product/';
 
-    const FILE_STORAGE_DOCUMENT = 'customer.txt';
-    const FILE_STORAGE_PRODUCT_IMAGE = 'image.png';
+    const FILE_DOCUMENT = 'customer.txt';
+    const FILE_PRODUCT_IMAGE = 'image.png';
 
     const FILE_CONTENT = 'Hello World';
 
@@ -79,7 +79,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithProduct()
     {
-        $flysystem = $this->flysystemService->getFilesystemByName(static::STORAGE_PRODUCT_IMAGE);
+        $flysystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_PRODUCT_IMAGE);
 
         $this->assertInstanceOf(Filesystem::class, $flysystem);
     }
@@ -89,7 +89,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetStorageByNameWithCustomer()
     {
-        $flysystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $flysystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
 
         $this->assertInstanceOf(Filesystem::class, $flysystem);
     }
@@ -99,7 +99,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationCreateDir()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
 
         $fileSystem->createDir('/foo');
 
@@ -109,7 +109,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($hasFoo);
         $this->assertFalse($hasBar);
 
-        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo/';
+        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo/';
         $rootDirectoryExists = is_dir($storageDirectory);
         $this->assertTrue($rootDirectoryExists);
     }
@@ -119,7 +119,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationRename()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
 
         $fileSystem->createDir('/foo');
         $fileSystem->rename('/foo', '/bar');
@@ -130,7 +130,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($hasBar);
         $this->assertFalse($hasFoo);
 
-        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'bar/';
+        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'bar/';
         $rootDirectoryExists = is_dir($storageDirectory);
         $this->assertTrue($rootDirectoryExists);
     }
@@ -140,10 +140,10 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFlysystemImplementationUpload()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::STORAGE_DOCUMENT);
+        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
 
-        $uploadedFilename = $this->testDataFlysystemRootDirectory . static::FILE_STORAGE_DOCUMENT;
-        $storageFilename = '/foo/' . static::FILE_STORAGE_DOCUMENT;
+        $uploadedFilename = $this->testDataFlysystemRootDirectory . static::FILE_DOCUMENT;
+        $storageFilename = '/foo/' . static::FILE_DOCUMENT;
 
         $h = fopen($uploadedFilename, 'w');
         fwrite($h, static::FILE_CONTENT);
@@ -176,32 +176,32 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     protected function directoryCleanup()
     {
         try {
-            $file = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo/' . static::FILE_STORAGE_DOCUMENT;
+            $file = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'bar';
+            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'bar';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo';
+            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_DOCUMENT;
+            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT;
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $file = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_PRODUCT_IMAGE . static::FILE_STORAGE_PRODUCT_IMAGE;
+            $file = $this->testDataFlysystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_STORAGE_PRODUCT_IMAGE;
+            $dir = $this->testDataFlysystemRootDirectory . static::PATH_PRODUCT_IMAGE;
             if (is_dir($dir)) {
                 rmdir($dir);
             }

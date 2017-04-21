@@ -9,10 +9,10 @@ namespace FileSystem\Stub;
 
 use Codeception\Configuration;
 use Functional\Spryker\Zed\FileSystem\Business\FileSystemFacadeTest;
+use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
 use Spryker\Service\Flysystem\Model\Builder\LocalBuilder;
-use Spryker\Zed\FileSystem\FileSystemConfig as SprykerFileSystemConfig;
 
-class FileSystemConfigStub extends SprykerFileSystemConfig
+class FlysystemConfigStub extends SprykerFlysystemConfig
 {
 
     /**

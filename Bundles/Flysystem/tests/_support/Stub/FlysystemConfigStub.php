@@ -23,15 +23,15 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
         $testDataFlysystemRootDirectory = Configuration::dataDir() . FlysystemServiceTest::ROOT_DIRECTORY;
 
         return [
-            FlysystemServiceTest::STORAGE_PRODUCT_IMAGE => [
+            FlysystemServiceTest::FILE_SYSTEM_PRODUCT_IMAGE => [
                 'type' => LocalBuilder::class,
                 'root' => $testDataFlysystemRootDirectory,
-                'path' => FlysystemServiceTest::PATH_STORAGE_PRODUCT_IMAGE,
+                'path' => FlysystemServiceTest::PATH_PRODUCT_IMAGE,
             ],
-            FlysystemServiceTest::STORAGE_DOCUMENT => [
+            FlysystemServiceTest::FILE_SYSTEM_DOCUMENT => [
                 'type' => LocalBuilder::class,
                 'root' => $testDataFlysystemRootDirectory,
-                'path' => FlysystemServiceTest::PATH_STORAGE_DOCUMENT,
+                'path' => FlysystemServiceTest::PATH_DOCUMENT,
             ],
         ];
     }

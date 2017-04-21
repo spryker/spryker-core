@@ -11,7 +11,8 @@ require_once('vendor/spryker/spryker/Bundles/Flysystem/tests/_support/Stub/Flysy
 
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
-use Flysystem\Stub\FlysystemConfigStub;
+use FileSystem\Stub\FlysystemConfigStub;
+use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -34,15 +35,15 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';
 
-    const STORAGE_DOCUMENT = 'customerStorage';
-    const STORAGE_PRODUCT_IMAGE = 'productStorage';
+    const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
-    const PATH_STORAGE_DOCUMENT = 'documents/';
-    const PATH_STORAGE_PRODUCT_IMAGE = 'images/product/';
+    const PATH_DOCUMENT = 'documents/';
+    const PATH_PRODUCT_IMAGE = 'images/product/';
 
-    const FILE_STORAGE_DOCUMENT = 'customer.txt';
-    const FILE_STORAGE_PRODUCT_IMAGE = 'image.png';
+    const FILE_DOCUMENT = 'customer.txt';
+    const FILE_PRODUCT_IMAGE = 'image.png';
 
     const FILE_CONTENT = 'Hello World';
 
@@ -99,11 +100,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testReadWithNonExistingFileShouldThrowException()
     {
-        $this->expectException(\League\Flysystem\FileNotFoundException::class);
+        $this->expectException(FileNotFoundException::class);
 
         $contents = $this->fileSystemFacade->read(
-            static::STORAGE_PRODUCT_IMAGE,
-            static::RESOURCE_FILE_NAME
+            static::FILE_SYSTEM_PRODUCT_IMAGE,
+            'nonExistingFile.nil'
         );
 
         $this->assertNull($contents);
@@ -112,35 +113,67 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testReadWithExistingFileShouldReturnContent()
+    {
+        $this->createDocumentFile();
+
+        $contents = $this->fileSystemFacade->read(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(static::FILE_CONTENT, $contents);
+    }
+
+    /**
+     * @return void
+     */
+    protected function createDocumentFile()
+    {
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+
+        $h = fopen($file, 'w');
+        fwrite($h, static::FILE_CONTENT);
+        fclose($h);
+    }
+
+    /**
+     * @return void
+     */
     protected function directoryCleanup()
     {
         try {
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo/' . static::FILE_STORAGE_DOCUMENT;
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'bar';
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT . 'foo';
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_DOCUMENT;
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_PRODUCT_IMAGE . static::FILE_STORAGE_PRODUCT_IMAGE;
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_STORAGE_PRODUCT_IMAGE;
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
             if (is_dir($dir)) {
                 rmdir($dir);
             }

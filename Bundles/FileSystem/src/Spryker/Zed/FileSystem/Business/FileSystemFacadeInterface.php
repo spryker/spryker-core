@@ -15,6 +15,8 @@ interface FileSystemFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $fileSystemName
      * @param string $path
      *
