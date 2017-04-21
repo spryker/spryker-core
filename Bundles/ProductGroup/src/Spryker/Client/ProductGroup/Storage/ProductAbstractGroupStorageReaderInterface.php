@@ -14,8 +14,8 @@ interface ProductAbstractGroupStorageReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupsTransfer|null
      */
-    public function getIdProductGroups($idProductAbstract, $localeName);
+    public function findProductAbstractGroup($idProductAbstract, $localeName);
 
 }

@@ -48,18 +48,36 @@ class ProductStorageReader implements ProductStorageReaderInterface
      *
      * @return array
      */
-    public function getGroupElementsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
     {
-        $idProductGroups = $this->productAbstractGroupStorageReader->getIdProductGroups($idProductAbstract, $localeName);
+        $productAbstractGroupsTransfer = $this->productAbstractGroupStorageReader->findProductAbstractGroup($idProductAbstract, $localeName);
 
-        if (!$idProductGroups) {
+        if (!$productAbstractGroupsTransfer) {
             return [];
         }
 
-        $idProductAbstracts = $this->productGroupStorageReader->getIdProductAbstracts($idProductGroups, $localeName);
-        $idProductAbstracts = $this->removeCurrentProductFromGroups($idProductAbstract, $idProductAbstracts);
+        $productGroupTransfers = $this->productGroupStorageReader->findProductGroups($productAbstractGroupsTransfer, $localeName);
+
+        $idProductAbstracts = $this->getUniqueIdProductAbstracts($productGroupTransfers);
+        $idProductAbstracts = $this->removeCurrentProduct($idProductAbstract, $idProductAbstracts);
 
         return $this->getProductsFromStorage($idProductAbstracts, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer[] $productGroupTransfers
+     *
+     * @return array
+     */
+    protected function getUniqueIdProductAbstracts(array $productGroupTransfers)
+    {
+        $idProductAbstracts = [];
+
+        foreach ($productGroupTransfers as $productGroupTransfer) {
+            $idProductAbstracts = array_merge($idProductAbstracts, $productGroupTransfer->getIdProductAbstracts());
+        }
+
+        return array_unique($idProductAbstracts);
     }
 
     /**
@@ -68,9 +86,10 @@ class ProductStorageReader implements ProductStorageReaderInterface
      *
      * @return array
      */
-    protected function removeCurrentProductFromGroups($idProductAbstract, array $idProductAbstracts)
+    protected function removeCurrentProduct($idProductAbstract, array $idProductAbstracts)
     {
         $currentProductIndex = array_search($idProductAbstract, $idProductAbstracts);
+
         if ($currentProductIndex !== false) {
             unset($idProductAbstracts[$currentProductIndex]);
         }

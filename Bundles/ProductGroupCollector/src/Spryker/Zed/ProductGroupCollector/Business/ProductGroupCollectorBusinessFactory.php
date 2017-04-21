@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductGroupCollector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductAbstractGroupsCollector;
 use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductGroupCollector;
+use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductAbstractGroupsCollectorQuery;
 use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupCollectorQuery;
 use Spryker\Zed\ProductGroupCollector\ProductGroupCollectorDependencyProvider;
 
@@ -44,7 +45,7 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
         );
 
         $storageProductGroupCollector->setTouchQueryContainer($this->getTouchQueryContainer());
-        $storageProductGroupCollector->setQueryBuilder($this->createProductGroupCollectorQuery());
+        $storageProductGroupCollector->setQueryBuilder($this->createProductAbstractGroupsCollectorQuery());
 
         return $storageProductGroupCollector;
     }
@@ -71,6 +72,14 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createProductGroupCollectorQuery()
     {
         return new ProductGroupCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductAbstractGroupsCollectorQuery
+     */
+    protected function createProductAbstractGroupsCollectorQuery()
+    {
+        return new ProductAbstractGroupsCollectorQuery();
     }
 
     /**

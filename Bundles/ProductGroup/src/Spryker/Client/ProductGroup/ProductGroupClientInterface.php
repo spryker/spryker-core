@@ -16,7 +16,7 @@ interface ProductGroupClientInterface
      * - Reads all abstract product IDs of all the obtained product groups.
      * - Reads and returns abstract product data for all the obtained abstract products.
      * - The given product won't be part of the result.
-     * - All data reading is happening from Storage in the given locale.
+     * - All data is read from Storage in the given locale.
      *
      * @api
      *
@@ -25,6 +25,6 @@ interface ProductGroupClientInterface
      *
      * @return array
      */
-    public function getGroupElementsByIdProductAbstract($idProductAbstract, $localeName);
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
 
 }

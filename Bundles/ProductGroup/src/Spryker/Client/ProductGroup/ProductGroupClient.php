@@ -25,11 +25,11 @@ class ProductGroupClient extends AbstractClient implements ProductGroupClientInt
      *
      * @return array
      */
-    public function getGroupElementsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
     {
         return $this->getFactory()
             ->createProductStorageReader()
-            ->getGroupElementsByIdProductAbstract($idProductAbstract, $localeName);
+            ->findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
     }
 
 }

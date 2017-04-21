@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductGroup\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractGroupsTransfer;
 use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -37,14 +38,31 @@ class ProductAbstractGroupStorageReader implements ProductAbstractGroupStorageRe
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupsTransfer|null
      */
-    public function getIdProductGroups($idProductAbstract, $localeName)
+    public function findProductAbstractGroup($idProductAbstract, $localeName)
     {
         $key = $this->productAbstractGroupsKeyBuilder->generateKey($idProductAbstract, $localeName);
-        $idProductGroups = (array)$this->storageClient->get($key);
+        $data = $this->storageClient->get($key);
 
-        return $idProductGroups;
+        if (!$data) {
+            return null;
+        }
+
+        return $this->mapProductAbstractGroupsTransfer($data);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupsTransfer
+     */
+    protected function mapProductAbstractGroupsTransfer(array $data)
+    {
+        $productAbstractGroupsTransfer = new ProductAbstractGroupsTransfer();
+        $productAbstractGroupsTransfer->fromArray($data, true);
+
+        return $productAbstractGroupsTransfer;
     }
 
 }

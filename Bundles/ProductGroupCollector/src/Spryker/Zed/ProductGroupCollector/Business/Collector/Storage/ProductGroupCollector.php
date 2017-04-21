@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductGroupCollector\Business\Collector\Storage;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Spryker\Shared\ProductGroup\ProductGroupConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
+use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupCollectorQuery;
 
 class ProductGroupCollector extends AbstractStoragePropelCollector
 {
@@ -31,7 +32,9 @@ class ProductGroupCollector extends AbstractStoragePropelCollector
     protected function collectItem($touchKey, array $collectItemData)
     {
         $productGroupTransfer = new ProductGroupTransfer();
-        $productGroupTransfer->fromArray($collectItemData, true);
+        $productGroupTransfer
+            ->setIdProductGroup($collectItemData[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_GROUP])
+            ->setIdProductAbstracts(explode(',', $collectItemData[ProductGroupCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]));
 
         return $productGroupTransfer->modifiedToArray();
     }

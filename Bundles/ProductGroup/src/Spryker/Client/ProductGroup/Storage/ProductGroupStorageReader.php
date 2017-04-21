@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductGroup\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractGroupsTransfer;
+use Generated\Shared\Transfer\ProductGroupTransfer;
 use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -34,22 +36,40 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
     }
 
     /**
-     * @param array $productAbstractGroups
+     * @param \Generated\Shared\Transfer\ProductAbstractGroupsTransfer $productAbstractGroupsTransfer
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer[]
      */
-    public function getIdProductAbstracts(array $productAbstractGroups, $localeName)
+    public function findProductGroups(ProductAbstractGroupsTransfer $productAbstractGroupsTransfer, $localeName)
     {
-        $idProductAbstracts = [];
+        $productGroupTransfers = [];
 
-        foreach ($productAbstractGroups as $idProductGroup) {
+        foreach ($productAbstractGroupsTransfer->getIdProductGroups() as $idProductGroup) {
             $key = $this->productGroupKeyBuilder->generateKey($idProductGroup, $localeName);
-            $idProductAbstracts = array_merge($idProductAbstracts, (array)$this->storageClient->get($key));
-        }
-        $idProductAbstracts = array_unique($idProductAbstracts);
+            $data = $this->storageClient->get($key);
 
-        return $idProductAbstracts;
+            if (!$data) {
+                continue;
+            }
+
+            $productGroupTransfers[] = $this->mapProductGroupTransfer($data);
+        }
+
+        return $productGroupTransfers;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    protected function mapProductGroupTransfer(array $data)
+    {
+        $productGroupTransfer = new ProductGroupTransfer();
+        $productGroupTransfer->fromArray($data, true);
+
+        return $productGroupTransfer;
     }
 
 }

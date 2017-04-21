@@ -7,15 +7,17 @@
 
 namespace Spryker\Client\ProductGroup\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractGroupsTransfer;
+
 interface ProductGroupStorageReaderInterface
 {
 
     /**
-     * @param array $productAbstractGroups
+     * @param \Generated\Shared\Transfer\ProductAbstractGroupsTransfer $productAbstractGroupsTransfer
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductGroupTransfer[]
      */
-    public function getIdProductAbstracts(array $productAbstractGroups, $localeName);
+    public function findProductGroups(ProductAbstractGroupsTransfer $productAbstractGroupsTransfer, $localeName);
 
 }

@@ -16,6 +16,6 @@ interface ProductStorageReaderInterface
      *
      * @return array
      */
-    public function getGroupElementsByIdProductAbstract($idProductAbstract, $localeName);
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
 
 }
