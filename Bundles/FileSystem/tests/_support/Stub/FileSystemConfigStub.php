@@ -10,7 +10,7 @@ namespace FileSystem\Stub;
 use Codeception\Configuration;
 use Functional\Spryker\Service\FileSystem\FileSystemServiceTest;
 use Spryker\Service\FileSystem\FileSystemConfig as SprykerFileSystemConfig;
-use Spryker\Service\FileSystem\Model\Storage\Builder\LocalStorageBuilder;
+use Spryker\Service\FileSystem\Model\Builder\Storage\LocalStorageBuilder;
 
 class FileSystemConfigStub extends SprykerFileSystemConfig
 {

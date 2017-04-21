@@ -13,7 +13,7 @@ use League\Flysystem\Filesystem;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
-use Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface;
+use Spryker\Service\FileSystem\Model\FileSystemStorageInterface;
 
 /**
  * @group Functional

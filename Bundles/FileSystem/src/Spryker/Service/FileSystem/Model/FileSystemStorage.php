@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Storage;
+namespace Spryker\Service\FileSystem\Model;
 
 use League\Flysystem\Filesystem;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;

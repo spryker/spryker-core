@@ -10,7 +10,7 @@ namespace Spryker\Service\FileSystem;
 use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use Generated\Shared\Transfer\FileSystemStorageConfigTransfer;
 use Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException;
-use Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProvider;
+use Spryker\Service\FileSystem\Model\Provider\FileSystemStorageProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -31,7 +31,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\Provider\FileSystemStorageProviderInterface
+     * @return \Spryker\Service\FileSystem\Model\Provider\FileSystemStorageProviderInterface
      */
     public function createStorageProvider()
     {
@@ -62,20 +62,19 @@ class FileSystemServiceFactory extends AbstractServiceFactory
      */
     protected function createStorageConfig($storageName, array $storageConfigData)
     {
-        $configTransfer = new FileSystemStorageConfigTransfer();
-        $configTransfer->setName($storageName);
-
         $type = $storageConfigData[FileSystemStorageConfigTransfer::TYPE];
-        $configTransfer->setType($type);
         unset($storageConfigData[FileSystemStorageConfigTransfer::TYPE]);
 
+        $configTransfer = new FileSystemStorageConfigTransfer();
+        $configTransfer->setName($storageName);
+        $configTransfer->setType($type);
         $configTransfer->setData($storageConfigData);
 
         return $configTransfer;
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[]
      */
     protected function createFileSystemStorageCollection()
     {
@@ -83,7 +82,7 @@ class FileSystemServiceFactory extends AbstractServiceFactory
 
         $storageCollection = [];
         foreach ($configCollection as $storageName => $configStorageTransfer) {
-            $builder = $this->createFileSystemStorageBuilder($configStorageTransfer);
+            $builder = $this->createFileSystemBuilder($configStorageTransfer);
             $storageCollection[$storageName] = $builder->build();
         }
 
@@ -95,9 +94,9 @@ class FileSystemServiceFactory extends AbstractServiceFactory
      *
      * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageBuilderNotFoundException
      *
-     * @return \Spryker\Service\FileSystem\Model\Storage\BuilderInterface
+     * @return \Spryker\Service\FileSystem\Model\Builder\FileSystemStorageBuilderInterface
      */
-    protected function createFileSystemStorageBuilder(FileSystemStorageConfigTransfer $storageConfigTransfer)
+    protected function createFileSystemBuilder(FileSystemStorageConfigTransfer $storageConfigTransfer)
     {
         $storageConfigTransfer->requireName();
 

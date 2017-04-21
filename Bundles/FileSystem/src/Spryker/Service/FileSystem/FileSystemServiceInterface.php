@@ -18,14 +18,14 @@ interface FileSystemServiceInterface
      *
      * @param string $name
      *
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface
      */
     public function getStorageByName($name);
 
     /**
      * @api
      *
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[]
      */
     public function getStorageCollection();
 

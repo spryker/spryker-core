@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Storage\Provider;
+namespace Spryker\Service\FileSystem\Model\Provider;
 
 use Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException;
 
@@ -13,12 +13,12 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
 {
 
     /**
-     * @var \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     * @var \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[]
      */
     protected $storageCollection;
 
     /**
-     * @param \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[] $storageCollection
+     * @param \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[] $storageCollection
      */
     public function __construct(array $storageCollection)
     {
@@ -30,7 +30,7 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
      *
      * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException
      *
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface
      */
     public function getStorageByName($name)
     {
@@ -44,7 +44,7 @@ class FileSystemStorageProvider implements FileSystemStorageProviderInterface
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[]
      */
     public function getStorageCollection()
     {

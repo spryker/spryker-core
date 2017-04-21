@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Storage\Provider;
+namespace Spryker\Service\FileSystem\Model\Provider;
 
 interface FileSystemStorageProviderInterface
 {
@@ -15,12 +15,12 @@ interface FileSystemStorageProviderInterface
      *
      * @throws \Spryker\Service\FileSystem\Exception\FileSystemStorageNotFoundException
      *
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface
      */
     public function getStorageByName($name);
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\Storage\FileSystemStorageInterface[]
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStorageInterface[]
      */
     public function getStorageCollection();
 
