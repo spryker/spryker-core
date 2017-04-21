@@ -24,16 +24,21 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
     }
 
     /**
-     * @param string $filesystem
-     * @param string $filename
+     * @param string $name
      *
-     * @return string|false The file contents or false on failure.
+     * @return \League\Flysystem\Filesystem
      */
-    public function read($filesystem, $filename)
+    public function getFilesystemByName($name)
     {
-        return $this->flysystemService
-            ->getFilesystemByName($filesystem)
-            ->read($filename);
+        return $this->flysystemService->getFilesystemByName($name);
+    }
+
+    /**
+     * @return \League\Flysystem\Filesystem[]
+     */
+    public function getFilesystemCollection()
+    {
+        return $this->flysystemService->getFilesystemCollection();
     }
 
 }

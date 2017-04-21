@@ -9,4 +9,17 @@ namespace Spryker\Zed\FileSystem\Dependency\Facade;
 
 interface FileSystemToFlysystemInterface
 {
+
+    /**
+     * @param string $name
+     *
+     * @return \League\Flysystem\Filesystem
+     */
+    public function getFilesystemByName($name);
+
+    /**
+     * @return \League\Flysystem\Filesystem[]
+     */
+    public function getFilesystemCollection();
+
 }

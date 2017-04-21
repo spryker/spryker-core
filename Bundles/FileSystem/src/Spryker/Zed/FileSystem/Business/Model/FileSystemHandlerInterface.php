@@ -5,20 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business;
+namespace Spryker\Zed\FileSystem\Business\Model;
 
-/**
- * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
- * @method \Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory getFactory()
- */
-interface FileSystemFacadeInterface
+interface FileSystemHandlerInterface
 {
 
     /**
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|null|false
+     * @return string|false The file contents or false on failure.
      */
     public function read($fileSystemName, $path);
 

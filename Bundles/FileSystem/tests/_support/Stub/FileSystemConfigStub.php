@@ -18,19 +18,19 @@ class FileSystemConfigStub extends SprykerFileSystemConfig
     /**
      * @return array
      */
-    public function getStorageConfig()
+    public function getFilesystemConfig()
     {
-        $testDataFileSystemRootDirectory = Configuration::dataDir() . FileSystemFacadeTest::ROOT_DIRECTORY;
+        $testDataFlysystemRootDirectory = Configuration::dataDir() . FileSystemFacadeTest::ROOT_DIRECTORY;
 
         return [
             FileSystemFacadeTest::STORAGE_PRODUCT_IMAGE => [
                 'type' => LocalBuilder::class,
-                'root' => $testDataFileSystemRootDirectory,
+                'root' => $testDataFlysystemRootDirectory,
                 'path' => FileSystemFacadeTest::PATH_STORAGE_PRODUCT_IMAGE,
             ],
             FileSystemFacadeTest::STORAGE_DOCUMENT => [
                 'type' => LocalBuilder::class,
-                'root' => $testDataFileSystemRootDirectory,
+                'root' => $testDataFlysystemRootDirectory,
                 'path' => FileSystemFacadeTest::PATH_STORAGE_DOCUMENT,
             ],
         ];

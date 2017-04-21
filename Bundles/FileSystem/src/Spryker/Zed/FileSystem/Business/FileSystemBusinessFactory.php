@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileSystem\Business;
 
+use Spryker\Zed\FileSystem\Business\Model\FileSystemHandler;
+use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -14,4 +16,23 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class FileSystemBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemHandlerInterface
+     */
+    public function createFileSystemHandler()
+    {
+        return new FileSystemHandler(
+            $this->getFlysystemService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface
+     */
+    protected function getFlysystemService()
+    {
+        return $this->getProvidedDependency(FileSystemDependencyProvider::SERVICE_FLYSYSTEM);
+    }
+
 }

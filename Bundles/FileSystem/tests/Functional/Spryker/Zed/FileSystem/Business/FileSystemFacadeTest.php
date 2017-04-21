@@ -7,11 +7,19 @@
 
 namespace Functional\Spryker\Zed\FileSystem\Business;
 
+require_once('vendor/spryker/spryker/Bundles/Flysystem/tests/_support/Stub/FlysystemConfigStub.php');
+
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
+use Flysystem\Stub\FlysystemConfigStub;
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\Flysystem\FlysystemService;
+use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory;
 use Spryker\Zed\FileSystem\Business\FileSystemFacade;
+use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemBridge;
+use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @group Functional
@@ -55,12 +63,24 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $config = new FileSystemConfigStub();
-
         $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
+        $flysystemConfig = new FlysystemConfigStub();
+        $flysystemFactory = new FlysystemServiceFactory();
+        $flysystemFactory->setConfig($flysystemConfig);
+
+        $flysystemService = new FlysystemService();
+        $flysystemService->setFactory($flysystemFactory);
+
+        $container = new Container();
+        $container[FileSystemDependencyProvider::SERVICE_FLYSYSTEM] = function (Container $container) use ($flysystemService) {
+            return new FileSystemToFlysystemBridge($flysystemService);
+        };
+
+        $config = new FileSystemConfigStub();
         $factory = new FileSystemBusinessFactory();
         $factory->setConfig($config);
+        $factory->setContainer($container);
 
         $this->fileSystemFacade = new FileSystemFacade();
         $this->fileSystemFacade->setFactory($factory);
@@ -77,13 +97,15 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testReadShouldReturnNullWithNonExistentFile()
+    public function testReadWithNonExistingFileShouldThrowException()
     {
+        $this->expectException(\League\Flysystem\FileNotFoundException::class);
+
         $contents = $this->fileSystemFacade->read(
             static::STORAGE_PRODUCT_IMAGE,
             static::RESOURCE_FILE_NAME
         );
-        
+
         $this->assertNull($contents);
     }
 
