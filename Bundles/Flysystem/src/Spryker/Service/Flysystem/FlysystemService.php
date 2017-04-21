@@ -24,11 +24,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function getStorageByName($name)
+    public function getFilesystemByName($name)
     {
         return $this->getFactory()
-            ->createStorageProvider()
-            ->getStorageByName($name);
+            ->createFilesystemProvider()
+            ->getFilesystemByName($name);
     }
 
     /**
@@ -38,11 +38,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @return \League\Flysystem\Filesystem[]
      */
-    public function getStorageCollection()
+    public function getFilesystemCollection()
     {
         return $this->getFactory()
-            ->createStorageProvider()
-            ->getStorageCollection();
+            ->createFilesystemProvider()
+            ->getFilesystemCollection();
     }
 
 }

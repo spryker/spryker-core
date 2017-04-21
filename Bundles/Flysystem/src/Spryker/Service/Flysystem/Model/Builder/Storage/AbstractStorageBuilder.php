@@ -7,14 +7,14 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder\Storage;
 
-use Generated\Shared\Transfer\FlysystemStorageConfigTransfer;
+use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
 
 abstract class AbstractStorageBuilder implements FlysystemStorageBuilderInterface
 {
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemStorageConfigTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
     protected $config;
 
@@ -36,9 +36,9 @@ abstract class AbstractStorageBuilder implements FlysystemStorageBuilderInterfac
     abstract protected function createFlysystemBuilder();
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigTransfer $configTransfer
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      */
-    public function __construct(FlysystemStorageConfigTransfer $configTransfer)
+    public function __construct(FlysystemConfigTransfer $configTransfer)
     {
         $this->config = $configTransfer;
     }

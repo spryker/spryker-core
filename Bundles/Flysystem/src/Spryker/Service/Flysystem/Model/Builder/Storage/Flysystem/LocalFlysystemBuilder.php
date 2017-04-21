@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem;
 
-use Generated\Shared\Transfer\FlysystemStorageConfigLocalTransfer;
-use Generated\Shared\Transfer\FlysystemStorageConfigTransfer;
+use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
+use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
@@ -33,22 +33,22 @@ class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
     protected $filesystem;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemStorageConfigTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
     protected $fileSystemConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemStorageConfigLocalTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
      */
     protected $adapterConfig;
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigTransfer $fileSystemConfig
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigLocalTransfer $adapterConfig
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
+     * @param \Generated\Shared\Transfer\FlysystemConfigLocalTransfer $adapterConfig
      */
     public function __construct(
-        FlysystemStorageConfigTransfer $fileSystemConfig,
-        FlysystemStorageConfigLocalTransfer $adapterConfig
+        FlysystemConfigTransfer $fileSystemConfig,
+        FlysystemConfigLocalTransfer $adapterConfig
     ) {
         $this->fileSystemConfig = $fileSystemConfig;
         $this->adapterConfig = $adapterConfig;

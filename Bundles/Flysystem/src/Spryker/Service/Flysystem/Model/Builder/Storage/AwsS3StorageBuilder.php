@@ -7,18 +7,18 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder\Storage;
 
-use Generated\Shared\Transfer\FlysystemStorageConfigAwsTransfer;
+use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
 use Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem\AwsS3FlysystemBuilder;
 
 class AwsS3StorageBuilder extends AbstractStorageBuilder
 {
 
     /**
-     * @return \Generated\Shared\Transfer\FlysystemStorageConfigAwsTransfer
+     * @return \Generated\Shared\Transfer\FlysystemConfigAwsTransfer
      */
     protected function buildAdapterConfig()
     {
-        $configTransfer = new FlysystemStorageConfigAwsTransfer();
+        $configTransfer = new FlysystemConfigAwsTransfer();
         $configTransfer->fromArray($this->config->getData(), true);
 
         return $configTransfer;

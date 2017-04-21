@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\Flysystem\Model\Provider;
 
-interface FlysystemStorageProviderInterface
+interface FlysystemProviderInterface
 {
 
     /**
@@ -17,11 +17,11 @@ interface FlysystemStorageProviderInterface
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function getStorageByName($name);
+    public function getFilesystemByName($name);
 
     /**
      * @return \League\Flysystem\Filesystem[]
      */
-    public function getStorageCollection();
+    public function getFilesystemCollection();
 
 }

@@ -17,18 +17,18 @@
         <property name="isFolder" type="bool" />
     </transfer>
 
-    <transfer name="FlysystemStorageConfig">
+    <transfer name="FlysystemConfig">
         <property name="name" type="string" />
         <property name="type" type="string" />
         <property name="data" type="array" />
     </transfer>
 
-    <transfer name="FlysystemStorageConfigLocal">
+    <transfer name="FlysystemConfigLocal">
         <property name="root" type="string" />
         <property name="path" type="string" />
     </transfer>
 
-    <transfer name="FlysystemStorageConfigAws">
+    <transfer name="FlysystemConfigAws">
         <property name="root" type="string" />
         <property name="path" type="string" />
         <property name="key" type="string" />

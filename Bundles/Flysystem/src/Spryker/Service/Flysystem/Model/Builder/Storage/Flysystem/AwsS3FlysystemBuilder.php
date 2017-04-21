@@ -8,8 +8,8 @@
 namespace Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem;
 
 use Aws\S3\S3Client;
-use Generated\Shared\Transfer\FlysystemStorageConfigAwsTransfer;
-use Generated\Shared\Transfer\FlysystemStorageConfigTransfer;
+use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
+use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
@@ -40,22 +40,22 @@ class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
     protected $filesystem;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemStorageConfigTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
     protected $fileSystemConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemStorageConfigAwsTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigAwsTransfer
      */
     protected $adapterConfig;
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigTransfer $fileSystemConfig
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigAwsTransfer $adapterConfig
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
+     * @param \Generated\Shared\Transfer\FlysystemConfigAwsTransfer $adapterConfig
      */
     public function __construct(
-        FlysystemStorageConfigTransfer $fileSystemConfig,
-        FlysystemStorageConfigAwsTransfer $adapterConfig
+        FlysystemConfigTransfer $fileSystemConfig,
+        FlysystemConfigAwsTransfer $adapterConfig
     ) {
         $this->fileSystemConfig = $fileSystemConfig;
         $this->adapterConfig = $adapterConfig;

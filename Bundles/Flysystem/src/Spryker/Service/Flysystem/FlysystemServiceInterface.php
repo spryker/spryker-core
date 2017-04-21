@@ -20,13 +20,13 @@ interface FlysystemServiceInterface
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function getStorageByName($name);
+    public function getFilesystemByName($name);
 
     /**
      * @api
      *
      * @return \League\Flysystem\Filesystem[]
      */
-    public function getStorageCollection();
+    public function getFilesystemCollection();
 
 }

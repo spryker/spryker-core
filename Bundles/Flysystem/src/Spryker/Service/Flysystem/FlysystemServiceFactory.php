@@ -8,9 +8,9 @@
 namespace Spryker\Service\Flysystem;
 
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
-use Generated\Shared\Transfer\FlysystemStorageConfigTransfer;
+use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use Spryker\Service\Flysystem\Exception\FlysystemStorageBuilderNotFoundException;
-use Spryker\Service\Flysystem\Model\Provider\FlysystemStorageProvider;
+use Spryker\Service\Flysystem\Model\Provider\FlysystemProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -31,44 +31,44 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Provider\FlysystemStorageProviderInterface
+     * @return \Spryker\Service\Flysystem\Model\Provider\FlysystemProviderInterface
      */
-    public function createStorageProvider()
+    public function createFilesystemProvider()
     {
-        return new FlysystemStorageProvider(
-            $this->createFlysystemStorageCollection()
+        return new FlysystemProvider(
+            $this->createFilesystemCollection()
         );
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FlysystemStorageConfigTransfer[]
+     * @return \Generated\Shared\Transfer\FlysystemConfigTransfer[]
      */
-    protected function createStorageConfigCollection()
+    protected function createFilesystemConfigCollection()
     {
-        $storageCollection = [];
-        foreach ($this->getConfig()->getStorageConfig() as $storageName => $storageConfigData) {
-            $storageConfig = $this->createStorageConfig($storageName, $storageConfigData);
-            $storageCollection[$storageName] = $storageConfig;
+        $configCollection = [];
+        foreach ($this->getConfig()->getFilesystemConfig() as $name => $configData) {
+            $config = $this->createFilesystemConfig($name, $configData);
+            $configCollection[$name] = $config;
         }
 
-        return $storageCollection;
+        return $configCollection;
     }
 
     /**
-     * @param string $storageName
-     * @param array $storageConfigData
+     * @param string $name
+     * @param array $configData
      *
-     * @return \Generated\Shared\Transfer\FlysystemStorageConfigTransfer
+     * @return \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
-    protected function createStorageConfig($storageName, array $storageConfigData)
+    protected function createFilesystemConfig($name, array $configData)
     {
-        $type = $storageConfigData[FlysystemStorageConfigTransfer::TYPE];
-        unset($storageConfigData[FlysystemStorageConfigTransfer::TYPE]);
+        $type = $configData[FlysystemConfigTransfer::TYPE];
+        unset($configData[FlysystemConfigTransfer::TYPE]);
 
-        $configTransfer = new FlysystemStorageConfigTransfer();
-        $configTransfer->setName($storageName);
+        $configTransfer = new FlysystemConfigTransfer();
+        $configTransfer->setName($name);
         $configTransfer->setType($type);
-        $configTransfer->setData($storageConfigData);
+        $configTransfer->setData($configData);
 
         return $configTransfer;
     }
@@ -76,39 +76,39 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     /**
      * @return \League\Flysystem\Filesystem[]
      */
-    protected function createFlysystemStorageCollection()
+    protected function createFilesystemCollection()
     {
-        $configCollection = $this->createStorageConfigCollection();
+        $configCollection = $this->createFilesystemConfigCollection();
 
-        $storageCollection = [];
-        foreach ($configCollection as $storageName => $configStorageTransfer) {
-            $builder = $this->createFlysystemBuilder($configStorageTransfer);
-            $storageCollection[$storageName] = $builder->build();
+        $filesystemCollection = [];
+        foreach ($configCollection as $name => $configTransfer) {
+            $builder = $this->createFlysystemBuilder($configTransfer);
+            $filesystemCollection[$name] = $builder->build();
         }
 
-        return $storageCollection;
+        return $filesystemCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemStorageConfigTransfer $storageConfigTransfer
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      *
      * @throws \Spryker\Service\Flysystem\Exception\FlysystemStorageBuilderNotFoundException
      *
      * @return \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
      */
-    protected function createFlysystemBuilder(FlysystemStorageConfigTransfer $storageConfigTransfer)
+    protected function createFlysystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
-        $storageConfigTransfer->requireName();
+        $configTransfer->requireName();
 
-        $builderClass = $storageConfigTransfer->getType();
+        $builderClass = $configTransfer->getType();
         if (!$builderClass) {
             throw new FlysystemStorageBuilderNotFoundException(
-                sprintf('FlysystemStorageBuilder "%s" was not found', $storageConfigTransfer->getName())
+                sprintf('FlysystemStorageBuilder "%s" was not found', $configTransfer->getName())
             );
         }
 
         //TODO remove magic
-        $builder = new $builderClass($storageConfigTransfer);
+        $builder = new $builderClass($configTransfer);
 
         return $builder;
     }

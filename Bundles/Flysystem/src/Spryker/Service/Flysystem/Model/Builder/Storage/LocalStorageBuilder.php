@@ -7,18 +7,18 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder\Storage;
 
-use Generated\Shared\Transfer\FlysystemStorageConfigLocalTransfer;
+use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem\LocalFlysystemBuilder;
 
 class LocalStorageBuilder extends AbstractStorageBuilder
 {
 
     /**
-     * @return \Generated\Shared\Transfer\FlysystemStorageConfigLocalTransfer
+     * @return \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
      */
     protected function buildAdapterConfig()
     {
-        $configTransfer = new FlysystemStorageConfigLocalTransfer();
+        $configTransfer = new FlysystemConfigLocalTransfer();
         $configTransfer->fromArray($this->config->getData(), true);
 
         return $configTransfer;
