@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder;
 
-interface FlysystemStorageBuilderInterface
+interface FilesystemBuilderInterface
 {
 
     /**

@@ -13,7 +13,7 @@ interface FlysystemProviderInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemStorageNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\FlysystemNotFoundException
      *
      * @return \League\Flysystem\Filesystem
      */

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Storage;
+namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem\LocalFlysystemBuilder;
+use Spryker\Service\Flysystem\Model\Builder\Type\LocalTypeBuilder;
 
-class LocalStorageBuilder extends AbstractStorageBuilder
+class LocalBuilder extends AbstractBuilder
 {
 
     /**
@@ -36,13 +36,13 @@ class LocalStorageBuilder extends AbstractStorageBuilder
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
     protected function createFlysystemBuilder()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new LocalFlysystemBuilder($this->config, $adapterConfigTransfer);
+        return new LocalTypeBuilder($this->config, $adapterConfigTransfer);
     }
 
 }

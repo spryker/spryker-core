@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\Flysystem\Model\Provider;
 
-use Spryker\Service\Flysystem\Exception\FlysystemStorageNotFoundException;
+use Spryker\Service\Flysystem\Exception\FlysystemNotFoundException;
 
 class FlysystemProvider implements FlysystemProviderInterface
 {
@@ -28,15 +28,15 @@ class FlysystemProvider implements FlysystemProviderInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemStorageNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\FlysystemNotFoundException
      *
      * @return \League\Flysystem\Filesystem
      */
     public function getFilesystemByName($name)
     {
         if (!array_key_exists($name, $this->storageCollection)) {
-            throw new FlysystemStorageNotFoundException(
-                sprintf('FlysystemStorage "%s" was not found', $name)
+            throw new FlysystemNotFoundException(
+                sprintf('Flysystem "%s" was not found', $name)
             );
         }
 

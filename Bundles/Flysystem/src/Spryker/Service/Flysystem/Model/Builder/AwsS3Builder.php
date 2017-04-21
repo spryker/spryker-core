@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Storage;
+namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem\AwsS3FlysystemBuilder;
+use Spryker\Service\Flysystem\Model\Builder\Type\AwsS3TypeBuilder;
 
-class AwsS3StorageBuilder extends AbstractStorageBuilder
+class AwsS3Builder extends AbstractBuilder
 {
 
     /**
@@ -39,13 +39,13 @@ class AwsS3StorageBuilder extends AbstractStorageBuilder
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
     protected function createFlysystemBuilder()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new AwsS3FlysystemBuilder($this->config, $adapterConfigTransfer);
+        return new AwsS3TypeBuilder($this->config, $adapterConfigTransfer);
     }
 
 }

@@ -9,6 +9,6 @@ namespace Spryker\Service\Flysystem\Exception;
 
 use Exception;
 
-class FlysystemStorageBuilderNotFoundException extends Exception
+class FlysystemBuilderNotFoundException extends Exception
 {
 }

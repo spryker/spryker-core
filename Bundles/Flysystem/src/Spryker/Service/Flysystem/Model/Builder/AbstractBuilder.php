@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Storage;
+namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
+use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
 
-abstract class AbstractStorageBuilder implements FlysystemStorageBuilderInterface
+abstract class AbstractBuilder implements FilesystemBuilderInterface
 {
 
     /**
@@ -19,7 +19,7 @@ abstract class AbstractStorageBuilder implements FlysystemStorageBuilderInterfac
     protected $config;
 
     /**
-     * @var \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
+     * @var \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
     protected $builder;
 
@@ -31,7 +31,7 @@ abstract class AbstractStorageBuilder implements FlysystemStorageBuilderInterfac
     abstract protected function validateConfig();
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
     abstract protected function createFlysystemBuilder();
 

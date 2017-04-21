@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem;
+namespace Spryker\Service\Flysystem\Model\Builder\Type;
 
 use Aws\S3\S3Client;
 use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
-use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
-use Spryker\Service\Flysystem\Model\FlysystemStorage;
+use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
 
-class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
+class AwsS3TypeBuilder implements FilesystemBuilderInterface
 {
 
     const KEY = 'key';
@@ -76,7 +75,7 @@ class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
         $this
             ->buildS3Client()
             ->buildAdapter()
-            ->buildFlySystem();
+            ->buildFilesystem();
 
         return $this->filesystem;
     }
@@ -111,7 +110,7 @@ class AwsS3FlysystemBuilder implements FlysystemStorageBuilderInterface
     /**
      * @return $this
      */
-    protected function buildFlySystem()
+    protected function buildFilesystem()
     {
         $this->filesystem = new Filesystem($this->adapter);
 

@@ -7,9 +7,9 @@
 
 namespace Spryker\Service\Flysystem;
 
-use Generated\Shared\Transfer\FlysystemResourceTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use Spryker\Service\Flysystem\Exception\FlysystemStorageBuilderNotFoundException;
+use Generated\Shared\Transfer\FlysystemResourceTransfer;
+use Spryker\Service\Flysystem\Exception\FlysystemBuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FlysystemProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
@@ -92,9 +92,9 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      *
-     * @throws \Spryker\Service\Flysystem\Exception\FlysystemStorageBuilderNotFoundException
+     * @throws \Spryker\Service\Flysystem\Exception\FlysystemBuilderNotFoundException
      *
-     * @return \Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
     protected function createFlysystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
@@ -102,8 +102,8 @@ class FlysystemServiceFactory extends AbstractServiceFactory
 
         $builderClass = $configTransfer->getType();
         if (!$builderClass) {
-            throw new FlysystemStorageBuilderNotFoundException(
-                sprintf('FlysystemStorageBuilder "%s" was not found', $configTransfer->getName())
+            throw new FlysystemBuilderNotFoundException(
+                sprintf('FlysystemBuilder "%s" was not found', $configTransfer->getName())
             );
         }
 

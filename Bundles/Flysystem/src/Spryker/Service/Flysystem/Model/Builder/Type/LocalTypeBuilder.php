@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Storage\Flysystem;
+namespace Spryker\Service\Flysystem\Model\Builder\Type;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
-use Spryker\Service\Flysystem\Model\Builder\FlysystemStorageBuilderInterface;
-use Spryker\Service\Flysystem\Model\FlysystemStorage;
+use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
 
-class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
+class LocalTypeBuilder implements FilesystemBuilderInterface
 {
 
     /**
@@ -66,7 +65,7 @@ class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
         $this
             ->buildPath()
             ->buildAdapter()
-            ->buildFlysystem();
+            ->buildFilesystem();
 
         return $this->filesystem;
     }
@@ -99,7 +98,7 @@ class LocalFlysystemBuilder implements FlysystemStorageBuilderInterface
     /**
      * @return $this
      */
-    protected function buildFlysystem()
+    protected function buildFilesystem()
     {
         $this->filesystem = new Filesystem($this->adapter);
 
