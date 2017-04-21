@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException;
@@ -161,8 +162,19 @@ class Writer implements WriterInterface
     {
         $productImage = $productImageSetToProductImage->getSpyProductImage();
         $productImage->removeSpyProductImageSetToProductImage($productImageSetToProductImage);
-        $productImage->save();
 
+        $productImageSetToProductImage->delete();
+
+        $this->deleteOrphanProductImage($productImage);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImage
+     *
+     * @return void
+     */
+    protected function deleteOrphanProductImage(SpyProductImage $productImage)
+    {
         if ($productImage->getSpyProductImageSetToProductImages()->isEmpty()) {
             $productImage->delete();
         }
