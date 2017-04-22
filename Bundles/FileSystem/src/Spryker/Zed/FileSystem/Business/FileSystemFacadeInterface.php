@@ -20,7 +20,7 @@ interface FileSystemFacadeInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getMimeType($fileSystemName, $path);
 
@@ -30,7 +30,7 @@ interface FileSystemFacadeInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getTimestamp($fileSystemName, $path);
 
@@ -40,9 +40,20 @@ interface FileSystemFacadeInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getSize($fileSystemName, $path);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $dirname
+     * @param array $config
+     *
+     * @return string|false
+     */
+    public function createDir($fileSystemName, $dirname, array $config = []);
 
     /**
      * @api
@@ -51,7 +62,7 @@ interface FileSystemFacadeInterface
      * @param string $path
      * @param string $newpath
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function copy($fileSystemName, $path, $newpath);
 
@@ -82,7 +93,7 @@ interface FileSystemFacadeInterface
      * @param string $path
      * @param string $content
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function put($fileSystemName, $path, $content);
 
@@ -114,7 +125,7 @@ interface FileSystemFacadeInterface
      * @param string $path
      * @param string $content
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function write($fileSystemName, $path, $content);
 

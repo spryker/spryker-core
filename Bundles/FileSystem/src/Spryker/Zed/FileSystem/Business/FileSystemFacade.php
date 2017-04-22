@@ -22,7 +22,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getMimeType($fileSystemName, $path)
     {
@@ -37,7 +37,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getTimestamp($fileSystemName, $path)
     {
@@ -52,7 +52,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getSize($fileSystemName, $path)
     {
@@ -65,10 +65,26 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @api
      *
      * @param string $fileSystemName
+     * @param string $dirname
+     * @param array $config
+     *
+     * @return string|false
+     */
+    public function createDir($fileSystemName, $dirname, array $config = [])
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->createDir($fileSystemName, $dirname, $config);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
      * @param string $path
      * @param string $newpath
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function copy($fileSystemName, $path, $newpath)
     {
@@ -114,7 +130,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $path
      * @param string $content
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function put($fileSystemName, $path, $content)
     {
@@ -161,7 +177,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $path
      * @param string $content
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function write($fileSystemName, $path, $content)
     {

@@ -68,6 +68,20 @@ class FileSystemHandler implements FileSystemHandlerInterface
 
     /**
      * @param string $fileSystemName
+     * @param string $dirname
+     * @param array $config
+     *
+     * @return string|false The file contents or false on failure.
+     */
+    public function createDir($fileSystemName, $dirname, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->createDir($dirname, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
      * @param string $path
      * @param string $newpath
      *

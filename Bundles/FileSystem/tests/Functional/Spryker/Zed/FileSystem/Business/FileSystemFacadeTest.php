@@ -290,7 +290,25 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string|null $content
+     * @return void
+     */
+    public function testCreateDir()
+    {
+        $dirCreated = $this->fileSystemFacade->createDir(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo'
+        );
+
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/';
+        $isDir = is_dir($dir);
+
+        $this->assertTrue($dirCreated);
+        $this->assertTrue($isDir);
+    }
+
+    /**
+     * @param null|string $content
+     * @param null|string $modifiedTimestamp
      *
      * @return void
      */
