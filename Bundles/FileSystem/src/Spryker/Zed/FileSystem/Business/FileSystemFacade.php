@@ -201,4 +201,70 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
             ->write($fileSystemName, $path, $content);
     }
 
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param resource $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function putStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->putStream($fileSystemName, $path, $resource, $config);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return resource|false
+     */
+    public function readStream($fileSystemName, $path)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->readStream($fileSystemName, $path);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param mixed $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function updateStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->updateStream($fileSystemName, $path, $resource, $config);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param mixed $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function writeStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->writeStream($fileSystemName, $path, $resource, $config);
+    }
+
 }

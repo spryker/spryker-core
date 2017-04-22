@@ -139,4 +139,50 @@ interface FileSystemFacadeInterface
      */
     public function write($fileSystemName, $path, $content);
 
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param resource $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function putStream($fileSystemName, $path, $resource, array $config = []);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return resource|false
+     */
+    public function readStream($fileSystemName, $path);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param mixed $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function updateStream($fileSystemName, $path, $resource, array $config = []);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param mixed $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function writeStream($fileSystemName, $path, $resource, array $config = []);
+
 }

@@ -205,4 +205,62 @@ class FileSystemHandler implements FileSystemHandlerInterface
             ->write($path, $content, $config);
     }
 
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param resource $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function putStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->putStream($path, $resource, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return resource|false
+     */
+    public function readStream($fileSystemName, $path)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->readStream($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param resource $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function updateStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->updateStream($path, $resource, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param resource $resource
+     * @param array $config
+     *
+     * @return bool
+     */
+    public function writeStream($fileSystemName, $path, $resource, array $config = [])
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->writeStream($path, $resource, $config);
+    }
+
 }

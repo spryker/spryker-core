@@ -326,6 +326,112 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testPutStream()
+    {
+        $putStream = tmpfile();
+        fwrite($putStream, static::FILE_CONTENT);
+        rewind($putStream);
+
+        $streamPut = $this->fileSystemFacade->putStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $putStream
+        );
+
+        if (is_resource($putStream)) {
+            fclose($putStream);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($streamPut);
+        $this->assertTrue($isFile);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReadStream()
+    {
+        $this->createDocumentFile();
+
+        $stream = $this->fileSystemFacade->readStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $content = stream_get_contents($stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStream()
+    {
+        $this->createDocumentFile();
+        $this->createDocumentFileInRoot('Lorem Ipsum');
+
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+        $stream = fopen($file, 'r+');
+
+        $result = $this->fileSystemFacade->updateStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $stream
+        );
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isFile);
+        $this->assertSame('Lorem Ipsum', $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteStream()
+    {
+        $this->createDocumentFileInRoot();
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+        $stream = fopen($file, 'r+');
+
+        $result = $this->fileSystemFacade->writeStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $stream
+        );
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isFile);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
      * @param null|string $content
      * @param null|string $modifiedTimestamp
      *
@@ -339,6 +445,25 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+
+        $h = fopen($file, 'w');
+        fwrite($h, $content ?: static::FILE_CONTENT);
+        fclose($h);
+
+        if ($modifiedTimestamp) {
+            touch($file, $modifiedTimestamp);
+        }
+    }
+
+    /**
+     * @param null|string $content
+     * @param null|string $modifiedTimestamp
+     *
+     * @return void
+     */
+    protected function createDocumentFileInRoot($content = null, $modifiedTimestamp = null)
+    {
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
 
         $h = fopen($file, 'w');
         fwrite($h, $content ?: static::FILE_CONTENT);
@@ -411,6 +536,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
             $dir = $this->testDataFileSystemRootDirectory . 'images/';
             if (is_dir($dir)) {
                 rmdir($dir);
+            }
+
+            $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+            if (is_file($file)) {
+                unlink($file);
             }
 
         } catch (\Exception $e) {
