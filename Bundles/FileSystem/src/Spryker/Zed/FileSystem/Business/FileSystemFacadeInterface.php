@@ -59,6 +59,16 @@ interface FileSystemFacadeInterface
      * @api
      *
      * @param string $fileSystemName
+     * @param string $dirname
+     *
+     * @return string|false
+     */
+    public function deleteDir($fileSystemName, $dirname);
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
      * @param string $path
      * @param string $newpath
      *

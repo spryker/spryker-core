@@ -296,14 +296,33 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     {
         $dirCreated = $this->fileSystemFacade->createDir(
             static::FILE_SYSTEM_DOCUMENT,
-            'foo'
+            'foo/bar'
         );
 
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/';
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
         $isDir = is_dir($dir);
 
         $this->assertTrue($dirCreated);
         $this->assertTrue($isDir);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteDir()
+    {
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
+        mkdir($dir, 0777, true);
+
+        $dirDeleted = $this->fileSystemFacade->deleteDir(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/bar'
+        );
+
+        $isDir = is_dir($dir);
+
+        $this->assertTrue($dirDeleted);
+        $this->assertFalse($isDir);
     }
 
     /**
@@ -360,6 +379,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
             }
 
             $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
+
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
             if (is_dir($dir)) {
                 rmdir($dir);
             }

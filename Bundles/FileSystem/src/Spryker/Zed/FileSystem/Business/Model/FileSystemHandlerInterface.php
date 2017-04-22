@@ -45,6 +45,14 @@ interface FileSystemHandlerInterface
 
     /**
      * @param string $fileSystemName
+     * @param string $dirname
+     *
+     * @return bool
+     */
+    public function deleteDir($fileSystemName, $dirname);
+
+    /**
+     * @param string $fileSystemName
      * @param string $path
      * @param string $newpath
      *
