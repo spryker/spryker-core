@@ -14,7 +14,15 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     */
+    public function getMetadata($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
      */
     public function getMimeType($fileSystemName, $path);
 
@@ -22,7 +30,24 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
+     */
+    public function getVisibility($fileSystemName, $path);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $visibility 'public' or 'private'
+     *
+     * @return bool
+     */
+    public function setVisibility($fileSystemName, $path, $visibility);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
      */
     public function getTimestamp($fileSystemName, $path);
 
@@ -30,7 +55,7 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function getSize($fileSystemName, $path);
 
@@ -39,7 +64,7 @@ interface FileSystemHandlerInterface
      * @param string $dirname
      * @param array $config
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function createDir($fileSystemName, $dirname, array $config = []);
 
@@ -56,7 +81,7 @@ interface FileSystemHandlerInterface
      * @param string $path
      * @param string $newpath
      *
-     * @return string|false The file contents or false on failure.
+     * @return bool
      */
     public function copy($fileSystemName, $path, $newpath);
 
@@ -64,7 +89,7 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return bool
      */
     public function delete($fileSystemName, $path);
 
@@ -82,7 +107,7 @@ interface FileSystemHandlerInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function put($fileSystemName, $path, $content, array $config = []);
 
@@ -90,7 +115,7 @@ interface FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function read($fileSystemName, $path);
 
@@ -99,7 +124,7 @@ interface FileSystemHandlerInterface
      * @param string $newpath
      * @param string $path
      *
-     * @return string|false The file contents or false on failure.
+     * @return string|false
      */
     public function rename($fileSystemName, $path, $newpath);
 
@@ -109,7 +134,7 @@ interface FileSystemHandlerInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function update($fileSystemName, $path, $content, array $config = []);
 
@@ -119,7 +144,7 @@ interface FileSystemHandlerInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool True on success, false on failure.
+     * @return bool
      */
     public function write($fileSystemName, $path, $content, array $config = []);
 
@@ -160,5 +185,14 @@ interface FileSystemHandlerInterface
      * @return bool
      */
     public function writeStream($fileSystemName, $path, $resource, array $config = []);
+
+    /**
+     * @param string $fileSystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @return array
+     */
+    public function listContents($fileSystemName, $directory = '', $recursive = false);
 
 }

@@ -10,6 +10,8 @@ namespace Functional\Spryker\Zed\FileSystem\Business;
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use FileSystem\Stub\FlysystemConfigStub;
+use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
+use League\Flysystem\AdapterInterface;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemService;
@@ -244,6 +246,21 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testGetMetadata()
+    {
+        $this->createDocumentFile();
+
+        $metadataTransfer = $this->fileSystemFacade->getMetadata(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertInstanceOf(FileSystemResourceMetadataTransfer::class, $metadataTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetMimeType()
     {
         $this->createDocumentFile();
@@ -287,6 +304,49 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertSame($sizeExpected, $size);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetVisibility()
+    {
+        $this->createDocumentFile();
+
+        $visibility = $this->fileSystemFacade->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPrivateVisibility()
+    {
+        $this->createDocumentFile();
+
+        $visibility = $this->fileSystemFacade->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+
+        $this->fileSystemFacade->setVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            AdapterInterface::VISIBILITY_PRIVATE
+        );
+
+        $visibility = $this->fileSystemFacade->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
     }
 
     /**
@@ -429,6 +489,22 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result);
         $this->assertTrue($isFile);
         $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testListContents()
+    {
+        $this->createDocumentFile();
+
+        $content = $this->fileSystemFacade->listContents(
+            static::FILE_SYSTEM_DOCUMENT,
+            '/',
+            true
+        );
+
+        $this->assertGreaterThan(0, count($content));
     }
 
     /**

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\FileSystem\Business\Model;
 
+use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
+use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface;
 
 //TODO replace parameters with transfer
+//TODO add resource mapper
 class FileSystemHandler implements FileSystemHandlerInterface
 {
 
@@ -31,6 +34,31 @@ class FileSystemHandler implements FileSystemHandlerInterface
      * @param string $fileSystemName
      * @param string $path
      *
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     */
+    public function getMetadata($fileSystemName, $path)
+    {
+        $metadata = $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->getMetadata($path);
+
+        if (!$metadata) {
+            return null;
+        }
+
+        $metadataTransfer = new FileSystemResourceMetadataTransfer();
+        $metadataTransfer->fromArray($metadata, true);
+
+        $isFile = $this->isFile($metadataTransfer->getType());
+        $metadataTransfer->setIsFile($isFile);
+
+        return $metadataTransfer;
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
      * @return string|false
      */
     public function getMimeType($fileSystemName, $path)
@@ -38,6 +66,33 @@ class FileSystemHandler implements FileSystemHandlerInterface
         return $this->flysystemService
             ->getFilesystemByName($fileSystemName)
             ->getMimetype($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function getVisibility($fileSystemName, $path)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->getVisibility($path);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $visibility 'public' or 'private'
+     *
+     * @return bool
+     */
+    public function setVisibility($fileSystemName, $path, $visibility)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->setVisibility($path, $visibility);
     }
 
     /**
@@ -261,6 +316,43 @@ class FileSystemHandler implements FileSystemHandlerInterface
         return $this->flysystemService
             ->getFilesystemByName($fileSystemName)
             ->writeStream($path, $resource, $config);
+    }
+
+    /**
+     * @param string $fileSystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
+     */
+    public function listContents($fileSystemName, $directory = '', $recursive = false)
+    {
+        $resourceCollection = $this->flysystemService
+            ->getFilesystemByName($fileSystemName)
+            ->listContents($directory, $recursive);
+
+        $results = [];
+        foreach ($resourceCollection as $resource) {
+            $resourceTransfer = new FileSystemResourceTransfer();
+            $resourceTransfer->fromArray($resource);
+
+            $isFile = $this->isFile($resourceTransfer->getType());
+            $resourceTransfer->setIsFile($isFile);
+
+            $results[] = $resourceTransfer;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isFile($type)
+    {
+        return $type === 'file';
     }
 
 }

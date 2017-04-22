@@ -22,6 +22,21 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      *
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     */
+    public function getMetadata($fileSystemName, $path)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->getMetadata($fileSystemName, $path);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     *
      * @return string|false
      */
     public function getMimeType($fileSystemName, $path)
@@ -65,6 +80,37 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @api
      *
      * @param string $fileSystemName
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function getVisibility($fileSystemName, $path)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->getVisibility($fileSystemName, $path);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $path
+     * @param string $visibility 'public' or 'private'
+     *
+     * @return bool
+     */
+    public function setVisibility($fileSystemName, $path, $visibility)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->setVisibility($fileSystemName, $path, $visibility);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
      * @param string $dirname
      * @param array $config
      *
@@ -83,7 +129,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $dirname
      *
-     * @return string|false
+     * @return bool
      */
     public function deleteDir($fileSystemName, $dirname)
     {
@@ -144,14 +190,15 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      * @param string $content
+     * @param array $config
      *
      * @return bool
      */
-    public function put($fileSystemName, $path, $content)
+    public function put($fileSystemName, $path, $content, array $config = [])
     {
         return $this->getFactory()
             ->createFileSystemHandler()
-            ->put($fileSystemName, $path, $content);
+            ->put($fileSystemName, $path, $content, $config);
     }
 
     /**
@@ -191,14 +238,15 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      * @param string $fileSystemName
      * @param string $path
      * @param string $content
+     * @param array $config
      *
      * @return bool
      */
-    public function write($fileSystemName, $path, $content)
+    public function write($fileSystemName, $path, $content, array $config = [])
     {
         return $this->getFactory()
             ->createFileSystemHandler()
-            ->write($fileSystemName, $path, $content);
+            ->write($fileSystemName, $path, $content, $config);
     }
 
     /**
@@ -265,6 +313,22 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
         return $this->getFactory()
             ->createFileSystemHandler()
             ->writeStream($fileSystemName, $path, $resource, $config);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileSystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @return array
+     */
+    public function listContents($fileSystemName, $directory = '', $recursive = false)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->listContents($fileSystemName, $directory, $recursive);
     }
 
 }
