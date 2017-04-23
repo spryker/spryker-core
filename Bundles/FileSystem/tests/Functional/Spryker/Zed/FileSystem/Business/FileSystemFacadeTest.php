@@ -10,8 +10,17 @@ namespace Functional\Spryker\Zed\FileSystem\Business;
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use FileSystem\Stub\FlysystemConfigStub;
+use Generated\Shared\Transfer\FileSystemContentTransfer;
+use Generated\Shared\Transfer\FileSystemCopyTransfer;
+use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteTransfer;
+use Generated\Shared\Transfer\FileSystemListTransfer;
+use Generated\Shared\Transfer\FileSystemQueryTransfer;
+use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
-use League\Flysystem\AdapterInterface;
+use Generated\Shared\Transfer\FileSystemStreamTransfer;
+use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemService;
@@ -100,10 +109,10 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testHasShouldReturnFalseWithNonExistingFile()
     {
-        $result = $this->fileSystemFacade->has(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
+        $fileSystemQueryTransfer->setPath('invalid filename');
+
+        $result = $this->fileSystemFacade->has($fileSystemQueryTransfer);
 
         $this->assertFalse($result);
     }
@@ -113,12 +122,10 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testHasShouldReturnTrueWithExistingFile()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $result = $this->fileSystemFacade->has(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $result = $this->fileSystemFacade->has($fileSystemQueryTransfer);
 
         $this->assertTrue($result);
     }
@@ -128,12 +135,12 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testReadWithNonExistingFileShouldThrowException()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
+        $fileSystemQueryTransfer->setPath('invalid path');
+
         $this->expectException(FileNotFoundException::class);
 
-        $contents = $this->fileSystemFacade->read(
-            static::FILE_SYSTEM_PRODUCT_IMAGE,
-            'nonExistingFile.nil'
-        );
+        $contents = $this->fileSystemFacade->read($fileSystemQueryTransfer);
 
         $this->assertNull($contents);
     }
@@ -143,12 +150,10 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testReadWithExistingFileShouldReturnContent()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $contents = $this->fileSystemFacade->read(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $contents = $this->fileSystemFacade->read($fileSystemQueryTransfer);
 
         $this->assertSame(static::FILE_CONTENT, $contents);
     }
@@ -158,18 +163,13 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testPut()
     {
+        $fileSystemContentTransfer = $this->createContentTransfer();
         $this->createDocumentFile('Lorem Ipsum');
 
-        $result = $this->fileSystemFacade->put(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            static::FILE_CONTENT
-        );
-
-        $content = $this->getDocumentFileContent();
+        $result = $this->fileSystemFacade->put($fileSystemContentTransfer);
 
         $this->assertTrue($result);
-        $this->assertSame(static::FILE_CONTENT, $content);
+        $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
     /**
@@ -177,13 +177,12 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testWrite()
     {
-        $result = $this->fileSystemFacade->write(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            static::FILE_CONTENT
-        );
+        $fileSystemContentTransfer = $this->createContentTransfer();
+
+        $result = $this->fileSystemFacade->write($fileSystemContentTransfer);
 
         $this->assertTrue($result);
+        $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
     /**
@@ -191,12 +190,13 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testDelete()
     {
+        $fileSystemDeleteTransfer = new FileSystemDeleteTransfer();
+        $fileSystemDeleteTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemDeleteTransfer->setPath('foo/' . static::FILE_DOCUMENT);
+
         $this->createDocumentFile();
 
-        $result = $this->fileSystemFacade->delete(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $result = $this->fileSystemFacade->delete($fileSystemDeleteTransfer);
 
         $this->assertTrue($result);
     }
@@ -206,13 +206,13 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testRename()
     {
+        $fileSystemRenameTransfer = new FileSystemRenameTransfer();
+        $fileSystemRenameTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemRenameTransfer->setPath('foo/' . static::FILE_DOCUMENT);
+        $fileSystemRenameTransfer->setNewPath('foo/NEW_' . static::FILE_DOCUMENT);
         $this->createDocumentFile();
 
-        $result = $this->fileSystemFacade->rename(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            'foo/' . 'NEW_' . static::FILE_DOCUMENT
-        );
+        $result = $this->fileSystemFacade->rename($fileSystemRenameTransfer);
 
         $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
         $isRenamedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
@@ -227,13 +227,14 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testCopy()
     {
+        $fileSystemCopyTransfer = new FileSystemCopyTransfer();
+        $fileSystemCopyTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemCopyTransfer->setPath('foo/' . static::FILE_DOCUMENT);
+        $fileSystemCopyTransfer->setNewPath('foo/NEW_' . static::FILE_DOCUMENT);
+
         $this->createDocumentFile();
 
-        $result = $this->fileSystemFacade->copy(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            'foo/' . 'NEW_' . static::FILE_DOCUMENT
-        );
+        $result = $this->fileSystemFacade->copy($fileSystemCopyTransfer);
 
         $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
         $isCopiedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
@@ -249,11 +250,9 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     public function testGetMetadata()
     {
         $this->createDocumentFile();
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
 
-        $metadataTransfer = $this->fileSystemFacade->getMetadata(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $metadataTransfer = $this->fileSystemFacade->getMetadata($fileSystemQueryTransfer);
 
         $this->assertInstanceOf(FileSystemResourceMetadataTransfer::class, $metadataTransfer);
     }
@@ -264,11 +263,9 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     public function testGetMimeType()
     {
         $this->createDocumentFile();
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
 
-        $mimeType = $this->fileSystemFacade->getMimetype(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $mimeType = $this->fileSystemFacade->getMimetype($fileSystemQueryTransfer);
 
         $this->assertSame('text/plain', $mimeType);
     }
@@ -278,13 +275,12 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetTimestamp()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
+
         $timestampExpected = time();
         $this->createDocumentFile(null, $timestampExpected);
 
-        $timestamp = $this->fileSystemFacade->getTimestamp(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $timestamp = $this->fileSystemFacade->getTimestamp($fileSystemQueryTransfer);
 
         $this->assertSame($timestamp, $timestampExpected);
     }
@@ -294,14 +290,13 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSize()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
+
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $sizeExpected = filesize($file);
 
-        $size = $this->fileSystemFacade->getSize(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $size = $this->fileSystemFacade->getSize($fileSystemQueryTransfer);
 
         $this->assertSame($sizeExpected, $size);
     }
@@ -309,44 +304,34 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetVisibility()
+    public function testIsPrivate()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $visibility = $this->fileSystemFacade->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $isPrivate = $this->fileSystemFacade->isPrivate($fileSystemQueryTransfer);
 
-        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+        $this->assertFalse($isPrivate);
     }
 
     /**
      * @return void
      */
-    public function testPrivateVisibility()
+    public function testMarkAsPrivate()
     {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
+        $fileSystemVisibilityTransfer = $this->createDocumentVisibilityTransfer();
+        $fileSystemVisibilityTransfer->setIsPrivate(true);
+
         $this->createDocumentFile();
 
-        $visibility = $this->fileSystemFacade->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $isPrivate = $this->fileSystemFacade->isPrivate($fileSystemQueryTransfer);
+        $this->assertFalse($isPrivate);
 
-        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+        $this->fileSystemFacade->markAsPrivate($fileSystemVisibilityTransfer);
 
-        $this->fileSystemFacade->setVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            AdapterInterface::VISIBILITY_PRIVATE
-        );
-
-        $visibility = $this->fileSystemFacade->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
+        $isPrivate = $this->fileSystemFacade->isPrivate($fileSystemQueryTransfer);
+        $this->assertTrue($isPrivate);
     }
 
     /**
@@ -354,10 +339,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateDir()
     {
-        $dirCreated = $this->fileSystemFacade->createDir(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/bar'
-        );
+        $fileSystemCreateDirectoryTransfer = new FileSystemCreateDirectoryTransfer();
+        $fileSystemCreateDirectoryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemCreateDirectoryTransfer->setPath('/foo/bar');
+
+        $dirCreated = $this->fileSystemFacade->createDirectory($fileSystemCreateDirectoryTransfer);
 
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
         $isDir = is_dir($dir);
@@ -371,13 +357,14 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteDir()
     {
+        $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
+        $fileSystemDeleteDirectoryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemDeleteDirectoryTransfer->setPath('foo/bar');
+
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
         mkdir($dir, 0777, true);
 
-        $dirDeleted = $this->fileSystemFacade->deleteDir(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/bar'
-        );
+        $dirDeleted = $this->fileSystemFacade->deleteDirectory($fileSystemDeleteDirectoryTransfer);
 
         $isDir = is_dir($dir);
 
@@ -390,25 +377,23 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testPutStream()
     {
-        $putStream = tmpfile();
-        fwrite($putStream, static::FILE_CONTENT);
-        rewind($putStream);
+        $fileSystemStreamTransfer = $this->createStreamTransfer();
 
-        $streamPut = $this->fileSystemFacade->putStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            $putStream
-        );
+        $stream = tmpfile();
+        fwrite($stream, static::FILE_CONTENT);
+        rewind($stream);
 
-        if (is_resource($putStream)) {
-            fclose($putStream);
+        $result = $this->fileSystemFacade->putStream($fileSystemStreamTransfer, $stream);
+
+        if (is_resource($stream)) {
+            fclose($stream);
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $isFile = is_file($file);
         $content = file_get_contents($file);
 
-        $this->assertTrue($streamPut);
+        $this->assertTrue($result);
         $this->assertTrue($isFile);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
@@ -418,12 +403,10 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testReadStream()
     {
+        $fileSystemStreamTransfer = $this->createStreamTransfer();
         $this->createDocumentFile();
 
-        $stream = $this->fileSystemFacade->readStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
+        $stream = $this->fileSystemFacade->readStream($fileSystemStreamTransfer);
 
         $content = stream_get_contents($stream);
         if (is_resource($stream)) {
@@ -438,17 +421,14 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateStream()
     {
+        $fileSystemStreamTransfer = $this->createStreamTransfer();
         $this->createDocumentFile();
         $this->createDocumentFileInRoot('Lorem Ipsum');
 
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->fileSystemFacade->updateStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            $stream
-        );
+        $result = $this->fileSystemFacade->updateStream($fileSystemStreamTransfer, $stream);
 
         if (is_resource($stream)) {
             fclose($stream);
@@ -468,15 +448,12 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testWriteStream()
     {
+        $fileSystemStreamTransfer = $this->createStreamTransfer();
         $this->createDocumentFileInRoot();
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->fileSystemFacade->writeStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            $stream
-        );
+        $result = $this->fileSystemFacade->writeStream($fileSystemStreamTransfer, $stream);
 
         if (is_resource($stream)) {
             fclose($stream);
@@ -496,13 +473,14 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
      */
     public function testListContents()
     {
+        $fileSystemListTransfer = new FileSystemListTransfer();
+        $fileSystemListTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemListTransfer->setPath('/');
+        $fileSystemListTransfer->setRecursive(true);
+
         $this->createDocumentFile();
 
-        $content = $this->fileSystemFacade->listContents(
-            static::FILE_SYSTEM_DOCUMENT,
-            '/',
-            true
-        );
+        $content = $this->fileSystemFacade->listContents($fileSystemListTransfer);
 
         $this->assertGreaterThan(0, count($content));
     }
@@ -624,6 +602,55 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         } catch (\Throwable $e) {
 
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileSystemQueryTransfer
+     */
+    protected function createDocumentQueryTransfer()
+    {
+        $fileSystemQueryTransfer = new FileSystemQueryTransfer();
+        $fileSystemQueryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemQueryTransfer->setPath('/foo/' . static::FILE_DOCUMENT);
+
+        return $fileSystemQueryTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileSystemVisibilityTransfer
+     */
+    protected function createDocumentVisibilityTransfer()
+    {
+        $fileSystemVisibilityTransfer = new FileSystemVisibilityTransfer();
+        $fileSystemVisibilityTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemVisibilityTransfer->setPath('/foo/' . static::FILE_DOCUMENT);
+
+        return $fileSystemVisibilityTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileSystemContentTransfer
+     */
+    protected function createContentTransfer()
+    {
+        $fileSystemContentTransfer = new FileSystemContentTransfer();
+        $fileSystemContentTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemContentTransfer->setPath('foo/' . static::FILE_DOCUMENT);
+        $fileSystemContentTransfer->setContent(static::FILE_CONTENT);
+
+        return $fileSystemContentTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileSystemStreamTransfer
+     */
+    protected function createStreamTransfer()
+    {
+        $fileSystemStreamTransfer = new FileSystemStreamTransfer();
+        $fileSystemStreamTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
+        $fileSystemStreamTransfer->setPath('foo/' . static::FILE_DOCUMENT);
+
+        return $fileSystemStreamTransfer;
     }
 
 }

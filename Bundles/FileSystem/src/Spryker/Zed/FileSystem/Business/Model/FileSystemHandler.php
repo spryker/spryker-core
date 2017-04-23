@@ -7,8 +7,19 @@
 
 namespace Spryker\Zed\FileSystem\Business\Model;
 
+use Generated\Shared\Transfer\FileSystemContentTransfer;
+use Generated\Shared\Transfer\FileSystemCopyTransfer;
+use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteTransfer;
+use Generated\Shared\Transfer\FileSystemListTransfer;
+use Generated\Shared\Transfer\FileSystemQueryTransfer;
+use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FileSystemResourceTransfer;
+use Generated\Shared\Transfer\FileSystemStreamTransfer;
+use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
+use League\Flysystem\AdapterInterface;
 use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface;
 
 //TODO replace parameters with transfer
@@ -31,16 +42,15 @@ class FileSystemHandler implements FileSystemHandlerInterface
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
      */
-    public function getMetadata($fileSystemName, $path)
+    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         $metadata = $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->getMetadata($path);
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->getMetadata($fileSystemQueryTransfer->getPath());
 
         if (!$metadata) {
             return null;
@@ -56,280 +66,289 @@ class FileSystemHandler implements FileSystemHandlerInterface
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getMimeType($fileSystemName, $path)
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->getMimetype($path);
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->getMimetype($fileSystemQueryTransfer->getPath());
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getVisibility($fileSystemName, $path)
+    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->getVisibility($path);
+        $visibility = $this->flysystemService
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->getVisibility($fileSystemQueryTransfer->getPath());
+
+        return $visibility === AdapterInterface::VISIBILITY_PRIVATE;
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $visibility 'public' or 'private'
+     * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
      * @return bool
      */
-    public function setVisibility($fileSystemName, $path, $visibility)
+    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
+        $visibility = AdapterInterface::VISIBILITY_PUBLIC;
+        if ($fileSystemVisibilityTransfer->getIsPrivate()) {
+            $visibility = AdapterInterface::VISIBILITY_PRIVATE;
+        }
+
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->setVisibility($path, $visibility);
+            ->getFilesystemByName($fileSystemVisibilityTransfer->getFileSystemName())
+            ->setVisibility($fileSystemVisibilityTransfer->getPath(), $visibility);
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getTimestamp($fileSystemName, $path)
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->getTimestamp($path);
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->getTimestamp($fileSystemQueryTransfer->getPath());
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return int|false
      */
-    public function getSize($fileSystemName, $path)
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->getSize($path);
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->getSize($fileSystemQueryTransfer->getPath());
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $dirname
-     * @param array $config
-     *
-     * @return bool
-     */
-    public function createDir($fileSystemName, $dirname, array $config = [])
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->createDir($dirname, $config);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $dirname
+     * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
      * @return bool
      */
-    public function deleteDir($fileSystemName, $dirname)
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->deleteDir($dirname);
+            ->getFilesystemByName($fileSystemCreateDirectoryTransfer->getFileSystemName())
+            ->createDir(
+                $fileSystemCreateDirectoryTransfer->getPath(),
+                $fileSystemCreateDirectoryTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $newpath
-     *
-     * @return string|false
-     */
-    public function copy($fileSystemName, $path, $newpath)
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->copy($path, $newpath);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function delete($fileSystemName, $path)
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->delete($path);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
      * @return bool
      */
-    public function has($fileSystemName, $path)
+    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->has($path);
+            ->getFilesystemByName($fileSystemDeleteDirectoryTransfer->getFileSystemName())
+            ->deleteDir($fileSystemDeleteDirectoryTransfer->getPath());
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
+     *
+     * @return false|string
+     */
+    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemCopyTransfer->getFileSystemName())
+            ->copy(
+                $fileSystemCopyTransfer->getPath(),
+                $fileSystemCopyTransfer->getNewPath()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
+     *
+     * @return false|string
+     */
+    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemDeleteTransfer->getFileSystemName())
+            ->delete($fileSystemDeleteTransfer->getPath());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return bool
      */
-    public function put($fileSystemName, $path, $content, array $config = [])
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->put($path, $content, $config);
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->has($fileSystemQueryTransfer->getPath());
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function read($fileSystemName, $path)
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->read($path);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $newpath
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function rename($fileSystemName, $path, $newpath)
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->rename($path, $newpath);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function update($fileSystemName, $path, $content, array $config = [])
+    public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->update($path, $content, $config);
+            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
+            ->put(
+                $fileSystemContentTransfer->getPath(),
+                $fileSystemContentTransfer->getContent(),
+                $fileSystemContentTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return false|string
+     */
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
+            ->read($fileSystemQueryTransfer->getPath());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
+     *
+     * @return false|string
+     */
+    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemRenameTransfer->getFileSystemName())
+            ->rename(
+                $fileSystemRenameTransfer->getPath(),
+                $fileSystemRenameTransfer->getNewPath()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function write($fileSystemName, $path, $content, array $config = [])
+    public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->write($path, $content, $config);
+            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
+            ->update(
+                $fileSystemContentTransfer->getPath(),
+                $fileSystemContentTransfer->getContent(),
+                $fileSystemContentTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function putStream($fileSystemName, $path, $resource, array $config = [])
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->putStream($path, $resource, $config);
+            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
+            ->write(
+                $fileSystemContentTransfer->getPath(),
+                $fileSystemContentTransfer->getContent(),
+                $fileSystemContentTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     *
-     * @return resource|false
-     */
-    public function readStream($fileSystemName, $path)
-    {
-        return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->readStream($path);
-    }
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
      *
      * @return bool
      */
-    public function updateStream($fileSystemName, $path, $resource, array $config = [])
+    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->updateStream($path, $resource, $config);
+            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
+            ->putStream(
+                $fileSystemStreamTransfer->getPath(),
+                $stream,
+                $fileSystemStreamTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     *
+     * @return false|mixed
+     */
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
+            ->readStream($fileSystemStreamTransfer->getPath());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
      *
      * @return bool
      */
-    public function writeStream($fileSystemName, $path, $resource, array $config = [])
+    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->writeStream($path, $resource, $config);
+            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
+            ->updateStream(
+                $fileSystemStreamTransfer->getPath(),
+                $stream,
+                $fileSystemStreamTransfer->getConfig()
+            );
     }
 
     /**
-     * @param string $fileSystemName
-     * @param string $directory
-     * @param bool $recursive
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
+     *
+     * @return bool
+     */
+    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
+    {
+        return $this->flysystemService
+            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
+            ->writeStream(
+                $fileSystemStreamTransfer->getPath(),
+                $stream,
+                $fileSystemStreamTransfer->getConfig()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
-    public function listContents($fileSystemName, $directory = '', $recursive = false)
+    public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {
         $resourceCollection = $this->flysystemService
-            ->getFilesystemByName($fileSystemName)
-            ->listContents($directory, $recursive);
+            ->getFilesystemByName($fileSystemListTransfer->getFileSystemName())
+            ->listContents(
+                $fileSystemListTransfer->getPath(),
+                $fileSystemListTransfer->getRecursive()
+            );
 
         $results = [];
         foreach ($resourceCollection as $resource) {
@@ -346,6 +365,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     }
 
     /**
+     * TODO move to adapter
+     *
      * @param string $type
      *
      * @return bool

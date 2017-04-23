@@ -7,192 +7,168 @@
 
 namespace Spryker\Zed\FileSystem\Business\Model;
 
+use Generated\Shared\Transfer\FileSystemContentTransfer;
+use Generated\Shared\Transfer\FileSystemCopyTransfer;
+use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
+use Generated\Shared\Transfer\FileSystemDeleteTransfer;
+use Generated\Shared\Transfer\FileSystemListTransfer;
+use Generated\Shared\Transfer\FileSystemQueryTransfer;
+use Generated\Shared\Transfer\FileSystemRenameTransfer;
+use Generated\Shared\Transfer\FileSystemStreamTransfer;
+use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
+
 interface FileSystemHandlerInterface
 {
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
      */
-    public function getMetadata($fileSystemName, $path);
+    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getMimeType($fileSystemName, $path);
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getVisibility($fileSystemName, $path);
+    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $visibility 'public' or 'private'
+     * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
      * @return bool
      */
-    public function setVisibility($fileSystemName, $path, $visibility);
+    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return false|string
      */
-    public function getTimestamp($fileSystemName, $path);
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return int|false
      */
-    public function getSize($fileSystemName, $path);
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $dirname
-     * @param array $config
-     *
-     * @return string|false
-     */
-    public function createDir($fileSystemName, $dirname, array $config = []);
-
-    /**
-     * @param string $fileSystemName
-     * @param string $dirname
+     * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
      * @return bool
      */
-    public function deleteDir($fileSystemName, $dirname);
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $newpath
+     * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
      * @return bool
      */
-    public function copy($fileSystemName, $path, $newpath);
+    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
+     *
+     * @return false|string
+     */
+    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
+     *
+     * @return false|string
+     */
+    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return bool
      */
-    public function delete($fileSystemName, $path);
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function has($fileSystemName, $path);
+    public function put(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return false|string
+     */
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
+     *
+     * @return false|string
+     */
+    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function put($fileSystemName, $path, $content, array $config = []);
+    public function update(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function read($fileSystemName, $path);
-
-    /**
-     * @param string $fileSystemName
-     * @param string $newpath
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function rename($fileSystemName, $path, $newpath);
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
      */
-    public function update($fileSystemName, $path, $content, array $config = []);
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
      *
      * @return bool
      */
-    public function write($fileSystemName, $path, $content, array $config = []);
+    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return resource|false
+     * @return false|mixed
      */
-    public function putStream($fileSystemName, $path, $resource, array $config = []);
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     *
-     * @return resource|false
-     */
-    public function readStream($fileSystemName, $path);
-
-    /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
      *
      * @return bool
      */
-    public function updateStream($fileSystemName, $path, $resource, array $config = []);
+    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
     /**
-     * @param string $fileSystemName
-     * @param string $path
-     * @param resource $resource
-     * @param array $config
+     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
+     * @param mixed $stream
      *
      * @return bool
      */
-    public function writeStream($fileSystemName, $path, $resource, array $config = []);
+    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
     /**
-     * @param string $fileSystemName
-     * @param string $directory
-     * @param bool $recursive
+     * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
-    public function listContents($fileSystemName, $directory = '', $recursive = false);
+    public function listContents(FileSystemListTransfer $fileSystemListTransfer);
 
 }
