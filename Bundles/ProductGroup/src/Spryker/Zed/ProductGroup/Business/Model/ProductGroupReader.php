@@ -54,7 +54,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
     }
 
     /**
-     * @param ProductGroupTransfer $productGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return void
      */

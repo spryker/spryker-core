@@ -53,7 +53,7 @@ class ProductGroupTable extends AbstractProductTable
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface $productGroupQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,

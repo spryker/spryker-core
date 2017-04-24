@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel;
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery

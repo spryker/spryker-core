@@ -49,7 +49,7 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
      * @api
      *
      * @param int $idProductAbstract
-     * @param int $excludedIdProductGroup
+     * @param int|null $excludedIdProductGroup
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */

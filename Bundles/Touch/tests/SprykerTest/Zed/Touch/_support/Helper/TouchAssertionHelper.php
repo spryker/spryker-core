@@ -21,7 +21,7 @@ class TouchAssertionHelper extends Module
     /**
      * @param string $itemType
      * @param int $itemId
-     * @param string$message|string
+     * @param string $message
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class TouchAssertionHelper extends Module
     /**
      * @param string $itemType
      * @param int $itemId
-     * @param string$message|string
+     * @param string $message
      *
      * @return void
      */
