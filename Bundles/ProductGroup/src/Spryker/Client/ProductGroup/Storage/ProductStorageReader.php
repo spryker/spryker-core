@@ -59,7 +59,7 @@ class ProductStorageReader implements ProductStorageReaderInterface
         $productGroupTransfers = $this->productGroupStorageReader->findProductGroups($productAbstractGroupsTransfer, $localeName);
 
         $idProductAbstracts = $this->getUniqueIdProductAbstracts($productGroupTransfers);
-        $idProductAbstracts = $this->removeCurrentProduct($idProductAbstract, $idProductAbstracts);
+        $idProductAbstracts = $this->moveSubjectProductToFirstPosition($idProductAbstract, $idProductAbstracts);
 
         return $this->getProductsFromStorage($idProductAbstracts, $localeName);
     }
@@ -86,12 +86,13 @@ class ProductStorageReader implements ProductStorageReaderInterface
      *
      * @return array
      */
-    protected function removeCurrentProduct($idProductAbstract, array $idProductAbstracts)
+    protected function moveSubjectProductToFirstPosition($idProductAbstract, array $idProductAbstracts)
     {
         $currentProductIndex = array_search($idProductAbstract, $idProductAbstracts);
 
         if ($currentProductIndex !== false) {
             unset($idProductAbstracts[$currentProductIndex]);
+            array_unshift($idProductAbstracts, $idProductAbstract);
         }
 
         return $idProductAbstracts;

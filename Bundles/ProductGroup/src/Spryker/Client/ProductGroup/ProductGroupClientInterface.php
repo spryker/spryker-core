@@ -15,7 +15,7 @@ interface ProductGroupClientInterface
      * - Reads all product groups of the given product.
      * - Reads all abstract product IDs of all the obtained product groups.
      * - Reads and returns abstract product data for all the obtained abstract products.
-     * - The given product won't be part of the result.
+     * - The first item in the result set is the subject product.
      * - All data is read from Storage in the given locale.
      *
      * @api
