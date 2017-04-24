@@ -56,48 +56,14 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
      */
     public function handle(array $originData, array $targetData)
     {
-        $this->deleteOriginGlossaryKeyMappings(
-            $originData[SpyCmsPageTableMap::COL_ID_CMS_PAGE]
-        );
+        $this->cmsGlossarySaver->deleteCmsGlossary($originData[SpyCmsPageTableMap::COL_ID_CMS_PAGE]);
 
-        $this->createTargetGlossaryKeyMappings(
+        $glossaryAttributeTransfers = $this->createCmsGlossaryAttributeTransfers(
             $targetData[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME],
             $originData[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             $targetData[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_NAME]
         );
-    }
 
-    /**
-     * @param int $idCmsPage
-     *
-     * @return void
-     */
-    protected function deleteOriginGlossaryKeyMappings($idCmsPage)
-    {
-        $idGlossaryKeys = $this->queryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)
-            ->select(SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY)
-            ->find()
-            ->toArray();
-
-        if (empty($idGlossaryKeys)) {
-            return;
-        }
-
-        $this->queryContainer->queryGlossaryKeyMappingsByFkGlossaryKeys($idGlossaryKeys)->delete();
-        $this->queryContainer->queryGlossaryTranslationByFkGlossaryKeys($idGlossaryKeys)->delete();
-        $this->queryContainer->queryGlossaryKeyByIdGlossaryKeys($idGlossaryKeys)->delete();
-    }
-
-    /**
-     * @param array $glossaryKeyMappings
-     * @param int $idCmsPage
-     * @param string $templateName
-     *
-     * @return void
-     */
-    protected function createTargetGlossaryKeyMappings(array $glossaryKeyMappings, $idCmsPage, $templateName)
-    {
-        $glossaryAttributeTransfers = $this->createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $idCmsPage, $templateName);
         $this->cmsGlossarySaver->saveCmsGlossary((new CmsGlossaryTransfer())->setGlossaryAttributes($glossaryAttributeTransfers));
     }
 

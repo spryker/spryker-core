@@ -16,6 +16,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -45,21 +46,29 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $cmsPageUrlBuilder;
 
     /**
+     * @var CmsGlossarySaverInterface
+     */
+    protected $cmsGlossarySaver;
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
+     * @param CmsGlossarySaverInterface $cmsGlossarySaver
      */
     public function __construct(
         CmsToUrlInterface $urlFacade,
         CmsToTouchInterface $touchFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsPageUrlBuilderInterface $cmsPageUrlBuilder
+        CmsPageUrlBuilderInterface $cmsPageUrlBuilder,
+        CmsGlossarySaverInterface $cmsGlossarySaver
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
+        $this->cmsGlossarySaver = $cmsGlossarySaver;
     }
 
     /**
@@ -127,6 +136,10 @@ class CmsPageSaver implements CmsPageSaverInterface
         try {
 
             $this->cmsQueryContainer->getConnection()->beginTransaction();
+
+            if ($cmsPageEntity->getFkTemplate() !== $cmsPageTransfer->getFkTemplate()) {
+                $this->cmsGlossarySaver->deleteCmsGlossary($cmsPageEntity->getIdCmsPage());
+            }
 
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();

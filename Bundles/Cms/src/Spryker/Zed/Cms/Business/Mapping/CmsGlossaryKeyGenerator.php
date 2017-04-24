@@ -13,6 +13,8 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
 {
 
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
+    const ID_CMS_PAGE = 'idCmsPage';
+    const UNIQUE_ID = 'uniqueId';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
@@ -28,24 +30,25 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
     }
 
     /**
+     * @param int $idCmsPage
      * @param string $templateName
      * @param string $placeholder
      * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true)
+    public function generateGlossaryKeyName($idCmsPage, $templateName, $placeholder, $autoIncrement = true)
     {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
         $keyName .= str_replace([' ', '.'], '-', $placeholder);
 
+        $candidate = sprintf('%s.%s.%d', $keyName, static::ID_CMS_PAGE, $idCmsPage);
+
         $index = 0;
 
-        $candidate = $keyName . $index;
-
         while ($this->glossaryFacade->hasKey($candidate) && $autoIncrement === true) {
-            $candidate = $keyName . ++$index;
+            $candidate = sprintf('%s.%s.%d.%s.%d', $keyName, static::ID_CMS_PAGE, $idCmsPage, static::UNIQUE_ID, ++$index);
         }
 
         return $candidate;

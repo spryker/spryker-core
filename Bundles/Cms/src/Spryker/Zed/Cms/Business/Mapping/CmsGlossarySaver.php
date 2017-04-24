@@ -90,6 +90,27 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deleteCmsGlossary($idCmsPage)
+    {
+        $idGlossaryKeys = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)
+            ->select(SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY)
+            ->find()
+            ->toArray();
+
+        if (empty($idGlossaryKeys)) {
+            return;
+        }
+
+        $this->cmsQueryContainer->queryGlossaryKeyMappingsByFkGlossaryKeys($idGlossaryKeys)->delete();
+        $this->cmsQueryContainer->queryGlossaryTranslationByFkGlossaryKeys($idGlossaryKeys)->delete();
+        $this->cmsQueryContainer->queryGlossaryKeyByIdGlossaryKeys($idGlossaryKeys)->delete();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributesTransfer
      *
      * @return int
@@ -210,6 +231,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
         $translationKey = $glossaryAttributesTransfer->getTranslationKey();
         if (!$glossaryAttributesTransfer->getTranslationKey()) {
             $translationKey = $this->cmsGlossaryKeyGenerator->generateGlossaryKeyName(
+                $glossaryAttributesTransfer->getFkPage(),
                 $glossaryAttributesTransfer->getTemplateName(),
                 $glossaryAttributesTransfer->getPlaceholder()
             );

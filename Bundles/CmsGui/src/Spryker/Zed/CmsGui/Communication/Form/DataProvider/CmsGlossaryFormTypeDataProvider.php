@@ -46,7 +46,6 @@ class CmsGlossaryFormTypeDataProvider
         return [
             'data_class' => CmsGlossaryTransfer::class,
             CmsGlossaryFormType::OPTION_DATA_CLASS_ATTRIBUTES => CmsGlossaryAttributesTransfer::class,
-            CmsGlossaryAttributesFormType::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS => $this->getGlossaryChoices(),
         ];
     }
 
@@ -58,19 +57,6 @@ class CmsGlossaryFormTypeDataProvider
     public function getData($idCmsPage)
     {
         return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getGlossaryChoices()
-    {
-        return [
-            static::TYPE_AUTO_GLOSSARY,
-            static::TYPE_GLOSSARY_NEW,
-            static::TYPE_GLOSSARY_FIND,
-            static::TYPE_FULLTEXT_SEARCH,
-        ];
     }
 
 }

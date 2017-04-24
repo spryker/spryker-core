@@ -31,13 +31,10 @@ class CmsGlossaryAttributesFormType extends AbstractType
     const FIELD_FK_PAGE = 'fkPage';
     const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
     const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_SEARCH_OPTION = 'searchOption';
     const FIELD_TRANSLATIONS = 'translations';
-    const FIELD_TRANSLATION_KEY = 'translationKey';
 
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
-    const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     use ArrayObjectTransformerTrait;
 
@@ -78,7 +75,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -103,28 +99,10 @@ class CmsGlossaryAttributesFormType extends AbstractType
     {
         $this
             ->addFkPageField($builder)
-            ->addGlossaryKeyField($builder)
             ->addIdCmsGlossaryKeyMappingField($builder)
             ->addTemplateNameField($builder)
             ->addPlaceholderField($builder)
-            ->addTranslationsField($builder)
-            ->addSearchOptionField($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class, [
-            'constraints' => [
-               $this->uniqueGlossaryForSearchTypeConstraint,
-            ],
-        ]);
-
-        return $this;
+            ->addTranslationsField($builder);
     }
 
     /**
@@ -174,22 +152,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected function addTemplateNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TEMPLATE_NAME, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addSearchOptionField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_SEARCH_OPTION, ChoiceType::class, [
-            'label' => 'Search Type',
-            'choices' => $options[static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS],
-        ]);
 
         return $this;
     }

@@ -169,7 +169,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getUrlFacade(),
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->createCmsUrlBuilder()
+            $this->createCmsUrlBuilder(),
+            $this->createCmsGlossarySaver()
         );
     }
 

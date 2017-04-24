@@ -17,4 +17,11 @@ interface CmsGlossarySaverInterface
      */
     public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deleteCmsGlossary($idCmsPage);
+
 }
