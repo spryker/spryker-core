@@ -12,12 +12,16 @@
 {% endblock %}
 
 {% block content %}
+    {% set hasTemplateDiff = false %}
+    {% if cmsTargetPage is not null %}
+        {% set hasTemplateDiff = cmsCurrentPage.fkTemplate == cmsTargetPage.fkTemplate ? true : false %}
+    {% endif %}
     <div id="version-diff" class="row">
         <div class="col-lg-6 current-version">
             {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Current Version' }  %}
                 {% block widget_content %}
                     <div class="current-version-box">
-                            Page Version is <b>{{ cmsVersion.version }}</b> and it has published on <b>{{ cmsVersion.createdAt|date }}</b>
+                            <b>{{ cmsVersion.versionName }}</b> published on <b>{{ cmsVersion.createdAt|date }}</b>
                             {% if cmsVersion.firstName is not null %}
                                 by <b>{{ cmsVersion.firstName ~ ' ' ~ cmsVersion.lastName }}</b>
                             {% endif %}
@@ -46,6 +50,7 @@
                             <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-edit" value="{{ 'Compare' | trans }}" name="compare" />
                         </div>
                     </div>
+                    {{ form_errors(versionForm.version) }}
                     {{ form_end(versionForm) }}
                 {% endblock %}
             {% endembed %}

@@ -22,6 +22,8 @@ use Throwable;
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
 
+    const DEFAULT_TRANSLATION = '';
+
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -248,6 +250,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     protected function translatePlaceholder(CmsGlossaryAttributesTransfer $glossaryAttributesTransfer, $translationKey)
     {
         foreach ($glossaryAttributesTransfer->getTranslations() as $glossaryTranslationTransfer) {
+            $this->setDefaultTranslation($glossaryTranslationTransfer);
             $keyTranslationTransfer = $this->createTranslationTransfer($translationKey, $glossaryTranslationTransfer);
             $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
         }
@@ -308,6 +311,18 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
         return $this->cmsQueryContainer
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne();
+    }
+
+    /**
+     * @param CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer
+     *
+     * @return void
+     */
+    protected function setDefaultTranslation(CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer)
+    {
+        if ($glossaryTranslationTransfer->getTranslation() === null) {
+            $glossaryTranslationTransfer->setTranslation(static::DEFAULT_TRANSLATION);
+        }
     }
 
 }

@@ -47,7 +47,9 @@ $(document).ready( function () {
     var originalText = $('#version-diff .has-original .original');
     originalText.each(function(index, element){
         var targets = $('#version-diff .has-diff .original');
-        targets[index].innerText = element.innerText;
+        if (typeof targets[index] !== 'undefined') {
+            targets[index].innerText = element.innerText;
+        }
     });
 
 

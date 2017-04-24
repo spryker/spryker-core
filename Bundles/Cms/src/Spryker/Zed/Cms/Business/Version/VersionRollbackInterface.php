@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 
 interface VersionRollbackInterface
@@ -16,7 +17,7 @@ interface VersionRollbackInterface
      *
      * @throws MissingPageException
      *
-     * @return bool
+     * @return CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version);
 

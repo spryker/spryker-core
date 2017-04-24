@@ -581,7 +581,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @throws MissingPageException
      *
-     * @return bool
+     * @return CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version)
     {

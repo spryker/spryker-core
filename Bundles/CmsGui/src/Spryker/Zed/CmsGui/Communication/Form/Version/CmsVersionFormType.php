@@ -11,6 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Required;
 
 class CmsVersionFormType extends AbstractType
 {
@@ -47,14 +49,29 @@ class CmsVersionFormType extends AbstractType
      */
     protected function addVersionNameField(FormBuilderInterface $builder, array $choices)
     {
+        $attr = [];
+
+        if (empty($choices)) {
+            $attr['disabled'] = 'disabled';
+        }
+
         $builder->add('version',ChoiceType::class, [
-           'label' => false,
+            'label' => false,
             'choices' => $choices,
+            'required' => true,
+            'constraints' => [
+                new Required(),
+                new NotNull()
+            ],
+            'attr' => $attr,
         ]);
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return self::CMS_VERSION;

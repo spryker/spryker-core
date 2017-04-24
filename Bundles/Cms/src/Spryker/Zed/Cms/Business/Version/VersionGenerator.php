@@ -60,6 +60,6 @@ class VersionGenerator implements VersionGeneratorInterface
     public function generateReferenceCmsVersionName($versionNumber)
     {
 
-        return sprintf('Copied from v. %d', $versionNumber);
+        return sprintf('copy of v. %d', $versionNumber);
     }
 }

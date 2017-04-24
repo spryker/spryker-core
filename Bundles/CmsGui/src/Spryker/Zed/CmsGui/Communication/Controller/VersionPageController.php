@@ -38,11 +38,11 @@ class VersionPageController extends AbstractController
                 ->getCmsFacade()
                 ->activatePage($idCmsPage);
 
-            $this->getFactory()
+            $cmsVersionTransfer = $this->getFactory()
                 ->getCmsFacade()
                 ->publishAndVersion($idCmsPage);
 
-            $this->addSuccessMessage('Page successfully published.');
+            $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
 
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page, placeholders do not exist for this page Please go to "Edit Placeholders" and provide them.');
@@ -92,10 +92,11 @@ class VersionPageController extends AbstractController
                 $cmsVersionData = $request->request->get(CmsVersionFormType::CMS_VERSION);
                 $version = $this->castId($cmsVersionData['version']);
                 if ($request->request->get('rollback') !== null) {
-                    $this->getFactory()->getCmsFacade()->rollback($idCmsPage, $version);
-                    $this->addSuccessMessage('Rollback successfully applied.');
+                    $cmsVersionTransfer =  $this->getFactory()->getCmsFacade()->rollback($idCmsPage, $version);
+                    $this->addSuccessMessage(
+                        sprintf('Rollback successfully applied and Page with version %d published.', $cmsVersionTransfer->getVersion())
+                    );
 
-                    //@todo fix me
                     return $this->redirectResponse('/cms-gui/version-page/history?id-cms-page='. $idCmsPage);
                 }
             }

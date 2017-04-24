@@ -9,38 +9,24 @@
                     <td class="original hidden"></td>
                 {% endif %}
             </tr>
-            <tr>
-                <td><strong>{{ 'Valid from:' | trans }}</strong></td>
-                <td class="{{ prettyDiffClass }}">{{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}</td>
-                {% if prettyDiffClass != 'original' %}
-                    <td class="original hidden"></td>
-                {% endif %}
-            </tr>
-
-            <tr>
-                <td><strong>{{ 'Valid to:' | trans }}</strong></td>
-                <td class="{{ prettyDiffClass }}">{{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}</td>
-                {% if prettyDiffClass != 'original' %}
-                    <td class="original hidden"></td>
-                {% endif %}
-            </tr>
         </table>
-        <p></p>
-                {% for pageAttribute in cmsPage.pageAttributes %}
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
-                        {% block content %}
-                            <table class="has-{{ versionDiffClass }}">
-                                <tr>
-                                    <td><strong>{{ 'Name:' | trans }}</strong> </td>
-                                    <td class="{{ prettyDiffClass }}">{{ pageAttribute.name }}</td>
-                                    {% if prettyDiffClass != 'original' %}
-                                        <td class="original hidden"></td>
-                                    {% endif %}
-                                </tr>
-                            </table>
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
+        <p>
+            {% for pageAttribute in cmsPage.pageAttributes %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+                    {% block content %}
+                        <table class="has-{{ versionDiffClass }}">
+                            <tr>
+                                <td><strong>{{ 'Name:' | trans }}</strong> </td>
+                                <td class="{{ prettyDiffClass }}">{{ pageAttribute.name }}</td>
+                                {% if prettyDiffClass != 'original' %}
+                                    <td class="original hidden"></td>
+                                {% endif %}
+                            </tr>
+                        </table>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </p>
 {% endblock %}
 {% endembed %}
 
@@ -82,6 +68,15 @@
 
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
 {% block widget_content %}
+
+    {% if hasTemplateDiff == false and versionDiffClass == 'diff' %}
+    <div class="well">
+        {% filter trans|raw %}
+            <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> The Template has changed, Auto-Diff is not possible for placeholders.</p>
+        {% endfilter %}
+    </div>
+    {% endif %}
+
     {% set locales = [] %}
     {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
         {% for translation in glossaryAttribute.translations %}

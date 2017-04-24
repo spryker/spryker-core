@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
@@ -56,7 +57,7 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @throws MissingPageException
      *
-     * @return bool
+     * @return CmsVersionTransfer|null
      */
     public function rollback($idCmsPage, $version)
     {
@@ -73,15 +74,17 @@ class VersionRollback implements VersionRollbackInterface
         }
 
         if (!$this->versionMigration->migrate($originVersionEntity->getData(), $targetVersionEntity->getData())) {
-            return false;
+            return null;
         }
 
-        $this->versionPublisher->publishAndVersion(
-            $idCmsPage,
-            $this->versionGenerator->generateReferenceCmsVersionName($version)
-        );
+        $newVersion = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
+        $referenceVersion = sprintf(
+            '%s (%s)',
+                $this->versionGenerator->generateNewCmsVersionName($newVersion),
+                $this->versionGenerator->generateReferenceCmsVersionName($version)
+            );
 
-        return true;
+        return $this->versionPublisher->publishAndVersion($idCmsPage, $referenceVersion);
     }
 
     /**

@@ -98,7 +98,7 @@ interface CmsGuiToCmsInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return bool
+     * @return CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version);
 

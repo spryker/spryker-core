@@ -68,6 +68,7 @@ class CmsVersionDataProvider
         }
 
         $cmsVersionTransfers = $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
+        array_shift($cmsVersionTransfers);
 
         $versionList = [];
         foreach ($cmsVersionTransfers as $cmsVersionTransfer) {
@@ -84,13 +85,19 @@ class CmsVersionDataProvider
      */
     protected function createOptionLabel(CmsVersionTransfer $cmsVersionTransfer)
     {
-        return sprintf('Version: %s, %s, %s [%s %s]',
-            $cmsVersionTransfer->getVersion(),
+        $optionLabel = sprintf('%s published on %s ',
             $cmsVersionTransfer->getVersionName(),
-            date('d/m/Y H:i:s', strtotime($cmsVersionTransfer->getCreatedAt())),
-            $cmsVersionTransfer->getFirstName(),
-            $cmsVersionTransfer->getLastName()
+            date('d/m/Y H:i:s', strtotime($cmsVersionTransfer->getCreatedAt()))
         );
+
+        if ($cmsVersionTransfer->getFirstName() !== null) {
+            $optionLabel .= sprintf('by %s %s',
+                $cmsVersionTransfer->getFirstName(),
+                $cmsVersionTransfer->getLastName()
+            );
+        }
+
+        return $optionLabel;
     }
 
 }

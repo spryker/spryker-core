@@ -12,6 +12,16 @@
                 <bundle>cms-gui</bundle>
                 <controller>list-page</controller>
                 <action>index</action>
+                <pages>
+                    <version>
+                        <label>Version</label>
+                        <title>Version</title>
+                        <bundle>cms-gui</bundle>
+                        <controller>version-page</controller>
+                        <action>history</action>
+                        <visible>0</visible>
+                    </version>
+                </pages>
             </page>
             <block>
                 <label>Blocks</label>

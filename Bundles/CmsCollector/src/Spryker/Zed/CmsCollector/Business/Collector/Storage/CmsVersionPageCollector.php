@@ -65,7 +65,10 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
         $placeholders = [];
         foreach ($glossaryKeyMappings as $glossaryKeyMapping) {
             $placeholder = $glossaryKeyMapping[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
-            $placeholders[$placeholder] = $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME][$localeName][SpyGlossaryTranslationTableMap::COL_VALUE];
+            $translations = $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME];
+            if (array_key_exists($localeName, $translations)) {
+                $placeholders[$placeholder] = $translations[$localeName][SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
         }
 
         return $placeholders;
