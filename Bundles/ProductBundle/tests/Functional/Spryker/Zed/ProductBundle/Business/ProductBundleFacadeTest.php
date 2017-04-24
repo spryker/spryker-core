@@ -20,8 +20,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Ratepay\Business\Status;
 
+use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
-use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class TransactionStatus implements TransactionStatusInterface
 {

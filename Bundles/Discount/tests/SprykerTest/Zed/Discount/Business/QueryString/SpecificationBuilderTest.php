@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
@@ -25,6 +24,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 

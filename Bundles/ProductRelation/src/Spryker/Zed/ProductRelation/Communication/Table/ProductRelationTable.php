@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductRelation\Communication\Table;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

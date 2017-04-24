@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationCollector\Persistence\Collector\Propel;
 
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;

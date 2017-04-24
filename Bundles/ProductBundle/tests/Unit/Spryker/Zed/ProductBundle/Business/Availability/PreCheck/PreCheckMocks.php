@@ -8,8 +8,8 @@ namespace Unit\Spryker\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck;

@@ -10,8 +10,8 @@ namespace Spryker\Zed\SalesAggregator\Business\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException;
 
 class OrderTotalsAggregator implements OrderTotalsAggregatorInterface
 {

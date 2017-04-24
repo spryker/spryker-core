@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Twig\Business\Model\CacheWarmer;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Twig\Cache\CacheWriterInterface;
-use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 use Spryker\Zed\Twig\Business\Model\CacheWarmer\CacheWarmer;
+use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 
 /**

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface;
 
 class MoneyValueConverter implements MoneyValueConverterInterface
