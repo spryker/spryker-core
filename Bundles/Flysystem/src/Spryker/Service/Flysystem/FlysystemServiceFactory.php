@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\FlysystemResourceTransfer;
 use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Zed\Flysytem\Business\Model\Reader;
+use Spryker\Zed\Flysytem\Business\Model\Stream;
+use Spryker\Zed\Flysytem\Business\Model\Writer;
 
 /**
  * @method \Spryker\Service\Flysystem\FlysystemConfig getConfig()
@@ -37,6 +40,36 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     {
         return new FilesystemProvider(
             $this->createFilesystemCollection()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Flysytem\Business\Model\ReaderInterface
+     */
+    public function createReader()
+    {
+        return new Reader(
+            $this->createFilesystemProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Flysytem\Business\Model\WriterInterface
+     */
+    public function createWriter()
+    {
+        return new Writer(
+            $this->createFilesystemProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Flysytem\Business\Model\StreamInterface
+     */
+    public function createStream()
+    {
+        return new Stream(
+            $this->createFilesystemProvider()
         );
     }
 
