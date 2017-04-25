@@ -24,12 +24,4 @@ class FactFinderGuiFactory extends AbstractFactory
         return $this->getProvidedDependency(FactFinderGuiDependencyProvider::FACT_FINDER_CLIENT);
     }
 
-    /**
-     * @return string
-     */
-    public function getExportFolderPath()
-    {
-        return APPLICATION_ROOT_DIR . '/public/fact_finder/';
-    }
-
 }

@@ -271,7 +271,7 @@ class FactFinderConnector
      */
     public function createRequestParametersFromSearchRequestTransfer(FactFinderSearchRequestTransfer $searchRequestTransfer)
     {
-        $config = $this->factFinderConfig->getFFConfiguration();
+        $config = $this->factFinderConfig->getFactFinderFConfiguration();
         $parameters = [];
         $parameters['channel'] = $config['channel'];
         $query = trim($searchRequestTransfer->getQuery());
@@ -409,7 +409,7 @@ class FactFinderConnector
         $this->dic['configuration'] = function ($c) {
             return FF::getInstance(
                 'Core\ManualConfiguration',
-                $this->factFinderConfig->getFFConfiguration()
+                $this->factFinderConfig->getFactFinderFConfiguration()
             );
         };
 

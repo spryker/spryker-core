@@ -42,7 +42,6 @@ interface FactFinderConstants
     const ITEM_FIELDS = [
         self::ITEM_PRODUCT_NUMBER,
         self::ITEM_NAME,
-//        self::ABSTRACT_URL,
         self::ITEM_PRICE,
         self::ITEM_STOCK,
         self::ITEM_CATEGORY,

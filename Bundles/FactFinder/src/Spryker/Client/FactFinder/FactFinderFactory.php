@@ -153,22 +153,4 @@ class FactFinderFactory extends AbstractFactory
         return new UrlKeyBuilder();
     }
 
-    /**
-     * @return \Pyz\Yves\Product\Builder\FrontendProductBuilder
-     */
-    public function createFrontendProductBuilder()
-    {
-        return new FrontendProductBuilder(
-            $this->createProductAbstract()
-        );
-    }
-
-    /**
-     * @return \Pyz\Yves\Product\Model\ProductAbstract
-     */
-    protected function createProductAbstract()
-    {
-        return new ProductAbstract();
-    }
-
 }
