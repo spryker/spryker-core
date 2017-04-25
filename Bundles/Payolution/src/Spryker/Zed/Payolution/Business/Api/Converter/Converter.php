@@ -58,7 +58,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData)
     {
@@ -124,7 +124,7 @@ class Converter implements ConverterInterface
      * @param \DOMDocument $xml
      * @param array $data
      *
-     * @return \DOMDocument
+     * @return \DOMElement
      */
     protected function createXml(DOMDocument $xml, array $data)
     {
