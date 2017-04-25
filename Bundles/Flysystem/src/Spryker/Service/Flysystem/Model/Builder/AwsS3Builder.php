@@ -45,7 +45,7 @@ class AwsS3Builder extends AbstractBuilder
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new AwsS3FilesystemBuilder($this->config, $adapterConfigTransfer);
+        return new AwsS3FilesystemBuilder($this->config, $adapterConfigTransfer, $this->pluginProvider);
     }
 
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
+use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface;
 
 class LocalFilesystemBuilder implements FilesystemBuilderInterface
 {
@@ -42,15 +43,23 @@ class LocalFilesystemBuilder implements FilesystemBuilderInterface
     protected $adapterConfig;
 
     /**
+     * @var \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
+     */
+    protected $pluginProvider;
+
+    /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
      * @param \Generated\Shared\Transfer\FlysystemConfigLocalTransfer $adapterConfig
+     * @param \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface $pluginProvider
      */
     public function __construct(
         FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigLocalTransfer $adapterConfig
+        FlysystemConfigLocalTransfer $adapterConfig,
+        FlysystemPluginProviderInterface $pluginProvider
     ) {
         $this->fileSystemConfig = $fileSystemConfig;
         $this->adapterConfig = $adapterConfig;
+        $this->pluginProvider = $pluginProvider;
     }
 
     /**
@@ -107,6 +116,8 @@ class LocalFilesystemBuilder implements FilesystemBuilderInterface
      */
     protected function buildPlugins()
     {
+        $this->filesystem = $this->pluginProvider->provide($this->filesystem);
+
         return $this;
     }
 

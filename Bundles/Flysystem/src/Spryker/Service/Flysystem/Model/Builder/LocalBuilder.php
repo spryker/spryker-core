@@ -42,7 +42,7 @@ class LocalBuilder extends AbstractBuilder
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new LocalFilesystemBuilder($this->config, $adapterConfigTransfer);
+        return new LocalFilesystemBuilder($this->config, $adapterConfigTransfer, $this->pluginProvider);
     }
 
 }

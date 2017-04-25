@@ -10,6 +10,7 @@ namespace Spryker\Service\Flysystem;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
+use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProvider;
 use Spryker\Service\Flysystem\Model\Reader;
 use Spryker\Service\Flysystem\Model\Stream;
 use Spryker\Service\Flysystem\Model\Writer;
@@ -58,6 +59,16 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     {
         return new Stream(
             $this->createFilesystemProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
+     */
+    protected function createFlysystemPluginProvider()
+    {
+        return new FlysystemPluginProvider(
+            $this->createFlysystemPluginCollection()
         );
     }
 
@@ -128,9 +139,17 @@ class FlysystemServiceFactory extends AbstractServiceFactory
             );
         }
 
-        $builder = new $builderClass($configTransfer);
+        $builder = new $builderClass($configTransfer, $this->createFlysystemPluginProvider());
 
         return $builder;
+    }
+
+    /**
+     * @return \League\Flysystem\PluginInterface[]
+     */
+    protected function createFlysystemPluginCollection()
+    {
+        return [];
     }
 
 }

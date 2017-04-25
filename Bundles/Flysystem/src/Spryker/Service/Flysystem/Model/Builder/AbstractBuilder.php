@@ -8,6 +8,7 @@
 namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
+use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface;
 
 abstract class AbstractBuilder implements FilesystemBuilderInterface
 {
@@ -23,6 +24,11 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     protected $builder;
 
     /**
+     * @var \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
+     */
+    protected $pluginProvider;
+
+    /**
      * @throws \Spryker\Service\Flysystem\Exception\InvalidConfigurationException
      *
      * @return void
@@ -35,11 +41,15 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     abstract protected function createFileSystemBuilder();
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $config
+     * @param \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface $pluginProvider
      */
-    public function __construct(FlysystemConfigTransfer $configTransfer)
-    {
-        $this->config = $configTransfer;
+    public function __construct(
+        FlysystemConfigTransfer $config,
+        FlysystemPluginProviderInterface $pluginProvider
+    ) {
+        $this->config = $config;
+        $this->pluginProvider = $pluginProvider;
     }
 
     /**
