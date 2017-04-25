@@ -13,7 +13,7 @@
   "require": {
     "spryker/category-data-feed": "^1.0.0",
     "FACT-Finder/FACT-Finder-PHP-Library": "1.3.*",
-    "spryker/product-abstract-data-feed": "^1.0.0",
+    "spryker/product-abstract-data-feed": "^1.0.0"
   },
   "description": "FactFinder bundle",
   "license": "proprietary",
