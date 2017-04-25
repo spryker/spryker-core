@@ -213,6 +213,10 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      */
     public function has($name)
     {
+        if (!$this->getContainer()) {
+            return false;
+        }
+
         return $this->getContainer()->has($name);
     }
 

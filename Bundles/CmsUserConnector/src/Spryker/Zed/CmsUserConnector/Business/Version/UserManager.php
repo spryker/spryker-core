@@ -43,6 +43,10 @@ class UserManager implements UserManagerInterface
      */
     public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer)
     {
+        if (!$this->userFacade->hasCurrentUser()) {
+            return $cmsVersionTransfer;
+        }
+
         $idUser = $this->userFacade->getCurrentUser()->getIdUser();
         $cmsVersionEntity = $this->updateCmsVersionUserId($cmsVersionTransfer, $idUser);
         $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
@@ -57,6 +61,10 @@ class UserManager implements UserManagerInterface
      */
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer)
     {
+        if ($cmsVersionTransfer->getFkUser() === null) {
+            return $cmsVersionTransfer;
+        }
+
         $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());
         $cmsVersionTransfer->setFirstName($userTransfer->getFirstName());
         $cmsVersionTransfer->setLastName($userTransfer->getLastName());

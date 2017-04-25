@@ -34,6 +34,14 @@ class CmsUserConnectorToUserBridge implements CmsUserConnectorToUserInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasCurrentUser()
+    {
+        return $this->userFacade->hasCurrentUser();
+    }
+
+    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer

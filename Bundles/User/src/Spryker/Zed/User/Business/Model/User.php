@@ -281,7 +281,7 @@ class User implements UserInterface
      */
     public function setCurrentUser(UserTransfer $user)
     {
-        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+        $key = $this->createUserKey();
 
         return $this->session->set($key, clone $user);
     }
@@ -301,7 +301,11 @@ class User implements UserInterface
      */
     protected function readUserFromSession()
     {
-        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+        $key = $this->createUserKey();
+
+        if (!$this->session->has($key)) {
+            return null;
+        }
 
         return $this->session->get($key);
     }
@@ -398,6 +402,14 @@ class User implements UserInterface
         $rowsAffected = $userEntity->save();
 
         return $rowsAffected > 0;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createUserKey()
+    {
+        return sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
     }
 
 }

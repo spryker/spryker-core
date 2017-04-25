@@ -16,6 +16,11 @@ interface CmsUserConnectorToUserInterface
     public function getCurrentUser();
 
     /**
+     * @return bool
+     */
+    public function hasCurrentUser();
+
+    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
