@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\FactFinder\Persistence;
 
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToCategoryDataFeedInterface;
-use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToProductAbstractDataFeedInterface;
 use Spryker\Zed\FactFinder\FactFinderDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -21,7 +18,7 @@ class FactFinderPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return FactFinderToProductAbstractDataFeedInterface
+     * @return \Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToProductAbstractDataFeedInterface
      */
     public function getProductAbstractDataFeedQueryContainer()
     {
@@ -29,7 +26,7 @@ class FactFinderPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return FactFinderToCategoryDataFeedInterface
+     * @return \Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToCategoryDataFeedInterface
      */
     public function getCategoryDataFeedQueryContainer()
     {
@@ -37,7 +34,7 @@ class FactFinderPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function getLocaleQuery()
     {

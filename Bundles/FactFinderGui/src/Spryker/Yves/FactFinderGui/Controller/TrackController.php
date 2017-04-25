@@ -41,9 +41,9 @@ class TrackController extends AbstractController
     }
 
     /**
-     * @param FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
      *
-     * @return FactFinderTrackingRequestTransfer
+     * @return \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer
      */
     protected function addSessionId(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
     {
@@ -55,4 +55,5 @@ class TrackController extends AbstractController
 
         return $factFinderTrackingRequestTransfer;
     }
+
 }

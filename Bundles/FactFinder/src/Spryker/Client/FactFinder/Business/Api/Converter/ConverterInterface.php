@@ -10,6 +10,9 @@ namespace Spryker\Client\FactFinder\Business\Api\Converter;
 interface ConverterInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function convert();
 
 }

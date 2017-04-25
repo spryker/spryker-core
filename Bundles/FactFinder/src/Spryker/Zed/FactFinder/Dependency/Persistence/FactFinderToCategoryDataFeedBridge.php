@@ -8,20 +8,19 @@
 namespace Spryker\Zed\FactFinder\Dependency\Persistence;
 
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
-use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainerInterface;
 
 class FactFinderToCategoryDataFeedBridge implements FactFinderToCategoryDataFeedInterface
 {
 
     /**
-     * @var CategoryDataFeedQueryContainerInterface
+     * @var \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainerInterface
      */
     protected $categoryDataFeedQueryContainer;
 
     /**
      * FactFinderToCategoryDataFeedBridge constructor.
      *
-     * @param CategoryDataFeedQueryContainerInterface $categoryDataFeedQueryContainer
+     * @param \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainerInterface $categoryDataFeedQueryContainer
      */
     public function __construct($categoryDataFeedQueryContainer)
     {

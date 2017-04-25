@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\FactFinder\Business\Exception;
 
-class ApiNoQueryException extends \Exception
+use Exception;
+
+class ApiNoQueryException extends Exception
 {
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Client\FactFinder\Zed;
 
 use Generated\Shared\Transfer\FactFinderCsvTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class FactFinderStub implements FactFinderStubInterface

@@ -7,15 +7,8 @@
 
 namespace Spryker\Zed\FactFinder\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\Base\SpyLocale;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\FactFinder\Business\FactFinderBusinessFactory getFactory()
@@ -26,7 +19,7 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
     /**
      * @api
      *
-     * @param SpyLocale $locale
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
      *
      * @return mixed
      */
@@ -37,6 +30,8 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function getLocaleQuery()
@@ -46,8 +41,10 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
     }
 
     /**
-     * @param $idLocale int
-     * @param $rootCategoryNodeId int
+     * @api
+     *
+     * @param int $idLocale
+     * @param int $rootCategoryNodeId
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */

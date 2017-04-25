@@ -1,11 +1,18 @@
 <?php
 
-namespace Spryker\Zed\FactFinder\Business\Writer;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\FactFinder\Business\Writer;
 
 abstract class AbstractFileWriter
 {
 
+    /**
+     * @var string
+     */
     protected $fileName;
 
     /**
@@ -19,7 +26,7 @@ abstract class AbstractFileWriter
     abstract public function write($filePath, $data, $append = false, $delimiter = ',');
 
     /**
-     * @param $fileName string
+     * @param string $fileName
      *
      * @return void
      */
@@ -32,4 +39,5 @@ abstract class AbstractFileWriter
             mkdir($directory);
         }
     }
+
 }

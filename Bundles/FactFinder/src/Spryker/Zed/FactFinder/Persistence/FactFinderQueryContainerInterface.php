@@ -13,19 +13,22 @@ interface FactFinderQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
-     * @param $IdLocale string
+     * @api
+     *
+     * @param int $IdLocale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getExportDataQuery($IdLocale);
 
     /**
-     * @param $IdLocale
-     * @param $rootCategoryNodeId
+     * @api
+     *
+     * @param int $IdLocale
+     * @param int $rootCategoryNodeId
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function getParentCategoryQuery($IdLocale, $rootCategoryNodeId);
 
 }
-

@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\FactFinder;
 
-use Pyz\Yves\Product\Builder\FrontendProductBuilder;
-use Pyz\Yves\Product\Model\ProductAbstract;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
@@ -21,7 +19,6 @@ use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Session\QuoteSession;
-use Spryker\Client\Session\SessionClientInterface;
 
 /**
  * @method \Spryker\Zed\FactFinder\FactFinderConfig getConfig()
@@ -62,7 +59,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return TrackingRequest
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\TrackingRequest
      */
     public function createTrackingRequest()
     {
@@ -100,7 +97,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return QuoteSession
+     * @return \Spryker\Client\Quote\Session\QuoteSession
      */
     public function createQuoteSession()
     {
@@ -108,7 +105,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return SessionClientInterface
+     * @return \Spryker\Client\Session\SessionClientInterface
      */
     public function getSession()
     {

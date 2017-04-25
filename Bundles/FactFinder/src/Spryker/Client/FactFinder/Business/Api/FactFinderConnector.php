@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api;
 
+use Exception;
 use FACTFinder\Loader as FF;
 use FACTFinder\Util\Parameters;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
@@ -21,7 +22,7 @@ class FactFinderConnector
     protected $dic;
 
     /**
-     * @var \FACTFinder\Util\Parameters
+     * @var \FACTFinder\Util\Parameters|null
      */
     protected $requestParameters = null;
 
@@ -258,6 +259,8 @@ class FactFinderConnector
 
     /**
      * @param \FACTFinder\Util\Parameters $requestParameters
+     *
+     * @return void
      */
     public function setRequestParameters($requestParameters)
     {
@@ -367,37 +370,11 @@ class FactFinderConnector
         return FF::getClassName('Data\ArticleNumberSearchStatus');
     }
 
-
-
-//    /**
-//     * @return \FACTFinder\Util\Log4PhpLogger
-//     * @throws \Exception
-//     */
-//    public function createLogger()
-//    {
-//        $logger = FF::getClassName('Util\Log4PhpLogger');
-//        $logger::configure($this->getLog4phpConfigXml());
-//        $this->logger = $logger;
-//
-//        return $this->logger;
-//    }
-//
-//    /**
-//     * @return \FACTFinder\Core\XmlConfiguration
-//     * @throws \Exception
-//     */
-//    public function createConfiguration()
-//    {
-//        $this->configuration = FF::getInstance(
-//            'Core\XmlConfiguration',
-//            $this->getConfigXml(),
-//            $this->factFinderConfig->getEnv()
-//        );
-//
-//        return $this->configuration;
-//    }
-
-
+    /**
+     * @throws \Exception
+     *
+     * @return void
+     */
     protected function init()
     {
         $this->dic['loggerClass'] = function ($c) {
@@ -452,7 +429,7 @@ class FactFinderConnector
                 && function_exists('utf8_decode'))
                 $type = 'Core\Utf8EncodingConverter';
             else
-                throw new \Exception('No encoding conversion available.');
+                throw new Exception('No encoding conversion available.');
 
             return FF::getInstance(
                 $type,

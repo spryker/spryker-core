@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FactFinder\Communication\Controller;
 
 use Generated\Shared\Transfer\FactFinderCsvTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

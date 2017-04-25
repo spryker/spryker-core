@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\FactFinder\Zed;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface FactFinderStubInterface
 {
 

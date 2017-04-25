@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
+use ArrayObject;
 use FACTFinder\Adapter\Search as FFSearchAdapter;
 use FACTFinder\Data\AfterSearchNavigation;
 use FACTFinder\Data\BreadCrumbTrail;
@@ -19,7 +20,6 @@ use Generated\Shared\Transfer\FactFinderDataAfterSearchNavigationTransfer;
 use Generated\Shared\Transfer\FactFinderDataBreadCrumbTransfer;
 use Generated\Shared\Transfer\FactFinderDataCampaignIteratorTransfer;
 use Generated\Shared\Transfer\FactFinderDataCampaignTransfer;
-use Generated\Shared\Transfer\FactFinderDataFilterGroupTransfer;
 use Generated\Shared\Transfer\FactFinderDataResultsPerPageOptionsTransfer;
 use Generated\Shared\Transfer\FactFinderDataResultTransfer;
 use Generated\Shared\Transfer\FactFinderDataSingleWordSearchItemTransfer;
@@ -216,7 +216,7 @@ class SearchResponseConverter extends BaseConverter
      */
     protected function convertAfterSearchNavigation(AfterSearchNavigation $afterSearchNavigation)
     {
-        $factFinderDataAfterSearchNavigationTransfer  = new FactFinderDataAfterSearchNavigationTransfer();
+        $factFinderDataAfterSearchNavigationTransfer = new FactFinderDataAfterSearchNavigationTransfer();
         $factFinderDataAfterSearchNavigationTransfer->setHasPreviewImages($afterSearchNavigation->hasPreviewImages());
 
         /** @var \FACTFinder\Data\FilterGroup $filterGroup */
@@ -237,7 +237,7 @@ class SearchResponseConverter extends BaseConverter
      */
     protected function convertBreadCrumbTrail(BreadCrumbTrail $breadCrumbTrail)
     {
-        $breadCrumbs = new \ArrayObject();
+        $breadCrumbs = new ArrayObject();
         /** @var \FACTFinder\Data\BreadCrumb $breadCrumb */
         foreach ($breadCrumbTrail as $breadCrumb) {
             $factFinderDataBreadCrumbTransfer = new FactFinderDataBreadCrumbTransfer();
@@ -310,7 +310,7 @@ class SearchResponseConverter extends BaseConverter
      */
     protected function convertSingleWordSearch($singleWordSearch)
     {
-        $singleWordSearchItems = new \ArrayObject();
+        $singleWordSearchItems = new ArrayObject();
         foreach ($singleWordSearch as $singleWordSearchItem) {
             $factFinderDataSingleWordSearchItemTransfer = new FactFinderDataSingleWordSearchItemTransfer();
             /** @var \FACTFinder\Data\Record $previewRecord */
@@ -353,7 +353,7 @@ class SearchResponseConverter extends BaseConverter
      */
     protected function convertSorting(Sorting $sorting)
     {
-        $sortingItems = new \ArrayObject();
+        $sortingItems = new ArrayObject();
         /** @var \FACTFinder\Data\Item $sortingItem */
         foreach ($sorting as $sortingItem) {
             $this->itemConverter->setItem($sortingItem);

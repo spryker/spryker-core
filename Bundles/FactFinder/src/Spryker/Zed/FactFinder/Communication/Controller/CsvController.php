@@ -24,7 +24,6 @@ class CsvController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-
         $locale = $request->query->get('locale', '');
         $fileName = $this->getFactory()
             ->getFileName($locale);
@@ -32,10 +31,10 @@ class CsvController extends AbstractController
             ->getFileContent($locale);
 
         if ($content === false) {
-            return $this->streamedResponse(function() {}, 404);
+            return $this->streamedResponse(function () {}, 404);
         }
 
-        $this->streamedResponse(function() use ($content) {
+        $this->streamedResponse(function () use ($content) {
             echo $content;
         }, 200, [
             'Content-Type' => 'text/csv',

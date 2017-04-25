@@ -42,7 +42,6 @@ class FactFinderGuiControllerProvider extends AbstractYvesControllerProvider
 
         $this->createController('/{factfinder}/track', self::ROUTE_FACT_FINDER_TRACK, 'FactFinderGui', 'Track', 'index')
             ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
-
     }
 
 }

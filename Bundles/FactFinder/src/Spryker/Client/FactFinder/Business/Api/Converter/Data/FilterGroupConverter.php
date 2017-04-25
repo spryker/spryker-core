@@ -37,6 +37,7 @@ class FilterGroupConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\FilterGroup $filterGroup
+     *
      * @return void
      */
     public function setFilterGroup(FilterGroup $filterGroup)
@@ -51,8 +52,8 @@ class FilterGroupConverter extends BaseConverter
     {
         $factFinderDataFilterGroupTransfer = new FactFinderDataFilterGroupTransfer();
 
-        /** @var Filter $filter */
-        foreach($this->filterGroup as $filter) {
+        /** @var \FACTFinder\Data\Filter $filter */
+        foreach ($this->filterGroup as $filter) {
             $factFinderDataFilterGroupTransfer->addFilters(
                 $this->convertFilter($filter)
             );
@@ -78,6 +79,7 @@ class FilterGroupConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Filter $filter
+     *
      * @return \Generated\Shared\Transfer\FactFinderDataFilterTransfer
      */
     protected function convertFilter(Filter $filter)

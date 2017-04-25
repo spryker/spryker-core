@@ -37,6 +37,7 @@ class AdvisorQuestionConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\AdvisorQuestion $advisorQuestion
+     *
      * @return void
      */
     public function setAdvisorQuestion(AdvisorQuestion $advisorQuestion)

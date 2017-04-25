@@ -22,7 +22,9 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param SpyLocale $locale
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
+     *
+     * @return void
      */
     public function createCsvFile(SpyLocale $locale)
     {
@@ -47,7 +49,7 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function getLocaleQuery()
     {
@@ -55,9 +57,9 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $filePath
+     * @param string $filePath
      *
-     * @return CsvFileWriter
+     * @return \Spryker\Zed\FactFinder\Business\Writer\CsvFileWriter
      */
     public function createCsvWriter($filePath)
     {
@@ -65,9 +67,9 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param AbstractFileWriter $fileWriter
+     * @param \Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter $fileWriter
      *
-     * @return FactFinderProductExporterPlugin
+     * @return \Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporterPlugin
      */
     protected function createFactFinderProductExporter(AbstractFileWriter $fileWriter, SpyLocale $locale)
     {

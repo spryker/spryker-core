@@ -90,7 +90,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -107,4 +107,5 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($response->getSuggestions());
     }
+
 }

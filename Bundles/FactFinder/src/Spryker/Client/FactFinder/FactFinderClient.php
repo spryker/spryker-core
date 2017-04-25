@@ -56,6 +56,7 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
      * @api
      *
      * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer)
@@ -72,7 +73,9 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
-     * @param FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
      */
@@ -89,7 +92,9 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
-     * @param FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
@@ -107,7 +112,9 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
-     * @param FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderRecommendationResponseTransfer
      */
@@ -125,6 +132,8 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Session\SessionClientInterface
      */
     public function getSession()
@@ -140,6 +149,9 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
         return $this->getQuoteSession()->getQuote();
     }
 
+    /**
+     * @return \Spryker\Client\Quote\Session\QuoteSession
+     */
     protected function getQuoteSession()
     {
         return $this->getFactory()->createQuoteSession();

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\FactFinder\Business\Exception;
 
-class ApiHttpRequestException extends \Exception
+use Exception;
+
+class ApiHttpRequestException extends Exception
 {
 }

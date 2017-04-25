@@ -26,7 +26,7 @@ class FactFinderGuiSecurityServiceProvider extends AbstractServiceProvider
      */
     public function register(Application $app)
     {
-        $this->setSecurityFirewalls($app);
+//        $this->setSecurityFirewalls($app);
     }
 
     /**
@@ -53,10 +53,10 @@ class FactFinderGuiSecurityServiceProvider extends AbstractServiceProvider
                     'users' => [
                         Config::get(FactFinderConstants::CONFIG_BASIC_AUTH_USERNAME) => [
                             self::ROLE_FACT_FINDER,
-                            Config::get(FactFinderConstants::CONFIG_BASIC_AUTH_PASSWORD)
-                        ]
+                            Config::get(FactFinderConstants::CONFIG_BASIC_AUTH_PASSWORD),
+                        ],
                     ],
-                ]
+                ],
             ],
             $app['security.firewalls']
         );

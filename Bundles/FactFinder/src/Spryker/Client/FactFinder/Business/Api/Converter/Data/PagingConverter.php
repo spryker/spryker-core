@@ -36,6 +36,7 @@ class PagingConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Paging $paging
+     *
      * @return void
      */
     public function setPaging(Paging $paging)
@@ -61,6 +62,7 @@ class PagingConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Page|null $page
+     *
      * @return \Generated\Shared\Transfer\FactFinderDataPageTransfer
      */
     protected function convertPage($page)

@@ -11,13 +11,12 @@ use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -33,7 +32,9 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     const STOCK_NEVER_OUTOFSTOCK_CONDITION = 'STOCK_NEVER_OUTOFSTOCK_CONDITION';
 
     /**
-     * @param string $IdLocale
+     * @api
+     *
+     * @param int $IdLocale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -58,13 +59,14 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
         $productsAbstractQuery = $this->addColumns($productsAbstractQuery);
         $productsAbstractQuery = $this->addInStockConditions($productsAbstractQuery);
 
-
         return $productsAbstractQuery;
     }
 
     /**
-     * @param $IdLocale
-     * @param $rootCategoryNodeId
+     * @api
+     *
+     * @param int $IdLocale
+     * @param int $rootCategoryNodeId
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
@@ -87,7 +89,7 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     }
 
     /**
-     * @return SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     protected function getLocaleQuery()
     {
@@ -96,9 +98,9 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     }
 
     /**
-     * @param SpyProductAbstractQuery $productsAbstractQuery
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $productsAbstractQuery
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function addColumns(SpyProductAbstractQuery $productsAbstractQuery)
     {
@@ -116,9 +118,9 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     }
 
     /**
-     * @param SpyProductAbstractQuery $productsAbstractQuery
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $productsAbstractQuery
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
     protected function addInStockConditions(SpyProductAbstractQuery $productsAbstractQuery)
     {
@@ -132,11 +134,10 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
         );
         $productsAbstractQuery->where([
             self::STOCK_QUANTITY_CONDITION,
-            self::STOCK_NEVER_OUTOFSTOCK_CONDITION
+            self::STOCK_NEVER_OUTOFSTOCK_CONDITION,
         ], Criteria::LOGICAL_OR);
 
         return $productsAbstractQuery;
     }
 
 }
-

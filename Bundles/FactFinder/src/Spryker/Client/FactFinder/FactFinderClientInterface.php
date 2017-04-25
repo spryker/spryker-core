@@ -39,6 +39,7 @@ interface FactFinderClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer);
@@ -55,14 +56,16 @@ interface FactFinderClientInterface
     /**
      * @api
      *
-     * @param FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
+     * @param \Generated\Shared\Transfer\FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
     public function getSuggestions(FactFinderSuggestRequestTransfer $factFinderSuggestRequestTransfer);
 
     /**
-     * @param FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
      */

@@ -37,5 +37,4 @@ class FactFinderToProductAbstractDataFeedBridge implements FactFinderToProductAb
         return $this->productAbstractDataFeed->queryAbstractProductDataFeed($productDataFeedTransfer);
     }
 
-
 }

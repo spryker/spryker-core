@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\FactFinderGui;
 
-use Spryker\Client\FactFinder\FactFinderClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
@@ -17,7 +16,7 @@ class FactFinderGuiFactory extends AbstractFactory
 {
 
     /**
-     * @return FactFinderClient
+     * @return \Spryker\Client\FactFinder\FactFinderClient
      */
     public function getFactFinderClient()
     {

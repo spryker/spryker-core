@@ -39,6 +39,7 @@ class ProductByUrlResolver
      * @param string $locale
      * @param string $lang
      * @param string $sku
+     *
      * @return array
      */
     public function getProductDataByLocaleAndSku($locale, $lang, $sku)

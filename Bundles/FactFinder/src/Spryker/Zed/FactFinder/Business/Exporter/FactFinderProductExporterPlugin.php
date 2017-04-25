@@ -21,12 +21,12 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
 {
 
     /**
-     * @var AbstractFileWriter
+     * @var \Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter
      */
     protected $fileWriter;
 
     /**
-     * @var SpyLocale
+     * @var \Orm\Zed\Locale\Persistence\Base\SpyLocale
      */
     protected $locale;
 
@@ -58,8 +58,8 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     /**
      * FactFinderProductExporterPlugin constructor.
      *
-     * @param AbstractFileWriter $fileWriter
-     * @param SpyLocale $locale
+     * @param \Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter $fileWriter
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
      */
     public function __construct(AbstractFileWriter $fileWriter, SpyLocale $locale)
     {
@@ -92,7 +92,9 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
 
     /**
      * @param string $filePath
-     * @param SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     *
+     * @return void
      */
     protected function exportToCsv($filePath, SpyProductAbstractQuery $query)
     {
@@ -109,12 +111,12 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
             $prepared = $this->prepareDataForExport($result, $this->locale);
 
             $this->fileWriter
-                ->write($filePath,$prepared, true);
+                ->write($filePath, $prepared, true);
         } while (!empty($result));
     }
 
     /**
-     * @param SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
      *
      * @return bool
      */
@@ -134,7 +136,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param $localeName
+     * @param string $localeName
      *
      * @return string
      */
@@ -147,8 +149,8 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param $data array
-     * @param SpyLocale $locale
+     * @param array $data
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
      *
      * @return array
      */
@@ -175,7 +177,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param $data array
+     * @param array $data
      *
      * @return array
      */
@@ -188,8 +190,8 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param $data array
-     * @param SpyLocale $locale
+     * @param array $data
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
      *
      * @return array
      */
@@ -205,14 +207,14 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
         } else {
             $categoryPath = $parentCategoryName . '/' . $data[FactFinderConstants::ITEM_CATEGORY];
         }
-        $data[FactFinderConstants::ITEM_CATEGORY_PATH] = $categoryPath ;
+        $data[FactFinderConstants::ITEM_CATEGORY_PATH] = $categoryPath;
 
         return $data;
     }
 
     /**
-     * @param $idLocale int
-     * @param $rootCategoryNodeId int
+     * @param int $idLocale
+     * @param int $rootCategoryNodeId
      *
      * @return string
      */
@@ -231,6 +233,8 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
 
     /**
      * @param string $filePath
+     *
+     * @return void
      */
     protected function saveFileHeader($filePath)
     {

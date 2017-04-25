@@ -10,6 +10,9 @@ namespace Spryker\Client\FactFinder\Business\Api\Mapper;
 interface MapperInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function map();
 
 }

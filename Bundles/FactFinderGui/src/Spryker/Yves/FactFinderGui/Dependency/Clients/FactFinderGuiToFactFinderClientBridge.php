@@ -9,5 +9,4 @@ namespace Spryker\Yves\FactFinderGui\Dependency\Clients;
 
 class FactFinderGuiToFactFinderClientBridge
 {
-
 }

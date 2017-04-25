@@ -21,6 +21,7 @@ class ItemConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Item $item
+     *
      * @return void
      */
     public function setItem(Item $item)

@@ -43,6 +43,11 @@ class TrackingRequest extends AbstractRequest implements RequestInterface
         return $responseTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
+     *
+     * @return array
+     */
     protected function getRequestData(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
     {
         $data = $factFinderTrackingRequestTransfer->toArray();

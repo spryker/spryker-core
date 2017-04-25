@@ -60,4 +60,5 @@ class FactFinderCommunicationFactory extends AbstractCommunicationFactory
 
         return $content;
     }
+
 }

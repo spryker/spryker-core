@@ -9,7 +9,6 @@ namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\ProductCampaign as FFProductCampaign;
 use Generated\Shared\Transfer\FactFinderProductCampaignResponseTransfer;
-use Generated\Shared\Transfer\FactFinderSearchResponseTransfer;
 
 class ProductCampaignResponseConverter extends BaseConverter
 {
