@@ -8,7 +8,7 @@
 namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Type\AwsS3TypeBuilder;
+use Spryker\Service\Flysystem\Model\Builder\Filesystem\AwsS3FilesystemBuilder;
 
 class AwsS3Builder extends AbstractBuilder
 {
@@ -41,11 +41,11 @@ class AwsS3Builder extends AbstractBuilder
     /**
      * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
-    protected function createFlysystemBuilder()
+    protected function createFileSystemBuilder()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new AwsS3TypeBuilder($this->config, $adapterConfigTransfer);
+        return new AwsS3FilesystemBuilder($this->config, $adapterConfigTransfer);
     }
 
 }

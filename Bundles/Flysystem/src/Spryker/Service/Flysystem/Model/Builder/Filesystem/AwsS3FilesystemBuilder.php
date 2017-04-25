@@ -5,24 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Type;
+namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
 
-use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
+use Aws\S3\S3Client;
+use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
 
-class LocalTypeBuilder implements FilesystemBuilderInterface
+class AwsS3FilesystemBuilder implements FilesystemBuilderInterface
 {
 
-    /**
-     * @var string
-     */
-    protected $path;
+    const KEY = 'key';
+    const SECRET = 'secret';
+    const REGION = 'region';
+    const VERSION = 'version';
+    const CREDENTIALS = 'credentials';
 
     /**
-     * @var \League\Flysystem\Adapter\Local
+     * @var \Aws\S3\S3Client
+     */
+    protected $client;
+
+    /**
+     * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
      */
     protected $adapter;
 
@@ -37,33 +44,29 @@ class LocalTypeBuilder implements FilesystemBuilderInterface
     protected $fileSystemConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
+     * @var \Generated\Shared\Transfer\FlysystemConfigAwsTransfer
      */
     protected $adapterConfig;
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
-     * @param \Generated\Shared\Transfer\FlysystemConfigLocalTransfer $adapterConfig
+     * @param \Generated\Shared\Transfer\FlysystemConfigAwsTransfer $adapterConfig
      */
     public function __construct(
         FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigLocalTransfer $adapterConfig
+        FlysystemConfigAwsTransfer $adapterConfig
     ) {
         $this->fileSystemConfig = $fileSystemConfig;
         $this->adapterConfig = $adapterConfig;
     }
 
     /**
-     * Sample config
-     * 'root' => '/data/uploads/',
-     * 'path' => 'customers/pds/',
-     *
      * @return \League\Flysystem\Filesystem
      */
     public function build()
     {
         $this
-            ->buildPath()
+            ->buildS3Client()
             ->buildAdapter()
             ->buildFilesystem()
             ->buildPlugins();
@@ -74,14 +77,16 @@ class LocalTypeBuilder implements FilesystemBuilderInterface
     /**
      * @return $this
      */
-    protected function buildPath()
+    protected function buildS3Client()
     {
-        $this->path = sprintf(
-            '%s%s%s',
-            $this->adapterConfig->getRoot(),
-            DIRECTORY_SEPARATOR,
-            $this->adapterConfig->getPath()
-        );
+        $this->client = new S3Client([
+            self::CREDENTIALS => [
+                self::KEY => $this->adapterConfig->getKey(),
+                self::SECRET => $this->adapterConfig->getSecret(),
+            ],
+            self::REGION => $this->adapterConfig->getRegion(),
+            self::VERSION => $this->adapterConfig->getVersion(),
+        ]);
 
         return $this;
     }
@@ -91,7 +96,7 @@ class LocalTypeBuilder implements FilesystemBuilderInterface
      */
     protected function buildAdapter()
     {
-        $this->adapter = new LocalAdapter($this->path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
+        $this->adapter = new AwsS3Adapter($this->client, $this->adapterConfig->getBucket());
 
         return $this;
     }

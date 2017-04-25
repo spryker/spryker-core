@@ -8,7 +8,7 @@
 namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Type\LocalTypeBuilder;
+use Spryker\Service\Flysystem\Model\Builder\Filesystem\LocalFilesystemBuilder;
 
 class LocalBuilder extends AbstractBuilder
 {
@@ -38,11 +38,11 @@ class LocalBuilder extends AbstractBuilder
     /**
      * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
-    protected function createFlysystemBuilder()
+    protected function createFileSystemBuilder()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new LocalTypeBuilder($this->config, $adapterConfigTransfer);
+        return new LocalFilesystemBuilder($this->config, $adapterConfigTransfer);
     }
 
 }

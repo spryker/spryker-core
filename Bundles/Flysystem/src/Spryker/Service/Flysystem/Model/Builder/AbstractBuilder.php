@@ -8,7 +8,6 @@
 namespace Spryker\Service\Flysystem\Model\Builder;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
 
 abstract class AbstractBuilder implements FilesystemBuilderInterface
 {
@@ -33,7 +32,7 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     /**
      * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
      */
-    abstract protected function createFlysystemBuilder();
+    abstract protected function createFileSystemBuilder();
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
@@ -51,9 +50,9 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
         $this->validateMandatoryConfigFields();
         $this->validateConfig();
 
-        $fileSystemBuilder = $this->createFlysystemBuilder();
+        $filesystemBuilder = $this->createFileSystemBuilder();
 
-        return $fileSystemBuilder->build();
+        return $filesystemBuilder->build();
     }
 
     /**
