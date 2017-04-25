@@ -31,7 +31,6 @@
     <transfer name="FileSystemVisibility">
         <property name="fileSystemName" type="string" />
         <property name="path" type="string" />
-        <property name="isPrivate" type="bool" />
     </transfer>
 
     <transfer name="FileSystemCreateDirectory">

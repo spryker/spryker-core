@@ -10,7 +10,6 @@ namespace Functional\Spryker\Service\Flysystem;
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
-use League\Flysystem\AdapterInterface;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemService;
@@ -291,49 +290,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetVisibility()
-    {
-        $this->createDocumentFile();
-
-        $visibility = $this->flysystemService->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPrivateVisibility()
-    {
-        $this->createDocumentFile();
-
-        $visibility = $this->flysystemService->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
-
-        $this->flysystemService->setVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            AdapterInterface::VISIBILITY_PRIVATE
-        );
-
-        $visibility = $this->flysystemService->getVisibility(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
-    }
-
-    /**
-     * @return void
-     */
     public function testIsPrivate()
     {
         $this->createDocumentFile();
@@ -353,18 +309,40 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile();
 
+        $isPrivate = $this->flysystemService->isPrivate(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertFalse($isPrivate);
+
         $result = $this->flysystemService->markAsPrivate(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
 
-        $visibility = $this->flysystemService->getVisibility(
+        $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
 
         $this->assertTrue($result);
-        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
+        $this->assertTrue($isPrivate);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPublic()
+    {
+        $this->createDocumentFile();
+
+        $isPrivate = $this->flysystemService->isPrivate(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertFalse($isPrivate);
     }
 
     /**
@@ -379,13 +357,13 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/' . static::FILE_DOCUMENT
         );
 
-        $visibility = $this->flysystemService->getVisibility(
+        $isPrivate = $this->flysystemService->isPrivate(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
 
         $this->assertTrue($result);
-        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+        $this->assertFalse($isPrivate);
     }
 
     /**

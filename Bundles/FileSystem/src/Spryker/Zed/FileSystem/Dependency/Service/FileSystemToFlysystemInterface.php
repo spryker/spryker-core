@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem;
+namespace Spryker\Zed\FileSystem\Dependency\Service;
 
-/**
- * @method \Spryker\Service\Flysystem\FlysystemServiceFactory getFactory()
- */
-interface FlysystemServiceInterface
+interface FileSystemToFlysystemInterface
 {
 
     /**

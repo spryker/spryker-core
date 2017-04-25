@@ -113,6 +113,20 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
+     *
+     * @return bool
+     */
+    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
+    {
+        return $this->getFactory()
+            ->createFileSystemHandler()
+            ->markAsPublic($fileSystemVisibilityTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
      * @return false|string

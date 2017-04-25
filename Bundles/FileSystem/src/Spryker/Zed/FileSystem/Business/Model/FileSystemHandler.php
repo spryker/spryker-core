@@ -19,25 +19,21 @@ use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FileSystemResourceTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use League\Flysystem\AdapterInterface;
-use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface;
+use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
 
-//TODO replace parameters with transfer
-//TODO add resource mapper
 class FileSystemHandler implements FileSystemHandlerInterface
 {
 
     /**
-     * @var \Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface
+     * @var \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
      */
     protected $flysystemService;
 
     /**
-     * @param \Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface $flysystemService
+     * @param \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
      */
-    public function __construct(
-        FileSystemToFlysystemInterface $flysystemService
-    ) {
+    public function __construct(FileSystemToFlysystemInterface $flysystemService)
+    {
         $this->flysystemService = $flysystemService;
     }
 
@@ -48,19 +44,18 @@ class FileSystemHandler implements FileSystemHandlerInterface
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        $metadata = $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->getMetadata($fileSystemQueryTransfer->getPath());
+        $flysystemMetadataTransfer = $this->flysystemService
+            ->getMetadata(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
 
-        if (!$metadata) {
+        if (!$flysystemMetadataTransfer) {
             return null;
         }
 
         $metadataTransfer = new FileSystemResourceMetadataTransfer();
-        $metadataTransfer->fromArray($metadata, true);
-
-        $isFile = $this->isFile($metadataTransfer->getType());
-        $metadataTransfer->setIsFile($isFile);
+        $metadataTransfer->fromArray($flysystemMetadataTransfer->toArray(), true);
 
         return $metadataTransfer;
     }
@@ -73,8 +68,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->getMimetype($fileSystemQueryTransfer->getPath());
+            ->getMimetype(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -84,11 +81,11 @@ class FileSystemHandler implements FileSystemHandlerInterface
      */
     public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        $visibility = $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->getVisibility($fileSystemQueryTransfer->getPath());
-
-        return $visibility === AdapterInterface::VISIBILITY_PRIVATE;
+        return $this->flysystemService
+            ->isPrivate(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -98,14 +95,25 @@ class FileSystemHandler implements FileSystemHandlerInterface
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        $visibility = AdapterInterface::VISIBILITY_PUBLIC;
-        if ($fileSystemVisibilityTransfer->getIsPrivate()) {
-            $visibility = AdapterInterface::VISIBILITY_PRIVATE;
-        }
-
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemVisibilityTransfer->getFileSystemName())
-            ->setVisibility($fileSystemVisibilityTransfer->getPath(), $visibility);
+            ->markAsPrivate(
+                $fileSystemVisibilityTransfer->getFileSystemName(),
+                $fileSystemVisibilityTransfer->getPath()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
+     *
+     * @return bool
+     */
+    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
+    {
+        return $this->flysystemService
+            ->markAsPublic(
+                $fileSystemVisibilityTransfer->getFileSystemName(),
+                $fileSystemVisibilityTransfer->getPath()
+            );
     }
 
     /**
@@ -116,8 +124,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->getTimestamp($fileSystemQueryTransfer->getPath());
+            ->getTimestamp(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -128,8 +138,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->getSize($fileSystemQueryTransfer->getPath());
+            ->getSize(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -140,8 +152,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemCreateDirectoryTransfer->getFileSystemName())
             ->createDir(
+                $fileSystemCreateDirectoryTransfer->getFileSystemName(),
                 $fileSystemCreateDirectoryTransfer->getPath(),
                 $fileSystemCreateDirectoryTransfer->getConfig()
             );
@@ -155,8 +167,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemDeleteDirectoryTransfer->getFileSystemName())
-            ->deleteDir($fileSystemDeleteDirectoryTransfer->getPath());
+            ->deleteDir(
+                $fileSystemDeleteDirectoryTransfer->getFileSystemName(),
+                $fileSystemDeleteDirectoryTransfer->getPath()
+            );
     }
 
     /**
@@ -167,8 +181,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemCopyTransfer->getFileSystemName())
             ->copy(
+                $fileSystemCopyTransfer->getFileSystemName(),
                 $fileSystemCopyTransfer->getPath(),
                 $fileSystemCopyTransfer->getNewPath()
             );
@@ -182,8 +196,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemDeleteTransfer->getFileSystemName())
-            ->delete($fileSystemDeleteTransfer->getPath());
+            ->delete(
+                $fileSystemDeleteTransfer->getFileSystemName(),
+                $fileSystemDeleteTransfer->getPath()
+            );
     }
 
     /**
@@ -194,8 +210,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->has($fileSystemQueryTransfer->getPath());
+            ->has(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -206,8 +224,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
             ->put(
+                $fileSystemContentTransfer->getFileSystemName(),
                 $fileSystemContentTransfer->getPath(),
                 $fileSystemContentTransfer->getContent(),
                 $fileSystemContentTransfer->getConfig()
@@ -222,8 +240,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemQueryTransfer->getFileSystemName())
-            ->read($fileSystemQueryTransfer->getPath());
+            ->read(
+                $fileSystemQueryTransfer->getFileSystemName(),
+                $fileSystemQueryTransfer->getPath()
+            );
     }
 
     /**
@@ -234,8 +254,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemRenameTransfer->getFileSystemName())
             ->rename(
+                $fileSystemRenameTransfer->getFileSystemName(),
                 $fileSystemRenameTransfer->getPath(),
                 $fileSystemRenameTransfer->getNewPath()
             );
@@ -249,8 +269,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
             ->update(
+                $fileSystemContentTransfer->getFileSystemName(),
                 $fileSystemContentTransfer->getPath(),
                 $fileSystemContentTransfer->getContent(),
                 $fileSystemContentTransfer->getConfig()
@@ -265,8 +285,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemContentTransfer->getFileSystemName())
             ->write(
+                $fileSystemContentTransfer->getFileSystemName(),
                 $fileSystemContentTransfer->getPath(),
                 $fileSystemContentTransfer->getContent(),
                 $fileSystemContentTransfer->getConfig()
@@ -282,8 +302,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
             ->putStream(
+                $fileSystemStreamTransfer->getFileSystemName(),
                 $fileSystemStreamTransfer->getPath(),
                 $stream,
                 $fileSystemStreamTransfer->getConfig()
@@ -298,8 +318,10 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
-            ->readStream($fileSystemStreamTransfer->getPath());
+            ->readStream(
+                $fileSystemStreamTransfer->getFileSystemName(),
+                $fileSystemStreamTransfer->getPath()
+            );
     }
 
     /**
@@ -311,8 +333,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
             ->updateStream(
+                $fileSystemStreamTransfer->getFileSystemName(),
                 $fileSystemStreamTransfer->getPath(),
                 $stream,
                 $fileSystemStreamTransfer->getConfig()
@@ -328,8 +350,8 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->flysystemService
-            ->getFilesystemByName($fileSystemStreamTransfer->getFileSystemName())
             ->writeStream(
+                $fileSystemStreamTransfer->getFileSystemName(),
                 $fileSystemStreamTransfer->getPath(),
                 $stream,
                 $fileSystemStreamTransfer->getConfig()
@@ -344,36 +366,21 @@ class FileSystemHandler implements FileSystemHandlerInterface
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {
         $resourceCollection = $this->flysystemService
-            ->getFilesystemByName($fileSystemListTransfer->getFileSystemName())
             ->listContents(
+                $fileSystemListTransfer->getFileSystemName(),
                 $fileSystemListTransfer->getPath(),
                 $fileSystemListTransfer->getRecursive()
             );
 
         $results = [];
-        foreach ($resourceCollection as $resource) {
+        foreach ($resourceCollection as $flysystemResourceTransfer) {
             $resourceTransfer = new FileSystemResourceTransfer();
-            $resourceTransfer->fromArray($resource);
-
-            $isFile = $this->isFile($resourceTransfer->getType());
-            $resourceTransfer->setIsFile($isFile);
+            $resourceTransfer->fromArray($flysystemResourceTransfer->toArray(), true);
 
             $results[] = $resourceTransfer;
         }
 
         return $results;
-    }
-
-    /**
-     * TODO move to adapter
-     *
-     * @param string $type
-     *
-     * @return bool
-     */
-    protected function isFile($type)
-    {
-        return $type === 'file';
     }
 
 }

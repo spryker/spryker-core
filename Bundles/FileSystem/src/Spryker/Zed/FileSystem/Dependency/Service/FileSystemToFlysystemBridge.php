@@ -5,15 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem;
+namespace Spryker\Zed\FileSystem\Dependency\Service;
 
-use Spryker\Service\Kernel\AbstractService;
-
-/**
- * @method \Spryker\Service\Flysystem\FlysystemServiceFactory getFactory()
- */
-class FlysystemService extends AbstractService implements FlysystemServiceInterface
+class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
 {
+
+    /**
+     * @var \Spryker\Service\Flysystem\FlysystemServiceInterface
+     */
+    protected $flysystemService;
+
+    /**
+     * @param \Spryker\Service\Flysystem\FlysystemServiceInterface $flysystemService
+     */
+    public function __construct($flysystemService)
+    {
+        $this->flysystemService = $flysystemService;
+    }
 
     /**
      * @param string $filesystemName
@@ -23,9 +31,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function isPrivate($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->isPrivate($filesystemName, $path);
+        return $this->flysystemService->isPrivate($filesystemName, $path);
     }
 
     /**
@@ -36,9 +42,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function getMetadata($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->getMetadata($filesystemName, $path);
+        return $this->flysystemService->getMetadata($filesystemName, $path);
     }
 
     /**
@@ -49,9 +53,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function getMimeType($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->getMimeType($filesystemName, $path);
+        return $this->flysystemService->getMimeType($filesystemName, $path);
     }
 
     /**
@@ -62,9 +64,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function getTimestamp($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->getTimestamp($filesystemName, $path);
+        return $this->flysystemService->getTimestamp($filesystemName, $path);
     }
 
     /**
@@ -75,9 +75,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function getSize($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->getSize($filesystemName, $path);
+        return $this->flysystemService->getSize($filesystemName, $path);
     }
 
     /**
@@ -88,9 +86,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function has($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->has($filesystemName, $path);
+        return $this->flysystemService->has($filesystemName, $path);
     }
 
     /**
@@ -101,9 +97,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function read($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->read($filesystemName, $path);
+        return $this->flysystemService->read($filesystemName, $path);
     }
 
     /**
@@ -115,9 +109,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function listContents($filesystemName, $directory = '', $recursive = false)
     {
-        return $this->getFactory()
-            ->createReader()
-            ->listContents($filesystemName, $directory, $recursive);
+        return $this->flysystemService->listContents($filesystemName, $directory, $recursive);
     }
 
     /**
@@ -128,9 +120,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function markAsPrivate($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPrivate($filesystemName, $path);
+        return $this->flysystemService->markAsPrivate($filesystemName, $path);
     }
 
     /**
@@ -141,9 +131,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function markAsPublic($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPublic($filesystemName, $path);
+        return $this->flysystemService->markAsPublic($filesystemName, $path);
     }
 
     /**
@@ -155,9 +143,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function createDir($filesystemName, $dirname, array $config = [])
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->createDir($filesystemName, $dirname, $config);
+        return $this->flysystemService->createDir($filesystemName, $dirname, $config);
     }
 
     /**
@@ -168,9 +154,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function deleteDir($filesystemName, $dirname)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->deleteDir($filesystemName, $dirname);
+        return $this->flysystemService->deleteDir($filesystemName, $dirname);
     }
 
     /**
@@ -182,9 +166,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function copy($filesystemName, $path, $newpath)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->copy($filesystemName, $path, $newpath);
+        return $this->flysystemService->copy($filesystemName, $path, $newpath);
     }
 
     /**
@@ -195,9 +177,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function delete($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->delete($filesystemName, $path);
+        return $this->flysystemService->delete($filesystemName, $path);
     }
 
     /**
@@ -210,9 +190,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function put($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->put($filesystemName, $path, $content, $config);
+        return $this->flysystemService->put($filesystemName, $path, $content, $config);
     }
 
     /**
@@ -224,9 +202,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function rename($filesystemName, $path, $newpath)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->rename($filesystemName, $path, $newpath);
+        return $this->flysystemService->rename($filesystemName, $path, $newpath);
     }
 
     /**
@@ -239,9 +215,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function update($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->update($filesystemName, $path, $content, $config);
+        return $this->flysystemService->update($filesystemName, $path, $content, $config);
     }
 
     /**
@@ -254,9 +228,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function write($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->write($filesystemName, $path, $content, $config);
+        return $this->flysystemService->write($filesystemName, $path, $content, $config);
     }
 
     /**
@@ -269,9 +241,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function putStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
-            ->createStream()
-            ->putStream($filesystemName, $path, $resource, $config);
+        return $this->flysystemService->putStream($filesystemName, $path, $resource, $config);
     }
 
     /**
@@ -282,9 +252,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function readStream($filesystemName, $path)
     {
-        return $this->getFactory()
-            ->createStream()
-            ->readStream($filesystemName, $path);
+        return $this->flysystemService->readStream($filesystemName, $path);
     }
 
     /**
@@ -297,9 +265,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function updateStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
-            ->createStream()
-            ->updateStream($filesystemName, $path, $resource, $config);
+        return $this->flysystemService->updateStream($filesystemName, $path, $resource, $config);
     }
 
     /**
@@ -312,9 +278,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      */
     public function writeStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
-            ->createStream()
-            ->writeStream($filesystemName, $path, $resource, $config);
+        return $this->flysystemService->writeStream($filesystemName, $path, $resource, $config);
     }
 
 }

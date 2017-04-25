@@ -50,6 +50,13 @@ interface FileSystemHandlerInterface
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
+     *
+     * @return bool
+     */
+    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return false|string

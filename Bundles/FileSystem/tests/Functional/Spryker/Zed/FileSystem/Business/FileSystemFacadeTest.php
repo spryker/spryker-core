@@ -27,7 +27,7 @@ use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory;
 use Spryker\Zed\FileSystem\Business\FileSystemFacade;
-use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemBridge;
+use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
 use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -321,7 +321,6 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     {
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $fileSystemVisibilityTransfer = $this->createDocumentVisibilityTransfer();
-        $fileSystemVisibilityTransfer->setIsPrivate(true);
 
         $this->createDocumentFile();
 
@@ -337,7 +336,23 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCreateDir()
+    public function testMarkAsPublic()
+    {
+        $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
+        $fileSystemVisibilityTransfer = $this->createDocumentVisibilityTransfer();
+
+        $this->createDocumentFile();
+
+        $this->fileSystemFacade->markAsPublic($fileSystemVisibilityTransfer);
+
+        $isPublic = $this->fileSystemFacade->isPrivate($fileSystemQueryTransfer);
+        $this->assertFalse($isPublic);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDirectory()
     {
         $fileSystemCreateDirectoryTransfer = new FileSystemCreateDirectoryTransfer();
         $fileSystemCreateDirectoryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
@@ -355,7 +370,7 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testDeleteDir()
+    public function testDeleteDirectory()
     {
         $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
         $fileSystemDeleteDirectoryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);

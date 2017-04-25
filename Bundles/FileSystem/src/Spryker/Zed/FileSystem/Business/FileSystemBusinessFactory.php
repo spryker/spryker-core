@@ -28,7 +28,7 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemInterface
+     * @return \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
      */
     protected function getFlysystemService()
     {
