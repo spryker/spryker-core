@@ -207,4 +207,20 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->toggleOptionActive($idProductOptionGroup, $isActive);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderProductOptions(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionOrderHydrate()
+            ->hydrate($orderTransfer);
+    }
+
 }

@@ -6,40 +6,47 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class GrandTotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculateGrandTotal($quoteTransfer);
+        $calculableObjectTransfer->requireTotals();
+
+        $grandTotal = $this->calculateGrandTotal($calculableObjectTransfer->getTotals());
+
+        $calculableObjectTransfer->getTotals()->setGrandTotal($grandTotal);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return int
      */
-    protected function calculateGrandTotal(QuoteTransfer $quoteTransfer)
+    protected function calculateGrandTotal(TotalsTransfer $totalsTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $subtotal = $totalsTransfer->getSubtotal();
+        $expenseTotal = $totalsTransfer->getExpenseTotal();
+        $discountTotal = $totalsTransfer->getDiscountTotal();
+        $canceledTotal = $totalsTransfer->getCanceledTotal();
 
-        $subtotal = $quoteTransfer->getTotals()->getSubtotal();
-        $expenseTotal = $quoteTransfer->getTotals()->getExpenseTotal();
-        $discountAmount = $quoteTransfer->getTotals()->getDiscountTotal();
-
-        $grandTotal = $subtotal + $expenseTotal - $discountAmount;
+        $grandTotal = $subtotal + $expenseTotal - $discountTotal - $canceledTotal;
 
         if ($grandTotal < 0) {
             $grandTotal = 0;
         }
 
-        $quoteTransfer->getTotals()->setGrandTotal($grandTotal);
+        return $grandTotal;
     }
 }

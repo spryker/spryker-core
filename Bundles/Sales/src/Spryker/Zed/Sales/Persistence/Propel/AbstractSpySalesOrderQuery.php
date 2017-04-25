@@ -11,6 +11,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery as BaseSpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
@@ -91,6 +92,41 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
         $this->addSubQueryResultField($subQuery, $resultFieldName);
 
         return $this;
+    }
+
+    /**
+     * @param string $resultFieldName
+     *
+     * @return $this
+     */
+    public function addLastOrderGrandTotalToResult($resultFieldName)
+    {
+        $subQuery = clone $this;
+        $subQuery->clear();
+
+        $subQuery
+            ->setModelAlias('sso', true)
+            ->useOrderTotalQuery()
+            ->withColumn(
+                SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL,
+                $resultFieldName
+            )
+            ->filterByFkSalesOrder(
+                sprintf(
+                    '%s = %s',
+                    SpySalesOrderTotalsTableMap::COL_FK_SALES_ORDER,
+                    SpySalesOrderTableMap::COL_ID_SALES_ORDER
+                ),
+                Criteria::CUSTOM
+            )
+            ->limit(1)
+            ->orderByCreatedAt(Criteria::DESC)
+            ->endUse();
+
+        $this->addSubQueryResultField($subQuery, $resultFieldName);
+
+        return $this;
+
     }
 
     /**

@@ -95,4 +95,22 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
         return $taxAmount / $netPrice;
     }
 
+    /**
+     * @param int $netPrice
+     * @param float $taxPercentage
+     *
+     * @return float|int
+     */
+    public function getTaxValueFromNetPrice($netPrice, $taxPercentage)
+    {
+        $price = (int)$netPrice;
+
+        if ($price < 0) {
+            throw new CalculationException('Invalid price value given.');
+        }
+
+        $amount = $netPrice * $taxPercentage / 100;
+
+        return (int)round($amount);
+    }
 }

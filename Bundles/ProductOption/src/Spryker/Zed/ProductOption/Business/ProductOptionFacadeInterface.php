@@ -161,4 +161,17 @@ interface ProductOptionFacadeInterface
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive);
 
+
+    /**
+     * Specification:
+     *  - Hydrate product options for given order transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderProductOptions(OrderTransfer $orderTransfer);
+
 }

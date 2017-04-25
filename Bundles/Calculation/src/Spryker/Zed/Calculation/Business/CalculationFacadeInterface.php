@@ -5,7 +5,9 @@
  */
 namespace Spryker\Zed\Calculation\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -29,17 +31,13 @@ interface CalculationFacadeInterface
     public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
-     *
-     * Specification
-     *  - Calculates item prices, based on store tax mode (gross/net)
-     *  - Calculates item sum (gross/net) price
-     *  - Calculate  item option sum (gross/net) price
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function calculateItemPrice(QuoteTransfer $quoteTransfer);
+    public function recalculateOrder(OrderTransfer $orderTransfer);
 
     /**
      * @api
@@ -115,16 +113,29 @@ interface CalculationFacadeInterface
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
+     *
+     * Specification
+     *  - Calculates item prices, based on store tax mode (gross/net)
+     *  - Calculates item sum (gross/net) price
+     *  - Calculate  item option sum (gross/net) price
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     */
+    public function calculateItemPrice(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
      * Specification:
      *  - Calculates total item option amount uses ProductOption::getSumPrice()
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateProductOptionPriceAggregation(QuoteTransfer $quoteTransfer);
+    public function calculateProductOptionPriceAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
 
     /**
@@ -133,9 +144,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateItemDiscountAmountAggregation(QuoteTransfer $quoteTransfer);
+    public function calculateDiscountAmountAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -143,9 +154,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateItemDiscountAmountFullAggregation(QuoteTransfer $quoteTransfer);
+    public function calculateItemDiscountAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -153,10 +164,10 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      */
-    public function calculateItemTaxAmountFullAggregation(QuoteTransfer $quoteTransfer);
+    public function calculateItemTaxAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -164,9 +175,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateItemSumAggregation(QuoteTransfer $quoteTransfer);
+    public function calculateSumAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -174,9 +185,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateItemPriceToPayAggregation(QuoteTransfer $quoteTransfer);
+    public function calculatePriceToPayAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -184,9 +195,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateSubtotal(QuoteTransfer $quoteTransfer);
+    public function calculateSubtotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -194,9 +205,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateExpenseTotal(QuoteTransfer $quoteTransfer);
+    public function calculateExpenseTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -204,9 +215,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
      */
-    public function calculateDiscountTotal(QuoteTransfer $quoteTransfer);
+    public function calculateDiscountTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -214,9 +225,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateTaxTotal(QuoteTransfer $quoteTransfer);
+    public function calculateTaxTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -224,9 +235,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateRefundTotal(QuoteTransfer $quoteTransfer);
+    public function calculateRefundTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -234,9 +245,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateRefundableAmount(QuoteTransfer $quoteTransfer);
+    public function calculateRefundableAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -244,8 +255,69 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      */
-    public function calculateGrandTotal(QuoteTransfer $quoteTransfer);
+    public function calculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate tax amount for item and its additions (option, expenses) + order expenses
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     */
+    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate total already canceled amount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+
+    /**
+     * Specification:
+     *  - Calculate tax average for item and expenses, used when recalculate taxable amount after refund
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     *
+     * Specification:
+     * - Calculate tax amount after cancellation
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculate total tax amount for order, take into account canceled amount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateOrderTaxTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
 }

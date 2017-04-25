@@ -43,11 +43,11 @@
                 <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
                     <td>{{ orderItem.Sku }}</td>
-                    <td>{{ orderItem.unitGrossPriceWithProductOptions | default(0) | money }}</td>
-                    <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | default(0) | money }}</td>
+                    <td>{{ orderItem.unitSubtotalAggregation | default(0) | money }}</td>
+                    <td>{{ orderItem.unitTaxAmountFullAggregation | default(0) | money }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
-                    <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | default(0) | money }} </td>
-                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts }}">{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | default(0) | money }} </td>
+                    <td>-{{ orderItem.unitDiscountAmountFullAggregation | default(0) | money }} </td>
+                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.unitPriceToPayAggregation }}">{{ orderItem.unitPriceToPayAggregation | default(0) | money }} </td>
                     <td>
                         <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
                             {{ orderItem.process }}

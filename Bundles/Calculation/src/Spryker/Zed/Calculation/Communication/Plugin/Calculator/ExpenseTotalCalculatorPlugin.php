@@ -6,28 +6,28 @@
 
 namespace Spryker\Zed\Calculation\Communication\Plugin\Calculator;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
-class ExpenseTotalCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
+class ExpenseTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFacade()
-            ->calculateExpenseTotal($quoteTransfer);
+            ->calculateExpenseTotal($calculableObjectTransfer);
     }
 }

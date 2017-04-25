@@ -6,25 +6,23 @@
 
 namespace Spryker\Zed\Calculation\Business\Aggregator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class ItemProductOptionPriceAggregator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setProductOptionPriceAggregation(
-                $this->aggregateProductOptionPrice($itemTransfer)
-            );
-        }
+        $this->calculateProductOptionPriceAggregationForItems($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -32,14 +30,47 @@ class ItemProductOptionPriceAggregator implements CalculatorInterface
      *
      * @return int
      */
-    protected function aggregateProductOptionPrice(ItemTransfer $itemTransfer)
+    protected function aggregateSumProductOptionPrice(ItemTransfer $itemTransfer)
     {
-        $productOptionPriceAggregation = 0;
+        $productOptionSumPriceAggregation = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionPriceAggregation += $productOptionTransfer->getSumPrice();
+            $productOptionSumPriceAggregation += $productOptionTransfer->getSumPrice();
         }
 
-        return $productOptionPriceAggregation;
+        return $productOptionSumPriceAggregation;
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function aggregateUnitProductOptionPrice(ItemTransfer $itemTransfer)
+    {
+        $productOptionUnitPriceAggregation = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionUnitPriceAggregation += $productOptionTransfer->getUnitPrice();
+        }
+
+        return $productOptionUnitPriceAggregation;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateProductOptionPriceAggregationForItems(ArrayObject $items)
+    {
+        foreach ($items as $itemTransfer) {
+            $itemTransfer->setSumProductOptionPriceAggregation(
+                $this->aggregateSumProductOptionPrice($itemTransfer)
+            );
+
+            $itemTransfer->setUnitProductOptionPriceAggregation(
+                $this->aggregateUnitProductOptionPrice($itemTransfer)
+            );
+        }
     }
 }
 

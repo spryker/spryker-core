@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Totals' } %}
+
+            {% block widget_content %}
+
+                <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
+                    <tbody>
+                    {% for orderItem in order.items if orderItem.relatedBundleItemIdentifier is empty %}
+                        <tr>
+                            <th>{{ orderItem.name }}</th>
+                            <th></th>
+                            <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                            <th></th>
+                        </tr>
+                        {% for orderItemOption in orderItem.productOptions %}
+                            <tr>
+                                <td> + {{ orderItemOption.value }}</td>
+                                <td></td>
+                                <td class="text-right">{{ orderItemOption.unitGrossPrice | money }}</td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+
+                    {% if order.bundleItems is defined %}
+                        {% for orderItem in order.bundleItems %}
+                            <tr>
+                                <th>{{ orderItem.name }}</th>
+                                <th></th>
+                                <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                                <th></th>
+                            </tr>
+                            {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
+                                <tr>
+                                    <th></th>
+                                    <th>{{ bundledItem.name }}</th>
+                                    <td class="text-right">{{ bundledItem.unitGrossPrice | money  }}</td>
+                                    <td></td>
+                                </tr>
+                                {% for orderItemOption in bundledItem.productOptions %}
+                                    <tr>
+                                        <td></td>
+                                        <td> + {{ orderItemOption.value }}</td>
+                                        <td class="text-right">{{ orderItemOption.unitGrossPrice | money  }}</td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <tr><td colspan="4">&nbsp;</td></tr>
+
+                    <tr>
+                        <th>{{ 'Sub total' | trans }}</th>
+                        <th></th>
+                        <td class="text-right">{{ order.totals.subtotal | money }}</td>
+                        <td></td>
+                    </tr>
+                    {% for expense in order.expenses %}
+                        <tr>
+                            <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
+                            <th></th>
+                            <td class="text-right">{{ expense.unitGrossPrice | money  }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <th>{{ 'Discount' | trans }}</th>
+                        <th></th>
+                        <td class="text-right">-{{ order.totals.discountTotal | money }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ 'Canceled total' | trans }}</th>
+                        <th></th>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.refundTotal }}">-{{ order.totals.canceledTotal | money }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ 'Grand total' | trans }}</th>
+                        <th></th>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal | money }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ 'Included tax amount' | trans }}</td>
+                        <th></th>
+                        <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | money }}</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>

@@ -6,24 +6,23 @@
 
 namespace Spryker\Zed\Calculation\Business\Aggregator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class ItemTaxAmountFullAggregator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productOptionTaxAmount = $this->calculateProductOptionTaxAmount($itemTransfer);
-            $itemTransfer->setTaxAmountFullAggregation($itemTransfer->getSumTaxAmount() + $productOptionTaxAmount);
-        }
+        $this->calculateTaxAmountFullAggregationForItems($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -31,13 +30,46 @@ class ItemTaxAmountFullAggregator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateProductOptionTaxAmount(ItemTransfer $itemTransfer)
+    protected function calculateProductOptionSumTaxAmount(ItemTransfer $itemTransfer)
     {
-        $productOptionTotalTaxAmount = 0;
+        $productOptionSumTotalTaxAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionTotalTaxAmount += $productOptionTransfer->getSumTaxAmount();
+            $productOptionSumTotalTaxAmount += $productOptionTransfer->getSumTaxAmount();
         }
 
-        return $productOptionTotalTaxAmount;
+        return $productOptionSumTotalTaxAmount;
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function calculateProductOptionUnitTaxAmount(ItemTransfer $itemTransfer)
+    {
+        $productOptionUnitTotalTaxAmount = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionUnitTotalTaxAmount += $productOptionTransfer->getUnitTaxAmount();
+        }
+
+        return $productOptionUnitTotalTaxAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateTaxAmountFullAggregationForItems(ArrayObject $items)
+    {
+        foreach ($items as $itemTransfer) {
+
+            $productOptionUnitTaxAmount = $this->calculateProductOptionUnitTaxAmount($itemTransfer);
+            $itemTransfer->setUnitTaxAmountFullAggregation($itemTransfer->getUnitTaxAmount() + $productOptionUnitTaxAmount);
+
+            $productOptionSumTaxAmount = $this->calculateProductOptionSumTaxAmount($itemTransfer);
+            $itemTransfer->setSumTaxAmountFullAggregation($itemTransfer->getSumTaxAmount() + $productOptionSumTaxAmount);
+
+        }
     }
 }

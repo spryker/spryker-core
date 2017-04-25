@@ -25,12 +25,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
-    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
+
+    const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -47,9 +48,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addHydrateOrderPlugins($container);
 
         return $container;
     }
@@ -63,11 +64,24 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addOmsFacade($container);
         $container = $this->addUserFacade($container);
-        $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addDateTimeFormatter($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addHydrateOrderPlugins(Container $container)
+    {
+        $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
+            return $this->getHydrateOrderPlugins();
+        };
 
         return $container;
     }
@@ -123,20 +137,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesAggregatorFacade(Container $container)
-    {
-        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;
@@ -210,6 +210,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return array|/Spryker/Zed/Sales/Dependency/Plugin/HydrateOrderPluginInterface[]
+     */
+    protected function getHydrateOrderPlugins()
+    {
+         return [];
     }
 
 }

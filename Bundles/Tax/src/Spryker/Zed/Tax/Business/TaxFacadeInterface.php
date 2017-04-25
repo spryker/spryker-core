@@ -307,6 +307,20 @@ interface TaxFacadeInterface
 
     /**
      * Specification:
+     *  - Calculate tax amount from given price and rate
+     *  - Share rounding error between calls to this method.
+     *
+     * @api
+     *
+     * @param int $netPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromNetPrice($netPrice, $taxRate);
+
+    /**
+     * Specification:
      *  - Reset rounding error counter to 0
      *
      * @api

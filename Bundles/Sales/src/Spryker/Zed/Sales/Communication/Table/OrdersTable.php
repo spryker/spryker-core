@@ -56,20 +56,17 @@ class OrdersTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
-        SalesToSalesAggregatorInterface $salesAggregatorFacade,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService
     ) {
         $this->queryBuilder = $queryBuilder;
-        $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
@@ -117,7 +114,7 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
+                static::GRAND_TOTAL => $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]),
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
@@ -252,18 +249,6 @@ class OrdersTable extends AbstractTable
                 )
             );
         }
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return int
-     */
-    protected function getGrandTotalByIdSalesOrder($idSalesOrder)
-    {
-        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
-
-        return $orderTransfer->getTotals()->getGrandTotal();
     }
 
     /**

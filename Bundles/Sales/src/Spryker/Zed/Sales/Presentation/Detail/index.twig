@@ -9,6 +9,8 @@
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
 
+    {% include '@Sales/Detail/boxes/totals.twig' %}
+
     {% for blockName, externalBlock in blocks %}
     <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
     {% endfor %}

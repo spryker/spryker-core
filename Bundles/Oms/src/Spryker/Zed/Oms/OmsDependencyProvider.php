@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorBridge;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge AS PersistenceOmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
@@ -31,7 +32,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
 
     const FACADE_MAIL = 'FACADE_MAIL';
-    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
+    const FACADE_SALES = 'FACADE_SALES';
+
     const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
@@ -51,10 +53,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getCommandPlugins($container);
         };
 
-        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new OmsToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
-        };
-
         $container[self::FACADE_MAIL] = function (Container $container) {
             return new OmsToMailBridge($container->getLocator()->mail()->facade());
         };
@@ -69,6 +67,10 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::SERVICE_UTIL_NETWORK] = function (Container $container) {
             return new OmsToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
+        };
+
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new OmsToSalesBridge($container->getLocator()->sales()->facade());
         };
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {

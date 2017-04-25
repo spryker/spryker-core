@@ -6,26 +6,41 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class SubtotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $calculableObjectTransfer->requireTotals();
 
+        $subtotal = $this->calculateTotalItemSumAggregation($calculableObjectTransfer->getItems());
+
+        $calculableObjectTransfer->getTotals()->setSubtotal($subtotal);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return int
+     */
+    protected function calculateTotalItemSumAggregation(ArrayObject $items)
+    {
         $subtotal = 0;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $subtotal += $itemTransfer->getSumAggregation();
-        }
+        foreach ($items as $itemTransfer) {
+            $itemTransfer->requireSumSubtotalAggregation();
 
-        $quoteTransfer->getTotals()->setSubtotal($subtotal) ;
+            $subtotal += $itemTransfer->getSumSubtotalAggregation();
+        }
+        return $subtotal;
     }
 }

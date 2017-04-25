@@ -6,42 +6,24 @@
 
 namespace Spryker\Zed\Calculation\Business\Aggregator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class ItemDiscountAmountFullAggregator implements CalculatorInterface
 {
-    /**
-     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
-     */
-    protected $itemDiscountAmountAggregator;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface $itemDiscountAmountAggregator
-     */
-    public function __construct(CalculatorInterface $itemDiscountAmountAggregator)
-    {
-        $this->itemDiscountAmountAggregator = $itemDiscountAmountAggregator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->itemDiscountAmountAggregator->recalculate($quoteTransfer);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productOptionDiscountAmountAggregation = $this->calculateProductOptionDiscountAmountAggregation($itemTransfer);
-
-            $itemTransfer->setDiscountAmountFullAggregation(
-                $itemTransfer->getDiscountAmountAggregation() + $productOptionDiscountAmountAggregation
-            );
-        }
+        $this->calculateDiscountAmountFullAggregationForItems($calculableObjectTransfer->getItems());
     }
 
     /**
@@ -49,25 +31,50 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateProductOptionDiscountAmountAggregation(ItemTransfer $itemTransfer)
+    protected function calculateSumProductOptionDiscountAmountAggregation(ItemTransfer $itemTransfer)
     {
-        $productOptionDiscountAmountAggregation = 0;
+        $productOptionSumDiscountAmountAggregation = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            foreach ($productOptionTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-                $this->setCalculatedDiscountsSumGrossAmount($calculatedDiscountTransfer);
-                $productOptionDiscountAmountAggregation += $calculatedDiscountTransfer->getSumGrossAmount();
-            }
+            $productOptionSumDiscountAmountAggregation += $productOptionTransfer->getSumDiscountAmountAggregation();
         }
 
-        return $productOptionDiscountAmountAggregation;
+        return $productOptionSumDiscountAmountAggregation;
     }
 
 
     /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return int
      */
-    protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    protected function calculateUnitProductOptionDiscountAmountAggregation(ItemTransfer $itemTransfer)
     {
-        $calculatedDiscountTransfer->setSumGrossAmount($calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity());
+        $productOptionUnitDiscountAmountAggregation = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionUnitDiscountAmountAggregation += $productOptionTransfer->getUnitDiscountAmountAggregation();
+        }
+
+        return $productOptionUnitDiscountAmountAggregation;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateDiscountAmountFullAggregationForItems(ArrayObject $items)
+    {
+        foreach ($items as $itemTransfer) {
+
+            $unitProductOptionDiscountAmountAggregation = $this->calculateUnitProductOptionDiscountAmountAggregation($itemTransfer);
+            $itemTransfer->setUnitDiscountAmountFullAggregation(
+                $itemTransfer->getUnitDiscountAmountAggregation() + $unitProductOptionDiscountAmountAggregation
+            );
+
+            $sumProductOptionDiscountAmountAggregation = $this->calculateSumProductOptionDiscountAmountAggregation($itemTransfer);
+            $itemTransfer->setSumDiscountAmountFullAggregation(
+                $itemTransfer->getSumDiscountAmountAggregation() + $sumProductOptionDiscountAmountAggregation
+            );
+        }
     }
 }

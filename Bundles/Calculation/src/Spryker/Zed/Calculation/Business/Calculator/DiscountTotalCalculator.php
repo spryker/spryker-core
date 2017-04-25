@@ -6,51 +6,53 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class DiscountTotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $calculableObjectTransfer->requireTotals();
 
-        $totalDiscountAmount = $this->calculateItemTotalDiscountAmount($quoteTransfer);
-        $totalDiscountAmount += $this->calculateExpenseTotalDiscountAmount($quoteTransfer);
+        $totalDiscountAmount = $this->calculateItemTotalDiscountAmount($calculableObjectTransfer->getItems());
+        $totalDiscountAmount += $this->calculateExpenseTotalDiscountAmount($calculableObjectTransfer);
 
-        $quoteTransfer->getTotals()->setDiscountTotal($totalDiscountAmount);
+        $calculableObjectTransfer->getTotals()->setDiscountTotal($totalDiscountAmount);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return int
      */
-    protected function calculateExpenseTotalDiscountAmount(QuoteTransfer $quoteTransfer)
+    protected function calculateExpenseTotalDiscountAmount(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $totalDiscountAmount = 0;
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $totalDiscountAmount += $expenseTransfer->getDiscountAmountAggregation();
+        foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
+            $totalDiscountAmount += $expenseTransfer->getSumDiscountAmountAggregation();
         }
         return $totalDiscountAmount;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return int
      */
-    protected function calculateItemTotalDiscountAmount(QuoteTransfer $quoteTransfer)
+    protected function calculateItemTotalDiscountAmount(ArrayObject $items)
     {
         $totalDiscountAmount = 0;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $totalDiscountAmount += $itemTransfer->getDiscountAmountFullAggregation();
+        foreach ($items as $itemTransfer) {
+            $totalDiscountAmount += $itemTransfer->getSumDiscountAmountFullAggregation();
         }
         return $totalDiscountAmount;
     }

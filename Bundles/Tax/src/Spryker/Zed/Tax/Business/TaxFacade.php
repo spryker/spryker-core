@@ -366,13 +366,30 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param int $grossPrice
      * @param float $taxRate
      *
-     * @return float
+     * @return int
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
         return $this->getFactory()
             ->createAccruedTaxCalculator()
             ->getTaxValueFromPrice($grossPrice, $taxRate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $netPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromNetPrice($netPrice, $taxRate)
+    {
+        return $this->getFactory()
+            ->createAccruedTaxCalculator()
+            ->getTaxValueFromNetPrice($netPrice, $taxRate);
     }
 
     /**

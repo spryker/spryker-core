@@ -59,6 +59,11 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     ) {
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
         $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getUnitGrossPrice());
+        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getUnitNetPrice());
+        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getUnitTaxAmount());
+        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getUnitDiscountAmountAggregation());
+        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getUnitPrice());
+
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }
 

@@ -15,14 +15,15 @@ use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderConfirmationMailTypePlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypePlugin;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 
 class MailHandler
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
-    protected $salesAggregatorFacade;
+    protected $saleFacade;
 
     /**
      * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
@@ -30,12 +31,12 @@ class MailHandler
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface $salesAggregatorFacade
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface $mailFacade
      */
-    public function __construct(OmsToSalesAggregatorInterface $salesAggregatorFacade, OmsToMailInterface $mailFacade)
+    public function __construct(OmsToSalesInterface $salesFacade, OmsToMailInterface $mailFacade)
     {
-        $this->salesAggregatorFacade = $salesAggregatorFacade;
+        $this->saleFacade = $salesFacade;
         $this->mailFacade = $mailFacade;
     }
 
@@ -80,7 +81,7 @@ class MailHandler
      */
     protected function getOrderTransfer(SpySalesOrder $salesOrderEntity)
     {
-        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $orderTransfer = $this->saleFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
 
         $shippingAddressTransfer = $this->getShippingAddressTransfer($salesOrderEntity);
         $orderTransfer->setShippingAddress($shippingAddressTransfer);

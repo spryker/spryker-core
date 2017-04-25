@@ -6,35 +6,59 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $calculableObjectTransfer->requireTotals();
 
-        $totalTaxAmount = 0;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $totalTaxAmount += $itemTransfer->getTaxAmountFullAggregation();
-        }
-
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
-        }
+        $totalTaxAmount = $this->calculateTaxTotalForItems($calculableObjectTransfer->getItems());
+        $totalTaxAmount += $this->calculateTaxTotalAmountForExpenses($calculableObjectTransfer->getExpenses());
 
         $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount($totalTaxAmount);
+        $taxTotalTransfer->setAmount((int)round($totalTaxAmount));
 
-        $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
+        $calculableObjectTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
 
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return int
+     */
+    protected function calculateTaxTotalForItems(ArrayObject $items)
+    {
+        $totalTaxAmount = 0;
+        foreach ($items as $itemTransfer) {
+            $totalTaxAmount += $itemTransfer->getSumTaxAmountFullAggregation();
+        }
+        return $totalTaxAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     *
+     * @return int
+     */
+    protected function calculateTaxTotalAmountForExpenses(ArrayObject $expenses)
+    {
+        $totalTaxAmount = 0;
+        foreach ($expenses as $expenseTransfer) {
+            $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
+        }
+        return $totalTaxAmount;
     }
 }

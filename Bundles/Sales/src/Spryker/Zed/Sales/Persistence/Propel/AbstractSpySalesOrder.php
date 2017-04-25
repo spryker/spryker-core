@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_order' table.
@@ -20,4 +23,17 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
+
+    /**
+     * @return SpySalesOrderTotals
+     */
+    public function getLastOrderTotals()
+    {
+        $salesOrderTotalsEntity = SpySalesOrderTotalsQuery::create()
+            ->orderByCreatedAt(Criteria::DESC)
+            ->filterByFkSalesOrder($this->getIdSalesOrder())
+            ->findOne();
+
+        return $salesOrderTotalsEntity;
+    }
 }

@@ -16,7 +16,7 @@ interface OrderUpdaterInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return bool
      */
     public function update(OrderTransfer $orderTransfer, $idSalesOrder);
 

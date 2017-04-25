@@ -6,38 +6,39 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class RefundTotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $calculableObjectTransfer->requireTotals();
 
-        $refundTotalAmount = $this->calculateItemRefundAmount($quoteTransfer);
-        $refundTotalAmount += $this->calculateExpenseRefundAmount($quoteTransfer);
+        $refundTotalAmount = $this->calculateItemRefundAmount($calculableObjectTransfer);
+        $refundTotalAmount += $this->calculateExpenseRefundAmount($calculableObjectTransfer);
 
-        $quoteTransfer->getTotals()->setRefundTotal($refundTotalAmount);
+        $calculableObjectTransfer->getTotals()->setRefundTotal($refundTotalAmount);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return int
      */
-    protected function calculateItemRefundAmount(QuoteTransfer $quoteTransfer)
+    protected function calculateItemRefundAmount(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $refundTotalAmount = 0;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $refundTotalAmount += $itemTransfer->getRefundableAmount();
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            $refundTotalAmount += $itemTransfer->getRefundableAmount() * $itemTransfer->getQuantity();
             $refundTotalAmount += $this->calculateItemOptionTotalRefundAmount($itemTransfer);
         }
         return $refundTotalAmount;
@@ -52,21 +53,21 @@ class RefundTotalCalculator implements CalculatorInterface
     {
         $refundTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $refundTotalAmount += $productOptionTransfer->getRefundableAmount();
+            $refundTotalAmount += $productOptionTransfer->getRefundableAmount() * $productOptionTransfer->getQuantity();
         }
         return $refundTotalAmount;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return int
      */
-    protected function calculateExpenseRefundAmount(QuoteTransfer $quoteTransfer)
+    protected function calculateExpenseRefundAmount(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $refundTotalAmount = 0;
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $refundTotalAmount += $expenseTransfer->getRefundableAmount();
+        foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
+            $refundTotalAmount += $expenseTransfer->getRefundableAmount() * $expenseTransfer->getQuantity();
         }
         return $refundTotalAmount;
     }

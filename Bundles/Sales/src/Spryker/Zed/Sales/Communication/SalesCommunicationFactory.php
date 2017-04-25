@@ -99,7 +99,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OrdersTable(
             $this->createOrdersTableQueryBuilder(),
-            $this->getSalesAggregator(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
@@ -164,14 +163,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getCountryFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
-     */
-    public function getSalesAggregator()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
     /**

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Refund\Persistence\SpyRefund;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundSaver implements RefundSaverInterface
@@ -22,11 +25,28 @@ class RefundSaver implements RefundSaverInterface
     protected $salesQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
-    public function __construct(SalesQueryContainerInterface $salesQueryContainer)
-    {
+    protected $salesFacade;
+
+    /**
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface
+     */
+    protected $calculationFacade;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $saleFacade
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacade
+     */
+    public function __construct(
+        SalesQueryContainerInterface $salesQueryContainer,
+        RefundToSalesInterface $saleFacade,
+        RefundToCalculationInterface $calculationFacade
+    ) {
         $this->salesQueryContainer = $salesQueryContainer;
+        $this->salesFacade = $saleFacade;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -41,6 +61,7 @@ class RefundSaver implements RefundSaverInterface
         $this->updateOrderItems($refundTransfer);
         $this->updateExpenses($refundTransfer);
         $this->storeRefund($refundTransfer);
+        $this->recalculateOrder($refundTransfer);
 
         return $this->salesQueryContainer->getConnection()->commit();
     }
@@ -88,6 +109,7 @@ class RefundSaver implements RefundSaverInterface
     protected function updateOrderItems(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
+
             $salesOrderItemEntity = $this->getSalesOrderItemEntity($itemTransfer);
             $salesOrderItemEntity->setCanceledAmount($itemTransfer->getCanceledAmount());
             $salesOrderItemEntity->save();
@@ -134,6 +156,18 @@ class RefundSaver implements RefundSaverInterface
             ->findOneByIdSalesExpense($expenseTransfer->getIdSalesExpense());
 
         return $salesExpenseEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function recalculateOrder(RefundTransfer $refundTransfer)
+    {
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($refundTransfer->getFkSalesOrder());
+        $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
+        $this->salesFacade->updateOrder($orderTransfer, $refundTransfer->getFkSalesOrder());
     }
 
 }

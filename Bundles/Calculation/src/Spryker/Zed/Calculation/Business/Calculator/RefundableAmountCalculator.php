@@ -6,31 +6,54 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class RefundableAmountCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireSumAggregation();
+        $this->calculateRefundableAmountForItems($calculableObjectTransfer->getItems());
+        $this->calculateRefundableAmountForExpenses($calculableObjectTransfer->getExpenses());
+    }
 
-            $totalCanceledAmount = $itemTransfer->getCanceledAmount();
-            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $totalCanceledAmount += $productOptionTransfer->getCanceledAmount();
-            }
-            $itemTransfer->setRefundableAmount($itemTransfer->getSumAggregation() - $totalCanceledAmount);
-        }
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function calculateRefundableAmountForItems(ArrayObject $items)
+    {
+        foreach ($items as $itemTransfer) {
+            $itemTransfer->requireUnitPriceToPayAggregation();
 
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $expenseTransfer->setRefundableAmount(0);
+            $itemTransfer->setRefundableAmount(
+                $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getCanceledAmount()
+            );
         }
     }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     *
+     * @return void
+     */
+    protected function calculateRefundableAmountForExpenses(ArrayObject $expenses)
+    {
+        foreach ($expenses as $expenseTransfer) {
+            $expenseTransfer->setRefundableAmount(
+                $expenseTransfer->getUnitPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
+            );
+        }
+    }
+
 }

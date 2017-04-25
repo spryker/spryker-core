@@ -42,6 +42,11 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     protected function calculateRefundableItemAmount(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
+
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                $refundTransfer->setAmount($refundTransfer->getAmount() + $productOptionTransfer->getRefundableAmount());
+            }
+
             $refundTransfer->setAmount($refundTransfer->getAmount() + $itemTransfer->getRefundableAmount());
         }
     }
@@ -54,6 +59,10 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     protected function setCanceledItemAmount(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                $productOptionTransfer->setCanceledAmount($productOptionTransfer->getRefundableAmount());
+            }
+
             $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
         }
     }

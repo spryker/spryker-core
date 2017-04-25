@@ -21,6 +21,9 @@ class RemoveAllCalculatedDiscountsCalculator implements CalculatorInterface
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getItems() as $item) {
+            foreach ($item->getProductOptions() as $productOptionTransfer) {
+                $productOptionTransfer->setCalculatedDiscounts(new ArrayObject());
+            }
             $item->setCalculatedDiscounts(new ArrayObject());
         }
 

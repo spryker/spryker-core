@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
@@ -94,11 +95,30 @@ class OrderSaver implements OrderSaverInterface
         Propel::getConnection()->beginTransaction();
 
         $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
+        $this->saveOrderTotals($quoteTransfer, $salesOrderEntity->getIdSalesOrder());
         $this->saveOrderItems($quoteTransfer, $salesOrderEntity);
 
         Propel::getConnection()->commit();
 
         $this->hydrateCheckoutResponseTransfer($checkoutResponseTransfer, $quoteTransfer, $salesOrderEntity);
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idSalesOrder
+     */
+    protected function saveOrderTotals(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    {
+        $taxTotal = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
+
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setFkSalesOrder($idSalesOrder);
+        $salesOrderTotalsEntity->fromArray($quoteTransfer->getTotals()->toArray());
+        $salesOrderTotalsEntity->setTaxTotal($taxTotal);
+        $salesOrderTotalsEntity->setOrderExpenseTotal($quoteTransfer->getTotals()->getExpenseTotal());
+        $salesOrderTotalsEntity->save();
+
     }
 
     /**
@@ -270,6 +290,19 @@ class OrderSaver implements OrderSaverInterface
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
         $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
+        $salesOrderItemEntity->setNetPrice($itemTransfer->getUnitNetPrice());
+
+        $salesOrderItemEntity->setPrice($itemTransfer->getUnitPrice());
+        $salesOrderItemEntity->setPriceToPayAggregation($itemTransfer->getUnitPriceToPayAggregation());
+        $salesOrderItemEntity->setSubtotalAggregation($itemTransfer->getUnitSubtotalAggregation());
+        $salesOrderItemEntity->setProductOptionPriceAggregation($itemTransfer->getUnitProductOptionPriceAggregation());
+        $salesOrderItemEntity->setExpensePriceAggregation($itemTransfer->getUnitExpensePriceAggregation());
+        $salesOrderItemEntity->setTaxAmount($itemTransfer->getUnitTaxAmount());
+        $salesOrderItemEntity->setTaxAmountFullAggregation($itemTransfer->getUnitTaxAmountFullAggregation());
+        $salesOrderItemEntity->setDiscountAmountAggregation($itemTransfer->getUnitDiscountAmountAggregation());
+        $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getUnitDiscountAmountFullAggregation());
+        $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
+
         $salesOrderItemEntity->setProcess($processEntity);
     }
 

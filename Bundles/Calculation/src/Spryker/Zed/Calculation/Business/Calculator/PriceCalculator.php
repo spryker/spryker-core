@@ -6,121 +6,76 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Calculation\CalculationConfig;
 
 class PriceCalculator implements CalculatorInterface
 {
 
     /**
-     * @var array|CalculatorInterface[]
+     * @var array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
      */
-    protected $calculators;
+    protected $netPriceCalculators;
 
     /**
-     * @param array|CalculatorInterface[] $itemSumCalculators
+     * @var array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
      */
-    public function __construct(array $itemSumCalculators)
+    protected $grossPriceCalculators;
+
+    /**
+     * @var \Spryker\Zed\Calculation\CalculationConfig
+     */
+    protected $calculatorConfig;
+
+    /**
+     * @param array $netPriceCalculators
+     * @param array $grossPriceCalculators
+     * @param \Spryker\Zed\Calculation\CalculationConfig $calculatorConfig
+     */
+    public function __construct(
+        array $netPriceCalculators,
+        array $grossPriceCalculators,
+        CalculationConfig $calculatorConfig
+    )
     {
-        $this->calculators = $itemSumCalculators;
+        $this->netPriceCalculators = $netPriceCalculators;
+        $this->grossPriceCalculators = $grossPriceCalculators;
+        $this->calculatorConfig = $calculatorConfig;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->recalculateItemSumPrices($quoteTransfer);
+        $calculableObjectTransfer->setTaxMode($this->calculatorConfig->getTaxMode());
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->setItemPriceBasedOnTaxMode($itemTransfer, $quoteTransfer->getTaxMode());
-            $this->recalculateProductOptionPrices($itemTransfer, $quoteTransfer->getTaxMode());
-        }
-
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $this->setExpensePriceBaseOnTaxMode($expenseTransfer, $quoteTransfer->getTaxMode());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $taxMode
-     *
-     * @return void
-     */
-    protected function setItemPriceBasedOnTaxMode(ItemTransfer $itemTransfer, $taxMode)
-    {
-        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
-            $itemTransfer->setUnitPrice($itemTransfer->getUnitNetPrice());
-            $itemTransfer->setSumPrice($itemTransfer->getSumNetPrice());
+        if ($this->calculatorConfig->getTaxMode() === CalculationConfig::TAX_MODE_NET) {
+            $this->executeCalculatorStack($this->netPriceCalculators, $calculableObjectTransfer);
         } else {
-            $itemTransfer->setUnitPrice($itemTransfer->getUnitGrossPrice());
-            $itemTransfer->setSumPrice($itemTransfer->getSumGrossPrice());
+            $this->executeCalculatorStack($this->grossPriceCalculators, $calculableObjectTransfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array|\Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface[] $calculators
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    protected function recalculateItemSumPrices(QuoteTransfer $quoteTransfer)
+    protected function executeCalculatorStack(array $calculators, CalculableObjectTransfer $calculableObjectTransfer)
     {
-        foreach ($this->calculators as $calculator) {
-            $calculator->recalculate($quoteTransfer);
+        foreach ($calculators as $calculator) {
+            $calculator->recalculate($calculableObjectTransfer);
         }
     }
 
-    /**
-     * @param ItemTransfer $itemTransfer
-     * @param string $taxMode
-     *
-     * @return void
-     */
-    protected function recalculateProductOptionPrices(ItemTransfer $itemTransfer, $taxMode)
-    {
-        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $this->setProductOptionPriceBasedOnTaxMode($productOptionTransfer, $taxMode);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     * @param string $taxMode
-     *
-     * @return void
-     */
-    protected function setProductOptionPriceBasedOnTaxMode(ProductOptionTransfer $productOptionTransfer, $taxMode)
-    {
-        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
-            $productOptionTransfer->setUnitPrice($productOptionTransfer->getUnitNetPrice());
-            $productOptionTransfer->setSumPrice($productOptionTransfer->getSumNetPrice());
-        } else {
-            $productOptionTransfer->setUnitPrice($productOptionTransfer->getUnitGrossPrice());
-            $productOptionTransfer->setSumPrice($productOptionTransfer->getSumGrossPrice());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param string $taxMode
-     *
-     * @return void
-     */
-    protected function setExpensePriceBaseOnTaxMode(ExpenseTransfer $expenseTransfer, $taxMode)
-    {
-        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
-            $expenseTransfer->setUnitPrice($expenseTransfer->getUnitNetPrice());
-            $expenseTransfer->setSumPrice($expenseTransfer->getSumNetPrice());
-        } else {
-            $expenseTransfer->setUnitPrice($expenseTransfer->getUnitGrossPrice());
-            $expenseTransfer->setSumPrice($expenseTransfer->getSumGrossPrice());
-        }
-    }
 }

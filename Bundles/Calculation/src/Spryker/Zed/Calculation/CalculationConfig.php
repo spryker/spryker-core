@@ -14,15 +14,23 @@ class CalculationConfig extends AbstractBundleConfig
 
     const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
 
-    const TAX_MODE_NET = 'tax mode net';
-    const TAX_MODE_GROSS = 'tax mode gross';
+    const TAX_MODE_NET = 'NET_MODE';
+    const TAX_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @return bool
      */
-    public function enableNewCalculators()
+    public function isNewCalculatorsEnabled()
     {
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxMode()
+    {
+        return static::TAX_MODE_GROSS;
     }
 
 }

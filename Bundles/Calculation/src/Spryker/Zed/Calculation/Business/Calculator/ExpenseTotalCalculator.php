@@ -6,27 +6,39 @@
 
 namespace Spryker\Zed\Calculation\Business\Calculator;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class ExpenseTotalCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $calculableObjectTransfer->requireTotals();
 
+        $expenseTotal = $this->calculateExpenseTotalSumPrice($calculableObjectTransfer->getExpenses());
+
+        $calculableObjectTransfer->getTotals()->setExpenseTotal($expenseTotal);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     *
+     * @return int
+     */
+    protected function calculateExpenseTotalSumPrice(\ArrayObject $expenses)
+    {
         $expenseTotal = 0;
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $expenseTotal +=$expenseTransfer->getSumPrice();
+        foreach ($expenses as $expenseTransfer) {
+            $expenseTotal += $expenseTransfer->getSumPrice();
         }
-
-        $quoteTransfer->getTotals()->setExpenseTotal($expenseTotal);
+        return $expenseTotal;
     }
 }

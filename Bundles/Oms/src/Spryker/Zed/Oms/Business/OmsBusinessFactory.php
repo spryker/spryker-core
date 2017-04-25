@@ -251,11 +251,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
-    protected function getSalesAggregatorFacade()
+    protected function getSalesFacade()
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES_AGGREGATOR);
+       return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
     }
 
     /**
@@ -288,7 +288,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createMailHandler()
     {
         $mailHandler = new MailHandler(
-            $this->getSalesAggregatorFacade(),
+            $this->getSalesFacade(),
             $this->getMailFacade()
         );
 
