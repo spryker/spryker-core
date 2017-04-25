@@ -17,7 +17,7 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "description": "Abstract product DataFeed bundle",
+  "description": "ProductAbstractDataFeed bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

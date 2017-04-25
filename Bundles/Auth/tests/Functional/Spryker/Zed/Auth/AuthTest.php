@@ -46,7 +46,10 @@ class AuthTest extends Test
 
         $sessionClient = new SessionClient();
         $pimple = new Pimple();
-        $sessionContainer = $pimple->getApplication()['session'];
+        $application = $pimple->getApplication();
+        $application['session.test'] = true;
+
+        $sessionContainer = $application['session'];
         $sessionClient->setContainer($sessionContainer);
 
         $this->userFacade = new UserFacade();

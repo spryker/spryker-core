@@ -8,8 +8,9 @@
 namespace Spryker\Client\Kernel;
 
 use Pimple;
+use Spryker\Shared\Kernel\ContainerInterface;
 
-class Container extends Pimple
+class Container extends Pimple implements ContainerInterface
 {
 
     /**

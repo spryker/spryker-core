@@ -21,7 +21,15 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return string
+     */
+    public function getDataBuilderTargetDirectory()
+    {
+        return APPLICATION_SOURCE_DIR . '/Generated/Shared/DataBuilder/';
+    }
+
+    /**
+     * @return array
      */
     public function getSourceDirectories()
     {
@@ -31,6 +39,27 @@ class TransferConfig extends AbstractBundleConfig
         $globPatterns = array_merge($globPatterns, $this->getAdditionalSourceDirectoryGlobPatterns());
 
         return $globPatterns;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDataBuilderSourceDirectories()
+    {
+        $globPatterns = $this->getSourceDirectories();
+
+        $globPatterns[] = APPLICATION_ROOT_DIR . '/tests/_data';
+        $globPatterns[] = APPLICATION_VENDOR_DIR . '/*/*/tests/_data/';
+
+        return $globPatterns;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataBuilderFileNamePattern()
+    {
+        return '/(.*?).(databuilder|transfer).xml/';
     }
 
     /**

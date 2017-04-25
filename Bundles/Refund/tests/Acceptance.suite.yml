@@ -6,11 +6,15 @@ modules:
             browser: phantomjs
             window_size: 1920x1080
 
-        - \Testify\Module\Environment
+        - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+        - \SprykerTest\Shared\Testify\Helper\Environment
         - \Config\Module\ConfigInit
         - \Transfer\Module\TransferGenerate
         - \Propel\Module\PropelInstall
         - \Application\Module\Yves
         - \Application\Module\Zed
-        - \Sales\Module\Sales
+        - \SprykerTest\Shared\Sales\Helper\SalesHelper
         - \Oms\Module\Oms
+
+coverage:
+  enabled: false
