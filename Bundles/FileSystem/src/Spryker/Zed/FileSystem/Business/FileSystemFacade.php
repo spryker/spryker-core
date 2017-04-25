@@ -49,7 +49,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -65,7 +65,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -81,7 +81,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|int
+     * @return int|false
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -145,7 +145,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
@@ -207,22 +207,6 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return bool
-     */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->getFactory()
-            ->createFileSystemAdapter()
-            ->has($fileSystemQueryTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return bool
@@ -241,7 +225,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -264,6 +248,22 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
         return $this->getFactory()
             ->createFileSystemAdapter()
             ->rename($fileSystemRenameTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
+     *
+     * @return bool
+     */
+    public function update(FileSystemContentTransfer $fileSystemContentTransfer)
+    {
+        return $this->getFactory()
+            ->createFileSystemAdapter()
+            ->update($fileSystemContentTransfer);
     }
 
     /**
@@ -306,7 +306,7 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return false|resource
+     * @return mixed|false
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
@@ -363,6 +363,22 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
         return $this->getFactory()
             ->createFileSystemAdapter()
             ->listContents($fileSystemListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->getFactory()
+            ->createFileSystemAdapter()
+            ->has($fileSystemQueryTransfer);
     }
 
 }

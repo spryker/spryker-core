@@ -235,7 +235,7 @@ class FileSystemAdapter implements FileSystemAdapterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return false|mixed
+     * @return mixed|false
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {

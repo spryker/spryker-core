@@ -14,14 +14,6 @@ interface FileSystemToFlysystemInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
-     */
-    public function isPrivate($filesystemName, $path);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
      * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer|null
      */
     public function getMetadata($filesystemName, $path);
@@ -56,24 +48,7 @@ interface FileSystemToFlysystemInterface
      *
      * @return bool
      */
-    public function has($filesystemName, $path);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function read($filesystemName, $path);
-
-    /**
-     * @param string $filesystemName
-     * @param string $directory
-     * @param bool $recursive
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
-     */
-    public function listContents($filesystemName, $directory = '', $recursive = false);
+    public function isPrivate($filesystemName, $path);
 
     /**
      * @param string $filesystemName
@@ -137,6 +112,14 @@ interface FileSystemToFlysystemInterface
 
     /**
      * @param string $filesystemName
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function read($filesystemName, $path);
+
+    /**
+     * @param string $filesystemName
      * @param string $newpath
      * @param string $path
      *
@@ -178,7 +161,7 @@ interface FileSystemToFlysystemInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return resource|false
+     * @return mixed|false
      */
     public function readStream($filesystemName, $path);
 
@@ -201,5 +184,22 @@ interface FileSystemToFlysystemInterface
      * @return bool
      */
     public function writeStream($filesystemName, $path, $resource, array $config = []);
+
+    /**
+     * @param string $filesystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
+     */
+    public function listContents($filesystemName, $directory = '', $recursive = false);
+
+    /**
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function has($filesystemName, $path);
 
 }

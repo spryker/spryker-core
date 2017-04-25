@@ -47,7 +47,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -60,7 +60,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -73,14 +73,14 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|int
+     * @return int|false
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * Specification:
      * - Check if resource has private access rights
-     * - Return true on success, false on failure
+     * - Return true if resource has private access rights
      *
      * @api
      *
@@ -125,7 +125,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
 
@@ -170,19 +170,6 @@ interface FileSystemFacadeInterface
 
     /**
      * Specification:
-     * - Check if resource exists
-     * - Return true if resource exist, false otherwise
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return bool
-     */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * Specification:
      * - Create a file or update if exists
      * - Return true on success, false on failure
      *
@@ -203,7 +190,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -219,6 +206,19 @@ interface FileSystemFacadeInterface
      * @return bool
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
+
+    /**
+     * Specification:
+     * - Update an existing file
+     * - Return true on success, false on failure
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
+     *
+     * @return bool
+     */
+    public function update(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
      * Specification:
@@ -256,7 +256,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return false|resource
+     * @return mixed|false
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
 
@@ -300,5 +300,18 @@ interface FileSystemFacadeInterface
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
+
+    /**
+     * Specification:
+     * - Check if resource exists
+     * - Return true if resource exist, false otherwise
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
 }

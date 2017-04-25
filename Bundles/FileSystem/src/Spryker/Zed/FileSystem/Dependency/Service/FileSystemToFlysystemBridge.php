@@ -27,17 +27,6 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
-     */
-    public function isPrivate($filesystemName, $path)
-    {
-        return $this->flysystemService->isPrivate($filesystemName, $path);
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
      * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer|null
      */
     public function getMetadata($filesystemName, $path)
@@ -84,32 +73,9 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
      *
      * @return bool
      */
-    public function has($filesystemName, $path)
+    public function isPrivate($filesystemName, $path)
     {
-        return $this->flysystemService->has($filesystemName, $path);
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return string|false
-     */
-    public function read($filesystemName, $path)
-    {
-        return $this->flysystemService->read($filesystemName, $path);
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $directory
-     * @param bool $recursive
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
-     */
-    public function listContents($filesystemName, $directory = '', $recursive = false)
-    {
-        return $this->flysystemService->listContents($filesystemName, $directory, $recursive);
+        return $this->flysystemService->isPrivate($filesystemName, $path);
     }
 
     /**
@@ -195,6 +161,17 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
 
     /**
      * @param string $filesystemName
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function read($filesystemName, $path)
+    {
+        return $this->flysystemService->read($filesystemName, $path);
+    }
+
+    /**
+     * @param string $filesystemName
      * @param string $newpath
      * @param string $path
      *
@@ -248,7 +225,7 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return resource|false
+     * @return mixed|false
      */
     public function readStream($filesystemName, $path)
     {
@@ -279,6 +256,29 @@ class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
     public function writeStream($filesystemName, $path, $resource, array $config = [])
     {
         return $this->flysystemService->writeStream($filesystemName, $path, $resource, $config);
+    }
+
+    /**
+     * @param string $filesystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
+     */
+    public function listContents($filesystemName, $directory = '', $recursive = false)
+    {
+        return $this->flysystemService->listContents($filesystemName, $directory, $recursive);
+    }
+
+    /**
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function has($filesystemName, $path)
+    {
+        return $this->flysystemService->has($filesystemName, $path);
     }
 
 }

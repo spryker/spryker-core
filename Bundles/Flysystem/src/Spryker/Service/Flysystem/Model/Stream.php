@@ -28,7 +28,7 @@ class Stream implements StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -44,7 +44,7 @@ class Stream implements StreamInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return resource|false
+     * @return mixed|false
      */
     public function readStream($filesystemName, $path)
     {
@@ -56,7 +56,7 @@ class Stream implements StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -71,7 +71,7 @@ class Stream implements StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool

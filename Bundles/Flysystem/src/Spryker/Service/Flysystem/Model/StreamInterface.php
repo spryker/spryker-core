@@ -13,7 +13,7 @@ interface StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -24,14 +24,14 @@ interface StreamInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return resource|false
+     * @return mixed|false
      */
     public function readStream($filesystemName, $path);
 
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -41,7 +41,7 @@ interface StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool

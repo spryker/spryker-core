@@ -16,19 +16,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 {
 
     /**
-     * @param string $filesystemName
-     * @param string $path
+     * {@inheritdoc}
      *
-     * @return bool
-     */
-    public function isPrivate($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createReader()
-            ->isPrivate($filesystemName, $path);
-    }
-
-    /**
      * @param string $filesystemName
      * @param string $path
      *
@@ -42,6 +31,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -55,6 +46,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -68,6 +61,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -81,6 +76,53 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isPrivate($filesystemName, $path)
+    {
+        return $this->getFactory()
+            ->createReader()
+            ->isPrivate($filesystemName, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function markAsPrivate($filesystemName, $path)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->markAsPrivate($filesystemName, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function markAsPublic($filesystemName, $path)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->markAsPublic($filesystemName, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -94,10 +136,12 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @return false|string
      */
     public function read($filesystemName, $path)
     {
@@ -107,6 +151,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $directory
      * @param bool $recursive
@@ -121,32 +167,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
-     * @param string $filesystemName
-     * @param string $path
+     * {@inheritdoc}
      *
-     * @return bool
-     */
-    public function markAsPrivate($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPrivate($filesystemName, $path);
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return bool
-     */
-    public function markAsPublic($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPublic($filesystemName, $path);
-    }
-
-    /**
      * @param string $filesystemName
      * @param string $dirname
      * @param array $config
@@ -161,6 +183,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $dirname
      *
@@ -174,6 +198,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $newpath
@@ -188,6 +214,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -201,6 +229,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $content
@@ -216,6 +246,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $newpath
      * @param string $path
@@ -230,6 +262,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $content
@@ -245,6 +279,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $content
@@ -260,9 +296,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -275,10 +313,12 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
      *
-     * @return resource|false
+     * @return mixed|false
      */
     public function readStream($filesystemName, $path)
     {
@@ -288,9 +328,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
@@ -303,9 +345,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param string $filesystemName
      * @param string $path
-     * @param resource $resource
+     * @param mixed $resource
      * @param array $config
      *
      * @return bool
