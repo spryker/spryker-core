@@ -13,7 +13,7 @@ class FilesystemProvider implements FilesystemProviderInterface
 {
 
     /**
-     * @var \League\Flysystem\Filesystem
+     * @var \League\Flysystem\Filesystem[]
      */
     protected $filesystemCollection;
 
