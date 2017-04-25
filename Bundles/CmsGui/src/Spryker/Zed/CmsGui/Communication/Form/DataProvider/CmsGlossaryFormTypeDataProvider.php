@@ -59,4 +59,16 @@ class CmsGlossaryFormTypeDataProvider
         return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
     }
 
+    /**
+     * @return array
+     */
+    protected function getGlossaryChoices()
+    {
+        return [
+            static::TYPE_AUTO_GLOSSARY,
+            static::TYPE_GLOSSARY_NEW,
+            static::TYPE_GLOSSARY_FIND,
+            static::TYPE_FULLTEXT_SEARCH,
+        ];
+    }
 }

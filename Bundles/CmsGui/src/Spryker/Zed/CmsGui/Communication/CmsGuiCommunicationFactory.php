@@ -235,6 +235,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProviderInterface
+     */
+    public function createAutocompleteDataProvider()
+    {
+        return new AutocompleteDataProvider($this->getCmsQueryContainer());
+    }
+
+    /**
      * @return CmsVersionDataHelper
      */
     public function createCmsVersionDataHelper()

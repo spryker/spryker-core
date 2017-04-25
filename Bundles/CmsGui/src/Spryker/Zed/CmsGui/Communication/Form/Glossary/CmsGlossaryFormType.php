@@ -20,6 +20,8 @@ class CmsGlossaryFormType extends AbstractType
 
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
 
+    const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
+
     /**
      * @var \Symfony\Component\Form\FormTypeInterface
      */
