@@ -156,9 +156,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $result = $formData;
         foreach ($formData as $name => $data) {
             if (array_key_exists($name, $imageData)) {
-                if (!empty($imageData[$name])) {
-                    $result[$name] = $imageData[$name];
-                }
+                $result[$name] = $imageData[$name];
             }
         }
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageCollectionForm extends AbstractSubForm
 {
@@ -120,6 +121,9 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_SMALL, 'text', [
                 'required' => false,
                 'label' => 'Small',
+                'constraints' => [
+                    new NotBlank()
+                ]
             ]);
 
         return $this;
@@ -136,6 +140,9 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_LARGE, 'text', [
                 'required' => false,
                 'label' => 'Large',
+                'constraints' => [
+                    new NotBlank()
+                ]
             ]);
 
         return $this;
