@@ -21,8 +21,8 @@ interface ProductGroupCollectorFacadeInterface
     /**
      * Specification:
      * - Executes product group storage collector.
-     * - Collects all touched product group entries.
-     * - TODO: add description
+     * - Collects all touched "product_group" entries.
+     * - Exports a fully hydrated representation of ProductGroupTransfer.
      *
      * @api
      *
@@ -48,8 +48,8 @@ interface ProductGroupCollectorFacadeInterface
 
     /**
      * - Executes product group storage collector.
-     * - Collects all touched product group entries.
-     * - TODO: add description
+     * - Collects all touched "product_abstract_group" entries.
+     * - Exports a fully hydrated representation of ProductAbstractGroupsTransfer.
      *
      * @api
      *
