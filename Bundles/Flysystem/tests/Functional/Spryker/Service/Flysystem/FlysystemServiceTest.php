@@ -9,7 +9,9 @@ namespace Functional\Spryker\Service\Flysystem;
 
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
-use League\Flysystem\Filesystem;
+use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
+use League\Flysystem\AdapterInterface;
+use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -46,7 +48,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $testDataFlysystemRootDirectory;
+    protected $testDataFileSystemRootDirectory;
 
     /**
      * @return void
@@ -55,15 +57,16 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $config = new FlysystemConfigStub();
+        $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
-        $this->testDataFlysystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
+        $flysystemConfig = new FlysystemConfigStub();
+        $flysystemFactory = new FlysystemServiceFactory();
+        $flysystemFactory->setConfig($flysystemConfig);
 
-        $factory = new FlysystemServiceFactory();
-        $factory->setConfig($config);
+        $flysystemService = new FlysystemService();
+        $flysystemService->setFactory($flysystemFactory);
 
-        $this->flysystemService = new FlysystemService();
-        $this->flysystemService->setFactory($factory);
+        $this->flysystemService = $flysystemService;
     }
 
     /**
@@ -77,97 +80,469 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetStorageByNameWithProduct()
+    public function testHasShouldReturnFalseWithNonExistingFile()
     {
-        $flysystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_PRODUCT_IMAGE);
+        $result = $this->flysystemService->has(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
 
-        $this->assertInstanceOf(Filesystem::class, $flysystem);
+        $this->assertFalse($result);
     }
 
     /**
      * @return void
      */
-    public function testGetStorageByNameWithCustomer()
+    public function testHasShouldReturnTrueWithExistingFile()
     {
-        $flysystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
+        $this->createDocumentFile();
 
-        $this->assertInstanceOf(Filesystem::class, $flysystem);
+        $result = $this->flysystemService->has(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
     }
 
     /**
      * @return void
      */
-    public function testFlysystemImplementationCreateDir()
+    public function testReadWithNonExistingFileShouldThrowException()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
+        $this->expectException(FileNotFoundException::class);
 
-        $fileSystem->createDir('/foo');
+        $contents = $this->flysystemService->read(
+            static::FILE_SYSTEM_PRODUCT_IMAGE,
+            'nonExistingFile.nil'
+        );
 
-        $hasFoo = $fileSystem->has('/foo');
-        $hasBar = $fileSystem->has('/bar');
-
-        $this->assertTrue($hasFoo);
-        $this->assertFalse($hasBar);
-
-        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo/';
-        $rootDirectoryExists = is_dir($storageDirectory);
-        $this->assertTrue($rootDirectoryExists);
+        $this->assertNull($contents);
     }
 
     /**
      * @return void
      */
-    public function testFlysystemImplementationRename()
+    public function testReadWithExistingFileShouldReturnContent()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
+        $this->createDocumentFile();
 
-        $fileSystem->createDir('/foo');
-        $fileSystem->rename('/foo', '/bar');
+        $contents = $this->flysystemService->read(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
 
-        $hasBar = $fileSystem->has('/bar');
-        $hasFoo = $fileSystem->has('/foo');
-
-        $this->assertTrue($hasBar);
-        $this->assertFalse($hasFoo);
-
-        $storageDirectory = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'bar/';
-        $rootDirectoryExists = is_dir($storageDirectory);
-        $this->assertTrue($rootDirectoryExists);
+        $this->assertSame(static::FILE_CONTENT, $contents);
     }
 
     /**
      * @return void
      */
-    public function testFlysystemImplementationUpload()
+    public function testPut()
     {
-        $fileSystem = $this->flysystemService->getFilesystemByName(static::FILE_SYSTEM_DOCUMENT);
+        $this->createDocumentFile('Lorem Ipsum');
 
-        $uploadedFilename = $this->testDataFlysystemRootDirectory . static::FILE_DOCUMENT;
-        $storageFilename = '/foo/' . static::FILE_DOCUMENT;
+        $result = $this->flysystemService->put(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            static::FILE_CONTENT
+        );
 
-        $h = fopen($uploadedFilename, 'w');
-        fwrite($h, static::FILE_CONTENT);
-        fclose($h);
+        $content = $this->getDocumentFileContent();
 
-        $stream = fopen($uploadedFilename, 'r+');
-        try {
-            if ($fileSystem->has($storageFilename)) {
-                $fileSystem->updateStream($storageFilename, $stream);
-            } else {
-                $fileSystem->writeStream($storageFilename, $stream);
-            }
-            fclose($stream);
-        } finally {
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
+        $this->assertTrue($result);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
 
-            unlink($uploadedFilename);
+    /**
+     * @return void
+     */
+    public function testWrite()
+    {
+        $result = $this->flysystemService->write(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            static::FILE_CONTENT
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDelete()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->flysystemService->delete(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRename()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->flysystemService->rename(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+        );
+
+        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
+        $isRenamedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+
+        $this->assertTrue($result);
+        $this->assertFalse($isOriginalFile);
+        $this->assertTrue($isRenamedFile);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCopy()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->flysystemService->copy(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            'foo/' . 'NEW_' . static::FILE_DOCUMENT
+        );
+
+        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
+        $isCopiedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isOriginalFile);
+        $this->assertTrue($isCopiedFile);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMetadata()
+    {
+        $this->createDocumentFile();
+
+        $metadataTransfer = $this->flysystemService->getMetadata(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertInstanceOf(FlysystemResourceMetadataTransfer::class, $metadataTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMimeType()
+    {
+        $this->createDocumentFile();
+
+        $mimeType = $this->flysystemService->getMimetype(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame('text/plain', $mimeType);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTimestamp()
+    {
+        $timestampExpected = time();
+        $this->createDocumentFile(null, $timestampExpected);
+
+        $timestamp = $this->flysystemService->getTimestamp(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame($timestamp, $timestampExpected);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSize()
+    {
+        $this->createDocumentFile();
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $sizeExpected = filesize($file);
+
+        $size = $this->flysystemService->getSize(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame($sizeExpected, $size);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetVisibility()
+    {
+        $this->createDocumentFile();
+
+        $visibility = $this->flysystemService->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPrivateVisibility()
+    {
+        $this->createDocumentFile();
+
+        $visibility = $this->flysystemService->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+
+        $this->flysystemService->setVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            AdapterInterface::VISIBILITY_PRIVATE
+        );
+
+        $visibility = $this->flysystemService->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDir()
+    {
+        $dirCreated = $this->flysystemService->createDir(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/bar'
+        );
+
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
+        $isDir = is_dir($dir);
+
+        $this->assertTrue($dirCreated);
+        $this->assertTrue($isDir);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteDir()
+    {
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
+        mkdir($dir, 0777, true);
+
+        $dirDeleted = $this->flysystemService->deleteDir(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/bar'
+        );
+
+        $isDir = is_dir($dir);
+
+        $this->assertTrue($dirDeleted);
+        $this->assertFalse($isDir);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPutStream()
+    {
+        $putStream = tmpfile();
+        fwrite($putStream, static::FILE_CONTENT);
+        rewind($putStream);
+
+        $streamPut = $this->flysystemService->putStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $putStream
+        );
+
+        if (is_resource($putStream)) {
+            fclose($putStream);
         }
 
-        $content = $fileSystem->read($storageFilename);
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($streamPut);
+        $this->assertTrue($isFile);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReadStream()
+    {
+        $this->createDocumentFile();
+
+        $stream = $this->flysystemService->readStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $content = stream_get_contents($stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
 
         $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStream()
+    {
+        $this->createDocumentFile();
+        $this->createDocumentFileInRoot('Lorem Ipsum');
+
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+        $stream = fopen($file, 'r+');
+
+        $result = $this->flysystemService->updateStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $stream
+        );
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isFile);
+        $this->assertSame('Lorem Ipsum', $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteStream()
+    {
+        $this->createDocumentFileInRoot();
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+        $stream = fopen($file, 'r+');
+
+        $result = $this->flysystemService->writeStream(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT,
+            $stream
+        );
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $isFile = is_file($file);
+        $content = file_get_contents($file);
+
+        $this->assertTrue($result);
+        $this->assertTrue($isFile);
+        $this->assertSame(static::FILE_CONTENT, $content);
+    }
+
+    /**
+     * @return void
+     */
+    public function testListContents()
+    {
+        $this->createDocumentFile();
+
+        $content = $this->flysystemService->listContents(
+            static::FILE_SYSTEM_DOCUMENT,
+            '/',
+            true
+        );
+
+        $this->assertGreaterThan(0, count($content));
+    }
+
+    /**
+     * @param null|string $content
+     * @param null|string $modifiedTimestamp
+     *
+     * @return void
+     */
+    protected function createDocumentFile($content = null, $modifiedTimestamp = null)
+    {
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+
+        $h = fopen($file, 'w');
+        fwrite($h, $content ?: static::FILE_CONTENT);
+        fclose($h);
+
+        if ($modifiedTimestamp) {
+            touch($file, $modifiedTimestamp);
+        }
+    }
+
+    /**
+     * @param null|string $content
+     * @param null|string $modifiedTimestamp
+     *
+     * @return void
+     */
+    protected function createDocumentFileInRoot($content = null, $modifiedTimestamp = null)
+    {
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+
+        $h = fopen($file, 'w');
+        fwrite($h, $content ?: static::FILE_CONTENT);
+        fclose($h);
+
+        if ($modifiedTimestamp) {
+            touch($file, $modifiedTimestamp);
+        }
+    }
+
+    /**
+     * @return bool|string
+     */
+    protected function getDocumentFileContent()
+    {
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        if (!is_file($file)) {
+            return false;
+        }
+
+        return file_get_contents($file);
     }
 
     /**
@@ -176,39 +551,54 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     protected function directoryCleanup()
     {
         try {
-            $file = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'bar';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
-
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT . 'foo';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
-
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_DOCUMENT;
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
-
-            $file = $this->testDataFlysystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
             if (is_file($file)) {
                 unlink($file);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . static::PATH_PRODUCT_IMAGE;
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
             if (is_dir($dir)) {
                 rmdir($dir);
             }
 
-            $dir = $this->testDataFlysystemRootDirectory . 'images/';
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
             if (is_dir($dir)) {
                 rmdir($dir);
+            }
+
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
+
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
+
+            $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
+            if (is_file($file)) {
+                unlink($file);
+            }
+
+            $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
+
+            $dir = $this->testDataFileSystemRootDirectory . 'images/';
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
+
+            $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+            if (is_file($file)) {
+                unlink($file);
             }
 
         } catch (\Exception $e) {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Flysytem\Business\Model;
+namespace Spryker\Service\Flysystem\Model;
 
 use League\Flysystem\AdapterInterface;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;

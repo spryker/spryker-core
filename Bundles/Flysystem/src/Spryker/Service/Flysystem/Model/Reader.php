@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Flysytem\Business\Model;
+namespace Spryker\Service\Flysystem\Model;
 
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
