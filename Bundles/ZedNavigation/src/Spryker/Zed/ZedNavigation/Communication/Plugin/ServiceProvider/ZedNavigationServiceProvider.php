@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    const URI_TAIL_INDEX = '\/index$';
+    const URI_TAIL_SLASH = '\/$';
+
     /**
      * @param \Silex\Application $app
      *
@@ -46,9 +49,10 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     protected function getNavigation()
     {
         $request = Request::createFromGlobals();
+        $uri = preg_replace('/' . self::URI_TAIL_INDEX . '|' . self::URI_TAIL_SLASH . '/m', '', $request->getPathInfo());
 
         return (new ZedNavigation())
-            ->buildNavigation($request->getPathInfo());
+            ->buildNavigation($uri);
     }
 
     /**
