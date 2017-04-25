@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 
-interface FileSystemHandlerInterface
+interface FileSystemAdapterInterface
 {
 
     /**

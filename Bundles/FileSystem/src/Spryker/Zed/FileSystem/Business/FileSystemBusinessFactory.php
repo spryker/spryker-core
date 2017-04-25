@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileSystem\Business;
 
-use Spryker\Zed\FileSystem\Business\Model\FileSystemHandler;
+use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemReader;
+use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemStream;
+use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemWriter;
+use Spryker\Zed\FileSystem\Business\Model\FileSystemAdapter;
 use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -18,11 +21,43 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemHandlerInterface
+     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemAdapterInterface
      */
-    public function createFileSystemHandler()
+    public function createFileSystemAdapter()
     {
-        return new FileSystemHandler(
+        return new FileSystemAdapter(
+            $this->createFlysystemAdapterReader(),
+            $this->createFlysystemAdapterWriter(),
+            $this->createFlysystemAdapterStream()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemReaderInterface
+     */
+    protected function createFlysystemAdapterReader()
+    {
+        return new FileSystemReader(
+            $this->getFlysystemService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemWriterInterface
+     */
+    protected function createFlysystemAdapterWriter()
+    {
+        return new FileSystemWriter(
+            $this->getFlysystemService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemStreamInterface
+     */
+    protected function createFlysystemAdapterStream()
+    {
+        return new FileSystemStream(
             $this->getFlysystemService()
         );
     }
