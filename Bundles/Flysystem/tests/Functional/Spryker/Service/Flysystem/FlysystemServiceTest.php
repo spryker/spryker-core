@@ -334,6 +334,63 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testIsPrivate()
+    {
+        $this->createDocumentFile();
+
+        $isPrivate = $this->flysystemService->isPrivate(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertFalse($isPrivate);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMarkAsPrivate()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->flysystemService->markAsPrivate(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $visibility = $this->flysystemService->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
+        $this->assertSame(AdapterInterface::VISIBILITY_PRIVATE, $visibility);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMarkAsPublic()
+    {
+        $this->createDocumentFile();
+
+        $result = $this->flysystemService->markAsPublic(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $visibility = $this->flysystemService->getVisibility(
+            static::FILE_SYSTEM_DOCUMENT,
+            'foo/' . static::FILE_DOCUMENT
+        );
+
+        $this->assertTrue($result);
+        $this->assertSame(AdapterInterface::VISIBILITY_PUBLIC, $visibility);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateDir()
     {
         $dirCreated = $this->flysystemService->createDir(
@@ -356,14 +413,14 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
         mkdir($dir, 0777, true);
 
-        $dirDeleted = $this->flysystemService->deleteDir(
+        $result = $this->flysystemService->deleteDir(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/bar'
         );
 
         $isDir = is_dir($dir);
 
-        $this->assertTrue($dirDeleted);
+        $this->assertTrue($result);
         $this->assertFalse($isDir);
     }
 
@@ -372,25 +429,25 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testPutStream()
     {
-        $putStream = tmpfile();
-        fwrite($putStream, static::FILE_CONTENT);
-        rewind($putStream);
+        $stream = tmpfile();
+        fwrite($stream, static::FILE_CONTENT);
+        rewind($stream);
 
-        $streamPut = $this->flysystemService->putStream(
+        $result = $this->flysystemService->putStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
-            $putStream
+            $stream
         );
 
-        if (is_resource($putStream)) {
-            fclose($putStream);
+        if (is_resource($stream)) {
+            fclose($stream);
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $isFile = is_file($file);
         $content = file_get_contents($file);
 
-        $this->assertTrue($streamPut);
+        $this->assertTrue($result);
         $this->assertTrue($isFile);
         $this->assertSame(static::FILE_CONTENT, $content);
     }

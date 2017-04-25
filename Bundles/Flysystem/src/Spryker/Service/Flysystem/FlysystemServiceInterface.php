@@ -17,6 +17,14 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
+     * @return bool
+     */
+    public function isPrivate($filesystemName, $path);
+
+    /**
+     * @param string $filesystemName
+     * @param string $path
+     *
      * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer|null
      */
     public function getMetadata($filesystemName, $path);
