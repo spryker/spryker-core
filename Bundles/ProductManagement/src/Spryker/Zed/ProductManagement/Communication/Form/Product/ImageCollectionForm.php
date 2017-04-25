@@ -123,7 +123,7 @@ class ImageCollectionForm extends AbstractSubForm
                 'label' => 'Small',
                 'constraints' => [
                     new NotBlank()
-                ]
+                ],
             ]);
 
         return $this;
@@ -142,7 +142,7 @@ class ImageCollectionForm extends AbstractSubForm
                 'label' => 'Large',
                 'constraints' => [
                     new NotBlank()
-                ]
+                ],
             ]);
 
         return $this;
