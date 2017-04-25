@@ -20,19 +20,20 @@ class ProductDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param array $override
+     * @param array $productConcreteOverride
      *
+     * @param array $productAbstractOverride
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProduct(array $override = [])
+    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [])
     {
-        $productAbstractTransfer = (new ProductAbstractBuilder())->build();
+        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
 
         $productConcreteTransfer = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProductId]))
-            ->seed($override)
+            ->seed($productConcreteOverride)
             ->build();
 
         $productFacade->createProductConcrete($productConcreteTransfer);
@@ -52,13 +53,13 @@ class ProductDataHelper extends Module
     }
 
     /**
-     * @param array $override
+     * @param array $productAbstractOverride
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductAbstract(array $override = [])
+    public function haveProductAbstract(array $productAbstractOverride = [])
     {
-        $productAbstractTransfer = (new ProductAbstractBuilder($override))->build();
+        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
@@ -68,9 +69,9 @@ class ProductDataHelper extends Module
             $abstractProductId
         ));
 
-//        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer) {
-//            $this->cleanupProductAbstract($productAbstractTransfer->getIdProductAbstract());
-//        });
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer) {
+            $this->cleanupProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        });
 
         return $productAbstractTransfer;
     }
