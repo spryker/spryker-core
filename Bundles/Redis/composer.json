@@ -1,7 +1,7 @@
 {
   "name": "spryker/redis",
   "require": {
-    "predis/predis": "~1.0.3"
+    "predis/predis": "^1.1.1"
   },
   "description": "Redis bundle",
   "license": "proprietary",
