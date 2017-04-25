@@ -46,7 +46,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @return int|false
      */
     public function getTimestamp($filesystemName, $path);
 

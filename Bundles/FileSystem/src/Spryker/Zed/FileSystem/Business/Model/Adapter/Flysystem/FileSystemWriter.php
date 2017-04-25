@@ -93,7 +93,7 @@ class FileSystemWriter implements FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
@@ -138,7 +138,7 @@ class FileSystemWriter implements FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {

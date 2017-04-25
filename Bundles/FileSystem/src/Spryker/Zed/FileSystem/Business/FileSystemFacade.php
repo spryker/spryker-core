@@ -27,6 +27,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -41,6 +43,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -55,6 +59,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -69,11 +75,13 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return false|int
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -83,6 +91,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -97,6 +107,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
@@ -111,6 +123,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
@@ -125,6 +139,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
@@ -139,6 +155,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
@@ -153,11 +171,13 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
@@ -167,6 +187,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
@@ -181,6 +203,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -195,6 +219,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
@@ -209,6 +235,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -223,11 +251,13 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
@@ -237,6 +267,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
@@ -251,6 +283,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -266,6 +300,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -280,6 +316,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -295,6 +333,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -310,6 +350,8 @@ class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer

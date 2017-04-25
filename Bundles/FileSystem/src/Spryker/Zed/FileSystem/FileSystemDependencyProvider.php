@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileSystem;
 
-use Spryker\Zed\FileSystem\Dependency\Facade\FileSystemToFlysystemBridge;
+use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

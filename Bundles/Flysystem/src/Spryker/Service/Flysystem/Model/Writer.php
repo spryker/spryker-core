@@ -130,7 +130,7 @@ class Writer implements WriterInterface
      * @param string $newpath
      * @param string $path
      *
-     * @return string|false
+     * @return bool
      */
     public function rename($filesystemName, $path, $newpath)
     {
