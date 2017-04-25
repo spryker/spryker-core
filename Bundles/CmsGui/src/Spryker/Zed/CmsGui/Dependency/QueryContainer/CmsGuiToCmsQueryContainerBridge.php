@@ -72,6 +72,16 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
     }
 
     /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage)
+    {
+        return $this->cmsQueryContainer->queryCmsPageLocalizedAttributesByFkPage($idPage);
+    }
+
+    /**
      * @param int $idLocale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

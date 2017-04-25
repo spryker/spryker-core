@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsConfig extends AbstractBundleConfig
 {
 
+    const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+
     /**
      * @param string $templateRelativePath
      *
@@ -20,8 +22,13 @@ class CmsConfig extends AbstractBundleConfig
      */
     public function getTemplateRealPath($templateRelativePath)
     {
-        $templateRelativePath = substr($templateRelativePath, 4);
-        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $this->get(CmsConstants::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $this->get(CmsConstants::YVES_THEME) . $templateRelativePath;
+        $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
+        $physicalAddress = sprintf('%s/%s/Shared/Cms/Theme/%s%s',
+            APPLICATION_SOURCE_DIR,
+            $this->get(CmsConstants::PROJECT_NAMESPACE),
+            $this->get(CmsConstants::YVES_THEME),
+            $templateRelativePath
+        );
 
         return $physicalAddress;
     }

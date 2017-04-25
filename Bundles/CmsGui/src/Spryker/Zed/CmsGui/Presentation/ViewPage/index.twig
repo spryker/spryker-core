@@ -54,6 +54,9 @@
             <p>
                 <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsPage.validTo ? cmsPage.validTo|date : 'n/a'|trans }}
             </p>
+            <p>
+                <strong>{{ 'Created at:' | trans }}</strong> {{ pageCreatedDate ?pageCreatedDate|date : 'n/a'|trans }}
+            </p>
 
         {% endblock %}
     {% endembed %}
@@ -63,15 +66,15 @@
 
             <table class="table">
                 <tr>
+                    <th>{{ "Locale" | trans }}</th>
                     <th>{{ "Name" | trans }}</th>
                     <th>{{ "Url" | trans }}</th>
-                    <th>{{ "Locale" | trans }}</th>
                 </tr>
                 {% for pageAttribute in cmsPage.pageAttributes %}
                     <tr>
+                        <td>{{ pageAttribute.localeName }}</td>
                         <td>{{ pageAttribute.name }}</td>
                         <td>{{ pageAttribute.url }}</td>
-                        <td>{{ pageAttribute.localeName }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -84,17 +87,17 @@
 
             <table class="table">
                 <tr>
-                    <th>{{ "Title" | trans }}</th>
-                    <th>{{ "Keywords" | trans }}</th>
-                    <th>{{ "Description" | trans }}</th>
                     <th>{{ "Locale" | trans }}</th>
+                    <th>{{ "Meta Title" | trans }}</th>
+                    <th>{{ "Meta Keywords" | trans }}</th>
+                    <th>{{ "Meta Description" | trans }}</th>
                 </tr>
                 {% for pageMetaAttribute in cmsPage.metaAttributes %}
                     <tr>
+                        <td>{{ pageMetaAttribute.localeName }}</td>
                         <td>{{ pageMetaAttribute.metaTitle }}</td>
                         <td>{{ pageMetaAttribute.metaKeywords }}</td>
                         <td>{{ pageMetaAttribute.metaDescription }}</td>
-                        <td>{{ pageMetaAttribute.localeName }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -121,6 +124,7 @@
                    {% endembed %}
                 {% endfor %}
 
+                <br>
             {% endfor %}
 
         {% endblock %}

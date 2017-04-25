@@ -42,6 +42,12 @@ interface CmsGuiToCmsQueryContainerInterface
      */
     public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
 
+    /** @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage);
+
     /**
      * @param int $idLocale
      *

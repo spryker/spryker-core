@@ -36,6 +36,8 @@ class ViewPageController extends AbstractController
             ->getCmsFacade()
             ->findLatestCmsVersionByIdCmsPage($idCmsPage);
 
+        $cmsLocalizedPageEntity = $this->getFactory()->getCmsQueryContainer()->queryCmsPageLocalizedAttributesByFkPage($idCmsPage)->findOne();
+
         if ($cmsVersionTransfer === null) {
             throw new NotFoundHttpException(
                 sprintf('Cms published page with id "%d" not found.', $idCmsPage)
@@ -47,7 +49,8 @@ class ViewPageController extends AbstractController
         return [
             'cmsPage' => $cmsVersionDataHelper->extractCmsPageTransfer($cmsVersionTransfer),
             'cmsGlossary' => $cmsVersionDataHelper->extractCmsGlossaryPageTransfer($cmsVersionTransfer),
-            'cmsVersion' => $cmsVersionTransfer
+            'cmsVersion' => $cmsVersionTransfer,
+            'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt()
         ];
     }
 
