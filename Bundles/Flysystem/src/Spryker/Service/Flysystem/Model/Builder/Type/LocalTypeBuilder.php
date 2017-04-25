@@ -65,7 +65,8 @@ class LocalTypeBuilder implements FilesystemBuilderInterface
         $this
             ->buildPath()
             ->buildAdapter()
-            ->buildFilesystem();
+            ->buildFilesystem()
+            ->buildPlugins();
 
         return $this->filesystem;
     }
@@ -102,6 +103,14 @@ class LocalTypeBuilder implements FilesystemBuilderInterface
     {
         $this->filesystem = new Filesystem($this->adapter);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function buildPlugins()
+    {
         return $this;
     }
 

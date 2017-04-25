@@ -61,13 +61,6 @@ class AwsS3TypeBuilder implements FilesystemBuilderInterface
     }
 
     /**
-     * Sample config
-     * 'key' => ' key',
-     * 'secret' => 'secret',
-     * 'bucket' => 'bucket',
-     * 'version' => 'version',
-     * 'region' => 'region',
-     *
      * @return \League\Flysystem\Filesystem
      */
     public function build()
@@ -75,7 +68,8 @@ class AwsS3TypeBuilder implements FilesystemBuilderInterface
         $this
             ->buildS3Client()
             ->buildAdapter()
-            ->buildFilesystem();
+            ->buildFilesystem()
+            ->buildPlugins();
 
         return $this->filesystem;
     }
@@ -114,6 +108,14 @@ class AwsS3TypeBuilder implements FilesystemBuilderInterface
     {
         $this->filesystem = new Filesystem($this->adapter);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function buildPlugins()
+    {
         return $this;
     }
 
