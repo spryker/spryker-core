@@ -21,8 +21,8 @@ class ProductDataHelper extends Module
 
     /**
      * @param array $productConcreteOverride
-     *
      * @param array $productAbstractOverride
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [])
