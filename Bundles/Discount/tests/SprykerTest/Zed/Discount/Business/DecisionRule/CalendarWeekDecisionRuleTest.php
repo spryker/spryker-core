@@ -9,9 +9,9 @@ namespace SprykerTest\Zed\Discount\Business\DecisionRule;
 
 use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
-use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
+use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations

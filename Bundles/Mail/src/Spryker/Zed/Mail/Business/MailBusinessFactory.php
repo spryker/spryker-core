@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Mail\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
+use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
 use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
 use Spryker\Zed\Mail\MailDependencyProvider;

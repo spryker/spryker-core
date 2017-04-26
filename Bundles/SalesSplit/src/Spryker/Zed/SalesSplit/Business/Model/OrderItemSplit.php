@@ -13,9 +13,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderItemSplit implements OrderItemSplitInterface
 {
