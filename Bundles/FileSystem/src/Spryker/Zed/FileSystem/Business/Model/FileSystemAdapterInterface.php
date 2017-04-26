@@ -38,7 +38,7 @@ interface FileSystemAdapterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -87,14 +87,14 @@ interface FileSystemAdapterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
 
@@ -122,7 +122,7 @@ interface FileSystemAdapterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
 

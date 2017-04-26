@@ -46,8 +46,8 @@
 
     <transfer name="FileSystemCopy">
         <property name="fileSystemName" type="string" />
-        <property name="path" type="string" />
-        <property name="newPath" type="string" />
+        <property name="sourcePath" type="string" />
+        <property name="destinationPath" type="string" />
     </transfer>
 
     <transfer name="FileSystemDelete">

@@ -70,7 +70,7 @@ class FileSystemReader implements FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {

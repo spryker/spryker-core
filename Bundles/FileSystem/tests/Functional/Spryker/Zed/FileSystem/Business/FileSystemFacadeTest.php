@@ -229,8 +229,8 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     {
         $fileSystemCopyTransfer = new FileSystemCopyTransfer();
         $fileSystemCopyTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
-        $fileSystemCopyTransfer->setPath('foo/' . static::FILE_DOCUMENT);
-        $fileSystemCopyTransfer->setNewPath('foo/NEW_' . static::FILE_DOCUMENT);
+        $fileSystemCopyTransfer->setSourcePath('foo/' . static::FILE_DOCUMENT);
+        $fileSystemCopyTransfer->setDestinationPath('foo/NEW_' . static::FILE_DOCUMENT);
 
         $this->createDocumentFile();
 

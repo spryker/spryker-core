@@ -5,6 +5,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
+    "spryker/kernel": "^3.0.0",
     "spryker/flysystem": "*"
   },
   "autoload": {

@@ -56,7 +56,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
 

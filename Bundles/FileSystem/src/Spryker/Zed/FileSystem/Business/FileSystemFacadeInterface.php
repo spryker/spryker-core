@@ -125,7 +125,7 @@ interface FileSystemFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return string|false
+     * @return bool
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
 

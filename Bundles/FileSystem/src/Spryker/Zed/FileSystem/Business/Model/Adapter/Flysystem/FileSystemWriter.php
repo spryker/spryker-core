@@ -100,15 +100,15 @@ class FileSystemWriter implements FileSystemWriterInterface
         return $this->flysystemService
             ->copy(
                 $fileSystemCopyTransfer->getFileSystemName(),
-                $fileSystemCopyTransfer->getPath(),
-                $fileSystemCopyTransfer->getNewPath()
+                $fileSystemCopyTransfer->getSourcePath(),
+                $fileSystemCopyTransfer->getDestinationPath()
             );
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return false|string
+     * @return bool
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
