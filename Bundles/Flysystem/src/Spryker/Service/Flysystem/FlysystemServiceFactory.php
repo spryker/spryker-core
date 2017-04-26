@@ -100,7 +100,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName($name);
         $configTransfer->setType($type);
-        $configTransfer->setData($configData);
+        $configTransfer->setAdapterConfig($configData);
 
         return $configTransfer;
     }
@@ -126,20 +126,24 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
      *
-     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\Filesystem\FilesystemBuilderInterface
      */
     protected function createFilesystemBuilder(FlysystemConfigTransfer $configTransfer)
     {
         $configTransfer->requireName();
 
-        $builderClass = $configTransfer->getType();
-        if (!$builderClass) {
+        $filesystemBuilderClass = $configTransfer->getType();
+        if (!$filesystemBuilderClass) {
             throw new BuilderNotFoundException(
                 sprintf('FlysystemBuilder "%s" was not found', $configTransfer->getName())
             );
         }
 
-        $builder = new $builderClass($configTransfer, $this->createFlysystemPluginProvider());
+        $configTransfer->setFlysystemConfig(
+            $this->getConfig()->getFlysystemFilesystemConfig()
+        );
+
+        $builder = new $filesystemBuilderClass($configTransfer, $this->createFlysystemPluginProvider());
 
         return $builder;
     }

@@ -5,23 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder;
+namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
+use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface;
 
-abstract class AbstractBuilder implements FilesystemBuilderInterface
+abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
 {
 
     /**
      * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
     protected $config;
-
-    /**
-     * @var \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
-     */
-    protected $builder;
 
     /**
      * @var \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
@@ -36,9 +32,9 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     abstract protected function assertAdapterConfig();
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
+     * @return \Spryker\Service\Flysystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
-    abstract protected function createFileSystemBuilder();
+    abstract protected function createAdapterBuilder();
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $config
@@ -60,9 +56,10 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
         $this->assertConfig();
         $this->assertAdapterConfig();
 
-        $filesystemBuilder = $this->createFileSystemBuilder();
+        $filesystem = $this->buildFilesystem();
+        $filesystem = $this->pluginProvider->provide($filesystem);
 
-        return $filesystemBuilder->build();
+        return $filesystem;
     }
 
     /**
@@ -72,7 +69,18 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     {
         $this->config->requireName();
         $this->config->requireType();
-        $this->config->requireData();
+        $this->config->requireAdapterConfig();
+    }
+
+    /**
+     * @return \League\Flysystem\Filesystem
+     */
+    protected function buildFilesystem()
+    {
+        $adapter = $this->createAdapterBuilder()->build();
+        $config = $this->config->getFlysystemConfig() ?: [];
+
+        return new Filesystem($adapter, $config);
     }
 
 }

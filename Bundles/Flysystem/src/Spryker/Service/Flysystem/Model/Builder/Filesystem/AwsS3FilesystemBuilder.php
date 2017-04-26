@@ -7,127 +7,45 @@
 
 namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
 
-use Aws\S3\S3Client;
 use Generated\Shared\Transfer\FlysystemConfigAwsTransfer;
-use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
-use League\Flysystem\Filesystem;
-use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
-use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface;
+use Spryker\Service\Flysystem\Model\Builder\Adapter\AwsS3AdapterBuilder;
 
-class AwsS3FilesystemBuilder implements FilesystemBuilderInterface
+class AwsS3FilesystemBuilder extends AbstractFilesystemBuilder
 {
 
-    const KEY = 'key';
-    const SECRET = 'secret';
-    const REGION = 'region';
-    const VERSION = 'version';
-    const CREDENTIALS = 'credentials';
-
     /**
-     * @var \Aws\S3\S3Client
+     * @return \Generated\Shared\Transfer\FlysystemConfigAwsTransfer
      */
-    protected $client;
+    protected function buildAdapterConfig()
+    {
+        $configTransfer = new FlysystemConfigAwsTransfer();
+        $configTransfer->fromArray($this->config->getAdapterConfig(), true);
 
-    /**
-     * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
-     */
-    protected $adapter;
-
-    /**
-     * @var \League\Flysystem\Filesystem
-     */
-    protected $filesystem;
-
-    /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
-     */
-    protected $fileSystemConfig;
-
-    /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigAwsTransfer
-     */
-    protected $adapterConfig;
-
-    /**
-     * @var \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
-     */
-    protected $pluginProvider;
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
-     * @param \Generated\Shared\Transfer\FlysystemConfigAwsTransfer $adapterConfig
-     * @param \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface $pluginProvider
-     */
-    public function __construct(
-        FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigAwsTransfer $adapterConfig,
-        FlysystemPluginProviderInterface $pluginProvider
-    ) {
-        $this->fileSystemConfig = $fileSystemConfig;
-        $this->adapterConfig = $adapterConfig;
-        $this->pluginProvider = $pluginProvider;
+        return $configTransfer;
     }
 
     /**
-     * @return \League\Flysystem\Filesystem
+     * @return void
      */
-    public function build()
+    protected function assertAdapterConfig()
     {
-        $this
-            ->buildS3Client()
-            ->buildAdapter()
-            ->buildFilesystem()
-            ->buildPlugins();
+        $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return $this->filesystem;
+        $adapterConfigTransfer->requireKey();
+        $adapterConfigTransfer->requireSecret();
+        $adapterConfigTransfer->requireBucket();
+        $adapterConfigTransfer->requireVersion();
+        $adapterConfigTransfer->requireRegion();
     }
 
     /**
-     * @return $this
+     * @return \Spryker\Service\Flysystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
-    protected function buildS3Client()
+    protected function createAdapterBuilder()
     {
-        $this->client = new S3Client([
-            self::CREDENTIALS => [
-                self::KEY => $this->adapterConfig->getKey(),
-                self::SECRET => $this->adapterConfig->getSecret(),
-            ],
-            self::REGION => $this->adapterConfig->getRegion(),
-            self::VERSION => $this->adapterConfig->getVersion(),
-        ]);
+        $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildAdapter()
-    {
-        $this->adapter = new AwsS3Adapter($this->client, $this->adapterConfig->getBucket());
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildFilesystem()
-    {
-        $this->filesystem = new Filesystem($this->adapter);
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildPlugins()
-    {
-        $this->filesystem = $this->pluginProvider->provide($this->filesystem);
-
-        return $this;
+        return new AwsS3AdapterBuilder($this->config, $adapterConfigTransfer);
     }
 
 }

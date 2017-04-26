@@ -8,117 +8,41 @@
 namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\Adapter\Local as LocalAdapter;
-use League\Flysystem\Filesystem;
-use Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface;
-use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface;
+use Spryker\Service\Flysystem\Model\Builder\Adapter\LocalAdapterBuilder;
 
-class LocalFilesystemBuilder implements FilesystemBuilderInterface
+class LocalFilesystemBuilder extends AbstractFilesystemBuilder
 {
 
     /**
-     * @var string
+     * @return \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
      */
-    protected $path;
+    protected function buildAdapterConfig()
+    {
+        $configTransfer = new FlysystemConfigLocalTransfer();
+        $configTransfer->fromArray($this->config->getAdapterConfig(), true);
 
-    /**
-     * @var \League\Flysystem\Adapter\Local
-     */
-    protected $adapter;
-
-    /**
-     * @var \League\Flysystem\Filesystem
-     */
-    protected $filesystem;
-
-    /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
-     */
-    protected $fileSystemConfig;
-
-    /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
-     */
-    protected $adapterConfig;
-
-    /**
-     * @var \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
-     */
-    protected $pluginProvider;
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
-     * @param \Generated\Shared\Transfer\FlysystemConfigLocalTransfer $adapterConfig
-     * @param \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface $pluginProvider
-     */
-    public function __construct(
-        FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigLocalTransfer $adapterConfig,
-        FlysystemPluginProviderInterface $pluginProvider
-    ) {
-        $this->fileSystemConfig = $fileSystemConfig;
-        $this->adapterConfig = $adapterConfig;
-        $this->pluginProvider = $pluginProvider;
+        return $configTransfer;
     }
 
     /**
-     * @return \League\Flysystem\Filesystem
+     * @return void
      */
-    public function build()
+    protected function assertAdapterConfig()
     {
-        $this
-            ->buildPath()
-            ->buildAdapter()
-            ->buildFilesystem()
-            ->buildPlugins();
+        $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return $this->filesystem;
+        $adapterConfigTransfer->requirePath();
+        $adapterConfigTransfer->requireRoot();
     }
 
     /**
-     * @return $this
+     * @return \Spryker\Service\Flysystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
-    protected function buildPath()
+    protected function createAdapterBuilder()
     {
-        $this->path = sprintf(
-            '%s%s%s',
-            $this->adapterConfig->getRoot(),
-            DIRECTORY_SEPARATOR,
-            $this->adapterConfig->getPath()
-        );
+        $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildAdapter()
-    {
-        $this->adapter = new LocalAdapter($this->path, LOCK_EX, LocalAdapter::DISALLOW_LINKS);
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildFilesystem()
-    {
-        $this->filesystem = new Filesystem($this->adapter);
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function buildPlugins()
-    {
-        $this->filesystem = $this->pluginProvider->provide($this->filesystem);
-
-        return $this;
+        return new LocalAdapterBuilder($this->config, $adapterConfigTransfer);
     }
 
 }
