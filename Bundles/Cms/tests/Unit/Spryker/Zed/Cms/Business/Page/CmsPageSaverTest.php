@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -117,7 +118,8 @@ class CmsPageSaverTest extends CmsMocks
         UrlFacadeInterface $urlFacadeMock = null,
         CmsToTouchInterface $touchFacadeMock = null,
         CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null
+        CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
+        CmsGlossarySaverInterface $cmsGlossarySaverMock = null
     ) {
 
         if ($urlFacadeMock === null) {
@@ -136,12 +138,17 @@ class CmsPageSaverTest extends CmsMocks
             $cmsPageUrlBuilderMock = $this->createCmsPageUrlBuilderMock();
         }
 
+        if ($cmsGlossarySaverMock === null) {
+            $cmsGlossarySaverMock = $this->createCmsGlossarySaverMock();
+        }
+
         return $this->getMockBuilder(CmsPageSaver::class)
             ->setConstructorArgs([
                 $urlFacadeMock,
                 $touchFacadeMock,
                 $cmsQueryContainerMock,
                 $cmsPageUrlBuilderMock,
+                $cmsGlossarySaverMock
             ])
             ->setMethods([
                 'getCmsPageEntity',
