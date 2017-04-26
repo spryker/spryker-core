@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -557,12 +555,12 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @api
      *
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null)
     {
@@ -579,9 +577,9 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version)
     {
@@ -591,6 +589,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return bool
@@ -609,7 +609,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage)
     {
@@ -619,9 +619,11 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer[]
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
      */
     public function findAllCmsVersionByIdCmsPage($idCmsPage)
     {
@@ -638,7 +640,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
     {

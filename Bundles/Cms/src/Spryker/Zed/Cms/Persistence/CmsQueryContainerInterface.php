@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
@@ -293,45 +289,57 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage);
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionByIdPage($idPage);
 
     /**
+     * @api
+     *
      * @param int $idCmsVersion
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionById($idCmsVersion);
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionByIdPageAndVersion($idPage, $version);
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys);
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys);
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
 

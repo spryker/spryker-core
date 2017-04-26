@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,6 +12,11 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 interface CmsVersionTransferExpanderPlugin
 {
 
+    /**
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
     public function expandTransfer(CmsVersionTransfer $cmsVersionTransfer);
 
 }

@@ -134,4 +134,5 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
+
 }

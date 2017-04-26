@@ -1,21 +1,18 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CmsCollector\Business;
 
-use Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector as CmsVersionStoragePageCollector;
 use Spryker\Zed\CmsCollector\Business\Collector\Search\CmsVersionPageCollector as CmsVersionSearchPageCollector;
-use Spryker\Zed\CmsCollector\CmsCollectorDependencyProvider;
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorInterface;
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface;
-use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
-use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorStorageQuery;
-use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorSearchQuery;
+use Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector as CmsVersionStoragePageCollector;
 use Spryker\Zed\CmsCollector\Business\Map\CmsDataPageMapBuilder;
+use Spryker\Zed\CmsCollector\CmsCollectorDependencyProvider;
+use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorSearchQuery;
+use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorStorageQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -25,11 +22,11 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsVersionStoragePageCollector
+     * @return \Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector
      */
     public function createStorageCmsVersionPageCollector()
     {
-        $cmsVersionPageCollector =  new CmsVersionStoragePageCollector(
+        $cmsVersionPageCollector = new CmsVersionStoragePageCollector(
             $this->getUtilDataReaderService()
         );
 
@@ -40,7 +37,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsVersionSearchPageCollector
+     * @return \Spryker\Zed\CmsCollector\Business\Collector\Search\CmsVersionPageCollector
      */
     public function createSearchCmsVersionPageCollector()
     {
@@ -57,7 +54,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsDataPageMapBuilder
+     * @return \Spryker\Zed\CmsCollector\Business\Map\CmsDataPageMapBuilder
      */
     public function createCmsDataPageMapBuilder()
     {
@@ -73,7 +70,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsCollectorToCollectorInterface
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
@@ -89,7 +86,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsCollectorToSearchInterface
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface
      */
     protected function getSearchFacade()
     {
@@ -97,7 +94,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AbstractCmsVersionPageCollector
+     * @return \Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector
      */
     protected function createCmsVersionPageCollectorStorageQuery()
     {
@@ -105,10 +102,11 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AbstractCmsVersionPageCollector
+     * @return \Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector
      */
     protected function createCmsVersionPageCollectorSearchQuery()
     {
         return new CmsVersionPageCollectorSearchQuery();
     }
+
 }

@@ -87,7 +87,7 @@ interface CmsGuiToCmsInterface
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @param string|null $versionName
      *
      * @return CmsVersionTransfer

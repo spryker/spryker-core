@@ -12,18 +12,13 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
@@ -169,7 +164,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param int $idCmsPage
      * @param string $localName
      *
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName)
     {
@@ -200,9 +195,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPagesWithTemplatesForSelectedLocale($idLocale)
             ->addJoin(
-            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
-            Criteria::LEFT_JOIN
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+                Criteria::LEFT_JOIN
             )
             ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT);
     }
@@ -688,6 +683,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param int $idLocale
      *
@@ -716,9 +713,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
-     * @return SpyCmsPageQuery|ModelCriteria
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage)
     {
@@ -743,27 +742,30 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->with(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
             ->with(self::ALIAS_GLOSSARY_KEY)
             ->with(self::ALIAS_TRANSLATION)
-            ->with(self::ALIAS_LOCALE_FOR_TRANSLATION)
-            ;
+            ->with(self::ALIAS_LOCALE_FOR_TRANSLATION);
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionByIdPage($idPage)
     {
         return $this->getFactory()
             ->createSpyCmsVersionQuery()
             ->filterByFkCmsPage($idPage)
-            ->orderBy(SpyCmsVersionTableMap::COL_VERSION,Criteria::DESC);
+            ->orderBy(SpyCmsVersionTableMap::COL_VERSION, Criteria::DESC);
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsVersion
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionById($idCmsVersion)
     {
@@ -773,10 +775,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *
-     * @return SpyCmsVersionQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionByIdPageAndVersion($idPage, $version)
     {
@@ -785,9 +789,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys)
     {
@@ -797,6 +803,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -809,13 +817,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $idGlossaryKeys
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys)
     {
         return $this->queryGlossaryKeyMappings()
             ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
+
 }

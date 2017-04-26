@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Business\Version\Handler;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
@@ -21,25 +23,26 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 {
+
     /**
-     * @var CmsGlossarySaverInterface
+     * @var \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
     protected $cmsGlossarySaver;
 
     /**
-     * @var CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param CmsGlossarySaverInterface $cmsGlossarySaver
-     * @param CmsToLocaleInterface $localeFacade
-     * @param CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface $cmsGlossarySaver
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
     public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
@@ -68,15 +71,15 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
     }
 
     /**
-     * @param $glossaryKeyMappings
-     * @param $idCmsPage
+     * @param array $glossaryKeyMappings
+     * @param int $idCmsPage
      * @param string $templateName
      *
      * @return \ArrayObject
      */
-    protected function createCmsGlossaryAttributeTransfers($glossaryKeyMappings, $idCmsPage, $templateName)
+    protected function createCmsGlossaryAttributeTransfers(array $glossaryKeyMappings, $idCmsPage, $templateName)
     {
-        $glossaryAttributeTransfers = new \ArrayObject();
+        $glossaryAttributeTransfers = new ArrayObject();
         foreach ($glossaryKeyMappings as $glossaryKeyMapping) {
             $translations = $this->createCmsPlaceholderTranslationTransfers(
                 $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME]
@@ -99,9 +102,9 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
      * @param string $placeholder
      * @param string $templateName
      *
-     * @return CmsGlossaryAttributesTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer
      */
-    protected function createGlossaryAttributeTransfer(\ArrayObject $translations, $idCmsPage, $placeholder, $templateName)
+    protected function createGlossaryAttributeTransfer(ArrayObject $translations, $idCmsPage, $placeholder, $templateName)
     {
         $glossaryAttributeTransfer = new CmsGlossaryAttributesTransfer();
         $glossaryAttributeTransfer->setPlaceholder($placeholder);
@@ -119,7 +122,7 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
      */
     protected function createCmsPlaceholderTranslationTransfers(array $translations)
     {
-        $newTranslation = new \ArrayObject();
+        $newTranslation = new ArrayObject();
         foreach ($translations as $localeName => $translation) {
             $localeTransfer = $this->localeFacade->getLocale($localeName);
             $newTranslation[] = $this->createCmsPlaceholderTranslationTransfer(
@@ -133,9 +136,9 @@ class CmsGlossaryKeyMappingMigrationHandler implements MigrationHandlerInterface
 
     /**
      * @param string $value
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return CmsPlaceholderTranslationTransfer
+     * @return \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer
      */
     protected function createCmsPlaceholderTranslationTransfer($value, LocaleTransfer $localeTransfer)
     {

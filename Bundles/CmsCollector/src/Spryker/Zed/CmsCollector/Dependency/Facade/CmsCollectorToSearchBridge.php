@@ -1,27 +1,27 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CmsCollector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Search\Business\SearchFacadeInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class CmsCollectorToSearchBridge implements CmsCollectorToSearchInterface
 {
 
     /**
-     * @var SearchFacadeInterface
+     * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
     protected $searchFacade;
 
     /**
      * CmsCollectorToSearchBridge constructor.
      *
-     * @param SearchFacadeInterface $searchFacade
+     * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
     public function __construct($searchFacade)
     {
@@ -39,4 +39,5 @@ class CmsCollectorToSearchBridge implements CmsCollectorToSearchInterface
     {
         return $this->searchFacade->transformPageMapToDocument($pageMap, $data, $localeTransfer);
     }
+
 }

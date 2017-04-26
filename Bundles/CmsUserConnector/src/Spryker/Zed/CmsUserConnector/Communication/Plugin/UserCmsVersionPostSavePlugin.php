@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,22 +9,22 @@ namespace Spryker\Zed\CmsUserConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
-use Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CmsUserConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacadeInterface getFacade()
  */
 class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionPostSavePluginInterface
 {
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function postSave(CmsVersionTransfer $cmsVersionTransfer)
     {
         return $this->getFacade()->updateCmsVersion($cmsVersionTransfer);
     }
+
 }

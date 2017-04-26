@@ -129,7 +129,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     }
 
     /**
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @param string|null $versionName
      *
      * @return CmsVersionTransfer

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,14 +24,14 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
     protected $cmsPageDataPageMapPlugin;
 
     /**
-     * @var CmsCollectorToSearchInterface
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface
      */
     protected $searchFacade;
 
     /**
-     * @param UtilDataReaderServiceInterface $utilDataReaderService
-     * @param PageMapInterface $cmsPageDataPageMapPlugin
-     * @param CmsCollectorToSearchInterface $searchFacade
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $cmsPageDataPageMapPlugin
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface $searchFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,

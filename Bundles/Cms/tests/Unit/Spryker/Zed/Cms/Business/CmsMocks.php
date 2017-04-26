@@ -103,7 +103,7 @@ abstract class CmsMocks extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CmsGlossarySaverInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
     protected function createCmsGlossarySaverMock()
     {

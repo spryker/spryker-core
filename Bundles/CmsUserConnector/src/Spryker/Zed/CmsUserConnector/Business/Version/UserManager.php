@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CmsUserConnector\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsVersion;
-use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface;
 use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface;
 
@@ -17,18 +15,18 @@ class UserManager implements UserManagerInterface
 {
 
     /**
-     * @var CmsUserConnectorToUserInterface
+     * @var \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface
      */
     protected $userFacade;
 
     /**
-     * @var CmsUserConnectorToCmsQueryContainerInterface
+     * @var \Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param CmsUserConnectorToUserInterface $userFacade
-     * @param CmsUserConnectorToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface $userFacade
+     * @param \Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface $cmsQueryContainer
      */
     public function __construct(CmsUserConnectorToUserInterface $userFacade, CmsUserConnectorToCmsQueryContainerInterface $cmsQueryContainer)
     {
@@ -37,9 +35,9 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer)
     {
@@ -55,9 +53,9 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer)
     {
@@ -73,10 +71,10 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      * @param int $idUser
      *
-     * @return SpyCmsVersion
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersion
      */
     protected function updateCmsVersionUserId(CmsVersionTransfer $cmsVersionTransfer, $idUser)
     {

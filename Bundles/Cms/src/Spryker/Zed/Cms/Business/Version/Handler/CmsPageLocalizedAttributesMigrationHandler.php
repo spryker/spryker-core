@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,18 +16,18 @@ class CmsPageLocalizedAttributesMigrationHandler implements MigrationHandlerInte
 {
 
     /**
-     * @var CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param CmsToLocaleInterface $localeFacade
-     * @param CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
     public function __construct(CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
@@ -59,4 +60,5 @@ class CmsPageLocalizedAttributesMigrationHandler implements MigrationHandlerInte
             $cmsLocalizedAttributeEntity->save();
         }
     }
+
 }

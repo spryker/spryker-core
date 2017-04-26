@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,25 +9,24 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsVersion;
-use Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionFinder implements VersionFinderInterface
 {
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CmsVersionTransferExpanderPlugin[]
+     * @var \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[]
      */
     protected $transferExpanderPlugins;
 
     /**
-     * @param CmsQueryContainerInterface $queryContainer
-     * @param CmsVersionTransferExpanderPlugin[] $transferExpanderPlugins
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[] $transferExpanderPlugins
      */
     public function __construct(CmsQueryContainerInterface $queryContainer, array $transferExpanderPlugins)
     {
@@ -38,7 +37,7 @@ class VersionFinder implements VersionFinderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer|null
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage)
     {
@@ -68,7 +67,7 @@ class VersionFinder implements VersionFinderInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return CmsVersionTransfer|null
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
     {
@@ -78,9 +77,9 @@ class VersionFinder implements VersionFinderInterface
     }
 
     /**
-     * @param SpyCmsVersion $cmsVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsVersion $cmsVersionEntity
      *
-     * @return CmsVersionTransfer|null
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     protected function getCmsVersionTransfer($cmsVersionEntity)
     {
@@ -94,9 +93,9 @@ class VersionFinder implements VersionFinderInterface
     }
 
     /**
-     * @param SpyCmsVersion $cmsVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsVersion $cmsVersionEntity
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function convertToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
     {
@@ -107,9 +106,9 @@ class VersionFinder implements VersionFinderInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function expandCmsVersionTransfer(CmsVersionTransfer $cmsVersionTransfer)
     {
@@ -119,4 +118,5 @@ class VersionFinder implements VersionFinderInterface
 
         return $cmsVersionTransfer;
     }
+
 }

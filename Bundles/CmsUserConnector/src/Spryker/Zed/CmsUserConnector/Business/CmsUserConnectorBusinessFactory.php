@@ -1,17 +1,14 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CmsUserConnector\Business;
 
 use Spryker\Zed\CmsUserConnector\Business\Version\UserManager;
-use Spryker\Zed\CmsUserConnector\Business\Version\UserManagerInterface;
 use Spryker\Zed\CmsUserConnector\CmsUserConnectorDependencyProvider;
-use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface;
-use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -21,7 +18,7 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return UserManagerInterface
+     * @return \Spryker\Zed\CmsUserConnector\Business\Version\UserManagerInterface
      */
     public function createUserManager()
     {
@@ -32,7 +29,7 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsUserConnectorToUserInterface
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface
      */
     public function getUserFacade()
     {
@@ -40,10 +37,11 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsUserConnectorToCmsQueryContainerInterface
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface
      */
     public function getCmsQueryContainer()
     {
         return $this->getProvidedDependency(CmsUserConnectorDependencyProvider::QUERY_CONTAINER_CMS);
     }
+
 }

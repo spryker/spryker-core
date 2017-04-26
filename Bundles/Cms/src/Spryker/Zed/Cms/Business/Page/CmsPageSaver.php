@@ -46,7 +46,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $cmsPageUrlBuilder;
 
     /**
-     * @var CmsGlossarySaverInterface
+     * @var \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
     protected $cmsGlossarySaver;
 
@@ -55,7 +55,7 @@ class CmsPageSaver implements CmsPageSaverInterface
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
-     * @param CmsGlossarySaverInterface $cmsGlossarySaver
+     * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface $cmsGlossarySaver
      */
     public function __construct(
         CmsToUrlInterface $urlFacade,

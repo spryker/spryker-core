@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,8 +12,8 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQuery
 {
@@ -49,7 +49,7 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
         $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'is_active');
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_VERSION);
 
-        $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION ,$this->getMaxVersionSubQuery()));
+        $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()));
     }
 
     /**
@@ -68,4 +68,5 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
 
         return $queryString;
     }
+
 }

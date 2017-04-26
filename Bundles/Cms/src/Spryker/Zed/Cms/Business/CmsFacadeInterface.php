@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 
 interface CmsFacadeInterface
 {
@@ -411,12 +409,12 @@ interface CmsFacadeInterface
      *
      * @api
      *
-     * @param $idCmsPage
+     * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null);
 
@@ -424,23 +422,26 @@ interface CmsFacadeInterface
      * Specification:
      * - Rollbacks latest CmsPageVersion to older version
      *
+     * @api
+     *
      * @param int $idCmsPage
      * @param int $version
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version);
-
 
     /**
      * Specification:
      * - Revert all cms changes to the latest CmsPageVersion
      *
+     * @api
+     *
      * @param int $idCmsPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return bool
      */
@@ -450,16 +451,20 @@ interface CmsFacadeInterface
      * Specification:
      * - Returns the latest CmsPageVersionTransfer by IdCmsPage
      *
+     * @api
+     *
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer[]
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
      */
     public function findAllCmsVersionByIdCmsPage($idCmsPage);
 
@@ -467,10 +472,12 @@ interface CmsFacadeInterface
      * Specification:
      * - Returns the CmsPageVersionTransfer by IdCmsPage and specific version
      *
+     * @api
+     *
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -54,11 +54,11 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CmsVersionPageDataPageMapPlugin
+     * @return \Spryker\Zed\CmsCollector\Communication\Plugin\CmsVersionPageDataPageMapPlugin
      */
-    function createCmsVersionPageDataPageMapPlugin(Container $container)
+    public function createCmsVersionPageDataPageMapPlugin(Container $container)
     {
         return new CmsVersionPageDataPageMapPlugin();
     }

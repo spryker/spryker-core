@@ -20,20 +20,14 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
-use Spryker\Zed\Cms\Business\Version\Handler\CmsTemplateMigrationHandler;
-use Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface;
 use Spryker\Zed\Cms\Business\Version\Handler\CmsGlossaryKeyMappingMigrationHandler;
 use Spryker\Zed\Cms\Business\Version\Handler\CmsPageLocalizedAttributesMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\Handler\CmsTemplateMigrationHandler;
 use Spryker\Zed\Cms\Business\Version\VersionFinder;
-use Spryker\Zed\Cms\Business\Version\VersionFinderInterface;
-use Spryker\Zed\Cms\Business\Version\VersionPublisher;
-use Spryker\Zed\Cms\Business\Version\VersionPublisherInterface;
-use Spryker\Zed\Cms\Business\Version\VersionMigration;
-use Spryker\Zed\Cms\Business\Version\VersionMigrationInterface;
 use Spryker\Zed\Cms\Business\Version\VersionGenerator;
-use Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface;
+use Spryker\Zed\Cms\Business\Version\VersionMigration;
+use Spryker\Zed\Cms\Business\Version\VersionPublisher;
 use Spryker\Zed\Cms\Business\Version\VersionRollback;
-use Spryker\Zed\Cms\Business\Version\VersionRollbackInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
@@ -203,7 +197,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionFinderInterface
+     * @return \Spryker\Zed\Cms\Business\Version\VersionFinderInterface
      */
     public function createVersionFinder()
     {
@@ -214,7 +208,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionPublisherInterface
+     * @return \Spryker\Zed\Cms\Business\Version\VersionPublisherInterface
      */
     public function createVersionPublisher()
     {
@@ -227,7 +221,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionGeneratorInterface
+     * @return \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface
      */
     public function createVersionGenerator()
     {
@@ -237,7 +231,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionMigrationInterface
+     * @return \Spryker\Zed\Cms\Business\Version\VersionMigrationInterface
      */
     public function createVersionMigration()
     {
@@ -249,7 +243,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
      */
     public function createCmsTemplateMigrationHandler()
     {
@@ -260,7 +254,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
      */
     public function createCmsPageLocalizedAttributeMigrationHandler()
     {
@@ -271,7 +265,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
      */
     public function createCmsGlossaryKeyMappingMigrationHandler()
     {
@@ -283,7 +277,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionRollbackInterface
+     * @return \Spryker\Zed\Cms\Business\Version\VersionRollbackInterface
      */
     public function createVersionRollback()
     {

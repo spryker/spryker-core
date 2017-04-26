@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,12 +15,12 @@ class VersionGenerator implements VersionGeneratorInterface
     const DEFAULT_VERSION_NUMBER = 1;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
     public function __construct(CmsQueryContainerInterface $queryContainer)
     {
@@ -59,7 +60,7 @@ class VersionGenerator implements VersionGeneratorInterface
      */
     public function generateReferenceCmsVersionName($versionNumber)
     {
-
         return sprintf('copy of v. %d', $versionNumber);
     }
+
 }

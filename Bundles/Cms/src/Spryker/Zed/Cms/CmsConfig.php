@@ -23,7 +23,8 @@ class CmsConfig extends AbstractBundleConfig
     public function getTemplateRealPath($templateRelativePath)
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
-        $physicalAddress = sprintf('%s/%s/Shared/Cms/Theme/%s%s',
+        $physicalAddress = sprintf(
+            '%s/%s/Shared/Cms/Theme/%s%s',
             APPLICATION_SOURCE_DIR,
             $this->get(CmsConstants::PROJECT_NAMESPACE),
             $this->get(CmsConstants::YVES_THEME),

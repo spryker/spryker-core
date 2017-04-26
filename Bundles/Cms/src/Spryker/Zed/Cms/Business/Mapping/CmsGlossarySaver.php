@@ -314,7 +314,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     }
 
     /**
-     * @param CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer
+     * @param \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer $glossaryTranslationTransfer
      *
      * @return void
      */

@@ -148,7 +148,7 @@ class CmsPageSaverTest extends CmsMocks
                 $touchFacadeMock,
                 $cmsQueryContainerMock,
                 $cmsPageUrlBuilderMock,
-                $cmsGlossarySaverMock
+                $cmsGlossarySaverMock,
             ])
             ->setMethods([
                 'getCmsPageEntity',

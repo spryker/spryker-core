@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,16 +13,21 @@ interface CmsUserConnectorFacadeInterface
 {
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @api
      *
-     * @return CmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer);
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @api
      *
-     * @return CmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer);
+
 }

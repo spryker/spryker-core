@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,7 +18,6 @@ use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
@@ -31,7 +31,7 @@ class VersionPublisher implements VersionPublisherInterface
     const GLOSSARY_KEY = 'GlossaryKey';
 
     /**
-     * @var VersionGeneratorInterface
+     * @var \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface
      */
     protected $versionGenerator;
 
@@ -41,20 +41,20 @@ class VersionPublisher implements VersionPublisherInterface
     protected $touchFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CmsVersionPostSavePluginInterface[]
+     * @var \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
 
     /**
-     * @param VersionGeneratorInterface $versionGenerator
+     * @param \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface $versionGenerator
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
-     * @param CmsQueryContainerInterface $queryContainer
-     * @param CmsVersionPostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(VersionGeneratorInterface $versionGenerator, CmsToTouchInterface $touchFacade, CmsQueryContainerInterface $queryContainer, array $postSavePlugins)
     {
@@ -68,9 +68,9 @@ class VersionPublisher implements VersionPublisherInterface
      * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null)
     {
@@ -231,7 +231,7 @@ class VersionPublisher implements VersionPublisherInterface
      * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function createCmsVersion($data, $idCmsPage, $versionName = null)
     {
@@ -263,7 +263,7 @@ class VersionPublisher implements VersionPublisherInterface
      * @param int $versionNumber
      * @param string $versionName
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function saveCmsVersion($idCmsPage, $data, $versionNumber, $versionName)
     {
@@ -278,9 +278,9 @@ class VersionPublisher implements VersionPublisherInterface
     }
 
     /**
-     * @param SpyCmsVersion $cmsVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $cmsVersionEntity
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function convertToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
     {
@@ -289,4 +289,5 @@ class VersionPublisher implements VersionPublisherInterface
 
         return $cmsVersionTransfer;
     }
+
 }

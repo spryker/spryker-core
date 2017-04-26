@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,19 +16,18 @@ class CmsTemplateMigrationHandler implements MigrationHandlerInterface
 {
 
     /**
-     * @var TemplateManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     *
-     * @param TemplateManagerInterface $templateManager
-     * @param CmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
     public function __construct(TemplateManagerInterface $templateManager, CmsQueryContainerInterface $queryContainer)
     {
@@ -57,4 +57,5 @@ class CmsTemplateMigrationHandler implements MigrationHandlerInterface
 
         $cmsPageEntity->save();
     }
+
 }
