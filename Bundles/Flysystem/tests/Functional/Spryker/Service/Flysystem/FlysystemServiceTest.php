@@ -195,12 +195,12 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/' . 'NEW_' . static::FILE_DOCUMENT
         );
 
-        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
-        $isRenamedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+        $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
         $this->assertTrue($result);
-        $this->assertFalse($isOriginalFile);
-        $this->assertTrue($isRenamedFile);
+        $this->assertFileNotExists($originalFile);
+        $this->assertFileExists($renamedFile);
     }
 
     /**
@@ -216,12 +216,12 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/' . 'NEW_' . static::FILE_DOCUMENT
         );
 
-        $isOriginalFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT);
-        $isCopiedFile = is_file($this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT);
+        $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $copiedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
         $this->assertTrue($result);
-        $this->assertTrue($isOriginalFile);
-        $this->assertTrue($isCopiedFile);
+        $this->assertFileExists($originalFile);
+        $this->assertFileExists($copiedFile);
     }
 
     /**
@@ -377,10 +377,9 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         );
 
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
-        $isDir = is_dir($dir);
 
         $this->assertTrue($dirCreated);
-        $this->assertTrue($isDir);
+        $this->assertDirectoryExists($dir);
     }
 
     /**
@@ -396,10 +395,8 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/bar'
         );
 
-        $isDir = is_dir($dir);
-
         $this->assertTrue($result);
-        $this->assertFalse($isDir);
+        $this->assertDirectoryNotExists($dir);
     }
 
     /**
@@ -422,11 +419,10 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
-        $isFile = is_file($file);
         $content = file_get_contents($file);
 
         $this->assertTrue($result);
-        $this->assertTrue($isFile);
+        $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
 
@@ -472,11 +468,10 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
-        $isFile = is_file($file);
         $content = file_get_contents($file);
 
         $this->assertTrue($result);
-        $this->assertTrue($isFile);
+        $this->assertFileExists($file);
         $this->assertSame('Lorem Ipsum', $content);
     }
 
@@ -500,11 +495,10 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         }
 
         $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
-        $isFile = is_file($file);
         $content = file_get_contents($file);
 
         $this->assertTrue($result);
-        $this->assertTrue($isFile);
+        $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
 
@@ -585,61 +579,54 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function directoryCleanup()
     {
-        try {
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
-            if (is_file($file)) {
-                unlink($file);
-            }
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        if (is_file($file)) {
+            unlink($file);
+        }
 
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
-            if (is_file($file)) {
-                unlink($file);
-            }
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
+        if (is_file($file)) {
+            unlink($file);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
-            if (is_file($file)) {
-                unlink($file);
-            }
+        $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
+        if (is_file($file)) {
+            unlink($file);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $dir = $this->testDataFileSystemRootDirectory . 'images/';
-            if (is_dir($dir)) {
-                rmdir($dir);
-            }
+        $dir = $this->testDataFileSystemRootDirectory . 'images/';
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
 
-            $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
-            if (is_file($file)) {
-                unlink($file);
-            }
-
-        } catch (\Exception $e) {
-
-        } catch (\Throwable $e) {
-
+        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
+        if (is_file($file)) {
+            unlink($file);
         }
     }
 

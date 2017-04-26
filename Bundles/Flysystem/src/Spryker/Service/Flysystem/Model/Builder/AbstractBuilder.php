@@ -33,7 +33,7 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
      *
      * @return void
      */
-    abstract protected function validateConfig();
+    abstract protected function assertAdapterConfig();
 
     /**
      * @return \Spryker\Service\Flysystem\Model\Builder\FilesystemBuilderInterface
@@ -57,8 +57,8 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
      */
     public function build()
     {
-        $this->validateMandatoryConfigFields();
-        $this->validateConfig();
+        $this->assertConfig();
+        $this->assertAdapterConfig();
 
         $filesystemBuilder = $this->createFileSystemBuilder();
 
@@ -68,7 +68,7 @@ abstract class AbstractBuilder implements FilesystemBuilderInterface
     /**
      * @return void
      */
-    protected function validateMandatoryConfigFields()
+    protected function assertConfig()
     {
         $this->config->requireName();
         $this->config->requireType();

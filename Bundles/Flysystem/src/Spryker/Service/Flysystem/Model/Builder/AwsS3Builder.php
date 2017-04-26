@@ -27,7 +27,7 @@ class AwsS3Builder extends AbstractBuilder
     /**
      * @return void
      */
-    protected function validateConfig()
+    protected function assertAdapterConfig()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 

@@ -27,7 +27,7 @@ class LocalBuilder extends AbstractBuilder
     /**
      * @return void
      */
-    protected function validateConfig()
+    protected function assertAdapterConfig()
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
