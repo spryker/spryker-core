@@ -8,15 +8,14 @@
 namespace SprykerTest\Zed\ProductGroup\Business\ProductGroupFacade;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\ProductGroupBuilder;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 
+/**
+ * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
+ */
 class ReadProductGroupTest extends Test
 {
-
-    /**
-     * @var \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester
-     */
-    protected $tester;
 
     /**
      * @return void
@@ -30,14 +29,15 @@ class ReadProductGroupTest extends Test
         $productAbstractTransfer4 = $this->tester->haveProductAbstract();
         $productAbstractTransfer5 = $this->tester->haveProductAbstract();
 
-        $productGroupTransfer = new ProductGroupTransfer();
-        $productGroupTransfer->setIdProductAbstracts([
-            $productAbstractTransfer1->getIdProductAbstract(),
-            $productAbstractTransfer2->getIdProductAbstract(),
-            $productAbstractTransfer4->getIdProductAbstract(),
-            $productAbstractTransfer5->getIdProductAbstract(),
-            $productAbstractTransfer3->getIdProductAbstract(),
-        ]);
+        $productGroupTransfer = (new ProductGroupBuilder([
+            ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer1->getIdProductAbstract(),
+                $productAbstractTransfer2->getIdProductAbstract(),
+                $productAbstractTransfer4->getIdProductAbstract(),
+                $productAbstractTransfer5->getIdProductAbstract(),
+                $productAbstractTransfer3->getIdProductAbstract(),
+            ]
+        ]))->build();
 
         $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);
 

@@ -8,19 +8,15 @@
 namespace SprykerTest\Zed\ProductGroup\Business\ProductGroupFacade;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\ProductGroupBuilder;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
- *
+ * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
 class DeleteProductGroupTest extends Test
 {
-
-    /**
-     * @var \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester
-     */
-    protected $tester;
 
     /**
      * @return void
@@ -31,11 +27,13 @@ class DeleteProductGroupTest extends Test
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
 
-        $productGroupTransfer = new ProductGroupTransfer();
-        $productGroupTransfer->setIdProductAbstracts([
-            $productAbstractTransfer1->getIdProductAbstract(),
-            $productAbstractTransfer2->getIdProductAbstract(),
-        ]);
+        $productGroupTransfer = (new ProductGroupBuilder([
+            ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer1->getIdProductAbstract(),
+                $productAbstractTransfer2->getIdProductAbstract(),
+            ]
+        ]))->build();
+
         $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);
 
         // Act
