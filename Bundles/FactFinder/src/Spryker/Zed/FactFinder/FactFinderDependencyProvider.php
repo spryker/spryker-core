@@ -54,6 +54,7 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::LOCALE_QUERY] = function (Container $container) {
+//            $container->getLocator()->locale()->queryContainer()-
             return new SpyLocaleQuery();
         };
 

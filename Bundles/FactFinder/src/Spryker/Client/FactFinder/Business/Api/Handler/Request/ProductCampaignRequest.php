@@ -28,7 +28,6 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
 
         $this->logInfo($quoteTransfer, $productCampaignAdapter);
 
-        // convert to FactFinderSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createProductCampaignResponseConverter($productCampaignAdapter)
             ->convert();

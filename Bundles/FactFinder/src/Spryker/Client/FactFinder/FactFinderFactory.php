@@ -113,17 +113,6 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver
-     */
-    public function createProductByUrlResolver()
-    {
-        return new ProductByUrlResolver(
-            $this->createUrlMatcher(),
-            $this->getStorageClient()
-        );
-    }
-
-    /**
      * @return \Spryker\Client\Collector\Matcher\UrlMatcher
      */
     public function createUrlMatcher()

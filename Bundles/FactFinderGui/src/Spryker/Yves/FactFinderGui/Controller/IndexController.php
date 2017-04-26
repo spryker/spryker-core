@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Generated\Shared\Transfer\FactFinderSuggestRequestTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Yves\FactFinderGui\Communication\Plugin\Provider\FactFinderGuiControllerProvider;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,7 +39,7 @@ class IndexController extends AbstractController
 
         return [
             'searchResponse' => $ffSearchResponseTransfer,
-            'pagingRote' => FactFinderGuiControllerProvider::ROUTE_FACT_FINDER,
+            'pagingRote' => 'fact-finder',
             'lang' => Store::getInstance()->getCurrentLanguage(),
             'query' => $factFinderSearchRequestTransfer->getQuery(),
             'page' => $factFinderSearchRequestTransfer->getPage(),
