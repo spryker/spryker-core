@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -21,7 +21,7 @@ class CmsVersionFormType extends AbstractType
     const CMS_VERSION = 'cms_version';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -42,7 +42,7 @@ class CmsVersionFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -55,13 +55,13 @@ class CmsVersionFormType extends AbstractType
             $attr['disabled'] = 'disabled';
         }
 
-        $builder->add('version',ChoiceType::class, [
+        $builder->add('version', ChoiceType::class, [
             'label' => false,
             'choices' => $choices,
             'required' => true,
             'constraints' => [
                 new Required(),
-                new NotNull()
+                new NotNull(),
             ],
             'attr' => $attr,
         ]);

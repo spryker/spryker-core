@@ -78,7 +78,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();

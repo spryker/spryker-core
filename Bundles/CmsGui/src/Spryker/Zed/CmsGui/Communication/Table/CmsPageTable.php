@@ -271,7 +271,6 @@ class CmsPageTable extends AbstractTable
         );
     }
 
-
     /**
      * @param array $item
      *

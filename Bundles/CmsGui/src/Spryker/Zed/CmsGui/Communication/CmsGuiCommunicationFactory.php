@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
@@ -22,10 +21,10 @@ use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
+use Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
-use Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -66,7 +65,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param CmsVersionDataProvider $cmsVersionDataProvider
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
      * @param int|null $idCmsPage
      * @param int|null $version
      *
@@ -132,7 +131,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsVersionDataProvider
+     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider
      */
     public function createCmsVersionFormDataProvider()
     {
@@ -153,7 +152,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsVersionFormType
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType
      */
     protected function createCmsVersionFormType()
     {
@@ -243,7 +242,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsVersionDataHelper
+     * @return \Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper
      */
     public function createCmsVersionDataHelper()
     {

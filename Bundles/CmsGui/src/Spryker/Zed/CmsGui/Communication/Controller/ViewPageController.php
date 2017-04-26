@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -50,7 +47,7 @@ class ViewPageController extends AbstractController
             'cmsPage' => $cmsVersionDataHelper->extractCmsPageTransfer($cmsVersionTransfer),
             'cmsGlossary' => $cmsVersionDataHelper->extractCmsGlossaryPageTransfer($cmsVersionTransfer),
             'cmsVersion' => $cmsVersionTransfer,
-            'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt()
+            'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
         ];
     }
 

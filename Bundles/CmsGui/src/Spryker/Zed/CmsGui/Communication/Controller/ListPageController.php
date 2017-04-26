@@ -21,7 +21,6 @@ class ListPageController extends AbstractController
      */
     public function indexAction()
     {
-
 //        $cmsPageTransfer = $this->getFactory()->getCmsFacade()->publishAndVersion(7);
 //        dump($cmsPageTransfer);
 

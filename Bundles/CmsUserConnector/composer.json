@@ -8,11 +8,12 @@
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/cms": "^5.0.0",
-    "spryker/user": "^3.0.0",
+    "spryker/user": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/PropelOrm": "^1.0.0",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,7 +10,6 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -24,7 +24,7 @@ class VersionPageController extends AbstractController
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -52,9 +52,9 @@ class VersionPageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function discardAction(Request $request)
     {
@@ -71,14 +71,16 @@ class VersionPageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function historyAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $version =  $request->query->get(static::URL_PARAM_VERSION);
+        $version = $request->query->get(static::URL_PARAM_VERSION);
 
         $cmsVersionFormDataProvider = $this->getFactory()
             ->createCmsVersionFormDataProvider();
@@ -92,12 +94,12 @@ class VersionPageController extends AbstractController
                 $cmsVersionData = $request->request->get(CmsVersionFormType::CMS_VERSION);
                 $version = $this->castId($cmsVersionData['version']);
                 if ($request->request->get('rollback') !== null) {
-                    $cmsVersionTransfer =  $this->getFactory()->getCmsFacade()->rollback($idCmsPage, $version);
+                    $cmsVersionTransfer = $this->getFactory()->getCmsFacade()->rollback($idCmsPage, $version);
                     $this->addSuccessMessage(
                         sprintf('Rollback successfully applied and Page with version %d published.', $cmsVersionTransfer->getVersion())
                     );
 
-                    return $this->redirectResponse('/cms-gui/version-page/history?id-cms-page='. $idCmsPage);
+                    return $this->redirectResponse('/cms-gui/version-page/history?id-cms-page=' . $idCmsPage);
                 }
             }
         }
@@ -143,4 +145,5 @@ class VersionPageController extends AbstractController
             'cmsVersion' => $cmsCurrentVersionTransfer,
         ];
     }
+
 }

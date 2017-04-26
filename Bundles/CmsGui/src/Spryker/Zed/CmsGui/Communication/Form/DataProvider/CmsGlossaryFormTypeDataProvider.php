@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
@@ -71,4 +70,5 @@ class CmsGlossaryFormTypeDataProvider
             static::TYPE_FULLTEXT_SEARCH,
         ];
     }
+
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -26,14 +26,14 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
 {
 
     /**
-     * @var CmsGuiToCmsQueryContainerInterface
+     * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
      * CmsVersionDataHelper constructor.
      *
-     * @param CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      */
     public function __construct(CmsGuiToCmsQueryContainerInterface $cmsQueryContainer)
     {
@@ -41,9 +41,9 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function extractCmsPageTransfer(CmsVersionTransfer $cmsVersionTransfer)
     {
@@ -66,9 +66,9 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function extractCmsGlossaryPageTransfer(CmsVersionTransfer $cmsVersionTransfer)
     {
@@ -91,7 +91,7 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
      * @param string $pageName
      * @param int $idCmsPage
      *
-     * @return CmsPageAttributesTransfer
+     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
     protected function extractCmsPageAttributeTransfer($localeName, $pageName, $idCmsPage)
     {
@@ -109,7 +109,7 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
      * @param array $item
      * @param string $localeName
      *
-     * @return CmsPageMetaAttributesTransfer
+     * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
     protected function extractCmsMetaAttributeTransfer(array $item, $localeName)
     {
@@ -123,7 +123,7 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
     }
 
     /**
-     * @param CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $cmsGlossaryAttributesTransfer
      * @param array $translations
      *
      * @return void
@@ -141,7 +141,7 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
     /**
      * @param array $versionDataArray
      *
-     * @return CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     protected function createCmsPageTransfer(array $versionDataArray)
     {
@@ -156,4 +156,5 @@ class CmsVersionDataHelper implements CmsVersionDataHelperInterface
 
         return $cmsPageTransfer;
     }
+
 }

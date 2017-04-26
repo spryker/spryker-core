@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsGuiToCmsInterface
 {
@@ -90,7 +89,7 @@ interface CmsGuiToCmsInterface
      * @param int $idCmsPage
      * @param string|null $versionName
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function publishAndVersion($idCmsPage, $versionName = null);
 
@@ -98,7 +97,7 @@ interface CmsGuiToCmsInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function rollback($idCmsPage, $version);
 
@@ -112,14 +111,14 @@ interface CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
     /**
      * @param int $idCmsPage
      *
-     * @return CmsVersionTransfer[]
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
      */
     public function findAllCmsVersionByIdCmsPage($idCmsPage);
 
@@ -127,7 +126,7 @@ interface CmsGuiToCmsInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,12 +15,12 @@ class CmsVersionDataProvider
 {
 
     /**
-     * @var CmsGuiToCmsInterface
+     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
      */
     protected $cmsFacade;
 
     /**
-     * @param CmsGuiToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
      */
     public function __construct(CmsGuiToCmsInterface $cmsFacade)
     {
@@ -27,10 +28,10 @@ class CmsVersionDataProvider
     }
 
     /**
-     * @param null $idCmsPage
-     * @param null $version
+     * @param int|null $idCmsPage
+     * @param int|null $version
      *
-     * @return array|CmsVersionTransfer
+     * @return array|\Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function getData($idCmsPage = null, $version = null)
     {
@@ -79,19 +80,21 @@ class CmsVersionDataProvider
     }
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return string
      */
     protected function createOptionLabel(CmsVersionTransfer $cmsVersionTransfer)
     {
-        $optionLabel = sprintf('%s published on %s ',
+        $optionLabel = sprintf(
+            '%s published on %s ',
             $cmsVersionTransfer->getVersionName(),
             date('d/m/Y H:i:s', strtotime($cmsVersionTransfer->getCreatedAt()))
         );
 
         if ($cmsVersionTransfer->getFirstName() !== null) {
-            $optionLabel .= sprintf('by %s %s',
+            $optionLabel .= sprintf(
+                'by %s %s',
                 $cmsVersionTransfer->getFirstName(),
                 $cmsVersionTransfer->getLastName()
             );

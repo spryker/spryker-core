@@ -110,4 +110,5 @@ class CreateGlossaryController extends AbstractController
 
         return $this->jsonResponse($result);
     }
+
 }
