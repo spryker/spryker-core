@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem;
+namespace Spryker\Service\FileSystem\Model\Adapter\Flysystem;
 
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
-use Spryker\Zed\FileSystem\Business\Model\FileSystemStreamInterface;
-use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
+use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
+use Spryker\Service\FileSystem\Model\FileSystemStreamInterface;
 
 class FileSystemStream implements FileSystemStreamInterface
 {
 
     /**
-     * @var \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
+     * @var \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
      */
     protected $flysystemService;
 
     /**
-     * @param \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
+     * @param \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
      */
     public function __construct(FileSystemToFlysystemInterface $flysystemService)
     {

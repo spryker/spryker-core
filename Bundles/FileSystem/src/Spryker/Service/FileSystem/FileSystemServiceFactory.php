@@ -5,23 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business;
+namespace Spryker\Service\FileSystem;
 
-use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemReader;
-use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemStream;
-use Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem\FileSystemWriter;
-use Spryker\Zed\FileSystem\Business\Model\FileSystemAdapter;
-use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemReader;
+use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemStream;
+use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemWriter;
+use Spryker\Service\FileSystem\Model\FileSystemAdapter;
+use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
- * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
+ * @method \Spryker\Service\FileSystem\FileSystemConfig getConfig()
  */
-class FileSystemBusinessFactory extends AbstractBusinessFactory
+class FileSystemServiceFactory extends AbstractServiceFactory
 {
 
     /**
-     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemAdapterInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemAdapterInterface
      */
     public function createFileSystemAdapter()
     {
@@ -33,7 +32,7 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemReaderInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemReaderInterface
      */
     protected function createFlysystemAdapterReader()
     {
@@ -43,7 +42,7 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemWriterInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemWriterInterface
      */
     protected function createFlysystemAdapterWriter()
     {
@@ -53,7 +52,7 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileSystem\Business\Model\FileSystemStreamInterface
+     * @return \Spryker\Service\FileSystem\Model\FileSystemStreamInterface
      */
     protected function createFlysystemAdapterStream()
     {
@@ -63,7 +62,7 @@ class FileSystemBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
+     * @return \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
      */
     protected function getFlysystemService()
     {

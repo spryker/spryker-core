@@ -8,7 +8,7 @@
 namespace FileSystem\Stub;
 
 use Codeception\Configuration;
-use Functional\Spryker\Zed\FileSystem\Business\FileSystemFacadeTest;
+use Functional\Spryker\Service\FileSystem\FileSystemServiceTest;
 use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
 use Spryker\Service\Flysystem\Model\Builder\LocalBuilder;
 
@@ -20,18 +20,18 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
      */
     public function getFilesystemConfig()
     {
-        $testDataFlysystemRootDirectory = Configuration::dataDir() . FileSystemFacadeTest::ROOT_DIRECTORY;
+        $testDataFlysystemRootDirectory = Configuration::dataDir() . FileSystemServiceTest::ROOT_DIRECTORY;
 
         return [
-            FileSystemFacadeTest::FILE_SYSTEM_PRODUCT_IMAGE => [
+            FileSystemServiceTest::FILE_SYSTEM_PRODUCT_IMAGE => [
                 'type' => LocalBuilder::class,
                 'root' => $testDataFlysystemRootDirectory,
-                'path' => FileSystemFacadeTest::PATH_PRODUCT_IMAGE,
+                'path' => FileSystemServiceTest::PATH_PRODUCT_IMAGE,
             ],
-            FileSystemFacadeTest::FILE_SYSTEM_DOCUMENT => [
+            FileSystemServiceTest::FILE_SYSTEM_DOCUMENT => [
                 'type' => LocalBuilder::class,
                 'root' => $testDataFlysystemRootDirectory,
-                'path' => FileSystemFacadeTest::PATH_DOCUMENT,
+                'path' => FileSystemServiceTest::PATH_DOCUMENT,
             ],
         ];
     }

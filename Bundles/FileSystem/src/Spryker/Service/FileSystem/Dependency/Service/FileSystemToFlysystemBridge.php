@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Dependency\Service;
+namespace Spryker\Service\FileSystem\Dependency\Service;
 
 class FileSystemToFlysystemBridge implements FileSystemToFlysystemInterface
 {

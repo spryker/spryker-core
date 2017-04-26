@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business\Model\Adapter\Flysystem;
+namespace Spryker\Service\FileSystem\Model\Adapter\Flysystem;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
@@ -14,19 +14,19 @@ use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Zed\FileSystem\Business\Model\FileSystemWriterInterface;
-use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
+use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
+use Spryker\Service\FileSystem\Model\FileSystemWriterInterface;
 
 class FileSystemWriter implements FileSystemWriterInterface
 {
 
     /**
-     * @var \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
+     * @var \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
      */
     protected $flysystemService;
 
     /**
-     * @param \Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
+     * @param \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
      */
     public function __construct(FileSystemToFlysystemInterface $flysystemService)
     {

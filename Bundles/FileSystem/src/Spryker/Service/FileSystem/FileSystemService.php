@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business;
+namespace Spryker\Service\FileSystem;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
@@ -17,13 +17,13 @@ use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Service\Kernel\AbstractService;
 
 /**
- * @method \Spryker\Zed\FileSystem\FileSystemConfig getConfig()
- * @method \Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory getFactory()
+ * @method \Spryker\Service\FileSystem\FileSystemConfig getConfig()
+ * @method \Spryker\Service\FileSystem\FileSystemServiceFactory getFactory()
  */
-class FileSystemFacade extends AbstractFacade implements FileSystemFacadeInterface
+class FileSystemService extends AbstractService implements FileSystemServiceInterface
 {
 
     /**

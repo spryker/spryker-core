@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem;
+namespace Spryker\Service\FileSystem;
 
-use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
+use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\Container;
 
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -17,13 +17,13 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_FLYSYSTEM = 'service flysystem';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Service\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideServiceDependencies($container);
 
         $container = $this->addFlysystemService($container);
 
@@ -31,9 +31,9 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Service\Kernel\Container
      */
     protected function addFlysystemService(Container $container)
     {

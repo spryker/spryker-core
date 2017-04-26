@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\FileSystem\Business;
+namespace Functional\Spryker\Service\FileSystem;
 
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
@@ -23,23 +23,22 @@ use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
+use Spryker\Service\FileSystem\FileSystemDependencyProvider;
+use Spryker\Service\FileSystem\FileSystemService;
+use Spryker\Service\FileSystem\FileSystemServiceFactory;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
-use Spryker\Zed\FileSystem\Business\FileSystemBusinessFactory;
-use Spryker\Zed\FileSystem\Business\FileSystemFacade;
-use Spryker\Zed\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
-use Spryker\Zed\FileSystem\FileSystemDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Service\Kernel\Container;
 
 /**
  * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Service
  * @group FileSystem
- * @group Business
- * @group FileSystemFacadeTest
+ * @group FileSystemServiceTest
  */
-class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
+class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 {
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';
@@ -57,7 +56,7 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
     const FILE_CONTENT = 'Hello World';
 
     /**
-     * @var \Spryker\Zed\FileSystem\Business\FileSystemFacadeInterface
+     * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
      */
     protected $fileSystemFacade;
 
@@ -88,11 +87,11 @@ class FileSystemFacadeTest extends PHPUnit_Framework_TestCase
         };
 
         $config = new FileSystemConfigStub();
-        $factory = new FileSystemBusinessFactory();
+        $factory = new FileSystemServiceFactory();
         $factory->setConfig($config);
         $factory->setContainer($container);
 
-        $this->fileSystemFacade = new FileSystemFacade();
+        $this->fileSystemFacade = new FileSystemService();
         $this->fileSystemFacade->setFactory($factory);
     }
 

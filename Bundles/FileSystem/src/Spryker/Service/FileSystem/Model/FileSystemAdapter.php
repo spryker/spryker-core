@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FileSystem\Business\Model;
+namespace Spryker\Service\FileSystem\Model;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
@@ -22,24 +22,24 @@ class FileSystemAdapter implements FileSystemAdapterInterface
 {
 
     /**
-     * @var \Spryker\Zed\FileSystem\Business\Model\FileSystemReaderInterface
+     * @var \Spryker\Service\FileSystem\Model\FileSystemReaderInterface
      */
     protected $fileSystemReader;
 
     /**
-     * @var \Spryker\Zed\FileSystem\Business\Model\FileSystemWriterInterface
+     * @var \Spryker\Service\FileSystem\Model\FileSystemWriterInterface
      */
     protected $fileSystemWriter;
 
     /**
-     * @var \Spryker\Zed\FileSystem\Business\Model\FileSystemStreamInterface
+     * @var \Spryker\Service\FileSystem\Model\FileSystemStreamInterface
      */
     protected $fileSystemStream;
 
     /**
-     * @param \Spryker\Zed\FileSystem\Business\Model\FileSystemReaderInterface $fileSystemReader
-     * @param \Spryker\Zed\FileSystem\Business\Model\FileSystemWriterInterface $fileSystemWriter
-     * @param \Spryker\Zed\FileSystem\Business\Model\FileSystemStreamInterface $fileSystemStream
+     * @param \Spryker\Service\FileSystem\Model\FileSystemReaderInterface $fileSystemReader
+     * @param \Spryker\Service\FileSystem\Model\FileSystemWriterInterface $fileSystemWriter
+     * @param \Spryker\Service\FileSystem\Model\FileSystemStreamInterface $fileSystemStream
      */
     public function __construct(
         FileSystemReaderInterface $fileSystemReader,
