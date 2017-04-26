@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -30,22 +28,25 @@ class ViewController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
-        $customerTransfer = $this->createCustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-
-        $customerTransfer = $this->getFacade()
-            ->getCustomer($customerTransfer);
-        $addresses = $customerTransfer->getAddresses()->toArray();
-        $customerArray = $customerTransfer->toArray();
-
-        if ($addresses[AddressesTransfer::ADDRESSES] instanceof ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
-            $addresses = [];
+        if (empty($idCustomer)) {
+            return $this->redirectResponse('/customer');
         }
 
+        $idCustomer = $this->castId($idCustomer);
+
+        $customerTransfer = $this->loadCustomerTransfer($idCustomer);
+
+        $addresses = $customerTransfer->getAddresses();
+
+        $table = $this->getFactory()
+            ->createCustomerAddressTable($idCustomer);
+
         return $this->viewResponse([
-            'customer' => $customerArray,
+            'customer' => $customerTransfer,
             'addresses' => $addresses,
             'idCustomer' => $idCustomer,
+            'addressTable' => $table->render(),
+
         ]);
     }
 
@@ -55,6 +56,34 @@ class ViewController extends AbstractController
     protected function createCustomerTransfer()
     {
         return new CustomerTransfer();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
+
+        $table = $this->getFactory()
+            ->createCustomerAddressTable($idCustomer);
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function loadCustomerTransfer($idCustomer)
+    {
+        $customerTransfer = $this->createCustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+        return $customerTransfer;
     }
 
 }
