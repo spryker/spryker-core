@@ -32,7 +32,7 @@ class UpdateProductGroupTest extends Test
             ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
                 $productAbstractTransfer1->getIdProductAbstract(),
                 $productAbstractTransfer2->getIdProductAbstract(),
-            ]
+            ],
         ]))->build();
 
         $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);

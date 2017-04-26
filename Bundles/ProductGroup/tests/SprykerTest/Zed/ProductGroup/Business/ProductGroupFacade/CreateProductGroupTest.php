@@ -31,7 +31,7 @@ class CreateProductGroupTest extends Test
             ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
                 $productAbstractTransfer1->getIdProductAbstract(),
                 $productAbstractTransfer2->getIdProductAbstract(),
-            ]
+            ],
         ]))->build();
 
         // Act

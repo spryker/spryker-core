@@ -36,7 +36,7 @@ class ReadProductGroupTest extends Test
                 $productAbstractTransfer4->getIdProductAbstract(),
                 $productAbstractTransfer5->getIdProductAbstract(),
                 $productAbstractTransfer3->getIdProductAbstract(),
-            ]
+            ],
         ]))->build();
 
         $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);
