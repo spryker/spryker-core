@@ -44,7 +44,7 @@ class ProductGroupTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(self::FUNCTION_NAME_PRODUCT_GROUP_ITEMS, [$this, 'renderProductGroupItems'], [
+            new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_GROUP_ITEMS, [$this, 'renderProductGroupItems'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),

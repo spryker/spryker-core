@@ -108,8 +108,8 @@ class ProductStorageReader implements ProductStorageReaderInterface
     {
         $products = [];
 
-        foreach ($idProductAbstracts as $idProductAbstract2) {
-            $product = $this->productClient->getProductAbstractFromStorageById($idProductAbstract2, $localeName);
+        foreach ($idProductAbstracts as $idProductAbstract) {
+            $product = $this->productClient->getProductAbstractFromStorageById($idProductAbstract, $localeName);
 
             if ($product) {
                 $products[] = $product;

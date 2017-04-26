@@ -55,7 +55,7 @@ class TouchAssertionHelper extends Module
     /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
-    private function getTouchQueryContainer()
+    protected function getTouchQueryContainer()
     {
         return $this->getLocator()->touch()->queryContainer();
     }

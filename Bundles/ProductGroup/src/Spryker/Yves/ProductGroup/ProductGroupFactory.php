@@ -17,7 +17,7 @@ class ProductGroupFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\ProductGroup\Twig\ProductGroupTwigExtension
+     * @return \Spryker\Shared\Twig\TwigExtension
      */
     public function createProductGroupTwigExtension()
     {
