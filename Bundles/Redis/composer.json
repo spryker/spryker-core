@@ -1,10 +1,10 @@
 {
   "name": "spryker/redis",
+  "description": "Redis bundle",
+  "license": "proprietary",
   "require": {
     "predis/predis": "^1.1.1"
   },
-  "description": "Redis bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
