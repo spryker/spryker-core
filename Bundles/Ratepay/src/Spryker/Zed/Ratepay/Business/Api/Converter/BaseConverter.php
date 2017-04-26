@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
-use \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface;
+use Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 abstract class BaseConverter implements ConverterInterface

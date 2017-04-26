@@ -7,12 +7,12 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Payment\Transaction;
 
-use \Generated\Shared\Transfer\OrderTransfer;
-use \Spryker\Zed\Ratepay\Business\Status\TransactionStatus;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
+use Spryker\Zed\Ratepay\Business\Status\TransactionStatus;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 /**
