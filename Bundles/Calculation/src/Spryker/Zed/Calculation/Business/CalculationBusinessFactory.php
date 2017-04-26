@@ -55,10 +55,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createStackExecutor()
     {
-        if ($this->getConfig()->isNewCalculatorsEnabled()) {
-            return $this->createQuoteCalculatorExecutor();
-        }
-        return new StackExecutor($this->getCalculatorStack());
+        return $this->createQuoteCalculatorExecutor();
     }
 
     // START: new calculators

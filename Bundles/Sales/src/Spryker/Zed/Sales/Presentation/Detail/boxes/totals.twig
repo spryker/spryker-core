@@ -11,14 +11,14 @@
                         <tr>
                             <th>{{ orderItem.name }}</th>
                             <th></th>
-                            <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                            <td class="text-right">{{ orderItem.unitPrice | money  }}</td>
                             <th></th>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
                                 <td> + {{ orderItemOption.value }}</td>
                                 <td></td>
-                                <td class="text-right">{{ orderItemOption.unitGrossPrice | money }}</td>
+                                <td class="text-right">{{ orderItemOption.unitPrice | money }}</td>
                                 <td></td>
                             </tr>
                         {% endfor %}
@@ -29,21 +29,21 @@
                             <tr>
                                 <th>{{ orderItem.name }}</th>
                                 <th></th>
-                                <td class="text-right">{{ orderItem.unitGrossPrice | money  }}</td>
+                                <td class="text-right">{{ orderItem.unitPrice | money  }}</td>
                                 <th></th>
                             </tr>
                             {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
                                 <tr>
                                     <th></th>
                                     <th>{{ bundledItem.name }}</th>
-                                    <td class="text-right">{{ bundledItem.unitGrossPrice | money  }}</td>
+                                    <td class="text-right">{{ bundledItem.unitPrice | money  }}</td>
                                     <td></td>
                                 </tr>
                                 {% for orderItemOption in bundledItem.productOptions %}
                                     <tr>
                                         <td></td>
                                         <td> + {{ orderItemOption.value }}</td>
-                                        <td class="text-right">{{ orderItemOption.unitGrossPrice | money  }}</td>
+                                        <td class="text-right">{{ orderItemOption.unitPrice | money  }}</td>
                                         <td></td>
                                     </tr>
                                 {% endfor %}
@@ -63,7 +63,7 @@
                         <tr>
                             <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
                             <th></th>
-                            <td class="text-right">{{ expense.unitGrossPrice | money  }}</td>
+                            <td class="text-right">{{ expense.unitPrice | money  }}</td>
                             <td></td>
                         </tr>
                     {% endfor %}
@@ -71,14 +71,14 @@
                     <tr>
                         <th>{{ 'Discount' | trans }}</th>
                         <th></th>
-                        <td class="text-right">-{{ order.totals.discountTotal | money }}</td>
+                        <td class="text-right">-{{ order.totals.discountTotal | default(0) | money }}</td>
                         <td></td>
                     </tr>
 
                     <tr>
                         <th>{{ 'Canceled total' | trans }}</th>
                         <th></th>
-                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.refundTotal }}">-{{ order.totals.canceledTotal | money }}</td>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.canceledTotal }}">-{{ order.totals.canceledTotal | default(0) | money }}</td>
                         <td></td>
                     </tr>
 

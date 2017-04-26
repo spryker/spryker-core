@@ -18,14 +18,6 @@ class CalculationConfig extends AbstractBundleConfig
     const TAX_MODE_GROSS = 'GROSS_MODE';
 
     /**
-     * @return bool
-     */
-    public function isNewCalculatorsEnabled()
-    {
-        return true;
-    }
-
-    /**
      * @return string
      */
     public function getTaxMode()

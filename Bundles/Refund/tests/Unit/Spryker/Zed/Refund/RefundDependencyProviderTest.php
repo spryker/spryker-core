@@ -12,6 +12,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -29,14 +30,14 @@ class RefundDependencyProviderTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testProvideBusinessLayerDependenciesShouldAddSalesAggregatorFacade()
+    public function testProvideBusinessLayerDependenciesShouldAddSalesFacade()
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
         $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::FACADE_SALES_AGGREGATOR, $container);
-        $this->assertInstanceOf(RefundToSalesAggregatorBridge::class, $container[RefundDependencyProvider::FACADE_SALES_AGGREGATOR]);
+        $this->assertArrayHasKey(RefundDependencyProvider::FACADE_SALES, $container);
+        $this->assertInstanceOf(RefundToSalesInterface::class, $container[RefundDependencyProvider::FACADE_SALES]);
     }
 
     /**

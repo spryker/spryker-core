@@ -82,6 +82,8 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      */
     protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
+        $this->addPrice($bundleItemTransfer, $itemTransfer);
+        $this->addNetPrice($bundleItemTransfer, $itemTransfer);
         $this->addGrossPrice($bundleItemTransfer, $itemTransfer);
         $this->addItemTotal($bundleItemTransfer, $itemTransfer);
         $this->addDiscounts($bundleItemTransfer, $itemTransfer);
@@ -99,8 +101,16 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setSumGrossPrice(0);
             $bundleItemTransfer->setUnitItemTotal(0);
             $bundleItemTransfer->setSumItemTotal(0);
+            $bundleItemTransfer->setUnitPrice(0);
+            $bundleItemTransfer->setSumPrice(0);
+            $bundleItemTransfer->setUnitNetPrice(0);
+            $bundleItemTransfer->setSumNetPrice(0);
             $bundleItemTransfer->setFinalUnitDiscountAmount(0);
             $bundleItemTransfer->setFinalSumDiscountAmount(0);
+            $bundleItemTransfer->setUnitDiscountAmountAggregation(0);
+            $bundleItemTransfer->setSumDiscountAmountAggregation(0);
+            $bundleItemTransfer->setUnitDiscountAmountFullAggregation(0);
+            $bundleItemTransfer->setSumDiscountAmountFullAggregation(0);
         }
     }
 
@@ -146,6 +156,22 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         $bundleItemTransfer->setFinalSumDiscountAmount(
             $bundleItemTransfer->getFinalSumDiscountAmount() + $itemTransfer->getFinalSumDiscountAmount()
         );
+
+        $bundleItemTransfer->setUnitDiscountAmountFullAggregation(
+            $bundleItemTransfer->getUnitDiscountAmountFullAggregation() + $itemTransfer->getUnitDiscountAmountFullAggregation()
+        );
+
+        $bundleItemTransfer->setSumDiscountAmountFullAggregation(
+            $bundleItemTransfer->getSumDiscountAmountFullAggregation() + $itemTransfer->getSumDiscountAmountFullAggregation()
+        );
+
+        $bundleItemTransfer->setUnitDiscountAmountAggregation(
+            $bundleItemTransfer->getUnitDiscountAmountAggregation() + $itemTransfer->getUnitDiscountAmountAggregation()
+        );
+
+        $bundleItemTransfer->setSumDiscountAmountAggregation(
+            $bundleItemTransfer->getSumDiscountAmountAggregation() + $itemTransfer->getSumDiscountAmountAggregation()
+        );
     }
 
     /**
@@ -183,6 +209,40 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setUnitPrice(
+            $bundleItemTransfer->getUnitPrice() + $itemTransfer->getUnitPrice()
+        );
+
+        $bundleItemTransfer->setSumPrice(
+            $bundleItemTransfer->getSumPrice() + $itemTransfer->getSumPrice()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addNetPrice(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setUnitNetPrice(
+            $bundleItemTransfer->getUnitNetPrice() + $itemTransfer->getUnitNetPrice()
+        );
+
+        $bundleItemTransfer->setSumNetPrice(
+            $bundleItemTransfer->getSumNetPrice() + $itemTransfer->getSumNetPrice()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
      * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
@@ -215,5 +275,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
 
         return $bundledProducts;
     }
+
+
 
 }

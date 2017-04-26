@@ -62,30 +62,16 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     *
+     * @deprecated use CalculationDependencyProvider::getQuoteCalculatorPluginStack or CalculationDependencyProvider::getQuoteCalculatorPluginStack respectively
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getCalculatorStack(Container $container)
     {
-        return [
-            //Remove calculated values, start with clean state.
-            new RemoveTotalsCalculatorPlugin(),
-
-            //Item calculators
-            new ProductOptionGrossSumCalculatorPlugin(),
-            new ItemGrossAmountsCalculatorPlugin(),
-
-            //SubTotal
-            new SubtotalTotalsCalculatorPlugin(),
-
-            //Expenses (e.g. shipping)
-            new ExpensesGrossSumAmountCalculatorPlugin(),
-            new ExpenseTotalsCalculatorPlugin(),
-
-            //GrandTotal
-            new GrandTotalTotalsCalculatorPlugin(),
-        ];
+        return $this->getQuoteCalculatorPluginStack($container);
     }
 
     /**
