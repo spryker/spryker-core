@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Session\Model\SessionStorage;
 
 use Codeception\TestCase\Test;
 use SessionHandlerInterface;
-use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolException;
+use Spryker\Shared\Session\Model\Exception\SessionHandlerNotFoundInSessionHandlerPoolException;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 
 /**

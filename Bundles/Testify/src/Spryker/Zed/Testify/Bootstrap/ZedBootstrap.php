@@ -32,6 +32,7 @@ use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider as
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as SprykerSessionServiceProvider;
 
 class ZedBootstrap
 {
