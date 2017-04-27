@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Session\Plugin\ServiceProvider;
 
-use Codeception\Test\Unit;
+use Codeception\TestCase\Test;
 use Silex\Application;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * @group SessionServiceProviderTest
  * Add your own group annotations below this line
  */
-class SessionServiceProviderTest extends Unit
+class SessionServiceProviderTest extends Test
 {
 
     use ConfigHelperTrait;

@@ -30,25 +30,9 @@ class SessionHandlerRedisLockingTest extends Test
      */
     public function testReadReturnsEmptyStringOnMissingSessionKey()
     {
-        $redisClientMock = $this->getRedisClientMock();
-        $redisClientMock
-            ->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('get'), ['session:session_key'])
-            ->will($this->returnValue(null));
-
+        $redisClientMock = $this->getRedisClientMock(null);
         $lockerMock = $this->getRedisSpinLockLockerMock();
-        $lockerMock
-            ->expects($this->once())
-            ->method('lock')
-            ->will($this->returnValue(true));
-
-        $sessionHandler = new SessionHandlerRedisLocking(
-            $redisClientMock,
-            $lockerMock,
-            new RedisSessionKeyGenerator(),
-            60
-        );
+        $sessionHandler = $this->getSessionHandlerRedisLocking($redisClientMock, $lockerMock);
 
         $sessionData = $sessionHandler->read('session_key');
 
@@ -60,25 +44,9 @@ class SessionHandlerRedisLockingTest extends Test
      */
     public function testReadDecodesLegacyJsonSession()
     {
-        $redisClientMock = $this->getRedisClientMock();
-        $redisClientMock
-            ->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('get'), ['session:session_key'])
-            ->will($this->returnValue(json_encode('foo bar baz')));
-
+        $redisClientMock = $this->getRedisClientMock(json_encode('foo bar baz'));
         $lockerMock = $this->getRedisSpinLockLockerMock();
-        $lockerMock
-            ->expects($this->once())
-            ->method('lock')
-            ->will($this->returnValue(true));
-
-        $sessionHandler = new SessionHandlerRedisLocking(
-            $redisClientMock,
-            $lockerMock,
-            new RedisSessionKeyGenerator(),
-            60
-        );
+        $sessionHandler = $this->getSessionHandlerRedisLocking($redisClientMock, $lockerMock);
 
         $sessionData = $sessionHandler->read('session_key');
 
@@ -86,13 +54,23 @@ class SessionHandlerRedisLockingTest extends Test
     }
 
     /**
+     * @param null|string $returnValue
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
      */
-    private function getRedisClientMock()
+    private function getRedisClientMock($returnValue)
     {
-        return $this
+        $redisClientMock = $this
             ->getMockBuilder(Client::class)
             ->getMock();
+
+        $redisClientMock
+            ->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('get'), ['session:session_key'])
+            ->will($this->returnValue($returnValue));
+
+        return $redisClientMock;
     }
 
     /**
@@ -100,10 +78,35 @@ class SessionHandlerRedisLockingTest extends Test
      */
     private function getRedisSpinLockLockerMock()
     {
-        return $this
+        $lockerMock = $this
             ->getMockBuilder(RedisSpinLockLocker::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $lockerMock
+            ->expects($this->once())
+            ->method('lock')
+            ->will($this->returnValue(true));
+
+        return $lockerMock;
+    }
+
+    /**
+     * @param \Predis\Client $redisClientMock
+     * @param \Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker $lockerMock
+     *
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
+     */
+    private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock)
+    {
+        $sessionHandler = new SessionHandlerRedisLocking(
+            $redisClientMock,
+            $lockerMock,
+            new RedisSessionKeyGenerator(),
+            60
+        );
+
+        return $sessionHandler;
     }
 
 }
