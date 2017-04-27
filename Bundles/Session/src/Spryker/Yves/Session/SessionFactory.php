@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Session\Communication;
+namespace Spryker\Yves\Session;
 
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConstants;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Session\Model\SessionHandlerFactory;
 
 /**
- * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ * @method \Spryker\Yves\Session\SessionConfig getConfig()
  */
-class SessionCommunicationFactory extends AbstractCommunicationFactory
+class SessionFactory extends AbstractFactory
 {
 
     /**
@@ -27,7 +28,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
         return new SessionStorage(
             $this->createSessionStorageOptions(),
             $this->createSessionStorageHandlerPool(),
-            $this->getConfig()->getConfiguredSessionHandlerNameZed()
+            $this->getConfig()->getConfiguredSessionHandlerName()
         );
     }
 
@@ -59,7 +60,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionHandlerRedis()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
-            $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
+            $this->getConfig()->getSessionHandlerRedisDataSourceName()
         );
     }
 
@@ -69,7 +70,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionHandlerRedisLocking()
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
-            $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
+            $this->getConfig()->getSessionHandlerRedisDataSourceName()
         );
     }
 
@@ -84,7 +85,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Session\Communication\SessionHandlerFactory
+     * @return \Spryker\Yves\Session\Model\SessionHandlerFactory
      */
     protected function createSessionHandlerFactory()
     {

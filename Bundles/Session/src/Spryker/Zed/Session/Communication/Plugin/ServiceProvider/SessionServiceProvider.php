@@ -10,11 +10,7 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Session\SessionConfig;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
@@ -39,148 +35,69 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Silex\Application $application
      *
      * @return void
      */
-    public function register(Application $app)
+    public function register(Application $application)
     {
-        $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
-
-        $app['session.storage.options'] = [
-            'name' => str_replace('.', '-', Config::get(SessionConstants::ZED_SESSION_COOKIE_NAME)),
-            'cookie_lifetime' => Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE),
-            'cookie_secure' => $this->secureCookie(),
-            'cookie_httponly' => true,
-            'use_only_cookies' => true,
-        ];
+        $this->setSessionStorageOptions($application);
+        $this->setSessionStorageHandler($application);
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Silex\Application $application
      *
      * @return void
      */
-    public function boot(Application $app)
+    protected function setSessionStorageOptions(Application $application)
     {
-        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
+        $application['session.storage.options'] = $this->getFactory()->createSessionStorage()->getOptions();
+    }
+
+    /**
+     * @param \Silex\Application $application
+     *
+     * @return void
+     */
+    protected function setSessionStorageHandler(Application $application)
+    {
+        $application['session.storage.handler'] = function () {
+            return $this->getFactory()->createSessionStorage()->getAndRegisterHandler();
+        };
+    }
+
+    /**
+     * @param \Silex\Application $application
+     *
+     * @return void
+     */
+    public function boot(Application $application)
+    {
+        if ($this->isCliOrPhpDbg()) {
             return;
         }
 
-        $this->client->setContainer($app['session']);
-
-        $saveHandler = Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER);
-        $savePath = $this->getSavePath($saveHandler);
-
-        $sessionHelper = new SessionFactory();
-
-        switch ($saveHandler) {
-            case SessionConstants::SESSION_HANDLER_COUCHBASE:
-                $savePath = !empty($savePath) ? $savePath : null;
-                $sessionHelper->registerCouchbaseSessionHandler($savePath);
-                break;
-
-            case SessionConstants::SESSION_HANDLER_MYSQL:
-                $savePath = !empty($savePath) ? $savePath : null;
-                $sessionHelper->registerMysqlSessionHandler($savePath);
-                break;
-
-            case SessionConstants::SESSION_HANDLER_REDIS:
-                $savePath = !empty($savePath) ? $savePath : null;
-                $sessionHelper->registerRedisSessionHandler($savePath);
-                break;
-
-            case SessionConstants::SESSION_HANDLER_REDIS_LOCKING:
-                $savePath = !empty($savePath) ? $savePath : null;
-                $sessionHelper->registerRedisLockingSessionHandler($savePath);
-                break;
-
-            case SessionConstants::SESSION_HANDLER_FILE:
-                $savePath = !empty($savePath) ? $savePath : null;
-                $sessionHelper->registerFileSessionHandler($savePath);
-                break;
-
-            default:
-                if (isset($saveHandler) && !empty($saveHandler)) {
-                    ini_set('session.save_handler', $saveHandler);
-                }
-                if (!empty($savePath)) {
-                    session_save_path($savePath);
-                }
-        }
-
-        ini_set('session.auto_start', false);
+        $session = $this->getSession($application);
+        $this->client->setContainer($session);
     }
 
     /**
-     * @param string $saveHandler
+     * @param \Silex\Application $application
      *
-     * @return string|null
+     * @return \Symfony\Component\HttpFoundation\Session\Session
      */
-    protected function getSavePath($saveHandler)
+    protected function getSession(Application $application)
     {
-        $path = null;
-
-        if ($this->isRedisSaveHandler($saveHandler)) {
-            $path = sprintf(
-                '%s://%s:%s?database=%s',
-                Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
-            );
-
-            if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
-                $path = sprintf(
-                    '%s://h:%s@%s:%s?database=%s',
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, SessionConfig::DEFAULT_REDIS_DATABASE)
-                );
-            }
-
-            return $path;
-        }
-
-        if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {
-            $path = Config::get(SessionConstants::ZED_SESSION_FILE_PATH);
-        }
-
-        return $path;
+        return $application['session'];
     }
 
     /**
-     * @param string $saveHandler
-     *
      * @return bool
      */
-    protected function isRedisSaveHandler($saveHandler)
+    protected function isCliOrPhpDbg()
     {
-        $redisSaveHandlers = [
-            SessionConstants::SESSION_HANDLER_REDIS,
-            SessionConstants::SESSION_HANDLER_REDIS_LOCKING,
-        ];
-
-        return in_array($saveHandler, $redisSaveHandlers);
-    }
-
-    /**
-     * Secure flag of cookies can only be set to true if SSL is enabled. If you set it to true
-     * without SSL enabled you will not get the same session in browsers like Firefox and Safari
-     *
-     * @return bool
-     */
-    protected function secureCookie()
-    {
-        if (Config::get(SessionConstants::ZED_SSL_ENABLED, false)
-            && Config::get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true)
-        ) {
-            return true;
-        }
-
-        return false;
+        return (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
     }
 
 }

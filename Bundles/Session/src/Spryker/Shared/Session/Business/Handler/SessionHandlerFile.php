@@ -57,7 +57,6 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->savePath = $savePath;
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath, 0775, true);
         }

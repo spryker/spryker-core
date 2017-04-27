@@ -32,11 +32,11 @@ trait ConfigHelperTrait
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\Config
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\ConfigHelper
      */
     private function getConfigHelper()
     {
-        return $this->getModule('\\' . DependencyHelper::class);
+        return $this->getModule('\\' . ConfigHelper::class);
     }
 
     /**
