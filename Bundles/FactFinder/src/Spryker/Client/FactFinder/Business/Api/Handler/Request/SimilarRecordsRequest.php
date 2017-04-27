@@ -7,26 +7,22 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\FactFinderSimilarRecordsRequestTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class SimilarRecordsRequest extends AbstractRequest implements RequestInterface
+class SimilarRecordsRequest extends AbstractRequest implements SimilarRecordsRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SIMILAR_RECORDS;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderSimilarRecordsRequestTransfer $factFinderSimilarRecordsRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderSimilarRecordsResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderSimilarRecordsRequestTransfer $factFinderSimilarRecordsRequestTransfer)
     {
-        $similarRecordsRequestTransfer = $quoteTransfer->getFactFinderSimilarRecordsRequest();
-
-        $similarRecordsAdapter = $this->ffConnector->createSimilarRecordsAdapter();
-
-        $this->logInfo($quoteTransfer, $similarRecordsAdapter);
+        $similarRecordsAdapter = $this->factFinderConnector->createSimilarRecordsAdapter();
 
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory

@@ -7,13 +7,13 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\ProductCampaign as FFProductCampaignAdapter;
-use FACTFinder\Adapter\Recommendation as FFRecommendationAdapter;
-use FACTFinder\Adapter\Search as FFSearchAdapter;
-use FACTFinder\Adapter\SimilarRecords as FFSimilarRecordsAdapter;
-use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
-use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
-use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
+use FACTFinder\Adapter\ProductCampaign as FactFinderProductCampaignAdapter;
+use FACTFinder\Adapter\Recommendation as FactFinderRecommendationAdapter;
+use FACTFinder\Adapter\Search as FactFinderSearchAdapter;
+use FACTFinder\Adapter\SimilarRecords as FactFinderSimilarRecordsAdapter;
+use FACTFinder\Adapter\Suggest as FactFinderSuggestAdapter;
+use FACTFinder\Adapter\TagCloud as FactFinderTagCloudAdapter;
+use FACTFinder\Adapter\Tracking as FactFinderTrackingAdapter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\ItemConverter;
@@ -28,7 +28,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\SearchResponseConverter
      */
-    public function createSearchResponseConverter(FFSearchAdapter $searchAdapter)
+    public function createSearchResponseConverter(FactFinderSearchAdapter $searchAdapter)
     {
         return new SearchResponseConverter(
             $searchAdapter,
@@ -45,7 +45,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\RecommendationResponseConverter
      */
-    public function createRecommendationResponseConverter(FFRecommendationAdapter $recommendationAdapter)
+    public function createRecommendationResponseConverter(FactFinderRecommendationAdapter $recommendationAdapter)
     {
         return new RecommendationResponseConverter($recommendationAdapter);
     }
@@ -55,7 +55,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\SuggestResponseConverter
      */
-    public function createSuggestResponseConverter(FFSuggestAdapter $suggestAdapter)
+    public function createSuggestResponseConverter(FactFinderSuggestAdapter $suggestAdapter)
     {
         return new SuggestResponseConverter($suggestAdapter);
     }
@@ -65,7 +65,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\TagCloudResponseConverter
      */
-    public function createTagCloudResponseConverter(FFTagCloudAdapter $tagCloudAdapter)
+    public function createTagCloudResponseConverter(FactFinderTagCloudAdapter $tagCloudAdapter)
     {
         return new TagCloudResponseConverter($tagCloudAdapter);
     }
@@ -75,7 +75,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\TrackingResponseConverter
      */
-    public function createTrackingResponseConverter(FFTrackingAdapter $trackingAdapter)
+    public function createTrackingResponseConverter(FactFinderTrackingAdapter $trackingAdapter)
     {
         return new TrackingResponseConverter($trackingAdapter);
     }
@@ -85,7 +85,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\SimilarRecordsResponseConverter
      */
-    public function createSimilarRecordsResponseConverter(FFSimilarRecordsAdapter $similarRecordsAdapter)
+    public function createSimilarRecordsResponseConverter(FactFinderSimilarRecordsAdapter $similarRecordsAdapter)
     {
         return new SimilarRecordsResponseConverter($similarRecordsAdapter);
     }
@@ -95,7 +95,7 @@ class ConverterFactory
      *
      * @return \Spryker\Client\FactFinder\Business\Api\Converter\ProductCampaignResponseConverter
      */
-    public function createProductCampaignResponseConverter(FFProductCampaignAdapter $productCampaignAdapter)
+    public function createProductCampaignResponseConverter(FactFinderProductCampaignAdapter $productCampaignAdapter)
     {
         return new ProductCampaignResponseConverter($productCampaignAdapter);
     }

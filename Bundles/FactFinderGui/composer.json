@@ -11,7 +11,9 @@
     }
   },
   "require": {
-    "spryker/fact-finder": "^1.0.0"
+    "spryker/fact-finder": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "description": "FactFinder GUI bundle",
   "license": "proprietary",

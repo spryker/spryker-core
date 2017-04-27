@@ -7,13 +7,11 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use FACTFinder\Adapter\AbstractAdapter;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Client\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Client\FactFinder\Business\Log\LoggerTrait;
 
-abstract class AbstractRequest implements RequestInterface
+abstract class AbstractRequest
 {
 
     use LoggerTrait;
@@ -23,7 +21,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * @var \Spryker\Client\FactFinder\Business\Api\FactFinderConnector
      */
-    protected $ffConnector;
+    protected $factFinderConnector;
 
     /**
      * @var \Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory
@@ -31,34 +29,16 @@ abstract class AbstractRequest implements RequestInterface
     protected $converterFactory;
 
     /**
-     * @param \Spryker\Client\FactFinder\Business\Api\FactFinderConnector $ffConnector
+     * @param \Spryker\Client\FactFinder\Business\Api\FactFinderConnector $factFinderConnector
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory $converterFactory
      */
     public function __construct(
-        FactFinderConnector $ffConnector,
+        FactFinderConnector $factFinderConnector,
         ConverterFactory $converterFactory
     ) {
 
-        $this->ffConnector = $ffConnector;
+        $this->factFinderConnector = $factFinderConnector;
         $this->converterFactory = $converterFactory;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \FACTFinder\Adapter\AbstractAdapter $ffAdapter
-     *
-     * @return void
-     */
-    protected function logInfo(
-        QuoteTransfer $quoteTransfer,
-        AbstractAdapter $ffAdapter
-    ) {
-
-        $context = [
-            'transaction_type' => static::TRANSACTION_TYPE,
-        ];
-
-        $this->getLogger()->info(static::TRANSACTION_TYPE, $context);
     }
 
 }

@@ -1,11 +1,11 @@
-# FactFinder Bundle
+# FactFinderGui Bundle
 
 ## Installation
 
 ```
-composer require spryker/fact-finder
+composer require spryker/fact-finder-gui
 ```
 
 ## Documentation
 
-[FactFinder Documentation](http://spryker.github.io/core/bundles/fact-finder)
+[FactFinderGui Documentation](https://spryker.github.io/core/bundles/fact-finder-gui)

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
+use FACTFinder\Adapter\TagCloud as FactFinderTagCloudAdapter;
 use Generated\Shared\Transfer\FactFinderTagCloudResponseTransfer;
 
 class TagCloudResponseConverter extends BaseConverter
@@ -21,7 +21,7 @@ class TagCloudResponseConverter extends BaseConverter
     /**
      * @param \FACTFinder\Adapter\TagCloud $tagCloudAdapter
      */
-    public function __construct(FFTagCloudAdapter $tagCloudAdapter)
+    public function __construct(FactFinderTagCloudAdapter $tagCloudAdapter)
     {
         $this->tagCloudAdapter = $tagCloudAdapter;
     }

@@ -7,29 +7,28 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class RecommendationRequest extends AbstractRequest implements RequestInterface
+class RecommendationRequest extends AbstractRequest implements RecommendationRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_RECOMMENDATION;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderRecommendationResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer)
     {
-        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
-        $this->ffConnector->setRequestParameters($requestParameters);
+        $requestParameters = $this->factFinderConnector->createRequestParametersFromRequestParser();
+        $this->factFinderConnector->setRequestParameters($requestParameters);
 
-        $suggestAdapter = $this->ffConnector->createRecommendationAdapter();
+        $suggestAdapter = $this->factFinderConnector
+            ->createRecommendationAdapter();
 
-        $rec = $suggestAdapter->getRecommendations();
-
-        $this->logInfo($quoteTransfer, $suggestAdapter);
+        $recommendations = $suggestAdapter->getRecommendations();
 
         $responseTransfer = $this->converterFactory
             ->createRecommendationResponseConverter($suggestAdapter)

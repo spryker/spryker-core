@@ -10,32 +10,27 @@ namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 use FACTFinder\Util\Parameters;
 use Generated\Shared\Transfer\FactFinderTrackingRequestTransfer;
 use Generated\Shared\Transfer\FactFinderTrackingResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class TrackingRequest extends AbstractRequest implements RequestInterface
+class TrackingRequest extends AbstractRequest implements TrackingRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SEARCH;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
     {
-        $trackingRequestTransfer = $quoteTransfer->getFactFinderTrackingRequest();
-
         $parameters = new Parameters();
-        $parameters->setAll($this->getRequestData($trackingRequestTransfer));
+        $parameters->setAll($this->getRequestData($factFinderTrackingRequestTransfer));
 
-        $this->ffConnector->setRequestParameters($parameters);
+        $this->factFinderConnector->setRequestParameters($parameters);
 
-        $trackingAdapter = $this->ffConnector->createTrackingAdapter();
+        $trackingAdapter = $this->factFinderConnector->createTrackingAdapter();
         $result = $trackingAdapter->applyTracking();
-
-        $this->logInfo($quoteTransfer, $trackingAdapter);
 
         $responseTransfer = new FactFinderTrackingResponseTransfer();
         $responseTransfer->setResult($result);

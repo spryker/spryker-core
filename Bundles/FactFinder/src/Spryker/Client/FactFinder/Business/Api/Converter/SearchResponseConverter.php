@@ -8,7 +8,7 @@
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
 use ArrayObject;
-use FACTFinder\Adapter\Search as FFSearchAdapter;
+use FACTFinder\Adapter\Search as FactFinderSearchAdapter;
 use FACTFinder\Data\AfterSearchNavigation;
 use FACTFinder\Data\BreadCrumbTrail;
 use FACTFinder\Data\CampaignIterator;
@@ -79,7 +79,7 @@ class SearchResponseConverter extends BaseConverter
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter $advisorQuestionConverter
      */
     public function __construct(
-        FFSearchAdapter $searchAdapter,
+        FactFinderSearchAdapter $searchAdapter,
         PagingConverter $pagingConverter,
         ItemConverter $itemConverter,
         RecordConverter $recordConverter,

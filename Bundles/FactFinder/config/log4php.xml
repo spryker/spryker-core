@@ -3,7 +3,7 @@
         <layout class="LoggerLayoutPattern">
             <param name="conversionPattern" value="%date{Y-m-d H:i:s,u} [%process] %logger %-5level - %msg%n" />
         </layout>
-        <param name="file" value="../../data/ff.log" />
+        <param name="file" value="../../data/factfinder.log" />
     </appender>
 
     <appender name="nullAppender" class="LoggerAppenderNull" />

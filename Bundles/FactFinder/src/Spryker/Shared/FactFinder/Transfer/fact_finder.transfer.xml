@@ -5,16 +5,6 @@
     xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
 >
 
-    <transfer name="Quote">
-        <property name="FactFinderSearchRequest" type="FactFinderSearchRequest"/>
-        <property name="FactFinderRecommendationRequest" type="FactFinderRecommendationRequest"/>
-        <property name="FactFinderSuggestRequest" type="FactFinderSuggestRequest"/>
-        <property name="FactFinderTagCloudRequest" type="FactFinderTagCloudRequest"/>
-        <property name="FactFinderTrackingRequest" type="FactFinderTrackingRequest"/>
-        <property name="FactFinderSimilarRecordsRequest" type="FactFinderSimilarRecordsRequest"/>
-        <property name="FactFinderProductCampaignRequest" type="FactFinderProductCampaignRequest"/>
-    </transfer>
-
     <transfer name="FactFinderSearchRequest">
         <property name="query" type="string"/>
         <property name="page" type="string"/>

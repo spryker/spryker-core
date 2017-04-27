@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\FactFinderGui;
 
+use Spryker\Yves\FactFinderGui\Dependency\Clients\FactFinderGuiToFactFinderClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -22,19 +23,8 @@ class FactFinderGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->providePlugins($container);
         $container = $this->provideClients($container);
 
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function providePlugins(Container $container)
-    {
         return $container;
     }
 
@@ -46,7 +36,11 @@ class FactFinderGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function provideClients(Container $container)
     {
         $container[self::FACT_FINDER_CLIENT] = function () use ($container) {
-            return $container->getLocator()->factFinder()->client();
+            $factFinderClient = $container->getLocator()
+                ->factFinder()
+                ->client();
+
+            return new FactFinderGuiToFactFinderClientBridge($factFinderClient);
         };
 
         return $container;

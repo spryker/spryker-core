@@ -4,8 +4,8 @@
  */
 use Spryker\Shared\FactFinder\FactFinderConstants;
 
-$config[FactFinderConstants::ENV] = FactFinderConstants::ENV_PRODUCTION;
-$config[FactFinderConstants::ENV . FactFinderConstants::ENV_PRODUCTION] = [
+$config[FactFinderConstants::ENVIRONMENT] = FactFinderConstants::ENVIRONMENT_PRODUCTION;
+$config[FactFinderConstants::ENVIRONMENT . FactFinderConstants::ENVIRONMENT_PRODUCTION] = [
     'debug' => true,
     'requestProtocol' => 'http', //https
     'serverAddress' => 'partner3.fact-finder.de',
@@ -39,12 +39,9 @@ $config[FactFinderConstants::ENV . FactFinderConstants::ENV_PRODUCTION] = [
     'clientUrlEncoding' => 'UTF-8',
 ];
 
-// BCryptPasswordEncoder(12)
-$config[FactFinderConstants::CONFIG_BASIC_AUTH_USERNAME] = 'spryker';
-$config[FactFinderConstants::CONFIG_BASIC_AUTH_PASSWORD] = '$2y$12$SeghsDyAJniRI58Ypfd/1emFfCFE4gziRfFKGDl2i0VAzpFI3qva2'; // change123
-
-$config[FactFinderConstants::CSV_DIRECTORY] = APPLICATION_ROOT_DIR . '/public/fact_finder/';
+$config[FactFinderConstants::CSV_DIRECTORY] = APPLICATION_ROOT_DIR . '/public/Zed/assets/fact_finder/';
 $config[FactFinderConstants::EXPORT_QUERY_LIMIT] = 1000;
 $config[FactFinderConstants::EXPORT_FILE_NAME_PREFIX] = 'product';
 $config[FactFinderConstants::EXPORT_FILE_NAME_DELIMITER] = '_';
 $config[FactFinderConstants::EXPORT_FILE_EXTENSION] = '.csv';
+$config[FactFinderConstants::PHP_LOGGER_CONFIG_PATH] = APPLICATION_ROOT_DIR . '/config/Shared/log4php.xml'

@@ -16,9 +16,9 @@ class FactFinderConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getEnv()
+    public function getEnvironment()
     {
-        return $this->get(FactFinderConstants::ENV);
+        return $this->get(FactFinderConstants::ENVIRONMENT);
     }
 
     /**
@@ -26,7 +26,7 @@ class FactFinderConfig extends AbstractBundleConfig
      */
     public function getFactFinderConfiguration()
     {
-        return $this->get(FactFinderConstants::ENV . $this->getEnv());
+        return $this->get(FactFinderConstants::ENVIRONMENT . $this->getEnvironment());
     }
 
     /**

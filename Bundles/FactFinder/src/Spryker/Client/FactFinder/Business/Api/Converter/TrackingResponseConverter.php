@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
+use FACTFinder\Adapter\Tracking as FactFinderTrackingAdapter;
 use Generated\Shared\Transfer\FactFinderTrackingResponseTransfer;
 
 class TrackingResponseConverter extends BaseConverter
@@ -21,7 +21,7 @@ class TrackingResponseConverter extends BaseConverter
     /**
      * @param \FACTFinder\Adapter\Tracking $trackingAdapter
      */
-    public function __construct(FFTrackingAdapter $trackingAdapter)
+    public function __construct(FactFinderTrackingAdapter $trackingAdapter)
     {
         $this->trackingAdapter = $trackingAdapter;
     }
@@ -32,9 +32,6 @@ class TrackingResponseConverter extends BaseConverter
     public function convert()
     {
         $responseTransfer = new FactFinderTrackingResponseTransfer();
-
-        $esferf = $this->trackingAdapter->getError();
-//        $responseTransfer->setResult($this->trackingAdapter);
 
         return $responseTransfer;
     }

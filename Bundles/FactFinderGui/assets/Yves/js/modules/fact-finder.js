@@ -6,7 +6,7 @@
 'use strict';
 
 var $ = require('jquery');
-var factFinderSearch = require('./fact-finder-search');
+var factFinderSuggestions = require('./fact-finder-suggestions');
 var suggestionsBox = require('./fact-finder-suggestions-box');
 var track = require('./fact-finder-track');
 
@@ -29,13 +29,13 @@ function init(config) {
                 suggestionsBox.goTo(e);
                 break;
 
-            default: factFinderSearch.query($("#ffSearchInput").val());
+            default: factFinderSuggestions.query($("#ffSearchInput").val());
                 break;
         }
     });
 
     $("#ffSearchInput").click(function(){
-        factFinderSearch.query($("#ffSearchInput").val());
+        factFinderSuggestions.query($("#ffSearchInput").val());
     });
 
     $(document).click(function(){

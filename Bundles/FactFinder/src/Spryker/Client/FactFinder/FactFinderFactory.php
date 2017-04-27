@@ -7,15 +7,12 @@
 
 namespace Spryker\Client\FactFinder;
 
-use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
-use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Client\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequest;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\TrackingRequest;
-use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Session\QuoteSession;
@@ -37,7 +34,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequestInterface
      */
     public function createSearchRequest()
     {
@@ -48,7 +45,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequest
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\SuggestRequestInterface
      */
     public function createSuggestRequest()
     {
@@ -59,7 +56,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\TrackingRequest
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\TrackingRequestInterface
      */
     public function createTrackingRequest()
     {
@@ -70,7 +67,7 @@ class FactFinderFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequest
+     * @return \Spryker\Client\FactFinder\Business\Api\Handler\Request\RecommendationRequestInterface
      */
     public function createRecommendationsRequest()
     {
@@ -110,33 +107,6 @@ class FactFinderFactory extends AbstractFactory
     public function getSession()
     {
         return $this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
-     * @return \Spryker\Client\Collector\Matcher\UrlMatcher
-     */
-    public function createUrlMatcher()
-    {
-        return new UrlMatcher(
-            $this->createUrlKeyBuilder(),
-            $this->getStorageClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
-     */
-    public function getStorageClient()
-    {
-        return $this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_KV_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder
-     */
-    public function createUrlKeyBuilder()
-    {
-        return new UrlKeyBuilder();
     }
 
 }

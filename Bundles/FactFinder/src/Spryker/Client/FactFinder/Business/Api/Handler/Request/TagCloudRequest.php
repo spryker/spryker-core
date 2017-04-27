@@ -7,26 +7,22 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\FactFinderTagCloudRequestTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class TagCloudRequest extends AbstractRequest implements RequestInterface
+class TagCloudRequest extends AbstractRequest implements TagCloudRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_TAG_CLOUD;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderTagCloudRequestTransfer $factFinderTagCloudRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderTagCloudResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderTagCloudRequestTransfer $factFinderTagCloudRequestTransfer)
     {
-        $tagCloudRequestTransfer = $quoteTransfer->getFactFinderTagCloudRequest();
-
-        $tagCloudAdapter = $this->ffConnector->createTagCloudAdapter();
-
-        $this->logInfo($quoteTransfer, $tagCloudAdapter);
+        $tagCloudAdapter = $this->factFinderConnector->createTagCloudAdapter();
 
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory

@@ -8,9 +8,9 @@
 var $ = require('jquery');
 var suggestionsBox = require('./fact-finder-suggestions-box');
 
-var factFinderSearch = {
+var factFinderSuggestions = {
 
-    url: '/fact-finder/search?format=jsonp&query=',
+    url: '/fact-finder/suggestions?format=jsonp&query=',
     maxItemsCount: 4,
     queryText: '',
 
@@ -51,7 +51,7 @@ var factFinderSearch = {
 
         $.each(items, function (i, item) {
             objectsList.push({
-                'name': factFinderSearch.getHighlited(item.label, factFinderSearch.queryText),
+                'name': factFinderSuggestions.getHighlited(item.label, factFinderSuggestions.queryText),
                 'url': item.attributes.deeplink,
                 'image': item.imageUrl
             });
@@ -84,4 +84,4 @@ var factFinderSearch = {
 
 };
 
-module.exports = factFinderSearch;
+module.exports = factFinderSuggestions;

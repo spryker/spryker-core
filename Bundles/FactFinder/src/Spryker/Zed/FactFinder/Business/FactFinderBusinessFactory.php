@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\FactFinder\Business;
 
-use Orm\Zed\Locale\Persistence\Base\SpyLocale;
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-use Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporterPlugin;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporter;
 use Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter;
 use Spryker\Zed\FactFinder\Business\Writer\CsvFileWriter;
+use Spryker\Zed\FactFinder\FactFinderDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -22,13 +22,13 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function createCsvFile(SpyLocale $locale)
+    public function createCsvFile(LocaleTransfer $localeTransfer)
     {
-        return $this->createFactFinderProductExporter(new CsvFileWriter(), $locale)
+        return $this->createFactFinderProductExporter(new CsvFileWriter(), $localeTransfer)
             ->export();
     }
 
@@ -49,31 +49,27 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
+     * @return \Spryker\Zed\FactFinder\Dependency\Facade\FactFinderToLocaleInterface
      */
-    public function getLocaleQuery()
+    public function getLocaleFacade()
     {
-        return SpyLocaleQuery::create()->addSelfSelectColumns();
-    }
-
-    /**
-     * @param string $filePath
-     *
-     * @return \Spryker\Zed\FactFinder\Business\Writer\CsvFileWriter
-     */
-    public function createCsvWriter($filePath)
-    {
-        return new CsvFileWriter($filePath);
+        return $this->getProvidedDependency(FactFinderDependencyProvider::LOCALE_FACADE);
     }
 
     /**
      * @param \Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter $fileWriter
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporterPlugin
+     * @return \Spryker\Zed\FactFinder\Business\Exporter\FactFinderProductExporter
      */
-    protected function createFactFinderProductExporter(AbstractFileWriter $fileWriter, SpyLocale $locale)
+    protected function createFactFinderProductExporter(AbstractFileWriter $fileWriter, LocaleTransfer $localeTransfer)
     {
-        return new FactFinderProductExporterPlugin($fileWriter, $locale);
+        return new FactFinderProductExporter(
+            $fileWriter,
+            $localeTransfer,
+            $this->getConfig(),
+            $this->getQueryContainer()
+        );
     }
 
 }

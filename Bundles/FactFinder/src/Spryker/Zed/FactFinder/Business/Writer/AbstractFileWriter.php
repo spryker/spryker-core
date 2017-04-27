@@ -19,11 +19,10 @@ abstract class AbstractFileWriter
      * @param string $filePath
      * @param array $data
      * @param bool $append
-     * @param string $delimiter
      *
      * @return void
      */
-    abstract public function write($filePath, $data, $append = false, $delimiter = ',');
+    abstract public function write($filePath, $data, $append = false);
 
     /**
      * @param string $fileName

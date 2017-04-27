@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FactFinder;
 
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Zed\FactFinder\Dependency\Facade\FactFinderToLocaleBridge;
 use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToCategoryDataFeedBridge;
 use Spryker\Zed\FactFinder\Dependency\Persistence\FactFinderToProductAbstractDataFeedBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -18,7 +18,7 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
 
     const PRODUCT_ABSTRACT_DATA_FEED = 'PRODUCT_ABSTRACT_DATA_FEED';
     const CATEGORY_DATA_FEED = 'CATEGORY_DATA_FEED';
-    const LOCALE_QUERY = 'LOCALE_QUERY';
+    const LOCALE_FACADE = 'LOCALE_FACADE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +27,14 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container[self::LOCALE_FACADE] = function (Container $container) {
+            $localeFacade = $container->getLocator()
+                ->locale()
+                ->facade();
+
+            return new FactFinderToLocaleBridge($localeFacade);
+        };
+
         return $container;
     }
 
@@ -51,11 +59,6 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
                 ->queryContainer();
 
             return new FactFinderToCategoryDataFeedBridge($categoryDataFeedQueryContainer);
-        };
-
-        $container[self::LOCALE_QUERY] = function (Container $container) {
-//            $container->getLocator()->locale()->queryContainer()-
-            return new SpyLocaleQuery();
         };
 
         return $container;

@@ -17,7 +17,7 @@
 
         {% include '@FactFinderGui/layout/partials/sort.twig' %}
 
-        {% include '@FactFinderGui/index/partials/pagination.twig' %}
+        {% include '@FactFinderGui/search/partials/pagination.twig' %}
 
         <div class="row">
             {% for record in searchResponse.result.records %}
@@ -45,7 +45,7 @@
             {% endfor %}
         </div>
 
-        {% include '@FactFinderGui/index/partials/pagination.twig' %}
+        {% include '@FactFinderGui/search/partials/pagination.twig' %}
 
     </div>
 </div>

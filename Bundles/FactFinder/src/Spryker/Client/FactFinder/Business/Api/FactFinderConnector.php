@@ -8,7 +8,7 @@
 namespace Spryker\Client\FactFinder\Business\Api;
 
 use Exception;
-use FACTFinder\Loader as FF;
+use FACTFinder\Loader as FactFinderLoader;
 use FACTFinder\Util\Parameters;
 use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Spryker\Client\FactFinder\FactFinderConfig;
@@ -27,7 +27,7 @@ class FactFinderConnector
     protected $requestParameters = null;
 
     /**
-     * @var \Spryker\Zed\FactFinder\FactFinderConfig
+     * @var \Spryker\Client\FactFinder\FactFinderConfig
      */
     protected $factFinderConfig;
 
@@ -76,23 +76,13 @@ class FactFinderConnector
      */
     protected $compareAdapter;
 
-//    /**
-//     * @var \FACTFinder\Util\Log4PhpLogger
-//     */
-//    protected $logger;
-//
-//    /**
-//     * @var \FACTFinder\Core\XmlConfiguration
-//     */
-//    protected $configuration;
-
     /**
      * @param \Spryker\Client\FactFinder\FactFinderConfig $factFinderConfig
      */
     public function __construct(FactFinderConfig $factFinderConfig)
     {
         $this->factFinderConfig = $factFinderConfig;
-        $this->dic = FF::getInstance('Util\Pimple');
+        $this->dic = FactFinderLoader::getInstance('Util\Pimple');
 
         $this->init();
     }
@@ -102,7 +92,7 @@ class FactFinderConnector
      */
     public function createSearchAdapter()
     {
-        $this->searchAdapter = FF::getInstance(
+        $this->searchAdapter = FactFinderLoader::getInstance(
             'Adapter\Search',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -118,7 +108,7 @@ class FactFinderConnector
      */
     public function createTagCloudAdapter()
     {
-        $this->tagCloudAdapter = FF::getInstance(
+        $this->tagCloudAdapter = FactFinderLoader::getInstance(
             'Adapter\TagCloud',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -134,7 +124,7 @@ class FactFinderConnector
      */
     public function createRecommendationAdapter()
     {
-        $this->recommendationAdapter = FF::getInstance(
+        $this->recommendationAdapter = FactFinderLoader::getInstance(
             'Adapter\Recommendation',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -150,7 +140,7 @@ class FactFinderConnector
      */
     public function createSuggestAdapter()
     {
-        $this->suggestAdapter = FF::getInstance(
+        $this->suggestAdapter = FactFinderLoader::getInstance(
             'Adapter\Suggest',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -166,7 +156,7 @@ class FactFinderConnector
      */
     public function createTrackingAdapter()
     {
-        $this->trackingAdapter = FF::getInstance(
+        $this->trackingAdapter = FactFinderLoader::getInstance(
             'Adapter\Tracking',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -182,7 +172,7 @@ class FactFinderConnector
      */
     public function createSimilarRecordsAdapter()
     {
-        $this->similarRecordsAdapter = FF::getInstance(
+        $this->similarRecordsAdapter = FactFinderLoader::getInstance(
             'Adapter\SimilarRecords',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -198,7 +188,7 @@ class FactFinderConnector
      */
     public function createProductCampaignAdapter()
     {
-        $this->productCampaignAdapter = FF::getInstance(
+        $this->productCampaignAdapter = FactFinderLoader::getInstance(
             'Adapter\ProductCampaign',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -214,7 +204,7 @@ class FactFinderConnector
      */
     public function createImportAdapter()
     {
-        $this->importAdapter = FF::getInstance(
+        $this->importAdapter = FactFinderLoader::getInstance(
             'Adapter\Import',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -230,7 +220,7 @@ class FactFinderConnector
      */
     public function createCompareAdapter()
     {
-        $this->compareAdapter = FF::getInstance(
+        $this->compareAdapter = FactFinderLoader::getInstance(
             'Adapter\Compare',
             $this->dic['loggerClass'],
             $this->dic['configuration'],
@@ -274,7 +264,7 @@ class FactFinderConnector
      */
     public function createRequestParametersFromSearchRequestTransfer(FactFinderSearchRequestTransfer $searchRequestTransfer)
     {
-        $config = $this->factFinderConfig->getFactFinderFConfiguration();
+        $config = $this->factFinderConfig->getFactFinderConfiguration();
         $parameters = [];
         $parameters['channel'] = $config['channel'];
         $query = trim($searchRequestTransfer->getQuery());
@@ -284,7 +274,7 @@ class FactFinderConnector
         $parameters['query'] = $query;
         $parameters['page'] = $searchRequestTransfer->getPage();
 
-        return FF::getInstance(
+        return FactFinderLoader::getInstance(
             'Util\Parameters',
             $parameters
         );
@@ -315,7 +305,7 @@ class FactFinderConnector
      */
     public function createSearchParameters(Parameters $parameters)
     {
-        return FF::getInstance(
+        return FactFinderLoader::getInstance(
             'Data\SearchParameters',
             $parameters
         );
@@ -326,7 +316,7 @@ class FactFinderConnector
      */
     public function createSearchParametersFromRequestParser()
     {
-        return FF::getInstance(
+        return FactFinderLoader::getInstance(
             'Data\SearchParameters',
             $this->dic['requestParser']->getRequestParameters()
         );
@@ -359,7 +349,7 @@ class FactFinderConnector
      */
     public function getSearchStatusEnum()
     {
-        return FF::getClassName('Data\SearchStatus');
+        return FactFinderLoader::getClassName('Data\SearchStatus');
     }
 
     /**
@@ -367,7 +357,7 @@ class FactFinderConnector
      */
     public function getArticleNumberSearchStatusEnum()
     {
-        return FF::getClassName('Data\ArticleNumberSearchStatus');
+        return FactFinderLoader::getClassName('Data\ArticleNumberSearchStatus');
     }
 
     /**
@@ -378,15 +368,15 @@ class FactFinderConnector
     protected function init()
     {
         $this->dic['loggerClass'] = function ($c) {
-            $loggerClass = FF::getClassName('Util\Log4PhpLogger');
+            $loggerClass = FactFinderLoader::getClassName('Util\Log4PhpLogger');
             $loggerClass::configure($this->getLog4phpConfigXml());
             return $loggerClass;
         };
 
         $this->dic['configuration'] = function ($c) {
-            return FF::getInstance(
+            return FactFinderLoader::getInstance(
                 'Core\ManualConfiguration',
-                $this->factFinderConfig->getFactFinderFConfiguration()
+                $this->factFinderConfig->getFactFinderConfiguration()
             );
         };
 
@@ -395,7 +385,7 @@ class FactFinderConnector
         });
 
         $this->dic['requestFactory'] = function ($c) {
-            return FF::getInstance(
+            return FactFinderLoader::getInstance(
                 'Core\Server\MultiCurlRequestFactory',
                 $c['loggerClass'],
                 $c['configuration'],
@@ -404,7 +394,7 @@ class FactFinderConnector
         };
 
         $this->dic['clientUrlBuilder'] = function ($c) {
-            return FF::getInstance(
+            return FactFinderLoader::getInstance(
                 'Core\Client\UrlBuilder',
                 $c['loggerClass'],
                 $c['configuration'],
@@ -414,7 +404,7 @@ class FactFinderConnector
         };
 
         $this->dic['requestParser'] = function ($c) {
-            return FF::getInstance(
+            return FactFinderLoader::getInstance(
                 'Core\Client\RequestParser',
                 $c['loggerClass'],
                 $c['configuration'],
@@ -431,7 +421,7 @@ class FactFinderConnector
             else
                 throw new Exception('No encoding conversion available.');
 
-            return FF::getInstance(
+            return FactFinderLoader::getInstance(
                 $type,
                 $c['loggerClass'],
                 $c['configuration']
@@ -442,25 +432,10 @@ class FactFinderConnector
     /**
      * @return string
      */
-    protected function getConfigXml()
-    {
-        $filePath = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/FactFinder/config/config.xml';
-        if (!is_file($filePath)) {
-            $filePath = __DIR__ . '/../../../../../../config/config.xml';
-        }
-        return $filePath;
-    }
-
-    /**
-     * @return string
-     */
     protected function getLog4phpConfigXml()
     {
-        $filePath = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/FactFinder/config/log4php.xml';
-        if (!is_file($filePath)) {
-            $filePath = __DIR__ . '/../../../../../../config/log4php.xml';
-        }
-        return $filePath;
+        return $this->factFinderConfig
+            ->getLog4PhpConfigPath();
     }
 
 }

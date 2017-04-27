@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\ProductCampaign as FFProductCampaign;
+use FACTFinder\Adapter\ProductCampaign as FactFinderProductCampaign;
 use Generated\Shared\Transfer\FactFinderProductCampaignResponseTransfer;
 
 class ProductCampaignResponseConverter extends BaseConverter
@@ -21,7 +21,7 @@ class ProductCampaignResponseConverter extends BaseConverter
     /**
      * @param \FACTFinder\Adapter\ProductCampaign $productCampaignAdapter
      */
-    public function __construct(FFProductCampaign $productCampaignAdapter)
+    public function __construct(FactFinderProductCampaign $productCampaignAdapter)
     {
         $this->productCampaignAdapter = $productCampaignAdapter;
     }

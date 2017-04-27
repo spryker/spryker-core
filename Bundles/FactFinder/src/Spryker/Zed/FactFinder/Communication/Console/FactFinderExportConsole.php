@@ -40,13 +40,13 @@ class FactFinderExportConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locales = $this->getFacade()
-            ->getLocaleQuery()
-            ->find();
+        $localeTransfers = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
 
-        foreach ($locales as $key => $locale) {
+        foreach ($localeTransfers as $localeTransfer) {
             $this->getFacade()
-                ->createFactFinderCsv($locale);
+                ->createFactFinderCsv($localeTransfer);
         }
     }
 

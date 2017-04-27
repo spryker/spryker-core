@@ -7,17 +7,14 @@
 
 namespace Spryker\Zed\FactFinder\Business\Exporter;
 
-use Orm\Zed\Locale\Persistence\Base\SpyLocale;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\FactFinder\FactFinderConfig;
+use Spryker\Zed\FactFinder\Persistence\FactFinderQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\FactFinder\Business\FactFinderBusinessFactory getFactory()
- * @method \Spryker\Zed\FactFinder\Business\FactFinderFacade getFacade()
- */
-class FactFinderProductExporterPlugin extends AbstractPlugin
+class FactFinderProductExporter implements FactFinderProductExporterInterface
 {
 
     /**
@@ -26,9 +23,9 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     protected $fileWriter;
 
     /**
-     * @var \Orm\Zed\Locale\Persistence\Base\SpyLocale
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected $locale;
+    protected $localeTransfer;
 
     /**
      * @var string
@@ -36,7 +33,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     protected $filePath;
 
     /**
-     * @var string
+     * @var int
      */
     protected $queryLimit;
 
@@ -56,21 +53,38 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     protected $fileExtension;
 
     /**
+     * @var \Spryker\Zed\FactFinder\Persistence\FactFinderQueryContainer
+     */
+    protected $factFinderQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\FactFinder\FactFinderConfig
+     */
+    protected $factFinderConfig;
+
+    /**
      * FactFinderProductExporterPlugin constructor.
      *
      * @param \Spryker\Zed\FactFinder\Business\Writer\AbstractFileWriter $fileWriter
-     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\FactFinder\FactFinderConfig $factFinderConfig
+     * @param \Spryker\Zed\FactFinder\Persistence\FactFinderQueryContainerInterface $factFinderQueryContainer
      */
-    public function __construct(AbstractFileWriter $fileWriter, SpyLocale $locale)
-    {
-        $config = $this->getFactory()
-            ->getConfig();
+    public function __construct(
+        AbstractFileWriter $fileWriter,
+        LocaleTransfer $localeTransfer,
+        FactFinderConfig $factFinderConfig,
+        FactFinderQueryContainerInterface $factFinderQueryContainer
+    ) {
+
         $this->fileWriter = $fileWriter;
-        $this->locale = $locale;
-        $this->queryLimit = $config->getExportQueryLimit();
-        $this->fileNamePrefix = $config->getExportFileNamePrefix();
-        $this->fileNameDelimiter = $config->getExportFileNameDelimiter();
-        $this->fileExtension = $config->getExportFileExtension();
+        $this->localeTransfer = $localeTransfer;
+        $this->queryLimit = $factFinderConfig->getExportQueryLimit();
+        $this->fileNamePrefix = $factFinderConfig->getExportFileNamePrefix();
+        $this->fileNameDelimiter = $factFinderConfig->getExportFileNameDelimiter();
+        $this->fileExtension = $factFinderConfig->getExportFileExtension();
+        $this->factFinderQueryContainer = $factFinderQueryContainer;
+        $this->factFinderConfig = $factFinderConfig;
     }
 
     /**
@@ -78,14 +92,13 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
      */
     public function export()
     {
-        $query = $this->getFactory()
-            ->getFactFinderQueryContainer()
-            ->getExportDataQuery($this->locale->getIdLocale());
+        $query = $this->factFinderQueryContainer
+            ->getExportDataQuery($this->localeTransfer);
 
         if (!$this->productsExists($query)) {
             return;
         }
-        $filePath = $this->getFilePath($this->locale->getLocaleName());
+        $filePath = $this->getFilePath($this->localeTransfer->getLocaleName());
 
         $this->exportToCsv($filePath, $query);
     }
@@ -108,7 +121,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
                 ->toArray();
             $offset += $this->queryLimit;
 
-            $prepared = $this->prepareDataForExport($result, $this->locale);
+            $prepared = $this->prepareDataForExport($result, $this->localeTransfer);
 
             $this->fileWriter
                 ->write($filePath, $prepared, true);
@@ -142,7 +155,8 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
      */
     protected function getFilePath($localeName)
     {
-        $directory = $this->getConfig()->getCsvDirectory();
+        $directory = $this->factFinderConfig
+            ->getCsvDirectory();
         $fileName = $this->fileNamePrefix . $this->fileNameDelimiter . $localeName . $this->fileExtension;
 
         return $directory . $fileName;
@@ -150,11 +164,11 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
 
     /**
      * @param array $data
-     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    protected function prepareDataForExport($data, SpyLocale $locale)
+    protected function prepareDataForExport($data, LocaleTransfer $localeTransfer)
     {
         $headers = $this->getFileHeader();
         $dataForExport = [];
@@ -162,7 +176,7 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
         foreach ($data as $row) {
             $prepared = [];
             $row = $this->addProductUrl($row);
-            $row = $this->addCategoryPath($row, $locale);
+            $row = $this->addCategoryPath($row, $localeTransfer);
 
             foreach ($headers as $headerName) {
                 if (isset($row[$headerName])) {
@@ -191,14 +205,14 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
 
     /**
      * @param array $data
-     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    protected function addCategoryPath($data, SpyLocale $locale)
+    protected function addCategoryPath($data, LocaleTransfer $localeTransfer)
     {
         $parentCategoryName = $this->getParentСategoryName(
-            $locale->getIdLocale(),
+            $localeTransfer,
             $data[FactFinderConstants::ITEM_PARENT_CATEGORY_NODE_ID]
         );
 
@@ -213,18 +227,18 @@ class FactFinderProductExporterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $rootCategoryNodeId
      *
      * @return string
      */
-    protected function getParentСategoryName($idLocale, $rootCategoryNodeId)
+    protected function getParentСategoryName(LocaleTransfer $localeTransfer, $rootCategoryNodeId)
     {
-        $query = $this->getFacade()
-            ->getParentCategoryQuery($idLocale, $rootCategoryNodeId);
+        $query = $this->factFinderQueryContainer
+            ->getParentCategoryQuery($localeTransfer, $rootCategoryNodeId);
         $category = $query->findOne();
 
-        if (empty($category)) {
+        if (!$category) {
             return '';
         }
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\SimilarRecords as FFSimilarRecords;
+use FACTFinder\Adapter\SimilarRecords as FactFinderSimilarRecords;
 use Generated\Shared\Transfer\FactFinderSimilarRecordsResponseTransfer;
 
 class SimilarRecordsResponseConverter extends BaseConverter
@@ -21,7 +21,7 @@ class SimilarRecordsResponseConverter extends BaseConverter
     /**
      * @param \FACTFinder\Adapter\SimilarRecords $similarRecordsAdapter
      */
-    public function __construct(FFSimilarRecords $similarRecordsAdapter)
+    public function __construct(FactFinderSimilarRecords $similarRecordsAdapter)
     {
         $this->similarRecordsAdapter = $similarRecordsAdapter;
     }

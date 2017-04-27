@@ -16,17 +16,17 @@ class FactFinderConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getEnv()
+    public function getEnvironment()
     {
-        return $this->get(FactFinderConstants::ENV);
+        return $this->get(FactFinderConstants::ENVIRONMENT);
     }
 
     /**
      * @return array
      */
-    public function getFactFinderFConfiguration()
+    public function getFactFinderConfiguration()
     {
-        return $this->get(FactFinderConstants::ENV . $this->getEnv());
+        return $this->get(FactFinderConstants::ENVIRONMENT . $this->getEnvironment());
     }
 
     /**
@@ -35,6 +35,14 @@ class FactFinderConfig extends AbstractBundleConfig
     public function getCsvDirectory()
     {
         return $this->get(FactFinderConstants::CSV_DIRECTORY);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLog4PhpConfigPath()
+    {
+        return $this->get(FactFinderConstants::PHP_LOGGER_CONFIG_PATH);
     }
 
 }

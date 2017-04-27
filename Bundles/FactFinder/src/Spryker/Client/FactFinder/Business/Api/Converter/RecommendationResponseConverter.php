@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Converter;
 
-use FACTFinder\Adapter\Recommendation as FFRecommendationAdapter;
+use FACTFinder\Adapter\Recommendation as FactFinderRecommendationAdapter;
 use Generated\Shared\Transfer\FactFinderRecommendationResponseTransfer;
 
 class RecommendationResponseConverter extends BaseConverter
@@ -21,7 +21,7 @@ class RecommendationResponseConverter extends BaseConverter
     /**
      * @param \FACTFinder\Adapter\Recommendation $recommendationAdapter
      */
-    public function __construct(FFRecommendationAdapter $recommendationAdapter)
+    public function __construct(FactFinderRecommendationAdapter $recommendationAdapter)
     {
         $this->recommendationAdapter = $recommendationAdapter;
     }

@@ -33,20 +33,4 @@ class FactFinderPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(FactFinderDependencyProvider::CATEGORY_DATA_FEED);
     }
 
-    /**
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function getLocaleQuery()
-    {
-        return $this->getProvidedDependency(FactFinderDependencyProvider::LOCALE_QUERY);
-    }
-
-    /**
-     * @return \Spryker\Zed\FactFinder\FactFinderConfig
-     */
-    public function getZedConfig()
-    {
-        return $this->getConfig();
-    }
-
 }

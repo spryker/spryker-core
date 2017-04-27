@@ -8,15 +8,16 @@
 namespace Spryker\Zed\FactFinder\Persistence;
 
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -34,11 +35,11 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     /**
      * @api
      *
-     * @param int $IdLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getExportDataQuery($IdLocale)
+    public function getExportDataQuery(LocaleTransfer $localeTransfer)
     {
         $productAbstractDataFeedTransfer = new ProductAbstractDataFeedTransfer();
         $productAbstractDataFeedTransfer->setJoinProduct(true);
@@ -46,11 +47,7 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
         $productAbstractDataFeedTransfer->setJoinImage(true);
         $productAbstractDataFeedTransfer->setJoinPrice(true);
 
-        $localeObject = $this->getLocaleQuery()
-            ->filterByIdLocale($IdLocale)
-            ->findOne();
-
-        $productAbstractDataFeedTransfer->setIdLocale($localeObject->getIdLocale());
+        $productAbstractDataFeedTransfer->setIdLocale($localeTransfer->getIdLocale());
 
         $productsAbstractQuery = $this->getFactory()
             ->getProductAbstractDataFeedQueryContainer()
@@ -65,19 +62,15 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     /**
      * @api
      *
-     * @param int $IdLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $rootCategoryNodeId
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function getParentCategoryQuery($IdLocale, $rootCategoryNodeId)
+    public function getParentCategoryQuery(LocaleTransfer $localeTransfer, $rootCategoryNodeId)
     {
-        $localeObject = $this->getLocaleQuery()
-            ->filterByIdLocale($IdLocale)
-            ->findOne();
-
         $categoryDataFeedTransfer = new CategoryDataFeedTransfer();
-        $categoryDataFeedTransfer->setIdLocale($localeObject->getIdLocale());
+        $categoryDataFeedTransfer->setIdLocale($localeTransfer->getIdLocale());
 
         $categoryQuery = $this->getFactory()
             ->getCategoryDataFeedQueryContainer()
@@ -89,18 +82,9 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     }
 
     /**
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    protected function getLocaleQuery()
-    {
-        return $this->getFactory()
-            ->getLocaleQuery();
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $productsAbstractQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productsAbstractQuery
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function addColumns(SpyProductAbstractQuery $productsAbstractQuery)
     {
@@ -118,9 +102,9 @@ class FactFinderQueryContainer extends AbstractQueryContainer implements FactFin
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $productsAbstractQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productsAbstractQuery
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function addInStockConditions(SpyProductAbstractQuery $productsAbstractQuery)
     {

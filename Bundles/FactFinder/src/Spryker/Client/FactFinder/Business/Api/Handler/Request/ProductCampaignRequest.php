@@ -7,26 +7,23 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\FactFinderProductCampaignRequestTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class ProductCampaignRequest extends AbstractRequest implements RequestInterface
+class ProductCampaignRequest extends AbstractRequest implements ProductCampaignRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_PRODUCT_CAMPAIGN;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderProductCampaignRequestTransfer $factFinderProductCampaignRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderProductCampaignResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderProductCampaignRequestTransfer $factFinderProductCampaignRequestTransfer)
     {
-        $productCampaignRequestTransfer = $quoteTransfer->getFactFinderProductCampaignRequest();
-
-        $productCampaignAdapter = $this->ffConnector->createProductCampaignAdapter();
-
-        $this->logInfo($quoteTransfer, $productCampaignAdapter);
+        $productCampaignAdapter = $this->factFinderConnector
+            ->createProductCampaignAdapter();
 
         $responseTransfer = $this->converterFactory
             ->createProductCampaignResponseConverter($productCampaignAdapter)

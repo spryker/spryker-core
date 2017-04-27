@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FactFinder\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface FactFinderQueryContainerInterface extends QueryContainerInterface
@@ -15,20 +16,20 @@ interface FactFinderQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $IdLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getExportDataQuery($IdLocale);
+    public function getExportDataQuery(LocaleTransfer $localeTransfer);
 
     /**
      * @api
      *
-     * @param int $IdLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $rootCategoryNodeId
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function getParentCategoryQuery($IdLocale, $rootCategoryNodeId);
+    public function getParentCategoryQuery(LocaleTransfer $localeTransfer, $rootCategoryNodeId);
 
 }

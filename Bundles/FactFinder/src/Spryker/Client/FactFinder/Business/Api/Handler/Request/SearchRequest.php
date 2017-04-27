@@ -7,27 +7,25 @@
 
 namespace Spryker\Client\FactFinder\Business\Api\Handler\Request;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Spryker\Client\FactFinder\Business\Api\ApiConstants;
 
-class SearchRequest extends AbstractRequest implements RequestInterface
+class SearchRequest extends AbstractRequest implements SearchRequestInterface
 {
 
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SEARCH;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
-    public function request(QuoteTransfer $quoteTransfer)
+    public function request(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer)
     {
-        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
-        $this->ffConnector->setRequestParameters($requestParameters);
+        $requestParameters = $this->factFinderConnector->createRequestParametersFromRequestParser();
+        $this->factFinderConnector->setRequestParameters($requestParameters);
 
-        $searchAdapter = $this->ffConnector->createSearchAdapter();
-
-        $this->logInfo($quoteTransfer, $searchAdapter);
+        $searchAdapter = $this->factFinderConnector->createSearchAdapter();
 
         $responseTransfer = $this->converterFactory
             ->createSearchResponseConverter($searchAdapter)

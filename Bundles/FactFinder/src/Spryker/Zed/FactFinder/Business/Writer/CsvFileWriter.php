@@ -10,15 +10,16 @@ namespace Spryker\Zed\FactFinder\Business\Writer;
 class CsvFileWriter extends AbstractFileWriter
 {
 
+    const DELIMITER = ',';
+
     /**
      * @param string $filePath
      * @param array $data
      * @param bool $append
-     * @param string $delimiter
      *
      * @return void
      */
-    public function write($filePath, $data, $append = false, $delimiter = ',')
+    public function write($filePath, $data, $append = false)
     {
         $this->createDirectory($filePath);
 
@@ -29,7 +30,7 @@ class CsvFileWriter extends AbstractFileWriter
         }
 
         foreach ($data as $row) {
-            fputcsv($filePointer, $row, $delimiter);
+            fputcsv($filePointer, $row, self::DELIMITER);
         }
 
         fclose($filePointer);

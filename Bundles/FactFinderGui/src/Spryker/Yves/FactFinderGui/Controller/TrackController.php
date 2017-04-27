@@ -27,33 +27,18 @@ class TrackController extends AbstractController
         $factFinderTrackingRequestTransfer = new FactFinderTrackingRequestTransfer();
         $factFinderTrackingRequestTransfer->fromArray($request->query->all());
 
-        $factFinderTrackingRequestTransfer = $this->addSessionId($factFinderTrackingRequestTransfer);
+        $sessionId = $request->getSession()->getId();
+        $factFinderTrackingRequestTransfer->setSid($sessionId);
 
         $factFinderTrackingResponseTransfer = $this->getFactory()
             ->getFactFinderClient()
             ->track($factFinderTrackingRequestTransfer);
 
         if (!$factFinderTrackingResponseTransfer->getResult()) {
-            return $this->jsonResponse(nul, 400);
+            return $this->jsonResponse(null, 400);
         }
 
         return $this->jsonResponse();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderTrackingRequestTransfer
-     */
-    protected function addSessionId(FactFinderTrackingRequestTransfer $factFinderTrackingRequestTransfer)
-    {
-        $sessionId = $this->getFactory()
-            ->getFactFinderClient()
-            ->getSession()
-            ->getId();
-        $factFinderTrackingRequestTransfer->setSid($sessionId);
-
-        return $factFinderTrackingRequestTransfer;
     }
 
 }
