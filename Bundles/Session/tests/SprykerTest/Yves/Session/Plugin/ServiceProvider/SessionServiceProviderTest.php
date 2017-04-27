@@ -9,12 +9,12 @@ namespace SprykerTest\Yves\Session\Plugin\ServiceProvider;
 
 use Codeception\Test\Unit;
 use Silex\Application;
-use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Yves\Session\Plugin\ServiceProvider\SessionServiceProvider;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**

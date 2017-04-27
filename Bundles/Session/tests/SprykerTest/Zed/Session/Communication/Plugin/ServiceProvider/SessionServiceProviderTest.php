@@ -9,13 +9,13 @@ namespace SprykerTest\Zed\Session\Communication\Plugin\ServiceProvider;
 
 use Codeception\TestCase\Test;
 use Silex\Application;
-use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**

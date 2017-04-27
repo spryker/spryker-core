@@ -18,11 +18,10 @@ use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvi
  * @group SprykerTest
  * @group Zed
  * @group Session
+ * @group Business
  * @group Facade
  * @group SessionFacadeTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\Session\SessionBusinessTester $tester
  */
 class SessionFacadeTest extends Test
 {
