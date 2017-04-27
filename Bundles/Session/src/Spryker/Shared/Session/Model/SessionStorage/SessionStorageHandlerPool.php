@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Session\Model\SessionStorage;
 
 use SessionHandlerInterface;
-use Spryker\Shared\Session\Model\Exception\SessionHandlerNotFoundInSessionHandlerPoolException;
+use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolException;
 
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
@@ -36,7 +36,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
      *
      * @param string $sessionHandlerName
      *
-     * @throws \Spryker\Shared\Session\Model\Exception\SessionHandlerNotFoundInSessionHandlerPoolException
+     * @throws \Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolException
      *
      * @return \SessionHandlerInterface
      */

@@ -16,7 +16,7 @@ interface SessionStorageHandlerPoolInterface
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
-     * @return mixed
+     * @return $this
      */
     public function addHandler(SessionHandlerInterface $sessionHandler, $sessionHandlerName);
 
