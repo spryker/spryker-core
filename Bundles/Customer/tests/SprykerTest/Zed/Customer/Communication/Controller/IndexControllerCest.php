@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\Customer\Communication\Controller;
 use Codeception\Util\Stub;
 
 use Generated\Shared\DataBuilder\CustomerBuilder;
-use SprykerTest\Zed\Customer\CommunicationTester;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
+use SprykerTest\Zed\Customer\CommunicationTester;
 
 /**
  * Auto-generated group annotations

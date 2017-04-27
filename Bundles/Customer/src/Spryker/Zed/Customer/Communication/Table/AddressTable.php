@@ -52,8 +52,9 @@ class AddressTable extends AbstractTable
     {
         $config->setHeader([
             SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS => '#',
-            SpyCustomerAddressTableMap::COL_LAST_NAME => 'Last Name',
+            SpyCustomerAddressTableMap::COL_SALUTATION => 'Salutation',
             SpyCustomerAddressTableMap::COL_FIRST_NAME => 'First Name',
+            SpyCustomerAddressTableMap::COL_LAST_NAME => 'Last Name',
             SpyCustomerAddressTableMap::COL_ADDRESS1 => 'Address ',
             SpyCustomerAddressTableMap::COL_ADDRESS2 => 'Address (2nd line)',
             SpyCustomerAddressTableMap::COL_ADDRESS3 => 'Address (3rd line)',
@@ -148,7 +149,6 @@ class AddressTable extends AbstractTable
 
         if ($idCustomerAddress !== null) {
             $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
-            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
         }
 
         return implode(' ', $buttons);

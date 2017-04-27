@@ -23,7 +23,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Customer\Customer
+     * @return \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
     public function createCustomer()
     {
@@ -42,7 +42,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Customer\Address
+     * @return \Spryker\Zed\Customer\Business\Customer\AddressInterface
      */
     public function createAddress()
     {
@@ -74,7 +74,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator
+     * @return \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface
      */
     protected function createCustomerReferenceGenerator()
     {
@@ -93,7 +93,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaver
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaverInterface
      */
     public function createCustomerOrderSaver()
     {
@@ -101,7 +101,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Model\PreConditionChecker
+     * @return \Spryker\Zed\Customer\Business\Model\PreConditionCheckerInterface
      */
     public function createPreConditionChecker()
     {

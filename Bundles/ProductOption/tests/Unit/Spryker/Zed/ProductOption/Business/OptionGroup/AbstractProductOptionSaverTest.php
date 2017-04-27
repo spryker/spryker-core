@@ -6,8 +6,8 @@
 
 namespace Unit\Spryker\Zed\ProductOption\Business\OptionGroup;
 
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;

@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
-use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @group Functional

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Business\Attribute;
 
-use \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface;
+use Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface;
 
 class AttributeProvider implements AttributeProviderInterface
 {

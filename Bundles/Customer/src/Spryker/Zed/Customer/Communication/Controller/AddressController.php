@@ -20,13 +20,21 @@ class AddressController extends AbstractController
 {
 
     /**
+     * @deprecated moved to Customer view page ViewController->indexAction()
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
+        $idCustomerRaw = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
+
+        if (empty($idCustomerRaw)) {
+            return $this->redirectResponse('/customer');
+        }
+
+        $idCustomer = $this->castId($idCustomerRaw);
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -38,6 +46,8 @@ class AddressController extends AbstractController
     }
 
     /**
+     * @deprecated moved to Customer view page ViewController->indexAction()
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -53,6 +63,8 @@ class AddressController extends AbstractController
     }
 
     /**
+     * @deprecated Address has no detail page anymore
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -121,7 +133,7 @@ class AddressController extends AbstractController
             $this->getFacade()->updateAddress($customerAddress);
 
             return $this->redirectResponse(sprintf(
-                '/customer/address?%s=%d',
+                '/customer/view?%s=%d',
                 CustomerConstants::PARAM_ID_CUSTOMER,
                 $idCustomer
             ));
@@ -160,7 +172,7 @@ class AddressController extends AbstractController
             $this->getFacade()->createAddress($addressTransfer);
 
             return $this->redirectResponse(
-                sprintf('/customer/address?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
         }
 
