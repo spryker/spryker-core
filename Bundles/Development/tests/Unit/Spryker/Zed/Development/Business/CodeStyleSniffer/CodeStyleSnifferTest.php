@@ -45,8 +45,8 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     public function allowedAllNames()
     {
         return [
-            ['all'],
             ['All'],
+            ['all'],
         ];
     }
 
@@ -72,10 +72,10 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     public function allowedNonSplitNames()
     {
         return [
-            ['NonSplitBundle'],
-            ['nonSplitBundle'],
             ['non_Split_Bundle'],
             ['non_split_bundle'],
+            ['NonSplitBundle'],
+            ['nonSplitBundle'],
         ];
     }
 
