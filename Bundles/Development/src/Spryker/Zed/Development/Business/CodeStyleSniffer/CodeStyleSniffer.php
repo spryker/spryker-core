@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
-use ErrorException;
+use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Symfony\Component\Process\Process;
+use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeStyleSniffer
@@ -57,22 +58,12 @@ class CodeStyleSniffer
      * @param string|null $bundle
      * @param array $options
      *
-     * @throws \ErrorException
-     *
-     * @return int Exit code
+     * @return int
      */
     public function checkCodeStyle($bundle, array $options = [])
     {
-        $path = $this->resolvePath($bundle, $options['path']);
-
-        if (!is_file($path) && !is_dir($path)) {
-            $message = 'This path does not exist';
-            if ($bundle) {
-                $message .= ' in bundle ' . $bundle;
-            }
-
-            throw new ErrorException($message . ': ' . $path);
-        }
+        $path = isset($options['path']) ? $options['path'] : null;
+        $path = $this->resolvePath($bundle, $path);
 
         $defaults = [
             'ignore' => $bundle ? '' : 'vendor/',
@@ -84,18 +75,6 @@ class CodeStyleSniffer
 
     /**
      * @param string $bundle
-     *
-     * @return string
-     */
-    protected function normalizeBundleName($bundle)
-    {
-        $filter = new UnderscoreToCamelCase();
-
-        return ucfirst($filter->filter($bundle));
-    }
-
-    /**
-     * @param string $bundle
      * @param string|null $path
      *
      * @return string
@@ -103,11 +82,9 @@ class CodeStyleSniffer
     protected function resolvePath($bundle, $path = null)
     {
         if ($bundle) {
-            if ($bundle === static::BUNDLE_ALL) {
+            if (strtolower($bundle) === static::BUNDLE_ALL) {
                 return $this->pathToBundles;
             }
-
-            $bundle = $this->normalizeBundleName($bundle);
 
             return $this->getPathToBundle($bundle) . $path;
         }
@@ -120,11 +97,68 @@ class CodeStyleSniffer
     /**
      * @param string $bundle
      *
+     * @throws \Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException
+     *
      * @return string
      */
     protected function getPathToBundle($bundle)
     {
-        return $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
+        $inputBundleName = $bundle;
+        $bundle = $this->normalizeBundleNameForNonSplit($bundle);
+        $path = $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
+
+        if ($this->isPathValid($path)) {
+            return $path;
+        }
+
+        $bundle = $this->normalizeBundleNameForSplit($bundle);
+        $path = $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
+
+        if ($this->isPathValid($path)) {
+            return $path;
+        }
+
+        $message = sprintf(
+            'The path "%s" does not exist in your bundle "%s". Maybe there is a typo in the bundle name?',
+            $path,
+            $inputBundleName
+        );
+
+        throw new PathDoesNotExistException($message);
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function normalizeBundleNameForNonSplit($bundle)
+    {
+        $filter = new UnderscoreToCamelCase();
+
+        return ucfirst($filter->filter($bundle));
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function normalizeBundleNameForSplit($bundle)
+    {
+        $filter = new CamelCaseToDash();
+
+        return strtolower($filter->filter($bundle));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function isPathValid($path)
+    {
+        return (is_file($path) || is_dir($path));
     }
 
     /**
@@ -172,6 +206,20 @@ class CodeStyleSniffer
         });
 
         return $process->getExitCode();
+    }
+
+    /**
+     * @deprecated Use `normalizeBundleNameForNonSplit()` or `normalizeBundleNameForSplit()`
+     *
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function normalizeBundleName($bundle)
+    {
+        $filter = new UnderscoreToCamelCase();
+
+        return ucfirst($filter->filter($bundle));
     }
 
 }
