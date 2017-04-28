@@ -24,7 +24,7 @@ class FlysystemConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getFlysystemFilesystemConfig()
+    public function getFlysystemConfig()
     {
         return [];
     }

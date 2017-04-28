@@ -10,7 +10,6 @@ namespace Spryker\Service\Flysystem;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
-use Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProvider;
 use Spryker\Service\Flysystem\Model\Reader;
 use Spryker\Service\Flysystem\Model\Stream;
 use Spryker\Service\Flysystem\Model\Writer;
@@ -63,27 +62,31 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Provider\FlysystemPluginProviderInterface
-     */
-    protected function createFlysystemPluginProvider()
-    {
-        return new FlysystemPluginProvider(
-            $this->createFlysystemPluginCollection()
-        );
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\FlysystemConfigTransfer[]
      */
     protected function createConfigCollection()
     {
         $configCollection = [];
         foreach ($this->getConfig()->getFilesystemConfig() as $name => $configData) {
-            $config = $this->createConfig($name, $configData);
-            $configCollection[$name] = $config;
+            $configTransfer = $this->createConfig($name, $configData);
+            $this->assertConfig($configTransfer);
+
+            $configCollection[$name] = $configTransfer;
         }
 
         return $configCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
+     *
+     * @return void
+     */
+    protected function assertConfig(FlysystemConfigTransfer $configTransfer)
+    {
+        $configTransfer->requireName();
+        $configTransfer->requireType();
+        $configTransfer->requireAdapterConfig();
     }
 
     /**
@@ -95,12 +98,15 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     protected function createConfig($name, array $configData)
     {
         $type = $configData[FlysystemConfigTransfer::TYPE];
-        unset($configData[FlysystemConfigTransfer::TYPE]);
 
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName($name);
         $configTransfer->setType($type);
-        $configTransfer->setAdapterConfig($configData);
+        $configTransfer->setAdapterConfig($configData[FlysystemConfigTransfer::ADAPTER_CONFIG]);
+
+        $configTransfer->setFlysystemConfig(
+            $this->getConfig()->getFlysystemConfig()
+        );
 
         return $configTransfer;
     }
@@ -114,8 +120,12 @@ class FlysystemServiceFactory extends AbstractServiceFactory
 
         $filesystemCollection = [];
         foreach ($configCollection as $name => $configTransfer) {
-            $builder = $this->createFilesystemBuilder($configTransfer);
-            $filesystemCollection[$name] = $builder->build();
+            $filesystemBuilderPlugin = $this->getFilesystemBuilderPluginByType($configTransfer);
+
+            $filesystemCollection[$name] = $filesystemBuilderPlugin->build(
+                $configTransfer,
+                $this->getFlysystemPluginCollection()
+            );
         }
 
         return $filesystemCollection;
@@ -126,34 +136,37 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
      *
-     * @return \Spryker\Service\Flysystem\Model\Builder\Filesystem\FilesystemBuilderInterface
+     * @return \Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface
      */
-    protected function createFilesystemBuilder(FlysystemConfigTransfer $configTransfer)
+    protected function getFilesystemBuilderPluginByType(FlysystemConfigTransfer $configTransfer)
     {
-        $configTransfer->requireName();
-
-        $filesystemBuilderClass = $configTransfer->getType();
-        if (!$filesystemBuilderClass) {
-            throw new BuilderNotFoundException(
-                sprintf('FlysystemBuilder "%s" was not found', $configTransfer->getName())
-            );
+        $pluginBuilderCollection = $this->getFilesystemBuilderPluginCollection();
+        foreach ($pluginBuilderCollection as $plugin) {
+            if ($plugin->acceptType($configTransfer->getType())) {
+                return $plugin;
+            }
         }
 
-        $configTransfer->setFlysystemConfig(
-            $this->getConfig()->getFlysystemFilesystemConfig()
-        );
-
-        $builder = new $filesystemBuilderClass($configTransfer, $this->createFlysystemPluginProvider());
-
-        return $builder;
+        throw new BuilderNotFoundException(sprintf(
+            'FlysystemFileSystemBuilderPlugin "%s" was not found',
+            $configTransfer->getName()
+        ));
     }
 
     /**
      * @return \League\Flysystem\PluginInterface[]
      */
-    protected function createFlysystemPluginCollection()
+    protected function getFlysystemPluginCollection()
     {
-        return [];
+        return $this->getProvidedDependency(FlysystemDependencyProvider::PLUGIN_COLLECTION_FLYSYSTEM);
+    }
+
+    /**
+     * @return \Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface[]
+     */
+    protected function getFilesystemBuilderPluginCollection()
+    {
+        return $this->getProvidedDependency(FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER);
     }
 
 }

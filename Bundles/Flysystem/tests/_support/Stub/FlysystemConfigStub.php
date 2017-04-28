@@ -8,9 +8,9 @@
 namespace Flysystem\Stub;
 
 use Codeception\Configuration;
+use Flysystem\Stub\FlysystemLocalFileSystem\Plugin\FlysystemLocalFilesystemBuilderPluginStub;
 use Functional\Spryker\Service\Flysystem\FlysystemServiceTest;
 use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
-use Spryker\Service\Flysystem\Model\Builder\Filesystem\LocalFilesystemBuilder;
 
 class FlysystemConfigStub extends SprykerFlysystemConfig
 {
@@ -24,12 +24,12 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
 
         return [
             FlysystemServiceTest::FILE_SYSTEM_PRODUCT_IMAGE => [
-                'type' => LocalFilesystemBuilder::class,
+                'type' => FlysystemLocalFilesystemBuilderPluginStub::class,
                 'root' => $testDataFlysystemRootDirectory,
                 'path' => FlysystemServiceTest::PATH_PRODUCT_IMAGE,
             ],
             FlysystemServiceTest::FILE_SYSTEM_DOCUMENT => [
-                'type' => LocalFilesystemBuilder::class,
+                'type' => FlysystemLocalFilesystemBuilderPluginStub::class,
                 'root' => $testDataFlysystemRootDirectory,
                 'path' => FlysystemServiceTest::PATH_DOCUMENT,
             ],

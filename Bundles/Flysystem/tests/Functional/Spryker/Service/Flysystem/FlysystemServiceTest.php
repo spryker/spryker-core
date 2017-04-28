@@ -9,11 +9,14 @@ namespace Functional\Spryker\Service\Flysystem;
 
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
+use Flysystem\Stub\FlysystemLocalFileSystem\Plugin\FlysystemLocalFilesystemBuilderPluginStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
+use Spryker\Service\Kernel\Container;
 
 /**
  * @group Functional
@@ -58,8 +61,17 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
 
         $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
+        $container = new Container();
+        $container[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container) {
+            return [
+                new FlysystemLocalFilesystemBuilderPluginStub()
+            ];
+        };
+
         $flysystemConfig = new FlysystemConfigStub();
+
         $flysystemFactory = new FlysystemServiceFactory();
+        $flysystemFactory->setContainer($container);
         $flysystemFactory->setConfig($flysystemConfig);
 
         $flysystemService = new FlysystemService();

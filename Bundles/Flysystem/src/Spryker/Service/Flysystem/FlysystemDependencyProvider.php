@@ -7,8 +7,54 @@
 
 namespace Spryker\Service\Flysystem;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\Container;
 
 class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
 {
+
+    const PLUGIN_COLLECTION_FLYSYSTEM = 'flysystem adapter plugin collection';
+    const PLUGIN_COLLECTION_FILESYSTEM_BUILDER = 'filesystem builder plugin collection';
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    public function provideServiceDependencies(Container $container)
+    {
+        $container = $this->addFlysystemAdapterPluginCollection($container);
+        $container = $this->addFilesystemBuilderPluginCollection($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFlysystemAdapterPluginCollection($container)
+    {
+        $container[self::PLUGIN_COLLECTION_FLYSYSTEM] = function (Container $container) {
+            return [];
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFilesystemBuilderPluginCollection($container)
+    {
+        $container[self::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container) {
+            return [];
+        };
+
+        return $container;
+    }
+
 }
