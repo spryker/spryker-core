@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Flysystem\Stub\FlysystemLocalFileSystem\Adapter;
+namespace Flysystem\Stub;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;

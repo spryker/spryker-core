@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Flysystem\Stub\FlysystemLocalFileSystem\Plugin;
+namespace Flysystem\Stub;
 
-use Flysystem\Stub\FlysystemLocalFileSystem\Adapter\LocalAdapterBuilderStub;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Filesystem;

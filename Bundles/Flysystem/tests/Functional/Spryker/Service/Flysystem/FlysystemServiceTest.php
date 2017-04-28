@@ -9,7 +9,7 @@ namespace Functional\Spryker\Service\Flysystem;
 
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
-use Flysystem\Stub\FlysystemLocalFileSystem\Plugin\FlysystemLocalFilesystemBuilderPluginStub;
+use Flysystem\Stub\FlysystemLocalFilesystemBuilderPluginStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;

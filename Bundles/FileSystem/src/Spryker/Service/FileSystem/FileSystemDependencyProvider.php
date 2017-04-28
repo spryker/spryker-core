@@ -7,8 +7,6 @@
 
 namespace Spryker\Service\FileSystem;
 
-use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemReaderPlugin;
-use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
@@ -42,10 +40,6 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemReaderPlugin(Container $container)
     {
-        $container[static::PLUGIN_READER] = function (Container $container) {
-            return new FileSystemReaderPlugin();
-        };
-
         return $container;
     }
 
@@ -56,10 +50,6 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemWriterPlugin(Container $container)
     {
-        $container[static::PLUGIN_WRITER] = function (Container $container) {
-            return new FileSystemWriterPlugin();
-        };
-
         return $container;
     }
 

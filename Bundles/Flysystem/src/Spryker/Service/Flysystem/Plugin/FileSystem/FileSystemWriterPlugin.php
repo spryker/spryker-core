@@ -113,6 +113,7 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
         return $this->getService()->put(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
+            $fileSystemContentTransfer->getContent(),
             $fileSystemContentTransfer->getConfig()
         );
     }
@@ -141,6 +142,7 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
         return $this->getService()->update(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
+            $fileSystemContentTransfer->getContent(),
             $fileSystemContentTransfer->getConfig()
         );
     }
@@ -155,6 +157,7 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
         return $this->getService()->write(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
+            $fileSystemContentTransfer->getContent(),
             $fileSystemContentTransfer->getConfig()
         );
     }

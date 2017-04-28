@@ -7,54 +7,9 @@
 
 namespace FileSystem\Stub\Plugin;
 
-use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface;
-use Spryker\Service\Kernel\AbstractPlugin;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
 
-class FileSystemStreamPluginStub extends AbstractPlugin implements FileSystemStreamPluginInterface
+class FileSystemStreamPluginStub extends FileSystemStreamPlugin implements FileSystemStreamPluginInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return bool
-     */
-    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     *
-     * @return mixed|false
-     */
-    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
-    {
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return bool
-     */
-    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return bool
-     */
-    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        return false;
-    }
-
 }
