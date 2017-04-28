@@ -8,7 +8,6 @@
 namespace Spryker\Service\FlysystemLocalFileSystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem\FtpFilesystemBuilder;
 use Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem\LocalFilesystemBuilder;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
@@ -27,17 +26,6 @@ class FlysystemLocalFileSystemServiceFactory extends AbstractServiceFactory
     public function createFlysystemLocalFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
     {
         return new LocalFilesystemBuilder($configTransfer, $flysystemPluginCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
-     *
-     * @return \Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem\FtpFilesystemBuilder
-     */
-    public function createFlysystemFtpFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
-    {
-        return new FtpFilesystemBuilder($configTransfer, $flysystemPluginCollection);
     }
 
 }
