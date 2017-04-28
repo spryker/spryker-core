@@ -141,12 +141,14 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     * @return mixed|\Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    public function getPreviousStep(StepInterface $currentStep)
+    public function getPreviousStep(StepInterface $currentStep, AbstractTransfer $dataTransfer = null)
     {
         $previousStep = reset($this->steps);
+        $position = 0;
 
         foreach ($this->steps as $position => $step) {
             if ($step->getStepRoute() === $currentStep->getStepRoute() && $position !== 0) {
@@ -154,7 +156,26 @@ class StepCollection implements StepCollectionInterface
             }
         }
 
+        if ($position > 0 && !$this->isAccessible($previousStep, $dataTransfer)) {
+            return $this->getPreviousStep($previousStep, $dataTransfer);
+        }
+
         return $previousStep;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    protected function isAccessible(StepInterface $step, AbstractTransfer $dataTransfer = null)
+    {
+        if (!$dataTransfer) {
+            return true;
+        }
+
+        return $step->requireInput($dataTransfer);
     }
 
     /**
@@ -211,12 +232,13 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return string
      */
-    public function getPreviousUrl(StepInterface $currentStep)
+    public function getPreviousUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer = null)
     {
-        $stepRoute = $this->getPreviousStep($currentStep)->getStepRoute();
+        $stepRoute = $this->getPreviousStep($currentStep, $dataTransfer)->getStepRoute();
 
         return $this->getUrlFromRoute($stepRoute);
     }
