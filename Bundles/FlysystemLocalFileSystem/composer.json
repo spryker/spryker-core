@@ -6,8 +6,7 @@
     }
   },
   "require": {
-    "league/flysystem": "^1.0",
-    "spryker/flysystem": "*"
+    "league/flysystem": "^1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
