@@ -5,28 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Adapter;
+namespace FileSystem\Stub\Plugin;
 
 use Generated\Shared\Transfer\FileSystemListTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface;
-use Spryker\Service\FileSystem\Model\FileSystemReaderInterface;
+use Spryker\Service\Kernel\AbstractPlugin;
 
-class FileSystemReader implements FileSystemReaderInterface
+class FileSystemReaderPluginStub extends AbstractPlugin implements FileSystemReaderPluginInterface
 {
-
-    /**
-     * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
-     */
-    protected $fileSystemReader;
-
-    /**
-     * @param \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface $fileSystemReaderPlugin
-     */
-    public function __construct(FileSystemReaderPluginInterface $fileSystemReaderPlugin)
-    {
-        $this->fileSystemReader = $fileSystemReaderPlugin;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -35,7 +22,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getMetadata($fileSystemQueryTransfer);
+        return null;
     }
 
     /**
@@ -45,7 +32,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getMimetype($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -55,7 +42,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->isPrivate($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -65,7 +52,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getTimestamp($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -75,7 +62,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getSize($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -85,7 +72,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->has($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -95,7 +82,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->read($fileSystemQueryTransfer);
+        return false;
     }
 
     /**
@@ -105,7 +92,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {
-        return $this->fileSystemReader->listContents($fileSystemListTransfer);
+        return [];
     }
 
 }

@@ -3,8 +3,8 @@
  * Copy over the following configs to your config
  */
 
-use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Service\Flysystem\Model\Builder\Filesystem\LocalFilesystemBuilder;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 
 $config[FileSystemConstants::FILESYSTEM_STORAGE] = [
     FileSystemConstants::FILESYSTEM_SERVICE => [

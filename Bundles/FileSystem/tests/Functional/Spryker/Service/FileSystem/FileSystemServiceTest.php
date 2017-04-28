@@ -9,7 +9,9 @@ namespace Functional\Spryker\Service\FileSystem;
 
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
-use FileSystem\Stub\FlysystemConfigStub;
+use FileSystem\Stub\Plugin\FileSystemReaderPluginStub;
+use FileSystem\Stub\Plugin\FileSystemStreamPluginStub;
+use FileSystem\Stub\Plugin\FileSystemWriterPluginStub;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
@@ -23,12 +25,9 @@ use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
-use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
-use Spryker\Service\Flysystem\FlysystemService;
-use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Service\Kernel\Container;
 
 /**
@@ -74,16 +73,17 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 
         $this->testDataFileSystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
 
-        $flysystemConfig = new FlysystemConfigStub();
-        $flysystemFactory = new FlysystemServiceFactory();
-        $flysystemFactory->setConfig($flysystemConfig);
-
-        $flysystemService = new FlysystemService();
-        $flysystemService->setFactory($flysystemFactory);
-
         $container = new Container();
-        $container[FileSystemDependencyProvider::SERVICE_FLYSYSTEM] = function (Container $container) use ($flysystemService) {
-            return new FileSystemToFlysystemBridge($flysystemService);
+        $container[FileSystemDependencyProvider::PLUGIN_READER] = function (Container $container) {
+            return new FileSystemReaderPluginStub();
+        };
+
+        $container[FileSystemDependencyProvider::PLUGIN_WRITER] = function (Container $container) {
+            return new FileSystemWriterPluginStub();
+        };
+
+        $container[FileSystemDependencyProvider::PLUGIN_STREAM] = function (Container $container) {
+            return new FileSystemStreamPluginStub();
         };
 
         $config = new FileSystemConfigStub();

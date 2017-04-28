@@ -5,27 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Adapter;
+namespace FileSystem\Stub\Plugin;
 
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface;
-use Spryker\Service\FileSystem\Model\FileSystemStreamInterface;
+use Spryker\Service\Kernel\AbstractPlugin;
 
-class FileSystemStream implements FileSystemStreamInterface
+class FileSystemStreamPluginStub extends AbstractPlugin implements FileSystemStreamPluginInterface
 {
-
-    /**
-     * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface
-     */
-    protected $fileSystemStream;
-
-    /**
-     * @param \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface $fileSystemStreamPlugin
-     */
-    public function __construct(FileSystemStreamPluginInterface $fileSystemStreamPlugin)
-    {
-        $this->fileSystemStream = $fileSystemStreamPlugin;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -35,7 +22,7 @@ class FileSystemStream implements FileSystemStreamInterface
      */
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->putStream($fileSystemStreamTransfer, $stream);
+        return false;
     }
 
     /**
@@ -45,7 +32,7 @@ class FileSystemStream implements FileSystemStreamInterface
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
-        return $this->fileSystemStream->readStream($fileSystemStreamTransfer);
+        return false;
     }
 
     /**
@@ -56,7 +43,7 @@ class FileSystemStream implements FileSystemStreamInterface
      */
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->updateStream($fileSystemStreamTransfer, $stream);
+        return false;
     }
 
     /**
@@ -67,7 +54,7 @@ class FileSystemStream implements FileSystemStreamInterface
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->writeStream($fileSystemStreamTransfer, $stream);
+        return false;
     }
 
 }
