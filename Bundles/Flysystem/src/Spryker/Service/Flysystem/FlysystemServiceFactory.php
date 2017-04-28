@@ -21,6 +21,8 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
 
+    const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
+
     /**
      * @return \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
      */
@@ -97,12 +99,13 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      */
     protected function createConfig($name, array $configData)
     {
-        $type = $configData[FlysystemConfigTransfer::TYPE];
+        $type = $configData[static::SPRYKER_ADAPTER_CLASS];
+        unset($configData[static::SPRYKER_ADAPTER_CLASS]);
 
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName($name);
         $configTransfer->setType($type);
-        $configTransfer->setAdapterConfig($configData[FlysystemConfigTransfer::ADAPTER_CONFIG]);
+        $configTransfer->setAdapterConfig($configData);
 
         $configTransfer->setFlysystemConfig(
             $this->getConfig()->getFlysystemConfig()

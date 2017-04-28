@@ -68,6 +68,10 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             ];
         };
 
+        $container[FlysystemDependencyProvider::PLUGIN_COLLECTION_FLYSYSTEM] = function (Container $container) {
+            return [];
+        };
+
         $flysystemConfig = new FlysystemConfigStub();
 
         $flysystemFactory = new FlysystemServiceFactory();

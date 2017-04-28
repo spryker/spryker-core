@@ -24,12 +24,12 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
 
         return [
             FlysystemServiceTest::FILE_SYSTEM_PRODUCT_IMAGE => [
-                'type' => FlysystemLocalFilesystemBuilderPluginStub::class,
+                'sprykerAdapterClass' => FlysystemLocalFilesystemBuilderPluginStub::class,
                 'root' => $testDataFlysystemRootDirectory,
                 'path' => FlysystemServiceTest::PATH_PRODUCT_IMAGE,
             ],
             FlysystemServiceTest::FILE_SYSTEM_DOCUMENT => [
-                'type' => FlysystemLocalFilesystemBuilderPluginStub::class,
+                'sprykerAdapterClass' => FlysystemLocalFilesystemBuilderPluginStub::class,
                 'root' => $testDataFlysystemRootDirectory,
                 'path' => FlysystemServiceTest::PATH_DOCUMENT,
             ],
