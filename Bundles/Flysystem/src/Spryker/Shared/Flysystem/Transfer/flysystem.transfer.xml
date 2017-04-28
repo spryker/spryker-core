@@ -30,22 +30,6 @@
         <property name="flysystemConfig" type="array" />
     </transfer>
 
-    <transfer name="FlysystemConfigLocal">
-        <property name="root" type="string" />
-        <property name="path" type="string" />
-    </transfer>
-
-    <transfer name="FlysystemConfigFtp">
-        <property name="host" type="string" />
-        <property name="username" type="string" />
-        <property name="password" type="string" />
-        <property name="port" type="int" />
-        <property name="root" type="string" />
-        <property name="passive" type="bool" />
-        <property name="ssl" type="bool" />
-        <property name="timeout" type="int" />
-    </transfer>
-
     <transfer name="FlysystemConfigAws">
         <property name="root" type="string" />
         <property name="path" type="string" />

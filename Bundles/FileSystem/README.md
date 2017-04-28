@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/filesystem
+composer require spryker/file-system
 ```
 
 ## Documentation

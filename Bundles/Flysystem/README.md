@@ -3,9 +3,9 @@
 ## Installation
 
 ```
-composer require league/flysystem
+composer require spryker/flysystem
 ```
 
 ## Documentation
 
-[Flysystem](https://github.com/thephpleague/flysystem)
+[Documentation](https://spryker.github.io)
