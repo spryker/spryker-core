@@ -6,7 +6,8 @@
     }
   },
   "require": {
-    "league/flysystem": "^1.0"
+    "league/flysystem": "^1.0",
+    "spryker/file-system": "*"
   },
   "require-dev": {
     "spryker/kernel": "^3.0.0",

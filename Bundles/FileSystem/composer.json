@@ -4,10 +4,12 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require": {},
+  "require": {
+  },
   "require-dev": {
     "spryker/kernel": "^3.0.0",
     "spryker/flysystem": "*",
+    "spryker/flysystem-local-filesystem": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },

@@ -10,7 +10,6 @@ namespace Functional\Spryker\Service\FileSystem;
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use FileSystem\Stub\FlysystemConfigStub;
-use FileSystem\Stub\Flysystem\FlysystemLocalFilesystemBuilderPluginStub;
 use FileSystem\Stub\Plugin\FileSystemReaderPluginStub;
 use FileSystem\Stub\Plugin\FileSystemStreamPluginStub;
 use FileSystem\Stub\Plugin\FileSystemWriterPluginStub;
@@ -33,6 +32,7 @@ use Spryker\Service\FileSystem\FileSystemServiceFactory;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Service\Kernel\Container;
 
 /**
@@ -100,7 +100,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $flysystemContainer = new Container();
         $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $flysystemContainer) {
             return [
-                new FlysystemLocalFilesystemBuilderPluginStub()
+                new LocalFilesystemBuilderPlugin()
             ];
         };
 
