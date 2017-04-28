@@ -76,7 +76,7 @@ abstract class AbstractPlugin
      */
     public function setService(AbstractService $service)
     {
-        $this->factory = $service;
+        $this->service = $service;
 
         return $this;
     }
