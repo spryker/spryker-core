@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
+namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter;
 
-interface FilesystemBuilderInterface
+interface AdapterBuilderInterface
 {
 
     /**
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\AdapterInterface
      */
     public function build();
 

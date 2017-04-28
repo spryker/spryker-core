@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
+namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Adapter\LocalAdapterBuilder;
+use Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter\LocalAdapterBuilder;
 
 class LocalFilesystemBuilder extends AbstractFilesystemBuilder
 {
@@ -36,7 +36,7 @@ class LocalFilesystemBuilder extends AbstractFilesystemBuilder
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\Adapter\AdapterBuilderInterface
+     * @return \Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
     protected function createAdapterBuilder()
     {

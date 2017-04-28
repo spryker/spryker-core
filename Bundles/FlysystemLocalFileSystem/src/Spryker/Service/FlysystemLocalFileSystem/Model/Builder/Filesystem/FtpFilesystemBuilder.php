@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Flysystem\Model\Builder\Filesystem;
+namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
-use Spryker\Service\Flysystem\Model\Builder\Adapter\FtpAdapterBuilder;
+use Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter\FtpAdapterBuilder;
 
 class FtpFilesystemBuilder extends AbstractFilesystemBuilder
 {
@@ -37,7 +37,7 @@ class FtpFilesystemBuilder extends AbstractFilesystemBuilder
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Model\Builder\Adapter\AdapterBuilderInterface
+     * @return \Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
     protected function createAdapterBuilder()
     {
