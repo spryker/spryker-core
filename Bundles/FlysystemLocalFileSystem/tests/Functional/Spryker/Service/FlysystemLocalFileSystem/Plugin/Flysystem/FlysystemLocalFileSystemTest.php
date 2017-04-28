@@ -98,4 +98,47 @@ class FlysystemLocalFileSystemTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FilesystemInterface::class, $ftpFilesystem);
     }
 
+    /**
+     * @return void
+     */
+    public function testLocalFilesystemBuilderPluginShouldAcceptType()
+    {
+        $localFilesystemBuilderPlugin = new LocalFilesystemBuilderPlugin();
+
+        $adapterConfigTransfer = new FlysystemConfigLocalTransfer();
+        $adapterConfigTransfer->setRoot($this->testDataFlysystemRootDirectory);
+        $adapterConfigTransfer->setPath(static::PATH_DOCUMENT);
+
+        $configTransfer = new FlysystemConfigTransfer();
+        $configTransfer->setName('LocalDocumentFilesystem');
+        $configTransfer->setType(LocalFilesystemBuilderPlugin::class);
+        $configTransfer->setAdapterConfig($adapterConfigTransfer->modifiedToArray());
+
+        $isTypeAccepted = $localFilesystemBuilderPlugin->acceptType($configTransfer->getType());
+
+        $this->assertTrue($isTypeAccepted);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFtpFilesystemBuilderPluginShouldAcceptType()
+    {
+        $localFilesystemBuilderPlugin = new FtpFilesystemBuilderPlugin();
+
+        $adapterConfigTransfer = new FlysystemConfigFtpTransfer();
+        $adapterConfigTransfer->setHost('ftp://foo.bar');
+        $adapterConfigTransfer->setUsername('foo@bar');
+        $adapterConfigTransfer->setPassword('foobar');
+
+        $configTransfer = new FlysystemConfigTransfer();
+        $configTransfer->setName('FtpDocumentFilesystem');
+        $configTransfer->setType(FtpFilesystemBuilderPlugin::class);
+        $configTransfer->setAdapterConfig($adapterConfigTransfer->modifiedToArray());
+
+        $isTypeAccepted = $localFilesystemBuilderPlugin->acceptType($configTransfer->getType());
+
+        $this->assertTrue($isTypeAccepted);
+    }
+
 }
