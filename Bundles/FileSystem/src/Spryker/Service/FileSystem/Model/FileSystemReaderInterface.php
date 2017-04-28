@@ -23,7 +23,7 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -37,7 +37,7 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -58,7 +58,7 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string|false
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
 

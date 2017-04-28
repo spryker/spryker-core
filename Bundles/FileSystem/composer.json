@@ -4,8 +4,12 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require": {
-    "spryker/kernel": "^3.0.0"
+  "require": {},
+  "require-dev": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/flysystem": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-0": {
