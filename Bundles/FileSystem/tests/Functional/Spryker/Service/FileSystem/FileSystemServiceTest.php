@@ -10,9 +10,6 @@ namespace Functional\Spryker\Service\FileSystem;
 use Codeception\Configuration;
 use FileSystem\Stub\FileSystemConfigStub;
 use FileSystem\Stub\FlysystemConfigStub;
-use FileSystem\Stub\Plugin\FileSystemReaderPluginStub;
-use FileSystem\Stub\Plugin\FileSystemStreamPluginStub;
-use FileSystem\Stub\Plugin\FileSystemWriterPluginStub;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
@@ -32,6 +29,9 @@ use Spryker\Service\FileSystem\FileSystemServiceFactory;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemReaderPlugin;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Service\Kernel\Container;
 
@@ -117,13 +117,13 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $flysystemService = new FlysystemService();
         $flysystemService->setFactory($flysystemFactory);
 
-        $fileSystemReaderPlugin = new FileSystemReaderPluginStub();
+        $fileSystemReaderPlugin = new FileSystemReaderPlugin();
         $fileSystemReaderPlugin->setService($flysystemService);
 
-        $fileSystemWriterPlugin = new FileSystemWriterPluginStub();
+        $fileSystemWriterPlugin = new FileSystemWriterPlugin();
         $fileSystemWriterPlugin->setService($flysystemService);
 
-        $fileSystemStreamPlugin = new FileSystemStreamPluginStub();
+        $fileSystemStreamPlugin = new FileSystemStreamPlugin();
         $fileSystemStreamPlugin->setService($flysystemService);
 
         $container[FileSystemDependencyProvider::PLUGIN_READER] = function (Container $container) use ($fileSystemReaderPlugin) {
