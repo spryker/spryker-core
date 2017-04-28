@@ -7,10 +7,9 @@
 
 namespace Spryker\Service\FileSystem;
 
-use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemReader;
-use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemStream;
-use Spryker\Service\FileSystem\Model\Adapter\Flysystem\FileSystemWriter;
-use Spryker\Service\FileSystem\Model\FileSystemAdapter;
+use Spryker\Service\FileSystem\Model\Adapter\FileSystemReader;
+use Spryker\Service\FileSystem\Model\Adapter\FileSystemStream;
+use Spryker\Service\FileSystem\Model\Adapter\FileSystemWriter;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -20,53 +19,57 @@ class FileSystemServiceFactory extends AbstractServiceFactory
 {
 
     /**
-     * @return \Spryker\Service\FileSystem\Model\FileSystemAdapterInterface
-     */
-    public function createFileSystemAdapter()
-    {
-        return new FileSystemAdapter(
-            $this->createFlysystemAdapterReader(),
-            $this->createFlysystemAdapterWriter(),
-            $this->createFlysystemAdapterStream()
-        );
-    }
-
-    /**
      * @return \Spryker\Service\FileSystem\Model\FileSystemReaderInterface
      */
-    protected function createFlysystemAdapterReader()
+    public function createFileSystemReader()
     {
         return new FileSystemReader(
-            $this->getFlysystemService()
+            $this->getFileSystemReaderPlugin()
         );
     }
 
     /**
      * @return \Spryker\Service\FileSystem\Model\FileSystemWriterInterface
      */
-    protected function createFlysystemAdapterWriter()
+    public function createFileSystemWriter()
     {
         return new FileSystemWriter(
-            $this->getFlysystemService()
+            $this->getFileSystemWriterPlugin()
         );
     }
 
     /**
      * @return \Spryker\Service\FileSystem\Model\FileSystemStreamInterface
      */
-    protected function createFlysystemAdapterStream()
+    public function createFileSystemStream()
     {
         return new FileSystemStream(
-            $this->getFlysystemService()
+            $this->getFileSystemStreamPlugin()
         );
     }
 
     /**
-     * @return \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
+     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
      */
-    protected function getFlysystemService()
+    protected function getFileSystemReaderPlugin()
     {
-        return $this->getProvidedDependency(FileSystemDependencyProvider::SERVICE_FLYSYSTEM);
+        return $this->getProvidedDependency(FileSystemDependencyProvider::PLUGIN_READER);
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
+     */
+    protected function getFileSystemWriterPlugin()
+    {
+        return $this->getProvidedDependency(FileSystemDependencyProvider::PLUGIN_WRITER);
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface
+     */
+    protected function getFileSystemStreamPlugin()
+    {
+        return $this->getProvidedDependency(FileSystemDependencyProvider::PLUGIN_STREAM);
     }
 
 }

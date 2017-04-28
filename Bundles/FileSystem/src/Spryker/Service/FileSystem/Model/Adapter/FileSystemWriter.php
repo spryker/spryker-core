@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Model\Adapter\Flysystem;
+namespace Spryker\Service\FileSystem\Model\Adapter;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
@@ -14,23 +14,23 @@ use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface;
+use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface;
 use Spryker\Service\FileSystem\Model\FileSystemWriterInterface;
 
 class FileSystemWriter implements FileSystemWriterInterface
 {
 
     /**
-     * @var \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface
+     * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
      */
-    protected $flysystemService;
+    protected $fileSystemWriterPlugin;
 
     /**
-     * @param \Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemInterface $flysystemService
+     * @param \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface $fileSystemWriterPlugin
      */
-    public function __construct(FileSystemToFlysystemInterface $flysystemService)
+    public function __construct(FileSystemWriterPluginInterface $fileSystemWriterPlugin)
     {
-        $this->flysystemService = $flysystemService;
+        $this->fileSystemWriterPlugin = $fileSystemWriterPlugin;
     }
 
     /**
@@ -40,11 +40,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->flysystemService
-            ->markAsPrivate(
-                $fileSystemVisibilityTransfer->getFileSystemName(),
-                $fileSystemVisibilityTransfer->getPath()
-            );
+        return $this->fileSystemWriterPlugin->markAsPrivate($fileSystemVisibilityTransfer);
     }
 
     /**
@@ -54,11 +50,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->flysystemService
-            ->markAsPublic(
-                $fileSystemVisibilityTransfer->getFileSystemName(),
-                $fileSystemVisibilityTransfer->getPath()
-            );
+        return $this->fileSystemWriterPlugin->markAsPublic($fileSystemVisibilityTransfer);
     }
 
     /**
@@ -68,12 +60,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
-        return $this->flysystemService
-            ->createDir(
-                $fileSystemCreateDirectoryTransfer->getFileSystemName(),
-                $fileSystemCreateDirectoryTransfer->getPath(),
-                $fileSystemCreateDirectoryTransfer->getConfig()
-            );
+        return $this->fileSystemWriterPlugin->createDirectory($fileSystemCreateDirectoryTransfer);
     }
 
     /**
@@ -83,11 +70,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
-        return $this->flysystemService
-            ->deleteDir(
-                $fileSystemDeleteDirectoryTransfer->getFileSystemName(),
-                $fileSystemDeleteDirectoryTransfer->getPath()
-            );
+        return $this->fileSystemWriterPlugin->deleteDirectory($fileSystemDeleteDirectoryTransfer);
     }
 
     /**
@@ -97,12 +80,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
-        return $this->flysystemService
-            ->copy(
-                $fileSystemCopyTransfer->getFileSystemName(),
-                $fileSystemCopyTransfer->getSourcePath(),
-                $fileSystemCopyTransfer->getDestinationPath()
-            );
+        return $this->fileSystemWriterPlugin->copy($fileSystemCopyTransfer);
     }
 
     /**
@@ -112,11 +90,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
-        return $this->flysystemService
-            ->delete(
-                $fileSystemDeleteTransfer->getFileSystemName(),
-                $fileSystemDeleteTransfer->getPath()
-            );
+        return $this->fileSystemWriterPlugin->delete($fileSystemDeleteTransfer);
     }
 
     /**
@@ -126,13 +100,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->flysystemService
-            ->put(
-                $fileSystemContentTransfer->getFileSystemName(),
-                $fileSystemContentTransfer->getPath(),
-                $fileSystemContentTransfer->getContent(),
-                $fileSystemContentTransfer->getConfig()
-            );
+        return $this->fileSystemWriterPlugin->put($fileSystemContentTransfer);
     }
 
     /**
@@ -142,12 +110,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
-        return $this->flysystemService
-            ->rename(
-                $fileSystemRenameTransfer->getFileSystemName(),
-                $fileSystemRenameTransfer->getPath(),
-                $fileSystemRenameTransfer->getNewPath()
-            );
+        return $this->fileSystemWriterPlugin->rename($fileSystemRenameTransfer);
     }
 
     /**
@@ -157,13 +120,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->flysystemService
-            ->update(
-                $fileSystemContentTransfer->getFileSystemName(),
-                $fileSystemContentTransfer->getPath(),
-                $fileSystemContentTransfer->getContent(),
-                $fileSystemContentTransfer->getConfig()
-            );
+        return $this->fileSystemWriterPlugin->update($fileSystemContentTransfer);
     }
 
     /**
@@ -173,13 +130,7 @@ class FileSystemWriter implements FileSystemWriterInterface
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->flysystemService
-            ->write(
-                $fileSystemContentTransfer->getFileSystemName(),
-                $fileSystemContentTransfer->getPath(),
-                $fileSystemContentTransfer->getContent(),
-                $fileSystemContentTransfer->getConfig()
-            );
+        return $this->fileSystemWriterPlugin->write($fileSystemContentTransfer);
     }
 
 }

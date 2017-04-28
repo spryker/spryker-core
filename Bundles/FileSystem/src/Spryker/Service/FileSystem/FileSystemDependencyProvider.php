@@ -7,14 +7,15 @@
 
 namespace Spryker\Service\FileSystem;
 
-use Spryker\Service\FileSystem\Dependency\Service\FileSystemToFlysystemBridge;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const SERVICE_FLYSYSTEM = 'service flysystem';
+    const PLUGIN_READER = 'plugin reader';
+    const PLUGIN_WRITER = 'plugin writer';
+    const PLUGIN_STREAM = 'plugin stream';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -25,7 +26,9 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideServiceDependencies($container);
 
-        $container = $this->addFlysystemService($container);
+        $container = $this->addFileSystemReaderPlugin($container);
+        $container = $this->addFileSystemWriterPlugin($container);
+        $container = $this->addFileSystemStreamPlugin($container);
 
         return $container;
     }
@@ -35,12 +38,28 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addFlysystemService(Container $container)
+    protected function addFileSystemReaderPlugin(Container $container)
     {
-        $container[static::SERVICE_FLYSYSTEM] = function (Container $container) {
-            return new FileSystemToFlysystemBridge($container->getLocator()->flysystem()->service());
-        };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemWriterPlugin(Container $container)
+    {
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemStreamPlugin(Container $container)
+    {
         return $container;
     }
 

@@ -38,7 +38,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->getMetadata($fileSystemQueryTransfer);
     }
 
@@ -54,7 +54,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->getMimeType($fileSystemQueryTransfer);
     }
 
@@ -70,7 +70,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->getTimestamp($fileSystemQueryTransfer);
     }
 
@@ -86,7 +86,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->getSize($fileSystemQueryTransfer);
     }
 
@@ -102,7 +102,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->isPrivate($fileSystemQueryTransfer);
     }
 
@@ -118,7 +118,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->markAsPrivate($fileSystemVisibilityTransfer);
     }
 
@@ -134,7 +134,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->markAsPublic($fileSystemVisibilityTransfer);
     }
 
@@ -150,7 +150,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->createDirectory($fileSystemCreateDirectoryTransfer);
     }
 
@@ -166,7 +166,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->deleteDirectory($fileSystemDeleteDirectoryTransfer);
     }
 
@@ -182,7 +182,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->copy($fileSystemCopyTransfer);
     }
 
@@ -198,7 +198,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->delete($fileSystemDeleteTransfer);
     }
 
@@ -214,7 +214,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->put($fileSystemContentTransfer);
     }
 
@@ -230,7 +230,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->read($fileSystemQueryTransfer);
     }
 
@@ -246,7 +246,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->rename($fileSystemRenameTransfer);
     }
 
@@ -262,7 +262,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->update($fileSystemContentTransfer);
     }
 
@@ -278,7 +278,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemWriter()
             ->write($fileSystemContentTransfer);
     }
 
@@ -295,7 +295,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemStream()
             ->putStream($fileSystemStreamTransfer, $stream);
     }
 
@@ -311,7 +311,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemStream()
             ->readStream($fileSystemStreamTransfer);
     }
 
@@ -328,7 +328,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemStream()
             ->updateStream($fileSystemStreamTransfer, $stream);
     }
 
@@ -345,7 +345,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemStream()
             ->writeStream($fileSystemStreamTransfer, $stream);
     }
 
@@ -361,7 +361,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->listContents($fileSystemListTransfer);
     }
 
@@ -377,7 +377,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
     public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getFactory()
-            ->createFileSystemAdapter()
+            ->createFileSystemReader()
             ->has($fileSystemQueryTransfer);
     }
 
