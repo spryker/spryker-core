@@ -24,17 +24,35 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
 {
 
     /**
+     * @var string
+     */
+    protected $pathToBundles = 'vendor/spryker/spryker/Bundles/';
+
+    /**
+     * @return void
+     */
+    public function testCheckCodeStyleRunsCommandInProject()
+    {
+        $options = $this->getOptions(null);
+        $pathToApplicationRoot = 'applicationRoot/';
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
+
+        $codeStyleSnifferMock->checkCodeStyle(null);
+    }
+
+    /**
      * @dataProvider allowedAllNames
      *
      * @param string $all
+     * @param string $pathToBundles
      *
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandForAllBundlesWhenBundleNameIsAll($all)
+    public function testCheckCodeStyleRunsCommandForAllBundlesInNonWhenBundleNameIsAll($all, $pathToBundles)
     {
         $options = $this->getOptions($all);
-        $expectedPathToRunCommandWith = 'pathToBundles/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options);
+        $this->pathToBundles = $pathToBundles;
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToBundles, $options);
 
         $codeStyleSnifferMock->checkCodeStyle($all);
     }
@@ -45,37 +63,10 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     public function allowedAllNames()
     {
         return [
-            ['All'],
-            ['all'],
-        ];
-    }
-
-    /**
-     * @dataProvider allowedNonSplitNames
-     *
-     * @param string $bundle
-     *
-     * @return void
-     */
-    public function testCheckCodeStyleRunsCommandForBundleWithConvertedBundleNameInNonSplit($bundle)
-    {
-        $options = $this->getOptions($bundle);
-        $expectedPathToRunCommandWith = 'pathToBundles/NonSplitBundle/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle($bundle);
-    }
-
-    /**
-     * @return array
-     */
-    public function allowedNonSplitNames()
-    {
-        return [
-            ['non_Split_Bundle'],
-            ['non_split_bundle'],
-            ['NonSplitBundle'],
-            ['nonSplitBundle'],
+            ['all', 'vendor/spryker/spryker/Bundles/'],
+            ['All', 'vendor/spryker/spryker/Bundles/'],
+            ['all', 'vendor/spryker/'],
+            ['All', 'vendor/spryker/'],
         ];
     }
 
@@ -89,8 +80,9 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     public function testCheckCodeStyleRunsCommandForBundleWithConvertedBundleNameInSplit($bundle)
     {
         $options = $this->getOptions($bundle);
-        $expectedPathToRunCommandWith = 'pathToBundles/split-bundle/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options, false);
+        $this->pathToBundles = 'vendor/spryker/';
+        $expectedPathToRunCommandWith = 'vendor/spryker/split-bundle/';
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options);
 
         $codeStyleSnifferMock->checkCodeStyle($bundle);
     }
@@ -101,10 +93,57 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     public function allowedSplitNames()
     {
         return [
-            ['split-bundle'],
-            ['Split-Bundle'],
             ['SplitBundle'],
             ['splitBundle'],
+            ['split-bundle'],
+            ['Split-Bundle'],
+        ];
+    }
+
+    /**
+     * @dataProvider allowedNonSplitNames
+     *
+     * @param string $bundle
+     *
+     * @return void
+     */
+    public function testCheckCodeStyleRunsCommandForBundleWithConvertedBundleNameInNonSplit($bundle)
+    {
+        $options = $this->getOptions($bundle);
+        $this->pathToBundles = 'vendor/spryker/spryker/Bundles/';
+        $expectedPathToRunCommandWith = 'vendor/spryker/spryker/Bundles/NonSplitBundle/';
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options, false, false, true);
+
+        $codeStyleSnifferMock->checkCodeStyle($bundle);
+    }
+
+    /**
+     * @dataProvider allowedNonSplitNames
+     *
+     * @param string $bundle
+     *
+     * @return void
+     */
+    public function testCheckCodeStyleRunsCommandForPackageWithConvertedBundleNameInNonSplit($bundle)
+    {
+        $options = $this->getOptions($bundle);
+        $this->pathToBundles = 'vendor/spryker/spryker/Bundles/';
+        $expectedPathToRunCommandWith = 'vendor/spryker/non-split-bundle/';
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options, false, true);
+
+        $codeStyleSnifferMock->checkCodeStyle($bundle);
+    }
+
+    /**
+     * @return array
+     */
+    public function allowedNonSplitNames()
+    {
+        return [
+            ['NonSplitBundle'],
+            ['nonSplitBundle'],
+            ['non_Split_Bundle'],
+            ['non_split_bundle'],
         ];
     }
 
@@ -116,7 +155,7 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
         $bundle = 'not-existent-bundle-or-file';
         $options = $this->getOptions($bundle);
         $expectedPathToRunCommandWith = 'pathToBundles/not-existent-bundle-or-file/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options, false, false);
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($expectedPathToRunCommandWith, $options, false, false, false);
 
         $this->expectException(PathDoesNotExistException::class);
         $codeStyleSnifferMock->checkCodeStyle($bundle);
@@ -137,24 +176,29 @@ class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $expectedPathToRunCommandWith
      * @param array $options
-     * @param bool $pathValidInNonSplit
      * @param bool $pathValidInSplit
+     * @param bool $packagePathValidInNonSplit
+     * @param bool $pathValidInNonSplit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock($expectedPathToRunCommandWith, array $options, $pathValidInNonSplit = true, $pathValidInSplit = true)
+    protected function getCodeStyleSnifferMock($expectedPathToRunCommandWith, array $options, $pathValidInSplit = true, $packagePathValidInNonSplit = false, $pathValidInNonSplit = false)
     {
         $codeStyleSnifferMockBuilder = $this->getMockBuilder(CodeStyleSniffer::class);
         $codeStyleSnifferMockBuilder->setConstructorArgs([
             'applicationRoot/',
-            'pathToBundles/',
-            'coding standard standard',
+            $this->pathToBundles,
+            'coding standard',
         ]);
         $codeStyleSnifferMockBuilder->setMethods(['runSnifferCommand', 'isPathValid']);
 
         $codeStyleSnifferMock = $codeStyleSnifferMockBuilder->getMock();
         $codeStyleSnifferMock->method('runSnifferCommand')->with($expectedPathToRunCommandWith, $options);
-        $codeStyleSnifferMock->method('isPathValid')->will($this->onConsecutiveCalls($pathValidInNonSplit, $pathValidInSplit));
+        $codeStyleSnifferMock->method('isPathValid')->will($this->onConsecutiveCalls(
+            $pathValidInSplit,
+            $packagePathValidInNonSplit,
+            $pathValidInNonSplit
+        ));
 
         return $codeStyleSnifferMock;
     }
