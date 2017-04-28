@@ -8,6 +8,7 @@
 namespace Flysystem\Stub;
 
 use Codeception\Configuration;
+use Flysystem\Stub\FlysystemLocalFileSystem\FlysystemLocalFilesystemBuilderPluginStub;
 use Functional\Spryker\Service\Flysystem\FlysystemServiceTest;
 use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
 
