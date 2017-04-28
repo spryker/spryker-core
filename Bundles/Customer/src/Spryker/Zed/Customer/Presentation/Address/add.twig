@@ -6,10 +6,7 @@
 {% block section_title widget_title | trans %}
 
 {% block action %}
-    {{ backActionButton('/customer/address/?id-customer=' ~ idCustomer, 'Back to Manage Addresses' | trans) }}
-    {{ createActionButton('/customer/address/add?id-customer=' ~ idCustomer, 'Add new Address' | trans) }}
-    {{ viewActionButton('/customer/view/?id-customer=' ~ idCustomer, 'View Customer' | trans) }}
-    {{ editActionButton('/customer/edit/?id-customer=' ~ idCustomer, 'Edit Customer' | trans) }}
+    {{ backActionButton('/customer/view?id-customer=' ~ idCustomer, 'Back to Customer View' | trans) }}
 {% endblock %}
 
 {% block content %}

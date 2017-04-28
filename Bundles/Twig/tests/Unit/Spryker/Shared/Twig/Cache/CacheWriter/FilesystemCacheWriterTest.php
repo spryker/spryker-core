@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Shared\Twig\Cache\CacheWriter;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
 /**
  * @group Unit

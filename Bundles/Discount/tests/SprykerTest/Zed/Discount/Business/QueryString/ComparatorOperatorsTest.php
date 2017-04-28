@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\Discount\Business\QueryString;
 use Generated\Shared\Transfer\ClauseTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 /**
  * Auto-generated group annotations

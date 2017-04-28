@@ -12,9 +12,9 @@
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Customer name' | trans }}:</b>
                     {% if order.fkCustomer %}
-                        <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a>
+                        <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.salutation }} {{ order.firstName }} {{ order.lastName }}</a>
                     {% else %}
-                        {{ order.firstName }} {{ order.lastName }}
+                        {{ order.salutation }} {{ order.firstName }} {{ order.lastName }}
                     {% endif %}
                 </p>
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>

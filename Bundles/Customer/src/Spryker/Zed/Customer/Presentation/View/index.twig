@@ -8,81 +8,78 @@
 {% block action %}
     {{ backActionButton('/customer', 'List Customers' | trans) }}
     {{ editActionButton('/customer/edit?id-customer=' ~ idCustomer, 'Edit Customer' | trans) }}
-    {{ viewActionButton('/customer/address/?id-customer=' ~ idCustomer, 'Manage Addresses') }}
+    {{ createActionButton('/customer/address/add?id-customer=' ~ idCustomer, 'Add new Address' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Customer' } %}
 
         {% block widget_content %}
 
-    <div>
-        <h1>{{ customer.salutation }} {{ customer.last_name }} {{ customer.first_name }}</h1>
-
-        <table class="table">
-            <thead></thead>
-            <tbody>
-            <tr>
-                <th>{{ 'Email' | trans }}</th>
-                <td>{{ customer.email }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'Customer ID' | trans }}</th>
-                <td>{{ customer.id_customer }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'Gender' | trans }}</th>
-                <td>{{ customer.gender }}</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            {% if addresses|length > 0 %}
-                {% if addresses is empty %}
+            <div class="row">
+                <table class="table">
+                    <thead></thead>
+                    <tbody>
                     <tr>
-                        <td colspan="2">
-                                <span class="text-muted">
-                                    {{ 'No addresses found.' | trans }}
-                                </span>
-                            <a class="text-info" href="/customer/address/add?id_customer={{ id_customer }}">{{ 'Add a new address' | trans }}</a>
-                        </td>
-
+                        <th class="col-lg-2">
+                            {{ 'Salutation' | trans }}</th>
+                        <td>{{ customer.salutation }}</td>
                     </tr>
-                {% else %}
-                    {% for address in addresses.addresses %}
-                        <tr>
-                            <th>
-                                {% if address.id_customer_address == customer.default_shipping_address %}
-                                    Shipping
-                                {% endif %}
-                                {% if address.id_customer_address == customer.default_billing_address %}
-                                    Billing
-                                {% endif %}
-                                Address
-                                {% if address.comment|default %}
-                                    ({{ address.comment }})
-                                {% endif %}
-                            </th>
-                            <td>
-                                {% spaceless %}
-                                    {{ address.address1 }}
-                                    {{ address.address2 }}
-                                    {{ address.address3 }},
-                                    {{ address.zip_code }}
-                                    {{ address.city }}
-                                {% endspaceless %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-
-            {% endif %}
-            </tfoot>
-        </table>
-    </div>
+                    <tr>
+                        <th>{{ 'First name' | trans }}</th>
+                        <td>{{ customer.firstName }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Last name' | trans }}</th>
+                        <td>{{ customer.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Email' | trans }}</th>
+                        <td>{{ customer.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Company' | trans }}</th>
+                        <td>{{ customer.company }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Customer Reference' | trans }}</th>
+                        <td>{{ customer.customerReference }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Gender' | trans }}</th>
+                        <td>{{ customer.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Locale' | trans }}</th>
+                        <td>{{ customer.locale }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Phone' | trans }}</th>
+                        <td>{{ customer.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Date of birth' | trans }}</th>
+                        <td>{{ customer.dateOfBirth }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Registered at' | trans }}</th>
+                        <td>{{ customer.createdAt | formatDateTime }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                </table>
+            </div>
 
         {% endblock %}
-
     {% endembed %}
+
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Addresses' } %}
+        {% block widget_content %}
+            {{ addressTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
 
 {% endblock %}

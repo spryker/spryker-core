@@ -8,9 +8,9 @@
 namespace Unit\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplatePathMapBuilder;
+use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 use Symfony\Component\Finder\Finder;
 
 /**

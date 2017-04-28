@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder;
 
-use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface;
+use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 use Symfony\Component\Finder\Finder;
 
 class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface

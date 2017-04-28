@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\PropelOrm\Business\Transaction;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 use Propel\Runtime\Connection\ConnectionInterface;
+use PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
 /**
  * @group Unit
