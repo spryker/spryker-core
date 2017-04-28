@@ -8,7 +8,6 @@
 namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter;
 
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
-use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 
 class LocalAdapterBuilder implements AdapterBuilderInterface
@@ -25,24 +24,15 @@ class LocalAdapterBuilder implements AdapterBuilderInterface
     protected $adapterConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
-     */
-    protected $fileSystemConfig;
-
-    /**
      * @var string
      */
     protected $path;
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
      * @param \Generated\Shared\Transfer\FlysystemConfigLocalTransfer $adapterConfig
      */
-    public function __construct(
-        FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigLocalTransfer $adapterConfig
-    ) {
-        $this->fileSystemConfig = $fileSystemConfig;
+    public function __construct(FlysystemConfigLocalTransfer $adapterConfig)
+    {
         $this->adapterConfig = $adapterConfig;
     }
 

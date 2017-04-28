@@ -9,4 +9,8 @@ namespace Spryker\Shared\FlysystemLocalFileSystem;
 
 interface FlysystemLocalFileSystemConstants
 {
+
+    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
+    const FILESYSTEM_SERVICE = 'FILESYSTEM_SERVICE';
+
 }

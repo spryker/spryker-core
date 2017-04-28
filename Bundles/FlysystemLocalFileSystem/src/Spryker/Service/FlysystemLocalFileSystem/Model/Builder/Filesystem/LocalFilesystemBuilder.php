@@ -42,7 +42,7 @@ class LocalFilesystemBuilder extends AbstractFilesystemBuilder
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new LocalAdapterBuilder($this->config, $adapterConfigTransfer);
+        return new LocalAdapterBuilder($adapterConfigTransfer);
     }
 
 }

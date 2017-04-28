@@ -10,7 +10,7 @@ namespace Spryker\Service\FlysystemLocalFileSystem;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
- * @method \Spryker\Service\FlysystemLocalFileSystem\FlysystemServiceFactory getFactory()
+ * @method \Spryker\Service\FlysystemLocalFileSystem\FlysystemLocalFileSystemServiceFactory getFactory()
  */
 class FlysystemLocalFileSystemService extends AbstractService implements FlysystemLocalFileSystemServiceInterface
 {

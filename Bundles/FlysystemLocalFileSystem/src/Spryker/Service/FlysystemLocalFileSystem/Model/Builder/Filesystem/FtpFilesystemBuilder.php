@@ -43,7 +43,7 @@ class FtpFilesystemBuilder extends AbstractFilesystemBuilder
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        return new FtpAdapterBuilder($this->config, $adapterConfigTransfer);
+        return new FtpAdapterBuilder($adapterConfigTransfer);
     }
 
 }

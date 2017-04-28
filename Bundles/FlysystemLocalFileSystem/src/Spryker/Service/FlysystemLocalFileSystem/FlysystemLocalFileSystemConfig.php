@@ -8,6 +8,7 @@
 namespace Spryker\Service\FlysystemLocalFileSystem;
 
 use Spryker\Service\Kernel\AbstractBundleConfig;
+use Spryker\Shared\FlysystemLocalFileSystem\FlysystemLocalFileSystemConstants;
 
 class FlysystemLocalFileSystemConfig extends AbstractBundleConfig
 {
@@ -18,14 +19,6 @@ class FlysystemLocalFileSystemConfig extends AbstractBundleConfig
     public function getFilesystemConfig()
     {
         return $this->get(FlysystemLocalFileSystemConstants::FILESYSTEM_STORAGE)[FlysystemLocalFileSystemConstants::FILESYSTEM_SERVICE];
-    }
-
-    /**
-     * @return array
-     */
-    public function getFlysystemFilesystemConfig()
-    {
-        return [];
     }
 
 }

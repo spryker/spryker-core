@@ -19,13 +19,14 @@ abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
     protected $config;
 
     /**
-     * @var \Spryker\Service\FlysystemLocalFileSystem\Model\Provider\FlysystemPluginProviderInterface
+     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      */
-    protected $pluginProvider;
+    public function __construct(FlysystemConfigTransfer $configTransfer)
+    {
+        $this->config = $configTransfer;
+    }
 
     /**
-     * @throws \Spryker\Service\FlysystemLocalFileSystem\Exception\InvalidConfigurationException
-     *
      * @return void
      */
     abstract protected function assertAdapterConfig();
@@ -36,36 +37,14 @@ abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
     abstract protected function createAdapterBuilder();
 
     /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $config
-     */
-    public function __construct(
-        FlysystemConfigTransfer $config
-    ) {
-        $this->config = $config;
-    }
-
-    /**
      * @return \League\Flysystem\Filesystem
      */
     public function build()
     {
-        $this->assertConfig();
         $this->assertAdapterConfig();
-
         $filesystem = $this->buildFilesystem();
-        //$filesystem = $this->pluginProvider->provide($filesystem);
 
         return $filesystem;
-    }
-
-    /**
-     * @return void
-     */
-    protected function assertConfig()
-    {
-        $this->config->requireName();
-        $this->config->requireType();
-        $this->config->requireAdapterConfig();
     }
 
     /**

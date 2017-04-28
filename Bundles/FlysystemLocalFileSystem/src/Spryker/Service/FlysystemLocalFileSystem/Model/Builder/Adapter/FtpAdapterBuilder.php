@@ -8,7 +8,6 @@
 namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter;
 
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
-use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 
 class FtpAdapterBuilder implements AdapterBuilderInterface
@@ -25,19 +24,10 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
     protected $adapterConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
-     */
-    protected $fileSystemConfig;
-
-    /**
-     * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $fileSystemConfig
      * @param \Generated\Shared\Transfer\FlysystemConfigFtpTransfer $adapterConfig
      */
-    public function __construct(
-        FlysystemConfigTransfer $fileSystemConfig,
-        FlysystemConfigFtpTransfer $adapterConfig
-    ) {
-        $this->fileSystemConfig = $fileSystemConfig;
+    public function __construct(FlysystemConfigFtpTransfer $adapterConfig)
+    {
         $this->adapterConfig = $adapterConfig;
     }
 
