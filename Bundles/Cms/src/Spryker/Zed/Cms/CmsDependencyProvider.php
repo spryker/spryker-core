@@ -12,6 +12,7 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlBridge;
+use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -30,6 +31,8 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
+
+    const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -88,6 +91,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getTransferExpanderPlugins($container);
         };
 
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+
         return $container;
     }
 
@@ -118,7 +125,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
      */
     protected function getPostSavePlugins(Container $container)
     {
@@ -128,7 +135,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[]
      */
     protected function getTransferExpanderPlugins(Container $container)
     {

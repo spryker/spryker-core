@@ -17,20 +17,25 @@ class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorF
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
      *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer)
+    public function updateCmsVersionWithUser(CmsVersionTransfer $cmsVersionTransfer)
     {
         return $this->getFactory()
-            ->createUserManager()
-            ->updateCmsVersion($cmsVersionTransfer);
+            ->createCmsVersionUserUpdater()
+            ->updateCmsVersionWithUser($cmsVersionTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
@@ -40,7 +45,7 @@ class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorF
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer)
     {
         return $this->getFactory()
-            ->createUserManager()
+            ->createCmsVersionUserExpander()
             ->expandCmsVersionTransferWithUser($cmsVersionTransfer);
     }
 

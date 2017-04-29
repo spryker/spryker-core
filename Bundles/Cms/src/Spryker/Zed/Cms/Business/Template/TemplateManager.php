@@ -12,6 +12,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
@@ -242,25 +243,95 @@ class TemplateManager implements TemplateManagerInterface
      */
     public function syncTemplate($cmsTemplateFolderPath)
     {
-        $templateFolder = $this->config->getTemplateRealPath($cmsTemplateFolderPath);
+        $templateFolders = $this->config->getTemplateRealPaths($cmsTemplateFolderPath);
         $isSynced = false;
 
-        $this->finder->in($templateFolder)
+        /* Added for keeping BC */
+        if (!is_array($templateFolders)) {
+            $templateFolders = [$templateFolders];
+        }
+
+        foreach ($templateFolders as $folder) {
+            if (!$this->fileExists($folder)) {
+                continue;
+            }
+
+            $isSynced = $this->findTwigFileAndCreateTemplate($cmsTemplateFolderPath, $folder);
+        }
+
+        return $isSynced;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws TemplateFileNotFoundException
+     *
+     * @return void
+     */
+    public function checkTemplateFileExists($path)
+    {
+        if (!$this->isTemplateFileExists($path)) {
+            throw new TemplateFileNotFoundException(
+                sprintf('Template file not found in "%s"', $path)
+            );
+        }
+    }
+
+    /**
+     * @param string $realPath
+     *
+     * @return bool
+     */
+    protected function isTemplateFileExists($realPath)
+    {
+        $realPaths = $this->config->getTemplateRealPaths($realPath);
+
+        foreach ($realPaths as $realPath) {
+            if ($this->fileExists($realPath)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $cmsTemplateFolderPath
+     * @param string $folder
+     *
+     * @return bool
+     */
+    protected function findTwigFileAndCreateTemplate($cmsTemplateFolderPath, $folder)
+    {
+        $isTemplateCreated = false;
+        $this->finder->in($folder)
             ->name('*.twig')
             ->depth('0');
 
         foreach ($this->finder->files() as $file) {
             $fullFileName = $file->getRelativePathname();
-            $cmsTemplateCount = $this->cmsQueryContainer->queryTemplateByPath($cmsTemplateFolderPath . $fullFileName)->count();
+            $cmsTemplateCount = $this->cmsQueryContainer->queryTemplateByPath($cmsTemplateFolderPath . $fullFileName)
+                ->count();
 
             if ($cmsTemplateCount === 0) {
-                $fileName = basename($templateFolder . $fullFileName, '.twig');
+                $fileName = basename($folder . $fullFileName, '.twig');
                 $this->createTemplate($fileName, $cmsTemplateFolderPath . $fullFileName);
-                $isSynced = true;
+                $isTemplateCreated = true;
             }
         }
 
-        return $isSynced;
+        return $isTemplateCreated;
+    }
+
+    /**
+     * @param string $templateFile
+     *
+     * @return bool
+     */
+    protected function fileExists($templateFile)
+    {
+        return file_exists($templateFile);
     }
 
 }

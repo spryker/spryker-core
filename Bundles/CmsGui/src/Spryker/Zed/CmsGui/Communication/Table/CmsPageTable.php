@@ -136,14 +136,66 @@ class CmsPageTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->createPublishButton($item);
-        $buttons[] = $this->createViewButton($item);
-        $buttons[] = $this->createViewInShopButton($item, $urlPrefix);
-        $buttons[] = $this->createVersionHistoryButton($item);
-        $buttons[] = $this->createEditGlossaryButton($item);
-        $buttons[] = $this->createEditPageButton($item);
+        $buttons[] = $this->createViewButtonGroup($item, $urlPrefix);
+        $buttons[] = $this->createEditButtonGroup($item);
         $buttons[] = $this->createCmsStateChangeButton($item);
 
         return $buttons;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createPublishButton(array $item)
+    {
+        return $this->generateCreateButton(
+            Url::generate('/cms-gui/version-page/publish', [
+                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                VersionPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
+            ]),
+            'Publish',
+            [
+                'icon' => 'fa-upload',
+            ]
+        );
+    }
+
+    /**
+     * @param array $item
+     * @param string $urlPrefix
+     *
+     * @return string
+     */
+    protected function createViewButtonGroup(array $item, $urlPrefix)
+    {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
+        return $this->generateButtonGroup([
+            $this->createViewButton($item),
+            $this->createViewInShopButton($item, $urlPrefix),
+            $this->createVersionHistoryButton($item)
+        ],
+            'View '
+        );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createViewButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/view-page/index', [
+                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'In Zed',
+        ];
     }
 
     /**
@@ -170,11 +222,76 @@ class CmsPageTable extends AbstractTable
 
         $cmsPageUrlInYves = $yvesHost . $currentLocaleUrl;
 
-        return $this->generateViewButton(
-            $cmsPageUrlInYves,
-            'View in Shop',
-            ['target' => '_blank']
+        return [
+            'url' => $cmsPageUrlInYves,
+            'title' => 'In Shop',
+            'options' => ['target' => '_blank']
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createVersionHistoryButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/version-page/history', [
+                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title'=> 'Version History',
+            'separated' => true,
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditButtonGroup(array $item)
+    {
+        return $this->generateButtonGroup([
+            $this->createEditPageButton($item),
+            $this->createEditGlossaryButton($item),
+        ],
+            'Edit ',
+            [
+                'class' => 'btn-edit',
+                'icon' => 'fa-pencil-square-o',
+            ]
         );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditPageButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/edit-page/index', [
+                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'Page'
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditGlossaryButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/create-glossary/index', [
+                CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'Placeholders'
+        ];
     }
 
     /**
@@ -197,93 +314,6 @@ class CmsPageTable extends AbstractTable
         }
 
         return null;
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createViewButton(array $item)
-    {
-        if ($this->isDraft($item)) {
-            return '';
-        }
-
-        return $this->generateViewButton(
-            Url::generate('/cms-gui/view-page/index', [
-                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'View'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createEditGlossaryButton(array $item)
-    {
-        return $this->generateEditButton(
-            Url::generate('/cms-gui/create-glossary/index', [
-                CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'Edit Placeholders'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createPublishButton(array $item)
-    {
-        return $this->generateCreateButton(
-            Url::generate('/cms-gui/version-page/publish', [
-                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-                VersionPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
-            ]),
-            'Publish',
-            [
-                'icon' => 'fa-upload',
-            ]
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createVersionHistoryButton(array $item)
-    {
-        if ($this->isDraft($item)) {
-            return '';
-        }
-
-        return $this->generateViewButton(
-            Url::generate('/cms-gui/version-page/history', [
-                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'Version History'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createEditPageButton(array $item)
-    {
-        return $this->generateEditButton(
-            Url::generate('/cms-gui/edit-page/index', [
-                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'Edit Page'
-        );
     }
 
     /**

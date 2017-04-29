@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionMigration implements VersionMigrationInterface
@@ -15,15 +17,22 @@ class VersionMigration implements VersionMigrationInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface[]
+     * @var CmsToUtilEncodingInterface
+     */
+    protected $utilEncoding;
+
+    /**
+     * @var \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface[]
      */
     protected $migrationHandlers = [];
 
     /**
-     * @param \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface[] $migrationHandlers
+     * @param CmsToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface[] $migrationHandlers
      */
-    public function __construct(array $migrationHandlers)
+    public function __construct(CmsToUtilEncodingInterface $utilEncoding, array $migrationHandlers)
     {
+        $this->utilEncoding = $utilEncoding;
         $this->migrationHandlers = $migrationHandlers;
     }
 
@@ -31,20 +40,31 @@ class VersionMigration implements VersionMigrationInterface
      * @param string $cmsVersionOriginData
      * @param string $cmsVersionTargetData
      *
-     * @return bool
+     * @return void
      */
     public function migrate($cmsVersionOriginData, $cmsVersionTargetData)
     {
         $this->handleDatabaseTransaction(function () use ($cmsVersionOriginData, $cmsVersionTargetData) {
-            $originData = json_decode($cmsVersionOriginData, true);
-            $targetData = json_decode($cmsVersionTargetData, true);
-
-            foreach ($this->migrationHandlers as $migration) {
-                $migration->handle($originData, $targetData);
-            }
+            $this->executeMigrateTransaction($cmsVersionOriginData, $cmsVersionTargetData);
         });
-
-        return true;
     }
 
+    /**
+     * @param string $cmsVersionOriginData
+     * @param string $cmsVersionTargetData
+     *
+     * @return void
+     */
+    protected function executeMigrateTransaction($cmsVersionOriginData, $cmsVersionTargetData)
+    {
+        $originDataArray = $this->utilEncoding->decodeJson($cmsVersionOriginData, true);
+        $targetDataArray = $this->utilEncoding->decodeJson($cmsVersionTargetData, true);
+
+        foreach ($this->migrationHandlers as $migration) {
+            $migration->migrate(
+                (new CmsVersionDataTransfer())->fromArray($originDataArray),
+                (new CmsVersionDataTransfer())->fromArray($targetDataArray)
+            );
+        }
+    }
 }

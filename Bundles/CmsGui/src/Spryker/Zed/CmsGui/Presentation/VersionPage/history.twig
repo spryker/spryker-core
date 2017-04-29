@@ -32,28 +32,26 @@
             {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsCurrentPage, 'cmsGlossary' : cmsCurrentGlossary , 'prettyDiffClass' : 'original', 'versionDiffClass' : 'original'}) }}
         </div>
         <div class="col-lg-6">
-            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Selected Version' }  %}
-                {% block widget_content %}
-                    {{ form_start(versionForm) }}
-                    <div class="row">
-                        <div class="col-lg-12 text-right">
-                            <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-view" value="{{ 'Rollback to Selected Version' | trans }}" name="rollback"/>
+            {{ form_start(versionForm) }}
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Selected Version' }  %}
+                    {% block widget_header_content -%}
+                        <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-view" value="{{ 'Rollback to Selected Version' | trans }}" name="rollback"/>
+                    {%- endblock %}
+                    {% block widget_content %}
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <p>
+                                    {{ form_widget(versionForm.version) }}
+                                </p>
+                            </div>
+                            <div class="col-lg-2 text-right">
+                                <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-edit" value="{{ 'Compare' | trans }}" name="compare" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <p>
-                                {{ form_widget(versionForm.version) }}
-                            </p>
-                        </div>
-                        <div class="col-lg-2 text-right">
-                            <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-edit" value="{{ 'Compare' | trans }}" name="compare" />
-                        </div>
-                    </div>
-                    {{ form_errors(versionForm.version) }}
-                    {{ form_end(versionForm) }}
-                {% endblock %}
-            {% endembed %}
+                        {{ form_errors(versionForm.version) }}
+                    {% endblock %}
+                {% endembed %}
+            {{ form_end(versionForm) }}
 
             {% if (cmsTargetPage is not null) %}
                 {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsTargetPage, 'cmsGlossary' : cmsTargetGlossary, 'prettyDiffClass' : 'changed diff', 'versionDiffClass' : 'diff'}) }}

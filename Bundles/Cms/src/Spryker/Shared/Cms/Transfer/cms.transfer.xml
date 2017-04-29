@@ -107,5 +107,11 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
     </transfer>
+
+    <transfer name="CmsVersionData">
+        <property name="cmsPage" type="CmsPage" />
+        <property name="cmsTemplate" type="CmsTemplate" />
+        <property name="cmsGlossary" type="CmsGlossary" />
+    </transfer>
 </transfers>
 

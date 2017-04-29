@@ -37,11 +37,9 @@ class CmsVersionDataProvider
     {
         if (!$idCmsPage || !$version) {
             return new CmsVersionTransfer();
-        } else {
-            $cmsVersionTransfer = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
         }
 
-        return $cmsVersionTransfer;
+        return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
 
     /**

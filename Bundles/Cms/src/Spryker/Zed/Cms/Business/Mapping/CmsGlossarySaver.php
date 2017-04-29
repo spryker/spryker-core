@@ -108,8 +108,8 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
         }
 
         $this->cmsQueryContainer->queryGlossaryKeyMappingsByFkGlossaryKeys($idGlossaryKeys)->delete();
-        $this->cmsQueryContainer->queryGlossaryTranslationByFkGlossaryKeys($idGlossaryKeys)->delete();
-        $this->cmsQueryContainer->queryGlossaryKeyByIdGlossaryKeys($idGlossaryKeys)->delete();
+        $this->glossaryFacade->deleteTranslationsByFkKeys($idGlossaryKeys);
+        $this->glossaryFacade->deleteKeys($idGlossaryKeys);
     }
 
     /**

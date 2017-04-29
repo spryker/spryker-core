@@ -589,6 +589,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -609,7 +611,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage)
     {
@@ -640,7 +642,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
     {

@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionRollback implements VersionRollbackInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Version\VersionPublisherInterface
@@ -75,9 +79,35 @@ class VersionRollback implements VersionRollbackInterface
             );
         }
 
-        if (!$this->versionMigration->migrate($originVersionEntity->getData(), $targetVersionEntity->getData())) {
-            return null;
-        }
+        return $this->migrateVersions($originVersionEntity, $targetVersionEntity, $idCmsPage, $version);
+    }
+
+    /**
+     * @param SpyCmsVersion $originVersionEntity
+     * @param SpyCmsVersion $targetVersionEntity
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    protected function migrateVersions(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, $idCmsPage, $version)
+    {
+        return $this->handleDatabaseTransaction(function () use ($originVersionEntity, $targetVersionEntity, $idCmsPage, $version) {
+            return $this->executeMigrateVersion($originVersionEntity, $targetVersionEntity, $idCmsPage, $version);
+        });
+    }
+
+    /**
+     * @param SpyCmsVersion $originVersionEntity
+     * @param SpyCmsVersion $targetVersionEntity
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function executeMigrateVersion(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, $idCmsPage, $version)
+    {
+        $this->versionMigration->migrate($originVersionEntity->getData(), $targetVersionEntity->getData());
 
         $newVersion = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
         $referenceVersion = sprintf(
@@ -110,12 +140,7 @@ class VersionRollback implements VersionRollbackInterface
         }
 
         $latestVersionData = $versionEntity->getData();
-
-        if (!$this->versionMigration->migrate($latestVersionData, $latestVersionData)) {
-            return false;
-        }
-
-        return true;
+        $this->versionMigration->migrate($latestVersionData, $latestVersionData);
     }
 
 }

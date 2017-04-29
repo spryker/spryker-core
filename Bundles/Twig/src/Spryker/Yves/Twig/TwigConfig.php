@@ -28,18 +28,6 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
-     */
-    public function getSharedTemplatePaths()
-    {
-        $paths = [];
-        $paths = $this->addProjectSharedTemplatePaths($paths);
-        $paths = $this->addCoreSharedTemplatePaths($paths);
-
-        return $paths;
-    }
-
-    /**
      * @param array $paths
      *
      * @return array
@@ -53,6 +41,8 @@ class TwigConfig extends AbstractBundleConfig
         foreach ($namespaces as $namespace) {
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
         }
 
         return $paths;
@@ -70,46 +60,10 @@ class TwigConfig extends AbstractBundleConfig
 
         foreach ($namespaces as $namespace) {
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-        }
-
-        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Yves/%s/Theme' . $themeName;
-
-        return $paths;
-    }
-
-    /**
-     * @param array $paths
-     *
-     * @return array
-     */
-    protected function addProjectSharedTemplatePaths(array $paths)
-    {
-        $namespaces = $this->get(KernelConstants::PROJECT_NAMESPACES);
-        $storeName = $this->getStoreName();
-        $themeName = $this->getThemeName();
-
-        foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
-        }
-
-        return $paths;
-    }
-
-    /**
-     * @param array $paths
-     *
-     * @return array
-     */
-    protected function addCoreSharedTemplatePaths(array $paths)
-    {
-        $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
-        $themeName = $this->getThemeName();
-
-        foreach ($namespaces as $namespace) {
             $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $themeName;
         }
 
+        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Yves/%s/Theme' . $themeName;
         $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Shared/%s/Theme' . $themeName;
 
         return $paths;

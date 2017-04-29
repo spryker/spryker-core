@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 
 interface TemplateManagerInterface
 {
@@ -67,5 +68,14 @@ interface TemplateManagerInterface
      * @return bool
      */
     public function syncTemplate($cmsTemplateFolderPath);
+
+    /**
+     * @param string $path
+     *
+     * @throws TemplateFileNotFoundException
+     *
+     * @return void
+     */
+    public function checkTemplateFileExists($path);
 
 }

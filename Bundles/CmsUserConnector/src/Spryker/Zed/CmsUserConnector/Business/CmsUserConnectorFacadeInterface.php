@@ -13,15 +13,21 @@ interface CmsUserConnectorFacadeInterface
 {
 
     /**
+     * Specification:
+     *  - Updates user_id in CmsVersion table with the logged in user
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer);
+    public function updateCmsVersionWithUser(CmsVersionTransfer $cmsVersionTransfer);
 
     /**
+     * Specification:
+     *  - Expands CmsVersionTransfer object with the user information
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer

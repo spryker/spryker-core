@@ -26,22 +26,6 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
     /**
      * @api
      *
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $cmsData
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\PageMapTransfer
-     */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsData, LocaleTransfer $locale)
-    {
-        return $this->getFactory()
-            ->createCmsDataPageMapBuilder()
-            ->buildPageMap($pageMapBuilder, $cmsData, $locale);
-    }
-
-    /**
-     * @api
-     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

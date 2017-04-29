@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
+use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapperInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -45,10 +50,12 @@ class VersionPageController extends AbstractController
             $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
 
         } catch (CannotActivatePageException $exception) {
-            $this->addErrorMessage('Cannot publish the CMS page, placeholders do not exist for this page Please go to "Edit Placeholders" and provide them.');
-        } finally {
-            return $this->redirectResponse($redirectUrl);
+            $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
+
+            return $this->redirectResponse($request->headers->get('referer'));
         }
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -81,6 +88,7 @@ class VersionPageController extends AbstractController
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
         $version = $request->query->get(static::URL_PARAM_VERSION);
+        $redirect = null;
 
         $cmsVersionFormDataProvider = $this->getFactory()
             ->createCmsVersionFormDataProvider();
@@ -89,19 +97,15 @@ class VersionPageController extends AbstractController
             ->createCmsVersionForm($cmsVersionFormDataProvider, $idCmsPage, $version)
             ->handleRequest($request);
 
-        if ($versionForm->isSubmitted()) {
-            if ($versionForm->isValid()) {
-                $cmsVersionData = $request->request->get(CmsVersionFormType::CMS_VERSION);
-                $version = $this->castId($cmsVersionData['version']);
-                if ($request->request->get('rollback') !== null) {
-                    $cmsVersionTransfer = $this->getFactory()->getCmsFacade()->rollback($idCmsPage, $version);
-                    $this->addSuccessMessage(
-                        sprintf('Rollback successfully applied and Page with version %d published.', $cmsVersionTransfer->getVersion())
-                    );
+        if ($versionForm->isSubmitted() && $versionForm->isValid()) {
+            $cmsVersionData = $request->request->get(CmsVersionFormType::CMS_VERSION);
+            $version = $this->castId($cmsVersionData['version']);
 
-                    return $this->redirectResponse('/cms-gui/version-page/history?id-cms-page=' . $idCmsPage);
-                }
-            }
+            $redirect = $this->submitVersionForm($request, $version, $idCmsPage);
+        }
+
+        if (!empty($redirect)) {
+            return $this->redirectResponse($redirect);
         }
 
         $cmsCurrentVersionTransfer = $this->getFactory()
@@ -115,35 +119,73 @@ class VersionPageController extends AbstractController
         }
 
         $cmsVersionDataHelper = $this->getFactory()->createCmsVersionDataHelper();
-
-        $cmsCurrentPageTransfer = $cmsVersionDataHelper->extractCmsPageTransfer($cmsCurrentVersionTransfer);
-        $cmsCurrentGlossaryTransfer = $cmsVersionDataHelper->extractCmsGlossaryPageTransfer($cmsCurrentVersionTransfer);
-        $cmsTargetPage = null;
-        $cmsTargetGlossary = null;
+        $cmsCurrentVersionDataTransfer = $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsCurrentVersionTransfer);
+        $cmsTargetVersionDataTransfer = new CmsVersionDataTransfer();
 
         if ($version !== null) {
-            $cmsTargetVersionTransfer = $this->getFactory()
-                ->getCmsFacade()
-                ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
-
-            if ($cmsTargetVersionTransfer === null) {
-                throw new NotFoundHttpException(
-                    sprintf('Cms page with version "%d" not found.', $version)
-                );
-            }
-
-            $cmsTargetPage = $cmsVersionDataHelper->extractCmsPageTransfer($cmsTargetVersionTransfer);
-            $cmsTargetGlossary = $cmsVersionDataHelper->extractCmsGlossaryPageTransfer($cmsTargetVersionTransfer);
+            $cmsTargetVersionDataTransfer = $this->getCmsTargetVersionDataTransfer($cmsVersionDataHelper, $idCmsPage, $version);
         }
 
         return [
-            'cmsCurrentPage' => $cmsCurrentPageTransfer,
-            'cmsCurrentGlossary' => $cmsCurrentGlossaryTransfer,
-            'cmsTargetPage' => $cmsTargetPage,
-            'cmsTargetGlossary' => $cmsTargetGlossary,
+            'cmsCurrentPage' => $cmsCurrentVersionDataTransfer->getCmsPage(),
+            'cmsCurrentGlossary' => $cmsCurrentVersionDataTransfer->getCmsGlossary(),
+            'cmsTargetPage' => $cmsTargetVersionDataTransfer->getCmsPage(),
+            'cmsTargetGlossary' => $cmsTargetVersionDataTransfer->getCmsGlossary(),
             'versionForm' => $versionForm->createView(),
             'cmsVersion' => $cmsCurrentVersionTransfer,
         ];
+    }
+
+    /**
+     * @param Request $request
+     * @param int $version
+     * @param int $idCmsPage
+     *
+     * @return null|string
+     */
+    protected function submitVersionForm(Request $request, $version, $idCmsPage)
+    {
+        if ($request->request->get('rollback') === null) {
+            return null;
+        }
+
+        $redirectUrl = '/cms-gui/version-page/history?id-cms-page=' . $idCmsPage;
+
+        try {
+            $cmsVersionTransfer = $this->getFactory()
+                ->getCmsFacade()
+                ->rollback($idCmsPage, $version);
+        } catch (TemplateFileNotFoundException $exception) {
+            $this->addErrorMessage('It is not possible to rollback to this version. The version you are trying to rollback to uses a template that does not exist anymore.');
+
+            return $redirectUrl;
+        }
+
+        $this->addSuccessMessage(sprintf('Rollback successfully applied and Page with version %d published.', $cmsVersionTransfer->getVersion()));
+
+        return $redirectUrl;
+    }
+
+    /**
+     * @param CmsVersionMapperInterface $cmsVersionDataHelper
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return CmsVersionDataTransfer
+     */
+    protected function getCmsTargetVersionDataTransfer(CmsVersionMapperInterface $cmsVersionDataHelper, $idCmsPage, $version)
+    {
+        $cmsTargetVersionTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
+        if ($cmsTargetVersionTransfer === null) {
+            throw new NotFoundHttpException(sprintf('Cms page with version "%d" not found.', $version));
+        }
+
+        return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);
     }
 
 }

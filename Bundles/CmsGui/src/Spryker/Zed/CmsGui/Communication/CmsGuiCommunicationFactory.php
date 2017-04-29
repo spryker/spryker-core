@@ -21,7 +21,7 @@ use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
-use Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper;
+use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
@@ -242,11 +242,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Communication\Helper\CmsVersionDataHelper
+     * @return \Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper
      */
     public function createCmsVersionDataHelper()
     {
-        return new CmsVersionDataHelper($this->getCmsQueryContainer());
+        return new CmsVersionMapper(
+            $this->getCmsQueryContainer(),
+            $this->getUtilEncodingService()
+        );
     }
 
     /**
@@ -287,6 +290,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Service\CmsGuiToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

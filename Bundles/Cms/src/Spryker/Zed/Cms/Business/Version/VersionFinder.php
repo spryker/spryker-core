@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsVersion;
+use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionFinder implements VersionFinderInterface
@@ -20,17 +21,27 @@ class VersionFinder implements VersionFinderInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[]
+     * @var \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
+     */
+    protected $versionDataMapper;
+
+    /**
+     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[]
      */
     protected $transferExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[] $transferExpanderPlugins
+     * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
+     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[] $transferExpanderPlugins
      */
-    public function __construct(CmsQueryContainerInterface $queryContainer, array $transferExpanderPlugins)
+    public function __construct(
+        CmsQueryContainerInterface $queryContainer,
+        VersionDataMapperInterface $versionDataMapper,
+        array $transferExpanderPlugins)
     {
         $this->queryContainer = $queryContainer;
+        $this->versionDataMapper = $versionDataMapper;
         $this->transferExpanderPlugins = $transferExpanderPlugins;
     }
 
@@ -49,7 +60,7 @@ class VersionFinder implements VersionFinderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
      */
     public function findAllCmsVersionByIdCmsPage($idCmsPage)
     {
@@ -77,7 +88,7 @@ class VersionFinder implements VersionFinderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsVersion $cmsVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $cmsVersionEntity
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
@@ -87,22 +98,9 @@ class VersionFinder implements VersionFinderInterface
             return null;
         }
 
-        $cmsVersionTransfer = $this->convertToCmsVersionTransfer($cmsVersionEntity);
+        $cmsVersionTransfer = $this->versionDataMapper->mapToCmsVersionTransfer($cmsVersionEntity);
 
         return $this->expandCmsVersionTransfer($cmsVersionTransfer);
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsVersion $cmsVersionEntity
-     *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
-     */
-    protected function convertToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
-    {
-        $cmsVersionTransfer = new CmsVersionTransfer();
-        $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
-
-        return $cmsVersionTransfer;
     }
 
     /**

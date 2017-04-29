@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,7 +10,7 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface;
 use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainerInterface;
 
-class UserManager implements UserManagerInterface
+class CmsVersionUserUpdater implements CmsVersionUserUpdaterInterface
 {
 
     /**
@@ -39,7 +38,7 @@ class UserManager implements UserManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function updateCmsVersion(CmsVersionTransfer $cmsVersionTransfer)
+    public function updateCmsVersionWithUser(CmsVersionTransfer $cmsVersionTransfer)
     {
         if (!$this->userFacade->hasCurrentUser()) {
             return $cmsVersionTransfer;
@@ -48,24 +47,6 @@ class UserManager implements UserManagerInterface
         $idUser = $this->userFacade->getCurrentUser()->getIdUser();
         $cmsVersionEntity = $this->updateCmsVersionUserId($cmsVersionTransfer, $idUser);
         $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
-
-        return $cmsVersionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
-     */
-    public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer)
-    {
-        if ($cmsVersionTransfer->getFkUser() === null) {
-            return $cmsVersionTransfer;
-        }
-
-        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());
-        $cmsVersionTransfer->setFirstName($userTransfer->getFirstName());
-        $cmsVersionTransfer->setLastName($userTransfer->getLastName());
 
         return $cmsVersionTransfer;
     }
@@ -87,5 +68,4 @@ class UserManager implements UserManagerInterface
 
         return $cmsVersionEntity;
     }
-
 }

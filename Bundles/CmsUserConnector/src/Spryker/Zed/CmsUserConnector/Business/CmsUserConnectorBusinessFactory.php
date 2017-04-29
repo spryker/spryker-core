@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CmsUserConnector\Business;
 
-use Spryker\Zed\CmsUserConnector\Business\Version\UserManager;
+use Spryker\Zed\CmsUserConnector\Business\Version\CmsVersionUserExpander;
+use Spryker\Zed\CmsUserConnector\Business\Version\CmsVersionUserUpdater;
 use Spryker\Zed\CmsUserConnector\CmsUserConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -18,13 +19,23 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\CmsUserConnector\Business\Version\UserManagerInterface
+     * @return \Spryker\Zed\CmsUserConnector\Business\Version\CmsVersionUserUpdaterInterface
      */
-    public function createUserManager()
+    public function createCmsVersionUserUpdater()
     {
-        return new UserManager(
+        return new CmsVersionUserUpdater(
             $this->getUserFacade(),
             $this->getCmsQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsUserConnector\Business\Version\CmsVersionUserExpanderInterface
+     */
+    public function createCmsVersionUserExpander()
+    {
+        return new CmsVersionUserExpander(
+            $this->getUserFacade()
         );
     }
 

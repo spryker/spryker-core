@@ -19,28 +19,28 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
 {
 
     /**
-     * @var \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface
-     */
-    protected $cmsPageDataPageMapPlugin;
-
-    /**
      * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface
      */
     protected $searchFacade;
 
     /**
+     * @var PageMapInterface
+     */
+    protected $cmsDataPageMapBuilder;
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $cmsPageDataPageMapPlugin
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $cmsDataPageMapBuilder
      * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface $searchFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        PageMapInterface $cmsPageDataPageMapPlugin,
+        PageMapInterface $cmsDataPageMapBuilder,
         CmsCollectorToSearchInterface $searchFacade
     ) {
         parent::__construct($utilDataReaderService);
 
-        $this->cmsPageDataPageMapPlugin = $cmsPageDataPageMapPlugin;
+        $this->cmsDataPageMapBuilder = $cmsDataPageMapBuilder;
         $this->searchFacade = $searchFacade;
     }
 
@@ -62,7 +62,7 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
     {
         $result = $this
             ->searchFacade
-            ->transformPageMapToDocument($this->cmsPageDataPageMapPlugin, $collectItemData, $this->locale);
+            ->transformPageMapToDocument($this->cmsDataPageMapBuilder, $collectItemData, $this->locale);
 
         $result = $this->addExtraCollectorFields($result, $collectItemData);
 

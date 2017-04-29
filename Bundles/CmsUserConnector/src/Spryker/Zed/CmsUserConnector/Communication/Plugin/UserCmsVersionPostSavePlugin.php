@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsUserConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface;
+use Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -24,7 +24,7 @@ class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionP
      */
     public function postSave(CmsVersionTransfer $cmsVersionTransfer)
     {
-        return $this->getFacade()->updateCmsVersion($cmsVersionTransfer);
+        return $this->getFacade()->updateCmsVersionWithUser($cmsVersionTransfer);
     }
 
 }

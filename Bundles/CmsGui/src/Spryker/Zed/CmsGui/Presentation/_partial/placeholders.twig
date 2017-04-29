@@ -1,19 +1,19 @@
 <table class="has-{{ versionDiffClass }}">
 {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
-        <tr>
-        {% for translation in glossaryAttribute.translations %}
-                {% if translation.localeName == localeName %}
-                            <td class="placeholder-title"><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
-                            {%  if hasTemplateDiff == true %}
-                                <td class="{{ prettyDiffClass }}">{{ translation.translation | trim }}</td>
-                            {% else %}
-                                <td class="changed">{{ translation.translation | trim }}</td>
-                            {% endif %}
-                            {% if prettyDiffClass != 'original' %}
-                                <td class="original hidden"></td>
-                            {% endif %}
-                {% endif %}
-        {% endfor %}
-        </tr>
+    <tr>
+    {% for translation in glossaryAttribute.translations %}
+        {% if translation.localeName == localeName %}
+            <td class="placeholder-title"><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
+            {%  if hasTemplateDiff == true %}
+                <td class="{{ prettyDiffClass }}">{{ translation.translation | trim }}</td>
+            {% else %}
+                <td class="changed">{{ translation.translation | trim }}</td>
+            {% endif %}
+            {% if prettyDiffClass != 'original' %}
+                <td class="original hidden"></td>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    </tr>
 {% endfor %}
 </table>

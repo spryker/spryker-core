@@ -94,13 +94,13 @@
         <id-method-parameter value="spy_cms_block_pk_seq"/>
     </table>
 
-    <table name="spy_cms_version" phpName="SpyCmsVersion">
+    <table name="spy_cms_version">
         <column name="id_cms_version" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" type="INTEGER" required="true" />
         <column name="version" type="INTEGER" required="true"/>
         <column name="version_name" type="VARCHAR" size="255"/>
         <column name="data" type="LONGVARCHAR"/>
-        <foreign-key name="spy_cms_version-fk_cms_page" foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
+        <foreign-key name="spy_cms_version-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_cms_page"/>
         </foreign-key>
         <index name="spy_cms_version-index">

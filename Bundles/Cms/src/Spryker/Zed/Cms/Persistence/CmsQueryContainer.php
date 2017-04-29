@@ -719,7 +719,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage)
+    public function queryCmsPageWithAllRelationsByIdPage($idPage)
     {
         return $this->getFactory()->createCmsPageQuery()
             ->filterByIdCmsPage($idPage)
@@ -749,15 +749,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @api
      *
      * @param int $idPage
+     * @param string $versionOrder
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersionByIdPage($idPage)
+    public function queryCmsVersionByIdPage($idPage, $versionOrder = Criteria::DESC)
     {
         return $this->getFactory()
             ->createSpyCmsVersionQuery()
             ->filterByFkCmsPage($idPage)
-            ->orderBy(SpyCmsVersionTableMap::COL_VERSION, Criteria::DESC);
+            ->orderBy(SpyCmsVersionTableMap::COL_VERSION, $versionOrder);
     }
 
     /**
@@ -786,34 +787,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryCmsVersionByIdPage($idPage)
             ->filterByVersion($version);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $idGlossaryKeys
-     *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
-     */
-    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys)
-    {
-        return $this->getGlossaryQueryContainer()
-            ->queryTranslations()
-            ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $idGlossaryKeys
-     *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
-     */
-    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys)
-    {
-        return $this->getGlossaryQueryContainer()
-            ->queryKeys()
-            ->filterByIdGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
 
     /**

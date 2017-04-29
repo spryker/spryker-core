@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
@@ -286,16 +287,17 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryCmsPageWithAllRelationsEntitiesByIdPage($idPage);
+    public function queryCmsPageWithAllRelationsByIdPage($idPage);
 
     /**
      * @api
      *
      * @param int $idPage
+     * @param string $versionOrder
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersionByIdPage($idPage);
+    public function queryCmsVersionByIdPage($idPage, $versionOrder = Criteria::DESC);
 
     /**
      * @api
@@ -315,24 +317,6 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionByIdPageAndVersion($idPage, $version);
-
-    /**
-     * @api
-     *
-     * @param array $idGlossaryKeys
-     *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
-     */
-    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys);
-
-    /**
-     * @api
-     *
-     * @param array $idGlossaryKeys
-     *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
-     */
-    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys);
 
     /**
      * @api

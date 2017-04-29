@@ -404,8 +404,10 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Creates a cms version for page and mark it for publishing
-     * - Creates a generated version name if $versionName is null
+     * - Creates a cms version for page.
+     * - Creates a generated version name if $versionName is null.
+     * - Touches cms page with given idCmsPage.
+     * - Calls save() on PostSavePlugins classes
      *
      * @api
      *
@@ -420,7 +422,9 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Rollbacks latest CmsPageVersion to older version
+     * - Rollbacks latest CmsPageVersion to older version.
+     * - Creates a reference cms version copy
+     * - Calls publishAndVersion() method
      *
      * @api
      *
@@ -455,7 +459,7 @@ interface CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
@@ -477,7 +481,7 @@ interface CmsFacadeInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 

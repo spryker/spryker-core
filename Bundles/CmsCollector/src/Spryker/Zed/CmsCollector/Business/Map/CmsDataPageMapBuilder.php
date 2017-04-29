@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsCollector\Business\Map;
 
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
@@ -15,15 +17,35 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
+use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 /**
- * @method \Pyz\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
  */
-class CmsDataPageMapBuilder
+class CmsDataPageMapBuilder implements PageMapInterface
 {
 
     const TYPE_CMS_PAGE = 'cms_page';
+    const TYPE = 'type';
+    const ID_CMS_PAGE = 'id_cms_page';
+    const NAME = 'name';
+
+    /**
+     * @var DataExtractorInterface
+     */
+    protected $dataExtractor;
+
+    /**
+     * @param DataExtractorInterface $dataExtractor
+     */
+    public function __construct(DataExtractorInterface $dataExtractor)
+    {
+        $this->dataExtractor = $dataExtractor;
+    }
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -34,51 +56,46 @@ class CmsDataPageMapBuilder
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
     {
-        $cmsDataArray = json_decode($cmsPageData['data'], true);
+
+        $cmsVersionDataTransfer = $this->dataExtractor->extractCmsVersionDataTransfer($cmsPageData[CmsVersionPageCollectorQuery::COL_DATA]);
         $localeName = $localeTransfer->getLocaleName();
-        $cmsLocalizedAttributes = $cmsDataArray[SpyCmsPageLocalizedAttributesTableMap::TABLE_NAME][$localeName];
+        $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
+        $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
+        $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CMS_PAGE);
 
-        /*
-         * Here you can hard code which cms data will be used for which search functionality
-         */
         $pageMapBuilder
-            ->addSearchResultData($pageMapTransfer, 'id_cms_page', $cmsDataArray[SpyCmsPageTableMap::COL_ID_CMS_PAGE])
-            ->addSearchResultData($pageMapTransfer, 'name', $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_NAME])
-            ->addSearchResultData($pageMapTransfer, 'url', $cmsPageData['url'])
-            ->addSearchResultData($pageMapTransfer, 'type', static::TYPE_CMS_PAGE)
-            ->addFullTextBoosted($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_NAME])
-            ->addFullText($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_TITLE])
-            ->addFullText($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_KEYWORDS])
-            ->addFullText($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_DESCRIPTION])
-            ->addFullText($pageMapTransfer, $this->extractContents($cmsDataArray[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME], $localeName))
-            ->addSuggestionTerms($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_NAME])
-            ->addCompletionTerms($pageMapTransfer, $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_NAME]);
+            ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())
+            ->addSearchResultData($pageMapTransfer, static::NAME, $cmsPageAttributeTransfer->getName())
+            ->addSearchResultData($pageMapTransfer, static::TYPE, static::TYPE_CMS_PAGE)
+            ->addSearchResultData($pageMapTransfer, CmsVersionPageCollectorQuery::COL_URL, $cmsPageData[CmsVersionPageCollectorQuery::COL_URL])
+            ->addFullTextBoosted($pageMapTransfer, $cmsPageAttributeTransfer->getName())
+            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaTitle())
+            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaKeywords())
+            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaDescription())
+            ->addFullText($pageMapTransfer, $this->extractContents($cmsVersionDataTransfer->getCmsGlossary(), $localeName))
+            ->addSuggestionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName())
+            ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName())
+        ;
 
         return $pageMapTransfer;
     }
 
     /**
-     * @param array $glossaryKeyMappings
+     * @param CmsGlossaryTransfer $cmsGlossaryTransfer
      * @param string $localeName
      *
      * @return string
      */
-    protected function extractContents(array $glossaryKeyMappings, $localeName)
+    public function extractContents(CmsGlossaryTransfer $cmsGlossaryTransfer, $localeName)
     {
-        $contents = [];
-        foreach ($glossaryKeyMappings as $glossaryKeyMapping) {
-            $translations = $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME];
-            if (array_key_exists($localeName, $translations)) {
-                $contents[] = $translations[$localeName][SpyGlossaryTranslationTableMap::COL_VALUE];
-            }
-        }
+        $placeholders = $this->dataExtractor->extractPlaceholdersByLocale($cmsGlossaryTransfer, $localeName);
 
-        return implode(',', $contents);
+        return implode(',', $placeholders);
     }
 
 }

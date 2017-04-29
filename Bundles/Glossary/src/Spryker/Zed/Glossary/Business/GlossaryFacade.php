@@ -90,6 +90,20 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @param array $idKeys
+     *
+     * @return void
+     */
+    public function deleteKeys(array $idKeys)
+    {
+        $keyManager = $this->getFactory()->createKeyManager();
+
+        $keyManager->deleteKeys($idKeys);
+    }
+
+    /**
      * @api
      *
      * @param string $keyName
@@ -258,6 +272,22 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         $translationManager = $this->getFactory()->createTranslationManager();
 
         return $translationManager->deleteTranslation($keyName, $locale);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys)
+    {
+        $translationManager = $this->getFactory()->createTranslationManager();
+
+        return $translationManager->deleteTranslationsByFkKeys($idKeys);
     }
 
     /**

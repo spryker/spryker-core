@@ -13,7 +13,7 @@ interface VersionFinderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
@@ -28,7 +28,7 @@ interface VersionFinderInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 

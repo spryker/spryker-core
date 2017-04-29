@@ -178,4 +178,22 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryTranslationByValue($value);
 
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys);
+
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys);
+
 }

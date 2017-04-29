@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsCollector;
 use Spryker\Zed\CmsCollector\Communication\Plugin\CmsVersionPageDataPageMapPlugin;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
+use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,11 +18,13 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
-    const PLUGIN_PRODUCT_DATA_PAGE_MAP = 'PLUGIN_PRODUCT_DATA_PAGE_MAP';
     const FACADE_SEARCH = 'FACADE_SEARCH';
-    const PLUGIN_CMS_PAGE_DATA_PAGE_MAP = 'PLUGIN_CMS_PAGE_DATA_PAGE_MAP';
+
+    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+
+    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    const SERVICE_UTIL_ENCODING = 'util encoding service';
+
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,21 +49,11 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[self::PLUGIN_CMS_PAGE_DATA_PAGE_MAP] = function (Container $container) {
-            return $this->createCmsVersionPageDataPageMapPlugin($container);
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\CmsCollector\Communication\Plugin\CmsVersionPageDataPageMapPlugin
-     */
-    public function createCmsVersionPageDataPageMapPlugin(Container $container)
-    {
-        return new CmsVersionPageDataPageMapPlugin();
     }
 
 }

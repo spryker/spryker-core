@@ -14,7 +14,7 @@ interface VersionMigrationInterface
      * @param string $cmsVersionOriginData
      * @param string $cmsVersionTargetData
      *
-     * @return bool
+     * @return void
      */
     public function migrate($cmsVersionOriginData, $cmsVersionTargetData);
 

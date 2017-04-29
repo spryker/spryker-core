@@ -20,9 +20,11 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
-use Spryker\Zed\Cms\Business\Version\Handler\CmsGlossaryKeyMappingMigrationHandler;
-use Spryker\Zed\Cms\Business\Version\Handler\CmsPageLocalizedAttributesMigrationHandler;
-use Spryker\Zed\Cms\Business\Version\Handler\CmsTemplateMigrationHandler;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsGlossaryKeyMappingMigration;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsPageLocalizedAttributesMigration;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsTemplateMigration;
+use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
+use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Business\Version\VersionFinder;
 use Spryker\Zed\Cms\Business\Version\VersionGenerator;
 use Spryker\Zed\Cms\Business\Version\VersionMigration;
@@ -203,6 +205,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new VersionFinder(
             $this->getQueryContainer(),
+            $this->createVersionDataMapper(),
             $this->getCmsVersionTransferExpanderPlugins()
         );
     }
@@ -214,6 +217,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new VersionPublisher(
             $this->createVersionGenerator(),
+            $this->createVersionDataMapper(),
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->getCmsVersionPostSavePlugins()
@@ -235,41 +239,43 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createVersionMigration()
     {
-        return new VersionMigration([
-            $this->createCmsTemplateMigrationHandler(),
-            $this->createCmsPageLocalizedAttributeMigrationHandler(),
-            $this->createCmsGlossaryKeyMappingMigrationHandler(),
-        ]);
+        return new VersionMigration(
+            $this->getUtilEncodingService(),
+            [
+                $this->createCmsTemplateMigrationHandler(),
+                $this->createCmsPageLocalizedAttributeMigrationHandler(),
+                $this->createCmsGlossaryKeyMappingMigrationHandler(),
+            ]);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
     public function createCmsTemplateMigrationHandler()
     {
-        return new CmsTemplateMigrationHandler(
+        return new CmsTemplateMigration(
             $this->createTemplateManager(),
             $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
     public function createCmsPageLocalizedAttributeMigrationHandler()
     {
-        return new CmsPageLocalizedAttributesMigrationHandler(
+        return new CmsPageLocalizedAttributesMigration(
             $this->getLocaleFacade(),
             $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Business\Version\Handler\MigrationHandlerInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
     public function createCmsGlossaryKeyMappingMigrationHandler()
     {
-        return new CmsGlossaryKeyMappingMigrationHandler(
+        return new CmsGlossaryKeyMappingMigration(
             $this->createCmsGlossarySaver(),
             $this->getLocaleFacade(),
             $this->getQueryContainer()
@@ -290,7 +296,17 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\CmsVersionPostSavePluginInterface[]
+     * @return VersionDataMapperInterface
+     */
+    public function createVersionDataMapper()
+    {
+        return new VersionDataMapper(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
      */
     protected function getCmsVersionPostSavePlugins()
     {
@@ -298,11 +314,19 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\CmsVersionTransferExpanderPlugin[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[]
      */
     protected function getCmsVersionTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

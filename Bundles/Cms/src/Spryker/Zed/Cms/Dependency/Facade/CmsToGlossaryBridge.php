@@ -146,4 +146,24 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
         $this->glossaryFacade->touchTranslationForKeyId($idKey, $localeTransfer);
     }
 
+    /**
+     * @param array $idKeys
+     *
+     * @return void
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys)
+    {
+        $this->glossaryFacade->deleteTranslationsByFkKeys($idKeys);
+    }
+
+    /**
+     * @param array $idKeys
+     *
+     * @return void
+     */
+    public function deleteKeys(array $idKeys)
+    {
+        $this->glossaryFacade->deleteKeys($idKeys);
+    }
+
 }

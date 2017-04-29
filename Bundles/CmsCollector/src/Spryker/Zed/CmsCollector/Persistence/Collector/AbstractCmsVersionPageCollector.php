@@ -18,6 +18,10 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQuery
 {
 
+    const COL_URL = 'url';
+    const COL_IS_ACTIVE = 'is_active';
+    const COL_DATA = 'data';
+
     /**
      * @return void
      */
@@ -28,25 +32,25 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
             Criteria::INNER_JOIN
         )
-            ->addJoin(
-                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-                SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
-                Criteria::INNER_JOIN
-            )
-            ->addJoin(
-                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
-                Criteria::INNER_JOIN
-            )
-            ->addAnd(
-                SpyUrlTableMap::COL_FK_LOCALE,
-                $this->getLocale()->getIdLocale(),
-                Criteria::EQUAL
-            );
+        ->addJoin(
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+            Criteria::INNER_JOIN
+        )
+        ->addJoin(
+            SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+            Criteria::INNER_JOIN
+        )
+        ->addAnd(
+            SpyUrlTableMap::COL_FK_LOCALE,
+            $this->getLocale()->getIdLocale(),
+            Criteria::EQUAL
+        );
 
-        $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, 'data');
-        $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, 'url');
-        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'is_active');
+        $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, static::COL_DATA);
+        $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, static::COL_URL);
+        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_VERSION);
 
         $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()));

@@ -33,18 +33,6 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Twig_LoaderInterface
-     */
-    public function createSharedFilesystemLoader()
-    {
-        return new TwigFilesystemLoader(
-            $this->getConfig()->getSharedTemplatePaths(),
-            $this->createFilesystemCache(),
-            $this->createTemplateNameExtractor()
-        );
-    }
-
-    /**
      * @return \Spryker\Shared\Twig\Cache\CacheInterface
      */
     protected function createFilesystemCache()

@@ -5,18 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cms\Dependency;
+namespace Spryker\Zed\Cms\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 
-interface CmsVersionPostSavePluginInterface
+interface CmsVersionTransferExpanderPlugin
 {
 
     /**
+     * Specification:
+     * - This plugin interface is used for expanding additional information in
+     *   CmsVersionTransfer, this method will call when VersionFinder return a
+     *   Cms Version
+     *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function postSave(CmsVersionTransfer $cmsVersionTransfer);
+    public function expandTransfer(CmsVersionTransfer $cmsVersionTransfer);
 
 }

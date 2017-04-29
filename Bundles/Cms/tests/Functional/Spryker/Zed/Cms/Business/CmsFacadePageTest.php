@@ -225,23 +225,7 @@ class CmsFacadePageTest extends Test
      */
     public function testPublishPageShouldPersistCmsVersion()
     {
-        $fixtures = $this->createCmsPageTransferFixtures();
-        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
-
-        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
-        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
-
-        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
-
-        $translationFixtures = $this->getTranslationFixtures();
-
-        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
-        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
-            $cmsPlaceholderTranslationTransfer->setTranslation(
-                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
-            );
-        }
-        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransfer = $this->cmsFacade->publishAndVersion($idCmsPage);
 
         $this->assertNotNull($cmsVersionTransfer);
@@ -255,23 +239,7 @@ class CmsFacadePageTest extends Test
      */
     public function testPublishPageShouldGetNewVersion()
     {
-        $fixtures = $this->createCmsPageTransferFixtures();
-        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
-
-        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
-        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
-
-        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
-
-        $translationFixtures = $this->getTranslationFixtures();
-
-        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
-        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
-            $cmsPlaceholderTranslationTransfer->setTranslation(
-                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
-            );
-        }
-        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
         $cmsVersionTransferTwo = $this->cmsFacade->publishAndVersion($idCmsPage);
 
@@ -283,23 +251,7 @@ class CmsFacadePageTest extends Test
      */
     public function testRollbackPageShouldGetOldData()
     {
-        $fixtures = $this->createCmsPageTransferFixtures();
-        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
-
-        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
-        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
-
-        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
-
-        $translationFixtures = $this->getTranslationFixtures();
-
-        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
-        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
-            $cmsPlaceholderTranslationTransfer->setTranslation(
-                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
-            );
-        }
-        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
         $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
@@ -326,6 +278,105 @@ class CmsFacadePageTest extends Test
         $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
         $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
         $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRevertPageShouldGetOldData()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        foreach ($persistedCmsPageTransfer->getMetaAttributes() as $metaAttribute) {
+            $metaAttribute->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+            $metaAttribute->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+            $metaAttribute->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
+        }
+
+        $updatedPageTransfer = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+        $updatedCmsPageMetaAttributes = $updatedPageTransfer->getMetaAttributes()[0];
+
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+
+        $this->cmsFacade->revert($idCmsPage);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+        $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
+
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLatestCmsVersionReturnsLatestVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+
+        $cmsVersionTransferTwo = $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+        $this->assertGreaterThan($cmsVersionTransferOne->getVersion(), $cmsVersionTransferTwo->getVersion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAllCmsVersionByReturnsAllVersions()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+
+        $versions = $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
+
+        $this->assertEquals(count($versions), 2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCmsVersionByVersionNumberReturnsSameVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishAndVersion($idCmsPage);
+
+        $cmsVersion = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage,1);
+
+        $this->assertEquals($cmsVersion->getVersion(), 1);
+    }
+
+    /**
+     * @return int
+     */
+    protected function createCmsPageWithGlossaryAttributes()
+    {
+        $fixtures = $this->createCmsPageTransferFixtures();
+        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
+
+        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
+        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+
+        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+
+        $translationFixtures = $this->getTranslationFixtures();
+
+        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
+        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
+            $cmsPlaceholderTranslationTransfer->setTranslation($translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]);
+        }
+        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+
+        return $idCmsPage;
     }
 
     /**

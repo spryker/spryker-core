@@ -45,7 +45,7 @@ class CmsGlossaryReaderTest extends CmsMocks
             ->method('getCmsPageEntity')
             ->willReturn($cmsPageEntityMock);
 
-        $cmsGlossaryReaderMock->expects($this->once())
+        $cmsGlossaryReaderMock->expects($this->any())
             ->method('fileExists')
             ->willReturn(true);
 

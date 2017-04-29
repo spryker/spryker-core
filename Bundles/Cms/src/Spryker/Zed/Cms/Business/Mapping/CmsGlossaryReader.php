@@ -89,9 +89,21 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity)
     {
         $cmsPageArray = $cmsPageEntity->toArray();
-        $templateFile = $this->cmsConfig->getTemplateRealPath($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
+        $templateFiles = $this->cmsConfig->getTemplateRealPaths($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
 
-        $placeholders = $this->getTemplatePlaceholders($templateFile);
+        /* Added for keeping BC */
+        if (!is_array($templateFiles)) {
+            $templateFiles = [$templateFiles];
+        }
+
+        $placeholders = [];
+        foreach ($templateFiles as $templateFile) {
+            if (!$this->fileExists($templateFile)) {
+                continue;
+            }
+
+            $placeholders = $this->getTemplatePlaceholders($templateFile);
+        }
 
         return $placeholders;
     }

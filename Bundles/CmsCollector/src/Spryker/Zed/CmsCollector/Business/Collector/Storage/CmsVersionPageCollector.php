@@ -7,17 +7,43 @@
 
 namespace Spryker\Zed\CmsCollector\Business\Collector\Storage;
 
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
+use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
 class CmsVersionPageCollector extends AbstractStoragePropelCollector
 {
+
+    /**
+     * @var DataExtractorInterface
+     */
+    protected $dataExtractor;
+
+    /**
+     * @param UtilDataReaderServiceInterface $utilDataReaderService
+     * @param DataExtractorInterface $dataExtractorDataPage
+     */
+    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService, DataExtractorInterface $dataExtractorDataPage)
+    {
+        parent::__construct($utilDataReaderService);
+
+        $this->dataExtractor = $dataExtractorDataPage;
+    }
 
     /**
      * @param string $touchKey
@@ -27,24 +53,28 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        $cmsDataArray = json_decode($collectItemData['data'], true);
+        $cmsVersionDataTransfer = $this->dataExtractor->extractCmsVersionDataTransfer($collectItemData[CmsVersionPageCollectorQuery::COL_DATA]);
         $localeName = $this->locale->getLocaleName();
-        $cmsLocalizedAttributes = $cmsDataArray[SpyCmsPageLocalizedAttributesTableMap::TABLE_NAME][$localeName];
+        $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
+        $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
+        $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
         return [
-            'url' => $collectItemData['url'],
-            'valid_from' => $cmsDataArray[SpyCmsPageTableMap::COL_VALID_FROM],
-            'valid_to' => $cmsDataArray[SpyCmsPageTableMap::COL_VALID_TO],
-            'is_active' => $collectItemData['is_active'],
-            'id' => $cmsDataArray[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            'template' => $cmsDataArray[SpyCmsTemplateTableMap::TABLE_NAME][SpyCmsTemplateTableMap::COL_TEMPLATE_PATH],
-            'placeholders' => $this->extractPlaceholders($cmsDataArray[SpyCmsGlossaryKeyMappingTableMap::TABLE_NAME], $localeName),
-            'name' => $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_NAME],
-            'meta_title' => $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_TITLE],
-            'meta_keywords' => $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_KEYWORDS],
-            'meta_description' => $cmsLocalizedAttributes[SpyCmsPageLocalizedAttributesTableMap::COL_META_DESCRIPTION],
+            'url' => $collectItemData[CmsVersionPageCollectorQuery::COL_URL],
+            'valid_from' => $cmsPageTransfer->getValidFrom(),
+            'valid_to' => $cmsPageTransfer->getValidTo(),
+            'is_active' => $cmsPageTransfer->getIsActive(),
+            'id' => $cmsPageTransfer->getFkPage(),
+            'template' => $cmsVersionDataTransfer->getCmsTemplate()->getTemplatePath(),
+            'placeholders' => $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName),
+            'name' => $cmsPageAttributeTransfer->getName(),
+            'meta_title' => $cmsMetaAttributeTransfer->getMetaTitle(),
+            'meta_keywords' => $cmsMetaAttributeTransfer->getMetaKeywords(),
+            'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
         ];
     }
+
+
 
     /**
      * @return string
@@ -52,26 +82,6 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     protected function collectResourceType()
     {
         return CmsConstants::RESOURCE_TYPE_PAGE;
-    }
-
-    /**
-     * @param array $glossaryKeyMappings
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function extractPlaceholders(array $glossaryKeyMappings, $localeName)
-    {
-        $placeholders = [];
-        foreach ($glossaryKeyMappings as $glossaryKeyMapping) {
-            $placeholder = $glossaryKeyMapping[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
-            $translations = $glossaryKeyMapping[SpyGlossaryKeyTableMap::TABLE_NAME][SpyGlossaryTranslationTableMap::TABLE_NAME];
-            if (array_key_exists($localeName, $translations)) {
-                $placeholders[$placeholder] = $translations[$localeName][SpyGlossaryTranslationTableMap::COL_VALUE];
-            }
-        }
-
-        return $placeholders;
     }
 
 }
