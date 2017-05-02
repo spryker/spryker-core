@@ -1,0 +1,31 @@
+{
+  "name": "spryker/flysystem-aws3v3-filesystem",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "require": {
+    "league/flysystem-aws-s3-v3": "*"
+  },
+  "suggest": {
+    "spryker/flysystem": "*"
+
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "description": "FlysystemAws3v3FileSystem bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

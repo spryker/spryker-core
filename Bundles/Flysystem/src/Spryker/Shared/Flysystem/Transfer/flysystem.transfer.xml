@@ -30,14 +30,4 @@
         <property name="flysystemConfig" type="array" />
     </transfer>
 
-    <transfer name="FlysystemConfigAws">
-        <property name="root" type="string" />
-        <property name="path" type="string" />
-        <property name="key" type="string" />
-        <property name="secret" type="string" />
-        <property name="bucket" type="string" />
-        <property name="version" type="string" />
-        <property name="region" type="string" />
-    </transfer>
-
 </transfers>
