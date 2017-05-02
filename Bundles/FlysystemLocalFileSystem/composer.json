@@ -5,7 +5,7 @@
       "Spryker": "src/"
     }
   },
-  "require": {
+  "suggest": {
     "spryker/flysystem": "*"
   },
   "require-dev": {

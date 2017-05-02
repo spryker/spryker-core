@@ -4,8 +4,6 @@
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require": {
-  },
   "require-dev": {
     "spryker/kernel": "^3.0.0",
     "spryker/flysystem": "*",
