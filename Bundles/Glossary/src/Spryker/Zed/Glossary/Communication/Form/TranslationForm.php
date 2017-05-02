@@ -106,6 +106,7 @@ class TranslationForm extends AbstractType
         return [
             'type' => 'textarea',
             'label' => false,
+            'required' => false,
             $dataTypeField => $translationFields,
             'constraints' => $this->getFieldDefaultConstraints(),
             'options' => [
