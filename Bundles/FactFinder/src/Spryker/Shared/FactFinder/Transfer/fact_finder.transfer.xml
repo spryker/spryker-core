@@ -200,20 +200,20 @@
         <property name="cookieId" type="string"/>
         <property name="query" type="string"/>
         <property name="pos" type="string"/>
-        <property name="pos" type="integer"/>
-        <property name="origPos" type="integer"/>
-        <property name="origPos" type="integer"/>
-        <property name="page" type="integer"/>
-        <property name="pageSize" type="integer"/>
-        <property name="origPageSize" type="integer"/>
+        <property name="pos" type="int"/>
+        <property name="origPos" type="int"/>
+        <property name="origPos" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="origPageSize" type="int"/>
         <property name="simi" type="string"/>
         <property name="campaign" type="string"/>
-        <property name="count" type="integer"/>
+        <property name="count" type="int"/>
         <property name="price" type="string"/>
         <property name="mainId" type="string"/>
-        <property name="positive" type="boolean"/>
+        <property name="positive" type="bool"/>
         <property name="message" type="string"/>
-        <property name="hitCount" type="integer"/>
+        <property name="hitCount" type="int"/>
         <property name="searchTime" type="string"/>
         <property name="bestSimi" type="string"/>
         <property name="minSimi" type="string"/>
@@ -226,7 +226,7 @@
     </transfer>
 
     <transfer name="FactFinderTrackingResponse">
-        <property name="result" type="boolean"/>
+        <property name="result" type="bool"/>
     </transfer>
 
     <transfer name="FactFinderSimilarRecordsRequest">
