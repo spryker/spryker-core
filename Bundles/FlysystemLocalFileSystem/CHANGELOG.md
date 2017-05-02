@@ -1,3 +1,3 @@
-# Flysystem Changelog
+# FlysystemLocalFileSystem Changelog
 
-[Flysystem Changelog](https://github.com/thephpleague/flysystem/releases
+[FlysystemLocalFileSystem Changelog](https://github.com/spryker/FlysystemLocalFileSystem/releases)
