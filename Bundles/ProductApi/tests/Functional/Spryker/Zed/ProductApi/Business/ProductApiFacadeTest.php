@@ -8,7 +8,10 @@
 namespace Functional\Spryker\Zed\ProductApi\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiItemTransfer;
+use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\ProductApi\Business\ProductApiFacade;
 
 /**
@@ -34,7 +37,23 @@ class ProductApiFacadeTest extends Test
 
         $resultTransfer = $productApiFacade->getProduct($idProduct, $apiFilterTransfer);
 
-        $this->assertInstanceOf(ApiFilterTransfer::class, $resultTransfer);
+        $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFind()
+    {
+        $productApiFacade = new ProductApiFacade();
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiFilterTransfer = new ApiFilterTransfer();
+        $apiRequestTransfer->setFilter($apiFilterTransfer);
+
+        $resultTransfer = $productApiFacade->findProducts($apiRequestTransfer);
+
+        $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
     }
 
 }

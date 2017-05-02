@@ -219,7 +219,7 @@ class ProductApi implements ProductApiInterface
     protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
     {
         $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            $apiRequestTransfer->getFilter()->getFilter()
+            $apiRequestTransfer->getFilter()->getCriteriaJson()
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
@@ -243,7 +243,7 @@ class ProductApi implements ProductApiInterface
         );
 
         $paginationTransfer = $this->buildPagination(
-            $apiRequestTransfer->getFilter()->getPagination()
+            $apiRequestTransfer->getFilter()
         );
 
         $criteriaTransfer->setPagination($paginationTransfer);
@@ -282,17 +282,17 @@ class ProductApi implements ProductApiInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPaginationTransfer $apiPaginationTransfer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
      */
-    protected function buildPagination(ApiPaginationTransfer $apiPaginationTransfer)
+    protected function buildPagination(ApiFilterTransfer $apiFilterTransfer)
     {
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
-        $paginationTransfer->fromArray($apiPaginationTransfer->toArray(), true);
+        $paginationTransfer->fromArray($apiFilterTransfer->toArray(), true);
 
         $sortItems = [];
-        foreach ($apiPaginationTransfer->getSort() as $column => $direction) {
+        foreach ($apiFilterTransfer->getSort() as $column => $direction) {
             $sortItems[] = (new PropelQueryBuilderSortTransfer())
                 ->setColumnName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $column)
                 ->setSortDirection($direction);
