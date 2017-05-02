@@ -32,7 +32,7 @@
       "Spryker": "src/"
     },
     "psr-4": {
-      "Product\\Module\\": "tests/"
+      "ProductApi\\Module\\": "tests/"
     }
   },
   "autoload-dev": {

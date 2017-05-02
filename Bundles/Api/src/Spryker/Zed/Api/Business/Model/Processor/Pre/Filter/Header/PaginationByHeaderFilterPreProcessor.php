@@ -30,8 +30,8 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
             return $apiRequestTransfer;
         }
 
-        $apiRequestTransfer->getFilter()->getPagination()->setOffset($matches[1]);
-        $apiRequestTransfer->getFilter()->getPagination()->setLimit($matches[2] - $matches[1]);
+        $apiRequestTransfer->getFilter()->setOffset($matches[1]);
+        $apiRequestTransfer->getFilter()->setLimit($matches[2] - $matches[1]);
 
         return $apiRequestTransfer;
     }
