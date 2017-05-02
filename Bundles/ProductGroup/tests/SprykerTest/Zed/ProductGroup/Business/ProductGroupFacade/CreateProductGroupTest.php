@@ -13,7 +13,14 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
- * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group ProductGroup
+ * @group Business
+ * @group ProductGroupFacade
+ * @group CreateProductGroupTest
+ * Add your own group annotations below this line
  */
 class CreateProductGroupTest extends Test
 {
