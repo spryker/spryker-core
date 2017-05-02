@@ -67,6 +67,7 @@
     "spryker/glossary": "*",
     "spryker/file-system": "*",
     "spryker/flysystem": "*",
+    "spryker/flysystem-aws3v3-filesystem": "*",
     "spryker/flysystem-ftp-filesystem": "*",
     "spryker/flysystem-local-filesystem": "*",
     "spryker/graph": "*",
