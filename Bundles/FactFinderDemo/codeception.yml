@@ -1,4 +1,4 @@
-namespace: FactFinder
+namespace: FactFinderDemo
 actor: Tester
 paths:
     tests: tests

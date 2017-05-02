@@ -1,3 +1,3 @@
-# Ratepay Changelog
+# FactFinder Changelog
 
-[Ratepay Changelog](https://github.com/spryker/FactFinder/releases)
+[FactFinder Changelog](https://github.com/spryker/FactFinder/releases)
