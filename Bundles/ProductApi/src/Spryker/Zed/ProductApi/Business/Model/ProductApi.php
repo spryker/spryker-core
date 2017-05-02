@@ -100,11 +100,6 @@ class ProductApi implements ProductApiInterface
     public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer)
     {
         $productData = $this->getProductData($idProductAbstract, $apiFilterTransfer);
-        foreach ($productData as $index => $value) {
-            $x = $index;
-            $x = str_replace("\x00*\x00", '', $x);
-            $productData[$x] = $value;
-        }
 
         $productTransfer = $this->transferMapper->toTransfer($productData);
 
@@ -200,7 +195,8 @@ class ProductApi implements ProductApiInterface
         //TODO column filtering
         $productArray = (array)$this->queryContainer
             ->queryGet($idProduct)
-            ->findOne();
+            ->findOne()
+            ->toArray();
 
         if (!$productArray) {
             throw new EntityNotFoundException(sprintf('Product not found: %s', $idProduct));
