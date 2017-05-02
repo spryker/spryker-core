@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Twig\Communication;
 
+use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
-use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;

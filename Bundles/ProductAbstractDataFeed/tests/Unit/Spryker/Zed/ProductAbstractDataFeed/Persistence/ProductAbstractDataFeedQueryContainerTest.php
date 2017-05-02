@@ -11,8 +11,8 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
-use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 
 /**
  * @group Unit

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence;
 
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

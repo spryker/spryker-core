@@ -128,7 +128,6 @@ class CustomerTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customer->getIdCustomer(), 'View');
         $buttons[] = $this->generateEditButton('/customer/edit?id-customer=' . $customer->getIdCustomer(), 'Edit');
-        $buttons[] = $this->generateViewButton('/customer/address?id-customer=' . $customer->getIdCustomer(), 'Manage Addresses');
 
         return implode(' ', $buttons);
     }

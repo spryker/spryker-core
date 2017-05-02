@@ -14,8 +14,8 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\ItemDiscounts;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\ItemDiscounts;
 
 /**
  * @group Unit

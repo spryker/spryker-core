@@ -6,7 +6,7 @@
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
 
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
         <column name="middle_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="true" size="100" type="VARCHAR"/>
@@ -42,7 +42,7 @@
         <column name="fk_sales_order_address" type="INTEGER" required="true"/>
 
         <column name="is_billing" type="BOOLEAN" default="0"/>
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
         <column name="middle_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="true" size="100" type="VARCHAR"/>
@@ -80,7 +80,7 @@
         <column name="fk_locale" type="INTEGER"/>
 
         <column name="email" required="false" size="255" type="VARCHAR"/>
-        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr" required="false"/>
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms" required="false"/>
         <column name="first_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
         <column name="order_reference" type="VARCHAR" size="45" required="true"/>

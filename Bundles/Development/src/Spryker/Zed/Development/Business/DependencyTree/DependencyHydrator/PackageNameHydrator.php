@@ -33,6 +33,9 @@ class PackageNameHydrator implements DependencyHydratorInterface
         try {
             $reflection = new ReflectionClass($dependency[DependencyTree::META_FOREIGN_CLASS_NAME]);
             $filePath = $reflection->getFileName();
+
+            $this->cleanAutoloader();
+
             $relativeFilePath = str_replace(APPLICATION_VENDOR_DIR, '', $filePath);
 
             $pathParts = explode(DIRECTORY_SEPARATOR, ltrim($relativeFilePath, DIRECTORY_SEPARATOR));
@@ -54,6 +57,27 @@ class PackageNameHydrator implements DependencyHydratorInterface
         }
 
         return false;
+    }
+
+    /**
+     * PHP_CodeSniffer adds an autoloader to the autoloader stack. This method make sure that it's removed after it was added.
+     *
+     * @return void
+     */
+    private function cleanAutoloader()
+    {
+        $autoloadFunctions = spl_autoload_functions();
+        $codeSnifferAutoloadFunction = false;
+
+        foreach ($autoloadFunctions as $autoloadFunction) {
+            if (is_array($autoloadFunction) && $autoloadFunction[0] === 'PHP_CodeSniffer') {
+                $codeSnifferAutoloadFunction = $autoloadFunction;
+            }
+        }
+
+        if ($codeSnifferAutoloadFunction) {
+            spl_autoload_unregister($codeSnifferAutoloadFunction);
+        }
     }
 
 }

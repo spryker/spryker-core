@@ -10,11 +10,11 @@ namespace Functional\Spryker\Zed\CustomerGroup\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
 
 /**

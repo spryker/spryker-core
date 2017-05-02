@@ -8,9 +8,9 @@
 namespace Spryker\Zed\CustomerGroup\Communication\Table;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;

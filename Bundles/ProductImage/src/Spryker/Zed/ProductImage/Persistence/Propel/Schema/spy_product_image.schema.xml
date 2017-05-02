@@ -31,8 +31,8 @@
 
     <table name="spy_product_image" idMethod="native" allowPkInsert="true">
         <column name="id_product_image" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="external_url_small" type="VARCHAR" size="1024"/>
-        <column name="external_url_large" type="VARCHAR" size="1024"/>
+        <column name="external_url_small" type="VARCHAR" size="2048"/>
+        <column name="external_url_large" type="VARCHAR" size="2048"/>
 
         <behavior name="timestampable"/>
 
