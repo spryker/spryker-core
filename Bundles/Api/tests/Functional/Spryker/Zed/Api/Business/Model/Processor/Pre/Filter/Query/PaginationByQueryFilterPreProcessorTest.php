@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter;
+namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
@@ -23,6 +23,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryF
  * @group Processor
  * @group Pre
  * @group Filter
+ * @group Query
  * @group PaginationByQueryFilterPreProcessorTest
  */
 class PaginationByQueryFilterPreProcessorTest extends Test

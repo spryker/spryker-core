@@ -244,7 +244,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPaginationByHeaderFilterPreProcessor()
     {
-        return new PaginationByHeaderFilterPreProcessor();
+        return new PaginationByHeaderFilterPreProcessor(
+            $this->getConfig()
+        );
     }
 
     /**
