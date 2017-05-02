@@ -209,6 +209,8 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
         $itemTransfer->setUnitNetPrice($orderItemEntity->getNetPrice());
         $itemTransfer->setUnitPrice($orderItemEntity->getPrice());
+        $itemTransfer->setSumPrice($orderItemEntity->getPrice());
+
         $itemTransfer->setUnitSubtotalAggregation($orderItemEntity->getSubtotalAggregation());
 
         $itemTransfer->setRefundableAmount($orderItemEntity->getRefundableAmount());

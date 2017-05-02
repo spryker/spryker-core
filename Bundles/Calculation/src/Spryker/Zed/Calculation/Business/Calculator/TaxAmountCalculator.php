@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Zed\Calculation\Dependency\Facade\CalculationToTaxInterface;
+use Spryker\Shared\Calculation\PriceTaxMode;
 
 class TaxAmountCalculator implements CalculatorInterface
 {
@@ -247,9 +247,9 @@ class TaxAmountCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function calculateTaxAmount($price, $taxRate, $taxMode = CalculationConfig::TAX_MODE_GROSS)
+    protected function calculateTaxAmount($price, $taxRate, $taxMode = PriceTaxMode::TAX_MODE_GROSS)
     {
-        if ($taxMode === CalculationConfig::TAX_MODE_NET) {
+        if ($taxMode === PriceTaxMode::TAX_MODE_NET) {
             return $this->taxFacade->getAccruedTaxAmountFromNetPrice($price, $taxRate);
         } else {
             return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);

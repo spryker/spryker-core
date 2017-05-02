@@ -8,21 +8,11 @@
 namespace Spryker\Zed\Calculation;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Calculation\PriceTaxMode;
 
 class CalculationConfig extends AbstractBundleConfig
 {
 
     const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
-
-    const TAX_MODE_NET = 'NET_MODE';
-    const TAX_MODE_GROSS = 'GROSS_MODE';
-
-    /**
-     * @return string
-     */
-    public function getTaxMode()
-    {
-        return static::TAX_MODE_GROSS;
-    }
 
 }

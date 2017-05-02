@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,6 +32,8 @@ class DetailController extends AbstractController
         $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
+
+        $invoice = $this->getFactory()->getInvoiceFacade()->buildInvoice($orderTransfer);
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);

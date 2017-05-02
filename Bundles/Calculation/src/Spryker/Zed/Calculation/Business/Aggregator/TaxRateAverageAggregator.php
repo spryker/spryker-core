@@ -7,8 +7,11 @@
 namespace Spryker\Zed\Calculation\Business\Aggregator;
 
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
+use Spryker\Shared\Calculation\PriceTaxMode;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
@@ -20,13 +23,56 @@ class TaxRateAverageAggregator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+        $this->calculateTaxAverageAggregationForItems(
+            $calculableObjectTransfer->getItems(),
+            $calculableObjectTransfer->getTaxMode()
+        );
+    }
 
-            $unitPriceToPayNetPrice = $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getUnitTaxAmountFullAggregation();
-            $taxRateAverageAggregation = round(($itemTransfer->getUnitPriceToPayAggregation() / $unitPriceToPayNetPrice - 1) * 100, 2) ;
+    /**
+     * @param \ArrayObject|ItemTransfer[] $items
+     * @param string $taxMode
+     *
+     * @return void
+     */
+    protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $taxMode)
+    {
+        foreach ($items as $itemTransfer) {
+
+            $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $taxMode);
+            $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $unitPriceToPayAggregationNetPrice);
 
             $itemTransfer->setTaxRateAverageAggregation($taxRateAverageAggregation);
 
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $taxMode
+     *
+     * @return int
+     */
+    protected function getUnitNetPriceToPayAggregationNetPrice(
+        ItemTransfer $itemTransfer,
+        $taxMode = PriceTaxMode::TAX_MODE_GROSS
+    )
+    {
+        if ($taxMode === PriceTaxMode::TAX_MODE_NET) {
+            return $itemTransfer->getUnitPriceToPayAggregation();
+        } else {
+            return $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getUnitTaxAmountFullAggregation();
+        }
+    }
+
+    /**
+     * @param ItemTransfer$itemTransfer
+     * @param int $unitPriceToPayAggregationNetPrice
+     *
+     * @return float
+     */
+    protected function calculateTaxRateAverage(ItemTransfer $itemTransfer, $unitPriceToPayAggregationNetPrice)
+    {
+        return round(($itemTransfer->getUnitPriceToPayAggregation() / $unitPriceToPayAggregationNetPrice - 1) * 100, 2);
     }
 }

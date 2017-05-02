@@ -1,0 +1,51 @@
+
+<h3>{{ 'invoice.header' }}</h3>
+
+{{ 'invoice.number' | trans }} <br />
+{{ 'invoice.order.number' | trans }} {{ order.orderReference }} <br />
+{{ 'invoice.customer.number' | trans }} <br />
+{{ 'invoice.created.at' | trans }} <br />
+
+<table width="100%" style="margin-top: 40px;">
+    <tr>
+        <th>{{ 'invoice.order.item.sku' | trans }}</th>
+        <th>{{ 'invoice.order.item.product_name' | trans }}</th>
+        <th>{{ 'invoice.order.item.quantity' | trans }}</th>
+        <th>{{ 'invoice.order.item.price' | trans }}</th>
+        <th>{{ 'invoice.order.item.price_total' | trans }}</th>
+    </tr>
+    {% for item in order.items %}
+        <tr>
+            <td>{{ item.sku }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity  }}</td>
+            <td>{{ item.unitPrice | default(0) | money }}</td>
+            <td>{{ item.unitPriceToPayAggregation | default(0) | money }}</td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="5">&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td colspan="4" align="right">
+            {{ 'invoice.order.expenses.total' | trans }}
+        </td>
+        <td>
+            {{ order.totals.expenseTotal | default(0) | money }}
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="4" align="right">
+            {{ 'invoice.order.grand_total' | trans }} <br />
+            {{ 'invoice.order.tax_amount' | trans }}
+        </td>
+        <td>
+            {{ order.totals.grandTotal | default(0) | money }} <br />
+            {{ order.totals.taxTotal.amount | default(0) | money }}
+        </td>
+    </tr>
+
+</table>

@@ -236,6 +236,7 @@
       "Spryker\\Zed\\Heartbeat\\": "Bundles/Heartbeat/src",
       "Unit\\Spryker\\Zed\\Heartbeat\\": "Bundles/Heartbeat/tests",
       "Spryker\\Zed\\Installer\\": "Bundles/Installer/src",
+      "Spryker\\Zed\\Invoice\\": "Bundles/Invoice/src",
       "Spryker\\Shared\\Invoice\\": "Bundles/Invoice/src",
       "Unit\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
       "Functional\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",

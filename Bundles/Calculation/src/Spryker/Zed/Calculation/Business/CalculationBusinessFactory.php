@@ -83,8 +83,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceCalculator(
             $this->createNetPriceCalculators(),
-            $this->createGrossPriceCalculators(),
-            $this->getConfig()
+            $this->createGrossPriceCalculators()
         );
     }
 

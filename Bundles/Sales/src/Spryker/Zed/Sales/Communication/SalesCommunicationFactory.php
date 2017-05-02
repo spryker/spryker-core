@@ -166,6 +166,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToInvoiceInterface
+     */
+    public function getInvoiceFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_INVOICE);
+    }
+
+    /**
      * @return array
      */
     public function getSalesDetailExternalBlocksUrls()

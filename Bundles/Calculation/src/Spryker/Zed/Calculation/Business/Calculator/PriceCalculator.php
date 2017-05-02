@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Calculation\CalculationConfig;
+use Spryker\Shared\Calculation\PriceTaxMode;
 
 class PriceCalculator implements CalculatorInterface
 {
@@ -29,24 +30,16 @@ class PriceCalculator implements CalculatorInterface
     protected $grossPriceCalculators;
 
     /**
-     * @var \Spryker\Zed\Calculation\CalculationConfig
-     */
-    protected $calculatorConfig;
-
-    /**
      * @param array $netPriceCalculators
      * @param array $grossPriceCalculators
-     * @param \Spryker\Zed\Calculation\CalculationConfig $calculatorConfig
      */
     public function __construct(
         array $netPriceCalculators,
-        array $grossPriceCalculators,
-        CalculationConfig $calculatorConfig
+        array $grossPriceCalculators
     )
     {
         $this->netPriceCalculators = $netPriceCalculators;
         $this->grossPriceCalculators = $grossPriceCalculators;
-        $this->calculatorConfig = $calculatorConfig;
     }
 
     /**
@@ -56,9 +49,9 @@ class PriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $calculableObjectTransfer->setTaxMode($this->calculatorConfig->getTaxMode());
+        $calculableObjectTransfer->requireTaxMode();
 
-        if ($this->calculatorConfig->getTaxMode() === CalculationConfig::TAX_MODE_NET) {
+        if ($calculableObjectTransfer->getTaxMode() === PriceTaxMode::TAX_MODE_NET) {
             $this->executeCalculatorStack($this->netPriceCalculators, $calculableObjectTransfer);
         } else {
             $this->executeCalculatorStack($this->grossPriceCalculators, $calculableObjectTransfer);

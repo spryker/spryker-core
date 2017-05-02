@@ -105,8 +105,6 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
 
         $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithProductOptions());
         $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithProductOptions());
-
-        $itemTransfer->setRefundableAmount($itemTransfer->getRefundableAmount() + $totalOptionsRefundableAmount);
     }
 
     /**

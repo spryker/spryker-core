@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Price\PriceTaxMode;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 
@@ -43,6 +45,8 @@ class PriceManager implements PriceManagerInterface
      */
     public function addGrossPriceToItems(CartChangeTransfer $change)
     {
+        $this->setQuoteTaxMode($change->getQuote());
+
         foreach ($change->getItems() as $cartItem) {
             if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {
                 throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getSku()));
@@ -52,6 +56,14 @@ class PriceManager implements PriceManagerInterface
         }
 
         return $change;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    protected function setQuoteTaxMode(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->setTaxMode(PriceTaxMode::TAX_MODE_GROSS);
     }
 
 }

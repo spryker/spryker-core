@@ -1,0 +1,29 @@
+
+<br />
+
+<table width="100%" style="margin-top:100px;">
+
+    <tr>
+        <td>{{ 'invoice.order.address.billing' | trans }}</td>
+        <td>{{ 'invoice.order.address.shipping' | trans }} </td>
+    </tr>
+
+    <tr>
+        <td>
+            {{ order.billingAddress.salutation }} {{ order.billingAddress.firstName }} {{ order.billingAddress.lastName }} <br />
+            {{ order.billingAddress.address1 }} <br />
+            {{ order.billingAddress.address2 }} <br />
+            {{ order.billingAddress.address3 }} <br />
+            {{ order.billingAddress.zipCode }}  {{ order.billingAddress.city }} <br />
+            {{ order.billingAddress.fkCountry }}
+        </td>
+        <td>
+            {{ order.shippingAddress.salutation }} {{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }} <br />
+            {{ order.shippingAddress.address1 }} <br />
+            {{ order.shippingAddress.address2 }} <br />
+            {{ order.shippingAddress.address3 }} <br />
+            {{ order.shippingAddress.zipCode }}  {{ order.shippingAddress.city }} <br />
+            {{ order.shippingAddress.fkCountry }}
+        </td>
+    </tr>
+</table>
