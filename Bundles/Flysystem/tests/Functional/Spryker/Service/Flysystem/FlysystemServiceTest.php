@@ -9,13 +9,13 @@ namespace Functional\Spryker\Service\Flysystem;
 
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
-use Flysystem\Stub\FlysystemLocalFileSystem\FlysystemLocalFilesystemBuilderPluginStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Service\Kernel\Container;
 
 /**
@@ -64,7 +64,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $container = new Container();
         $container[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container) {
             return [
-                new FlysystemLocalFilesystemBuilderPluginStub()
+                new LocalFilesystemBuilderPlugin()
             ];
         };
 
