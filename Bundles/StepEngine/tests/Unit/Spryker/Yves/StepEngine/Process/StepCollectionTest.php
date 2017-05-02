@@ -26,7 +26,7 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testInstantiation()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         $this->assertInstanceOf(StepCollectionInterface::class, $stepCollection);
     }
 
@@ -35,7 +35,7 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testAddStep()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         $stepCollection = $stepCollection->addStep($this->getStepMock());
         $this->assertInstanceOf(StepCollectionInterface::class, $stepCollection);
     }
@@ -45,11 +45,11 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testCanAccessStepReturnTrue()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMock = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMock = $this->getStepMock(false, false, false, static::STEP_ROUTE_A);
         $stepCollection = $stepCollection->addStep($stepMock);
 
-        $this->assertTrue($stepCollection->canAccessStep($stepMock, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
+        $this->assertTrue($stepCollection->canAccessStep($stepMock, $this->getRequest(static::STEP_ROUTE_A), $this->getDataTransferMock()));
     }
 
     /**
@@ -57,14 +57,14 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testCanAccessStepReturnTrueForFulfilledStep()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(false, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(false, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(false, true, false, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(false, true, false, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertTrue($stepCollection->canAccessStep($stepMockB, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
+        $this->assertTrue($stepCollection->canAccessStep($stepMockB, $this->getRequest(static::STEP_ROUTE_A), $this->getDataTransferMock()));
     }
 
     /**
@@ -72,14 +72,14 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testCanAccessStepReturnFalse()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(false, false, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(false, true, false, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(false, true, false, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertFalse($stepCollection->canAccessStep($stepMockB, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
+        $this->assertFalse($stepCollection->canAccessStep($stepMockB, $this->getRequest(static::STEP_ROUTE_A), $this->getDataTransferMock()));
     }
 
     /**
@@ -93,7 +93,7 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetCurrentStep(array $steps, $expectedCurrentPosition, $route = '')
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         foreach ($steps as $step) {
             $stepCollection->addStep($step);
         }
@@ -107,14 +107,14 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function currentStepDataProvider()
     {
-        $stepAPostTrue = $this->getStepMock(false, true, true, self::STEP_ROUTE_A);
-        $stepAPostFalse = $this->getStepMock(false, false, true, self::STEP_ROUTE_A);
+        $stepAPostTrue = $this->getStepMock(false, true, true, static::STEP_ROUTE_A);
+        $stepAPostFalse = $this->getStepMock(false, false, true, static::STEP_ROUTE_A);
 
-        $stepBPostTrue = $this->getStepMock(false, true, true, self::STEP_ROUTE_B);
-        $stepBPostFalse = $this->getStepMock(false, false, true, self::STEP_ROUTE_B);
+        $stepBPostTrue = $this->getStepMock(false, true, true, static::STEP_ROUTE_B);
+        $stepBPostFalse = $this->getStepMock(false, false, true, static::STEP_ROUTE_B);
 
-        $stepCPostTrue = $this->getStepMock(false, true, true, self::STEP_ROUTE_C);
-        $stepCPostFalse = $this->getStepMock(false, false, true, self::STEP_ROUTE_C);
+        $stepCPostTrue = $this->getStepMock(false, true, true, static::STEP_ROUTE_C);
+        $stepCPostFalse = $this->getStepMock(false, false, true, static::STEP_ROUTE_C);
 
         return [
             // match by postCondition not fulfilled
@@ -124,9 +124,9 @@ class StepCollectionTest extends AbstractStepEngineTest
             // if all steps fulfilled and no route matches return last
             [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 2],
             // Match by route, all steps fulfill postCondition
-            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 0, self::STEP_ROUTE_A],
-            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 1, self::STEP_ROUTE_B],
-            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 2, self::STEP_ROUTE_C],
+            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 0, static::STEP_ROUTE_A],
+            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 1, static::STEP_ROUTE_B],
+            [[$stepAPostTrue, $stepBPostTrue, $stepCPostTrue], 2, static::STEP_ROUTE_C],
         ];
     }
 
@@ -141,7 +141,7 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetNextStep(array $steps, $currentStep, $expectedStep)
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         foreach ($steps as $step) {
             $stepCollection->addStep($step);
         }
@@ -155,9 +155,9 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function nextStepDataProvider()
     {
-        $stepA = $this->getStepMock(false, true, true, self::STEP_ROUTE_A);
-        $stepB = $this->getStepMock(false, true, true, self::STEP_ROUTE_B);
-        $stepC = $this->getStepMock(false, true, true, self::STEP_ROUTE_C);
+        $stepA = $this->getStepMock(false, true, true, static::STEP_ROUTE_A);
+        $stepB = $this->getStepMock(false, true, true, static::STEP_ROUTE_B);
+        $stepC = $this->getStepMock(false, true, true, static::STEP_ROUTE_C);
 
         return [
             [[$stepA, $stepB, $stepC], $stepA, $stepB],
@@ -177,7 +177,7 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetPreviousStep(array $steps, $currentStep, $expectedStep)
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         foreach ($steps as $step) {
             $stepCollection->addStep($step);
         }
@@ -191,9 +191,9 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function previousStepDataProvider()
     {
-        $stepA = $this->getStepMock(false, true, true, self::STEP_ROUTE_A);
-        $stepB = $this->getStepMock(false, true, true, self::STEP_ROUTE_B);
-        $stepC = $this->getStepMock(false, true, true, self::STEP_ROUTE_C);
+        $stepA = $this->getStepMock(false, true, true, static::STEP_ROUTE_A);
+        $stepB = $this->getStepMock(false, true, true, static::STEP_ROUTE_B);
+        $stepC = $this->getStepMock(false, true, true, static::STEP_ROUTE_C);
 
         return [
             [[$stepA, $stepB, $stepC], $stepA, $stepA],
@@ -205,12 +205,53 @@ class StepCollectionTest extends AbstractStepEngineTest
     /**
      * @return void
      */
+    public function testGetPreviousStepReturnsStepBeforeVirtualStep()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $entryStep = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
+        $stepCollection->addStep($entryStep);
+
+        $stepBeforeVirtualStep = $this->getStepMock(true, true, true, static::STEP_ROUTE_B);
+        $stepCollection->addStep($stepBeforeVirtualStep);
+
+        $virtualStep = $this->getStepMock(true, true, false, static::STEP_ROUTE_C);
+        $stepCollection->addStep($virtualStep);
+
+        $currentStep = $this->getStepMock(true, true, true, static::STEP_ROUTE_D);
+        $stepCollection->addStep($currentStep);
+
+        $previous = $stepCollection->getPreviousStep($currentStep, $this->getDataTransferMock());
+        $this->assertSame($stepBeforeVirtualStep, $previous, sprintf('Expected step "%s" got "%s"', $stepBeforeVirtualStep->getStepRoute(), $previous->getStepRoute()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPreviousStepReturnsFirstStepIfStepBeforeVirtualStepIsFirstStep()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $entryStep = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
+        $stepCollection->addStep($entryStep);
+
+        $virtualStep = $this->getStepMock(true, true, false, static::STEP_ROUTE_B);
+        $stepCollection->addStep($virtualStep);
+
+        $currentStep = $this->getStepMock(true, true, true, static::STEP_ROUTE_C);
+        $stepCollection->addStep($currentStep);
+
+        $previous = $stepCollection->getPreviousStep($currentStep, $this->getDataTransferMock());
+        $this->assertSame($entryStep, $previous, sprintf('Expected step "%s" got "%s"', $entryStep->getStepRoute(), $previous->getStepRoute()));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCurrentUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMock = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMock = $this->getStepMock(false, false, false, static::STEP_ROUTE_A);
 
-        $this->assertSame(self::STEP_URL_A, $stepCollection->getCurrentUrl($stepMock));
+        $this->assertSame(static::STEP_URL_A, $stepCollection->getCurrentUrl($stepMock));
     }
 
     /**
@@ -218,10 +259,10 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetNextUrlShouldReturnExternalRedirectUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         $stepMock = $this->getStepWithExternalRedirectUrl();
 
-        $this->assertSame(self::EXTERNAL_URL, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
+        $this->assertSame(static::EXTERNAL_URL, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
     }
 
     /**
@@ -229,10 +270,10 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetNextUrlShouldReturnErrorUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
         $stepMock = $this->getStepMock(true, false, false);
 
-        $this->assertSame(self::ERROR_URL, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
+        $this->assertSame(static::ERROR_URL, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
     }
 
     /**
@@ -240,10 +281,10 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetNextUrlShouldReturnCurrentStepUrlIfPostConditionNotFulfilledAndInputRequired()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMock = $this->getStepMock(true, false, true, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMock = $this->getStepMock(true, false, true, static::STEP_ROUTE_A);
 
-        $this->assertSame(self::STEP_URL_A, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
+        $this->assertSame(static::STEP_URL_A, $stepCollection->getNextUrl($stepMock, $this->getDataTransferMock()));
     }
 
     /**
@@ -251,29 +292,29 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testGetNextUrlShouldReturnNextStepUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, true, false, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(true, true, false, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertSame(self::STEP_URL_B, $stepCollection->getNextUrl($stepMockA, $this->getDataTransferMock()));
+        $this->assertSame(static::STEP_URL_B, $stepCollection->getNextUrl($stepMockA, $this->getDataTransferMock()));
     }
 
     /**
      * @return void
      */
-    public function testGetNextUrlShouldReturnCurrentStepUrlIfCurrentStepIsLasStep()
+    public function testGetNextUrlShouldReturnCurrentStepUrlIfCurrentStepIsLastStep()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, true, false, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(true, true, false, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertSame(self::STEP_URL_B, $stepCollection->getNextUrl($stepMockB, $this->getDataTransferMock()));
+        $this->assertSame(static::STEP_URL_B, $stepCollection->getNextUrl($stepMockB, $this->getDataTransferMock()));
     }
 
     /**
@@ -281,14 +322,14 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testPreviousUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, true, false, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(true, true, false, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertSame(self::STEP_URL_A, $stepCollection->getPreviousUrl($stepMockB));
+        $this->assertSame(static::STEP_URL_A, $stepCollection->getPreviousUrl($stepMockB));
     }
 
     /**
@@ -296,11 +337,11 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testPreviousUrlShouldReturnCurrentStepUrlIfCurrentStepIsFirstStep()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $this->assertSame(self::STEP_URL_A, $stepCollection->getPreviousUrl($stepMockA));
+        $this->assertSame(static::STEP_URL_A, $stepCollection->getPreviousUrl($stepMockA));
     }
 
     /**
@@ -308,11 +349,11 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testEscapeUrl()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A, static::ESCAPE_ROUTE);
         $stepCollection->addStep($stepMockA);
 
-        $this->assertSame(self::ESCAPE_URL, $stepCollection->getEscapeUrl($stepMockA));
+        $this->assertSame(static::ESCAPE_URL, $stepCollection->getEscapeUrl($stepMockA));
     }
 
     /**
@@ -320,14 +361,14 @@ class StepCollectionTest extends AbstractStepEngineTest
      */
     public function testEscapeUrlShouldReturnStepRouteOfPreviousStepIfCurrentStepEscapeRouteIsNull()
     {
-        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A);
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, true, false, self::STEP_ROUTE_B, null);
+        $stepMockB = $this->getStepMock(true, true, false, static::STEP_ROUTE_B, null);
         $stepCollection->addStep($stepMockB);
 
-        $this->assertSame(self::STEP_URL_A, $stepCollection->getEscapeUrl($stepMockB));
+        $this->assertSame(static::STEP_URL_A, $stepCollection->getEscapeUrl($stepMockB));
     }
 
 }
