@@ -17,7 +17,7 @@
         <property name="resourceAction" type="string" />
         <property name="resourceParameters" type="array" />
 
-        <property name="filter" type="ApiRequestFilter" />
+        <property name="filter" type="ApiFilter" />
     </transfer>
 
     <transfer name="ApiResponse">
@@ -36,7 +36,7 @@
         <property name="messages" type="array"/>
     </transfer>
 
-    <transfer name="ApiRequestFilter">
+    <transfer name="ApiFilter">
         <property name="fields" type="array" />
         <property name="criteriaJson" type="string" />
         <property name="offset" type="int"/>

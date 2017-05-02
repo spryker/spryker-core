@@ -38,8 +38,6 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        //$apiRequestTransfer->getFilter()->getPagination()->setPage(1);
-        //$apiRequestTransfer->getFilter()->getPagination()->setItemsPerPage();
 
         $limitPerPage = $this->apiConfig->getLimitPerPage();
         if (!empty($queryStrings[self::LIMIT])) {
@@ -51,7 +49,9 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
             $page = $this->validatePageInput($queryStrings[self::PAGE]);
         }
 
-        $apiRequestTransfer->getFilter()->setOffset(($page - 1) * $limitPerPage + 1);
+        $offset = ($page - 1) * $limitPerPage;
+
+        $apiRequestTransfer->getFilter()->setOffset($offset);
         $apiRequestTransfer->getFilter()->setLimit($limitPerPage);
 
         return $apiRequestTransfer;
