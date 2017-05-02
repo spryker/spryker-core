@@ -2,13 +2,11 @@
   "name": "spryker/file-system",
   "description": "FileSystem bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "require-dev": {
-    "spryker/kernel": "^3.0.0",
+    "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
     "spryker/flysystem-local-filesystem": "*",
-    "spryker/code-sniffer": "*",
+    "spryker/kernel": "^3.0.0",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -22,6 +20,8 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config": {
     "sort-packages": true
   }

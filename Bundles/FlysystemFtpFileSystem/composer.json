@@ -1,19 +1,25 @@
 {
   "name": "spryker/flysystem-ftp-filesystem",
+  "description": "FlysystemFtpFileSystem bundle",
+  "license": "proprietary",
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/flysystem": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
     }
   },
-  "suggest": {
-    "spryker/flysystem": "*"
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
-  "description": "FlysystemFtpFileSystem bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
