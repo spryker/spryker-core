@@ -36,7 +36,7 @@ class CategoryNode implements CategoryNodeInterface
     protected $transferGenerator;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface|\Spryker\Zed\Category\Business\Model\CategoryToucherFormerParentInterface
      */
     protected $categoryToucher;
 
@@ -49,7 +49,7 @@ class CategoryNode implements CategoryNodeInterface
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface|\Spryker\Zed\Category\Business\Model\CategoryToucherFormerParentInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      */
     public function __construct(
@@ -148,6 +148,11 @@ class CategoryNode implements CategoryNodeInterface
         $idCategoryNode = $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
         $categoryNodeEntity = $this->getCategoryNodeEntity($idCategoryNode);
 
+        $idFormerParentCategoryNode = $this->getPossibleFormerParentCategoryNodeId(
+            $categoryNodeEntity,
+            $categoryTransfer
+        );
+
         $categoryNodeEntity = $this->setUpCategoryNodeEntity($categoryTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
 
@@ -155,7 +160,9 @@ class CategoryNode implements CategoryNodeInterface
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
+
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
+        $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
     }
 
     /**
@@ -180,6 +187,40 @@ class CategoryNode implements CategoryNodeInterface
         }
 
         return $categoryNodeEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return int|null
+     */
+    protected function getPossibleFormerParentCategoryNodeId(
+        SpyCategoryNode $categoryNodeEntity,
+            CategoryTransfer $categoryTransfer
+    ) {
+        $parentCategoryNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
+        $idFormerParentCategoryNode = $categoryNodeEntity->getFkParentCategoryNode();
+
+        if ($parentCategoryNodeTransfer->getIdCategoryNode() !== $idFormerParentCategoryNode) {
+            return $idFormerParentCategoryNode;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int|null $idCategoryNode
+     *
+     * @return void
+     */
+    protected function touchPossibleFormerParentCategoryNode($idCategoryNode)
+    {
+        if (!$idCategoryNode) {
+            return;
+        }
+
+        $this->categoryToucher->touchFormerParentCategoryNodeActiveRecursively($idCategoryNode);
     }
 
     /**

@@ -10,7 +10,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
-class CategoryToucher implements CategoryToucherInterface
+class CategoryToucher implements CategoryToucherInterface, CategoryToucherFormerParentInterface
 {
 
     /**
@@ -41,7 +41,13 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeActiveRecursively($idCategoryNode)
     {
         foreach ($this->getRelatedNodes($idCategoryNode) as $relatedNodeEntity) {
-            $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNodeDescendant());
+            if ($relatedNodeEntity->getFkCategoryNode() !== $idCategoryNode) {
+                $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNode());
+            }
+
+            if ($relatedNodeEntity->getFkCategoryNodeDescendant() !== $idCategoryNode) {
+                $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNodeDescendant());
+            }
         }
 
         $this->touchCategoryNodeActive($idCategoryNode);
@@ -148,6 +154,35 @@ class CategoryToucher implements CategoryToucherInterface
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $this->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
         }
+    }
+
+    /**
+     * @param int $idFormerParentCategoryNode
+     *
+     * @return void
+     */
+    public function touchFormerParentCategoryNodeActiveRecursively($idFormerParentCategoryNode)
+    {
+        foreach ($this->findParentCategoryNodes($idFormerParentCategoryNode) as $parentNodeEntity) {
+            if ($parentNodeEntity->getFkCategoryNode() !== $idFormerParentCategoryNode) {
+                $this->touchCategoryNodeActive($parentNodeEntity->getFkCategoryNode());
+            }
+        }
+
+        $this->touchCategoryNodeActive($idFormerParentCategoryNode);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findParentCategoryNodes($idCategoryNode)
+    {
+        return $this
+            ->queryContainer
+            ->queryClosureTableFilterByIdNodeDescendant($idCategoryNode)
+            ->find();
     }
 
 }
