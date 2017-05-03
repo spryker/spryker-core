@@ -55,6 +55,7 @@ class ProductApiFacadeTest extends Test
         $resultTransfer = $productApiFacade->findProducts($apiRequestTransfer);
 
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
+        $this->assertGreaterThan(1, count($resultTransfer->getData()));
     }
 
     /**

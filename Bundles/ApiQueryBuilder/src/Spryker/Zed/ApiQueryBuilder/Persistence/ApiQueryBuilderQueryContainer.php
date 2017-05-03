@@ -29,7 +29,6 @@ class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements Ap
         ApiRequestTransfer $apiRequestTransfer,
         PropelQueryBuilderTableTransfer $tableTransfer
     ) {
-
         return $this->getFactory()
             ->createApiRequestMapper()
             ->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
