@@ -44,7 +44,7 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
             $sort[$column] = $order;
         }
 
-        $apiRequestTransfer->getFilter()->getPagination()->setSort($sort);
+        $apiRequestTransfer->getFilter()->setSort($sort);
 
         return $apiRequestTransfer;
     }
