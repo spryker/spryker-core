@@ -212,7 +212,7 @@ class CustomerApi implements CustomerApiInterface
     protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
     {
         $criteriaRuleSet = $this->apiQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            $apiRequestTransfer->getFilter()->getFilter()
+            $apiRequestTransfer->getFilter()->getCriteriaJson()
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
