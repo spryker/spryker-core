@@ -21,6 +21,8 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
  * @group ProductGroupFacade
  * @group DeleteProductGroupTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
 class DeleteProductGroupTest extends Test
 {

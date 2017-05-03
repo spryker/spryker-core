@@ -20,6 +20,8 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
  * @group ProductGroupFacade
  * @group ReadProductGroupTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
 class ReadProductGroupTest extends Test
 {
