@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
@@ -22,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRe
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;

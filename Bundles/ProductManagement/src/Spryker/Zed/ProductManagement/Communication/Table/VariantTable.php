@@ -13,9 +13,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class VariantTable extends AbstractProductTable
 {

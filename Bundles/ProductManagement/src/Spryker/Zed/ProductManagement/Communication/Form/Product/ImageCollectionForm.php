@@ -127,7 +127,7 @@ class ImageCollectionForm extends AbstractSubForm
                     new Length([
                         'min' => 0,
                         'max' => 2048,
-                    ])
+                    ]),
                 ],
             ]);
 
@@ -150,7 +150,7 @@ class ImageCollectionForm extends AbstractSubForm
                     new Length([
                         'min' => 0,
                         'max' => 2048,
-                    ])
+                    ]),
                 ],
             ]);
 

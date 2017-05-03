@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider

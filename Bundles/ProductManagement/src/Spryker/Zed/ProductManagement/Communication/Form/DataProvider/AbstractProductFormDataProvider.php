@@ -13,19 +13,19 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
