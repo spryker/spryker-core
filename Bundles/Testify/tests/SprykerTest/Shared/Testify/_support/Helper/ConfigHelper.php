@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use ArrayObject;
 use Codeception\Module;
-use Codeception\TestCase;
 use Codeception\TestInterface;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
@@ -97,6 +96,5 @@ class ConfigHelper extends Module
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }
-
 
 }
