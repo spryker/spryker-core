@@ -89,11 +89,12 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
+        $translationKey = $keyTranslationTransfer->getGlossaryKey();
         try {
-            if (!$this->keyManager->hasKey($keyTranslationTransfer->getGlossaryKey())) {
-                $idGlossaryKey = $this->keyManager->createKey($keyTranslationTransfer->getGlossaryKey());
+            if (!$this->keyManager->hasKey($translationKey)) {
+                $idGlossaryKey = $this->keyManager->createKey($translationKey);
             } else {
-                $idGlossaryKey = $this->keyManager->getKey($keyTranslationTransfer->getGlossaryKey())
+                $idGlossaryKey = $this->keyManager->getKey($translationKey)
                     ->getIdGlossaryKey();
             }
 
@@ -103,7 +104,13 @@ class TranslationManager implements TranslationManagerInterface
                 $localeTransfer = $this->localeFacade->getLocale($localeName);
 
                 if (array_key_exists($localeName, $keyTranslationTransfer->getLocales())) {
-                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, (string)$keyTranslationTransfer->getLocales()[$localeName]);
+                    $translationValue = (string)$keyTranslationTransfer->getLocales()[$localeName];
+                    if (empty($translationValue)) {
+                        $this->deleteTranslation($translationKey, $localeTransfer);
+
+                        continue;
+                    }
+                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $translationValue);
                     $this->saveAndTouchTranslation($translationTransfer);
                 }
             }
