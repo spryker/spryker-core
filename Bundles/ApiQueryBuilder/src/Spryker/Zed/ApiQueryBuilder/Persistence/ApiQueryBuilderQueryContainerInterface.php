@@ -9,6 +9,7 @@ namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -16,6 +17,21 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQueryFromRequest(
+        ApiRequestTransfer $apiRequestTransfer,
+        ModelCriteria $query,
+        PropelQueryBuilderTableTransfer $tableTransfer
+    );
 
     /**
      * @api

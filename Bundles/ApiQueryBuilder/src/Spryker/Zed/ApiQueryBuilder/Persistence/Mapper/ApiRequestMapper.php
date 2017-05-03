@@ -15,8 +15,10 @@ use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToPropelQueryBuilderInterface;
 use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
 class ApiRequestMapper implements ApiRequestMapperInterface
 {
@@ -61,6 +63,26 @@ class ApiRequestMapper implements ApiRequestMapperInterface
         $criteriaTransfer = $this->expandResourceCriteria($apiRequestTransfer, $criteriaTransfer);
 
         return $criteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQuery(ApiRequestTransfer $apiRequestTransfer, ModelCriteria $query, PropelQueryBuilderTableTransfer $tableTransfer)
+    {
+        $criteriaTransfer = $this->toPropelQueryBuilderCriteria(
+            $apiRequestTransfer,
+            $tableTransfer
+        );
+
+        $query = $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
+        $query->setFormatter(new AssociativeArrayFormatter());
+
+        return $query;
     }
 
     /**
