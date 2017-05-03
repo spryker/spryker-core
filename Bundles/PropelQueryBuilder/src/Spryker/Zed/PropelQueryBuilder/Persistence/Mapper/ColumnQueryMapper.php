@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\Mapper;
 
-use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ColumnQueryMapper implements ColumnQueryMapperInterface
@@ -15,39 +15,31 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer|null $columnSelectionTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapColumns(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
-    {
-        $this->assertTransferFields($columnSelectionTransfer);
-
-        $query = $this->mapQuery($query, $columnSelectionTransfer);
+    public function mapColumns(
+        ModelCriteria $query,
+        PropelQueryBuilderTableTransfer $queryBuilderTableTransfer,
+        array $selectedColumns = []
+    ) {
+        $query = $this->mapSelectedColumns($query, $queryBuilderTableTransfer, $selectedColumns);
 
         return $query;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
-     *
-     * @return void
-     */
-    protected function assertTransferFields(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
-    {
-        $columnSelectionTransfer->requireTableName();
-        $columnSelectionTransfer->requireTableColumns();
-    }
-
-    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapQuery(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
+    protected function mapSelectedColumns(ModelCriteria $query, PropelQueryBuilderTableTransfer $queryBuilderTableTransfer, array $selectedColumns)
     {
-        $selectedColumns = $this->getSelectedColumns($columnSelectionTransfer);
+        $selectedColumns = $this->getSelectedColumns($queryBuilderTableTransfer, $selectedColumns);
 
         return $this->selectQueryColumns($query, $selectedColumns);
     }
@@ -67,32 +59,31 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
      *
      * @return array
      */
-    protected function getSelectedColumns(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
+    protected function getSelectedColumns(PropelQueryBuilderTableTransfer $queryBuilderTableTransfer, array $selectedColumns)
     {
-        $selectedColumns = [];
-        $tableName = $columnSelectionTransfer->getTableName();
-        $tableColumns = (array)$columnSelectionTransfer->getTableColumns();
+        $columns = [];
+        $tableColumns = (array)$queryBuilderTableTransfer->getColumns();
 
-        if ($columnSelectionTransfer->getSelectedColumns()->count()) {
-            foreach ($tableColumns as $columnName) {
-                foreach ($columnSelectionTransfer->getSelectedColumns() as $columnTransfer) {
-                    if (mb_strtolower($columnName) === mb_strtolower($columnTransfer->getName())) {
-                        $selectedColumns[$columnTransfer->getName()] = $columnTransfer->getAlias();
+        if ($selectedColumns) {
+            foreach ($tableColumns as $tableColumnTransfer) {
+                foreach ($selectedColumns as $selectedColumnTransfer) {
+                    if (mb_strtolower($tableColumnTransfer->getName()) === mb_strtolower($selectedColumnTransfer->getName())) {
+                        $columns[$selectedColumnTransfer->getName()] = $selectedColumnTransfer->getAlias();
                     }
                 }
             }
         } else {
-            foreach ($tableColumns as $columnName) {
-                $fieldName = str_replace($tableName . '.', '', $columnName);
-                $selectedColumns[$columnName] = $fieldName;
+            foreach ($tableColumns as $tableColumnTransfer) {
+                $columns[$tableColumnTransfer->getName()] = $tableColumnTransfer->getAlias();
             }
         }
 
-        return $selectedColumns;
+        return $columns;
     }
 
 }
