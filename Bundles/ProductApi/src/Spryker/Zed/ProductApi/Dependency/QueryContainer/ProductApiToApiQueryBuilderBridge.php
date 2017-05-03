@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductApi\Dependency\QueryContainer;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderInterface
 {
@@ -32,11 +33,21 @@ class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderIn
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(
-        ApiRequestTransfer $apiRequestTransfer,
-        PropelQueryBuilderTableTransfer $tableTransfer
-    ) {
+    public function toPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderTableTransfer $tableTransfer)
+    {
         return $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQueryFromRequest(ApiRequestTransfer $apiRequestTransfer, ModelCriteria $query, PropelQueryBuilderTableTransfer $tableTransfer)
+    {
+        return $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($apiRequestTransfer, $query, $tableTransfer);
     }
 
 }

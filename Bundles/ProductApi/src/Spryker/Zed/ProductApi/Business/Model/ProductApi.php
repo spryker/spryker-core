@@ -21,7 +21,6 @@ use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
@@ -37,11 +36,6 @@ class ProductApi implements ProductApiInterface
      * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface
      */
     protected $apiQueryBuilderQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
-     */
-    protected $propelQueryBuilderQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface
@@ -61,7 +55,6 @@ class ProductApi implements ProductApiInterface
     /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
-     * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface $propelQueryBuilderQueryContainer
      * @param \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface $transferMapper
@@ -69,14 +62,12 @@ class ProductApi implements ProductApiInterface
     public function __construct(
         ProductApiToApiInterface $apiQueryContainer,
         ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
-        ProductApiToPropelQueryBuilderInterface $propelQueryBuilderQueryContainer,
         ProductApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
         TransferMapperInterface $transferMapper
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
-        $this->propelQueryBuilderQueryContainer = $propelQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
@@ -215,13 +206,9 @@ class ProductApi implements ProductApiInterface
     protected function buildQuery(ApiRequestTransfer $apiRequestTransfer)
     {
         $tableTransfer = $this->buildTable();
-        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria(
-            $apiRequestTransfer,
-            $tableTransfer
-        );
 
         $query = $this->queryContainer->queryFind();
-        $query = $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
+        $query = $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($apiRequestTransfer, $query, $tableTransfer);
         $query->setFormatter(new AssociativeArrayFormatter());
 
         return $query;

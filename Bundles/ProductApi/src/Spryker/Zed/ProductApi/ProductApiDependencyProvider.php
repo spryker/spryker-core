@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderBridge;
 
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -33,7 +32,6 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->provideApiQueryContainer($container);
         $container = $this->provideApiQueryBuilderQueryContainer($container);
-        $container = $this->providePropelQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -49,7 +47,6 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->provideApiQueryContainer($container);
         $container = $this->provideApiQueryBuilderQueryContainer($container);
-        $container = $this->providePropelQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -89,20 +86,6 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = function (Container $container) {
             return new ProductApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function providePropelQueryBuilderQueryContainer(Container $container)
-    {
-        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
-            return new ProductApiToPropelQueryBuilderBridge($container->getLocator()->propelQueryBuilder()->queryContainer());
         };
 
         return $container;

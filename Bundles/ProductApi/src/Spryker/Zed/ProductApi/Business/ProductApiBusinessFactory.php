@@ -29,7 +29,6 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
         return new ProductApi(
             $this->getApiQueryContainer(),
             $this->getApiQueryBuilderQueryContainer(),
-            $this->getPropelQueryBuilderQueryContainer(),
             $this->getQueryContainer(),
             $this->createEntityMapper(),
             $this->createTransferMapper()
