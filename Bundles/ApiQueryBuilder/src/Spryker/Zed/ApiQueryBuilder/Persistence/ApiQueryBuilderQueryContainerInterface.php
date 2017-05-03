@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -20,9 +21,13 @@ interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer);
+    public function toPropelQueryBuilderCriteria(
+        ApiRequestTransfer $apiRequestTransfer,
+        PropelQueryBuilderTableTransfer $tableTransfer
+    );
 
 }

@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
@@ -45,10 +46,13 @@ class QueryContainerTest extends Test
     public function testToPropelQueryBuilderCriteria()
     {
         $apiFilter = new ApiFilterTransfer();
+
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter($apiFilter);
 
-        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer);
+        $tableTransfer = new PropelQueryBuilderTableTransfer();
+
+        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
 
         $this->assertInstanceOf(PropelQueryBuilderCriteriaTransfer::class, $criteriaTransfer);
     }
