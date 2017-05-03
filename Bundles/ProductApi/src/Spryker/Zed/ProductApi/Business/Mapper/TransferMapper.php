@@ -21,9 +21,7 @@ class TransferMapper implements TransferMapperInterface
     {
         $productApiTransfer = new ProductApiTransfer();
 
-        $data = $this->hydrate($data);
         $data = $this->mapAttributes($data);
-
         $productApiTransfer->fromArray($data, true);
 
         return $productApiTransfer;
@@ -59,26 +57,6 @@ class TransferMapper implements TransferMapperInterface
                 $data[ProductApiTransfer::ATTRIBUTES] = null;
             }
         }
-
-        return $data;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function hydrate(array $data)
-    {
-        $keys = array_keys($data);
-        array_walk($keys, function (&$item) {
-            $item = substr($item, strpos($item, '.') + 1);
-        });
-
-        $data = array_combine(
-            array_values($keys),
-            array_values($data)
-        );
 
         return $data;
     }

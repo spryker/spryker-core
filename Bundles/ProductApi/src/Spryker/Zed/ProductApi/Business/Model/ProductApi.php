@@ -215,8 +215,10 @@ class ProductApi implements ProductApiInterface
     protected function buildQuery(ApiRequestTransfer $apiRequestTransfer)
     {
         $tableTransfer = $this->buildTable();
-        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer);
-        $criteriaTransfer->setTable($tableTransfer);
+        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria(
+            $apiRequestTransfer,
+            $tableTransfer
+        );
 
         $query = $this->queryContainer->queryFind();
         $query = $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
@@ -225,11 +227,14 @@ class ProductApi implements ProductApiInterface
         return $query;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer
+     */
     protected function buildTable()
     {
         $tableTransfer = new PropelQueryBuilderTableTransfer();
         $tableTransfer->setName(SpyProductAbstractTableMap::TABLE_NAME);
-        $tableColumns = SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_COLNAME);
+        $tableColumns = SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
 
         foreach ($tableColumns as $columnAlias) {
             $columnTransfer = new PropelQueryBuilderColumnTransfer();

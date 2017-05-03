@@ -21,6 +21,7 @@ class EntityMapper implements EntityMapperInterface
     public function toEntity(array $data)
     {
         $productAbstractEntity = new SpyProductAbstract();
+
         $data = $this->mapAttributes($data);
         $productAbstractEntity->fromArray($data);
 

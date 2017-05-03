@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductApi\Dependency\QueryContainer;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 
 class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderInterface
 {
@@ -27,12 +28,15 @@ class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderIn
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer);
+    public function toPropelQueryBuilderCriteria(
+        ApiRequestTransfer $apiRequestTransfer,
+        PropelQueryBuilderTableTransfer $tableTransfer
+    ) {
+        return $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
     }
 
 }
