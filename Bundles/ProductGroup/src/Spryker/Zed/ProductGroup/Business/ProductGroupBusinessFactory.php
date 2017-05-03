@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductGroup\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupCreator;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupDeleter;
+use Spryker\Zed\ProductGroup\Business\Model\ProductGroupEntityReader;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupExpander;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupReader;
 use Spryker\Zed\ProductGroup\Business\Model\ProductGroupReducer;
@@ -45,7 +46,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupUpdater()
     {
-        return new ProductGroupUpdater($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductGroupUpdater($this->createProductGroupEntityReader(), $this->createProductGroupTouch());
     }
 
     /**
@@ -53,7 +54,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupExpander()
     {
-        return new ProductGroupExpander($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductGroupExpander($this->createProductGroupEntityReader(), $this->createProductGroupTouch());
     }
 
     /**
@@ -61,7 +62,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupReducer()
     {
-        return new ProductGroupReducer($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductGroupReducer($this->createProductGroupEntityReader(), $this->createProductGroupTouch());
     }
 
     /**
@@ -69,7 +70,7 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupDeleter()
     {
-        return new ProductGroupDeleter($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductGroupDeleter($this->createProductGroupEntityReader(), $this->createProductGroupTouch());
     }
 
     /**
@@ -78,6 +79,14 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
     public function createProductGroupTouch()
     {
         return new ProductGroupTouch($this->getTouchFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupEntityReaderInterface
+     */
+    protected function createProductGroupEntityReader()
+    {
+        return new ProductGroupEntityReader($this->getQueryContainer());
     }
 
     /**
