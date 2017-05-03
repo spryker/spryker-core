@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\Mapper;
 
+use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
@@ -69,21 +70,52 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
         $columns = [];
         $tableColumns = (array)$queryBuilderTableTransfer->getColumns();
 
-        if ($selectedColumns) {
-            foreach ($tableColumns as $tableColumnTransfer) {
-                foreach ($selectedColumns as $selectedColumnTransfer) {
-                    if (mb_strtolower($tableColumnTransfer->getName()) === mb_strtolower($selectedColumnTransfer->getName())) {
-                        $columns[$selectedColumnTransfer->getName()] = $selectedColumnTransfer->getAlias();
-                    }
+        if (!$selectedColumns) {
+            return $this->selectAllColumns($tableColumns);
+        }
+
+        foreach ($tableColumns as $tableColumnTransfer) {
+            foreach ($selectedColumns as $selectedColumnTransfer) {
+                $this->assertSelectedColumns($selectedColumnTransfer, $tableColumnTransfer);
+
+                if (mb_strtolower($tableColumnTransfer->getName()) === mb_strtolower($selectedColumnTransfer->getName())) {
+                    $columns[] = $selectedColumnTransfer->getAlias();
                 }
-            }
-        } else {
-            foreach ($tableColumns as $tableColumnTransfer) {
-                $columns[$tableColumnTransfer->getName()] = $tableColumnTransfer->getAlias();
             }
         }
 
         return $columns;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $tableColumns
+     *
+     * @return array
+     */
+    protected function selectAllColumns($tableColumns)
+    {
+        $columns = [];
+        foreach ($tableColumns as $tableColumnTransfer) {
+            $columns[] = $tableColumnTransfer->getAlias();
+        }
+
+        return $columns;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer $selectedColumnTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer $tableColumnTransfer
+     *
+     * @return void
+     */
+    protected function assertSelectedColumns(
+        PropelQueryBuilderColumnTransfer $selectedColumnTransfer,
+        PropelQueryBuilderColumnTransfer $tableColumnTransfer
+    ) {
+        $selectedColumnTransfer->requireName();
+        $selectedColumnTransfer->requireAlias();
+
+        $tableColumnTransfer->requireName();
     }
 
 }
