@@ -12,6 +12,15 @@ use Generated\Shared\DataBuilder\ProductGroupBuilder;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 
 /**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group ProductGroup
+ * @group Business
+ * @group ProductGroupFacade
+ * @group ReadProductGroupTest
+ * Add your own group annotations below this line
+ *
  * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
 class ReadProductGroupTest extends Test
