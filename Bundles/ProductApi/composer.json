@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1",
+    "spryker/api-query-builder": "*",
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.2.0",
