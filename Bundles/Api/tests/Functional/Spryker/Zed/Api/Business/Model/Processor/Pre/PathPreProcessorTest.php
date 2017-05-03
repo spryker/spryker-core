@@ -65,4 +65,20 @@ class PathPreProcessorTest extends Test
         $this->assertSame('resource-name/something/more', $apiRequestTransferAfter->getPath());
     }
 
+    /**
+     * @return void
+     */
+    public function testProcessWithQueryString()
+    {
+        $processor = new PathPreProcessor();
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiRequestTransfer->setServerData([
+            PathPreProcessor::SERVER_REQUEST_URI => '/api/rest/resource-name?foo=bar',
+        ]);
+
+        $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
+        $this->assertSame('resource-name', $apiRequestTransferAfter->getPath());
+    }
+
 }
