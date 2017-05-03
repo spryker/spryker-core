@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductLabel\Persistence;
+
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+
+/**
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelPersistenceFactory getFactory()
+ */
+class ProductLabelQueryContainer extends AbstractQueryContainer implements ProductLabelQueryContainerInterface
+{
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelById($idProductLabel)
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->filterByIdProductLabel($idProductLabel);
+    }
+
+}

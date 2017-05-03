@@ -10,6 +10,16 @@ namespace SprykerTest\Zed\ProductLabel\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group ProductLabel
+ * @group Business
+ * @group Facade
+ * @group ProductLabelFacadeTest
+ * Add your own group annotations below this line
+ */
 class ProductLabelFacadeTest extends Test
 {
 
@@ -18,20 +28,44 @@ class ProductLabelFacadeTest extends Test
      */
     protected $tester;
 
-//    public function testReadLabelReturnsTransfer()
-//    {
-//        $productLabelFacade = $this->createProductLabelFacade();
-//        $productLabelTransfer = $productLabelFacade->readLabel(1);
-//        $this->assertInstanceOf('\Generated\Shared\Transfer\ProductLabelTransfer', $productLabelTransfer);
-//    }
-
-    public function testCreateLabelPersistsData()
+    /**
+     * @return void
+     */
+    public function testReadLabelReturnsProductLabelTransfer()
     {
         $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelTransfer = (new ProductLabelBuilder())->build();
+        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
         $productLabelFacade->createLabel($productLabelTransfer);
+
+        $productLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+
+        $this->assertInstanceOf('\Generated\Shared\Transfer\ProductLabelTransfer', $productLabelTransfer);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
+     *
+     * @return void
+     */
+    public function testRealLabelThrowsExceptionIfLabelDoesNotExist()
+    {
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->readLabel(1);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateLabelPersistsDataAndUpdatesTransferIdField()
+    {
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
+        $productLabelFacade->createLabel($productLabelTransfer);
+
         $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
-        $this->assertSame($productLabelTransfer, $persistedProductLabelTransfer);
+
+        $this->assertNotNull($productLabelTransfer->getIdProductLabel());
+        $this->assertSame($productLabelTransfer->getIdProductLabel(), $persistedProductLabelTransfer->getIdProductLabel());
     }
 
     /**

@@ -12,8 +12,8 @@
         <property name="isExclusive" type="bool"/>
         <property name="isPublished" type="bool"/>
         <property name="frontEndReference" type="string"/>
-        <property name="validFrom" type="DateTime"/>
-        <property name="validTo" type="DateTime"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
 </transfers>
