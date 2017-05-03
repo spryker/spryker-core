@@ -11,6 +11,7 @@ use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageCollectionForm extends AbstractSubForm
 {
@@ -119,9 +120,10 @@ class ImageCollectionForm extends AbstractSubForm
     {
         $builder
             ->add(self::FIELD_IMAGE_SMALL, 'text', [
-                'required' => false,
+                'required' => true,
                 'label' => 'Small',
                 'constraints' => [
+                    new NotBlank(),
                     new Length([
                         'min' => 0,
                         'max' => 2048,
@@ -141,9 +143,10 @@ class ImageCollectionForm extends AbstractSubForm
     {
         $builder
             ->add(self::FIELD_IMAGE_LARGE, 'text', [
-                'required' => false,
+                'required' => true,
                 'label' => 'Large',
                 'constraints' => [
+                    new NotBlank(),
                     new Length([
                         'min' => 0,
                         'max' => 2048,
