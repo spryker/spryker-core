@@ -26,7 +26,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterP
 use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
@@ -115,7 +114,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createResourceParametersPreProcessor(),
 
             $this->createFilterPreProcessor(),
-            $this->createPaginationPreProcessor(),
             $this->createFieldsByQueryPreProcessor(),
             $this->createSortByQueryFilterPreProcessor(),
             $this->createCriteriaByQueryFilterPreProcessor(),
@@ -195,14 +193,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createFilterPreProcessor()
     {
         return new FilterPreProcessor();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
-     */
-    protected function createPaginationPreProcessor()
-    {
-        return new PaginationPreProcessor();
     }
 
     /**
