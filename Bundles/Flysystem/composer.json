@@ -5,6 +5,9 @@
   "require": {
     "league/flysystem": "^1.0"
   },
+  "suggest": {
+    "spryker/file-system": "FileSystem bundle"
+  },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/file-system": "*",

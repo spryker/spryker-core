@@ -7,7 +7,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/flysystem": "*"
+    "spryker/flysystem": "Flysystem bundle"
   },
   "autoload": {
     "psr-0": {

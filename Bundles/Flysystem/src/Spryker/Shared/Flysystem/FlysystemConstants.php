@@ -10,7 +10,6 @@ namespace Spryker\Shared\Flysystem;
 interface FlysystemConstants
 {
 
-    const FILESYSTEM_STORAGE = 'FILESYSTEM_STORAGE';
     const FILESYSTEM_SERVICE = 'FILESYSTEM_SERVICE';
 
 }
