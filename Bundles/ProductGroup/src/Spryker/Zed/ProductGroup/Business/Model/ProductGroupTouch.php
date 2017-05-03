@@ -42,11 +42,9 @@ class ProductGroupTouch implements ProductGroupTouchInterface
      */
     public function touchProductGroupActive(ProductGroupTransfer $productGroupTransfer)
     {
-        $idProductGroup = $productGroupTransfer
-            ->requireIdProductGroup()
-            ->getIdProductGroup();
+        $this->assertProductGroupForTouch($productGroupTransfer);
 
-        return $this->touchFacade->touchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_GROUP, $idProductGroup);
+        return $this->touchFacade->touchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_GROUP, $productGroupTransfer->getIdProductGroup());
     }
 
     /**
@@ -56,8 +54,6 @@ class ProductGroupTouch implements ProductGroupTouchInterface
      */
     public function touchProductAbstractGroupsActive(ProductGroupTransfer $productGroupTransfer)
     {
-        $productGroupTransfer->requireIdProductAbstracts();
-
         foreach ($productGroupTransfer->getIdProductAbstracts() as $idProductAbstract) {
             $this->touchFacade->touchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $idProductAbstract);
         }
@@ -70,11 +66,9 @@ class ProductGroupTouch implements ProductGroupTouchInterface
      */
     public function touchProductGroupDeleted(ProductGroupTransfer $productGroupTransfer)
     {
-        $idProductGroup = $productGroupTransfer
-            ->requireIdProductGroup()
-            ->getIdProductGroup();
+        $this->assertProductGroupForTouch($productGroupTransfer);
 
-        return $this->touchFacade->touchDeleted(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_GROUP, $idProductGroup);
+        return $this->touchFacade->touchDeleted(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_GROUP, $productGroupTransfer->getIdProductGroup());
     }
 
     /**
@@ -84,9 +78,7 @@ class ProductGroupTouch implements ProductGroupTouchInterface
      */
     public function touchProductAbstractGroupsDeleted(ProductGroupTransfer $productGroupTransfer)
     {
-        $productGroupTransfer
-            ->requireIdProductGroup()
-            ->requireIdProductAbstracts();
+        $this->assertProductGroupForTouch($productGroupTransfer);
 
         foreach ($productGroupTransfer->getIdProductAbstracts() as $idProductAbstract) {
             if ($this->hasProductAbstractOtherGroup($idProductAbstract, $productGroupTransfer->getIdProductGroup())) {
@@ -110,6 +102,16 @@ class ProductGroupTouch implements ProductGroupTouchInterface
             ->count();
 
         return $count > 0;
+    }
+
+    /**
+     * @param ProductGroupTransfer $productGroupTransfer
+     *
+     * @return void
+     */
+    protected function assertProductGroupForTouch(ProductGroupTransfer $productGroupTransfer)
+    {
+        $productGroupTransfer->requireIdProductGroup();
     }
 
 }

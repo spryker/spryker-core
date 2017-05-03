@@ -35,7 +35,7 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function providePluginApplication(Container $container)
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container[static::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();

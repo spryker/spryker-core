@@ -25,8 +25,8 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $this->provideStorageClient($container);
-        $this->provideProductClient($container);
+        $this->addStorageClient($container);
+        $this->addProductClient($container);
 
         return $container;
     }
@@ -36,7 +36,7 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
      *
      * @return void
      */
-    protected function provideStorageClient(Container $container)
+    protected function addStorageClient(Container $container)
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductGroupToStorageBridge($container->getLocator()->storage()->client());
@@ -48,7 +48,7 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
      *
      * @return void
      */
-    protected function provideProductClient(Container $container)
+    protected function addProductClient(Container $container)
     {
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
             return new ProductGroupToProductBridge($container->getLocator()->product()->client());

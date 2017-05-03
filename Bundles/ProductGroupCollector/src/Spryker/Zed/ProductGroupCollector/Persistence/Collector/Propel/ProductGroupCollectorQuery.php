@@ -29,14 +29,14 @@ class ProductGroupCollectorQuery extends AbstractPropelCollectorQuery
             Criteria::INNER_JOIN
         );
 
-        $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP, self::FIELD_ID_PRODUCT_GROUP);
+        $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP, static::FIELD_ID_PRODUCT_GROUP);
         $this->touchQuery->withColumn(sprintf(
             'GROUP_CONCAT(%s ORDER BY %s)',
             SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT,
             SpyProductAbstractGroupTableMap::COL_POSITION
-        ), self::FIELD_ID_PRODUCT_ABSTRACTS);
+        ), static::FIELD_ID_PRODUCT_ABSTRACTS);
 
-        $this->touchQuery->groupBy(self::FIELD_ID_PRODUCT_GROUP);
+        $this->touchQuery->groupBy(static::FIELD_ID_PRODUCT_GROUP);
     }
 
 }

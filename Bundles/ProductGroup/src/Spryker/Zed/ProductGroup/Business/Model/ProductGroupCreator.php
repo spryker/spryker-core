@@ -37,8 +37,6 @@ class ProductGroupCreator implements ProductGroupCreatorInterface
      */
     public function createProductGroup(ProductGroupTransfer $productGroupTransfer)
     {
-        $this->assertProductGroupForCreate($productGroupTransfer);
-
         if (!$productGroupTransfer->getIdProductAbstracts()) {
             return $productGroupTransfer;
         }

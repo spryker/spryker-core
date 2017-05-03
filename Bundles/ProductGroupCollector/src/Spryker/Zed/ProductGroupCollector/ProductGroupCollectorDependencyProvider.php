@@ -27,9 +27,9 @@ class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->provideCollectorFacade($container);
-        $this->provideDataReaderService($container);
-        $this->provideTouchQueryContainer($container);
+        $this->addCollectorFacade($container);
+        $this->addDataReaderService($container);
+        $this->addTouchQueryContainer($container);
 
         return $container;
     }
@@ -39,9 +39,9 @@ class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return void
      */
-    protected function provideCollectorFacade(Container $container)
+    protected function addCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new ProductGroupCollectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
     }
@@ -51,9 +51,9 @@ class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return void
      */
-    protected function provideDataReaderService(Container $container)
+    protected function addDataReaderService(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
+        $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
         };
     }
@@ -63,9 +63,9 @@ class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return void
      */
-    protected function provideTouchQueryContainer(Container $container)
+    protected function addTouchQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         };
     }

@@ -23,7 +23,7 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->provideTouchFacade($container);
+        $this->addTouchFacade($container);
 
         return $container;
     }
@@ -33,9 +33,9 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function provideTouchFacade(Container $container)
+    protected function addTouchFacade(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductGroupToTouchBridge($container->getLocator()->touch()->facade());
         };
     }

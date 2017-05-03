@@ -21,13 +21,13 @@ class ProductGroupFactory extends AbstractFactory
      */
     public function createProductGroupTwigExtension()
     {
-        return new ProductGroupTwigExtension($this->getClient(), $this->createApplication());
+        return new ProductGroupTwigExtension($this->getClient(), $this->getApplication());
     }
 
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function createApplication()
+    protected function getApplication()
     {
         return $this->getProvidedDependency(ProductGroupDependencyProvider::PLUGIN_APPLICATION);
     }

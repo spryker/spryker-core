@@ -72,7 +72,7 @@ class ProductGroupFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    public function createProductGroupKeyBuilder()
+    protected function createProductGroupKeyBuilder()
     {
         return new ProductGroupKeyBuilder();
     }
