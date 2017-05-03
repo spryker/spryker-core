@@ -105,7 +105,7 @@ class ProductGroupTouch implements ProductGroupTouchInterface
     }
 
     /**
-     * @param ProductGroupTransfer $productGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return void
      */

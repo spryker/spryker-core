@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductGroup\Business\Model;
 
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Orm\Zed\ProductGroup\Persistence\SpyProductGroup;
-use Spryker\Zed\ProductGroup\Business\Exception\ProductGroupNotFoundException;
-use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductGroupDeleter implements ProductGroupDeleterInterface
@@ -19,9 +17,9 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface
+     * @var \Spryker\Zed\ProductGroup\Business\Model\ProductGroupEntityReaderInterface
      */
-    protected $productGroupQueryContainer;
+    protected $productGroupEntityReader;
 
     /**
      * @var \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface
@@ -29,13 +27,13 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
     protected $productGroupTouch;
 
     /**
-     * @param \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface $productGroupQueryContainer
+     * @param \Spryker\Zed\ProductGroup\Business\Model\ProductGroupEntityReaderInterface $productGroupEntityReader
      * @param \Spryker\Zed\ProductGroup\Business\Model\ProductGroupTouchInterface $productGroupTouch
      */
-    public function __construct(ProductGroupQueryContainerInterface $productGroupQueryContainer, ProductGroupTouchInterface $productGroupTouch)
+    public function __construct(ProductGroupEntityReaderInterface $productGroupEntityReader, ProductGroupTouchInterface $productGroupTouch)
     {
-        $this->productGroupQueryContainer = $productGroupQueryContainer;
         $this->productGroupTouch = $productGroupTouch;
+        $this->productGroupEntityReader = $productGroupEntityReader;
     }
 
     /**
@@ -69,33 +67,10 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
      */
     protected function executeUpdateProductGroupTransaction(ProductGroupTransfer $productGroupTransfer)
     {
-        $productGroupEntity = $this->findProductGroupEntity($productGroupTransfer);
+        $productGroupEntity = $this->productGroupEntityReader->findProductGroupEntity($productGroupTransfer);
 
         $this->deleteProductGroupEntity($productGroupEntity);
         $this->touchProductGroup($productGroupTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
-     *
-     * @throws \Spryker\Zed\ProductGroup\Business\Exception\ProductGroupNotFoundException
-     *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroup
-     */
-    protected function findProductGroupEntity(ProductGroupTransfer $productGroupTransfer)
-    {
-        $productGroupEntity = $this->productGroupQueryContainer
-            ->queryProductGroupById($productGroupTransfer->getIdProductGroup())
-            ->findOne();
-
-        if (!$productGroupEntity) {
-            throw new ProductGroupNotFoundException(sprintf(
-                'Product group with ID "%d" not found.',
-                $productGroupTransfer->getIdProductGroup()
-            ));
-        }
-
-        return $productGroupEntity;
     }
 
     /**
