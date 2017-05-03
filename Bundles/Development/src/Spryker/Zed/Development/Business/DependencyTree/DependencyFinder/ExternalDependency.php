@@ -138,8 +138,8 @@ class ExternalDependency extends AbstractDependencyFinder
         $autoloadFunctions = spl_autoload_functions();
         $codeSnifferAutoloadFunction = false;
 
-        foreach ($autoloadFunctions as $key => $autoloadFunction) {
-            if ($autoloadFunction[0] === 'PHP_CodeSniffer') {
+        foreach ($autoloadFunctions as $autoloadFunction) {
+            if (is_array($autoloadFunction) && $autoloadFunction[0] === 'PHP_CodeSniffer') {
                 $codeSnifferAutoloadFunction = $autoloadFunction;
             }
         }

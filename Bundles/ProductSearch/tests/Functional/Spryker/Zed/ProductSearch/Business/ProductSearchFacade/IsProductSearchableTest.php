@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 /**

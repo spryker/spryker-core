@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\ProductBundle\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;

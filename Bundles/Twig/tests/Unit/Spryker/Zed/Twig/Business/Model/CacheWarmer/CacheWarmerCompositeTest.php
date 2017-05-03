@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\Twig\Business\Model\CacheWarmer;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 use Spryker\Zed\Twig\Business\Model\CacheWarmer\CacheWarmerComposite;
+use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 
 /**
  * @group Unit

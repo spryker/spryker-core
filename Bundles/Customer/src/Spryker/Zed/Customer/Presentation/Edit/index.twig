@@ -6,9 +6,7 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/customer', 'Back to Customers' | trans) }}
-    {{ viewActionButton('/customer/view?id-customer=' ~ idCustomer, 'View Customer' | trans) }}
-    {{ viewActionButton('/customer/address/?id-customer=' ~ idCustomer, 'Manage Addresses' | trans) }}
+    {{ backActionButton('/customer/view?id-customer=' ~ idCustomer, 'Back to Customer View' | trans) }}
 {% endblock %}
 
 {% block content %}

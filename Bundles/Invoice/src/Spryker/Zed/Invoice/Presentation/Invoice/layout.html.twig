@@ -2,18 +2,21 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link href="/assets/css/spryker-zed-invoice-main.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div style="width:50%; margin: 10px auto;">
-         <div style="float:right; position:relative;">
-             <img src="//www.de.project.local/assets/default/img/logo.svg" style="width: 216px; height: 36px;" />
-         </div>
-         <div style="clear:both;"></div>
+    <div class="invoice_container">
+        <div class="content">
+             <div style="float:right; position:relative;">
+                 <img src="//www.de.project.local/assets/default/img/logo.svg" style="width: 216px; height: 36px;" />
+             </div>
+             <div style="clear:both;"></div>
 
-        {% include '@Invoice/Invoice/partials/header.html.twig' %}
-        {% include '@Invoice/Invoice/partials/item_list.html.twig' %}
-        {% include '@Invoice/Invoice/partials/footer.html.twig' %}
-
+            {% include '@Invoice/Invoice/partials/header.html.twig' %}
+            {% include '@Invoice/Invoice/partials/item_list.html.twig' %}
+            {% include '@Invoice/Invoice/partials/footer.html.twig' %}
+        </div>
     </div>
+
 </body>
 </html>

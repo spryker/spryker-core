@@ -52,7 +52,7 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 
         $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
 
-        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitGrossPrice());
+        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
 
 }

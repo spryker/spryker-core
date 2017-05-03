@@ -13,18 +13,19 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
@@ -109,6 +110,11 @@ class AbstractProductFormDataProvider
     protected $imageUrlPrefix;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -121,6 +127,7 @@ class AbstractProductFormDataProvider
      * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -134,7 +141,8 @@ class AbstractProductFormDataProvider
         LocaleTransfer $currentLocale,
         array $attributeCollection,
         array $taxCollection,
-        $imageUrlPrefix
+        $imageUrlPrefix,
+        ProductManagementToStoreInterface $store = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -148,6 +156,7 @@ class AbstractProductFormDataProvider
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
+        $this->store = $store;
     }
 
     /**
@@ -172,6 +181,10 @@ class AbstractProductFormDataProvider
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
+
+        if ($this->store) {
+            $formOptions[ProductFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
+        }
 
         return $formOptions;
     }

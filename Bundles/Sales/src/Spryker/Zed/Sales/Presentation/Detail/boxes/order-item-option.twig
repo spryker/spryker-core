@@ -1,0 +1,13 @@
+
+{% for productOption in orderItem.productOptions %}
+    <tr class="addition-row">
+        <td>&nbsp; + <span class="label">{{ 'Option' | trans }}</span></td>
+        <td>{{ productOption.sku }}</td>
+        <td>{{ productOption.value }}</td>
+        <td>{{ productOption.unitPrice | money }}</td>
+        <td>{{ productOption.unitTaxAmount | money }}</td>
+        <td>{{ productOption.taxRate }}%</td>
+        <td>{{ productOption.unitDiscountAmountAggregation | money }}</td>
+        <td colspan="4"></td>
+    </tr>
+{% endfor %}

@@ -4,6 +4,12 @@
     {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | formatDateTime }})
 {% endblock %}
 
+{% block action %}
+
+    {{ viewActionButton(url('/sales/detail/invoice', {'id-sales-order': order.idSalesOrder}), 'View invoice' | trans) }}
+
+{% endblock %}
+
 {% block content %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>

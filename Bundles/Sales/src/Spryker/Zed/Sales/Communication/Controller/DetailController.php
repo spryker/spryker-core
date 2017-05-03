@@ -33,8 +33,6 @@ class DetailController extends AbstractController
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
-        $invoice = $this->getFactory()->getInvoiceFacade()->buildInvoice($orderTransfer);
-
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
@@ -52,6 +50,20 @@ class DetailController extends AbstractController
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
         ], $blockResponseData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    public function invoiceAction(Request $request)
+    {
+        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
+
+        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
+
+        return $this->getFactory()->getInvoiceFacade()->buildInvoice($orderTransfer);
     }
 
     /**

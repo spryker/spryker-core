@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
-use Spryker\Shared\Calculation\PriceTaxMode;
+use Spryker\Shared\Calculation\CalculationTaxMode;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
@@ -55,14 +55,14 @@ class TaxRateAverageAggregator implements CalculatorInterface
      */
     protected function getUnitNetPriceToPayAggregationNetPrice(
         ItemTransfer $itemTransfer,
-        $taxMode = PriceTaxMode::TAX_MODE_GROSS
+        $taxMode = CalculationTaxMode::TAX_MODE_GROSS
     )
     {
-        if ($taxMode === PriceTaxMode::TAX_MODE_NET) {
+        if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
             return $itemTransfer->getUnitPriceToPayAggregation();
-        } else {
-            return $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getUnitTaxAmountFullAggregation();
         }
+
+        return $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getUnitTaxAmountFullAggregation();
     }
 
     /**

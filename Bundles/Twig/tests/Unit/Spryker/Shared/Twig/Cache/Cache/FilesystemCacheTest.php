@@ -8,10 +8,10 @@
 namespace Unit\Spryker\Shared\Twig\Cache\Cache;
 
 use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
-use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 
 /**
  * @group Unit

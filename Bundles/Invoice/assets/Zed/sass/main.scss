@@ -1,0 +1,39 @@
+/**
+ * Copyright (c) 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.invoice_container {
+  width: 50%;
+  margin: 10px auto;
+  border:1px solid #9c9c9c;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  .content {
+    padding: 50px;
+  }
+
+  .vat-amount {
+     color: #d1d1d1;
+  }
+
+  .item-table {
+     margin-top: 40px;
+     border: 1px solid #cecece;
+     border-collapse: collapse;
+
+     th {
+       font-weight: bold;
+       background-color: #d1d1d1;
+       border: 1px solid #9c9c9c;
+       padding: 10px;
+     }
+
+      td {
+        padding: 10px;
+        border: 1px solid #9c9c9c;
+      }
+  }
+
+}
+

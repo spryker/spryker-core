@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Transaction;
 
+use \Closure;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
-use \Closure;
 
 trait DatabaseTransactionHandlerTrait
 {

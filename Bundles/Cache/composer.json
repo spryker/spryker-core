@@ -24,5 +24,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

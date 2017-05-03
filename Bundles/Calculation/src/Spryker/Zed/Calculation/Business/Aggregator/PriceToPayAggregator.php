@@ -10,6 +10,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Calculation\CalculationTaxMode;
 use Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface;
 
 class PriceToPayAggregator implements CalculatorInterface
@@ -22,27 +23,38 @@ class PriceToPayAggregator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculatePriceToPayAggregationForItems($calculableObjectTransfer->getItems());
-        $this->calculatePriceToPayAggregationForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculatePriceToPayAggregationForItems($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getTaxMode());
+        $this->calculatePriceToPayAggregationForExpenses($calculableObjectTransfer->getExpenses(), $calculableObjectTransfer->getTaxMode());
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $taxMode
      *
      * @return void
      */
-    protected function calculatePriceToPayAggregationForItems(ArrayObject $items)
+    protected function calculatePriceToPayAggregationForItems(ArrayObject $items, $taxMode)
     {
         foreach ($items as $itemTransfer) {
             $itemTransfer->requireSumSubtotalAggregation()
                 ->requireUnitSubtotalAggregation();
 
             $itemTransfer->setUnitPriceToPayAggregation(
-                $itemTransfer->getUnitSubtotalAggregation() - $itemTransfer->getUnitDiscountAmountAggregation()
+                $this->calculatePriceToPayAggregation(
+                    $itemTransfer->getUnitSubtotalAggregation(),
+                    $taxMode,
+                    $itemTransfer->getUnitDiscountAmountAggregation(),
+                    $itemTransfer->getUnitTaxAmountFullAggregation()
+                )
             );
 
             $itemTransfer->setSumPriceToPayAggregation(
-                $itemTransfer->getSumSubtotalAggregation() - $itemTransfer->getSumDiscountAmountFullAggregation()
+                $this->calculatePriceToPayAggregation(
+                    $itemTransfer->getSumSubtotalAggregation(),
+                    $taxMode,
+                    $itemTransfer->getSumDiscountAmountFullAggregation(),
+                    $itemTransfer->getSumTaxAmountFullAggregation()
+                )
             );
 
         }
@@ -50,20 +62,48 @@ class PriceToPayAggregator implements CalculatorInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param string $taxMode
      *
      * @return void
      */
-    protected function calculatePriceToPayAggregationForExpenses(ArrayObject $expenses)
+    protected function calculatePriceToPayAggregationForExpenses(ArrayObject $expenses, $taxMode)
     {
         foreach ($expenses as $expenseTransfer) {
 
             $expenseTransfer->setUnitPriceToPayAggregation(
-                $expenseTransfer->getUnitPrice() - $expenseTransfer->getUnitDiscountAmountAggregation()
+               $this->calculatePriceToPayAggregation(
+                   $expenseTransfer->getUnitPrice(),
+                   $taxMode,
+                   $expenseTransfer->getUnitDiscountAmountAggregation(),
+                   $expenseTransfer->getUnitTaxAmount()
+               )
             );
 
             $expenseTransfer->setSumPriceToPayAggregation(
-                $expenseTransfer->getSumPrice() - $expenseTransfer->getSumDiscountAmountAggregation()
+                $this->calculatePriceToPayAggregation(
+                    $expenseTransfer->getSumPrice(),
+                    $taxMode,
+                    $expenseTransfer->getSumDiscountAmountAggregation(),
+                    $expenseTransfer->getSumTaxAmount()
+                )
             );
         }
+    }
+
+    /**
+     * @param int $price
+     * @param string $taxMode
+     * @param int $discountAmount
+     * @param int $taxAmount
+     *
+     * @return int
+     */
+    protected function calculatePriceToPayAggregation($price, $taxMode, $discountAmount = 0, $taxAmount = 0)
+    {
+        if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
+            return $price + $taxAmount - $discountAmount ;
+        }
+
+        return $price - $discountAmount;
     }
 }

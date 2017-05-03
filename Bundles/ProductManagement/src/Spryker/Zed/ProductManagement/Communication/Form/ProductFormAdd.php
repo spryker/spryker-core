@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
@@ -21,7 +22,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRe
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -51,6 +51,7 @@ class ProductFormAdd extends AbstractType
     const OPTION_ID_LOCALE = 'option_id_locale';
 
     const OPTION_TAX_RATES = 'option_tax_rates';
+    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
@@ -138,6 +139,7 @@ class ProductFormAdd extends AbstractType
                 return $validationGroups;
             },
             'compound' => true,
+            static::OPTION_CURRENCY_ISO_CODE => null,
         ]);
     }
 
@@ -461,6 +463,7 @@ class ProductFormAdd extends AbstractType
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
                 ])],
                 PriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
+                PriceForm::OPTION_CURRENCY_ISO_CODE => $options[static::OPTION_CURRENCY_ISO_CODE],
             ]);
 
         return $this;

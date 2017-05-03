@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\Refund\Business;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\RefundCalculatorInterface as ConcreteCalculatorInterface;
+use Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaverInterface;
 use Spryker\Zed\Refund\Business\RefundBusinessFactory;
 

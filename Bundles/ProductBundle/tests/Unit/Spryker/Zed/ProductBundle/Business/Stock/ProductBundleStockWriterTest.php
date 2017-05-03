@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\ProductBundle\Business\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use PHPUnit_Framework_MockObject_MockObject;

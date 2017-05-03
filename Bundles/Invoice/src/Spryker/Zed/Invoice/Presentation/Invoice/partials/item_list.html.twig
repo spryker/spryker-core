@@ -1,12 +1,9 @@
 
-<h3>{{ 'invoice.header' }}</h3>
+<h3>{{ 'invoice.header' | trans }}</h3>
 
-{{ 'invoice.number' | trans }} <br />
 {{ 'invoice.order.number' | trans }} {{ order.orderReference }} <br />
-{{ 'invoice.customer.number' | trans }} <br />
-{{ 'invoice.created.at' | trans }} <br />
 
-<table width="100%" style="margin-top: 40px;">
+<table width="100%" style="margin-top: 40px;" class="item-table">
     <tr>
         <th>{{ 'invoice.order.item.sku' | trans }}</th>
         <th>{{ 'invoice.order.item.product_name' | trans }}</th>
@@ -16,35 +13,30 @@
     </tr>
     {% for item in order.items %}
         <tr>
-            <td>{{ item.sku }}</td>
+            <td align="center">{{ item.sku }}</td>
             <td>{{ item.name }}</td>
-            <td>{{ item.quantity  }}</td>
-            <td>{{ item.unitPrice | default(0) | money }}</td>
-            <td>{{ item.unitPriceToPayAggregation | default(0) | money }}</td>
+            <td align="center">{{ item.quantity  }}</td>
+            <td align="center">{{ item.unitPrice | default(0) | money }}</td>
+            <td align="center">{{ item.unitPriceToPayAggregation | default(0) | money }}</td>
         </tr>
     {% endfor %}
-
-    <tr>
-        <td colspan="5">&nbsp;</td>
-    </tr>
-
     <tr>
         <td colspan="4" align="right">
             {{ 'invoice.order.expenses.total' | trans }}
         </td>
-        <td>
+        <td align="center">
             {{ order.totals.expenseTotal | default(0) | money }}
         </td>
     </tr>
 
     <tr>
         <td colspan="4" align="right">
-            {{ 'invoice.order.grand_total' | trans }} <br />
-            {{ 'invoice.order.tax_amount' | trans }}
+            <strong>{{ 'invoice.order.grand_total' | trans }}</strong> <br />
+            <span class="vat-amount">{{ 'invoice.order.tax_amount' | trans }}</span>
         </td>
-        <td>
+        <td align="center">
             {{ order.totals.grandTotal | default(0) | money }} <br />
-            {{ order.totals.taxTotal.amount | default(0) | money }}
+            <span class="vat-amount">{{ order.totals.taxTotal.amount | default(0) | money }}</span>
         </td>
     </tr>
 

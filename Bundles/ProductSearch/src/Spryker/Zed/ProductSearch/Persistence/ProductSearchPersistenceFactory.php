@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

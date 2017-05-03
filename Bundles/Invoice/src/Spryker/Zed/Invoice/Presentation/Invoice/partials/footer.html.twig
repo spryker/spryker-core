@@ -1,13 +1,13 @@
-<table width="100%" style="margin-top:20px;">
+<table width="100%" style="margin-top:250px;">
     <tr>
         <td>
-           {{ "invoice.company.address" | trans }}
+           {{ "invoice.company.address" | trans | raw }}
         </td>
-        <td align="center">
-            {{ "invoice.company.bank.information" | trans }}
+        <td>
+            {{ "invoice.company.bank.information" | trans | raw }}
         </td>
         <td align="right">
-            {{ "invoice.company.contact.information" | trans }}
+            {{ "invoice.company.contact.information" | trans | raw }}
         </td>
     </tr>
 </table>

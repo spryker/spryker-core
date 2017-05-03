@@ -37,17 +37,17 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $change)
+    public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->setQuoteTaxMode($change->getQuote());
+        $cartChangeTransfer->setQuote($this->setQuoteTaxMode($cartChangeTransfer->getQuote()));
 
-        foreach ($change->getItems() as $cartItem) {
+        foreach ($cartChangeTransfer->getItems() as $cartItem) {
             if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {
                 throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getSku()));
             }
@@ -55,15 +55,19 @@ class PriceManager implements PriceManagerInterface
             $cartItem->setUnitGrossPrice($this->priceFacade->getPriceBySku($cartItem->getSku(), $this->grossPriceType));
         }
 
-        return $change;
+        return $cartChangeTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function setQuoteTaxMode(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->setTaxMode(PriceTaxMode::TAX_MODE_GROSS);
+
+        return $quoteTransfer;
     }
 
 }

@@ -54,7 +54,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
      */
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
-        $itemTransfer->requireSumGrossPrice()->requireQuantity();
+        $itemTransfer->requireQuantity();
     }
 
     /**

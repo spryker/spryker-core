@@ -9,8 +9,6 @@ namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
-use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
@@ -20,6 +18,8 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
+use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()

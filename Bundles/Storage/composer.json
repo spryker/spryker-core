@@ -25,7 +25,6 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {

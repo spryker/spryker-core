@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Shared\Twig\Cache\CacheLoader;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
+use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 
 /**
  * @group Unit

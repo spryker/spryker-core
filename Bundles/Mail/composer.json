@@ -6,8 +6,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/twig": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "swiftmailer/swiftmailer": "Default Mailer"

@@ -27,6 +27,7 @@
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
                 <th>{{ 'SKU' | trans }}</th>
+                <th>{{ 'Name' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
                 <th>{{ 'Tax amount' | trans }}</th>
                 <th>{{ 'Tax %' | trans }}</th>
@@ -40,45 +41,8 @@
             </thead>
             <tbody>
             {% for orderItem in order.items %}
-                <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
-                    <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
-                    <td>{{ orderItem.Sku }}</td>
-                    <td>{{ orderItem.unitSubtotalAggregation | default(0) | money }}</td>
-                    <td>{{ orderItem.unitTaxAmountFullAggregation | default(0) | money }}</td>
-                    <td>{{ orderItem.taxRate|default(0) }} %</td>
-                    <td>-{{ orderItem.unitDiscountAmountFullAggregation | default(0) | money }} </td>
-                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.unitPriceToPayAggregation }}">{{ orderItem.unitPriceToPayAggregation | default(0) | money }} </td>
-                    <td>
-                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
-                            {{ orderItem.process }}
-                        </a>
-                    </td>
-                    <td data-qa-item-current-state="{{ orderItem.idSalesOrderItem }}">{{ orderItem.state.name }}</td>
-                    <td>
-                        {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
-                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
-                        {% endfor %}
-
-                        {% if orderItem.stateHistory | length > 3 %}
-                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
-                                {% for stateHistory in orderItem.stateHistory | slice(3) %}
-                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
-                                {% endfor %}
-                            </div>
-
-                            <a id="history-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
-                            {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
-                                <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
-                            {% endfor %}
-                        {% else -%}
-                            -
-                        {%- endif %}
-                    </td>
-                </tr>
+                {% include '@Sales/Detail/boxes/order-item.twig' %}
+                {% include '@Sales/Detail/boxes/order-item-option.twig' %}
             {% endfor %}
             </tbody>
 

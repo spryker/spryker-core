@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

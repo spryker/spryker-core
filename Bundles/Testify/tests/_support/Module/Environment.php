@@ -10,6 +10,9 @@ use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 
+/**
+ * @deprecated Use \SprykerTest\Shared\Testify\Helper\Environment instead
+ */
 class Environment extends Module
 {
 

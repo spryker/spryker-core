@@ -1,0 +1,40 @@
+<tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
+    <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
+    <td>{{ orderItem.Sku }}</td>
+    <td>{{ orderItem.name }}</td>
+    <td>{{ orderItem.unitPrice | default(0) | money }}</td>
+    <td>{{ orderItem.unitTaxAmount | default(0) | money }}</td>
+    <td>{{ orderItem.taxRate|default(0) }} %</td>
+    <td>-{{ orderItem.unitDiscountAmountFullAggregation | default(0) | money }} </td>
+    <td rowspan="{{ orderItem.productOptions | length + 1 }}" data-qa="item-total-amount" data-qa-raw="{{ orderItem.unitPriceToPayAggregation }}">{{ orderItem.unitPriceToPayAggregation | default(0) | money }} </td>
+    <td rowspan="{{ orderItem.productOptions | length + 1 }}">
+        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
+            {{ orderItem.process }}
+        </a>
+    </td>
+    <td rowspan="{{ orderItem.productOptions | length  + 1}}" data-qa-item-current-state="{{ orderItem.idSalesOrderItem }}">{{ orderItem.state.name }}</td>
+    <td rowspan="{{ orderItem.productOptions | length  + 1}}">
+        {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
+            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+        {% endfor %}
+
+        {% if orderItem.stateHistory | length > 3 %}
+            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
+                {% for stateHistory in orderItem.stateHistory | slice(3) %}
+                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                {% endfor %}
+            </div>
+
+            <a id="history-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
+        {% endif %}
+    </td>
+    <td rowspan="{{ orderItem.productOptions | length + 1 }}">
+        {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
+            {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
+                <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
+            {% endfor %}
+        {% else -%}
+            -
+        {%- endif %}
+    </td>
+</tr>

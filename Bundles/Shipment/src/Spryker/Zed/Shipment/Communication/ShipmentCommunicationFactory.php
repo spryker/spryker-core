@@ -54,7 +54,8 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getTaxFacade(),
             $this->getPlugins(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getStore()
         );
     }
 
@@ -101,6 +102,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function createCarrierFormDataProvider()
     {
         return new CarrierFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::STORE);
     }
 
 }
