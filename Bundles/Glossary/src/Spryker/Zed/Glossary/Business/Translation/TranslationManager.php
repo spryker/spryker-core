@@ -105,13 +105,11 @@ class TranslationManager implements TranslationManagerInterface
 
                 if (array_key_exists($localeName, $keyTranslationTransfer->getLocales())) {
                     $translationValue = (string)$keyTranslationTransfer->getLocales()[$localeName];
-                    if (empty($translationValue)) {
-                        $this->deleteTranslation($translationKey, $localeTransfer);
-
-                        continue;
-                    }
                     $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $translationValue);
                     $this->saveAndTouchTranslation($translationTransfer);
+                    if (!$translationValue) {
+                        $this->deleteTranslation($translationKey, $localeTransfer);
+                    }
                 }
             }
 
@@ -368,7 +366,7 @@ class TranslationManager implements TranslationManagerInterface
     {
         if ($this->hasTranslationByIds($translationTransfer->getFkGlossaryKey(), $translationTransfer->getFkLocale())) {
             $translationEntity = $this->getTranslationByIds($translationTransfer->getFkGlossaryKey(), $translationTransfer->getFkLocale());
-            $translationEntity->setValue($translationTransfer->getValue());
+            $translationEntity->fromArray($translationTransfer->modifiedToArray());
             $translationEntity->save();
 
             $translationTransfer = new TranslationTransfer();
