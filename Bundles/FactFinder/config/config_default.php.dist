@@ -14,7 +14,8 @@ $config[FactFinderConstants::ENVIRONMENT . FactFinderConstants::ENVIRONMENT_PROD
     'channel' => 'test',
     'language' => 'de',
     'authenticationType' => 'advanced',
-//    'authenticationType' => 'manual',
+// This is another possible option for authentication type
+//   'authenticationType' => 'manual',
     'userName' => 'campaignManager',
     'password' => 'change123',
     'authenticationPrefix' => 'FACT-FINDER',

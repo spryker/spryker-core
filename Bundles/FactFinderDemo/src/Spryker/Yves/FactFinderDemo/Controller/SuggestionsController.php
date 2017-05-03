@@ -24,14 +24,14 @@ class SuggestionsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $ffSuggestRequestTransfer = new FactFinderSuggestRequestTransfer();
+        $factFinderSuggestRequestTransfer = new FactFinderSuggestRequestTransfer();
         $query = $request->query->get('query', '*');
 
-        $ffSuggestRequestTransfer->setQuery($query);
+        $factFinderSuggestRequestTransfer->setQuery($query);
 
         $response = $this->getFactory()
             ->getFactFinderClient()
-            ->getSuggestions($ffSuggestRequestTransfer);
+            ->getSuggestions($factFinderSuggestRequestTransfer);
 
         return $this->jsonResponse($response->getSuggestions());
     }
