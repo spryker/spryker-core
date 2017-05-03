@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductApi\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
-use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ProductApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
