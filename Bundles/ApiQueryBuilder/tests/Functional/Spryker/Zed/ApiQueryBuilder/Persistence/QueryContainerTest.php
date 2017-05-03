@@ -8,6 +8,10 @@
 namespace Functional\Spryker\Zed\ApiQueryBuilder\Persistence;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
  * @group Functional
@@ -21,10 +25,32 @@ class QueryContainerTest extends Test
 {
 
     /**
+     * @var \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer
+     */
+    protected $apiQueryBuilderQueryContainer;
+
+    /**
      * @return void
      */
-    public function testFoo()
+    protected function setUp()
     {
+        parent::setUp();
+
+        $this->apiQueryBuilderQueryContainer = new ApiQueryBuilderQueryContainer();
+    }
+
+    /**
+     * @return void
+     */
+    public function testToPropelQueryBuilderCriteria()
+    {
+        $apiFilter = new ApiFilterTransfer();
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiRequestTransfer->setFilter($apiFilter);
+
+        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer);
+
+        $this->assertInstanceOf(PropelQueryBuilderCriteriaTransfer::class, $criteriaTransfer);
     }
 
 }

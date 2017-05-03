@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ApiQueryBuilder\Persistence;
+namespace Spryker\Zed\ApiQueryBuilder\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderPersistenceFactory getFactory()
- */
-interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
+interface ApiRequestMapperInterface
 {
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer

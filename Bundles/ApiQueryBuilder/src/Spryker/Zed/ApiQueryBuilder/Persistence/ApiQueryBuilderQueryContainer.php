@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
+use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,4 +15,19 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements ApiQueryBuilderQueryContainerInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    public function toPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createApiRequestMapper()
+            ->toPropelQueryBuilderCriteria($apiRequestTransfer);
+    }
+
 }

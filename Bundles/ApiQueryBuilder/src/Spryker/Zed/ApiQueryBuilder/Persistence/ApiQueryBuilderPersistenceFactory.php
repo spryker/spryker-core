@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
 use Spryker\Zed\ApiQueryBuilder\ApiQueryBuilderDependencyProvider;
+use Spryker\Zed\ApiQueryBuilder\Persistence\Mapper\ApiRequestMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,6 +17,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Spryker\Zed\ApiQueryBuilder\Persistence\Mapper\ApiRequestMapperInterface
+     */
+    public function createApiRequestMapper()
+    {
+        return new ApiRequestMapper(
+            $this->getPropelQueryBuilderQueryContainer(),
+            $this->getQueryContainer()
+        );
+    }
 
     /**
      * @return \Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToApiInterface
