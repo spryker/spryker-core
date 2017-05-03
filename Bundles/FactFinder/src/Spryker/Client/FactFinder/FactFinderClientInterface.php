@@ -35,7 +35,7 @@ interface FactFinderClientInterface
      *
      * @param \Generated\Shared\Transfer\FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\FactFinderRecommendationsResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderRecommendationResponseTransfer
      */
     public function getRecommendations(FactFinderRecommendationRequestTransfer $factFinderRecommendationRequestTransfer);
 
