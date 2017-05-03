@@ -72,6 +72,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
+
         return $criteriaTransfer;
     }
 
