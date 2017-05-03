@@ -29,6 +29,11 @@ class PathPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $path = $apiRequestTransfer->getServerData()[static::SERVER_REQUEST_URI];
+        $queryStringIndex = strpos($path, '?');
+        if ($queryStringIndex) {
+            $path = substr($path, 0, $queryStringIndex);
+        }
+
         if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) === 0) {
             $path = substr($path, strlen(ApiConfig::ROUTE_PREFIX_API_REST));
         }
