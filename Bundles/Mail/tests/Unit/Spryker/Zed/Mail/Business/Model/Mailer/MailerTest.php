@@ -9,9 +9,9 @@ namespace Unit\Spryker\Zed\Mail\Business\Model\Mailer;
 
 use Generated\Shared\Transfer\MailTransfer;
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
+use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;

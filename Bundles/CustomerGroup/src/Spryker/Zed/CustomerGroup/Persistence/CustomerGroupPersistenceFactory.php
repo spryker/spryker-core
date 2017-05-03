@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

@@ -15,7 +15,7 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface;
 use Spryker\Zed\Ratepay\Business\Request\RequestMethodInterface;
-use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
+use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 {

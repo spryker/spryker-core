@@ -11,8 +11,8 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryQuery;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
-use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 
 /**
  * @group Unit

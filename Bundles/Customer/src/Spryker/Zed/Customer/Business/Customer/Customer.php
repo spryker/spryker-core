@@ -31,7 +31,7 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
-class Customer
+class Customer implements CustomerInterface
 {
 
     const BCRYPT_FACTOR = 12;

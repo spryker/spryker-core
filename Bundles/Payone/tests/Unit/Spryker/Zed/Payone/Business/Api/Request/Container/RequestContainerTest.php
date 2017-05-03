@@ -10,7 +10,6 @@ namespace Unit\Spryker\Zed\Payone\Business\Api\Request\Container;
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer as AuthorizationBusinessContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CashOnDeliveryContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\DirectDebitContainer;
@@ -22,18 +21,19 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalCont
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\BankAccountCheckContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer as CaptureBusinessContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer as DebitBusinessContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\BankAccountContainer as DebitBankAccountContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer as RefundBankAccountContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 
 /**
  * @group Unit
