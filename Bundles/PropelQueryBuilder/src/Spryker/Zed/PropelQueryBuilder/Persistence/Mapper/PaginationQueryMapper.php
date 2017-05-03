@@ -90,6 +90,8 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
 
         foreach ($sortCollection as $sortItem) {
             $columnTransfer = $sortItem->getColumn();
+            $columnTransfer->requireName();
+
             if (strtolower($sortItem->getSortDirection()) === strtolower(Criteria::ASC)) {
                 $query->addAscendingOrderByColumn($columnTransfer->getName());
             } else {
