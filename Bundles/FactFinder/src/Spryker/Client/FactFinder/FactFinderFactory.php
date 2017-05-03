@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Session\QuoteSession;
 
 /**
- * @method \Spryker\Zed\FactFinder\FactFinderConfig getConfig()
+ * @method \Spryker\Client\FactFinder\FactFinderConfig getConfig()
  */
 class FactFinderFactory extends AbstractFactory
 {
