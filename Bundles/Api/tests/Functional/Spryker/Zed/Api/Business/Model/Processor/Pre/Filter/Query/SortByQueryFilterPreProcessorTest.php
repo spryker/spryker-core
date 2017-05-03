@@ -65,8 +65,8 @@ class SortByQueryFilterPreProcessorTest extends Test
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $expected = [
-            'foo' => 'ASC',
-            'bar' => 'DESC',
+            'foo' => '',
+            'bar' => '-',
         ];
         $this->assertSame($expected, $apiRequestTransferAfter->getFilter()->getSort());
     }
