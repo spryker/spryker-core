@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
+namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Format;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 
 /**
  * @group Functional
@@ -21,11 +21,10 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFil
  * @group Model
  * @group Processor
  * @group Pre
- * @group Filter
- * @group Query
- * @group CriteriaByQueryFilterPreProcessorTest
+ * @group Format
+ * @group FormatTypeByPathPreProcessorTest
  */
-class CriteriaByQueryFilterPreProcessorTest extends Test
+class FormatTypeByPathPreProcessorTest extends Test
 {
 
     /**
@@ -41,30 +40,28 @@ class CriteriaByQueryFilterPreProcessorTest extends Test
      */
     public function testProcessEmpty()
     {
-        $processor = new CriteriaByQueryFilterPreProcessor();
+        $processor = new FormatTypeByPathPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('{}', $apiRequestTransferAfter->getFilter()->getCriteriaJson());
+        $this->assertNull($apiRequestTransferAfter->getFormatType());
     }
 
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcessExtension()
     {
-        $processor = new CriteriaByQueryFilterPreProcessor();
+        $processor = new FormatTypeByPathPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setFilter(new ApiFilterTransfer());
-        $apiRequestTransfer->setQueryData([
-            CriteriaByQueryFilterPreProcessor::FILTER => '{foo: bar}',
-        ]);
+        $apiRequestTransfer->setPath('resource-name/1.json');
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('{foo: bar}', $apiRequestTransferAfter->getFilter()->getCriteriaJson());
+        $this->assertSame('json', $apiRequestTransferAfter->getFormatType());
+        $this->assertSame('resource-name/1', $apiRequestTransfer->getPath());
     }
 
 }

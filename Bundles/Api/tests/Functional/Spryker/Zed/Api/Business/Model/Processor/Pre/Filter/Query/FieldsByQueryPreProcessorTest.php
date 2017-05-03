@@ -10,7 +10,8 @@ namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
+use Spryker\Zed\Api\ApiConfig;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\FieldsByQueryPreProcessor;
 
 /**
  * @group Functional
@@ -23,9 +24,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFil
  * @group Pre
  * @group Filter
  * @group Query
- * @group CriteriaByQueryFilterPreProcessorTest
+ * @group FieldsByQueryPreProcessorTest
  */
-class CriteriaByQueryFilterPreProcessorTest extends Test
+class FieldsByQueryPreProcessorTest extends Test
 {
 
     /**
@@ -41,13 +42,14 @@ class CriteriaByQueryFilterPreProcessorTest extends Test
      */
     public function testProcessEmpty()
     {
-        $processor = new CriteriaByQueryFilterPreProcessor();
+        $config = new ApiConfig();
+        $processor = new FieldsByQueryPreProcessor($config);
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('{}', $apiRequestTransferAfter->getFilter()->getCriteriaJson());
+        $this->assertSame([], $apiRequestTransferAfter->getFilter()->getFields());
     }
 
     /**
@@ -55,16 +57,22 @@ class CriteriaByQueryFilterPreProcessorTest extends Test
      */
     public function testProcess()
     {
-        $processor = new CriteriaByQueryFilterPreProcessor();
+        $config = new ApiConfig();
+        $processor = new FieldsByQueryPreProcessor($config);
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
         $apiRequestTransfer->setQueryData([
-            CriteriaByQueryFilterPreProcessor::FILTER => '{foo: bar}',
+            FieldsByQueryPreProcessor::FIELDS => 'one,two,three',
         ]);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('{foo: bar}', $apiRequestTransferAfter->getFilter()->getCriteriaJson());
+        $expected = [
+            'one',
+            'two',
+            'three',
+        ];
+        $this->assertSame($expected, $apiRequestTransferAfter->getFilter()->getFields());
     }
 
 }

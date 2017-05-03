@@ -10,7 +10,6 @@ namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
 
 /**

@@ -10,7 +10,6 @@ namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 
 /**
  * @group Functional
@@ -22,7 +21,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
  * @group Processor
  * @group Pre
  * @group Resource
- * @group ResourcePreProcessorTest
+ * @group ResourceActionPreProcessorTest
  */
 class ResourceActionPreProcessorTest extends Test
 {
@@ -67,6 +66,7 @@ class ResourceActionPreProcessorTest extends Test
 
     /**
      * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
      * @return void
      */
     public function testProcessPostInvalid()
@@ -95,7 +95,6 @@ class ResourceActionPreProcessorTest extends Test
         $this->assertSame('update', $apiRequestTransferAfter->getResourceAction());
     }
 
-
     /**
      * @return void
      */
@@ -110,7 +109,6 @@ class ResourceActionPreProcessorTest extends Test
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('remove', $apiRequestTransferAfter->getResourceAction());
     }
-
 
     /**
      * @return void
