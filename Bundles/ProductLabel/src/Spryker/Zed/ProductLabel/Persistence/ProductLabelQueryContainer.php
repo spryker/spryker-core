@@ -16,8 +16,6 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
 {
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param int $idProductLabel
@@ -30,6 +28,21 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->getFactory()
             ->createProductLabelQuery()
             ->filterByIdProductLabel($idProductLabel);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryLocalizedAttributesByProductLabel($idProductLabel)
+    {
+        return $this
+            ->getFactory()
+            ->createLocalizedAttributesQuery()
+            ->filterByFkProductLabel($idProductLabel);
     }
 
 }

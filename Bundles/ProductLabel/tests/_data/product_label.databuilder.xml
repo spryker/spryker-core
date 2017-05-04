@@ -7,13 +7,19 @@
 
     <transfer name="ProductLabel">
         <property name="idProductLabel" dataBuilderRule="="/>
-        <property name="name" dataBuilderRule="unique()->sentence"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
         <property name="isActive" dataBuilderRule="=true"/>
         <property name="isExclusive" dataBuilderRule="=false"/>
         <property name="isPublished" dataBuilderRule="=false"/>
-        <property name="frontEndReference" dataBuilderRule="sentence(10)"/>
+        <property name="frontEndReference" dataBuilderRule="sentence(2)"/>
         <property name="validFrom" dataBuilderRule="time('Y-m-d', '-1 days')"/>
         <property name="validTo" dataBuilderRule="time('Y-m-d', '+1 days')"/>
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkProductLabel" dataBuilderRule="="/>
+        <property name="fkLocale" dataBuilderRule="="/>
+        <property name="name" dataBuilderRule="sentence(2)"/>
     </transfer>
 
 </transfers>

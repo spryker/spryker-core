@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductLabel\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
+use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 
 /**
  * Auto-generated group annotations
@@ -56,6 +57,25 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
+    public function testRealLabelReturnsCollectionOfLocalizedAttributes()
+    {
+        $localeTransfer = $this->tester->haveLocale();
+
+        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
+        $productLabelTransfer->addLocalizedAttributes(
+            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale())
+        );
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->createLabel($productLabelTransfer);
+
+        $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+
+        $this->assertSame(1, $persistedProductLabelTransfer->getLocalizedAttributesCollection()->count());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateLabelPersistsDataAndUpdatesTransferIdField()
     {
         $productLabelFacade = $this->createProductLabelFacade();
@@ -69,11 +89,51 @@ class ProductLabelFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testCreateLabelPersistsLocalizedAttributes()
+    {
+        $localeTransfer = $this->tester->haveLocale();
+
+        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
+        $productLabelTransfer->addLocalizedAttributes(
+            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale())
+        );
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->createLabel($productLabelTransfer);
+
+        $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+
+        $this->assertSame(1, $persistedProductLabelTransfer->getLocalizedAttributesCollection()->count());
+
+        /** @var \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesList */
+        $localizedAttributesList = $persistedProductLabelTransfer->getLocalizedAttributesCollection()->getArrayCopy();
+        $this->assertSame($productLabelTransfer->getIdProductLabel(), $localizedAttributesList[0]->getFkProductLabel());
+        $this->assertSame($localeTransfer->getIdLocale(), $localizedAttributesList[0]->getFkLocale());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function createProductLabelFacade()
     {
         return $this->tester->getLocator()->productLabel()->facade();
+    }
+
+    /**
+     * @param int|null $fkLocale
+     * @param int|null $fkProductLabel
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function generateLocalizedAttributesTransfer($fkLocale = null, $fkProductLabel = null)
+    {
+        $builder = new ProductLabelLocalizedAttributesBuilder([
+            'fkProductLabel' => $fkProductLabel,
+            'fkLocale' => $fkLocale,
+        ]);
+
+        return $builder->build();
     }
 
 }

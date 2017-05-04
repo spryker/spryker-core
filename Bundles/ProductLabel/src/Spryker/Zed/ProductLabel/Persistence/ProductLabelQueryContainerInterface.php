@@ -19,4 +19,13 @@ interface ProductLabelQueryContainerInterface
      */
     public function queryProductLabelById($idProductLabel);
 
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryLocalizedAttributesByProductLabel($idProductLabel);
+
 }

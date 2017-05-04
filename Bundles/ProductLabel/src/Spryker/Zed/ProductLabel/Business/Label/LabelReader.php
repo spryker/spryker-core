@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class LabelReader implements LabelReaderInterface
@@ -21,11 +22,20 @@ class LabelReader implements LabelReaderInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface
      */
-    public function __construct(ProductLabelQueryContainerInterface $queryContainer)
-    {
+    protected $localizedAttributesCollectionReader;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface $localizedAttributesCollectionReader
+     */
+    public function __construct(
+        ProductLabelQueryContainerInterface $queryContainer,
+        LocalizedAttributesCollectionReaderInterface $localizedAttributesCollectionReader
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->localizedAttributesCollectionReader = $localizedAttributesCollectionReader;
     }
 
     /**
@@ -46,6 +56,7 @@ class LabelReader implements LabelReaderInterface
         }
 
         $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
+        $this->addLocalizedAttributes($productLabelTransfer);
 
         return $productLabelTransfer;
     }
@@ -74,6 +85,18 @@ class LabelReader implements LabelReaderInterface
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
         return $productLabelTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer)
+    {
+        $productLabelTransfer->setLocalizedAttributesCollection(
+            $this->localizedAttributesCollectionReader->read($productLabelTransfer->getIdProductLabel())
+        );
     }
 
 }

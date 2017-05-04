@@ -14,6 +14,17 @@
         <property name="frontEndReference" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
+        <property
+            name="localizedAttributesCollection"
+            singular="localizedAttributes"
+            type="ProductLabelLocalizedAttributes[]"
+        />
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkProductLabel" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

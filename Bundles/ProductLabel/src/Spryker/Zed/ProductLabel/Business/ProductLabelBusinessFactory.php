@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductLabel\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelWriter;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
@@ -23,7 +25,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     public function createLabelWriter()
     {
-        return new LabelWriter();
+        return new LabelWriter($this->createLocalizedAttributesCollectionWriter());
     }
 
     /**
@@ -31,7 +33,26 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     public function createLabelReader()
     {
-        return new LabelReader($this->getQueryContainer());
+        return new LabelReader(
+            $this->getQueryContainer(),
+            $this->createLocalizedAttributesCollectionReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface
+     */
+    public function createLocalizedAttributesCollectionWriter()
+    {
+        return new LocalizedAttributesCollectionWriter();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface
+     */
+    public function createLocalizedAttributesCollectionReader()
+    {
+        return new LocalizedAttributesCollectionReader($this->getQueryContainer());
     }
 
 }

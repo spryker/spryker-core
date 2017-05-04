@@ -20,7 +20,7 @@
 
         <id-method-parameter value="spy_product_label_pk_seq"/>
 
-        <unique name="spy_product_label_name">
+        <unique name="spy_product_label-unique_name">
             <unique-column name="name"/>
         </unique>
     </table>

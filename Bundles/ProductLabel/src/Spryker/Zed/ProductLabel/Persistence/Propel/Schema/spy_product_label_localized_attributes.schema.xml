@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<database
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="zed"
+    namespace="Orm\Zed\ProductLabel\Persistence"
+    package="src.Orm.Zed.ProductLabel.Persistence"
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+>
+    <table name="spy_product_label_localized_attributes">
+        <column name="fk_product_label" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="fk_locale" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" required="false"/>
+
+        <foreign-key
+            name="spy_product_label_localized_attributes-fk_product_label"
+            foreignTable="spy_product_label"
+            phpName="SpyProductLabel"
+            refPhpName="SpyProductLabelLocalizedAttributes"
+        >
+            <reference local="fk_product_label" foreign="id_product_label"/>
+        </foreign-key>
+
+        <foreign-key
+            name="spy_product_label_localized_attributes-fk_locale"
+            foreignTable="spy_locale"
+            phpName="SpyLocale"
+            refPhpName="SpyProductLabelLocalizedAttributes"
+        >
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+    </table>
+</database>

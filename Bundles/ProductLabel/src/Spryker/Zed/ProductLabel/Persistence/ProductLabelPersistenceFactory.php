@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -23,6 +24,14 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     public function createProductLabelQuery()
     {
         return SpyProductLabelQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function createLocalizedAttributesQuery()
+    {
+        return SpyProductLabelLocalizedAttributesQuery::create();
     }
 
 }
