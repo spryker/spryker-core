@@ -75,12 +75,4 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API_QUERY_BUILDER);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
-     */
-    public function getPropelQueryBuilderQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
-    }
-
 }

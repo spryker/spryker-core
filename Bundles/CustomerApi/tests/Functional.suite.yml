@@ -2,6 +2,7 @@ class_name: FunctionalTester
 modules:
     enabled:
         - \Testify\Module\Environment
+        - \CustomerApi\Module\Functional
         - \Config\Module\ConfigInit
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database

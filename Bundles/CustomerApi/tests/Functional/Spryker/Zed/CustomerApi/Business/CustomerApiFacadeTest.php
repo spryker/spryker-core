@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
 
 /**
@@ -26,6 +29,25 @@ class CustomerApiFacadeTest extends Test
 {
 
     /**
+     * @var
+     */
+    protected $idCustomer;
+
+    /**
+     * @return void
+     */
+    public function setUp() {
+        parent::setUp();
+
+        $customerEntity = new SpyCustomer();
+        $customerEntity->setEmail('foo' . time() . '@bar.de');
+        $customerEntity->setCustomerReference('foobar' . time());
+
+        $customerEntity->save();
+        $this->idCustomer = $customerEntity->getIdCustomer();
+    }
+
+    /**
      * @return void
      */
     public function testGet()
@@ -33,7 +55,7 @@ class CustomerApiFacadeTest extends Test
         $customerApiFacade = new CustomerApiFacade();
 
         $apiFilterTransfer = new ApiFilterTransfer();
-        $idCustomer = 1;
+        $idCustomer = $this->idCustomer;
 
         $resultTransfer = $customerApiFacade->getCustomer($idCustomer, $apiFilterTransfer);
 

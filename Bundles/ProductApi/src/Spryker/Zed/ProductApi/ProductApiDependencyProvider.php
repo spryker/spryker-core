@@ -19,7 +19,6 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
     const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
-    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
