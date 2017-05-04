@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\Locale\Helper;
+
+use Codeception\Module;
+use Generated\Shared\DataBuilder\LocaleBuilder;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+
+class LocaleDataHelper extends Module
+{
+
+    use LocatorHelperTrait;
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function haveLocale($seedData = [])
+    {
+        $localeTransfer = (new LocaleBuilder($seedData))->build();
+
+        if ($this->getLocaleFacade()->hasLocale($localeTransfer->getLocaleName())) {
+            return $this->getLocaleFacade()->getLocale($localeTransfer->getLocaleName());
+        }
+
+        return $this->getLocaleFacade()->createLocale($localeTransfer->getLocaleName());
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getLocator()->locale()->facade();
+    }
+
+}
