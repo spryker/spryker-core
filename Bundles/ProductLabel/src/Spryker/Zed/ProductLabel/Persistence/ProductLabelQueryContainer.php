@@ -31,6 +31,21 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelByAbstractProduct($idProductAbstract)
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->useSpyProductLabelProductAbstractQuery()
+                ->filterByFkProductAbstract($idProductAbstract)
+            ->endUse();
+    }
+
+    /**
      * @api
      *
      * @param int $idProductLabel

@@ -75,6 +75,39 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readAllForAbstractProduct($idProductAbstract)
+    {
+        $productLabelEntities = $this->findEntitiesForAbstractProduct($idProductAbstract);
+        $productLabelTransferCollection = [];
+
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
+            $this->addLocalizedAttributes($productLabelTransfer);
+
+            $productLabelTransferCollection[] = $productLabelTransfer;
+        }
+
+        return $productLabelTransferCollection;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     */
+    protected function findEntitiesForAbstractProduct($idProductAbstract)
+    {
+        return $this
+            ->queryContainer
+            ->queryProductLabelByAbstractProduct($idProductAbstract)
+            ->find();
+    }
+
+    /**
      * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer

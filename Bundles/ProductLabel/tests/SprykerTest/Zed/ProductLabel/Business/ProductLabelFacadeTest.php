@@ -113,6 +113,27 @@ class ProductLabelFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testSetAbstractProductRelationPersistsRelation()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->setAbstractProductRelationForLabel(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract()
+        );
+
+        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct(
+            $productTransfer->getFkProductAbstract()
+        );
+
+        $this->assertCount(1, $productLabelTransferCollection);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function createProductLabelFacade()

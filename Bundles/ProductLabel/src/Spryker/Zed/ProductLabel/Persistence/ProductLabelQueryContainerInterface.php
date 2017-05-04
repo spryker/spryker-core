@@ -20,6 +20,13 @@ interface ProductLabelQueryContainerInterface
     public function queryProductLabelById($idProductLabel);
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelByAbstractProduct($idProductAbstract);
+
+    /**
      * @api
      *
      * @param int $idProductLabel

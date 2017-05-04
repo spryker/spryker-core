@@ -12,6 +12,7 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelWriter;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
+use Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationWriter;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
@@ -53,6 +54,14 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createLocalizedAttributesCollectionReader()
     {
         return new LocalizedAttributesCollectionReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationWriterInterface
+     */
+    public function createProductRelationWriter()
+    {
+        return new ProductRelationWriter();
     }
 
 }

@@ -13,6 +13,8 @@ interface ProductLabelFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
@@ -22,10 +24,29 @@ interface ProductLabelFacadeInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readLabelsForAbstractProduct($idProductAbstract);
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
      */
     public function createLabel(ProductLabelTransfer $productLabelTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
 
 }
