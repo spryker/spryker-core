@@ -1,0 +1,48 @@
+<?php
+/**
+ * Fact Finder
+ */
+use Spryker\Shared\FactFinder\FactFinderConstants;
+
+$config[FactFinderConstants::ENVIRONMENT] = FactFinderConstants::ENVIRONMENT_PRODUCTION;
+$config[FactFinderConstants::ENVIRONMENT . FactFinderConstants::ENVIRONMENT_PRODUCTION] = [
+    'debug' => true,
+    'requestProtocol' => 'http', //https
+    'serverAddress' => 'partner3.fact-finder.de',
+    'port' => '80',
+    'context' => 'Spryker',
+    'channel' => 'test',
+    'language' => 'de',
+    'authenticationType' => 'advanced',
+// This is another possible option for authentication type
+//   'authenticationType' => 'manual',
+    'userName' => 'campaignManager',
+    'password' => 'change123',
+    'authenticationPrefix' => 'FACT-FINDER',
+    'authenticationPostfix' => 'FACT-FINDER',
+    'clientMappings' => [],
+    'serverMappings' => [],
+    'ignoredClientParameters' => [],
+    'ignoredServerParameters' => [],
+    'whitelistClientParameters' => [],
+    'whitelistServerParameters' => [],
+    'requiredClientParameters' => [],
+    'requiredServerParameters' => [],
+    'defaultConnectTimeout' => 2,
+    'defaultTimeout' => 4,
+    'suggestConnectTimeout' => 2,
+    'suggestTimeout' => 2,
+    'trackingConnectTimeout' => 1,
+    'trackingTimeout' => 2,
+    'importConnectTimeout' => 10,
+    'importTimeout' => 360,
+    'pageContentEncoding' => 'UTF-8',
+    'clientUrlEncoding' => 'UTF-8',
+];
+
+$config[FactFinderConstants::CSV_DIRECTORY] = APPLICATION_ROOT_DIR . '/public/Zed/assets/fact_finder/';
+$config[FactFinderConstants::EXPORT_QUERY_LIMIT] = 1000;
+$config[FactFinderConstants::EXPORT_FILE_NAME_PREFIX] = 'product';
+$config[FactFinderConstants::EXPORT_FILE_NAME_DELIMITER] = '_';
+$config[FactFinderConstants::EXPORT_FILE_EXTENSION] = '.csv';
+$config[FactFinderConstants::PHP_LOGGER_CONFIG_PATH] = APPLICATION_ROOT_DIR . '/config/Shared/log4php.xml'

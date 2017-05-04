@@ -1,0 +1,32 @@
+{
+  "name": "spryker/fact-finder-demo",
+  "description": "FactFinderDemo bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/fact-finder": "^0.1.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
