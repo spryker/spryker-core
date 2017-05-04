@@ -250,4 +250,12 @@ interface CustomerFacadeInterface
         CheckoutResponseTransfer  $checkoutResponseTransfer
     );
 
+    /**
+     * @api
+     *
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 }

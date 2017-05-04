@@ -373,4 +373,13 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->checkPreConditions($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        return true;
+    }
 }

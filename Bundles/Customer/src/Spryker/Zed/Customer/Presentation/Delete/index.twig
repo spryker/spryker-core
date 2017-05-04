@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit Customer' %}
+{% set widget_title = 'Customer deletion confirmation' %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -15,11 +15,8 @@
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(form) }}
+            <a href="{{ url('/customer/view', {'id-customer': idCustomer}) }}" class="btn btn-back">Back</a>
+            <a href="{{ url('/customer/delete/confirm', {'id-customer': idCustomer}) }}" class="btn btn-danger">Delete account</a>
 
         {% endblock %}
 
