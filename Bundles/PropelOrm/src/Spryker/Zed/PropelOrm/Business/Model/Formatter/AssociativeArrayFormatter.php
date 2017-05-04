@@ -20,12 +20,52 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
     public function getStructuredArrayFromRow($row)
     {
         $columnNames = array_keys($this->getAsColumns());
+
         $finalRow = [];
         foreach ($row as $index => $value) {
-            $finalRow[str_replace('"', '', $columnNames[$index])] = $value;
+            $key = str_replace('"', '', $columnNames[$index]);
+            $key = $this->getKeyName($key);
+
+            $finalRow[$key] = $value;
         }
 
         return $finalRow;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function getKeyName($key)
+    {
+        if ($this->isPhpName($key)) {
+            if (strpos($key, '.') === false) {
+                return $key;
+            }
+
+            $phpName = substr($key, strpos($key, '.') + 1);
+            $phpName = lcfirst($phpName);
+
+            $separator = '_';
+            $key = strtolower(preg_replace(
+                '/([a-z])([A-Z])/',
+                '$1' . addcslashes($separator, '$') . '$2',
+                $phpName
+            ));
+        }
+
+        return $key;
+    }
+
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    protected function isPhpName($keyName)
+    {
+        return strpos($keyName, '\\') !== false;
     }
 
 }
