@@ -57,6 +57,9 @@ class ViewController extends AddController
             ->getFactory()
             ->createVariantTable($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR);
 
+        $productGroupTable = $this->getFactory()
+            ->createProductGroupTable($idProductAbstract);
+
         $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
@@ -74,6 +77,7 @@ class ViewController extends AddController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'variantTable' => $variantTable->render(),
+            'productGroupTable' => $productGroupTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
             'productAttributes' => $attributes,
@@ -149,6 +153,26 @@ class ViewController extends AddController
 
         return $this->jsonResponse(
             $variantTable->fetchData()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productGroupTableAction(Request $request)
+    {
+        $idProductAbstract = $this->castId($request->get(
+            self::PARAM_ID_PRODUCT_ABSTRACT
+        ));
+
+        $productGroupTable = $this
+            ->getFactory()
+            ->createProductGroupTable($idProductAbstract);
+
+        return $this->jsonResponse(
+            $productGroupTable->fetchData()
         );
     }
 

@@ -1,0 +1,43 @@
+{
+  "name": "spryker/product-group",
+  "description": "ProductGroup bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/touch": "^3.0.0",
+    "spryker/twig": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use the ProductGroupTwigServiceProvider you need to install spryker/silex."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductGroup\\": "tests/SprykerTest/Zed/ProductGroup/_support/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
