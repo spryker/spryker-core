@@ -20,7 +20,7 @@ class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterfa
      *
      * @param string|null $mvc
      *
-     * @return string
+     * @return array
      */
     public function getRepeatData($mvc)
     {

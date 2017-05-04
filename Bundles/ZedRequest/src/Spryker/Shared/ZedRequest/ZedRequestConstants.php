@@ -41,4 +41,6 @@ interface ZedRequestConstants
 
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
 
+    const YVES_REQUEST_REPEAT_DATA_PATH = 'YVES_REQUEST_REPEAT_DATA_PATH';
+
 }

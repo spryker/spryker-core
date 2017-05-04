@@ -10,6 +10,9 @@ namespace Spryker\Zed\ZedRequest\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ZedRequest\ZedRequestDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
 {
 

@@ -8,13 +8,24 @@
 namespace Spryker\Zed\ZedRequest\Business\Model;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ */
 class Repeater implements RepeaterInterface
 {
+
+    /**
+     * This is a hack to get around a bad design which uses the singleton pattern.
+     *
+     * We need the configuration in this class to let customers control the path
+     * and file name for last yves request log data.
+     */
+    use BundleConfigResolverAwareTrait;
 
     /**
      * @var bool
@@ -24,15 +35,15 @@ class Repeater implements RepeaterInterface
     /**
      * @param string|null $mvc
      *
-     * @return string
+     * @return array
      */
     public function getRepeatData($mvc = null)
     {
         $this->isRepeatInProgress = true;
         if ($mvc !== null) {
-            return $this->getFlashInFile('last_yves_request_' . $mvc . '.log');
+            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($mvc));
         } else {
-            return $this->getFlashInFile('last_yves_request.log');
+            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName());
         }
     }
 
@@ -66,8 +77,8 @@ class Repeater implements RepeaterInterface
             $httpRequest->attributes->get('action')
         );
 
-        $this->setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
-        $this->setFlashInFile($repeatData, 'last_yves_request.log');
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($mvc));
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
     /**
@@ -100,6 +111,7 @@ class Repeater implements RepeaterInterface
         if (!file_exists($filePath)) {
             return [];
         }
+
         $content = file_get_contents($filePath);
         if (empty($content)) {
             return [];
@@ -115,7 +127,7 @@ class Repeater implements RepeaterInterface
      */
     protected function getFilePath($fileName)
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/' . $fileName;
+        return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
     }
 
 }
