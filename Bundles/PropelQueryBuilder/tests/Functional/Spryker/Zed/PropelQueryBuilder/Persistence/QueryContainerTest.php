@@ -42,30 +42,82 @@ class QueryContainerTest extends Test
     const EXPECTED_COUNT = 8;
     const EXPECTED_OFFSET = 10;
     const EXPECTED_SKU_COLLECTION = [
-        '001_25904004',
-        '019_30395396',
-        '019_31080444',
-        '029_13374503',
-        '029_20370432',
-        '029_13391322',
-        '031_19618271',
-        '031_21927455',
+        'test_concrete_sku_1',
+        'test_concrete_sku_2',
+        'test_concrete_sku_3',
+        'test_concrete_sku_4',
+        'test_concrete_sku_5',
+        'test_concrete_sku_6',
+        'test_concrete_sku_7',
+        'test_concrete_sku_8',
     ];
 
     /**
      * @var string
      */
-    protected $jsonDataWithMappings = '{"condition":"OR","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
+    protected $jsonDataWithMappings = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "product_sku",
+          "field": "product_sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_abstract_sku_1,test_abstract_sku_2,test_abstract_sku_3,test_abstract_sku_4"
+        },
+        {
+          "id": "product_sku",
+          "field": "product_sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_concrete_sku_5,test_concrete_sku_6,test_concrete_sku_7,test_concrete_sku_8"
+        }
+      ]
+    }';
 
     /**
      * @var string
      */
-    protected $jsonDataNoMappings = '{"condition":"OR","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"spy_product_abstract.sku","field":"spy_product.sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
+    protected $jsonDataNoMappings = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "spy_product_abstract.sku",
+          "field": "spy_product_abstract.sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_abstract_sku_1,test_abstract_sku_2,test_abstract_sku_3,test_abstract_sku_4"
+        },
+        {
+          "id": "spy_product_abstract.sku",
+          "field": "spy_product.sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_concrete_sku_5,test_concrete_sku_6,test_concrete_sku_7,test_concrete_sku_8"
+        }
+      ]
+    }';
 
     /**
      * @var string
      */
-    protected $jsonDataForPagination = '{"condition":"OR","rules":[{"id":"spy_product_abstract.id_product_abstract","field":"spy_product_abstract.id_product_abstract","type":"number","input":"text","operator":"greater_or_equal","value":"1"}]}';
+    protected $jsonDataForPagination = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "spy_product_abstract.id_product_abstract",
+          "field": "spy_product_abstract.id_product_abstract",
+          "type": "number",
+          "input": "text",
+          "operator": "greater_or_equal",
+          "value": "1"
+        }
+      ]
+    }';
 
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
@@ -73,11 +125,20 @@ class QueryContainerTest extends Test
     protected $queryContainer;
 
     /**
+     * @var \PropelQueryBuilder\FunctionalTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->queryContainer = new PropelQueryBuilderQueryContainer();
+
+        $this->prepareTestProducts();
     }
 
     /**
@@ -337,6 +398,21 @@ class QueryContainerTest extends Test
         $criteriaTransfer->setTable($tableTransfer);
 
         return $criteriaTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareTestProducts()
+    {
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_1'], ['sku' => 'test_abstract_sku_1']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_2'], ['sku' => 'test_abstract_sku_2']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_3'], ['sku' => 'test_abstract_sku_3']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_4'], ['sku' => 'test_abstract_sku_4']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_5'], ['sku' => 'test_abstract_sku_5']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_6'], ['sku' => 'test_abstract_sku_6']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_7'], ['sku' => 'test_abstract_sku_7']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_8'], ['sku' => 'test_abstract_sku_8']);
     }
 
 }

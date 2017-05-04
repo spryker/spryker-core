@@ -49,6 +49,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+    const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -181,6 +182,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT_GROUP] = function (Container $container) {
+            return $container->getLocator()->productGroup()->queryContainer();
         };
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
