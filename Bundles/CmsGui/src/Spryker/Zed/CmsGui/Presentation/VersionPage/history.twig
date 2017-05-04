@@ -1,6 +1,14 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'Version History' | trans %}
+{% set pageName = '' %}
+{% for pageAttribute in cmsCurrentPage.pageAttributes %}
+    {% if  pageAttribute.localeName == 'en_US' %}
+        {% set pageName = pageAttribute.name  %}
+    {% endif %}
+{% endfor %}
+
+
+{% set widget_title = 'Version History: ' | trans ~ pageName %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}

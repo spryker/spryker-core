@@ -17,6 +17,7 @@ use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
+use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -51,24 +52,32 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $cmsGlossarySaver;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
+     */
+    protected $templateManager;
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface $cmsGlossarySaver
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
      */
     public function __construct(
         CmsToUrlInterface $urlFacade,
         CmsToTouchInterface $touchFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsPageUrlBuilderInterface $cmsPageUrlBuilder,
-        CmsGlossarySaverInterface $cmsGlossarySaver
+        CmsGlossarySaverInterface $cmsGlossarySaver,
+        TemplateManagerInterface $templateManager
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
         $this->cmsGlossarySaver = $cmsGlossarySaver;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -83,6 +92,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         try {
             $cmsPageTransfer->requirePageAttributes();
+            $this->checkTemplateFileExists($cmsPageTransfer->getFkTemplate());
 
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -123,6 +133,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     public function updatePage(CmsPageTransfer $cmsPageTransfer)
     {
         $cmsPageEntity = $this->getCmsPageEntity($cmsPageTransfer);
+        $this->checkTemplateFileExists($cmsPageTransfer->getFkTemplate());
 
         if ($cmsPageEntity === null) {
             throw new MissingPageException(
@@ -162,6 +173,20 @@ class CmsPageSaver implements CmsPageSaverInterface
         }
 
         return $cmsPageTransfer;
+    }
+
+    /**
+     * @param int $idTemplate
+     *
+     * @return void
+     */
+    protected function checkTemplateFileExists($idTemplate)
+    {
+        $templateTransfer = $this->templateManager
+            ->getTemplateById($idTemplate);
+
+        $this->templateManager
+            ->checkTemplateFileExists($templateTransfer->getTemplatePath());
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cms\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
 
-interface CmsVersionTransferExpanderPlugin
+interface CmsVersionTransferExpanderPluginInterface
 {
 
     /**
@@ -17,6 +17,8 @@ interface CmsVersionTransferExpanderPlugin
      * - This plugin interface is used for expanding additional information in
      *   CmsVersionTransfer, this method will call when VersionFinder return a
      *   Cms Version
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *

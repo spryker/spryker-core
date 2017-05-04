@@ -159,7 +159,7 @@ class VersionPageController extends AbstractController
             return $redirectUrl;
         }
 
-        $this->addSuccessMessage(sprintf('Rollback successfully applied and Page with version %d published.', $cmsVersionTransfer->getVersion()));
+        $this->addSuccessMessage(sprintf('Rollback applied successfully. Page with version %s published.', $cmsVersionTransfer->getVersion()));
 
         return $redirectUrl;
     }

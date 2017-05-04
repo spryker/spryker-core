@@ -165,7 +165,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->createCmsUrlBuilder(),
-            $this->createCmsGlossarySaver()
+            $this->createCmsGlossarySaver(),
+            $this->createTemplateManager()
         );
     }
 
@@ -241,9 +242,9 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new VersionMigration(
             $this->getUtilEncodingService(),
             [
-                $this->createCmsTemplateMigrationHandler(),
-                $this->createCmsPageLocalizedAttributeMigrationHandler(),
-                $this->createCmsGlossaryKeyMappingMigrationHandler(),
+                $this->createCmsTemplateMigration(),
+                $this->createCmsPageLocalizedAttributeMigration(),
+                $this->createCmsGlossaryKeyMappingMigration(),
             ]
         );
     }
@@ -251,7 +252,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
-    public function createCmsTemplateMigrationHandler()
+    public function createCmsTemplateMigration()
     {
         return new CmsTemplateMigration(
             $this->createTemplateManager(),
@@ -262,7 +263,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
-    public function createCmsPageLocalizedAttributeMigrationHandler()
+    public function createCmsPageLocalizedAttributeMigration()
     {
         return new CmsPageLocalizedAttributesMigration(
             $this->getLocaleFacade(),
@@ -273,7 +274,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
      */
-    public function createCmsGlossaryKeyMappingMigrationHandler()
+    public function createCmsGlossaryKeyMappingMigration()
     {
         return new CmsGlossaryKeyMappingMigration(
             $this->createCmsGlossarySaver(),
@@ -314,7 +315,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected function getCmsVersionTransferExpanderPlugins()
     {

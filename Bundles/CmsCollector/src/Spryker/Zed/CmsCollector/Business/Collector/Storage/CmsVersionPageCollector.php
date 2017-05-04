@@ -48,9 +48,9 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
 
         return [
             'url' => $collectItemData[CmsVersionPageCollectorQuery::COL_URL],
-            'valid_from' => $cmsPageTransfer->getValidFrom(),
-            'valid_to' => $cmsPageTransfer->getValidTo(),
-            'is_active' => $cmsPageTransfer->getIsActive(),
+            'valid_from' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_FROM],
+            'valid_to' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_TO],
+            'is_active' => $collectItemData[CmsVersionPageCollectorQuery::COL_IS_ACTIVE],
             'id' => $cmsPageTransfer->getFkPage(),
             'template' => $cmsVersionDataTransfer->getCmsTemplate()->getTemplatePath(),
             'placeholders' => $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName),

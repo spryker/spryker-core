@@ -8,13 +8,13 @@
 namespace Spryker\Zed\CmsUserConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin;
+use Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacadeInterface getFacade()
  */
-class UserCmsVersionTransferExpanderPlugin extends AbstractPlugin implements CmsVersionTransferExpanderPlugin
+class UserCmsVersionTransferExpanderPlugin extends AbstractPlugin implements CmsVersionTransferExpanderPluginInterface
 {
 
     /**

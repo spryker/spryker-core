@@ -174,12 +174,17 @@ class CmsPageTable extends AbstractTable
             return '';
         }
 
+        $viewButtons = [
+            $this->createViewButton($item),
+            $this->createViewInShopButton($item, $urlPrefix),
+        ];
+
+        if ($this->hasMultipleVersions($item)) {
+            $viewButtons[] = $this->createVersionHistoryButton($item);
+        }
+
         return $this->generateButtonGroup(
-            [
-                $this->createViewButton($item),
-                $this->createViewInShopButton($item, $urlPrefix),
-                $this->createVersionHistoryButton($item),
-            ],
+            $viewButtons,
             'View '
         );
     }
@@ -482,6 +487,16 @@ class CmsPageTable extends AbstractTable
     protected function isDraft(array $item)
     {
         return $item[static::COL_CMS_VERSION_COUNT] <= 0;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return bool
+     */
+    protected function hasMultipleVersions(array $item)
+    {
+        return $item[static::COL_CMS_VERSION_COUNT] > 1;
     }
 
 }

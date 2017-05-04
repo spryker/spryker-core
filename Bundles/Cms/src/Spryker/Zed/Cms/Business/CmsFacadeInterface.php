@@ -407,7 +407,7 @@ interface CmsFacadeInterface
      * - Creates a cms version for page.
      * - Creates a generated version name if $versionName is null.
      * - Touches cms page with given idCmsPage.
-     * - Calls save() on PostSavePlugins classes
+     * - Executes PostSavePlugins
      *
      * @api
      *

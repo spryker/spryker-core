@@ -21,6 +21,8 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
     const COL_URL = 'url';
     const COL_IS_ACTIVE = 'is_active';
     const COL_DATA = 'data';
+    const COL_VALID_FROM = 'valid_from';
+    const COL_VALID_TO = 'valid_to';
 
     /**
      * @return void
@@ -51,6 +53,8 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, static::COL_DATA);
         $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, static::COL_URL);
         $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
+        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_VALID_FROM, static::COL_VALID_FROM);
+        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_VALID_TO, static::COL_VALID_TO);
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_VERSION);
 
         $this->touchQuery->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()));

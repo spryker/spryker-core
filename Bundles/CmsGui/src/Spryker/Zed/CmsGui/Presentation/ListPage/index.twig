@@ -11,6 +11,9 @@
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of CMS pages' | trans}}</h5>
+        {%- endblock %}
         {% block widget_content %}
             {{ pages | raw }}
         {% endblock %}

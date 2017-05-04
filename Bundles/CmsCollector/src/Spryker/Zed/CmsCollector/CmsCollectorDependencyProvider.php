@@ -22,7 +22,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -15,7 +15,7 @@
 {% block action %}
 
     {% set redirectUrl = url('/cms-gui/view-page', {'id-cms-page' : cmsPage.fkPage }) %}
-    {% if cmsVersion is not null %}
+    {% if cmsVersion is not null and cmsVersion.version > 1 %}
         {{ viewActionButton(url('/cms-gui/version-page/history', {'id-cms-page': cmsPage.fkPage , 'redirect-url' : redirectUrl }), 'Version History' | trans) }}
     {% endif %}
     {{ editActionButton(url('/cms-gui/edit-page', { 'id-cms-page': cmsPage.fkPage }), 'Edit page' | trans) }}

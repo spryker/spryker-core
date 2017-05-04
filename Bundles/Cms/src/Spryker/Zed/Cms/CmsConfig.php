@@ -24,7 +24,7 @@ class CmsConfig extends AbstractBundleConfig
      */
     public function getTemplateRealPath($templateRelativePath)
     {
-        return $this->getPhysicalAddress($templateRelativePath, 'Yves');
+        return $this->getAbsolutePath($templateRelativePath, 'Yves');
     }
 
     /**
@@ -35,8 +35,8 @@ class CmsConfig extends AbstractBundleConfig
     public function getTemplateRealPaths($templateRelativePath)
     {
         return [
-            $this->getPhysicalAddress($templateRelativePath, 'Yves'),
-            $this->getPhysicalAddress($templateRelativePath, 'Shared'),
+            $this->getAbsolutePath($templateRelativePath, 'Yves'),
+            $this->getAbsolutePath($templateRelativePath, 'Shared'),
         ];
     }
 
@@ -54,7 +54,7 @@ class CmsConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    protected function getPhysicalAddress($templateRelativePath, $twigLayer)
+    protected function getAbsolutePath($templateRelativePath, $twigLayer)
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 

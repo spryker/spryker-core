@@ -25,14 +25,14 @@ class VersionFinder implements VersionFinderInterface
     protected $versionDataMapper;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[]
+     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected $transferExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
-     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPlugin[] $transferExpanderPlugins
+     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[] $transferExpanderPlugins
      */
     public function __construct(
         CmsQueryContainerInterface $queryContainer,
