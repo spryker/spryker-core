@@ -47,7 +47,12 @@ $(document).ready( function () {
     originalText.each(function(index, element){
         var targets = $('#version-diff .has-diff .original');
         if (typeof targets[index] !== 'undefined') {
+            var targetsDiff = $('#version-diff .has-diff .diff');
             targets[index].innerText = element.innerText;
+
+            if (element.innerText !== targetsDiff[index].innerText) {
+                $(targetsDiff[index]).css('background-color', '#fbd6c4')
+            }
         }
     });
 
