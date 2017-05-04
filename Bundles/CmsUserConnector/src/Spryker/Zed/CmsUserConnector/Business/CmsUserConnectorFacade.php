@@ -21,7 +21,6 @@ class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorF
      *
      * @api
      *
-     *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer

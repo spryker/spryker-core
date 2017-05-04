@@ -39,11 +39,9 @@
                     {{ 'on' | trans }} <b>{{ cmsVersion.createdAt | formatDateTime }}</b>.
             </p>
             <p>
-                <i>
-                    {% filter trans|raw %}
-                        You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
-                    {% endfilter %}
-                </i>
+                {% filter trans|raw %}
+                    You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
+                {% endfilter %}
             </p>
         </div>
     {% endif %}

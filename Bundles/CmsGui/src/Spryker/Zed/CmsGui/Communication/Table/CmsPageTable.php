@@ -176,9 +176,9 @@ class CmsPageTable extends AbstractTable
 
         return $this->generateButtonGroup(
             [
-            $this->createViewButton($item),
-            $this->createViewInShopButton($item, $urlPrefix),
-            $this->createVersionHistoryButton($item),
+                $this->createViewButton($item),
+                $this->createViewInShopButton($item, $urlPrefix),
+                $this->createVersionHistoryButton($item),
             ],
             'View '
         );
@@ -255,8 +255,8 @@ class CmsPageTable extends AbstractTable
     {
         return $this->generateButtonGroup(
             [
-            $this->createEditPageButton($item),
-            $this->createEditGlossaryButton($item),
+                $this->createEditPageButton($item),
+                $this->createEditGlossaryButton($item),
             ],
             'Edit ',
             [

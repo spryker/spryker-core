@@ -464,6 +464,9 @@ interface CmsFacadeInterface
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
     /**
+     * Specification:
+     * - Returns All CmsPageVersions by IdCmsPage
+     *
      * @api
      *
      * @param int $idCmsPage
