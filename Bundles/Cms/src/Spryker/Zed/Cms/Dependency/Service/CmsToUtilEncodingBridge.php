@@ -37,8 +37,8 @@ class CmsToUtilEncodingBridge implements CmsToUtilEncodingInterface
     /**
      * @param string $jsonValue
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return array
      */

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -41,8 +39,8 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -54,8 +52,8 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -66,8 +64,8 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -85,8 +83,8 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */

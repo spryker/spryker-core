@@ -17,6 +17,8 @@ interface CmsVersionPostSavePluginInterface
      * - This plugin interface is used for post hook saving when the cms page
      *   gets published
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer

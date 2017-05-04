@@ -7,29 +7,11 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
-use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
-use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
-use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -76,8 +58,8 @@ class VersionPublisher implements VersionPublisherInterface
         CmsToTouchInterface $touchFacade,
         CmsQueryContainerInterface $queryContainer,
         array $postSavePlugins
-    )
-    {
+    ) {
+
         $this->versionGenerator = $versionGenerator;
         $this->versionDataMapper = $versionDataMapper;
         $this->touchFacade = $touchFacade;
@@ -88,8 +70,6 @@ class VersionPublisher implements VersionPublisherInterface
     /**
      * @param int $idCmsPage
      * @param string|null $versionName
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
@@ -105,8 +85,9 @@ class VersionPublisher implements VersionPublisherInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws MissingPageException
-     * @return SpyCmsPage
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function findCmsPage($idCmsPage)
     {
@@ -116,7 +97,8 @@ class VersionPublisher implements VersionPublisherInterface
 
         if (empty($cmsPageCollection)) {
             throw new MissingPageException(
-                sprintf('There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
+                sprintf(
+                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
                     $idCmsPage
                 )
             );
@@ -149,7 +131,7 @@ class VersionPublisher implements VersionPublisherInterface
      * @param string $versionName
      * @param int $versionNumber
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function saveAndTouchCmsVersion($data, $idCmsPage, $versionName, $versionNumber)
     {
@@ -164,7 +146,7 @@ class VersionPublisher implements VersionPublisherInterface
      * @param string $versionName
      * @param int $versionNumber
      *
-     * @return CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     protected function executeSaveAndTouchCmsVersionTransaction($data, $idCmsPage, $versionName, $versionNumber)
     {

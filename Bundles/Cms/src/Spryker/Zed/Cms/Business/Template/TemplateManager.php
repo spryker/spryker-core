@@ -265,7 +265,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws TemplateFileNotFoundException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
      *
      * @return void
      */

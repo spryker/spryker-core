@@ -13,8 +13,6 @@ use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapperInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -137,7 +135,7 @@ class VersionPageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $version
      * @param int $idCmsPage
      *
@@ -167,13 +165,13 @@ class VersionPageController extends AbstractController
     }
 
     /**
-     * @param CmsVersionMapperInterface $cmsVersionDataHelper
+     * @param \Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapperInterface $cmsVersionDataHelper
      * @param int $idCmsPage
      * @param int $version
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     protected function getCmsTargetVersionDataTransfer(CmsVersionMapperInterface $cmsVersionDataHelper, $idCmsPage, $version)
     {

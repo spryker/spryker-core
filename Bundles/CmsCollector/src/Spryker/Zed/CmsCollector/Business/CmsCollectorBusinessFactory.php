@@ -66,7 +66,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DataExtractor
+     * @return \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractor
      */
     public function createDataExtractor()
     {

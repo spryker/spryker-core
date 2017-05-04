@@ -174,11 +174,12 @@ class CmsPageTable extends AbstractTable
             return '';
         }
 
-        return $this->generateButtonGroup([
+        return $this->generateButtonGroup(
+            [
             $this->createViewButton($item),
             $this->createViewInShopButton($item, $urlPrefix),
-            $this->createVersionHistoryButton($item)
-        ],
+            $this->createVersionHistoryButton($item),
+            ],
             'View '
         );
     }
@@ -225,7 +226,7 @@ class CmsPageTable extends AbstractTable
         return [
             'url' => $cmsPageUrlInYves,
             'title' => 'In Shop',
-            'options' => ['target' => '_blank']
+            'options' => ['target' => '_blank'],
         ];
     }
 
@@ -240,7 +241,7 @@ class CmsPageTable extends AbstractTable
             'url' => Url::generate('/cms-gui/version-page/history', [
                 VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
-            'title'=> 'Version History',
+            'title' => 'Version History',
             'separated' => true,
         ];
     }
@@ -252,10 +253,11 @@ class CmsPageTable extends AbstractTable
      */
     protected function createEditButtonGroup(array $item)
     {
-        return $this->generateButtonGroup([
+        return $this->generateButtonGroup(
+            [
             $this->createEditPageButton($item),
             $this->createEditGlossaryButton($item),
-        ],
+            ],
             'Edit ',
             [
                 'class' => 'btn-edit',
@@ -275,7 +277,7 @@ class CmsPageTable extends AbstractTable
             'url' => Url::generate('/cms-gui/edit-page/index', [
                 EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
-            'title' => 'Page'
+            'title' => 'Page',
         ];
     }
 
@@ -290,7 +292,7 @@ class CmsPageTable extends AbstractTable
             'url' => Url::generate('/cms-gui/create-glossary/index', [
                 CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
-            'title' => 'Placeholders'
+            'title' => 'Placeholders',
         ];
     }
 

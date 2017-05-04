@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -41,8 +39,8 @@ class CmsTemplateMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -54,7 +52,7 @@ class CmsTemplateMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */

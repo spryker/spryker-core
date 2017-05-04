@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 
 interface TemplateManagerInterface
 {
@@ -72,7 +71,7 @@ interface TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws TemplateFileNotFoundException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
      *
      * @return void
      */

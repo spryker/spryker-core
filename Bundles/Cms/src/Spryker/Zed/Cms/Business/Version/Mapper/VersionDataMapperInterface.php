@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Business\Version\Mapper;
 
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
@@ -17,16 +15,16 @@ interface VersionDataMapperInterface
 {
 
     /**
-     * @param CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
      *
      * @return string
      */
     public function mapToJsonData(CmsVersionDataTransfer $cmsVersionDataTransfer);
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function mapToCmsVersionDataTransfer(SpyCmsPage $cmsPageEntity);
 
@@ -38,23 +36,24 @@ interface VersionDataMapperInterface
     public function mapToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity);
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function mapToCmsTemplateData(SpyCmsPage $cmsPageEntity);
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return CmsPageTransfer
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function mapToCmsPageLocalizedAttributesData(SpyCmsPage $cmsPageEntity);
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity);
+
 }

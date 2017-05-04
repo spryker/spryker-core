@@ -13,8 +13,8 @@ interface MigrationInterface
 {
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -22,4 +22,5 @@ interface MigrationInterface
         CmsVersionDataTransfer $originVersionDataTransfer,
         CmsVersionDataTransfer $targetVersionDataTransfer
     );
+
 }

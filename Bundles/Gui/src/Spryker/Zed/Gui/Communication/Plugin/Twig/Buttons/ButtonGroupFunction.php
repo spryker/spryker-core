@@ -48,7 +48,6 @@ class ButtonGroupFunction extends TwigFunction
         return '<i class="fa fa-caret-right"></i> ';
     }
 
-
     /**
      * @param array $buttons
      * @param string $title
@@ -68,4 +67,5 @@ class ButtonGroupFunction extends TwigFunction
     {
         return 'groupActionButtons';
     }
+
 }

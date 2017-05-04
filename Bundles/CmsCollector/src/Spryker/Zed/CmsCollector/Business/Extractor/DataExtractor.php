@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\CmsCollector\Business\Extractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
@@ -16,12 +17,12 @@ class DataExtractor implements DataExtractorInterface
 {
 
     /**
-     * @var CmsCollectorToUtilEncodingInterface
+     * @var \Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface
      */
     protected $utilEncoding;
 
     /**
-     * @param CmsCollectorToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface $utilEncoding
      */
     public function __construct(CmsCollectorToUtilEncodingInterface $utilEncoding)
     {
@@ -31,7 +32,7 @@ class DataExtractor implements DataExtractorInterface
     /**
      * @param string $data
      *
-     * @return CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function extractCmsVersionDataTransfer($data)
     {
@@ -42,7 +43,7 @@ class DataExtractor implements DataExtractorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     * @param $localeName
+     * @param string $localeName
      *
      * @return array
      */
@@ -98,7 +99,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return string
      */
-    protected function extractTranslationByLocales(\ArrayObject $translations, $localeName)
+    protected function extractTranslationByLocales(ArrayObject $translations, $localeName)
     {
         foreach ($translations as $translation) {
             if ($translation->getLocaleName() === $localeName) {
@@ -108,4 +109,5 @@ class DataExtractor implements DataExtractorInterface
 
         return '';
     }
+
 }

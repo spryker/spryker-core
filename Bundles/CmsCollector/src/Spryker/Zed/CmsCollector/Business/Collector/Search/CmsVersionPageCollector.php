@@ -24,7 +24,7 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
     protected $searchFacade;
 
     /**
-     * @var PageMapInterface
+     * @var \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface
      */
     protected $cmsDataPageMapBuilder;
 

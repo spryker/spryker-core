@@ -17,7 +17,7 @@ class VersionMigration implements VersionMigrationInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CmsToUtilEncodingInterface
+     * @var \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
     protected $utilEncoding;
 
@@ -27,7 +27,7 @@ class VersionMigration implements VersionMigrationInterface
     protected $migrationHandlers = [];
 
     /**
-     * @param CmsToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
      * @param \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface[] $migrationHandlers
      */
     public function __construct(CmsToUtilEncodingInterface $utilEncoding, array $migrationHandlers)
@@ -67,4 +67,5 @@ class VersionMigration implements VersionMigrationInterface
             );
         }
     }
+
 }

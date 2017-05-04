@@ -7,22 +7,9 @@
 
 namespace Spryker\Zed\CmsCollector\Business\Collector\Storage;
 
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
-use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
-use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -30,13 +17,13 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var DataExtractorInterface
+     * @var \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface
      */
     protected $dataExtractor;
 
     /**
-     * @param UtilDataReaderServiceInterface $utilDataReaderService
-     * @param DataExtractorInterface $dataExtractorDataPage
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
      */
     public function __construct(UtilDataReaderServiceInterface $utilDataReaderService, DataExtractorInterface $dataExtractorDataPage)
     {
@@ -73,8 +60,6 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
             'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
         ];
     }
-
-
 
     /**
      * @return string

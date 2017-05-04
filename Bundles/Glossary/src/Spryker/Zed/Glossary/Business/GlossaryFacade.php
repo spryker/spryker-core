@@ -92,6 +92,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param array $idKeys
      *
      * @return void

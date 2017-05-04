@@ -58,7 +58,8 @@ class CmsConfig extends AbstractBundleConfig
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
-        return sprintf('%s/%s/%s/Cms/Theme/%s%s',
+        return sprintf(
+            '%s/%s/%s/Cms/Theme/%s%s',
             APPLICATION_SOURCE_DIR,
             $this->get(CmsConstants::PROJECT_NAMESPACE),
             $twigLayer,

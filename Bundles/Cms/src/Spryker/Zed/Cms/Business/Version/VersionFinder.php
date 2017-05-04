@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
@@ -38,8 +37,9 @@ class VersionFinder implements VersionFinderInterface
     public function __construct(
         CmsQueryContainerInterface $queryContainer,
         VersionDataMapperInterface $versionDataMapper,
-        array $transferExpanderPlugins)
-    {
+        array $transferExpanderPlugins
+    ) {
+
         $this->queryContainer = $queryContainer;
         $this->versionDataMapper = $versionDataMapper;
         $this->transferExpanderPlugins = $transferExpanderPlugins;

@@ -83,8 +83,8 @@ class VersionRollback implements VersionRollbackInterface
     }
 
     /**
-     * @param SpyCmsVersion $originVersionEntity
-     * @param SpyCmsVersion $targetVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $originVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $targetVersionEntity
      * @param int $idCmsPage
      * @param int $version
      *
@@ -98,8 +98,8 @@ class VersionRollback implements VersionRollbackInterface
     }
 
     /**
-     * @param SpyCmsVersion $originVersionEntity
-     * @param SpyCmsVersion $targetVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $originVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $targetVersionEntity
      * @param int $idCmsPage
      * @param int $version
      *

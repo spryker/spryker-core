@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Mapper;
 
-use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsVersionMapperInterface
 {
 
     /**
-     * @param CmsVersionTransfer $cmsVersionTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
-     * @return CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function mapToCmsVersionDataTransfer(CmsVersionTransfer $cmsVersionTransfer);
 

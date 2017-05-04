@@ -350,7 +350,7 @@ class CmsFacadePageTest extends Test
         $this->cmsFacade->publishAndVersion($idCmsPage);
         $this->cmsFacade->publishAndVersion($idCmsPage);
 
-        $cmsVersion = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage,1);
+        $cmsVersion = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, 1);
 
         $this->assertEquals($cmsVersion->getVersion(), 1);
     }

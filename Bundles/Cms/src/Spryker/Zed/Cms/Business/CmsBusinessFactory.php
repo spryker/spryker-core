@@ -20,11 +20,10 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
 use Spryker\Zed\Cms\Business\Version\Migration\CmsGlossaryKeyMappingMigration;
 use Spryker\Zed\Cms\Business\Version\Migration\CmsPageLocalizedAttributesMigration;
 use Spryker\Zed\Cms\Business\Version\Migration\CmsTemplateMigration;
-use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
-use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Business\Version\VersionFinder;
 use Spryker\Zed\Cms\Business\Version\VersionGenerator;
 use Spryker\Zed\Cms\Business\Version\VersionMigration;
@@ -245,7 +244,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
                 $this->createCmsTemplateMigrationHandler(),
                 $this->createCmsPageLocalizedAttributeMigrationHandler(),
                 $this->createCmsGlossaryKeyMappingMigrationHandler(),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -296,7 +296,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VersionDataMapperInterface
+     * @return \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
      */
     public function createVersionDataMapper()
     {

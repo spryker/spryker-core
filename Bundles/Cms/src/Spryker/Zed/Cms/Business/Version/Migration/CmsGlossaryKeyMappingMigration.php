@@ -7,17 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Version\Migration;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
@@ -57,8 +47,8 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */
@@ -70,8 +60,8 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $originVersionDataTransfer
-     * @param CmsVersionDataTransfer $targetVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $originVersionDataTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $targetVersionDataTransfer
      *
      * @return void
      */

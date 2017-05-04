@@ -871,7 +871,7 @@ abstract class AbstractTable
      *
      * @return string
      */
-    protected function generateButtonGroupHtml(array $buttons, $title ,array $defaultOptions, array $customOptions = [])
+    protected function generateButtonGroupHtml(array $buttons, $title, array $defaultOptions, array $customOptions = [])
     {
         $buttonOptions = $this->generateButtonOptions($defaultOptions, $customOptions);
         $class = $this->getButtonClass($defaultOptions, $customOptions);

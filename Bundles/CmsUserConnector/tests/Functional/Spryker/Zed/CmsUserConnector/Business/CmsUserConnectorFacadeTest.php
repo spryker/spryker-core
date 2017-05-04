@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Functional\Spryker\Zed\Cms\Business;
+
+namespace Functional\Spryker\Zed\CmsUserConnector\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
@@ -12,9 +13,7 @@ use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
-use Spryker\Zed\Cms\Business\CmsBusinessFactory;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorBusinessFactory;
 use Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacade;
@@ -23,6 +22,14 @@ use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge;
 use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCmsQueryContainer;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group CmsUserConnector
+ * @group Business
+ * @group CmsUserConnectorFacadeTest
+ */
 class CmsUserConnectorFacadeTest extends Test
 {
 
@@ -32,7 +39,7 @@ class CmsUserConnectorFacadeTest extends Test
     protected $cmsFacade;
 
     /**
-     * @var CmsUserConnectorFacade
+     * @var \Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacade
      */
     protected $cmsUserConnectorFacade;
 
@@ -94,7 +101,7 @@ class CmsUserConnectorFacadeTest extends Test
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -166,9 +173,8 @@ class CmsUserConnectorFacadeTest extends Test
         return $userBridgeMock;
     }
 
-
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function createUserTransfer()
     {
@@ -192,8 +198,7 @@ class CmsUserConnectorFacadeTest extends Test
                 'getCurrentUser',
                 'getUserById',
             ])
-            ->getMock()
-        ;
+            ->getMock();
     }
 
     /**

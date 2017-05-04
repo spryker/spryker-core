@@ -8,17 +8,10 @@
 namespace Spryker\Zed\CmsCollector\Business\Map;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
-use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -35,12 +28,12 @@ class CmsDataPageMapBuilder implements PageMapInterface
     const NAME = 'name';
 
     /**
-     * @var DataExtractorInterface
+     * @var \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface
      */
     protected $dataExtractor;
 
     /**
-     * @param DataExtractorInterface $dataExtractor
+     * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractor
      */
     public function __construct(DataExtractorInterface $dataExtractor)
     {
@@ -56,7 +49,6 @@ class CmsDataPageMapBuilder implements PageMapInterface
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
     {
-
         $cmsVersionDataTransfer = $this->dataExtractor->extractCmsVersionDataTransfer($cmsPageData[CmsVersionPageCollectorQuery::COL_DATA]);
         $localeName = $localeTransfer->getLocaleName();
         $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
@@ -79,14 +71,13 @@ class CmsDataPageMapBuilder implements PageMapInterface
             ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaDescription())
             ->addFullText($pageMapTransfer, $this->extractContents($cmsVersionDataTransfer->getCmsGlossary(), $localeName))
             ->addSuggestionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName())
-            ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName())
-        ;
+            ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName());
 
         return $pageMapTransfer;
     }
 
     /**
-     * @param CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      * @param string $localeName
      *
      * @return string

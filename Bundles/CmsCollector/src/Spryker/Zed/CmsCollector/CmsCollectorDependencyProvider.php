@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsCollector;
 
-use Spryker\Zed\CmsCollector\Communication\Plugin\CmsVersionPageDataPageMapPlugin;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
@@ -24,7 +23,6 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
     const SERVICE_UTIL_ENCODING = 'util encoding service';
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
