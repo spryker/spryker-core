@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use ArrayObject;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 
@@ -71,11 +71,27 @@ class ConfigHelper extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
+    {
+        $this->resetConfig();
+    }
+
+    /**
+     * @return void
+     */
+    public function _afterSuite()
+    {
+        $this->resetConfig();
+    }
+
+    /**
+     * @return void
+     */
+    private function resetConfig()
     {
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));
