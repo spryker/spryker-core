@@ -21,12 +21,18 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
     {
         $columnNames = array_keys($this->getAsColumns());
 
+        $finalRowFallback = [];
         $finalRow = [];
         foreach ($row as $index => $value) {
             $key = str_replace('"', '', $columnNames[$index]);
-            $key = $this->getKeyName($key);
+            $finalRowFallback[$key] = $value;
 
+            $key = $this->getKeyName($key);
             $finalRow[$key] = $value;
+        }
+
+        if (count($finalRow) !== count($finalRowFallback)) {
+            return $finalRowFallback;
         }
 
         return $finalRow;
