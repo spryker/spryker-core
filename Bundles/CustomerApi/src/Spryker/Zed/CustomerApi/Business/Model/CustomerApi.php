@@ -199,7 +199,6 @@ class CustomerApi implements CustomerApiInterface
         return $tableTransfer;
     }
 
-
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
      *

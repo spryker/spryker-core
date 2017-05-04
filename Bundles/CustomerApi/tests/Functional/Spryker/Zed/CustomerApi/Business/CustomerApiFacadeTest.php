@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
 
 /**
@@ -29,14 +27,15 @@ class CustomerApiFacadeTest extends Test
 {
 
     /**
-     * @var
+     * @var int
      */
     protected $idCustomer;
 
     /**
      * @return void
      */
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         $customerEntity = new SpyCustomer();

@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\CustomerApi\Dependency\QueryContainer;
 
-use Generated\Shared\Transfer\ApiPaginationTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-
 class CustomerApiToApiBridge implements CustomerApiToApiInterface
 {
 
