@@ -35,6 +35,9 @@ class ItemGrossAmountsCalculator implements CalculatorInterface
         $this->assertItemRequirements($itemTransfer);
         $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
 
+        $itemTransfer->setUnitPrice($itemTransfer->getUnitGrossPrice());
+        $itemTransfer->setSumPrice($itemTransfer->getSumGrossPrice());
+
         $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPrice());
         $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPrice());
     }

@@ -27,6 +27,7 @@
         <property name="totalOrderCount" type="int" />
         <property name="uniqueProductQuantity" type="int" />
         <property name="locale" type="Locale" />
+        <property name="taxMode" type="string" />
     </transfer>
 
     <transfer name="OrderList">

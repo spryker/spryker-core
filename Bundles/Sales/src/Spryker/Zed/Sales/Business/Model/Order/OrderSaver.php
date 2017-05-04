@@ -207,6 +207,7 @@ class OrderSaver implements OrderSaverInterface
     {
         $salesOrderEntity->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
+        $salesOrderEntity->setTaxMode($quoteTransfer->getTaxMode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
     }

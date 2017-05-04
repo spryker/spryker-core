@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\Calculation\CalculationTaxMode;
 use Spryker\Zed\Calculation\Business\Aggregator\PriceToPayAggregator;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
@@ -56,6 +57,7 @@ class CalculationFacadeTest extends Test
         );
 
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setTaxMode(CalculationTaxMode::TAX_MODE_GROSS);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(2);
