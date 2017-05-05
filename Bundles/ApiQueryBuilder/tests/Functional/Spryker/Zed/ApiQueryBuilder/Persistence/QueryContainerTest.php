@@ -9,9 +9,15 @@ namespace Functional\Spryker\Zed\ApiQueryBuilder\Persistence;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
@@ -43,6 +49,29 @@ class QueryContainerTest extends Test
     /**
      * @return void
      */
+    public function testBuildQueryFromRequest()
+    {
+        $apiFilter = new ApiFilterTransfer();
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiRequestTransfer->setFilter($apiFilter);
+
+        $columnSelectionTransfer = $this->getColumnSelectionTransfer();
+
+        $apiQueryBuilderQueryTransfer = new ApiQueryBuilderQueryTransfer();
+        $apiQueryBuilderQueryTransfer->setApiRequest($apiRequestTransfer);
+        $apiQueryBuilderQueryTransfer->setColumnSelection($columnSelectionTransfer);
+
+        $query = SpyProductQuery::create();
+
+        $query = $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($query, $apiQueryBuilderQueryTransfer);
+
+        $this->assertInstanceOf(ModelCriteria::class, $query);
+    }
+
+    /**
+     * @return void
+     */
     public function testToPropelQueryBuilderCriteria()
     {
         $apiFilter = new ApiFilterTransfer();
@@ -50,11 +79,34 @@ class QueryContainerTest extends Test
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter($apiFilter);
 
-        $tableTransfer = new PropelQueryBuilderTableTransfer();
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
 
-        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
+        $apiQueryBuilderQueryTransfer = new ApiQueryBuilderQueryTransfer();
+        $apiQueryBuilderQueryTransfer->setApiRequest($apiRequestTransfer);
+        $apiQueryBuilderQueryTransfer->setColumnSelection($columnSelectionTransfer);
+
+        $criteriaTransfer = $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
 
         $this->assertInstanceOf(PropelQueryBuilderCriteriaTransfer::class, $criteriaTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
+     */
+    protected function getColumnSelectionTransfer()
+    {
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
+
+        $tableAliases = SpyProductTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
+        foreach ($tableAliases as $columnAlias) {
+            $columnTransfer = new PropelQueryBuilderColumnTransfer();
+            $columnTransfer->setName(SpyProductTableMap::TABLE_NAME . '.' . $columnAlias);
+            $columnTransfer->setAlias($columnAlias);
+
+            $columnSelectionTransfer->addTableColumn($columnTransfer);
+        }
+
+        return $columnSelectionTransfer;
     }
 
 }

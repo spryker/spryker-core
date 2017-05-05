@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\ApiQueryBuilder\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToPropelQueryBuilderInterface;
@@ -47,38 +46,36 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @internal param ApiRequestTransfer $apiRequestTransfer
+     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(
-        ApiRequestTransfer $apiRequestTransfer,
-        PropelQueryBuilderTableTransfer $tableTransfer
-    ) {
-        $apiRequestTransfer->requireFilter();
+    public function toPropelQueryBuilderCriteria(ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
+    {
+        $apiQueryBuilderQueryTransfer->requireApiRequest();
+        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();
 
-        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
-        $criteriaTransfer->setTable($tableTransfer);
-
-        $criteriaTransfer = $this->expandResourceCriteria($apiRequestTransfer, $criteriaTransfer);
+        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
+        $criteriaTransfer = $this->expandResourceCriteria($apiQueryBuilderQueryTransfer->getApiRequest(), $criteriaTransfer);
 
         return $criteriaTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @internal param ApiRequestTransfer $apiRequestTransfer
+     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQuery(ApiRequestTransfer $apiRequestTransfer, ModelCriteria $query, PropelQueryBuilderTableTransfer $tableTransfer)
+    public function buildQuery(ModelCriteria $query, ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
     {
-        $criteriaTransfer = $this->toPropelQueryBuilderCriteria(
-            $apiRequestTransfer,
-            $tableTransfer
-        );
+        $criteriaTransfer = $this->toPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
 
         $query = $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
         $query->setFormatter(new AssociativeArrayFormatter());
@@ -87,18 +84,22 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
+    protected function buildPropelQueryBuilderCriteria(ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
     {
+        $apiQueryBuilderQueryTransfer->requireApiRequest();
+        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();
+
         $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            trim($apiRequestTransfer->getFilter()->getCriteriaJson())
+            trim($apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson())
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaTransfer->setRuleSet($criteriaRuleSet);
+        $criteriaTransfer->setColumnSelection($apiQueryBuilderQueryTransfer->getColumnSelection());
 
         return $criteriaTransfer;
     }
@@ -109,21 +110,18 @@ class ApiRequestMapper implements ApiRequestMapperInterface
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    protected function expandResourceCriteria(
-        ApiRequestTransfer $apiRequestTransfer,
-        PropelQueryBuilderCriteriaTransfer $criteriaTransfer
-    ) {
-
+    protected function expandResourceCriteria(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
+    {
         $apiRequestTransfer->requireFilter();
 
         $columnSelectionTransfer = $this->buildColumnSelection(
             $apiRequestTransfer->getFilter()->getFields(),
-            $criteriaTransfer->getTable()
+            $criteriaTransfer->getColumnSelection()
         );
 
         $paginationTransfer = $this->buildPagination(
             $apiRequestTransfer->getFilter(),
-            $criteriaTransfer->getTable()
+            $criteriaTransfer->getColumnSelection()
         );
 
         $criteriaTransfer->setPagination($paginationTransfer);
@@ -134,15 +132,14 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
     /**
      * @param array $selectedColumns
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
      */
-    protected function buildColumnSelection(array $selectedColumns, PropelQueryBuilderTableTransfer $tableTransfer)
+    protected function buildColumnSelection(array $selectedColumns, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
-        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        foreach ($selectedColumns as $columnAlias) {
-            $columnTransfer = $this->getColumnByAlias($tableTransfer, $columnAlias);
+        foreach ($selectedColumns as $selectedColumnAlias) {
+            $columnTransfer = $this->getColumnByAlias((array)$columnSelectionTransfer->getTableColumns(), $selectedColumnAlias);
             if ($columnTransfer) {
                 $columnSelectionTransfer->addSelectedColumn($columnTransfer);
             }
@@ -153,22 +150,22 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
      */
-    protected function buildPagination(ApiFilterTransfer $apiFilterTransfer, PropelQueryBuilderTableTransfer $tableTransfer)
+    protected function buildPagination(ApiFilterTransfer $apiFilterTransfer, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
         $paginationTransfer->fromArray($apiFilterTransfer->toArray(), true);
 
-        foreach ($apiFilterTransfer->getSort() as $fieldName => $direction) {
+        foreach ($apiFilterTransfer->getSort() as $columnAlias => $direction) {
             $sortDirection = Criteria::ASC;
             if (trim($direction) === '-') {
                 $sortDirection = Criteria::DESC;
             }
 
-            $columnTransfer = $this->getColumnByAlias($tableTransfer, $fieldName);
+            $columnTransfer = $this->getColumnByAlias((array)$columnSelectionTransfer->getTableColumns(), $columnAlias);
             if ($columnTransfer) {
                 $sortItemTransfer = (new PropelQueryBuilderSortTransfer())
                     ->setColumn($columnTransfer)
@@ -182,15 +179,15 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
-     * @param string $name
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $columnCollection
+     * @param string $columnAlias
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer|null
      */
-    protected function getColumnByAlias(PropelQueryBuilderTableTransfer $tableTransfer, $name)
+    protected function getColumnByAlias(array $columnCollection, $columnAlias)
     {
-        foreach ($tableTransfer->getColumns() as $columnTransfer) {
-            if (mb_strtolower($name) === mb_strtolower($columnTransfer->getAlias())) {
+        foreach ($columnCollection as $columnTransfer) {
+            if (mb_strtolower($columnAlias) === mb_strtolower($columnTransfer->getAlias())) {
                 return $columnTransfer;
             }
         }

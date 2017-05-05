@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -21,37 +20,33 @@ class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements Ap
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromRequest(
-        ApiRequestTransfer $apiRequestTransfer,
-        ModelCriteria $query,
-        PropelQueryBuilderTableTransfer $tableTransfer
-    ) {
+    public function buildQueryFromRequest(ModelCriteria $query, ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
+    {
         return $this->getFactory()
             ->createApiRequestMapper()
-            ->buildQuery($apiRequestTransfer, $query, $tableTransfer);
+            ->buildQuery($query, $apiQueryBuilderQueryTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @internal param ApiRequestTransfer $apiRequestTransfer
+     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(
-        ApiRequestTransfer $apiRequestTransfer,
-        PropelQueryBuilderTableTransfer $tableTransfer
-    ) {
+    public function toPropelQueryBuilderCriteria(ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
+    {
         return $this->getFactory()
             ->createApiRequestMapper()
-            ->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
+            ->toPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
     }
 
 }

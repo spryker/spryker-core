@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ApiQueryBuilder\Persistence;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -21,29 +20,25 @@ interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromRequest(
-        ApiRequestTransfer $apiRequestTransfer,
-        ModelCriteria $query,
-        PropelQueryBuilderTableTransfer $tableTransfer
-    );
+    public function buildQueryFromRequest(ModelCriteria $query, ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @internal param ApiRequestTransfer $apiRequestTransfer
+     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
     public function toPropelQueryBuilderCriteria(
-        ApiRequestTransfer $apiRequestTransfer,
-        PropelQueryBuilderTableTransfer $tableTransfer
+        ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
     );
 
 }
