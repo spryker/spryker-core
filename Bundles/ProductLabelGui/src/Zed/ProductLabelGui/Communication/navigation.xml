@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <product_labels>
+                <label>Product Labels</label>
+                <title>Product Labels</title>
+                <bundle>product-label-gui</bundle>
+                <controller>list</controller>
+                <action>index</action>
+                <visible>2</visible>
+            </product_labels>
+        </pages>
+    </product>
+</config>

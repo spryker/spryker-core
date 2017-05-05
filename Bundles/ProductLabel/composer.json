@@ -1,7 +1,9 @@
 {
   "name": "spryker/product-label",
   "require": {
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -33,7 +35,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
