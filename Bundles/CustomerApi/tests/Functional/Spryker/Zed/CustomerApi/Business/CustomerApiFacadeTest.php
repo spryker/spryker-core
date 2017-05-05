@@ -53,10 +53,9 @@ class CustomerApiFacadeTest extends Test
     {
         $customerApiFacade = new CustomerApiFacade();
 
-        $apiFilterTransfer = new ApiFilterTransfer();
         $idCustomer = $this->idCustomer;
 
-        $resultTransfer = $customerApiFacade->getCustomer($idCustomer, $apiFilterTransfer);
+        $resultTransfer = $customerApiFacade->getCustomer($idCustomer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
     }

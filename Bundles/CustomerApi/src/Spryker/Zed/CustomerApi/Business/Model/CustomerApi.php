@@ -8,11 +8,11 @@
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ApiFilterTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerApiTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Map\TableMap;
@@ -22,7 +22,6 @@ use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
 class CustomerApi implements CustomerApiInterface
 {
@@ -88,13 +87,12 @@ class CustomerApi implements CustomerApiInterface
 
     /**
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    public function get($idCustomer)
     {
-        $customerData = $this->getCustomerData($idCustomer, $apiFilterTransfer);
+        $customerData = $this->getCustomerData($idCustomer);
         $customerApiTransfer = $this->transferMapper->toTransfer($customerData);
 
         return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
@@ -170,22 +168,36 @@ class CustomerApi implements CustomerApiInterface
      */
     protected function buildQuery(ApiRequestTransfer $apiRequestTransfer)
     {
-        $tableTransfer = $this->buildTable();
+        $apiQueryBuilderQueryTransfer = $this->buildApiQueryBuilderQuery($apiRequestTransfer);
 
         $query = $this->queryContainer->queryFind();
-        $query = $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($apiRequestTransfer, $query, $tableTransfer);
-        $query->setFormatter(new AssociativeArrayFormatter());
+        $query = $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($query, $apiQueryBuilderQueryTransfer);
 
         return $query;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer
      */
-    protected function buildTable()
+    protected function buildApiQueryBuilderQuery(ApiRequestTransfer $apiRequestTransfer)
     {
-        $tableTransfer = new PropelQueryBuilderTableTransfer();
-        $tableTransfer->setName(SpyCustomerTableMap::TABLE_NAME);
+        $columnSelectionTransfer = $this->buildColumnSelection();
+
+        $apiQueryBuilderQueryTransfer = new ApiQueryBuilderQueryTransfer();
+        $apiQueryBuilderQueryTransfer->setApiRequest($apiRequestTransfer);
+        $apiQueryBuilderQueryTransfer->setColumnSelection($columnSelectionTransfer);
+
+        return $apiQueryBuilderQueryTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
+     */
+    protected function buildColumnSelection()
+    {
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
         $tableColumns = SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
 
         foreach ($tableColumns as $columnAlias) {
@@ -193,10 +205,10 @@ class CustomerApi implements CustomerApiInterface
             $columnTransfer->setName(SpyCustomerTableMap::TABLE_NAME . '.' . $columnAlias);
             $columnTransfer->setAlias($columnAlias);
 
-            $tableTransfer->addColumn($columnTransfer);
+            $columnSelectionTransfer->addTableColumn($columnTransfer);
         }
 
-        return $tableTransfer;
+        return $columnSelectionTransfer;
     }
 
     /**
@@ -213,16 +225,15 @@ class CustomerApi implements CustomerApiInterface
 
     /**
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return array
      */
-    protected function getCustomerData($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    protected function getCustomerData($idCustomer)
     {
         $customerEntity = (array)$this->queryContainer
-            ->queryGet($idCustomer, $apiFilterTransfer->getFields())
+            ->queryGet($idCustomer)
             ->findOne()
             ->toArray();
 

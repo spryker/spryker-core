@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductApi\Business;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
 /**
@@ -34,11 +33,10 @@ interface ProductApiFacadeInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function getProduct($idProductAbstract, ApiFilterTransfer $apiFilterTransfer);
+    public function getProduct($idProductAbstract);
 
     /**
      * Specification:

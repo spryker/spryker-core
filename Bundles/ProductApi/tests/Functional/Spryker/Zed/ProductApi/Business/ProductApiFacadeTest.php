@@ -33,10 +33,9 @@ class ProductApiFacadeTest extends Test
     {
         $productApiFacade = new ProductApiFacade();
 
-        $apiFilterTransfer = new ApiFilterTransfer();
         $idProduct = 1;
 
-        $resultTransfer = $productApiFacade->getProduct($idProduct, $apiFilterTransfer);
+        $resultTransfer = $productApiFacade->getProduct($idProduct);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
     }

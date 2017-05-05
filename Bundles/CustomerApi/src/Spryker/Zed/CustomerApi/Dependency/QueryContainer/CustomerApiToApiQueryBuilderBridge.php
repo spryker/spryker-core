@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Dependency\QueryContainer;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CustomerApiToApiQueryBuilderBridge implements CustomerApiToApiQueryBuilderInterface
@@ -28,26 +27,27 @@ class CustomerApiToApiQueryBuilderBridge implements CustomerApiToApiQueryBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @internal param ApiRequestTransfer $apiRequestTransfer
+     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
+     *
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    public function toPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderTableTransfer $tableTransfer)
+    public function toPropelQueryBuilderCriteria(ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
     {
-        return $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiRequestTransfer, $tableTransfer);
+        return $this->apiQueryBuilderQueryContainer->toPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
+     * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromRequest(ApiRequestTransfer $apiRequestTransfer, ModelCriteria $query, PropelQueryBuilderTableTransfer $tableTransfer)
+    public function buildQueryFromRequest(ModelCriteria $query, ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer)
     {
-        return $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($apiRequestTransfer, $query, $tableTransfer);
+        return $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($query, $apiQueryBuilderQueryTransfer);
     }
 
 }
