@@ -49,4 +49,12 @@ interface ProductLabelFacadeInterface
      */
     public function setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
 
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function removeAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+
 }

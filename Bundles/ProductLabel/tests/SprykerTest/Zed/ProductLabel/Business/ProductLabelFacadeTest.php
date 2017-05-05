@@ -118,19 +118,36 @@ class ProductLabelFacadeTest extends Test
     public function testSetAbstractProductRelationPersistsRelation()
     {
         $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
         $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
         $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelFacade->setAbstractProductRelationForLabel(
-            $productLabelTransfer->getIdProductLabel(),
-            $productTransfer->getFkProductAbstract()
-        );
-
-        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct(
-            $productTransfer->getFkProductAbstract()
-        );
+        $productLabelFacade->setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
 
         $this->assertCount(1, $productLabelTransferCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAbstractProductRelationRemovesFromPersistence()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+
+        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
+        $this->assertCount(1, $productLabelTransferCollection);
+
+        $productLabelFacade->removeAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
+        $this->assertCount(0, $productLabelTransferCollection);
     }
 
     /**

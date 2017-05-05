@@ -20,10 +20,35 @@ class ProductRelationWriter implements ProductRelationWriterInterface
      */
     public function setRelation($idProductLabel, $idProductAbstract)
     {
+        $relationEntity = $this->createRelationEntity($idProductLabel, $idProductAbstract);
+        $relationEntity->save();
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function removeRelation($idProductLabel, $idProductAbstract)
+    {
+        $relationEntity = $this->createRelationEntity($idProductLabel, $idProductAbstract);
+        $relationEntity->delete();
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract
+     */
+    protected function createRelationEntity($idProductLabel, $idProductAbstract)
+    {
         $relationEntity = new SpyProductLabelProductAbstract();
         $relationEntity->setFkProductLabel($idProductLabel);
         $relationEntity->setFkProductAbstract($idProductAbstract);
-        $relationEntity->save();
+
+        return $relationEntity;
     }
 
 }

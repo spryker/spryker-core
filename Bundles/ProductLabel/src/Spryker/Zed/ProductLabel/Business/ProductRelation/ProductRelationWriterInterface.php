@@ -18,4 +18,12 @@ interface ProductRelationWriterInterface
      */
     public function setRelation($idProductLabel, $idProductAbstract);
 
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function removeRelation($idProductLabel, $idProductAbstract);
+
 }
