@@ -54,7 +54,6 @@ class QueryBuilder implements QueryBuilderInterface
     public function buildQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
         $propelQueryBuilderCriteriaTransfer->requireRuleSet();
-
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
@@ -84,12 +83,8 @@ class QueryBuilder implements QueryBuilderInterface
      */
     protected function mergeQueryWithColumnSelection(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
-        if ($propelQueryBuilderCriteriaTransfer->getSelectedColumns()) {
-            $query = $this->columnMapper->mapColumns(
-                $query,
-                $propelQueryBuilderCriteriaTransfer->getTable(),
-                (array)$propelQueryBuilderCriteriaTransfer->getSelectedColumns()
-            );
+        if ($propelQueryBuilderCriteriaTransfer->getColumnSelection()) {
+            $query = $this->columnMapper->mapColumns($query, $propelQueryBuilderCriteriaTransfer->getColumnSelection());
         }
 
         return $query;

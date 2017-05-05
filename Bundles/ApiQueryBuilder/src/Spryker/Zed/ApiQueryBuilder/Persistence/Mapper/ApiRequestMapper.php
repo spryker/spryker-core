@@ -10,6 +10,7 @@ namespace Spryker\Zed\ApiQueryBuilder\Persistence\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
@@ -115,7 +116,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
         $apiRequestTransfer->requireFilter();
 
-        $selectedColumns = $this->buildSelectedColumns(
+        $columnSelectionTransfer = $this->buildColumnSelection(
             $apiRequestTransfer->getFilter()->getFields(),
             $criteriaTransfer->getTable()
         );
@@ -126,7 +127,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
         );
 
         $criteriaTransfer->setPagination($paginationTransfer);
-        $criteriaTransfer->setSelectedColumns(new ArrayObject($selectedColumns));
+        $criteriaTransfer->setColumnSelection($columnSelectionTransfer);
 
         return $criteriaTransfer;
     }
@@ -135,19 +136,19 @@ class ApiRequestMapper implements ApiRequestMapperInterface
      * @param array $selectedColumns
      * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $tableTransfer
      *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[]
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
      */
-    protected function buildSelectedColumns(array $selectedColumns, PropelQueryBuilderTableTransfer $tableTransfer)
+    protected function buildColumnSelection(array $selectedColumns, PropelQueryBuilderTableTransfer $tableTransfer)
     {
-        $columns = [];
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
         foreach ($selectedColumns as $columnAlias) {
             $columnTransfer = $this->getColumnByAlias($tableTransfer, $columnAlias);
             if ($columnTransfer) {
-                $columns[] = $columnTransfer;
+                $columnSelectionTransfer->addSelectedColumn($columnTransfer);
             }
         }
 
-        return $columns;
+        return $columnSelectionTransfer;
     }
 
     /**

@@ -37,7 +37,7 @@ class RuleTransferMapper implements RuleTransferMapperInterface
 
         $querySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $querySetTransfer->fromArray(
-            (array)$this->utilEncodingService->decodeJson($json, true)
+            $this->utilEncodingService->decodeJson($json, true)
         );
 
         return $querySetTransfer;

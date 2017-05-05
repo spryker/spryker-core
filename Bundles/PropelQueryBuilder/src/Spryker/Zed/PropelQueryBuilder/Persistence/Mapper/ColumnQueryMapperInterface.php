@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\Mapper;
 
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ColumnQueryMapperInterface
@@ -15,15 +15,10 @@ interface ColumnQueryMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapColumns(
-        ModelCriteria $query,
-        PropelQueryBuilderTableTransfer $queryBuilderTableTransfer,
-        array $selectedColumns = []
-    );
+    public function mapColumns(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer);
 
 }

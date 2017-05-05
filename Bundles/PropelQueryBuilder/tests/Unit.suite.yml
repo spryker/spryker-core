@@ -1,4 +1,5 @@
 class_name: UnitTester
 modules:
     enabled:
-        - \PropelQueryBuilder\Helper\Unit
+        - \Testify\Module\Environment
+        - \PropelQueryBuilder\Module\Unit

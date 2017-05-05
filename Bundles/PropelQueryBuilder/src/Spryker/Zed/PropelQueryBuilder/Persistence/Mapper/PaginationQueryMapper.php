@@ -29,10 +29,10 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapPagination(ModelCriteria $query, PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
-    {
-        $propelQueryBuilderPaginationTransfer = $this->updatePaginationTotals($query, $propelQueryBuilderPaginationTransfer);
-
+    public function mapPagination(
+        ModelCriteria $query,
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
+    ) {
         $query = $this->mapQueryLimit($query, $propelQueryBuilderPaginationTransfer);
         $query = $this->mapQueryOffset($query, $propelQueryBuilderPaginationTransfer);
         $query = $this->mapQuerySort($query, $propelQueryBuilderPaginationTransfer);
@@ -46,10 +46,11 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapQueryLimit(ModelCriteria $query, PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
-    {
-        $propelQueryBuilderPaginationTransfer = $this->ensurePaginationDefaultValues($propelQueryBuilderPaginationTransfer);
-        $query->setLimit($propelQueryBuilderPaginationTransfer->getItemsPerPage());
+    protected function mapQueryLimit(
+        ModelCriteria $query,
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
+    ) {
+        $query->setLimit($this->getItemsPerPage($propelQueryBuilderPaginationTransfer));
 
         return $query;
     }
@@ -60,15 +61,15 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapQueryOffset(ModelCriteria $query, PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
-    {
-        $propelQueryBuilderPaginationTransfer = $this->ensurePaginationDefaultValues($propelQueryBuilderPaginationTransfer);
-
-        $itemsPerPage = (int)$propelQueryBuilderPaginationTransfer->getItemsPerPage();
+    protected function mapQueryOffset(
+        ModelCriteria $query,
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
+    ) {
+        $itemsPerPage = $this->getItemsPerPage($propelQueryBuilderPaginationTransfer);
         $page = (int)$propelQueryBuilderPaginationTransfer->getPage();
 
-        if ($page <= 0) {
-            $page = 1;
+        if ($page < 0) {
+            $page = 0;
         }
 
         $offset = ($page - 1) * $itemsPerPage;
@@ -84,18 +85,17 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapQuerySort(ModelCriteria $query, PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
-    {
+    protected function mapQuerySort(
+        ModelCriteria $query,
+        PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
+    ) {
         $sortCollection = $propelQueryBuilderPaginationTransfer->getSortItems();
 
         foreach ($sortCollection as $sortItem) {
-            $columnTransfer = $sortItem->getColumn();
-            $columnTransfer->requireName();
-
             if (strtolower($sortItem->getSortDirection()) === strtolower(Criteria::ASC)) {
-                $query->addAscendingOrderByColumn($columnTransfer->getName());
+                $query->addAscendingOrderByColumn($sortItem->getColumnName());
             } else {
-                $query->addDescendingOrderByColumn($columnTransfer->getName());
+                $query->addDescendingOrderByColumn($sortItem->getColumnName());
             }
         }
 
@@ -103,45 +103,18 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
      *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
+     * @return int
      */
-    protected function updatePaginationTotals(ModelCriteria $query, PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
+    protected function getItemsPerPage(PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
     {
-        $propelQueryBuilderPaginationTransfer = $this->ensurePaginationDefaultValues($propelQueryBuilderPaginationTransfer);
-
-        if ($propelQueryBuilderPaginationTransfer->getTotal() === null || $propelQueryBuilderPaginationTransfer->getPageTotal() === null) {
-            $total = $query->count();
-            $pageTotal = 0;
-            if ($total > 0) {
-                $pageTotal = ceil($total / $propelQueryBuilderPaginationTransfer->getItemsPerPage());
-            }
-
-            $propelQueryBuilderPaginationTransfer->setTotal($total);
-            $propelQueryBuilderPaginationTransfer->setPageTotal($pageTotal);
+        $itemsPerPage = (int)$propelQueryBuilderPaginationTransfer->getItemsPerPage();
+        if (!$itemsPerPage) {
+            $itemsPerPage = $this->defaultItemsPerPage;
         }
 
-        return $propelQueryBuilderPaginationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
-     */
-    protected function ensurePaginationDefaultValues(PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer)
-    {
-        if (!$propelQueryBuilderPaginationTransfer->getPage()) {
-            $propelQueryBuilderPaginationTransfer->setPage(1);
-        }
-
-        if (!$propelQueryBuilderPaginationTransfer->getItemsPerPage()) {
-            $propelQueryBuilderPaginationTransfer->setItemsPerPage($this->defaultItemsPerPage);
-        }
-
-        return $propelQueryBuilderPaginationTransfer;
+        return $itemsPerPage;
     }
 
 }

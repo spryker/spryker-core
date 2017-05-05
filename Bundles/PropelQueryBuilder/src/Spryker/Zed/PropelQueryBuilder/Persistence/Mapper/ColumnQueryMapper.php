@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\Mapper;
 
-use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderTableTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ColumnQueryMapper implements ColumnQueryMapperInterface
@@ -16,31 +15,39 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer|null $columnSelectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapColumns(
-        ModelCriteria $query,
-        PropelQueryBuilderTableTransfer $queryBuilderTableTransfer,
-        array $selectedColumns = []
-    ) {
-        $query = $this->mapSelectedColumns($query, $queryBuilderTableTransfer, $selectedColumns);
+    public function mapColumns(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
+    {
+        $this->assertTransferFields($columnSelectionTransfer);
+
+        $query = $this->mapQuery($query, $columnSelectionTransfer);
 
         return $query;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
+     *
+     * @return void
+     */
+    protected function assertTransferFields(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
+    {
+        $columnSelectionTransfer->requireTableName();
+        $columnSelectionTransfer->requireTableColumns();
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapSelectedColumns(ModelCriteria $query, PropelQueryBuilderTableTransfer $queryBuilderTableTransfer, array $selectedColumns)
+    protected function mapQuery(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
-        $selectedColumns = $this->getSelectedColumns($queryBuilderTableTransfer, $selectedColumns);
+        $selectedColumns = $this->getSelectedColumns($columnSelectionTransfer);
 
         return $this->selectQueryColumns($query, $selectedColumns);
     }
@@ -60,62 +67,32 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderTableTransfer $queryBuilderTableTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $selectedColumns
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
      *
      * @return array
      */
-    protected function getSelectedColumns(PropelQueryBuilderTableTransfer $queryBuilderTableTransfer, array $selectedColumns)
+    protected function getSelectedColumns(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
-        $columns = [];
-        $tableColumns = (array)$queryBuilderTableTransfer->getColumns();
+        $selectedColumns = [];
+        $tableName = $columnSelectionTransfer->getTableName();
+        $tableColumns = (array)$columnSelectionTransfer->getTableColumns();
 
-        if (!$selectedColumns) {
-            return $this->selectAllColumns($tableColumns);
-        }
-
-        foreach ($tableColumns as $tableColumnTransfer) {
-            foreach ($selectedColumns as $selectedColumnTransfer) {
-                $this->assertSelectedColumns($selectedColumnTransfer, $tableColumnTransfer);
-
-                if (mb_strtolower($tableColumnTransfer->getName()) === mb_strtolower($selectedColumnTransfer->getName())) {
-                    $columns[] = $selectedColumnTransfer->getAlias();
+        if ($columnSelectionTransfer->getSelectedColumns()->count()) {
+            foreach ($tableColumns as $columnName) {
+                foreach ($columnSelectionTransfer->getSelectedColumns() as $columnTransfer) {
+                    if (mb_strtolower($columnName) === mb_strtolower($columnTransfer->getName())) {
+                        $selectedColumns[$columnTransfer->getName()] = $columnTransfer->getAlias();
+                    }
                 }
+            }
+        } else {
+            foreach ($tableColumns as $columnName) {
+                $fieldName = str_replace($tableName . '.', '', $columnName);
+                $selectedColumns[$columnName] = $fieldName;
             }
         }
 
-        return $columns;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $tableColumns
-     *
-     * @return array
-     */
-    protected function selectAllColumns($tableColumns)
-    {
-        $columns = [];
-        foreach ($tableColumns as $tableColumnTransfer) {
-            $columns[] = $tableColumnTransfer->getAlias();
-        }
-
-        return $columns;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer $selectedColumnTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer $tableColumnTransfer
-     *
-     * @return void
-     */
-    protected function assertSelectedColumns(
-        PropelQueryBuilderColumnTransfer $selectedColumnTransfer,
-        PropelQueryBuilderColumnTransfer $tableColumnTransfer
-    ) {
-        $selectedColumnTransfer->requireName();
-        $selectedColumnTransfer->requireAlias();
-
-        $tableColumnTransfer->requireName();
+        return $selectedColumns;
     }
 
 }

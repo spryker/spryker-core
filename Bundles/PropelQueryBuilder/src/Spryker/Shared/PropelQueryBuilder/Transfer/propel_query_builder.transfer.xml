@@ -14,40 +14,39 @@
         <property name="value" type="string" />
     </transfer>
 
-    <transfer name="PropelQueryBuilderCriteriaMapping">
-        <property name="alias" type="string" />
-        <property name="columns" type="array"/>
-    </transfer>
-
     <transfer name="PropelQueryBuilderCriteria">
         <property name="ruleSet" type="PropelQueryBuilderRuleSet" />
         <property name="mappings" type="PropelQueryBuilderCriteriaMapping[]" singular="mapping"/>
         <property name="pagination" type="PropelQueryBuilderPagination"/>
-        <property name="table" type="PropelQueryBuilderTable"/>
-        <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderCriteriaMapping">
+        <property name="alias" type="string" />
+        <property name="columns" type="array"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderPagination">
         <property name="page" type="int"/>
         <property name="itemsPerPage" type="int"/>
         <property name="total" type="int"/>
-        <property name="pageTotal" type="int"/>
         <property name="sortItems" type="PropelQueryBuilderSort[]" singular="sortItem"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderSort">
-        <property name="column" type="PropelQueryBuilderColumn" />
+        <property name="columnName" type="string" />
         <property name="sortDirection" type="string" />
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumnSelection">
+        <property name="tableName" type="string" />
+        <property name="tableColumns" type="array"/>
+        <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumn">
         <property name="name" type="string" />
         <property name="alias" type="string"/>
-    </transfer>
-
-    <transfer name="PropelQueryBuilderTable">
-        <property name="name" type="string" />
-        <property name="columns" type="PropelQueryBuilderColumn[]" singular="column"/>
     </transfer>
 
 </transfers>
