@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\AddressAnonymizePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\AddressDeletePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\CustomerAnonymizePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\NewsletterUnsubscrubePlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -25,6 +29,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const STORE = 'store';
+
+    const PLUGINS_CUSTOMER_DELETE = 'plugins customer delete';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -57,6 +63,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return Store::getInstance();
         };
 
+        $container = $this->addPluginsCustomerDelete($container);
+
         return $container;
     }
 
@@ -77,4 +85,22 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addPluginsCustomerDelete(Container $container)
+    {
+        $container[static::PLUGINS_CUSTOMER_DELETE] = function (Container $container) {
+            return [
+                new AddressAnonymizePlugin(),
+                new AddressDeletePlugin(),
+                new CustomerAnonymizePlugin(),
+                new NewsletterUnsubscrubePlugin(),
+            ];
+        };
+
+        return $container;
+    }
 }
