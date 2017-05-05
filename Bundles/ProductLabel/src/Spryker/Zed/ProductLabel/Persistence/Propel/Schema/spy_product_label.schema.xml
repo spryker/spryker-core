@@ -6,7 +6,7 @@
     package="src.Orm.Zed.ProductLabel.Persistence"
     xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
 >
-    <table name="spy_product_label" phpName="SpyProductLabel">
+    <table name="spy_product_label" idMethod="native" identifierQuoting="true">
         <column name="id_product_label" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" required="true"/>
         <column name="is_active" type="BOOLEAN" required="false" default="false"/>

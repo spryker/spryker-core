@@ -6,7 +6,7 @@
                 <label>Product Labels</label>
                 <title>Product Labels</title>
                 <bundle>product-label-gui</bundle>
-                <controller>list</controller>
+                <controller>index</controller>
                 <action>index</action>
                 <visible>2</visible>
             </product_labels>
