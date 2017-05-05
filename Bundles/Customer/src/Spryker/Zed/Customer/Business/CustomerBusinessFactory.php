@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Zed\Customer\Business\Anonymizer\AddressAnonymizer;
+use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
@@ -106,6 +108,22 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createPreConditionChecker()
     {
         return new PreConditionChecker($this->createCustomer());
+    }
+
+    /**
+     * @return CustomerAnonymizer
+     */
+    public function createCustomerAnonymizer()
+    {
+        return new CustomerAnonymizer();
+    }
+
+    /**
+     * @return AddressAnonymizer
+     */
+    public function createAddressAnonymizer()
+    {
+        return new AddressAnonymizer();
     }
 
     /**

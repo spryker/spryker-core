@@ -255,7 +255,16 @@ interface CustomerFacadeInterface
      *
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @api
+     *
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return AddressTransfer
+     */
+    public function anonymizeAddress(AddressTransfer $addressTransfer);
 }

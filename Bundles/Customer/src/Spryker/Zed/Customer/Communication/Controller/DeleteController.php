@@ -4,6 +4,7 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
@@ -51,15 +52,16 @@ class DeleteController extends AbstractController
             return $this->redirectResponse('/customer');
         }
 
-        if (!$this->getFacade()->anonymizeCustomer($customerTransfer)) {
-            $this->addErrorMessage('Customer could not be deleted');
-            return $this->redirectResponse((string)new Url([
-                'path' => '/customer/delete',
-                'query' => [
-                    'id-customer' => $customerTransfer->getIdCustomer()
-                ]
-            ]));
+        $addressesTransfer = $customerTransfer->getAddresses();
+
+        /** @var AddressTransfer $addressTransfer */
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+            $addressTransfer = $this->getFacade()->anonymizeAddress($addressTransfer);
+            $this->getFacade()->updateAddress($addressTransfer);
         }
+
+        $customerTransfer = $this->getFacade()->anonymizeCustomer($customerTransfer);
+        $this->getFacade()->updateCustomer($customerTransfer);
 
         $this->addSuccessMessage('Customer successfully deleted');
         return $this->redirectResponse('/customer');
