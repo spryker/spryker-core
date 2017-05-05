@@ -18,13 +18,13 @@ class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterfa
     /**
      * @api
      *
-     * @param string|null $mvc
+     * @param string|null $bundleControllerAction
      *
      * @return array
      */
-    public function getRepeatData($mvc)
+    public function getRepeatData($bundleControllerAction)
     {
-        return $this->getFactory()->createRepeater()->getRepeatData($mvc);
+        return $this->getFactory()->createRepeater()->getRepeatData($bundleControllerAction);
     }
 
 }

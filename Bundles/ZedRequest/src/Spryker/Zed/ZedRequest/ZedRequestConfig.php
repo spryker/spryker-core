@@ -38,15 +38,15 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param null|string $mvc
+     * @param null|string $bundleControllerAction
      *
      * @return string
      */
-    public function getYvesRequestRepeatDataFileName($mvc = null)
+    public function getYvesRequestRepeatDataFileName($bundleControllerAction = null)
     {
         $fileName = 'last_yves_request';
-        if ($mvc) {
-            $fileName .= '_' . $mvc;
+        if ($bundleControllerAction) {
+            $fileName .= '_' . $bundleControllerAction;
         }
 
         return $fileName . '.log';

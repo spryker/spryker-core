@@ -33,15 +33,15 @@ class Repeater implements RepeaterInterface
     protected $isRepeatInProgress = false;
 
     /**
-     * @param string|null $mvc
+     * @param string|null $bundleControllerAction
      *
      * @return array
      */
-    public function getRepeatData($mvc = null)
+    public function getRepeatData($bundleControllerAction = null)
     {
         $this->isRepeatInProgress = true;
-        if ($mvc !== null) {
-            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($mvc));
+        if ($bundleControllerAction !== null) {
+            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($bundleControllerAction));
         } else {
             return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName());
         }
@@ -70,14 +70,14 @@ class Repeater implements RepeaterInterface
             'params' => $transferObject->toArray(false),
         ];
 
-        $mvc = sprintf(
+        $bundleControllerAction = sprintf(
             '%s_%s_%s',
             $httpRequest->attributes->get('module'),
             $httpRequest->attributes->get('controller'),
             $httpRequest->attributes->get('action')
         );
 
-        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($mvc));
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($bundleControllerAction));
         $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
@@ -94,7 +94,7 @@ class Repeater implements RepeaterInterface
 
         $directory = dirname($filePath);
         if (!is_dir($directory)) {
-            mkdir($directory);
+            mkdir($directory, 0755, true);
         }
 
         file_put_contents($filePath, $string);

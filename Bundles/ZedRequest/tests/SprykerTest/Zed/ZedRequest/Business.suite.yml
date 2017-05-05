@@ -4,3 +4,4 @@ modules:
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+        - \SprykerTest\Zed\ZedRequest\Helper\RepeaterHelper
