@@ -34,13 +34,12 @@
     </transfer>
 
     <transfer name="PropelQueryBuilderSort">
-        <property name="columnName" type="string" />
+        <property name="column" type="PropelQueryBuilderColumn" />
         <property name="sortDirection" type="string" />
     </transfer>
 
     <transfer name="PropelQueryBuilderColumnSelection">
-        <property name="tableName" type="string" />
-        <property name="tableColumns" type="array"/>
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
         <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
     </transfer>
 
