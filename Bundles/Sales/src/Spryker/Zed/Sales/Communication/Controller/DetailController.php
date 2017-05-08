@@ -54,20 +54,6 @@ class DetailController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    public function invoiceAction(Request $request)
-    {
-        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
-
-        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
-
-        return $this->getFactory()->getInvoiceFacade()->buildInvoice($orderTransfer);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array|string

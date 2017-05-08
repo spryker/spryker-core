@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Calculation\Business\Model\Calculator;
+
+use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+
+class RefundTotalCalculator implements CalculatorInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $calculableObjectTransfer->requireTotals();
+
+        $refundTotalAmount = $this->calculateItemRefundAmount($calculableObjectTransfer);
+        $refundTotalAmount += $this->calculateExpenseRefundAmount($calculableObjectTransfer);
+
+        $calculableObjectTransfer->getTotals()->setRefundTotal($refundTotalAmount);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return int
+     */
+    protected function calculateItemRefundAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $refundTotalAmount = 0;
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            $refundTotalAmount += $itemTransfer->getRefundableAmount() * $itemTransfer->getQuantity();
+            $refundTotalAmount += $this->calculateItemOptionTotalRefundAmount($itemTransfer);
+        }
+        return $refundTotalAmount;
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return mixed
+     */
+    protected function calculateItemOptionTotalRefundAmount(ItemTransfer $itemTransfer)
+    {
+        $refundTotalAmount = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $refundTotalAmount += $productOptionTransfer->getRefundableAmount() * $productOptionTransfer->getQuantity();
+        }
+        return $refundTotalAmount;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return int
+     */
+    protected function calculateExpenseRefundAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $refundTotalAmount = 0;
+        foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
+            $refundTotalAmount += $expenseTransfer->getRefundableAmount() * $expenseTransfer->getQuantity();
+        }
+        return $refundTotalAmount;
+    }
+}

@@ -21,9 +21,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
 {
 
     /**
-     * Specification:
-     * - Run all calculator plugins
-     * - Return the updated quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,11 +32,9 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->createStackExecutor()
+            ->createQuoteCalculatorExecutor()
             ->recalculate($quoteTransfer);
     }
-
-    // START: new calculators
 
     /**
      * {@inheritdoc}
@@ -88,7 +84,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->createProductOptionPriceAggregator()
             ->recalculate($calculableObjectTransfer);
     }
-
 
     /**
      * {@inheritdoc}
@@ -291,22 +286,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @return void
      */
-    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer)
-    {
-        $this->getFactory()
-            ->createTaxAmountCalculator()
-            ->recalculate($calculableObjectTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()
@@ -332,24 +311,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
-     *
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
-    {
-        $this->getFactory()
-            ->createTaxAmountAfterCancellationCalculator()
-            ->recalculate($calculableObjectTransfer);
-    }
-
-    /**
-     *
      * {@inheritdoc}
      *
      * @api
@@ -365,124 +326,24 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->recalculate($calculableObjectTransfer);
     }
 
-
-    // END: new calculators
-
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateExpenseGrossSumAmount(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createExpenseGrossSumAmount()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateExpenseTotals(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createExpenseTotalsCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createGrandTotalsCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateItemGrossAmounts(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createItemGrossSumCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateOptionGrossSum(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createOptionGrossSumCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function removeTotals(QuoteTransfer $quoteTransfer)
+    public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()
             ->createRemoveTotalsCalculator()
-            ->recalculate($quoteTransfer);
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createSubtotalTotalsCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Checks if the calculated totals in the quote are still valid/consistent.
-     * If not: Adds an error code and message to the response
+     * {@inheritdoc}
      *
      * @api
      *

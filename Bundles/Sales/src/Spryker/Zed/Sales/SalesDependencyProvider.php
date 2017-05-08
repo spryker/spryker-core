@@ -33,7 +33,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const STORE = 'store';
 
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
-    const FACADE_INVOICE = 'INVOICE_FACADE';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -66,7 +65,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addOmsFacade($container);
-        $container = $this->addInvoiceFacade($container);
         $container = $this->addUserFacade($container);
         $container = $this->addDateTimeFormatter($container);
         $container = $this->addCountryFacade($container);
@@ -155,20 +153,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_USER] = function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addInvoiceFacade(Container $container)
-    {
-        $container[static::FACADE_INVOICE] = function (Container $container) {
-            return new SalesToInvoiceBridge($container->getLocator()->invoice()->facade());
         };
 
         return $container;

@@ -18,7 +18,9 @@ interface CalculationFacadeInterface
 {
 
     /**
-     * Executes all calculators in plugin stack.
+     * Specification:
+     *  - Run all calculator plugins
+     *  - Return the updated quote
      *
      * @api
      *
@@ -31,6 +33,10 @@ interface CalculationFacadeInterface
     public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     *  - Run all calculator plugins
+     *  - Return the updated order
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -40,69 +46,22 @@ interface CalculationFacadeInterface
     public function recalculateOrder(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Remove totals from QuoteTransfer to recalculate in following calculator plugins (clear state)
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateExpenseGrossSumAmount(QuoteTransfer $quoteTransfer);
+    public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     * @api
+     * Specification:
+     *  - Checks if the calculated totals in the quote are still valid/consistent.
+     *  - If not valid then adds an error code and message to the response
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateExpenseTotals(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateItemGrossAmounts(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateOptionGrossSum(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function removeTotals(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer);
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -114,7 +73,7 @@ interface CalculationFacadeInterface
 
     /**
      *
-     * Specification
+     * Specification:
      *  - Calculates item prices, based on store tax mode (gross/net)
      *  - Calculates item sum (gross/net) price
      *  - Calculate  item option sum (gross/net) price
@@ -122,6 +81,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateItemPrice(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -145,6 +106,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateDiscountAmountAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -155,6 +118,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateItemDiscountAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -166,6 +131,7 @@ interface CalculationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
+     * @return void
      */
     public function calculateItemTaxAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -176,6 +142,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateSumAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -186,6 +154,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculatePriceToPayAggregation(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -196,6 +166,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateSubtotal(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -206,6 +178,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateExpenseTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -215,7 +189,9 @@ interface CalculationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateDiscountTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -226,6 +202,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateTaxTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -236,6 +214,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateRefundTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -246,6 +226,8 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateRefundableAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
@@ -256,18 +238,10 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
      */
     public function calculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer);
-
-    /**
-     * Specification:
-     *  - Calculate tax amount for item and its additions (option, expenses) + order expenses
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     */
-    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      * Specification:
@@ -293,19 +267,6 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
-
-    /**
-     *
-     * Specification:
-     * - Calculate tax amount after cancellation
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
      *

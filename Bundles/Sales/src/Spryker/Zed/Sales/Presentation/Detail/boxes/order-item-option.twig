@@ -7,7 +7,7 @@
         <td>{{ productOption.unitPrice | money }}</td>
         <td>{{ productOption.unitTaxAmount | money }}</td>
         <td>{{ productOption.taxRate }}%</td>
-        <td>{{ productOption.unitDiscountAmountAggregation | money }}</td>
+        <td>-{{ productOption.unitDiscountAmountAggregation | money }}</td>
         <td colspan="4"></td>
     </tr>
 {% endfor %}

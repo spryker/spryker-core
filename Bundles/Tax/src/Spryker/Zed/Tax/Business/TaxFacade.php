@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -405,6 +406,39 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
          $this->getFactory()
             ->createAccruedTaxCalculator()
             ->resetRoundingErrorDelta();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxAmountCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxAmountAfterCancellationCalculator()
+            ->recalculate($calculableObjectTransfer);
     }
 
 }

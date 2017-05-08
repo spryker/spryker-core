@@ -5,6 +5,7 @@
  */
 namespace Spryker\Zed\Tax\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -328,5 +329,31 @@ interface TaxFacadeInterface
      * @return void
      */
     public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
+    /**
+     *
+     * Specification:
+     * - Calculate tax amount after cancellation
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Calculate tax amount after cancellation
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer);
 
 }
