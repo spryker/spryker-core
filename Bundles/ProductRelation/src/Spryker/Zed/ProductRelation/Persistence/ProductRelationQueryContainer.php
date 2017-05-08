@@ -180,8 +180,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
             ->addGroupByColumn(SpyProductCategoryTableMap::COL_ID_PRODUCT_CATEGORY)
-            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE)
-            ->addGroupByColumn(SpyProductAbstractTableMap::COL_SKU);
+            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE);
     }
 
     /**
