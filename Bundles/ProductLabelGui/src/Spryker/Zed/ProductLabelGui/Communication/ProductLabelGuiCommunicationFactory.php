@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
+use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
@@ -23,6 +27,60 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductLabelTable()
     {
         return new ProductLabelTable($this->getQueryContainer());
+    }
+
+    /**
+     * @param ProductLabelTransfer $productLabelTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductLabelForm(ProductLabelTransfer $productLabelTransfer = null, array $options = [])
+    {
+        return $this
+            ->getFormFactory()
+            ->create(
+                $this->createProductLabelFormType(),
+                $productLabelTransfer,
+                $options
+            );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createProductLabelFormType()
+    {
+        return new ProductLabelFormType($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider
+     */
+    public function createProductLabelFormDataProvider()
+    {
+        return new ProductLabelFormDataProvider($this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     */
+    public function getProductLabelFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRODUCT_LABEL);
+    }
+
+    protected function getProductLabelQueryContainer()
+    {
+
     }
 
 }

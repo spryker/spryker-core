@@ -17,4 +17,13 @@ interface ProductLabelGuiQueryContainerInterface
      */
     public function queryProductLabels();
 
+    /**
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelByName($name);
+
 }
