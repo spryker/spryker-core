@@ -15,4 +15,11 @@ interface ProductLabelGuiToLocaleInterface
      */
     public function getLocaleCollection();
 
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
+
 }

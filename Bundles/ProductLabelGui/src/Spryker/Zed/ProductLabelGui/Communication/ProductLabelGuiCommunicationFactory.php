@@ -59,7 +59,10 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductLabelFormDataProvider()
     {
-        return new ProductLabelFormDataProvider($this->getLocaleFacade());
+        return new ProductLabelFormDataProvider(
+            $this->getLocaleFacade(),
+            $this->getProductLabelFacade()
+        );
     }
 
     /**

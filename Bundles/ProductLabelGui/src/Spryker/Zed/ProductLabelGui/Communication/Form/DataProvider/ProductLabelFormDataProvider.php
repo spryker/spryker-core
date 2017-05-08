@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
 
 class ProductLabelFormDataProvider
@@ -20,19 +21,40 @@ class ProductLabelFormDataProvider
     protected $localeFacade;
 
     /**
-     * ProductLabelFormDataProvider constructor.
-     *
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
+     * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    public function __construct(ProductLabelGuiToLocaleInterface $localeFacade)
-    {
+    protected $productLabelFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
+     */
+    public function __construct(
+        ProductLabelGuiToLocaleInterface $localeFacade,
+        ProductLabelFacadeInterface $productLabelFacade
+    ) {
         $this->localeFacade = $localeFacade;
+        $this->productLabelFacade = $productLabelFacade;
+    }
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    public function getData($idProductLabel = null)
+    {
+        if ($idProductLabel === null) {
+            return $this->createProductLabelTransfer();
+        }
+
+        return $this->readProductLabelTransfer($idProductLabel);
     }
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function getData()
+    protected function createProductLabelTransfer()
     {
         $productLabelTransfer = new ProductLabelTransfer();
         $productLabelTransfer->setIsActive(true);
@@ -43,6 +65,23 @@ class ProductLabelFormDataProvider
             $localizedAttributesTransfer->setLocale($localeTransfer);
 
             $productLabelTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productLabelTransfer;
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected function readProductLabelTransfer($idProductLabel)
+    {
+        $productLabelTransfer = $this->productLabelFacade->readLabel($idProductLabel);
+
+        foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer) {
+            $localeTransfer = $this->localeFacade->getLocaleById($localizedAttributesTransfer->getFkLocale());
+            $localizedAttributesTransfer->setLocale($localeTransfer);
         }
 
         return $productLabelTransfer;

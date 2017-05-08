@@ -33,4 +33,14 @@ class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
         return $this->localeFacade->getLocaleCollection();
     }
 
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        return $this->localeFacade->getLocaleById($idLocale);
+    }
+
 }
