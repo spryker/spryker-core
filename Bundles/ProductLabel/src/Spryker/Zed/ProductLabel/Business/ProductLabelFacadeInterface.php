@@ -42,6 +42,15 @@ interface ProductLabelFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer);
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int $idProductAbstract
      *
@@ -50,6 +59,8 @@ interface ProductLabelFacadeInterface
     public function setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int $idProductAbstract
      *

@@ -91,6 +91,30 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
+    public function testUpdateLabelPersistsChanges()
+    {
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            'idActive' => true,
+            'isExclusive' => false,
+        ]);
+
+        $productLabelTransfer->setIsActive(false);
+        $productLabelTransfer->setIsExclusive(true);
+        $productLabelTransfer->setName('FooBarBaz');
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->updateLabel($productLabelTransfer);
+
+        $updatedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+
+        $this->assertFalse($updatedProductLabelTransfer->getIsActive());
+        $this->assertTrue($updatedProductLabelTransfer->getIsExclusive());
+        $this->assertSame('FooBarBaz', $updatedProductLabelTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateLabelPersistsLocalizedAttributes()
     {
         $localeTransfer = $this->tester->haveLocale();

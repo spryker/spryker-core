@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
-use Spryker\Zed\ProductLabel\Business\Label\LabelWriter;
+use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationWriter;
@@ -22,11 +23,19 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelWriterInterface
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface
      */
-    public function createLabelWriter()
+    public function createLabelCreator()
     {
-        return new LabelWriter($this->createLocalizedAttributesCollectionWriter());
+        return new LabelCreator($this->createLocalizedAttributesCollectionWriter());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface
+     */
+    public function createLabelUpdater()
+    {
+        return new LabelUpdater($this->getQueryContainer());
     }
 
     /**

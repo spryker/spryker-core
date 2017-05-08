@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 
-class LabelWriter implements LabelWriterInterface
+class LabelCreator implements LabelCreatorInterface
 {
 
     /**

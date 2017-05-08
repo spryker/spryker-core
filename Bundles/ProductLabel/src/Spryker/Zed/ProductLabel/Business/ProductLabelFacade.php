@@ -61,8 +61,23 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     {
         $this
             ->getFactory()
-            ->createLabelWriter()
+            ->createLabelCreator()
             ->create($productLabelTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createLabelUpdater()
+            ->update($productLabelTransfer);
     }
 
     /**

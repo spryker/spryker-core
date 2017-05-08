@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
-interface LabelWriterInterface
+interface LabelCreatorInterface
 {
 
     /**
