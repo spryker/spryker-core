@@ -20,6 +20,12 @@ class AddressDeletePlugin implements CustomerAnonymizerPluginInterface
      */
     public function processCustomer(CustomerTransfer $customerTransfer)
     {
+        $addressesTransfer = $customerTransfer->getAddresses();
+
+        foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
+            $addressTransfer->setIsDeleted(true);
+        }
+
         return $customerTransfer;
     }
 
