@@ -91,11 +91,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $cmsPageArray = $cmsPageEntity->toArray();
         $templateFiles = $this->cmsConfig->getTemplateRealPaths($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
 
-        /* Added for keeping BC */
-        if (!is_array($templateFiles)) {
-            $templateFiles = [$templateFiles];
-        }
-
         $placeholders = [];
         foreach ($templateFiles as $templateFile) {
             if (!$this->fileExists($templateFile)) {

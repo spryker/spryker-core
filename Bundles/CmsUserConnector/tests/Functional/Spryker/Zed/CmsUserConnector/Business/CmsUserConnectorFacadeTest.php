@@ -76,7 +76,7 @@ class CmsUserConnectorFacadeTest extends Test
         $cmsVersionTransfer = (new CmsVersionTransfer())->fromArray($cmsVersionEntity->toArray(), true);
 
         $this->assertNull($cmsVersionEntity->getFkUser());
-        $cmsVersionTransfer = $this->cmsUserConnectorFacade->updateCmsVersionWithUser($cmsVersionTransfer);
+        $cmsVersionTransfer = $this->cmsUserConnectorFacade->updateCmsVersionUser($cmsVersionTransfer);
         $this->assertNotNull($cmsVersionTransfer->getFkUser());
     }
 

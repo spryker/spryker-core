@@ -91,7 +91,7 @@ interface CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishAndVersion($idCmsPage, $versionName = null);
+    public function publishWithVersion($idCmsPage, $versionName = null);
 
     /**
      * @param int $idCmsPage

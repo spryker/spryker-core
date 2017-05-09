@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
+use DateTime;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsVersionDataProvider
 {
+
+    const DATA_CLASS = 'data_class';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
@@ -50,7 +53,7 @@ class CmsVersionDataProvider
     public function getOptions($idCmsPage = null)
     {
         return [
-            'data_class' => CmsVersionTransfer::class,
+            static::DATA_CLASS => CmsVersionTransfer::class,
             CmsVersionFormType::OPTION_VERSION_NAME_CHOICES => $this->getVersionList($idCmsPage),
         ];
     }
@@ -87,7 +90,7 @@ class CmsVersionDataProvider
         $optionLabel = sprintf(
             '%s published on %s ',
             $cmsVersionTransfer->getVersionName(),
-            date('d/m/Y H:i:s', strtotime($cmsVersionTransfer->getCreatedAt()))
+            (new DateTime($cmsVersionTransfer->getCreatedAt()))->format('d/m/Y H:i:s')
         );
 
         if ($cmsVersionTransfer->getFirstName() !== null) {

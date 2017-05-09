@@ -24,7 +24,7 @@ class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionP
      */
     public function postSave(CmsVersionTransfer $cmsVersionTransfer)
     {
-        return $this->getFacade()->updateCmsVersionWithUser($cmsVersionTransfer);
+        return $this->getFacade()->updateCmsVersionUser($cmsVersionTransfer);
     }
 
 }

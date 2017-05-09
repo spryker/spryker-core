@@ -73,7 +73,7 @@ class VersionPublisher implements VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishAndVersion($idCmsPage, $versionName = null)
+    public function publishWithVersion($idCmsPage, $versionName = null)
     {
         $cmsPageEntity = $this->findCmsPage($idCmsPage);
         $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);

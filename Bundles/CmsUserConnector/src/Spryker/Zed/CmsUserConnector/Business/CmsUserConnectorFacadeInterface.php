@@ -22,7 +22,7 @@ interface CmsUserConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function updateCmsVersionWithUser(CmsVersionTransfer $cmsVersionTransfer);
+    public function updateCmsVersionUser(CmsVersionTransfer $cmsVersionTransfer);
 
     /**
      * Specification:

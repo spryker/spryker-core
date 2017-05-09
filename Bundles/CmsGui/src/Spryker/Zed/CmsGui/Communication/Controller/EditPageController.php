@@ -23,7 +23,7 @@ class EditPageController extends AbstractController
 
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    const INVALID_DATA_PROVIDED_ERROR_MESSAGE = 'Invalid data provided.';
+    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,9 +46,10 @@ class EditPageController extends AbstractController
             ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
-            $redirectUrl = $this->updateCmsPage($pageForm, $idCmsPage);
+            $isUpdated = $this->updateCmsPage($pageForm);
 
-            if (!empty($redirectUrl)) {
+            if ($isUpdated) {
+                $redirectUrl = $this->createEditPageUrl($idCmsPage);
                 return $this->redirectResponse($redirectUrl);
             }
         }
@@ -78,11 +79,10 @@ class EditPageController extends AbstractController
 
     /**
      * @param \Symfony\Component\Form\FormInterface $pageForm
-     * @param int $idCmsPage
      *
-     * @return string|null
+     * @return bool
      */
-    protected function updateCmsPage($pageForm, $idCmsPage)
+    protected function updateCmsPage($pageForm)
     {
         if ($pageForm->isValid()) {
             try {
@@ -92,15 +92,17 @@ class EditPageController extends AbstractController
 
                 $this->addSuccessMessage('Page successfully updated.');
 
-                return $this->createEditPageUrl($idCmsPage);
+                return true;
             } catch (TemplateFileNotFoundException $exception) {
-                $this->addErrorMessage(static::INVALID_DATA_PROVIDED_ERROR_MESSAGE);
+                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
                 $error = $this->createTemplateErrorForm();
                 $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
             }
         } else {
-            $this->addErrorMessage(static::INVALID_DATA_PROVIDED_ERROR_MESSAGE);
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
+
+        return false;
     }
 
     /**

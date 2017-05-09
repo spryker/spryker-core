@@ -116,7 +116,7 @@ class VersionRollback implements VersionRollbackInterface
             $this->versionGenerator->generateReferenceCmsVersionName($version)
         );
 
-        return $this->versionPublisher->publishAndVersion($idCmsPage, $referenceVersion);
+        return $this->versionPublisher->publishWithVersion($idCmsPage, $referenceVersion);
     }
 
     /**

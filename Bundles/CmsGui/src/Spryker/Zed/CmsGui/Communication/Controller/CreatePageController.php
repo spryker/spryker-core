@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreatePageController extends AbstractController
 {
 
-    const INVALID_DATA_PROVIDED_ERROR_MESSAGE = 'Invalid data provided.';
+    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -54,7 +54,7 @@ class CreatePageController extends AbstractController
                     return $this->redirectResponse($redirectUrl);
                 }
             } else {
-                $this->addErrorMessage(static::INVALID_DATA_PROVIDED_ERROR_MESSAGE);
+                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
             }
         }
 
@@ -85,7 +85,7 @@ class CreatePageController extends AbstractController
             )
                 ->build();
         } catch (TemplateFileNotFoundException $exception) {
-            $this->addErrorMessage(static::INVALID_DATA_PROVIDED_ERROR_MESSAGE);
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 
             $error = $this->createTemplateErrorForm();
             $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);

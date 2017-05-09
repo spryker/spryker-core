@@ -39,7 +39,7 @@ class CmsVersionUserUpdater implements CmsVersionUserUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function updateCmsVersionWithUser(CmsVersionTransfer $cmsVersionTransfer)
+    public function updateCmsVersionUser(CmsVersionTransfer $cmsVersionTransfer)
     {
         if (!$this->userFacade->hasCurrentUser()) {
             return $cmsVersionTransfer;

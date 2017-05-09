@@ -92,6 +92,8 @@ class CmsGlossaryReaderTest extends CmsMocks
 
         if ($cmsConfigMock === null) {
             $cmsConfigMock = $this->createCmsConfigMock();
+            $cmsConfigMock->method('getTemplateRealPaths')
+                ->willReturn(['test_template']);
         }
 
         return $this->getMockBuilder(CmsGlossaryReader::class)

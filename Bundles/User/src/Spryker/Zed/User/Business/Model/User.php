@@ -409,7 +409,7 @@ class User implements UserInterface
      */
     protected function createUserKey()
     {
-        return sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+        return sprintf('%s:currentUser', static::USER_BUNDLE_SESSION_KEY);
     }
 
 }

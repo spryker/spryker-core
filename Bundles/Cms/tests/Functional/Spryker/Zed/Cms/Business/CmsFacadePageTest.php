@@ -226,7 +226,7 @@ class CmsFacadePageTest extends Test
     public function testPublishPageShouldPersistCmsVersion()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $cmsVersionTransfer = $this->cmsFacade->publishAndVersion($idCmsPage);
+        $cmsVersionTransfer = $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $this->assertNotNull($cmsVersionTransfer);
         $this->assertEquals($cmsVersionTransfer->getFkCmsPage(), $idCmsPage);
@@ -240,8 +240,8 @@ class CmsFacadePageTest extends Test
     public function testPublishPageShouldGetNewVersion()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
-        $cmsVersionTransferTwo = $this->cmsFacade->publishAndVersion($idCmsPage);
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
+        $cmsVersionTransferTwo = $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $this->assertGreaterThan($cmsVersionTransferOne->getVersion(), $cmsVersionTransferTwo->getVersion());
     }
@@ -252,7 +252,7 @@ class CmsFacadePageTest extends Test
     public function testRollbackPageShouldGetOldData()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
@@ -269,7 +269,7 @@ class CmsFacadePageTest extends Test
         $this->assertEquals($updatedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
         $this->assertEquals($updatedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
 
-        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
         $this->cmsFacade->rollback($idCmsPage, $cmsVersionTransferOne->getVersion());
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
@@ -286,7 +286,7 @@ class CmsFacadePageTest extends Test
     public function testRevertPageShouldGetOldData()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
@@ -319,8 +319,8 @@ class CmsFacadePageTest extends Test
     public function testFindLatestCmsVersionReturnsLatestVersion()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $cmsVersionTransferOne = $this->cmsFacade->publishAndVersion($idCmsPage);
-        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $cmsVersionTransferTwo = $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
 
@@ -333,8 +333,8 @@ class CmsFacadePageTest extends Test
     public function testFindAllCmsVersionByReturnsAllVersions()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $this->cmsFacade->publishAndVersion($idCmsPage);
-        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $versions = $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
 
@@ -347,8 +347,8 @@ class CmsFacadePageTest extends Test
     public function testFindCmsVersionByVersionNumberReturnsSameVersion()
     {
         $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
-        $this->cmsFacade->publishAndVersion($idCmsPage);
-        $this->cmsFacade->publishAndVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
 
         $cmsVersion = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, 1);
 

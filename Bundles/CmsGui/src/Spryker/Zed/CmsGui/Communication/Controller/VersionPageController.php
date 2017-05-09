@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
@@ -43,7 +44,7 @@ class VersionPageController extends AbstractController
 
             $cmsVersionTransfer = $this->getFactory()
                 ->getCmsFacade()
-                ->publishAndVersion($idCmsPage);
+                ->publishWithVersion($idCmsPage);
 
             $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
 
@@ -147,7 +148,11 @@ class VersionPageController extends AbstractController
             return null;
         }
 
-        $redirectUrl = '/cms-gui/version-page/history?id-cms-page=' . $idCmsPage;
+        $redirectUrl = Url::generate(
+            '/cms-gui/version-page/history',
+            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+        )
+            ->build();
 
         try {
             $cmsVersionTransfer = $this->getFactory()

@@ -246,11 +246,6 @@ class TemplateManager implements TemplateManagerInterface
         $templateFolders = $this->config->getTemplateRealPaths($cmsTemplateFolderPath);
         $isSynced = false;
 
-        /* Added for keeping BC */
-        if (!is_array($templateFolders)) {
-            $templateFolders = [$templateFolders];
-        }
-
         foreach ($templateFolders as $folder) {
             if (!$this->fileExists($folder)) {
                 continue;

@@ -418,13 +418,13 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishAndVersion($idCmsPage, $versionName = null);
+    public function publishWithVersion($idCmsPage, $versionName = null);
 
     /**
      * Specification:
      * - Rollbacks latest CmsPageVersion to older version.
      * - Creates a reference cms version copy
-     * - Calls publishAndVersion() method
+     * - Calls publishWithVersion() method
      *
      * @api
      *

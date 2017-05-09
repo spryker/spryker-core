@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsCollector\Business\Extractor;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
@@ -63,7 +65,7 @@ class DataExtractor implements DataExtractorInterface
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer|null
+     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
     public function extractPageAttributeByLocale(CmsPageTransfer $cmsPageTransfer, $localeName)
     {
@@ -73,14 +75,14 @@ class DataExtractor implements DataExtractorInterface
             }
         }
 
-        return null;
+        return new CmsPageAttributesTransfer();
     }
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer|null
+     * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
     public function extractMetaAttributeByLocales(CmsPageTransfer $cmsPageTransfer, $localeName)
     {
@@ -90,7 +92,7 @@ class DataExtractor implements DataExtractorInterface
             }
         }
 
-        return null;
+        return new CmsPageMetaAttributesTransfer();
     }
 
     /**
