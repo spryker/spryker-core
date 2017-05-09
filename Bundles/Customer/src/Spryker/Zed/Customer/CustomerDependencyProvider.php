@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\AddressAnonymizePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\AddressDeletePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\CustomerAnonymizePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerDelete\NewsletterUnsubscrubePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\AddressAnonymizePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\AddressDeletePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\CustomerAnonymizePlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\NewsletterUnsubscrubePlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -30,7 +30,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const STORE = 'store';
 
-    const PLUGINS_CUSTOMER_DELETE = 'plugins customer delete';
+    const PLUGINS_CUSTOMER_ANONYMIZER = 'plugins customer anonymizer';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -63,7 +63,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return Store::getInstance();
         };
 
-        $container = $this->addPluginsCustomerDelete($container);
+        $container = $this->addCustomerDeletePlugins($container);
 
         return $container;
     }
@@ -86,21 +86,30 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPluginsCustomerDelete(Container $container)
+    protected function addCustomerDeletePlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_DELETE] = function (Container $container) {
-            return [
-                new AddressAnonymizePlugin(),
-                new AddressDeletePlugin(),
-                new CustomerAnonymizePlugin(),
-                new NewsletterUnsubscrubePlugin(),
-            ];
+        $container[static::PLUGINS_CUSTOMER_ANONYMIZER] = function (Container $container) {
+            return $this->getCustomerDeletePlugins();
         };
 
         return $container;
     }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     */
+    protected function getCustomerDeletePlugins()
+    {
+        return [
+            new AddressAnonymizePlugin(),
+            new AddressDeletePlugin(),
+            new CustomerAnonymizePlugin(),
+            new NewsletterUnsubscrubePlugin(),
+        ];
+    }
+
 }

@@ -1,17 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
-
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DeleteController extends AbstractController
 {
+
     public function indexAction(Request $request)
     {
         $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
@@ -34,7 +35,7 @@ class DeleteController extends AbstractController
         }
 
         return $this->viewResponse([
-            'idCustomer' => $customerTransfer->getIdCustomer()
+            'idCustomer' => $customerTransfer->getIdCustomer(),
         ]);
     }
 
@@ -54,7 +55,7 @@ class DeleteController extends AbstractController
 
         $addressesTransfer = $customerTransfer->getAddresses();
 
-        /** @var AddressTransfer $addressTransfer */
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
         foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
             $addressTransfer = $this->getFacade()->anonymizeAddress($addressTransfer);
             $this->getFacade()->updateAddress($addressTransfer);

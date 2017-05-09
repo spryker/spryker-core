@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Business;
 
-use Spryker\Zed\Customer\Business\Anonymizer\AddressAnonymizer;
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
@@ -111,19 +110,19 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerAnonymizer
+     * @return \Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer
      */
     public function createCustomerAnonymizer()
     {
-        return new CustomerAnonymizer();
+        return new CustomerAnonymizer($this->getCustomerAnonymizerPlugins());
     }
 
     /**
-     * @return AddressAnonymizer
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
      */
-    public function createAddressAnonymizer()
+    public function getCustomerAnonymizerPlugins()
     {
-        return new AddressAnonymizer();
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_ANONYMIZER);
     }
 
     /**

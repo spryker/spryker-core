@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Customer\Business\Anonymizer;
 
-
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerAnonymizerInterface
 {
+
     public function process(CustomerTransfer $customerTransfer);
+
 }

@@ -253,18 +253,10 @@ interface CustomerFacadeInterface
     /**
      * @api
      *
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 
-    /**
-     * @api
-     *
-     * @param AddressTransfer $addressTransfer
-     *
-     * @return AddressTransfer
-     */
-    public function anonymizeAddress(AddressTransfer $addressTransfer);
 }

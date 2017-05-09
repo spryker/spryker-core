@@ -7,24 +7,38 @@
 
 namespace Spryker\Zed\Customer\Business\Anonymizer;
 
-
 use Generated\Shared\Transfer\CustomerTransfer;
-use Orm\Zed\Customer\Persistence\Base\SpyCustomer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 
 class CustomerAnonymizer implements CustomerAnonymizerInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     */
+    protected $plugins;
+
+    /**
+     * CustomerAnonymizer constructor.
+     *
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[] $customerAnonymizerPlugins
+     */
+    public function __construct(array $customerAnonymizerPlugins)
+    {
+        $this->plugins = $customerAnonymizerPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     public function process(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer->setAnonymizedAt(new \DateTime());
-        $customerTransfer->setEmail(md5($customerTransfer->getEmail()));
-
-        $customerTransfer->setFirstName(null);
-        $customerTransfer->setLastName(null);
-        $customerTransfer->setSalutation(null);
-        $customerTransfer->setGender(null);
-        $customerTransfer->setDateOfBirth(null);
+        foreach ($this->plugins as $plugin) {
+            $customerTransfer = $plugin->processCustomer($customerTransfer);
+        }
 
         return $customerTransfer;
     }
+
 }

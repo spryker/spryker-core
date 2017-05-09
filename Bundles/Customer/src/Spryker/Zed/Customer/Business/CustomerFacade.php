@@ -376,9 +376,9 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     /**
      * @api
      *
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
@@ -387,17 +387,4 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->process($customerTransfer);
     }
 
-    /**
-     * @api
-     *
-     * @param AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function anonymizeAddress(AddressTransfer $addressTransfer)
-    {
-        return $this->getFactory()
-            ->createAddressAnonymizer()
-            ->process($addressTransfer);
-    }
 }
