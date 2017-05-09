@@ -15,6 +15,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Get resource metadata
      * - Return resource metadata transfer, null on failure
      *
@@ -27,6 +28,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Get resource mime type
      * - Return resource mime type, false on failure
      *
@@ -39,6 +41,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Get resource timestamp
      * - Return resource timestamp, false on failure
      *
@@ -51,6 +54,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Get resource size
      * - Return resource size, false on failure
      *
@@ -63,6 +67,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Check if resource has private access rights
      * - Return true if resource has private access rights
      *
@@ -75,6 +80,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Mark resource with private access rights
      * - Return true on success, false on failure
      *
@@ -87,6 +93,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Mark resource with public access rights
      * - Return true on success, false on failure
      *
@@ -99,6 +106,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Create directory with its path
      * - Return true on success, false on failure
      *
@@ -112,6 +120,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Delete empty directory
      * - Return true on success, false on failure
      *
@@ -124,6 +133,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Copy file, the destination must not exist
      * - Return true on success, false on failure
      *
@@ -137,6 +147,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Delete file
      * - Return true on success, false on failure
      *
@@ -149,6 +160,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Create a file or update if exists
      * - Return true on success, false on failure
      *
@@ -163,6 +175,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Read file
      * - Return file content, false on failure
      *
@@ -175,6 +188,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Create a file or update if exists
      * - Return true on success, false on failure
      *
@@ -188,6 +202,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Update an existing file
      * - Return true on success, false on failure
      *
@@ -202,6 +217,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Write a new file
      * - Return true on success, false on failure
      *
@@ -216,6 +232,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Create a file or update if exists using stream
      * - Return true on success, false on failure
      *
@@ -230,6 +247,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Retrieve stream for a file
      * - Return a read-stream for the path, false on failure
      *
@@ -242,6 +260,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Update an existing file using a stream
      * - Return true on success, false on failure
      *
@@ -256,6 +275,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Write a new file using a stream
      * - Return true on success, false on failure
      *
@@ -269,7 +289,8 @@ interface FlysystemServiceInterface
     public function writeStream($filesystemName, $path, $resource, array $config = []);
 
     /**
-     * Specification:
+     * Specification
+     * - Select pre-configured filesystem
      * - List contents under a path
      * - Return array of FileSystemResourceTransfer objects located under given path
      *
@@ -283,6 +304,7 @@ interface FlysystemServiceInterface
 
     /**
      * Specification:
+     * - Select pre-configured filesystem
      * - Check if resource exists
      * - Return true if resource exist, false otherwise
      *
