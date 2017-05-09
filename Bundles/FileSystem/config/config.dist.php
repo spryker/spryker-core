@@ -4,26 +4,27 @@
  */
 
 /*use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'productCategoryImage' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilder::class,
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'images/categories/',
     ],
     'customerDocument' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilder::class,
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/customer_storage/',
         'path' => 'documents/',
     ],
 ];
 
 use Spryker\Shared\FileSystem\FileSystemConstants;
-use Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\Aws3v3FilesystemBuilder;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'productCategoryImage' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilder::class,
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'root' => '/DE/',
         'path' => 'media/',
         'key' => '..',
@@ -33,7 +34,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'region' => '..',
     ],
     'customerDocument' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilder::class,
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'root' => '/var/data/DE/',
         'path' => 'documents/',
     ],

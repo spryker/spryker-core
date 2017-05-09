@@ -23,7 +23,7 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container)
     {
-        $container = $this->addFlysystemAdapterPluginCollection($container);
+        $container = $this->addFlysystemPluginCollection($container);
         $container = $this->addFilesystemBuilderPluginCollection($container);
 
         return $container;
@@ -34,7 +34,7 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addFlysystemAdapterPluginCollection($container)
+    protected function addFlysystemPluginCollection($container)
     {
         $container[self::PLUGIN_COLLECTION_FLYSYSTEM] = function (Container $container) {
             return [];
