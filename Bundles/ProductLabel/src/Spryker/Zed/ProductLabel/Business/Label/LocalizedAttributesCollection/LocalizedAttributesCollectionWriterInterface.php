@@ -17,6 +17,6 @@ interface LocalizedAttributesCollectionWriterInterface
      *
      * @return void
      */
-    public function replace(ArrayObject $localizedAttributesTransferCollection);
+    public function set(ArrayObject $localizedAttributesTransferCollection);
 
 }
