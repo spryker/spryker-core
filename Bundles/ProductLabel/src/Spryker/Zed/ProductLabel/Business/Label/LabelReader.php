@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
@@ -75,6 +76,28 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readAll()
+    {
+        $productLabelEntities = $this->findAllEntitiesSortedByPosition();
+        $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
+
+        return $productLabelTransferCollection;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     */
+    protected function findAllEntitiesSortedByPosition()
+    {
+        return $this
+            ->queryContainer
+            ->queryProductLabelsSortedByPosition()
+            ->find();
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
@@ -82,14 +105,7 @@ class LabelReader implements LabelReaderInterface
     public function readAllForAbstractProduct($idProductAbstract)
     {
         $productLabelEntities = $this->findEntitiesForAbstractProduct($idProductAbstract);
-        $productLabelTransferCollection = [];
-
-        foreach ($productLabelEntities as $productLabelEntity) {
-            $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
-            $this->addLocalizedAttributes($productLabelTransfer);
-
-            $productLabelTransferCollection[] = $productLabelTransfer;
-        }
+        $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
 
         return $productLabelTransferCollection;
     }
@@ -105,6 +121,25 @@ class LabelReader implements LabelReaderInterface
             ->queryContainer
             ->queryProductLabelByAbstractProduct($idProductAbstract)
             ->find();
+    }
+
+    /**
+     * @param array|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
+     *
+     * @return array
+     */
+    protected function createTransferCollectionForEntities(ObjectCollection $productLabelEntities)
+    {
+        $productLabelTransferCollection = [];
+
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
+            $this->addLocalizedAttributes($productLabelTransfer);
+
+            $productLabelTransferCollection[] = $productLabelTransfer;
+        }
+
+        return $productLabelTransferCollection;
     }
 
     /**

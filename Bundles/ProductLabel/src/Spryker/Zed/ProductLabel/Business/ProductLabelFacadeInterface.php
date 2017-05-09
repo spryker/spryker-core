@@ -24,6 +24,13 @@ interface ProductLabelFacadeInterface
     /**
      * @api
      *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readAllLabels();
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

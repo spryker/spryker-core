@@ -27,7 +27,10 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     public function createLabelCreator()
     {
-        return new LabelCreator($this->createLocalizedAttributesCollectionWriter());
+        return new LabelCreator(
+            $this->createLocalizedAttributesCollectionWriter(),
+            $this->getQueryContainer()
+        );
     }
 
     /**

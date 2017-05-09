@@ -38,6 +38,19 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     /**
      * @api
      *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readAllLabels()
+    {
+        return $this
+            ->getFactory()
+            ->createLabelReader()
+            ->readAll();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

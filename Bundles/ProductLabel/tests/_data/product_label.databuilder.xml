@@ -14,6 +14,7 @@
         <property name="frontEndReference" dataBuilderRule="sentence(2)"/>
         <property name="validFrom" dataBuilderRule="time('Y-m-d', '-1 days')"/>
         <property name="validTo" dataBuilderRule="time('Y-m-d', '+1 days')"/>
+        <property name="position" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="ProductLabelLocalizedAttributes">

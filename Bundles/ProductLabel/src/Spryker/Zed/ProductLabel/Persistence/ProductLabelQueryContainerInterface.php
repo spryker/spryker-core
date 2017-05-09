@@ -13,6 +13,13 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelsSortedByPosition();
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -20,6 +27,8 @@ interface ProductLabelQueryContainerInterface
     public function queryProductLabelById($idProductLabel);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -34,5 +43,12 @@ interface ProductLabelQueryContainerInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryLocalizedAttributesByProductLabel($idProductLabel);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryMaxPosition();
 
 }

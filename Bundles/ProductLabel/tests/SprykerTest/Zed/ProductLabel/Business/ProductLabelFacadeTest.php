@@ -76,6 +76,26 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
+    public function testReadAllLabelsReturnsCollectionSortedByPosition()
+    {
+        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        /** @var \ArrayObject $productLabelTransferCollection */
+        $productLabelTransferCollection = $productLabelFacade->readAllLabels();
+
+        $this->assertSame(1, $productLabelTransferCollection[0]->getPosition());
+        $this->assertSame(2, $productLabelTransferCollection[1]->getPosition());
+        $this->assertSame(3, $productLabelTransferCollection[2]->getPosition());
+        $this->assertSame(4, $productLabelTransferCollection[3]->getPosition());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateLabelPersistsDataAndUpdatesTransferIdField()
     {
         $productLabelFacade = $this->createProductLabelFacade();

@@ -20,6 +20,11 @@ interface LabelReaderInterface
     public function read($idProductLabel);
 
     /**
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function readAll();
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

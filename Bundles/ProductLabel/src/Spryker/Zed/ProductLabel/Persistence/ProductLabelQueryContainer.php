@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,6 +16,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelQueryContainer extends AbstractQueryContainer implements ProductLabelQueryContainerInterface
 {
+
+    const COL_MAX_POSITION = 'max_position';
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelsSortedByPosition()
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->orderByPosition(Criteria::ASC);
+    }
 
     /**
      * @api
@@ -31,6 +48,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -58,6 +77,25 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->getFactory()
             ->createLocalizedAttributesQuery()
             ->filterByFkProductLabel($idProductLabel);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryMaxPosition()
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->withColumn(
+                sprintf('MAX(%s)', SpyProductLabelTableMap::COL_POSITION),
+                static::COL_MAX_POSITION
+            )
+            ->select([
+                static::COL_MAX_POSITION,
+            ]);
     }
 
 }

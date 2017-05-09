@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class LabelCreator implements LabelCreatorInterface
 {
@@ -20,11 +21,20 @@ class LabelCreator implements LabelCreatorInterface
     protected $localizedAttributesCollectionWriter;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
-    public function __construct(LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter)
-    {
+    protected $queryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     */
+    public function __construct(
+        LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
+        ProductLabelQueryContainerInterface $queryContainer
+    ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -35,6 +45,7 @@ class LabelCreator implements LabelCreatorInterface
     public function create(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelEntity = $this->createEntityFromTransfer($productLabelTransfer);
+        $this->setPosition($productLabelEntity);
 
         $productLabelEntity->save();
 
@@ -53,6 +64,27 @@ class LabelCreator implements LabelCreatorInterface
         $productLabelEntity->fromArray($productLabelTransfer->toArray());
 
         return $productLabelEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
+     * @return void
+     */
+    protected function setPosition(SpyProductLabel $productLabelEntity)
+    {
+        $productLabelEntity->setPosition($this->getMaxPosition() + 1);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getMaxPosition()
+    {
+        return (int)$this
+            ->queryContainer
+            ->queryMaxPosition()
+            ->findOne();
     }
 
     /**
