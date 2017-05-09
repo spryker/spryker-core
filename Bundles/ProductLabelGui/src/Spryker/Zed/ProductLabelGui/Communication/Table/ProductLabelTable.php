@@ -12,7 +12,6 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\SetStatusController;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
@@ -21,7 +20,7 @@ class ProductLabelTable extends AbstractTable
 {
 
     const TABLE_IDENTIFIER = 'product-label-table';
-    const COL_STATUS = 'status';
+    const COL_VALIDITY = 'validity';
     const COL_ACTIONS = 'actions';
 
     /**
@@ -49,17 +48,26 @@ class ProductLabelTable extends AbstractTable
         $config->setHeader([
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => '#',
             SpyProductLabelTableMap::COL_NAME => 'Name',
-            static::COL_STATUS => 'Status',
+            SpyProductLabelTableMap::COL_IS_EXCLUSIVE => 'Is Exclusive',
+            static::COL_VALIDITY => 'Validity',
+            SpyProductLabelTableMap::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
 
-        $config->addRawColumn(static::COL_STATUS);
+        $config->addRawColumn(SpyProductLabelTableMap::COL_IS_ACTIVE);
         $config->addRawColumn(static::COL_ACTIONS);
 
         $config->setDefaultSortField(
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
-            TableConfiguration::SORT_DESC
+            TableConfiguration::SORT_ASC
         );
+
+        $config->setSortable([
+            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
+            SpyProductLabelTableMap::COL_NAME,
+            SpyProductLabelTableMap::COL_IS_EXCLUSIVE,
+            SpyProductLabelTableMap::COL_IS_ACTIVE,
+        ]);
 
         return $config;
     }
@@ -81,12 +89,38 @@ class ProductLabelTable extends AbstractTable
             $tableRows[] = [
                 SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
                 SpyProductLabelTableMap::COL_NAME => $productLabelEntity->getName(),
-                static::COL_STATUS => $this->createStatusMarker($productLabelEntity->getIsActive()),
+                SpyProductLabelTableMap::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
+                static::COL_VALIDITY => $this->getValidityDateRangeLabel($productLabelEntity),
+                SpyProductLabelTableMap::COL_IS_ACTIVE => $this->createStatusMarker($productLabelEntity->getIsActive()),
                 static::COL_ACTIONS => $this->createActionButtons($productLabelEntity),
             ];
         }
 
         return $tableRows;
+    }
+
+    /**
+     * @param SpyProductLabel $productLabelEntity
+     *
+     * @return string
+     */
+    protected function getIsExclusiveLabel(SpyProductLabel $productLabelEntity)
+    {
+        return $productLabelEntity->getIsExclusive() ? 'Yes' : 'No';
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
+     * @return string
+     */
+    protected function getValidityDateRangeLabel(SpyProductLabel $productLabelEntity)
+    {
+        if (!$productLabelEntity->getValidFrom() || !$productLabelEntity->getValidTo()) {
+            return 'n/a';
+        }
+
+        return '';
     }
 
     /**
@@ -115,7 +149,6 @@ class ProductLabelTable extends AbstractTable
         $actionButtons = [
             $this->createEditButton($idProductLabel),
             $this->createStatusToggleButton($idProductLabel, $productLabelEntity->getIsActive()),
-            $this->CreateDeleteButton($idProductLabel),
         ];
 
         return implode(' ', $actionButtons);
@@ -165,7 +198,7 @@ class ProductLabelTable extends AbstractTable
             Url::generate(
                 '/product-label-gui/set-status/inactive',
                 [
-                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel
+                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
             'Deactivate'
@@ -183,28 +216,10 @@ class ProductLabelTable extends AbstractTable
             Url::generate(
                 'product-label-gui/set-status/active',
                 [
-                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel
+                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
             'Activate'
-        );
-    }
-
-    /**
-     * @param int $idProductLabel
-     *
-     * @return string
-     */
-    protected function createDeleteButton($idProductLabel)
-    {
-        return $this->generateRemoveButton(
-            Url::generate(
-                '/product-label-gui/delete',
-                [
-                    DeleteController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
-            ),
-            'Delete'
         );
     }
 

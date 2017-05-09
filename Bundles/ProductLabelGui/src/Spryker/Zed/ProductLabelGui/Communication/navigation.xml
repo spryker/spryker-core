@@ -2,14 +2,39 @@
 <config>
     <product>
         <pages>
-            <product_labels>
+            <product-label-gui>
                 <label>Product Labels</label>
                 <title>Product Labels</title>
                 <bundle>product-label-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
-                <visible>2</visible>
-            </product_labels>
+                <pages>
+                    <create-product-label-gui>
+                        <label>Create a Product Label</label>
+                        <title>Create a Product Label</title>
+                        <bundle>product-label-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-product-label-gui>
+                    <edit-product-label-gui>
+                        <label>Edit Product Label</label>
+                        <title>Edit Product Label</title>
+                        <bundle>product-label-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-product-label-gui>
+                    <re-sort-product-label-gui>
+                        <label>Re-Sort Product Labels</label>
+                        <title>Re-Sort Product Labels</title>
+                        <bundle>product-label-gui</bundle>
+                        <controller>re-sort</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </re-sort-product-label-gui>
+                </pages>
+            </product-label-gui>
         </pages>
     </product>
 </config>

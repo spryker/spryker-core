@@ -1,0 +1,44 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Prioritize Product Labels' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Prioritize Product Labels' } %}
+
+        {% block widget_content %}
+            <div id="js-re-sort-list">
+                <ul>
+                    {% for productLabelTransfer in productLabelTransferCollection %}
+                        <li data-id-product-label="{{ productLabelTransfer.getIdProductLabel() }}">
+                            {{ productLabelTransfer.getName() }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <hr />
+
+            <button id="js-list-save-button" class="btn btn-primary" data-style="expand-left">
+                {% include '@ProductLabelGui/ReSort/_partials/wave-loader.twig' %}
+                {{ 'Save' | trans }}
+            </button>
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-label-re-sort.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-label-re-sort.js"></script>
+{% endblock %}
+
