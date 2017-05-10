@@ -42,7 +42,7 @@ class SkuCollector extends BaseCollector implements CollectorInterface
             }
 
             $discountableItems[] = $this->createDiscountableItemTransfer(
-                $itemTransfer->getUnitPrice(),
+                $itemTransfer->getUnitGrossPrice(),
                 $itemTransfer->getQuantity(),
                 $itemTransfer->getCalculatedDiscounts()
             );

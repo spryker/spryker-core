@@ -11,10 +11,11 @@ interface AccruedTaxCalculatorInterface
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param float $taxRate
+     * @param bool $round
      *
      * @return int
      */
-    public function getTaxValueFromPrice($price, $taxRate);
+    public function getTaxValueFromPrice($price, $taxRate, $round = false);
 
     /**
      * @return void

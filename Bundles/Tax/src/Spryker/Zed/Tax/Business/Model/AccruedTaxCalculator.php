@@ -30,16 +30,21 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param int $taxRate
+     * @param bool $round
      *
-     * @return int
+     * @return float
      */
-    public function getTaxValueFromPrice($price, $taxRate)
+    public function getTaxValueFromPrice($price, $taxRate, $round = false)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
 
         $taxAmount += static::$roundingErrorDelta;
 
-        $taxAmountRounded = (int)round($taxAmount);
+        if ($round) {
+            $taxAmountRounded = (int)round($taxAmount);
+        } else {
+            $taxAmountRounded = round($taxAmount, 2);
+        }
         static::$roundingErrorDelta = $taxAmount - $taxAmountRounded;
 
         return $taxAmountRounded;

@@ -57,30 +57,6 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
-     */
-    public function createTaxCalculator()
-    {
-        return new TaxCalculation();
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\ItemTaxCalculator
-     */
-    public function createTaxItemAmountCalculator()
-    {
-        return new ItemTaxCalculator($this->createAccruedTaxCalculator());
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator
-     */
-    public function createExpenseTaxCalculator()
-    {
-        return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
-    }
-
-    /**
      * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     public function createPriceCalculationHelper()
@@ -113,7 +89,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface|\Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountAfterCancellationCalculator
+     * @return \Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountAfterCancellationCalculator
      */
     public function createTaxAmountAfterCancellationCalculator()
     {
@@ -121,7 +97,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface|TaxAmountCalculator
+     * @return TaxAmountCalculator
      */
     public function createTaxAmountCalculator()
     {

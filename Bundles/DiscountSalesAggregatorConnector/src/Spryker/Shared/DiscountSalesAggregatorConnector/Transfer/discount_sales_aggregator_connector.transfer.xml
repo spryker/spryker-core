@@ -12,12 +12,6 @@
         <property name="idSalesExpense" type="int" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
-        <property name="unitGrossPriceWithDiscounts" type="int"/>
-        <property name="sumGrossPriceWithDiscounts" type="int" />
-        <property name="unitTaxAmountWithDiscounts" type="int" />
-        <property name="sumTaxAmountWithDiscounts" type="int" />
-        <property name="unitTotalDiscountAmount"  type="int" />
-        <property name="sumTotalDiscountAmount" type="int" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="quantity" type="int" />
         <property name="taxRate" type="float" />
@@ -38,10 +32,6 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
-        <property name="unitGrossPriceWithDiscounts" type="int"/>
-        <property name="sumGrossPriceWithDiscounts" type="int" />
-        <property name="unitTotalDiscountAmount"  type="int" />
-        <property name="sumTotalDiscountAmount" type="int" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />

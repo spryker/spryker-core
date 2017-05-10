@@ -24,7 +24,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     /**
      * Specification:
      *  - Returns persisted order information stored into OrderTransfer
-     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
      *
      * @api
      *

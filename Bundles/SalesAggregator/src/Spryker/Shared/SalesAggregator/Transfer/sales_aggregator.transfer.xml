@@ -21,8 +21,6 @@
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
         <property name="quantity" type="int" />
-        <property name="unitItemTotal" type="int" />
-        <property name="sumItemTotal" type="int" />
     </transfer>
 
     <transfer name="Quote">

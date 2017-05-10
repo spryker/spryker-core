@@ -23,8 +23,6 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="quantity" type="int" />
 
-        <!-- START: new calculator fields -->
-
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
 
@@ -41,8 +39,6 @@
         <property name="sumPriceToPayAggregation" type="int" />
 
         <property name="taxAmountAfterCancellation" type="int" />
-
-        <!-- END: new calculator fields -->
 
     </transfer>
 
@@ -65,10 +61,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
-
-        <!-- START: new calculator fields -->
         <property name="taxMode" type="string" />
-        <!-- END: new calculator fields -->
     </transfer>
 
     <transfer name="Item">
@@ -77,8 +70,6 @@
         <property name="taxRate" type="float" />
 
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
-
-        <!-- START: new calculator fields -->
 
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
@@ -113,8 +104,6 @@
         <property name="taxRateAverageAggregation" type="float" />
         <property name="taxAmountAfterCancellation" type="int" />
 
-        <!-- END: new calculator fields -->
-
     </transfer>
 
     <transfer name="ProductOption">
@@ -122,8 +111,6 @@
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
-
-        <!-- START: new calculator fields -->
 
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
@@ -135,8 +122,6 @@
 
         <property name="unitDiscountAmountAggregation" type="int" />
         <property name="sumDiscountAmountAggregation" type="int" />
-
-        <!-- END: new calculator fields -->
 
     </transfer>
 

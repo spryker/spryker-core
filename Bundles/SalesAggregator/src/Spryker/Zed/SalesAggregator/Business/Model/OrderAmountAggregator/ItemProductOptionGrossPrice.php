@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOption\Business\SalesAggregator;
+namespace Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator;
+namespace Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
@@ -17,10 +17,8 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 
-class ProductOptionDiscounts implements OrderAmountAggregatorInterface, CalculatorInterface
+class ProductOptionDiscounts implements OrderAmountAggregatorInterface
 {
 
     /**
@@ -52,17 +50,6 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
 
         $this->populateProductOptionDiscountsFromSalesOrderDiscounts($orderTransfer, $salesOrderDiscounts);
         $this->addProductOptionWithDiscountsGrossPriceAmounts($orderTransfer->getItems());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculate(QuoteTransfer $quoteTransfer)
-    {
-        $this->setCalculatedProductOptionCalculatedDiscounts($quoteTransfer->getItems());
-        $this->addProductOptionWithDiscountsGrossPriceAmounts($quoteTransfer->getItems());
     }
 
     /**

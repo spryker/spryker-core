@@ -174,7 +174,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      * Specification:
      *  - Calculate tax rate for current quote
-     *  - Set tax rate perecentage
+     *  - Set tax rate percentage
      *
      * @api
      *

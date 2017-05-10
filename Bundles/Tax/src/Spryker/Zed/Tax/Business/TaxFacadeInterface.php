@@ -222,42 +222,6 @@ interface TaxFacadeInterface
 
     /**
      * Specification:
-     *  - Loops over calculable items and sum all item taxes, including expenses
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateTaxTotals(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     *  - Calculate tax amount for each item
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculateTaxItemAmount(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     *  - Calculate tax amount for each expense item
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculateExpenseTaxAmount(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
      *  - Calculate tax amount from given price and rate
      *  - Value is not rounded
      *
@@ -301,10 +265,11 @@ interface TaxFacadeInterface
      *
      * @param int $grossPrice
      * @param float $taxRate
+     * @param bool $round
      *
      * @return int
      */
-    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = false);
 
     /**
      * Specification:
