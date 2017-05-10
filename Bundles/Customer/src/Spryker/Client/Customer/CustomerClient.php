@@ -387,4 +387,18 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->setDefaultBillingAddress($addressTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->anonymizeCustomer($customerTransfer);
+    }
+
 }

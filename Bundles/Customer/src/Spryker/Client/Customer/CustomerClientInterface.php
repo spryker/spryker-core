@@ -238,4 +238,13 @@ interface CustomerClientInterface
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
 }
