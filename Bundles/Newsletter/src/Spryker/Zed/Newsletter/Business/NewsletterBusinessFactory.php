@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Newsletter\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Newsletter\Business\Anonymizer\SubscriptionAnonymizer;
 use Spryker\Zed\Newsletter\Business\Internal\NewsletterTypeInstaller;
 use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
@@ -80,6 +81,16 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
         );
 
         return $subscriberOptInHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Newsletter\Business\Anonymizer\SubscriptionAnonymizerInterface
+     */
+    public function createSubscriptionAnonymizer()
+    {
+        return new SubscriptionAnonymizer(
+            $this->getQueryContainer()
+        );
     }
 
     /**

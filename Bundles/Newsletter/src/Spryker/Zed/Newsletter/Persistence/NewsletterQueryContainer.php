@@ -87,6 +87,32 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     /**
      * @api
      *
+     * @param $idCustomer
+     *
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
+     */
+    public function querySubscriberByIdCustomer($idCustomer)
+    {
+        return $this->querySubscriber()
+            ->filterByFkCustomer($idCustomer);
+    }
+
+    /**
+     * @api
+     *
+     * @param $email
+     *
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
+     */
+    public function querySubscriberByEmail($email)
+    {
+        return $this->querySubscriber()
+            ->filterByEmail($email);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
     public function querySubscriber()

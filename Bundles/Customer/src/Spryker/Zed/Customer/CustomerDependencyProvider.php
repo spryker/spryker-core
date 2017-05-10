@@ -8,10 +8,6 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\AddressAnonymizePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\AddressDeletePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\CustomerAnonymizePlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerAnonymizer\NewsletterUnsubscrubePlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -104,12 +100,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCustomerDeletePlugins()
     {
-        return [
-            new AddressAnonymizePlugin(),
-            new AddressDeletePlugin(),
-            new CustomerAnonymizePlugin(),
-            new NewsletterUnsubscrubePlugin(),
-        ];
+        return [];
     }
 
 }

@@ -74,4 +74,13 @@ interface NewsletterFacadeInterface
      */
     public function install();
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     *
+     * @return bool
+     */
+    public function anonymizeSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
+
 }

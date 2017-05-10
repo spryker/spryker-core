@@ -43,6 +43,24 @@ interface NewsletterQueryContainerInterface
     /**
      * @api
      *
+     * @param $idCustomer
+     *
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
+     */
+    public function querySubscriberByIdCustomer($idCustomer);
+
+    /**
+     * @api
+     *
+     * @param $email
+     *
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
+     */
+    public function querySubscriberByEmail($email);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
     public function querySubscriber();
