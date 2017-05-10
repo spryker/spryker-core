@@ -88,8 +88,7 @@ class Writer implements WriterInterface
 
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductId($productConcreteTransfer->getIdProductConcrete(), $excludeIdProductImageSet)
-            ->find()
-            ->toKeyIndex();
+            ->find();
 
         $this->deleteProductImageSets($missingProductImageSets);
     }
@@ -109,8 +108,7 @@ class Writer implements WriterInterface
 
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductAbstractId($productAbstractTransfer->getIdProductAbstract(), $excludeIdProductImageSet)
-            ->find()
-            ->toKeyIndex();
+            ->find();
 
         $this->deleteProductImageSets($missingProductImageSets);
     }
