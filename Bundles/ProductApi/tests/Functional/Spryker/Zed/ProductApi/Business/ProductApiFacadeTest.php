@@ -66,9 +66,10 @@ class ProductApiFacadeTest extends Test
 
         $apiDataTransfer = new ApiDataTransfer();
         $apiDataTransfer->setData([
-            'id_product_abstract' => 99999,
             'sku' => 'sku' . time(),
-            'attributes' => '',
+            'attributes' => [],
+            'product_concretes' => [],
+            'id_tax_set' => 1,
         ]);
 
         $resultTransfer = $productApiFacade->addProduct($apiDataTransfer);
@@ -86,36 +87,16 @@ class ProductApiFacadeTest extends Test
         $idProductAbstract = 1;
         $apiDataTransfer = new ApiDataTransfer();
         $apiDataTransfer->setData([
+            'id_product_abstract' => 1,
             'sku' => 'sku' . time() . '-update',
+            'attributes' => [],
+            'product_concretes' => [],
+            'id_tax_set' => 1,
         ]);
 
         $resultTransfer = $productApiFacade->updateProduct($idProductAbstract, $apiDataTransfer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemove()
-    {
-        $productApiFacade = new ProductApiFacade();
-
-        $apiDataTransfer = new ApiDataTransfer();
-        $apiDataTransfer->setData([
-            'id_product_abstract' => 99999,
-            'sku' => 'sku' . time(),
-            'attributes' => '',
-        ]);
-        $resultTransfer = $productApiFacade->addProduct($apiDataTransfer);
-
-        //$idProductAbstract = $resultTransfer->getId();
-        $idProductAbstract = 99999;
-        $resultTransfer = $productApiFacade->removeProduct($idProductAbstract);
-
-        $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
-        //FIXME
-        $this->assertSame(99999, $resultTransfer->getData()[0]['id_product_abstract']);
     }
 
 }

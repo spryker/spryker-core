@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductApi\Business\Model;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductApiTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -19,6 +21,7 @@ use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
+use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
@@ -52,24 +55,32 @@ class ProductApi implements ProductApiInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface
+     */
+    private $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
      * @param \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface $productFacade
      */
     public function __construct(
         ProductApiToApiInterface $apiQueryContainer,
         ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
         ProductApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
-        TransferMapperInterface $transferMapper
+        TransferMapperInterface $transferMapper,
+        ProductApiToProductInterface $productFacade
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -79,23 +90,37 @@ class ProductApi implements ProductApiInterface
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $productEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        $productApiTransfer = $this->persist($productEntity);
+        $data = (array)$apiDataTransfer->getData();
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer, $productEntity->getIdProductAbstract());
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->fromArray($data, true);
+
+        $productConcreteCollection = [];
+        if (!isset($data['product_concretes'])) {
+            $data['product_concretes'] = [];
+        }
+        foreach ($data['product_concretes'] as $productConcrete) {
+            $productConcreteCollection[] = (new ProductConcreteTransfer())->fromArray($productConcrete, true);
+        }
+
+        $idProductAbstract = $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
+
+        return $this->get($idProductAbstract);
     }
 
     /**
-     * @internal param ApiFilterTransfer $apiFilterTransfer
-     *
      * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($idProductAbstract)
     {
-        $productData = $this->getProductData($idProductAbstract);
-        $productTransfer = $this->transferMapper->toTransfer($productData);
+        $productTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+        if (!$productTransfer) {
+            throw new EntityNotFoundException(sprintf('Product Abstract not found for id %s', $idProductAbstract));
+        }
 
         return $this->apiQueryContainer->createApiItem($productTransfer, $idProductAbstract);
     }
@@ -120,11 +145,20 @@ class ProductApi implements ProductApiInterface
         }
 
         $data = (array)$apiDataTransfer->getData();
-        $entityToUpdate->fromArray($data);
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->fromArray($data, true);
 
-        $productApiTransfer = $this->persist($entityToUpdate);
+        $productConcreteCollection = [];
+        if (!isset($data['product_concretes'])) {
+            $data['product_concretes'] = [];
+        }
+        foreach ($data['product_concretes'] as $productConcrete) {
+            $productConcreteCollection[] = (new ProductConcreteTransfer())->fromArray($productConcrete, true);
+        }
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer, $entityToUpdate->getIdProductAbstract());
+        $idProductAbstract = $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
+
+        return $this->get($idProductAbstract);
     }
 
     /**
@@ -159,6 +193,10 @@ class ProductApi implements ProductApiInterface
         $collection = $this->transferMapper->toTransferCollection(
             $query->find()->toArray()
         );
+
+        foreach ($collection as $k => $productAbstractTransfer) {
+            $collection[$k] = $this->get($productAbstractTransfer->getIdProductAbstract())->getData();
+        }
 
         return $this->apiQueryContainer->createApiCollection($collection);
     }
