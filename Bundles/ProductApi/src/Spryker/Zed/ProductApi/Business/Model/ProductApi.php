@@ -7,17 +7,12 @@
 
 namespace Spryker\Zed\ProductApi\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ApiFilterTransfer;
-use Generated\Shared\Transfer\ApiPaginationTransfer;
+use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ProductApiTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
-use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Map\TableMap;
@@ -25,9 +20,8 @@ use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface;
+use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
 class ProductApi implements ProductApiInterface
 {
@@ -38,9 +32,9 @@ class ProductApi implements ProductApiInterface
     protected $apiQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
+     * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface
      */
-    protected $propelQueryBuilderQueryContainer;
+    protected $apiQueryBuilderQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface
@@ -59,20 +53,20 @@ class ProductApi implements ProductApiInterface
 
     /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
-     * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface $propelQueryBuilderQueryContainer
+     * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
      * @param \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface $transferMapper
      */
     public function __construct(
         ProductApiToApiInterface $apiQueryContainer,
-        ProductApiToPropelQueryBuilderInterface $propelQueryBuilderQueryContainer,
+        ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
         ProductApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
         TransferMapperInterface $transferMapper
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
-        $this->propelQueryBuilderQueryContainer = $propelQueryBuilderQueryContainer;
+        $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
@@ -88,27 +82,22 @@ class ProductApi implements ProductApiInterface
         $productEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
         $productApiTransfer = $this->persist($productEntity);
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer, $productEntity->getIdProductAbstract());
     }
 
     /**
+     * @internal param ApiFilterTransfer $apiFilterTransfer
+     *
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idProductAbstract, ApiFilterTransfer $apiFilterTransfer)
+    public function get($idProductAbstract)
     {
-        $productData = $this->getProductData($idProductAbstract, $apiFilterTransfer);
-        foreach ($productData as $index => $value) {
-            $x = $index;
-            $x = str_replace("\x00*\x00", '', $x);
-            $productData[$x] = $value;
-        }
-
+        $productData = $this->getProductData($idProductAbstract);
         $productTransfer = $this->transferMapper->toTransfer($productData);
 
-        return $this->apiQueryContainer->createApiItem($productTransfer);
+        return $this->apiQueryContainer->createApiItem($productTransfer, $idProductAbstract);
     }
 
     /**
@@ -135,7 +124,7 @@ class ProductApi implements ProductApiInterface
 
         $productApiTransfer = $this->persist($entityToUpdate);
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer, $entityToUpdate->getIdProductAbstract());
     }
 
     /**
@@ -155,7 +144,7 @@ class ProductApi implements ProductApiInterface
             $productApiTransfer->setIdProductAbstract($idProductAbstract);
         }
 
-        return $this->apiQueryContainer->createApiItem($productApiTransfer);
+        return $this->apiQueryContainer->createApiItem($productApiTransfer, $idProductAbstract);
     }
 
     /**
@@ -165,14 +154,63 @@ class ProductApi implements ProductApiInterface
      */
     public function find(ApiRequestTransfer $apiRequestTransfer)
     {
-        $criteriaTransfer = $this->buildPropelQueryBuilderCriteria($apiRequestTransfer);
-        $query = $this->buildQuery($apiRequestTransfer, $criteriaTransfer);
+        $query = $this->buildQuery($apiRequestTransfer);
 
         $collection = $this->transferMapper->toTransferCollection(
             $query->find()->toArray()
         );
 
         return $this->apiQueryContainer->createApiCollection($collection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function buildQuery(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $apiQueryBuilderQueryTransfer = $this->buildApiQueryBuilderQuery($apiRequestTransfer);
+
+        $query = $this->queryContainer->queryFind();
+        $query = $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($query, $apiQueryBuilderQueryTransfer);
+
+        return $query;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer
+     */
+    protected function buildApiQueryBuilderQuery(ApiRequestTransfer $apiRequestTransfer)
+    {
+        $columnSelectionTransfer = $this->buildColumnSelection();
+
+        $apiQueryBuilderQueryTransfer = new ApiQueryBuilderQueryTransfer();
+        $apiQueryBuilderQueryTransfer->setApiRequest($apiRequestTransfer);
+        $apiQueryBuilderQueryTransfer->setColumnSelection($columnSelectionTransfer);
+
+        return $apiQueryBuilderQueryTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
+     */
+    protected function buildColumnSelection()
+    {
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
+        $tableColumns = SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
+
+        foreach ($tableColumns as $columnAlias) {
+            $columnTransfer = new PropelQueryBuilderColumnTransfer();
+            $columnTransfer->setName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $columnAlias);
+            $columnTransfer->setAlias($columnAlias);
+
+            $columnSelectionTransfer->addTableColumn($columnTransfer);
+        }
+
+        return $columnSelectionTransfer;
     }
 
     /**
@@ -189,118 +227,24 @@ class ProductApi implements ProductApiInterface
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return array
      */
-    protected function getProductData($idProduct, ApiFilterTransfer $apiFilterTransfer)
+    protected function getProductData($idProduct)
     {
         //TODO column filtering
         $productArray = (array)$this->queryContainer
             ->queryGet($idProduct)
-            ->findOne();
+            ->findOne()
+            ->toArray();
 
         if (!$productArray) {
             throw new EntityNotFoundException(sprintf('Product not found: %s', $idProduct));
         }
 
         return $productArray;
-    }
-
-    /**
-     * TODO invert this, and put it into ApiQueryBuilder bundle
-     *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
-     */
-    protected function buildPropelQueryBuilderCriteria(ApiRequestTransfer $apiRequestTransfer)
-    {
-        $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            $apiRequestTransfer->getFilter()->getFilter()
-        );
-
-        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
-        $criteriaTransfer->setRuleSet($criteriaRuleSet);
-
-        return $criteriaTransfer;
-    }
-
-    /**
-     * TODO invert this, and put it into ApiQueryBuilder bundle
-     *
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function buildQuery(ApiRequestTransfer $apiRequestTransfer, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
-    {
-        $columnSelectionTransfer = $this->buildColumnSelection(
-            $apiRequestTransfer->getFilter()->getFields()
-        );
-
-        $paginationTransfer = $this->buildPagination(
-            $apiRequestTransfer->getFilter()->getPagination()
-        );
-
-        $criteriaTransfer->setPagination($paginationTransfer);
-        $criteriaTransfer->setColumnSelection($columnSelectionTransfer);
-
-        $query = $this->queryContainer->queryFind();
-        $query = $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
-        $query->setFormatter(new AssociativeArrayFormatter());
-
-        return $query;
-    }
-
-    /**
-     * @param array $selectedColumns
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
-     */
-    protected function buildColumnSelection(array $selectedColumns)
-    {
-        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        $columnSelectionTransfer->setTableName(SpyProductAbstractTableMap::TABLE_NAME);
-        $columnSelectionTransfer->setTableColumns(SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_COLNAME));
-
-        $columns = [];
-        foreach ($selectedColumns as $columnAlias) {
-            $columnTransfer = new PropelQueryBuilderColumnTransfer();
-            $columnTransfer->setName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $columnAlias);
-            $columnTransfer->setAlias($columnAlias);
-
-            $columns[] = $columnTransfer;
-        }
-
-        $columnSelectionTransfer->setSelectedColumns(new ArrayObject($columns));
-
-        return $columnSelectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiPaginationTransfer $apiPaginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer
-     */
-    protected function buildPagination(ApiPaginationTransfer $apiPaginationTransfer)
-    {
-        $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
-        $paginationTransfer->fromArray($apiPaginationTransfer->toArray(), true);
-
-        $sortItems = [];
-        foreach ($apiPaginationTransfer->getSort() as $column => $direction) {
-            $sortItems[] = (new PropelQueryBuilderSortTransfer())
-                ->setColumnName(SpyProductAbstractTableMap::TABLE_NAME . '.' . $column)
-                ->setSortDirection($direction);
-        }
-
-        $paginationTransfer->setSortItems(new ArrayObject($sortItems));
-
-        return $paginationTransfer;
     }
 
 }

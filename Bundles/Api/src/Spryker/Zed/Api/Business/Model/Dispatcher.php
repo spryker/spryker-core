@@ -157,14 +157,15 @@ class Dispatcher implements DispatcherInterface
      */
     protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer)
     {
-        if (!$apiRequestTransfer->getData()) {
+        return [];
+        /*if (!$apiRequestTransfer->getData()) {
             return [];
         }
 
         return $this->validator->validate(
             $apiRequestTransfer->getResource(),
             $apiRequestTransfer->getData()
-        );
+        );*/
     }
 
 }

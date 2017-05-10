@@ -17,25 +17,24 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomer();
-
-    /**
-     * @api
-     *
-     * @param array $fields
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    public function queryFind(array $fields = []);
+    public function queryFind();
 
     /**
      * @api
      *
      * @param int $idCustomer
-     * @param array $fields
      *
      * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomerById($idCustomer, array $fields = []);
+    public function queryGet($idCustomer);
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function queryRemove($idCustomer);
 
 }

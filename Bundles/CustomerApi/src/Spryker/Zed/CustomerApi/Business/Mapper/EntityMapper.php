@@ -19,10 +19,10 @@ class EntityMapper implements EntityMapperInterface
      */
     public function toEntity(array $data)
     {
-        $productAbstractEntity = new SpyCustomer();
-        $productAbstractEntity->fromArray($data);
+        $customerEntity = new SpyCustomer();
+        $customerEntity->fromArray($data);
 
-        return $productAbstractEntity;
+        return $customerEntity;
     }
 
     /**
