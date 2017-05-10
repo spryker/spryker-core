@@ -128,4 +128,13 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      */
     public function queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale);
 
+    /**
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetById($idProductImageSet);
+
 }

@@ -787,4 +787,17 @@ class ProductImageFacadeTest extends Test
         return $productConcreteTransfer;
     }
 
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetById()
+    {
+        $productImageSetTransfer = $this->productImageFacade->getProductImagesSetById(
+            $this->imageSetAbstract->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(1, $productImageSetTransfer->getProductImages());
+    }
+
 }

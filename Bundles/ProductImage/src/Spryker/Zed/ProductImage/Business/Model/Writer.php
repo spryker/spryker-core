@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
-use Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -237,8 +236,6 @@ class Writer implements WriterInterface
      */
     public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        $this->assertProductIsAssigned($productImageSetTransfer);
-
         $this->productImageQueryContainer->getConnection()->beginTransaction();
 
         $productImageSetEntity = $this->productImageQueryContainer
@@ -400,20 +397,6 @@ class Writer implements WriterInterface
 
         $this->deleteMissingProductImageSetInProductConcrete($productConcreteTransfer);
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
-     *
-     * @throws \Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException
-     *
-     * @return void
-     */
-    protected function assertProductIsAssigned(ProductImageSetTransfer $productImageSetTransfer)
-    {
-        if ((int)$productImageSetTransfer->getIdProductAbstract() === 0 && (int)$productImageSetTransfer->getIdProduct() === 0) {
-            throw new InvalidProductImageSetException('ImageSet has no product assigned.');
-        }
     }
 
 }

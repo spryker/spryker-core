@@ -183,4 +183,16 @@ interface ProductImageFacadeInterface
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
 
+    /**
+     * Specification:
+     * - Returns a product image set from database for the given ID.
+     *
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function getProductImagesSetById($idProductImageSet);
+
 }
