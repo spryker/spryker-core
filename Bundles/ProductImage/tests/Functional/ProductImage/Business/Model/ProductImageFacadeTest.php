@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
@@ -541,6 +541,33 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteProductImageSet()
+    {
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
+
+        $imageSet = new SpyProductImageSet();
+        $imageSet
+            ->setName(self::SET_NAME)
+            ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->setFkProduct(null)
+            ->setFkLocale(null)
+            ->save();
+
+        $this->assertProductImageSetExists($imageSet->getIdProductImageSet());
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setIdProductImageSet($imageSet->getIdProductImageSet())
+            ->setName(self::SET_NAME)
+            ->setIdProductAbstract($imageSet->getFkProductAbstract());
+
+        $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
+
+        $this->assertProductImageSetNotExists($imageSet->getIdProductImageSet());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return void
@@ -622,6 +649,34 @@ class ProductImageFacadeTest extends Test
         );
 
         $this->assertCount($expectedCount, $imageSetCollection);
+    }
+
+    /**
+     * @param $idProductImageSet
+     *
+     * @return void
+     */
+    protected function assertProductImageSetExists($idProductImageSet)
+    {
+        $exists = (new SpyProductImageSetQuery())
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->exists();
+
+        $this->assertTrue($exists);
+    }
+
+    /**
+     * @param $idProductImageSet
+     *
+     * @return void
+     */
+    protected function assertProductImageSetNotExists($idProductImageSet)
+    {
+        $exists = (new SpyProductImageSetQuery())
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->exists();
+
+        $this->assertFalse($exists);
     }
 
     /**

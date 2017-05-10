@@ -74,6 +74,25 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        $productImageSetEntity = $this->productImageQueryContainer
+            ->queryProductImageSet()
+            ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
+            ->findOne();
+
+        if ($productImageSetEntity) {
+            return $this->deleteProductImageSetEntities([$productImageSetEntity]);
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
@@ -88,9 +107,10 @@ class Writer implements WriterInterface
 
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductId($productConcreteTransfer->getIdProductConcrete(), $excludeIdProductImageSet)
-            ->find();
+            ->find()
+            ->getArrayCopy();
 
-        $this->deleteProductImageSets($missingProductImageSets);
+        $this->deleteProductImageSetEntities($missingProductImageSets);
     }
 
     /**
@@ -108,9 +128,10 @@ class Writer implements WriterInterface
 
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductAbstractId($productAbstractTransfer->getIdProductAbstract(), $excludeIdProductImageSet)
-            ->find();
+            ->find()
+            ->getArrayCopy();
 
-        $this->deleteProductImageSets($missingProductImageSets);
+        $this->deleteProductImageSetEntities($missingProductImageSets);
     }
 
     /**
@@ -138,17 +159,22 @@ class Writer implements WriterInterface
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSets
      *
-     * @return void
+     * @return bool
      */
-    protected function deleteProductImageSets(array $productImageSets)
+    protected function deleteProductImageSetEntities(array $productImageSets)
     {
+        $isSuccessful = true;
+
         foreach ($productImageSets as $productImageSet) {
             foreach ($productImageSet->getSpyProductImageSetToProductImages() as $productImageSetToProductImage) {
                 $this->deleteProductImageSetToProductImage($productImageSetToProductImage);
             }
 
             $productImageSet->delete();
+            $isSuccessful &= $productImageSet->isDeleted();
         }
+
+        return $isSuccessful;
     }
 
     /**

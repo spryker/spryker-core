@@ -60,6 +60,13 @@ interface WriterInterface
     public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+
+    /**
      * @param int $idProductImageSet
      * @param int $idProductImage
      * @param int|null $sortOrder

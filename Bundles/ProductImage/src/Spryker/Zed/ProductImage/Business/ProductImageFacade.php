@@ -196,4 +196,18 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->expandProductConcreteWithImageSets($productConcreteTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->deleteProductImageSet($productImageSetTransfer);
+    }
+
 }

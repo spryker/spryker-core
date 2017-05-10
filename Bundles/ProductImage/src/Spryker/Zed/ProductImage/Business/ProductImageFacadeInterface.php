@@ -142,4 +142,13 @@ interface ProductImageFacadeInterface
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+
 }
