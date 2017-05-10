@@ -120,7 +120,12 @@ class ProductLabelTable extends AbstractTable
             return 'n/a';
         }
 
-        return '';
+
+        return sprintf(
+            '%s - %s',
+            $productLabelEntity->getValidFrom('Y/m/d'),
+            $productLabelEntity->getValidTo('Y/m/d')
+        );
     }
 
     /**

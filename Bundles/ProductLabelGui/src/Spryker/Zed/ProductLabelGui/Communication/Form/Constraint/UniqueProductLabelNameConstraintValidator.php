@@ -29,28 +29,64 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueProductLabelNameConstraint::class);
         }
 
-        if (!$this->hasExistingProductLabelWithName($value, $constraint)) {
+        if (!$this->isNameChanged($value, $constraint)) {
+            return;
+        }
+
+        if ($this->isUniqueName($value, $constraint)) {
             return;
         }
 
         $this
             ->context
             ->buildViolation($constraint->getMessage($value))
-            ->atPath(ProductLabelFormType::FILED_NAME)
+            ->atPath(ProductLabelFormType::FIELD_NAME)
             ->addViolation();
     }
 
     /**
-     * @param string $name
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
+     * @param string $value
+     * @param \Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
      * @return bool
      */
-    protected function hasExistingProductLabelWithName($name, Constraint $constraint)
+    protected function isNameChanged($value, UniqueProductLabelNameConstraint $constraint)
+    {
+        $idProductLabel = $this->getProductLabelIdFromContext();
+        if (!$idProductLabel) {
+            return true;
+        }
+
+        $productLabelEntity = $constraint->findProductLabelById($idProductLabel);
+
+        return ($productLabelEntity->getName() !== $value);
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getProductLabelIdFromContext()
+    {
+        /** @var \Symfony\Component\Form\FormInterface $root */
+        $root = $this->context->getRoot();
+
+        /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
+        $productLabelTransfer = $root->getData();
+
+        return $productLabelTransfer->getIdProductLabel();
+    }
+
+    /**
+     * @param string $name
+     * @param \Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
+     *
+     * @return bool
+     */
+    protected function isUniqueName($name, UniqueProductLabelNameConstraint $constraint)
     {
         $productLabelEntity = $constraint->findProductLabelByName($name);
 
-        return ($productLabelEntity ? true : false);
+        return ($productLabelEntity ? false : true);
     }
 
 }

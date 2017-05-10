@@ -30,11 +30,21 @@ class UniqueProductLabelNameConstraint extends Constraint
     /**
      * @param string $name
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
      */
     public function findProductLabelByName($name)
     {
         return $this->queryContainer->queryProductLabelByName($name)->findOne();
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
+     */
+    public function findProductLabelById($idProductLabel)
+    {
+        return $this->queryContainer->queryProductLabelById($idProductLabel)->findOne();
     }
 
     /**

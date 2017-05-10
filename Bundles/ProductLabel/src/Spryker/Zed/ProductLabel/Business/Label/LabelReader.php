@@ -152,6 +152,9 @@ class LabelReader implements LabelReaderInterface
         $productLabelTransfer = new ProductLabelTransfer();
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
+        $productLabelTransfer->setValidFrom($productLabelEntity->getValidFrom());
+        $productLabelTransfer->setValidTo($productLabelEntity->getValidTo());
+
         return $productLabelTransfer;
     }
 

@@ -42,4 +42,19 @@ class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements Pr
             ->filterByName($name);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryProductLabelById($idProductLabel)
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->filterByIdProductLabel($idProductLabel);
+    }
+
 }

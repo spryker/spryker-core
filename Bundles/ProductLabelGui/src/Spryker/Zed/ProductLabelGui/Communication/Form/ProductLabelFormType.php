@@ -13,16 +13,18 @@ use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterfa
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductLabelFormType extends AbstractType
 {
 
-    const FILED_NAME = 'name';
+    const FIELD_NAME = 'name';
     const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
     const FIELD_STATUS_FLAG = 'isActive';
     const FIELD_VALID_FROM_DATE = 'validFrom';
@@ -77,7 +79,8 @@ class ProductLabelFormType extends AbstractType
             ->addNameField($builder)
             ->addStatusFlagField($builder)
             ->addExclusiveFlagField($builder)
-            ->addValidDateRangeFields($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder)
             ->addFontEndReferenceField($builder)
             ->addLocalizedAttributesSubForm($builder);
     }
@@ -90,7 +93,7 @@ class ProductLabelFormType extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FILED_NAME,
+            static::FIELD_NAME,
             TextType::class,
             [
                 'label' => 'Name *',
@@ -150,25 +153,43 @@ class ProductLabelFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addValidDateRangeFields(FormBuilderInterface $builder)
+    protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(
-                static::FIELD_VALID_FROM_DATE,
-                DateTimeType::class,
-                [
-                    'label' => 'Valid From',
-                    'required' => false,
-                ]
-            )
-            ->add(
-                static::FIELD_VALID_TO_DATE,
-                DateTimeType::class,
-                [
-                    'label' => 'Valid To',
-                    'required' => false,
-                ]
-            );
+        $builder->add(
+            static::FIELD_VALID_FROM_DATE,
+            DateType::class,
+            [
+                'label' => 'Valid From',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-valid-from-date-picker',
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_VALID_TO_DATE,
+            DateType::class,
+            [
+                'label' => 'Valid To',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-valid-to-date-picker',
+                ],
+            ]
+        );
 
         return $this;
     }
