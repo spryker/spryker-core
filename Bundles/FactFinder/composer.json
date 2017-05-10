@@ -1,0 +1,53 @@
+{
+  "name": "spryker/fact-finder",
+  "description": "FactFinder bundle",
+  "license": "proprietary",
+  "require": {
+    "FACT-Finder/FACT-Finder-PHP-Library": "1.3.*",
+    "spryker/category": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/log": "^3.0.0",
+    "spryker/monolog": "^2.0.0",
+    "spryker/price": "^4.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/product-category": "^4.0.0",
+    "spryker/product-image": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/quote": "^1.0.0",
+    "spryker/session": "^3.0.0",
+    "spryker/stock": "^4.0.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/category-data-feed": "^0.1.0",
+    "spryker/product-abstract-data-feed": "^0.1.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/FACT-Finder/FACT-Finder-PHP-Library"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

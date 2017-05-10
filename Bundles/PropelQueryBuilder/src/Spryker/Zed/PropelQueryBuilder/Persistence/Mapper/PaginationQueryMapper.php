@@ -92,10 +92,13 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
         $sortCollection = $propelQueryBuilderPaginationTransfer->getSortItems();
 
         foreach ($sortCollection as $sortItem) {
+            $sortItem->requireColumn();
+            $sortItem->getColumn()->requireName();
+
             if (strtolower($sortItem->getSortDirection()) === strtolower(Criteria::ASC)) {
-                $query->addAscendingOrderByColumn($sortItem->getColumnName());
+                $query->addAscendingOrderByColumn($sortItem->getColumn()->getName());
             } else {
-                $query->addDescendingOrderByColumn($sortItem->getColumnName());
+                $query->addDescendingOrderByColumn($sortItem->getColumn()->getName());
             }
         }
 

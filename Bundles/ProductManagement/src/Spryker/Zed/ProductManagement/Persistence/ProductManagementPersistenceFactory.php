@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

@@ -10,10 +10,10 @@ namespace Spryker\Zed\ProductRelationCollector\Business\Collector\Storage;
 use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Generated\Shared\Transfer\StorageProductRelationsTransfer;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
-use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
@@ -104,6 +104,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     protected function mapProductRelation(array $relationProduct)
     {
         return [
+            StorageProductAbstractRelationTransfer::ID_PRODUCT_ABSTRACT => $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             StorageProductAbstractRelationTransfer::NAME => $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
             StorageProductAbstractRelationTransfer::PRICE => $this->getPriceBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
             StorageProductAbstractRelationTransfer::SKU => $relationProduct[SpyProductAbstractTableMap::COL_SKU],

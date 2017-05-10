@@ -10,6 +10,7 @@
     </transfer>
 
     <transfer name="StorageProductAbstractRelation">
+        <property name="idProductAbstract" type="int" />
         <property name="name" type="string" />
         <property name="price" type="int" />
         <property name="url" type="string" />

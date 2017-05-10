@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface AS DependencyCommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface AS DependencyCommandCollectionInterface;
 
 interface CommandCollectionInterface extends DependencyCommandCollectionInterface
 {

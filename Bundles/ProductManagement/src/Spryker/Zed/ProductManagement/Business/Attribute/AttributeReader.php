@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use PDO;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;

@@ -18,15 +18,14 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\GetActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\UpdateActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Fields\FieldsByQueryPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\FieldsByQueryPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryFilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\PaginationPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
@@ -115,7 +114,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createResourceParametersPreProcessor(),
 
             $this->createFilterPreProcessor(),
-            $this->createPaginationPreProcessor(),
             $this->createFieldsByQueryPreProcessor(),
             $this->createSortByQueryFilterPreProcessor(),
             $this->createCriteriaByQueryFilterPreProcessor(),
@@ -200,14 +198,6 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createPaginationPreProcessor()
-    {
-        return new PaginationPreProcessor();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
-     */
     protected function createFieldsByQueryPreProcessor()
     {
         return new FieldsByQueryPreProcessor();
@@ -244,7 +234,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPaginationByHeaderFilterPreProcessor()
     {
-        return new PaginationByHeaderFilterPreProcessor();
+        return new PaginationByHeaderFilterPreProcessor(
+            $this->getConfig()
+        );
     }
 
     /**

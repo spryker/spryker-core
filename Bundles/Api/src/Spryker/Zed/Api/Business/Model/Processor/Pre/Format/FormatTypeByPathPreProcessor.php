@@ -20,7 +20,7 @@ class FormatTypeByPathPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        // PUT orders/1/events/foobar/item/5.json
+        // GET orders/1.json
         $path = $apiRequestTransfer->getPath();
 
         $formatType = null;

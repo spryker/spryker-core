@@ -28,7 +28,7 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductApi(
             $this->getApiQueryContainer(),
-            $this->getPropelQueryBuilderQueryContainer(),
+            $this->getApiQueryBuilderQueryContainer(),
             $this->getQueryContainer(),
             $this->createEntityMapper(),
             $this->createTransferMapper()
@@ -68,11 +68,11 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
+     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface
      */
-    public function getPropelQueryBuilderQueryContainer()
+    protected function getApiQueryBuilderQueryContainer()
     {
-        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
+        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API_QUERY_BUILDER);
     }
 
 }

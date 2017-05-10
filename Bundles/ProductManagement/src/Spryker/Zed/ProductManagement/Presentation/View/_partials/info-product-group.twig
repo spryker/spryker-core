@@ -1,0 +1,7 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Groups' } %}
+    {% block widget_content %}
+
+        {{ productGroupTable | raw }}
+
+    {% endblock %}
+{% endembed %}

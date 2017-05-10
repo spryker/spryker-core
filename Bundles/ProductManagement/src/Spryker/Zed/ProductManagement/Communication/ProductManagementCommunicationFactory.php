@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
+use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
@@ -22,6 +22,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
+use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
@@ -199,6 +200,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductImageQueryContainer()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface
+     */
+    public function getProductGroupQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_PRODUCT_GROUP);
     }
 
     /**
@@ -454,6 +463,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getAvailabilityFacade(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $idProductConcrete
+        );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
+     */
+    public function createProductGroupTable($idProductAbstract)
+    {
+        return new ProductGroupTable(
+            $this->getProductQueryContainer(),
+            $this->getProductGroupQueryContainer(),
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $idProductAbstract
         );
     }
 

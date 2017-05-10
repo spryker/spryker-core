@@ -20,7 +20,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
-class Address
+class Address implements AddressInterface
 {
 
     /**

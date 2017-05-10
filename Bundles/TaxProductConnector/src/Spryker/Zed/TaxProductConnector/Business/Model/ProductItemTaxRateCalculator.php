@@ -8,10 +8,10 @@
 namespace Spryker\Zed\TaxProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
-use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {

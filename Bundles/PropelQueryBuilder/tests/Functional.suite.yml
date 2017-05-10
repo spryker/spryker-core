@@ -1,5 +1,8 @@
 class_name: FunctionalTester
 modules:
     enabled:
-        - \SprykerTest\Shared\Testify\Helper\Environment
+        - \Testify\Module\Environment
         - \PropelQueryBuilder\Module\Functional
+        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+        - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+        - \SprykerTest\Shared\Product\Helper\ProductDataHelper
