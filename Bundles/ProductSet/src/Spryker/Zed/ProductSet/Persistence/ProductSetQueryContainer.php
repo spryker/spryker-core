@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductSet\Persistence;
+
+use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+
+/**
+ * @method \Spryker\Zed\ProductSet\Persistence\ProductSetPersistenceFactory getFactory()
+ */
+class ProductSetQueryContainer extends AbstractQueryContainer implements ProductSetQueryContainerInterface
+{
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetById($idProductSet)
+    {
+        return $this->getFactory()
+            ->createProductSetQuery()
+            ->filterByIdProductSet($idProductSet);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
+     */
+    public function queryProductAbstractSetsById($idProductSet)
+    {
+        return $this->getFactory()
+            ->createProductAbstractSetQuery()
+            ->filterByFkProductSet($idProductSet)
+            ->orderByPosition(Criteria::ASC);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int|null $excludedIdProductSet
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
+     */
+    public function queryProductAbstractSetsByIdProductAbstract($idProductAbstract, $excludedIdProductSet = null)
+    {
+        $query = $this->getFactory()
+            ->createProductAbstractSetQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->orderByFkProductSet();
+
+        if ($excludedIdProductSet) {
+            $query->filterByFkProductSet($excludedIdProductSet, Criteria::NOT_EQUAL);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param int|null $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIdProductSet($idProductSet, $idLocale = null)
+    {
+        $query = $this->getFactory()
+            ->getUrlQueryContainer()
+            ->queryUrls()
+            ->filterByFkResourceProductSet($idProductSet);
+
+        if ($idLocale) {
+            $query->filterByFkLocale($idLocale);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param int|null $idLocale
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImageSet($idProductSet, $idLocale = null)
+    {
+        $query = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->filterByFkResourceProductSet($idProductSet)
+            ->orderByIdProductImageSet(Criteria::ASC);
+
+        if ($idLocale) {
+            $query->filterByFkLocale($idLocale);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param int|null $idLocale
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryProductSetDataByProductSetId($idProductSet, $idLocale = null)
+    {
+        $query = $this->getFactory()
+            ->createProductSetDataQuery()
+            ->filterByFkProductSet($idProductSet);
+
+        if ($idLocale) {
+            $query->filterByFkLocale($idLocale);
+        }
+
+        return $query;
+    }
+
+}
