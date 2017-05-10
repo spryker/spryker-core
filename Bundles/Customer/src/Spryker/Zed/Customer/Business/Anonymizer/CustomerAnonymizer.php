@@ -11,9 +11,27 @@ use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\Customer\Business\Customer\AddressInterface;
+use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class CustomerAnonymizer implements CustomerAnonymizerInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
+     */
+    protected $customer;
+
+    /**
+     * @var \Spryker\Zed\Customer\Business\Customer\AddressInterface
+     */
+    protected $address;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
@@ -23,17 +41,21 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     /**
      * CustomerAnonymizer constructor.
      *
-     * @param \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[] $customerAnonymizerPlugins
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param array $customerAnonymizerPlugins
      */
-    public function __construct(array $customerAnonymizerPlugins)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, CustomerInterface $customer, AddressInterface $address, array $customerAnonymizerPlugins)
     {
+        $this->queryContainer = $customerQueryContainer;
+        $this->customer = $customer;
+        $this->address = $address;
         $this->plugins = $customerAnonymizerPlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return bool
      */
     public function process(CustomerTransfer $customerTransfer)
     {
@@ -41,13 +63,16 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
             $plugin->process($customerTransfer);
         }
 
-        $customerTransfer = $this->processCustomer($customerTransfer);
-
         $addressesTransfer = $customerTransfer->getAddresses();
-        $addressesTransfer = $this->processCustomerAddresses($addressesTransfer);
+        $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);
         $customerTransfer->setAddresses($addressesTransfer);
 
-        return $customerTransfer;
+        $customerTransfer = $this->anonymizeCustomer($customerTransfer);
+
+        $isSuccessful = $this->updateCustomerAddresses($customerTransfer->getAddresses());
+        $isSuccessful &= $this->updateCustomer($customerTransfer);
+
+        return $isSuccessful;
     }
 
     /**
@@ -55,16 +80,20 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function processCustomer(CustomerTransfer $customerTransfer)
+    protected function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
         $customerTransfer->setAnonymizedAt(new DateTime());
-        $customerTransfer->setEmail(md5($customerTransfer->getEmail()));
-
         $customerTransfer->setFirstName(null);
         $customerTransfer->setLastName(null);
         $customerTransfer->setSalutation(null);
         $customerTransfer->setGender(null);
         $customerTransfer->setDateOfBirth(null);
+
+        do {
+            $randomEmail = md5(mt_rand());
+        } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
+
+        $customerTransfer->setEmail($randomEmail);
 
         return $customerTransfer;
     }
@@ -74,10 +103,10 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    protected function processCustomerAddresses(AddressesTransfer $addressesTransfer)
+    protected function anonymizeCustomerAddresses(AddressesTransfer $addressesTransfer)
     {
         foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
-            $addressTransfer = $this->processCustomerAddress($addressTransfer);
+            $addressTransfer = $this->anonymizeCustomerAddress($addressTransfer);
         }
 
         return $addressesTransfer;
@@ -88,7 +117,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function processCustomerAddress(AddressTransfer $addressTransfer)
+    protected function anonymizeCustomerAddress(AddressTransfer $addressTransfer)
     {
         $addressTransfer->setAnonymizedAt(new DateTime());
         $addressTransfer->setIsDeleted(true);
@@ -106,6 +135,35 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
         $addressTransfer->setPhone(null);
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function updateCustomer(CustomerTransfer $customerTransfer)
+    {
+        $customerTransferResponse = $this->customer->update($customerTransfer);
+        return $customerTransferResponse->getIsSuccess();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     *
+     * @return bool
+     */
+    protected function updateCustomerAddresses(AddressesTransfer $addressesTransfer)
+    {
+        $isSuccessful = true;
+
+        foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
+            if (!$this->address->updateAddress($addressTransfer)) {
+                $isSuccessful = false;
+            }
+        }
+
+        return $isSuccessful;
     }
 
 }

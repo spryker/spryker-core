@@ -378,7 +378,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return bool
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {

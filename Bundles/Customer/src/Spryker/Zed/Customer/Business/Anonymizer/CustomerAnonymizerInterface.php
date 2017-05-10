@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerAnonymizerInterface
 {
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
     public function process(CustomerTransfer $customerTransfer);
 
 }

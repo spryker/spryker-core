@@ -53,18 +53,14 @@ class DeleteController extends AbstractController
             return $this->redirectResponse('/customer');
         }
 
-        $addressesTransfer = $customerTransfer->getAddresses();
+        $isSuccessful = $this->getFacade()->anonymizeCustomer($customerTransfer);
 
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-            $addressTransfer = $this->getFacade()->anonymizeAddress($addressTransfer);
-            $this->getFacade()->updateAddress($addressTransfer);
+        if ($isSuccessful) {
+            $this->addSuccessMessage('Customer successfully deleted');
+        } else {
+            $this->addSuccessMessage('Customer anonymization is failed');
         }
 
-        $customerTransfer = $this->getFacade()->anonymizeCustomer($customerTransfer);
-        $this->getFacade()->updateCustomer($customerTransfer);
-
-        $this->addSuccessMessage('Customer successfully deleted');
         return $this->redirectResponse('/customer');
     }
 

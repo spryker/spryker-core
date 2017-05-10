@@ -114,7 +114,12 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerAnonymizer()
     {
-        return new CustomerAnonymizer($this->getCustomerAnonymizerPlugins());
+        return new CustomerAnonymizer(
+            $this->getQueryContainer(),
+            $this->createCustomer(),
+            $this->createAddress(),
+            $this->getCustomerAnonymizerPlugins()
+        );
     }
 
     /**
