@@ -13,6 +13,7 @@
     "spryker/assertion": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/symfony": "^3.0.0",
