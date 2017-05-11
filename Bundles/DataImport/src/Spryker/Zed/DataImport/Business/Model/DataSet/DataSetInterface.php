@@ -27,4 +27,9 @@ interface DataSetInterface extends IteratorAggregate, ArrayAccess, Serializable,
      */
     public function exchangeArray($input);
 
+    /**
+     * @return array
+     */
+    public function getArrayCopy();
+
 }

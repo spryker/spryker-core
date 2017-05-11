@@ -176,10 +176,9 @@ class CsvReaderTest extends Test
     public function testThrowsExceptionWhenFileInvalid()
     {
         $this->expectException(DataReaderException::class);
-        $configuration = $this->getCsvReaderConfiguration(Configuration::dataDir() . 'not-existing.csv');
-        $dataSet = new DataSet();
+        $configuration = $this->getCsvReaderConfigurationTransfer(Configuration::dataDir() . 'not-existing.csv');
 
-        $reader = new CsvReader($configuration, $dataSet);
+        $this->tester->getFactory()->createCsvReaderFromConfig($configuration);
     }
 
     /**
@@ -190,9 +189,8 @@ class CsvReaderTest extends Test
      */
     protected function getCsvReader($fileName, $hasHeader = true)
     {
-        $configuration = $this->getCsvReaderConfiguration($fileName, $hasHeader);
-        $dataSet = new DataSet();
-        $csvReader = new CsvReader($configuration, $dataSet);
+        $configuration = $this->getCsvReaderConfigurationTransfer($fileName, $hasHeader);
+        $csvReader = $this->tester->getFactory()->createCsvReaderFromConfig($configuration);
 
         return $csvReader;
     }
@@ -201,16 +199,16 @@ class CsvReaderTest extends Test
      * @param string $fileName
      * @param bool $hasHeader
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface
+     * @return \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
      */
-    protected function getCsvReaderConfiguration($fileName, $hasHeader = true)
+    protected function getCsvReaderConfigurationTransfer($fileName, $hasHeader = true)
     {
         $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfiguration
             ->setFileName($fileName)
             ->setCsvHasHeader($hasHeader);
 
-        return new CsvReaderConfiguration($dataImporterReaderConfiguration);
+        return $dataImporterReaderConfiguration;
     }
 
 }

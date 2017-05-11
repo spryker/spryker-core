@@ -109,7 +109,7 @@ class DataImportFacadeTest extends Test
         $mockBuilder = $this->getMockBuilder(DataImportBusinessFactory::class)
             ->setMethods(['createDataImporterCollection']);
 
-        $dataImporterCollection = new DataImporterCollection();
+        $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $dataImporterCollection
             ->addDataImporter($this->tester->getDataImporterMock(static::IMPORT_TYPE_SPECIFIC_A, true))
             ->addDataImporter($this->tester->getDataImporterMock(static::IMPORT_TYPE_SPECIFIC_B, true));

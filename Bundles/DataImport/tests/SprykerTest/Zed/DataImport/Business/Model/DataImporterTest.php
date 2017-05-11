@@ -79,12 +79,12 @@ class DataImporterTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporter
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterAwareInterface
      */
     private function getDataImporter()
     {
         $dataReader = $this->tester->getDataReader();
-        $dataImporter = new DataImporter(static::IMPORTER_TYPE, $dataReader);
+        $dataImporter = $this->tester->getFactory()->createDataImporter(static::IMPORTER_TYPE, $dataReader);
 
         return $dataImporter;
     }

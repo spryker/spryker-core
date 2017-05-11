@@ -14,6 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\ReNameDataSetKeysStep;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
+use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporter;
@@ -28,7 +29,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createImporter()
+    public function getImporter()
     {
         return $this->createDataImporterCollection();
     }
@@ -79,11 +80,11 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration $csvReaderConfiguration
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface $csvReaderConfiguration
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader
+     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
      */
-    public function createCsvReader(CsvReaderConfiguration $csvReaderConfiguration)
+    public function createCsvReader(CsvReaderConfigurationInterface $csvReaderConfiguration)
     {
         $csvReader = new CsvReader($csvReaderConfiguration, $this->createDataSet());
 

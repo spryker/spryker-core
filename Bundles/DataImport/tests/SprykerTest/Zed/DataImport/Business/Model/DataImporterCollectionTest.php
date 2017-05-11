@@ -33,7 +33,7 @@ class DataImporterCollectionTest extends Test
      */
     public function testAddDataImporter()
     {
-        $dataImporterCollection = new DataImporterCollection();
+        $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $fluentInterface = $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A));
 
         $this->assertInstanceOf(DataImporterCollectionInterface::class, $fluentInterface);
@@ -47,7 +47,7 @@ class DataImporterCollectionTest extends Test
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer->setImportedDataSets(1);
 
-        $dataImporterCollection = new DataImporterCollection();
+        $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A, true, $dataImporterReportTransfer));
 
         $dataImporterReportTransfer = $dataImporterCollection->import();

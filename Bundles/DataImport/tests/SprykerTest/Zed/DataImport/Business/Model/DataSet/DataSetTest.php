@@ -31,7 +31,7 @@ class DataSetTest extends Test
      */
     public function testGetValueWithUndefinedKeyThrowsException()
     {
-        $dataSet = new DataSet();
+        $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
         $dataSet['undefinedKey'];
     }
@@ -41,7 +41,7 @@ class DataSetTest extends Test
      */
     public function testUnsetValueWithUndefinedKeyThrowsException()
     {
-        $dataSet = new DataSet();
+        $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
         unset($dataSet['undefinedKey']);
     }
@@ -54,7 +54,7 @@ class DataSetTest extends Test
         $oldData = ['old'];
         $newData = ['new'];
 
-        $dataSet = new DataSet($oldData);
+        $dataSet = $this->tester->getFactory()->createDataSet($oldData);
         $return = $dataSet->exchangeArray($newData);
         $this->assertSame($oldData, $return);
         $this->assertSame($newData, $dataSet->getArrayCopy());

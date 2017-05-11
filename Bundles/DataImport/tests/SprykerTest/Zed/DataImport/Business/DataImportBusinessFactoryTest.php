@@ -11,7 +11,6 @@ use Codeception\Configuration;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 
 /**
@@ -22,6 +21,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
  * @group Business
  * @group DataImportBusinessFactoryTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
 class DataImportBusinessFactoryTest extends Test
 {
@@ -38,8 +38,7 @@ class DataImportBusinessFactoryTest extends Test
             ->setImportType('import-type')
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $dataImportBusinessFactory = new DataImportBusinessFactory();
-        $csvDataImporter = $dataImportBusinessFactory->getCsvDataImporterFromConfig($dataImporterConfigurationTransfer);
+        $csvDataImporter = $this->tester->getFactory()->getCsvDataImporterFromConfig($dataImporterConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterInterface::class, $csvDataImporter);
     }
