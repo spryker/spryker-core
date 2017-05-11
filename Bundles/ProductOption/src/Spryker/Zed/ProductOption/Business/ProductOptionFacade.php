@@ -117,42 +117,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *  - Loops over all items and calculates gross amount for each items
-     *  - Data is read from sales order persistence
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()
-            ->createItemProductOptionGrossPriceAggregator()
-            ->aggregate($orderTransfer);
-    }
-
-    /**
-     * Specification:
-     *  - Loops over all items and calculates subtotal
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()
-            ->createSubtotalWithProductOption()
-            ->aggregate($orderTransfer);
-    }
-
-    /**
      * Specification:
      *  - Persist product option sales data
      *  - Used by sales saver plugin

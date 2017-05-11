@@ -17,8 +17,6 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
-use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
-use Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -89,14 +87,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
-     */
-    public function createItemProductOptionGrossPriceAggregator()
-    {
-        return new ItemProductOptionGrossPrice($this->getQueryContainer());
-    }
-
-    /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaverInterface
      */
     public function createProductOptionOrderSaver()
@@ -112,13 +102,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionValueReader($this->getQueryContainer());
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
-     */
-    public function createSubtotalWithProductOption()
-    {
-        return new SubtotalWithProductOptions();
-    }
 
     /**
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
