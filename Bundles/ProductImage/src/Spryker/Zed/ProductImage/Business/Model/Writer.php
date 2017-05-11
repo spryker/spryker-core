@@ -76,20 +76,20 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
-     * @return bool
+     * @return void
      */
     public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
+        $productImageSetTransfer->requireIdProductImageSet();
+
         $productImageSetEntity = $this->productImageQueryContainer
             ->queryProductImageSet()
             ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
             ->findOne();
 
         if ($productImageSetEntity) {
-            return $this->deleteProductImageSetEntities([$productImageSetEntity]);
+            $this->deleteProductImageSetEntities([$productImageSetEntity]);
         }
-
-        return false;
     }
 
     /**
@@ -159,22 +159,17 @@ class Writer implements WriterInterface
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSets
      *
-     * @return bool
+     * @return void
      */
     protected function deleteProductImageSetEntities(array $productImageSets)
     {
-        $isSuccessful = true;
-
         foreach ($productImageSets as $productImageSet) {
             foreach ($productImageSet->getSpyProductImageSetToProductImages() as $productImageSetToProductImage) {
                 $this->deleteProductImageSetToProductImage($productImageSetToProductImage);
             }
 
             $productImageSet->delete();
-            $isSuccessful &= $productImageSet->isDeleted();
         }
-
-        return $isSuccessful;
     }
 
     /**

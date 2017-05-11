@@ -558,9 +558,7 @@ class ProductImageFacadeTest extends Test
         $this->assertProductImageSetExists($imageSet->getIdProductImageSet());
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setIdProductImageSet($imageSet->getIdProductImageSet())
-            ->setName(self::SET_NAME)
-            ->setIdProductAbstract($imageSet->getFkProductAbstract());
+            ->setIdProductImageSet($imageSet->getIdProductImageSet());
 
         $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
 
@@ -652,7 +650,7 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
-     * @param $idProductImageSet
+     * @param int $idProductImageSet
      *
      * @return void
      */
@@ -666,7 +664,7 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
-     * @param $idProductImageSet
+     * @param int $idProductImageSet
      *
      * @return void
      */

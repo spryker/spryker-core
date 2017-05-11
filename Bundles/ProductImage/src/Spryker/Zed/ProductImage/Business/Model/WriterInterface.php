@@ -62,7 +62,9 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
-     * @return bool
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
+     * @return void
      */
     public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
