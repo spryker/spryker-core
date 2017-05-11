@@ -19,6 +19,8 @@ interface FlysystemServiceInterface
      * - Get resource metadata
      * - Return resource metadata transfer, null on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -31,6 +33,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Get resource mime type
      * - Return resource mime type, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -45,6 +49,8 @@ interface FlysystemServiceInterface
      * - Get resource timestamp
      * - Return resource timestamp, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -57,6 +63,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Get resource size
      * - Return resource size, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -71,6 +79,8 @@ interface FlysystemServiceInterface
      * - Check if resource has private access rights
      * - Return true if resource has private access rights
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -83,6 +93,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Mark resource with private access rights
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -97,6 +109,8 @@ interface FlysystemServiceInterface
      * - Mark resource with public access rights
      * - Return true on success, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -109,6 +123,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Create directory with its path
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $dirname
@@ -124,6 +140,8 @@ interface FlysystemServiceInterface
      * - Delete empty directory
      * - Return true on success, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $dirname
      *
@@ -136,6 +154,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Copy file, the destination must not exist
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -151,6 +171,8 @@ interface FlysystemServiceInterface
      * - Delete file
      * - Return true on success, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -163,6 +185,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Create a file or update if exists
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -179,6 +203,8 @@ interface FlysystemServiceInterface
      * - Read file
      * - Return file content, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -191,6 +217,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Create a file or update if exists
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $newpath
@@ -205,6 +233,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Update an existing file
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -221,6 +251,8 @@ interface FlysystemServiceInterface
      * - Write a new file
      * - Return true on success, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $content
@@ -235,6 +267,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Create a file or update if exists using stream
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -251,6 +285,8 @@ interface FlysystemServiceInterface
      * - Retrieve stream for a file
      * - Return a read-stream for the path, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -263,6 +299,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Update an existing file using a stream
      * - Return true on success, false on failure
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -279,6 +317,8 @@ interface FlysystemServiceInterface
      * - Write a new file using a stream
      * - Return true on success, false on failure
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      * @param mixed $resource
@@ -294,6 +334,8 @@ interface FlysystemServiceInterface
      * - List contents under a path
      * - Return array of FileSystemResourceTransfer objects located under given path
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $directory
      * @param bool $recursive
@@ -307,6 +349,8 @@ interface FlysystemServiceInterface
      * - Select pre-configured filesystem
      * - Check if resource exists
      * - Return true if resource exist, false otherwise
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path

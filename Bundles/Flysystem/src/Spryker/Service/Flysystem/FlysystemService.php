@@ -18,6 +18,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -32,6 +34,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -48,6 +52,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -62,6 +68,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -78,6 +86,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -92,6 +102,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -108,6 +120,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -122,6 +136,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -138,6 +154,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -152,6 +170,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $directory
@@ -169,6 +189,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $dirname
      * @param array $config
@@ -185,6 +207,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $dirname
      *
@@ -199,6 +223,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -216,6 +242,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -230,6 +258,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -248,6 +278,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $newpath
      * @param string $path
@@ -263,6 +295,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -281,6 +315,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      * @param string $content
@@ -297,6 +333,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -315,6 +353,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param string $filesystemName
      * @param string $path
      *
@@ -329,6 +369,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path
@@ -346,6 +388,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $filesystemName
      * @param string $path

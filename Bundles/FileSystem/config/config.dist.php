@@ -3,12 +3,11 @@
  * Copy over the following configs to your config
  */
 
-use Spryker\Shared\FileSystem\FileSystemConstants;
-use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
 
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'media' => [
@@ -22,7 +21,6 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => 'documents/',
     ],
 ];
-
 
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'media' => [
@@ -42,5 +40,3 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'password' => '..',
     ],
 ];
-
-
