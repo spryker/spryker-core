@@ -10,8 +10,8 @@ namespace Functional\Spryker\Service\Flysystem;
 use Codeception\Configuration;
 use Flysystem\Stub\FlysystemConfigStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
-use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -123,9 +123,9 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testReadWithNonExistingFileShouldThrowException()
+    public function testReadWithNonExistingFileShouldThrowFileSystemException()
     {
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(FileSystemReadException::class);
 
         $contents = $this->flysystemService->read(
             static::FILE_SYSTEM_PRODUCT_IMAGE,
@@ -157,7 +157,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile('Lorem Ipsum');
 
-        $result = $this->flysystemService->put(
+        $this->flysystemService->put(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             static::FILE_CONTENT
@@ -165,7 +165,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
 
         $content = $this->getDocumentFileContent();
 
-        $this->assertTrue($result);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
 
@@ -174,13 +173,15 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testWrite()
     {
-        $result = $this->flysystemService->write(
+        $this->flysystemService->write(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             static::FILE_CONTENT
         );
 
-        $this->assertTrue($result);
+        $file = $this->getLocalDocumentFile();
+        $fileContent = file_get_contents($file);
+        $this->assertSame(static::FILE_CONTENT, $fileContent);
     }
 
     /**
@@ -190,12 +191,13 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile();
 
-        $result = $this->flysystemService->delete(
+        $this->flysystemService->delete(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
 
-        $this->assertTrue($result);
+        $file = $this->getLocalDocumentFile();
+        $this->assertFileNotExists($file);
     }
 
     /**
@@ -205,7 +207,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile();
 
-        $result = $this->flysystemService->rename(
+        $this->flysystemService->rename(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             'foo/' . 'NEW_' . static::FILE_DOCUMENT
@@ -214,7 +216,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertTrue($result);
         $this->assertFileNotExists($originalFile);
         $this->assertFileExists($renamedFile);
     }
@@ -226,7 +227,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile();
 
-        $result = $this->flysystemService->copy(
+        $this->flysystemService->copy(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             'foo/' . 'NEW_' . static::FILE_DOCUMENT
@@ -235,7 +236,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $copiedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertTrue($result);
         $this->assertFileExists($originalFile);
         $this->assertFileExists($copiedFile);
     }
@@ -292,7 +292,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     public function testGetSize()
     {
         $this->createDocumentFile();
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         $sizeExpected = filesize($file);
 
         $size = $this->flysystemService->getSize(
@@ -332,7 +332,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($isPrivate);
 
-        $result = $this->flysystemService->markAsPrivate(
+        $this->flysystemService->markAsPrivate(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
@@ -342,7 +342,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/' . static::FILE_DOCUMENT
         );
 
-        $this->assertTrue($result);
         $this->assertTrue($isPrivate);
     }
 
@@ -368,7 +367,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->createDocumentFile();
 
-        $result = $this->flysystemService->markAsPublic(
+        $this->flysystemService->markAsPublic(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT
         );
@@ -378,7 +377,6 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             'foo/' . static::FILE_DOCUMENT
         );
 
-        $this->assertTrue($result);
         $this->assertFalse($isPrivate);
     }
 
@@ -387,14 +385,12 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateDir()
     {
-        $dirCreated = $this->flysystemService->createDir(
+        $this->flysystemService->createDir(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/bar'
         );
 
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
-
-        $this->assertTrue($dirCreated);
         $this->assertDirectoryExists($dir);
     }
 
@@ -406,12 +402,11 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
         mkdir($dir, 0777, true);
 
-        $result = $this->flysystemService->deleteDir(
+        $this->flysystemService->deleteDir(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/bar'
         );
 
-        $this->assertTrue($result);
         $this->assertDirectoryNotExists($dir);
     }
 
@@ -424,7 +419,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         fwrite($stream, static::FILE_CONTENT);
         rewind($stream);
 
-        $result = $this->flysystemService->putStream(
+        $this->flysystemService->putStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             $stream
@@ -434,10 +429,9 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
@@ -473,7 +467,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->flysystemService->updateStream(
+        $this->flysystemService->updateStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             $stream
@@ -483,10 +477,9 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame('Lorem Ipsum', $content);
     }
@@ -500,7 +493,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->flysystemService->writeStream(
+        $this->flysystemService->writeStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             $stream
@@ -510,10 +503,9 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
@@ -547,7 +539,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
             mkdir($dir, 0777, true);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
 
         $h = fopen($file, 'w');
         fwrite($h, $content ?: static::FILE_CONTENT);
@@ -582,7 +574,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function getDocumentFileContent()
     {
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         if (!is_file($file)) {
             return false;
         }
@@ -595,7 +587,7 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function directoryCleanup()
     {
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getLocalDocumentFile();
         if (is_file($file)) {
             unlink($file);
         }
@@ -644,6 +636,14 @@ class FlysystemServiceTest extends PHPUnit_Framework_TestCase
         if (is_file($file)) {
             unlink($file);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocalDocumentFile()
+    {
+        return $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
     }
 
 }

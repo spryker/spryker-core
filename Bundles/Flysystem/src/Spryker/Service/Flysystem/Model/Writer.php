@@ -9,9 +9,12 @@ namespace Spryker\Service\Flysystem\Model;
 
 use League\Flysystem\AdapterInterface;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
+use Spryker\Shared\Flysystem\OperationHandler\WriteOperationHandlerTrait;
 
 class Writer implements WriterInterface
 {
+
+    use WriteOperationHandlerTrait;
 
     /**
      * @var \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
@@ -30,30 +33,34 @@ class Writer implements WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @return void
      */
     public function markAsPrivate($filesystemName, $path)
     {
-        $visibility = AdapterInterface::VISIBILITY_PRIVATE;
+        $this->handleWriteOperation(function () use ($filesystemName, $path) {
+            $visibility = AdapterInterface::VISIBILITY_PRIVATE;
 
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->setVisibility($path, $visibility);
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->setVisibility($path, $visibility);
+        });
     }
 
     /**
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @return void
      */
     public function markAsPublic($filesystemName, $path)
     {
-        $visibility = AdapterInterface::VISIBILITY_PUBLIC;
+        $this->handleWriteOperation(function () use ($filesystemName, $path) {
+            $visibility = AdapterInterface::VISIBILITY_PUBLIC;
 
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->setVisibility($path, $visibility);
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->setVisibility($path, $visibility);
+        });
     }
 
     /**
@@ -61,26 +68,30 @@ class Writer implements WriterInterface
      * @param string $dirname
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function createDir($filesystemName, $dirname, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->createDir($dirname, $config);
+        $this->handleWriteOperation(function () use ($filesystemName, $dirname, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->createDir($dirname, $config);
+        });
     }
 
     /**
      * @param string $filesystemName
      * @param string $dirname
      *
-     * @return bool
+     * @return void
      */
     public function deleteDir($filesystemName, $dirname)
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->deleteDir($dirname);
+        $this->handleWriteOperation(function () use ($filesystemName, $dirname) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->deleteDir($dirname);
+        });
     }
 
     /**
@@ -88,26 +99,30 @@ class Writer implements WriterInterface
      * @param string $path
      * @param string $newpath
      *
-     * @return bool
+     * @return void
      */
     public function copy($filesystemName, $path, $newpath)
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->copy($path, $newpath);
+        $this->handleWriteOperation(function () use ($filesystemName, $path, $newpath) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->copy($path, $newpath);
+        });
     }
 
     /**
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @return void
      */
     public function delete($filesystemName, $path)
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->delete($path);
+        $this->handleWriteOperation(function () use ($filesystemName, $path) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->delete($path);
+        });
     }
 
     /**
@@ -116,13 +131,15 @@ class Writer implements WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function put($filesystemName, $path, $content, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->put($path, $content, $config);
+        $this->handleWriteOperation(function () use ($filesystemName, $path, $content, $config) {
+            $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->put($path, $content, $config);
+        });
     }
 
     /**
@@ -130,13 +147,15 @@ class Writer implements WriterInterface
      * @param string $newpath
      * @param string $path
      *
-     * @return bool
+     * @return void
      */
     public function rename($filesystemName, $path, $newpath)
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->rename($path, $newpath);
+        $this->handleWriteOperation(function () use ($filesystemName, $path, $newpath) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->rename($path, $newpath);
+        });
     }
 
     /**
@@ -145,13 +164,15 @@ class Writer implements WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function update($filesystemName, $path, $content, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->update($path, $content, $config);
+        $this->handleWriteOperation(function () use ($filesystemName, $path, $content, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->update($path, $content, $config);
+        });
     }
 
     /**
@@ -160,13 +181,15 @@ class Writer implements WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function write($filesystemName, $path, $content, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->write($path, $content, $config);
+        $this->handleWriteOperation(function () use ($filesystemName, $path, $content, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->write($path, $content, $config);
+        });
     }
 
 }

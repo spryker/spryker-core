@@ -14,7 +14,9 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPrivate($filesystemName, $path);
 
@@ -22,7 +24,9 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPublic($filesystemName, $path);
 
@@ -31,7 +35,9 @@ interface WriterInterface
      * @param string $dirname
      * @param array $config
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function createDir($filesystemName, $dirname, array $config = []);
 
@@ -39,7 +45,9 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $dirname
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function deleteDir($filesystemName, $dirname);
 
@@ -48,7 +56,9 @@ interface WriterInterface
      * @param string $path
      * @param string $newpath
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function copy($filesystemName, $path, $newpath);
 
@@ -56,7 +66,9 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function delete($filesystemName, $path);
 
@@ -66,7 +78,9 @@ interface WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function put($filesystemName, $path, $content, array $config = []);
 
@@ -75,7 +89,9 @@ interface WriterInterface
      * @param string $newpath
      * @param string $path
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function rename($filesystemName, $path, $newpath);
 
@@ -85,7 +101,9 @@ interface WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function update($filesystemName, $path, $content, array $config = []);
 
@@ -95,7 +113,9 @@ interface WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function write($filesystemName, $path, $content, array $config = []);
 

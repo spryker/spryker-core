@@ -24,7 +24,9 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer|null
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
      */
     public function getMetadata($filesystemName, $path);
 
@@ -39,7 +41,9 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getMimeType($filesystemName, $path);
 
@@ -54,7 +58,9 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getTimestamp($filesystemName, $path);
 
@@ -69,7 +75,9 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return int|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return int
      */
     public function getSize($filesystemName, $path);
 
@@ -84,9 +92,63 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return bool
      */
     public function isPrivate($filesystemName, $path);
+
+    /**
+     * Specification:
+     * - Select pre-configured filesystem
+     * - Check if resource exists
+     * - Return true if resource exist, false otherwise
+     *
+     * @api
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return bool
+     */
+    public function has($filesystemName, $path);
+
+    /**
+     * Specification:
+     * - Select pre-configured filesystem
+     * - Read file
+     * - Return file content, false on failure
+     *
+     * @api
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
+     */
+    public function read($filesystemName, $path);
+
+    /**
+     * Specification
+     * - Select pre-configured filesystem
+     * - List contents under a path
+     * - Return array of FileSystemResourceTransfer objects located under given path
+     *
+     * @api
+     *
+     * @param string $filesystemName
+     * @param string $directory
+     * @param bool $recursive
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
+     */
+    public function listContents($filesystemName, $directory = '', $recursive = false);
 
     /**
      * Specification:
@@ -98,6 +160,8 @@ interface FlysystemServiceInterface
      *
      * @param string $filesystemName
      * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -113,6 +177,8 @@ interface FlysystemServiceInterface
      *
      * @param string $filesystemName
      * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -130,6 +196,8 @@ interface FlysystemServiceInterface
      * @param string $dirname
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function createDir($filesystemName, $dirname, array $config = []);
@@ -144,6 +212,8 @@ interface FlysystemServiceInterface
      *
      * @param string $filesystemName
      * @param string $dirname
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -161,6 +231,8 @@ interface FlysystemServiceInterface
      * @param string $path
      * @param string $newpath
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function copy($filesystemName, $path, $newpath);
@@ -175,6 +247,8 @@ interface FlysystemServiceInterface
      *
      * @param string $filesystemName
      * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -193,24 +267,11 @@ interface FlysystemServiceInterface
      * @param string $content
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function put($filesystemName, $path, $content, array $config = []);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Read file
-     * - Return file content, false on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return false|string
-     */
-    public function read($filesystemName, $path);
 
     /**
      * Specification:
@@ -224,7 +285,9 @@ interface FlysystemServiceInterface
      * @param string $newpath
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return bool
      */
     public function rename($filesystemName, $path, $newpath);
 
@@ -240,6 +303,8 @@ interface FlysystemServiceInterface
      * @param string $path
      * @param string $content
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -258,6 +323,8 @@ interface FlysystemServiceInterface
      * @param string $content
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function write($filesystemName, $path, $content, array $config = []);
@@ -275,6 +342,8 @@ interface FlysystemServiceInterface
      * @param mixed $resource
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
      * @return bool
      */
     public function putStream($filesystemName, $path, $resource, array $config = []);
@@ -290,7 +359,9 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return mixed|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return mixed
      */
     public function readStream($filesystemName, $path);
 
@@ -306,6 +377,8 @@ interface FlysystemServiceInterface
      * @param string $path
      * @param mixed $resource
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
      * @return bool
      */
@@ -324,39 +397,10 @@ interface FlysystemServiceInterface
      * @param mixed $resource
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
      * @return bool
      */
     public function writeStream($filesystemName, $path, $resource, array $config = []);
-
-    /**
-     * Specification
-     * - Select pre-configured filesystem
-     * - List contents under a path
-     * - Return array of FileSystemResourceTransfer objects located under given path
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $directory
-     * @param bool $recursive
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
-     */
-    public function listContents($filesystemName, $directory = '', $recursive = false);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Check if resource exists
-     * - Return true if resource exist, false otherwise
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return bool
-     */
-    public function has($filesystemName, $path);
 
 }

@@ -23,7 +23,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer|null
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
      */
     public function getMetadata($filesystemName, $path)
     {
@@ -40,7 +42,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getMimeType($filesystemName, $path)
     {
@@ -57,7 +61,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getTimestamp($filesystemName, $path)
     {
@@ -74,7 +80,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return int|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return int
      */
     public function getSize($filesystemName, $path)
     {
@@ -90,6 +98,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $filesystemName
      * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -108,39 +118,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return bool
-     */
-    public function markAsPrivate($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPrivate($filesystemName, $path);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return bool
-     */
-    public function markAsPublic($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createWriter()
-            ->markAsPublic($filesystemName, $path);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -159,7 +137,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return false|string
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function read($filesystemName, $path)
     {
@@ -177,6 +157,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $directory
      * @param bool $recursive
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
      */
     public function listContents($filesystemName, $directory = '', $recursive = false)
@@ -192,8 +174,48 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @api
      *
      * @param string $filesystemName
+     * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return bool
+     */
+    public function markAsPrivate($filesystemName, $path)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->markAsPrivate($filesystemName, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $filesystemName
+     * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return bool
+     */
+    public function markAsPublic($filesystemName, $path)
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->markAsPublic($filesystemName, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $filesystemName
      * @param string $dirname
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -211,6 +233,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $filesystemName
      * @param string $dirname
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -230,6 +254,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $path
      * @param string $newpath
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function copy($filesystemName, $path, $newpath)
@@ -246,6 +272,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $filesystemName
      * @param string $path
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -266,6 +294,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $content
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function put($filesystemName, $path, $content, array $config = [])
@@ -284,7 +314,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $newpath
      * @param string $path
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return bool
      */
     public function rename($filesystemName, $path, $newpath)
     {
@@ -302,6 +334,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $path
      * @param string $content
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
      * @return bool
      */
@@ -322,6 +356,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $content
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
      * @return bool
      */
     public function write($filesystemName, $path, $content, array $config = [])
@@ -341,6 +377,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param mixed $resource
      * @param array $config
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
      * @return bool
      */
     public function putStream($filesystemName, $path, $resource, array $config = [])
@@ -358,7 +396,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @return mixed|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return mixed
      */
     public function readStream($filesystemName, $path)
     {
@@ -376,6 +416,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $path
      * @param mixed $resource
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
      * @return bool
      */
@@ -395,6 +437,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $path
      * @param mixed $resource
      * @param array $config
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
      * @return bool
      */

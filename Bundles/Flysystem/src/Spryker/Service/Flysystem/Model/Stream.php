@@ -8,9 +8,12 @@
 namespace Spryker\Service\Flysystem\Model;
 
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
+use Spryker\Shared\Flysystem\OperationHandler\StreamOperationHandlerTrait;
 
 class Stream implements StreamInterface
 {
+
+    use StreamOperationHandlerTrait;
 
     /**
      * @var \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
@@ -31,26 +34,30 @@ class Stream implements StreamInterface
      * @param mixed $resource
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function putStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->putStream($path, $resource, $config);
+        $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->putStream($path, $resource, $config);
+        });
     }
 
     /**
      * @param string $filesystemName
      * @param string $path
      *
-     * @return mixed|false
+     * @return mixed
      */
     public function readStream($filesystemName, $path)
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->readStream($path);
+        return $this->handleStreamOperation(function () use ($filesystemName, $path) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->readStream($path);
+        });
     }
 
     /**
@@ -59,13 +66,15 @@ class Stream implements StreamInterface
      * @param mixed $resource
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function updateStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->updateStream($path, $resource, $config);
+        $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->updateStream($path, $resource, $config);
+        });
     }
 
     /**
@@ -74,13 +83,15 @@ class Stream implements StreamInterface
      * @param mixed $resource
      * @param array $config
      *
-     * @return bool
+     * @return void
      */
     public function writeStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->filesystemProvider
-            ->getFilesystemByName($filesystemName)
-            ->writeStream($path, $resource, $config);
+        $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
+            return $this->filesystemProvider
+                ->getFilesystemByName($filesystemName)
+                ->writeStream($path, $resource, $config);
+        });
     }
 
 }
