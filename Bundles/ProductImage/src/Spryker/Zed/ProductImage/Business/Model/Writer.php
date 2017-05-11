@@ -88,7 +88,7 @@ class Writer implements WriterInterface
             ->findOne();
 
         if ($productImageSetEntity) {
-            $this->deleteProductImageSetEntities([$productImageSetEntity]);
+            $this->deleteProductImageSetEntity($productImageSetEntity);
         }
     }
 
@@ -164,12 +164,22 @@ class Writer implements WriterInterface
     protected function deleteProductImageSetEntities(array $productImageSets)
     {
         foreach ($productImageSets as $productImageSet) {
-            foreach ($productImageSet->getSpyProductImageSetToProductImages() as $productImageSetToProductImage) {
-                $this->deleteProductImageSetToProductImage($productImageSetToProductImage);
-            }
-
-            $productImageSet->delete();
+            $this->deleteProductImageSetEntity($productImageSet);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSet
+     *
+     * @return void
+     */
+    protected function deleteProductImageSetEntity(SpyProductImageSet $productImageSet)
+    {
+        foreach ($productImageSet->getSpyProductImageSetToProductImages() as $productImageSetToProductImage) {
+            $this->deleteProductImageSetToProductImage($productImageSetToProductImage);
+        }
+
+        $productImageSet->delete();
     }
 
     /**
