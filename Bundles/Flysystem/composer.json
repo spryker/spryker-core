@@ -5,15 +5,15 @@
   "require": {
     "league/flysystem": "^1.0"
   },
-  "suggest": {
-    "spryker/file-system": "FileSystem bundle"
-  },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/file-system": "*",
     "spryker/flysystem-local-filesystem": "*",
     "spryker/kernel": "^3.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/file-system": "FileSystem bundle"
   },
   "autoload": {
     "psr-0": {
