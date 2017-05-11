@@ -270,6 +270,21 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testUpdate()
+    {
+        $this->createDocumentFile('Foo Bar');
+
+        $fileSystemContentTransfer = $this->createContentTransfer();
+
+        $result = $this->fileSystemService->update($fileSystemContentTransfer);
+
+        $this->assertTrue($result);
+        $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
+    }
+
+    /**
+     * @return void
+     */
     public function testCopy()
     {
         $fileSystemCopyTransfer = new FileSystemCopyTransfer();
