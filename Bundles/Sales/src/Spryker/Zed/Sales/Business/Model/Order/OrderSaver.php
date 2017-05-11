@@ -103,14 +103,18 @@ class OrderSaver implements OrderSaverInterface
         $this->hydrateCheckoutResponseTransfer($checkoutResponseTransfer, $quoteTransfer, $salesOrderEntity);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idSalesOrder
+     *
+     * @return void
      */
     protected function saveOrderTotals(QuoteTransfer $quoteTransfer, $idSalesOrder)
     {
-        $taxTotal = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
+        $taxTotal = 0;
+        if ($quoteTransfer->getTotals()->getTaxTotal()) {
+            $taxTotal = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
+        }
 
         $salesOrderTotalsEntity = new SpySalesOrderTotals();
         $salesOrderTotalsEntity->setFkSalesOrder($idSalesOrder);
@@ -118,7 +122,6 @@ class OrderSaver implements OrderSaverInterface
         $salesOrderTotalsEntity->setTaxTotal($taxTotal);
         $salesOrderTotalsEntity->setOrderExpenseTotal($quoteTransfer->getTotals()->getExpenseTotal());
         $salesOrderTotalsEntity->save();
-
     }
 
     /**

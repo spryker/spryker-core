@@ -7,14 +7,6 @@
 
 namespace Spryker\Zed\Calculation;
 
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSubtotalAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemTaxAmountFullAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -61,6 +53,5 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 
 }

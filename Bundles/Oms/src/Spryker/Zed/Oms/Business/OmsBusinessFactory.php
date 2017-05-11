@@ -255,7 +255,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getSalesFacade()
     {
-       return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
     }
 
     /**

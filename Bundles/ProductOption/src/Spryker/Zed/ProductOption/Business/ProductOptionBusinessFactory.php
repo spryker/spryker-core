@@ -102,7 +102,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionValueReader($this->getQueryContainer());
     }
 
-
     /**
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */

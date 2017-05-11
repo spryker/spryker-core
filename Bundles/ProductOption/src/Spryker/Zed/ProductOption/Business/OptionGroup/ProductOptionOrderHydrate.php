@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,12 +9,12 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -56,7 +57,6 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             }
         }
 
-
         return $orderTransfer;
     }
 
@@ -78,7 +78,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     }
 
     /**
-     * @param SpySalesOrderItemOption $orderItemOptionEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
@@ -109,4 +109,5 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
     }
+
 }

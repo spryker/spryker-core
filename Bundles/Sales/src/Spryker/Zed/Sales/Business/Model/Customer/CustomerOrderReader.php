@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CustomerOrderReader implements CustomerOrderReaderInterface

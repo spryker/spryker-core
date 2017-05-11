@@ -11,10 +11,8 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToInvoiceBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
@@ -38,7 +36,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Will be removed in the next major version.
      */
     const FACADE_LOCALE = 'LOCALE_FACADE';
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -215,7 +212,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array|/Spryker/Zed/Sales/Dependency/Plugin/HydrateOrderPluginInterface[]
+     * @return array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
     protected function getHydrateOrderPlugins()
     {

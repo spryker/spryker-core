@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Tax\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 

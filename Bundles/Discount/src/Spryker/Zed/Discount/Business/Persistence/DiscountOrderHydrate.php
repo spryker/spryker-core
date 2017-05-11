@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,7 +10,6 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -82,8 +82,8 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param SpySalesDiscount $salesOrderDiscountEntity
-     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
      */
@@ -163,7 +163,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         OrderTransfer $orderTransfer,
         CalculatedDiscountTransfer $calculatedDiscountTransfer,
         $idSalesOrderItem
-    ){
+    ) {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem() !== $idSalesOrderItem) {
                 continue;
@@ -173,7 +173,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     }
 
     /**
-     * @param SpySalesDiscount $salesOrderDiscountEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
@@ -190,6 +190,5 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
         return $calculatedDiscountTransfer;
     }
-
 
 }

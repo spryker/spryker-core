@@ -76,7 +76,7 @@ interface CalculationFacadeInterface
      * Specification:
      *  - Calculates item prices, based on store tax mode (gross/net)
      *  - Calculates item sum (gross/net) price
-     *  - Calculate  item option sum (gross/net) price
+     *  - Calculate item option sum (gross/net) price
      *
      * @api
      *
@@ -97,7 +97,6 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateProductOptionPriceAggregation(CalculableObjectTransfer $calculableObjectTransfer);
-
 
     /**
      * Specification:
@@ -254,7 +253,6 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer);
-
 
     /**
      * Specification:

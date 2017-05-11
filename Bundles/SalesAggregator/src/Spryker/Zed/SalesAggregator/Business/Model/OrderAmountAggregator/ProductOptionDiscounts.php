@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\ActiveQuery\Criteria;

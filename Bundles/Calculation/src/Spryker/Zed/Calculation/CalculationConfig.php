@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Calculation;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Calculation\PriceTaxMode;
 
 class CalculationConfig extends AbstractBundleConfig
 {

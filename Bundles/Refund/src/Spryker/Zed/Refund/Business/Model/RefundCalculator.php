@@ -9,7 +9,6 @@ namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 
 class RefundCalculator implements RefundCalculatorInterface
@@ -32,8 +31,8 @@ class RefundCalculator implements RefundCalculatorInterface
     public function __construct(
         array $refundCalculatorPlugins,
         RefundToSalesInterface $salesFacade
-    )
-    {
+    ) {
+
         $this->refundCalculatorPlugins = $refundCalculatorPlugins;
         $this->salesFacade = $salesFacade;
     }

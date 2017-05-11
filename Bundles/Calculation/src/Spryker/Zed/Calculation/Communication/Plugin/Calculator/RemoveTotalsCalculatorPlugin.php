@@ -8,10 +8,8 @@
 namespace Spryker\Zed\Calculation\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()

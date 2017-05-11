@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -26,6 +27,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Shared\Price\PriceTaxMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
@@ -155,6 +157,7 @@ class SalesFacadeSaveOrderTest extends Test
         $country->save();
 
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setTaxMode(PriceTaxMode::TAX_MODE_GROSS);
         $billingAddress = new AddressTransfer();
 
         $billingAddress->setIso2Code('ix')
@@ -175,6 +178,8 @@ class SalesFacadeSaveOrderTest extends Test
         $totals = new TotalsTransfer();
         $totals->setGrandTotal(1337)
             ->setSubtotal(337);
+
+        $totals->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
 
         $quoteTransfer->setShippingAddress($shippingAddress)
             ->setBillingAddress($billingAddress)

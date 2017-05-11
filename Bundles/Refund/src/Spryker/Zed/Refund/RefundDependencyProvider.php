@@ -13,7 +13,6 @@ use Spryker\Zed\Refund\Communication\Plugin\RefundableExpenseAmountCalculatorPlu
 use Spryker\Zed\Refund\Communication\Plugin\RefundableItemAmountCalculatorPlugin;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
@@ -27,7 +26,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_ITEM_REFUND_CALCULATOR = 'item refund calculator plugin';
     const PLUGIN_EXPENSE_REFUND_CALCULATOR = 'expense refund calculator plugin';
     const SERVICE_DATE_TIME = 'date formatter';
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -72,7 +70,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -86,7 +83,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

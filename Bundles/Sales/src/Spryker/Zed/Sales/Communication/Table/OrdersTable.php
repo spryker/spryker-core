@@ -13,7 +13,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable

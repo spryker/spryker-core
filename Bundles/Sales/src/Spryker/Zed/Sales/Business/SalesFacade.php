@@ -186,4 +186,5 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderAddressUpdater()
             ->update($addressesTransfer, $idAddress);
     }
+
 }

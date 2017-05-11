@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
@@ -25,7 +25,6 @@ class SumNetPriceCalculator implements CalculatorInterface
     {
         $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
         $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
-
     }
 
     /**
@@ -55,7 +54,6 @@ class SumNetPriceCalculator implements CalculatorInterface
         }
 
         $itemTransfer->setSumNetPrice($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
-
     }
 
     /**
@@ -69,7 +67,7 @@ class SumNetPriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
      * @return void
      */
@@ -83,7 +81,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(\ArrayObject $items)
+    protected function calculateItemGrossAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemNetAmounts($itemTransfer);
@@ -93,4 +91,5 @@ class SumNetPriceCalculator implements CalculatorInterface
             }
         }
     }
+
 }

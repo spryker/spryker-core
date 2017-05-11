@@ -66,7 +66,7 @@ class RefundCalculatorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RefundToSalesInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected function getSalesFacadeMock()
     {
@@ -75,7 +75,6 @@ class RefundCalculatorTest extends PHPUnit_Framework_TestCase
 
         return $salesFacadeMock;
     }
-
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface

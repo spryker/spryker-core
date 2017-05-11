@@ -126,7 +126,6 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
         $this->addSubQueryResultField($subQuery, $resultFieldName);
 
         return $this;
-
     }
 
     /**

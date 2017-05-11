@@ -1,20 +1,15 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceCalculator implements CalculatorInterface
 {
@@ -36,8 +31,8 @@ class PriceCalculator implements CalculatorInterface
     public function __construct(
         array $netPriceCalculators,
         array $grossPriceCalculators
-    )
-    {
+    ) {
+
         $this->netPriceCalculators = $netPriceCalculators;
         $this->grossPriceCalculators = $grossPriceCalculators;
     }

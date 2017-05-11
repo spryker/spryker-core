@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

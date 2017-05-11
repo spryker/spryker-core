@@ -68,7 +68,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->recalculate($calculableObjectTransfer);
     }
 
-
     /**
      * {@inheritdoc}
      *
@@ -192,7 +191,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      */
     public function calculateExpenseTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
-       $this->getFactory()
+        $this->getFactory()
            ->createExpenseTotalCalculator()
            ->recalculate($calculableObjectTransfer);
     }
@@ -292,7 +291,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->createCanceledTotalCalculator()
             ->recalculate($calculableObjectTransfer);
     }
-
 
     /**
      * {@inheritdoc}

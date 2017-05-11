@@ -304,7 +304,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
             ->aggregate($orderTransfer);
     }
 
-
     /**
      * Specification:
      *  - Loops over product option calculated discounts and sums up to order total

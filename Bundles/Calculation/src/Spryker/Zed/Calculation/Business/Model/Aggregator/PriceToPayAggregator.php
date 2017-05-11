@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,8 +9,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Calculation\CalculationTaxMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
@@ -71,12 +70,12 @@ class PriceToPayAggregator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
 
             $expenseTransfer->setUnitPriceToPayAggregation(
-               $this->calculatePriceToPayAggregation(
-                   $expenseTransfer->getUnitPrice(),
-                   $taxMode,
-                   $expenseTransfer->getUnitDiscountAmountAggregation(),
-                   $expenseTransfer->getUnitTaxAmount()
-               )
+                $this->calculatePriceToPayAggregation(
+                    $expenseTransfer->getUnitPrice(),
+                    $taxMode,
+                    $expenseTransfer->getUnitDiscountAmountAggregation(),
+                    $expenseTransfer->getUnitTaxAmount()
+                )
             );
 
             $expenseTransfer->setSumPriceToPayAggregation(
@@ -101,9 +100,10 @@ class PriceToPayAggregator implements CalculatorInterface
     protected function calculatePriceToPayAggregation($price, $taxMode, $discountAmount = 0, $taxAmount = 0)
     {
         if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
-            return $price + $taxAmount - $discountAmount ;
+            return $price + $taxAmount - $discountAmount;
         }
 
         return $price - $discountAmount;
     }
+
 }

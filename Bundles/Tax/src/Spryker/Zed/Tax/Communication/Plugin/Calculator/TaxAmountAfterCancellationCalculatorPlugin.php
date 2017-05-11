@@ -1,15 +1,15 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Tax\Communication\Plugin\Calculator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
@@ -30,4 +30,5 @@ class TaxAmountAfterCancellationCalculatorPlugin extends AbstractPlugin implemen
         $this->getFacade()
             ->calculateTaxAfterCancellation($calculableObjectTransfer);
     }
+
 }

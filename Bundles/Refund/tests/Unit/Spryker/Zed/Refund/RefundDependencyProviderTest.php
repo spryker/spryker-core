@@ -11,7 +11,6 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;

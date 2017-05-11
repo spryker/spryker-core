@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Refund\Persistence\SpyRefund;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;

@@ -11,20 +11,18 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
-use Spryker\Zed\Tax\Business\TaxFacade;
-use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 
 class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
-     * @var SalesAggregatorToTaxInterface
+     * @var \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface
      */
     protected $taxFacade;
 
     /**
-     * @param SalesAggregatorToTaxInterface $taxFacade
+     * @param \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface $taxFacade
      */
     public function __construct(SalesAggregatorToTaxInterface $taxFacade)
     {

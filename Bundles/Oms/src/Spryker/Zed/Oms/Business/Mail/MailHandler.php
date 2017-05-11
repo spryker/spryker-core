@@ -14,7 +14,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderConfirmationMailTypePlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypePlugin;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 
 class MailHandler

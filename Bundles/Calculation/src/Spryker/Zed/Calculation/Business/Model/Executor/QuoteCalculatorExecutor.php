@@ -1,13 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Executor;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -52,7 +52,6 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
 
         return $quoteTransfer;
-
     }
 
     /**
@@ -100,4 +99,5 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 
         return $calculableObjectTransfer;
     }
+
 }

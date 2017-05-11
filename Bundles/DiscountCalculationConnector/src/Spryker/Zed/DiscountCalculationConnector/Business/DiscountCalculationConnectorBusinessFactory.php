@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -15,5 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
 }

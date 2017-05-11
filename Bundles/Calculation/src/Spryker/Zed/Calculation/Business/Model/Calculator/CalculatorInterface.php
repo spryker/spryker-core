@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CalculatorInterface
 {

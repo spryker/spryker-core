@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
@@ -28,7 +28,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -78,7 +78,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      *
      * @return int
      */
@@ -113,7 +113,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      *
      * @return int
      */
@@ -132,4 +132,5 @@ class DiscountAmountAggregator implements CalculatorInterface
 
         return $itemUnitDiscountAmountAggregation;
     }
+
 }

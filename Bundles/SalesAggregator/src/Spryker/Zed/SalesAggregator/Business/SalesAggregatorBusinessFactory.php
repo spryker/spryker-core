@@ -16,6 +16,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\GrandTotalW
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Item;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemDiscounts;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemProductOptionGrossPrice;
+use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemTax;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderDiscounts;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
@@ -28,7 +29,6 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductOpti
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Subtotal;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderTotalsAggregator;
-use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\SalesAggregator\SalesAggregatorDependencyProvider;
 
 /**

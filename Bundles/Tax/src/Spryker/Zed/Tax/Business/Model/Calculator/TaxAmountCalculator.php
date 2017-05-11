@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,8 +9,6 @@ namespace Spryker\Zed\Tax\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Calculation\CalculationTaxMode;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
@@ -17,12 +16,12 @@ class TaxAmountCalculator implements CalculatorInterface
 {
 
     /**
-     * @var AccruedTaxCalculatorInterface
+     * @var \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface
      */
     protected $accruedTaxCalculator;
 
     /**
-     * @param AccruedTaxCalculatorInterface $accruedTaxCalculator
+     * @param \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface $accruedTaxCalculator
      */
     public function __construct(AccruedTaxCalculatorInterface $accruedTaxCalculator)
     {
@@ -53,7 +52,7 @@ class TaxAmountCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateTaxSumAmountForProductOptions(\ArrayObject $items, $taxMode)
+    protected function calculateTaxSumAmountForProductOptions(ArrayObject $items, $taxMode)
     {
         foreach ($items as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -85,7 +84,7 @@ class TaxAmountCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateTaxSumAmountForItems(\ArrayObject $items, $taxMode)
+    protected function calculateTaxSumAmountForItems(ArrayObject $items, $taxMode)
     {
         $this->accruedTaxCalculator->resetRoundingErrorDelta();
 

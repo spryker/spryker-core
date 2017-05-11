@@ -276,6 +276,4 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         return $bundledProducts;
     }
 
-
-
 }

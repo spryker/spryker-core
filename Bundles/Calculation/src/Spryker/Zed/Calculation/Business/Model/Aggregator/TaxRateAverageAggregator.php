@@ -1,17 +1,17 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 
-
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
@@ -30,7 +30,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $taxMode
      *
      * @return void
@@ -56,8 +56,8 @@ class TaxRateAverageAggregator implements CalculatorInterface
     protected function getUnitNetPriceToPayAggregationNetPrice(
         ItemTransfer $itemTransfer,
         $taxMode = CalculationTaxMode::TAX_MODE_GROSS
-    )
-    {
+    ) {
+
         if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
             return $itemTransfer->getUnitPriceToPayAggregation();
         }
@@ -66,7 +66,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer$itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $unitPriceToPayAggregationNetPrice
      *
      * @return float
@@ -78,4 +78,5 @@ class TaxRateAverageAggregator implements CalculatorInterface
             2
         );
     }
+
 }

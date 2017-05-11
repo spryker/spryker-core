@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,6 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DiscountCalculationConnectorFacade extends AbstractFacade implements DiscountCalculationConnectorFacadeInterface
 {
-
-
 }

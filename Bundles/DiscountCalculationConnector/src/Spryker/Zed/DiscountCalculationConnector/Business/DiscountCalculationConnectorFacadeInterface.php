@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
  */
 interface DiscountCalculationConnectorFacadeInterface
 {
-
 }

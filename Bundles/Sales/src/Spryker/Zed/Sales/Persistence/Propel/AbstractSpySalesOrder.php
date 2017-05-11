@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -25,7 +24,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
 
     /**
-     * @return SpySalesOrderTotals
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
      */
     public function getLastOrderTotals()
     {
@@ -36,4 +35,5 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 
         return $salesOrderTotalsEntity;
     }
+
 }

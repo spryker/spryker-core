@@ -135,7 +135,6 @@ interface ProductOptionFacadeInterface
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive);
 
-
     /**
      * Specification:
      *  - Hydrate product options for given order transfer

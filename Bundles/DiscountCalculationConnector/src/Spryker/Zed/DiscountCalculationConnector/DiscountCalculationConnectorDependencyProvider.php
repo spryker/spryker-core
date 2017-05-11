@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DiscountCalculationConnector;
 
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountBridge;
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

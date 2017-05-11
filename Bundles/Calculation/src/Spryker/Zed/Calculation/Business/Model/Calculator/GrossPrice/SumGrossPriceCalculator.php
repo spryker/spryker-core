@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,11 +11,11 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SumGrossPriceCalculator implements CalculatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -24,7 +25,6 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
         $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
-
     }
 
     /**
@@ -54,7 +54,6 @@ class SumGrossPriceCalculator implements CalculatorInterface
         }
 
         $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
-
     }
 
     /**
@@ -68,7 +67,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
      * @return void
      */
@@ -82,7 +81,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(\ArrayObject $items)
+    protected function calculateItemGrossAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemGrossAmounts($itemTransfer);
@@ -92,4 +91,5 @@ class SumGrossPriceCalculator implements CalculatorInterface
             }
         }
     }
+
 }

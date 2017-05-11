@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -20,7 +19,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator implements OrderHydratorInterface
@@ -44,7 +42,7 @@ class OrderHydrator implements OrderHydratorInterface
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param array|HydrateOrderPluginInterface[] $hydrateOrderPlugins
+     * @param array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -362,13 +360,17 @@ class OrderHydrator implements OrderHydratorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
     protected function hydrateOrderTotals(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $salesOrderTotalsEntity = $orderEntity->getLastOrderTotals();
+
+        if (!$salesOrderTotalsEntity) {
+            return;
+        }
 
         $totalsTransfer = new TotalsTransfer();
 

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,25 +15,24 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Calculation\CalculationTaxMode;
-use Spryker\Zed\Calculation\Business\Aggregator\PriceToPayAggregator;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSubtotalAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemTaxAmountFullAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\SubtotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
 
 /**
  * @group Functional
@@ -99,7 +99,6 @@ class CalculationFacadeTest extends Test
         $this->assertSame($calculatedExpenseTransfer->getUnitPrice(), $calculatedExpenseTransfer->getUnitGrossPrice());
         $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Item sum price is not set.');
         $this->assertSame($calculatedExpenseTransfer->getSumPrice(), $calculatedExpenseTransfer->getSumGrossPrice());
-
     }
 
     /**
@@ -130,7 +129,6 @@ class CalculationFacadeTest extends Test
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
 
         $this->assertSame(40, $calculatedItemTransfer->getSumProductOptionPriceAggregation());
-
     }
 
     /**
@@ -185,7 +183,6 @@ class CalculationFacadeTest extends Test
 
         $this->assertSame(80, $calculatedItemTransfer->getSumDiscountAmountAggregation());
         $this->assertSame(20, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
-
     }
 
     /**
@@ -283,7 +280,6 @@ class CalculationFacadeTest extends Test
         $this->assertSame(15, $calculatedItemTransfer->getUnitSubtotalAggregation());
     }
 
-
     /**
      * @return void
      */
@@ -368,7 +364,6 @@ class CalculationFacadeTest extends Test
 
         $calculatedOrderExpenseTotal = $quoteTransfer->getTotals()->getExpenseTotal();
         $this->assertSame(20, $calculatedOrderExpenseTotal);
-
     }
 
     /**
@@ -403,9 +398,7 @@ class CalculationFacadeTest extends Test
 
         $calculatedTotalDiscountAmount = $quoteTransfer->getTotals()->getDiscountTotal();
         $this->assertSame(30, $calculatedTotalDiscountAmount);
-
     }
-
 
     /**
      * @return void
@@ -528,7 +521,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer = new QuoteTransfer();
 
-        $totalsTransfer =new TotalsTransfer();
+        $totalsTransfer = new TotalsTransfer();
 
         $totalsTransfer->setSubtotal(200);
         $totalsTransfer->setExpenseTotal(100);
@@ -543,7 +536,6 @@ class CalculationFacadeTest extends Test
         $this->assertSame(250, $calculatedGrandTotal);
     }
 
-
     /**
      * @param array $calculatorPlugins
      *
@@ -556,7 +548,7 @@ class CalculationFacadeTest extends Test
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
-        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function(Container $container) use ($calculatorPlugins) {
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
 
@@ -565,5 +557,5 @@ class CalculationFacadeTest extends Test
 
         return $calculationFacade;
     }
-}
 
+}
