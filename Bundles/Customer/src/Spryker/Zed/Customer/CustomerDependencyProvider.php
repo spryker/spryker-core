@@ -26,7 +26,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const STORE = 'store';
 
-    const PLUGINS_CUSTOMER_ANONYMIZER = 'plugins customer anonymizer';
+    const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
