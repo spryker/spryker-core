@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\CustomerApi\Persistence;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -23,7 +20,7 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomer()
+    public function queryFind()
     {
         return $this->getFactory()->createCustomerQuery();
     }
@@ -31,46 +28,29 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     /**
      * @api
      *
-     * @param array $fields
+     * @param int $idCustomer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryFind(array $fields = [])
+    public function queryGet($idCustomer)
     {
-        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
+        $query = $this->getFactory()->createCustomerQuery();
 
-        return $query;
+        return $query->filterByIdCustomer($idCustomer);
     }
 
     /**
      * @api
      *
      * @param int $idCustomer
-     * @param array $fields
      *
      * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomerById($idCustomer, array $fields = [])
+    public function queryRemove($idCustomer)
     {
-        $query = $this->mapQueryFields($this->queryCustomer(), $fields);
+        $query = $this->getFactory()->createCustomerQuery();
 
         return $query->filterByIdCustomer($idCustomer);
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $queryCustomer
-     * @param array $fields
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    protected function mapQueryFields(SpyCustomerQuery $queryCustomer, array $fields)
-    {
-        return $this->getFactory()->getApiQueryContainer()->mapFields(
-            SpyCustomerTableMap::TABLE_NAME,
-            SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME),
-            $queryCustomer,
-            $fields
-        );
     }
 
 }

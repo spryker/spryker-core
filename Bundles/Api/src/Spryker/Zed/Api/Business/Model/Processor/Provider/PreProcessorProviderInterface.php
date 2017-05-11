@@ -18,11 +18,6 @@ interface PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildPaginationPreProcessor();
-
-    /**
-     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
-     */
     public function buildPathPreProcessor();
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductApi;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderBridge;
+use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
 
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -18,7 +18,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
-    const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
+    const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +30,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->provideApiQueryContainer($container);
-        $container = $this->providePropelQueryBuilderQueryContainer($container);
+        $container = $this->provideApiQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -45,7 +45,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->provideApiQueryContainer($container);
-        $container = $this->providePropelQueryBuilderQueryContainer($container);
+        $container = $this->provideApiQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -81,10 +81,10 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function providePropelQueryBuilderQueryContainer(Container $container)
+    protected function provideApiQueryBuilderQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
-            return new ProductApiToPropelQueryBuilderBridge($container->getLocator()->propelQueryBuilder()->queryContainer());
+        $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = function (Container $container) {
+            return new ProductApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());
         };
 
         return $container;
