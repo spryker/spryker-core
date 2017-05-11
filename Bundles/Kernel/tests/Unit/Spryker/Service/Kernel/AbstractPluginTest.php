@@ -9,14 +9,13 @@ namespace Unit\Spryker\Service\Kernel;
 
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Unit\Spryker\Service\Kernel\Fixtures\Plugin\FooPlugin;
 
 /**
  * @group Unit
  * @group Spryker
- * @group Client
+ * @group Service
  * @group Kernel
  * @group AbstractPluginTest
  */
