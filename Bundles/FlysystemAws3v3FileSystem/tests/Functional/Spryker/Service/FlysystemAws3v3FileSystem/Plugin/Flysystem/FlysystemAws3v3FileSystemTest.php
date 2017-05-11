@@ -45,7 +45,7 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function SKIP_testLocalFilesystemBuilderPlugin()
+    public function testLocalFilesystemBuilderPlugin()
     {
         $localFilesystemBuilderPlugin = new Aws3v3FilesystemBuilderPlugin();
 
@@ -54,7 +54,7 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
         $adapterConfigTransfer->setPath(static::PATH_DOCUMENT);
 
         $configTransfer = new FlysystemConfigTransfer();
-        $configTransfer->setName('LocalDocumentFilesystem');
+        $configTransfer->setName('aws3v3');
         $configTransfer->setType(Aws3v3FilesystemBuilderPlugin::class);
         $configTransfer->setAdapterConfig($adapterConfigTransfer->modifiedToArray());
 
@@ -66,7 +66,7 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function SKIP_testLocalFilesystemBuilderPluginShouldAcceptType()
+    public function testLocalFilesystemBuilderPluginShouldAcceptType()
     {
         $localFilesystemBuilderPlugin = new Aws3v3FilesystemBuilderPlugin();
 
@@ -75,7 +75,7 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
         $adapterConfigTransfer->setPath(static::PATH_DOCUMENT);
 
         $configTransfer = new FlysystemConfigTransfer();
-        $configTransfer->setName('LocalDocumentFilesystem');
+        $configTransfer->setName('aws3v3');
         $configTransfer->setType(Aws3v3FilesystemBuilderPlugin::class);
         $configTransfer->setAdapterConfig($adapterConfigTransfer->modifiedToArray());
 

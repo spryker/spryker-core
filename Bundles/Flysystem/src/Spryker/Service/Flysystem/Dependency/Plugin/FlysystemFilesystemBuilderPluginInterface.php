@@ -13,6 +13,11 @@ interface FlysystemFilesystemBuilderPluginInterface
 {
 
     /**
+     * Specification:
+     *  - Create a Filesystem with parameters from FlysystemConfigTransfer
+     *  - Pass thephpleague/flysystem related plugins under $flysystemPluginCollection
+     *  - Return class implementing of \League\Flysystem\FilesystemInterface
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
@@ -23,6 +28,9 @@ interface FlysystemFilesystemBuilderPluginInterface
     public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = []);
 
     /**
+     * Specification:
+     *  - Returns true if builder type is accepted
+     *
      * @api
      *
      * @param string $type
