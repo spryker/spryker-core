@@ -1,6 +1,6 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'View pages' | trans %}
+{% set widget_title = 'Overview of CMS Pages' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -11,6 +11,9 @@
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of CMS pages' | trans}}</h5>
+        {%- endblock %}
         {% block widget_content %}
             {{ pages | raw }}
         {% endblock %}

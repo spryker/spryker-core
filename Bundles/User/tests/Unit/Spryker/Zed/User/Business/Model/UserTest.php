@@ -80,6 +80,10 @@ class UserTest extends PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($userTransfer));
 
+        $sessionClient->expects($this->once())
+            ->method('has')
+            ->will($this->returnValue(true));
+
         $userFromSession = $userModel->getCurrentUser();
         $this->assertEquals($userTransfer, $userFromSession);
         $this->assertNotSame($userTransfer, $userFromSession);
@@ -99,7 +103,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         );
 
         $sessionClient->expects($this->once())
-            ->method('get')
+            ->method('has')
             ->will($this->returnValue(null));
 
         $hasCurrentUser = $userModel->hasCurrentUser();
@@ -130,7 +134,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set'])->getMock();
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
 
         return $sessionClient;
     }

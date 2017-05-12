@@ -29,23 +29,26 @@ class ViewPageController extends AbstractController
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
-        $cmsPageTransfer = $this->getFactory()
+        $cmsVersionTransfer = $this->getFactory()
             ->getCmsFacade()
-            ->findCmsPageById($idCmsPage);
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
 
-        if ($cmsPageTransfer === null) {
+        $cmsLocalizedPageEntity = $this->getFactory()->getCmsQueryContainer()->queryCmsPageLocalizedAttributesByFkPage($idCmsPage)->findOne();
+
+        if ($cmsVersionTransfer === null) {
             throw new NotFoundHttpException(
-                sprintf('Cms page with id "%d" not found.', $idCmsPage)
+                sprintf('Cms published page with id "%d" not found.', $idCmsPage)
             );
         }
 
-        $cmsGlossaryTransfer = $this->getFactory()
-            ->getCmsFacade()
-            ->findPageGlossaryAttributes($idCmsPage);
+        $cmsVersionDataHelper = $this->getFactory()->createCmsVersionDataHelper();
+        $cmsVersionDataTransfer = $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsVersionTransfer);
 
         return [
-            'cmsPage' => $cmsPageTransfer,
-            'cmsGlossary' => $cmsGlossaryTransfer,
+            'cmsPage' => $cmsVersionDataTransfer->getCmsPage(),
+            'cmsGlossary' => $cmsVersionDataTransfer->getCmsGlossary(),
+            'cmsVersion' => $cmsVersionTransfer,
+            'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
         ];
     }
 

@@ -7,8 +7,12 @@
 namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
+
+    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,20 +49,12 @@ class CreatePageController extends AbstractController
 
         if ($pageForm->isSubmitted()) {
             if ($pageForm->isValid()) {
-                $idCmsPage = $this->getFactory()
-                    ->getCmsFacade()
-                    ->createPage($pageForm->getData());
-
-                $redirectUrl = Url::generate(
-                    '/cms-gui/create-glossary/index',
-                    [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
-                )->build();
-
-                $this->addSuccessMessage('Page successfully created.');
-
-                return $this->redirectResponse($redirectUrl);
+                $redirectUrl = $this->createPage($pageForm);
+                if (!empty($redirectUrl)) {
+                    return $this->redirectResponse($redirectUrl);
+                }
             } else {
-                $this->addErrorMessage('Invalid data provided.');
+                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
             }
         }
 
@@ -65,6 +63,41 @@ class CreatePageController extends AbstractController
             'pageForm' => $pageForm->createView(),
             'availableLocales' => $availableLocales,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $pageForm
+     *
+     * @return string|null
+     */
+    protected function createPage(FormInterface $pageForm)
+    {
+        try {
+            $idCmsPage = $this->getFactory()
+                ->getCmsFacade()
+                ->createPage($pageForm->getData());
+
+            $this->addSuccessMessage('Page successfully created.');
+
+            return Url::generate(
+                '/cms-gui/create-glossary/index',
+                [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+            )
+                ->build();
+        } catch (TemplateFileNotFoundException $exception) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
+            $error = $this->createTemplateErrorForm();
+            $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
+        }
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormError
+     */
+    protected function createTemplateErrorForm()
+    {
+        return new FormError("Selected template doesn't exist anymore");
     }
 
 }

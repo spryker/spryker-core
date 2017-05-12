@@ -55,6 +55,13 @@ interface KeyManagerInterface
     public function deleteKey($keyName);
 
     /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteKeys(array $idKeys);
+
+    /**
      * @param string $keyName
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException

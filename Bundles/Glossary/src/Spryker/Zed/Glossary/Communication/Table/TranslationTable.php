@@ -17,12 +17,14 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Glossary\Communication\Controller\EditController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class TranslationTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
     const URL_GLOSSARY_EDIT = '/glossary/edit';
+    const GENERATED_CMS = 'generated.cms%';
 
     /**
      * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -130,6 +132,7 @@ class TranslationTable extends AbstractTable
     {
         $query = $this->glossaryKeyQuery
             ->leftJoinSpyGlossaryTranslation()
+            ->filterByKey(self::GENERATED_CMS, Criteria::NOT_ILIKE)
             ->groupByIdGlossaryKey();
 
         $lines = $this->runQuery($query, $config);

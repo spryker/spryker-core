@@ -121,7 +121,7 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $page
      *
-     * @return string
+     * @return string|null
      */
     protected function getUri(array $page)
     {
@@ -133,7 +133,7 @@ class MenuFormatter implements MenuFormatterInterface
         $controller = $this->getPageController($page, $action);
 
         if (!isset($page[self::BUNDLE])) {
-            return '';
+            return null;
         }
 
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);

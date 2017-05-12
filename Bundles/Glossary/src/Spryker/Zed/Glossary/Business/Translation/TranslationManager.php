@@ -335,6 +335,24 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys)
+    {
+        $translations = $this->glossaryQueryContainer
+            ->queryGlossaryTranslationByFkGlossaryKeys($idKeys)
+            ->find();
+
+        foreach ($translations as $translation) {
+            $this->insertDeletedTouchRecord($translation->getPrimaryKey());
+        }
+
+        $translations->delete();
+    }
+
+    /**
      * @param string $keyName
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer

@@ -116,4 +116,18 @@ interface CmsToGlossaryInterface
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 
+    /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys);
+
+    /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteKeys(array $idKeys);
+
 }

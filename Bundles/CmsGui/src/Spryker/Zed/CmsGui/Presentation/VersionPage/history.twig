@@ -1,0 +1,81 @@
+{% extends '@Cms/Layout/layout.twig' %}
+
+{% set pageName = '' %}
+{% for pageAttribute in cmsCurrentPage.pageAttributes %}
+    {% if  pageAttribute.localeName == 'en_US' %}
+        {% set pageName = pageAttribute.name  %}
+    {% endif %}
+{% endfor %}
+
+
+{% set widget_title = 'Version History: ' | trans ~ pageName %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+
+    {% set redirectUrl = url('/cms-gui/version-page/history', {'id-cms-page' : cmsCurrentPage.fkPage }) %}
+    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% set hasTemplateDiff = false %}
+    {% if cmsTargetPage is not null %}
+        {% set hasTemplateDiff = cmsCurrentPage.fkTemplate == cmsTargetPage.fkTemplate ? true : false %}
+    {% endif %}
+    <div id="version-diff" class="row">
+        <div class="col-lg-6 current-version">
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Current Version' }  %}
+                {% block widget_content %}
+                    <div class="current-version-box">
+                            <b>{{ cmsVersion.versionName }}</b> published on <b>{{ cmsVersion.createdAt|date }}</b>
+                            {% if cmsVersion.firstName is not null %}
+                                by <b>{{ cmsVersion.firstName ~ ' ' ~ cmsVersion.lastName }}</b>
+                            {% endif %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsCurrentPage, 'cmsGlossary' : cmsCurrentGlossary , 'prettyDiffClass' : 'original', 'versionDiffClass' : 'original'}) }}
+        </div>
+        <div class="col-lg-6">
+            {{ form_start(versionForm) }}
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Selected Version' }  %}
+                    {% block widget_header_content -%}
+                        <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-view" value="{{ 'Rollback to Selected Version' | trans }}" name="rollback"/>
+                    {%- endblock %}
+                    {% block widget_content %}
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <p>
+                                    {{ form_widget(versionForm.version) }}
+                                </p>
+                            </div>
+                            <div class="col-lg-2 text-right">
+                                <input type="submit" id="submit-cms" class="btn btn-sm btn-outline btn-edit" value="{{ 'Compare' | trans }}" name="compare" />
+                            </div>
+                        </div>
+                        {{ form_errors(versionForm.version) }}
+                    {% endblock %}
+                {% endembed %}
+            {{ form_end(versionForm) }}
+
+            {% if (cmsTargetPage is not null) %}
+                {{ include ('@CmsGui/_template/version-history.twig', {'cmsPage' : cmsTargetPage, 'cmsGlossary' : cmsTargetGlossary, 'prettyDiffClass' : 'changed diff', 'versionDiffClass' : 'diff'}) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+{% endblock %}
+
