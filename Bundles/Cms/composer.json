@@ -1,10 +1,7 @@
 {
   "name": "spryker/cms",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Cms bundle",
+  "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",
     "spryker/glossary": "^3.1.0",
@@ -26,8 +23,17 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "Cms bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -37,11 +43,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }
