@@ -178,11 +178,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function markAsPrivate($filesystemName, $path)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->markAsPrivate($filesystemName, $path);
     }
@@ -197,11 +197,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function markAsPublic($filesystemName, $path)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->markAsPublic($filesystemName, $path);
     }
@@ -217,11 +217,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function createDir($filesystemName, $dirname, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->createDir($filesystemName, $dirname, $config);
     }
@@ -236,11 +236,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function deleteDir($filesystemName, $dirname)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->deleteDir($filesystemName, $dirname);
     }
@@ -256,11 +256,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function copy($filesystemName, $path, $newpath)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->copy($filesystemName, $path, $newpath);
     }
@@ -275,11 +275,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function delete($filesystemName, $path)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->delete($filesystemName, $path);
     }
@@ -296,11 +296,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function put($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->put($filesystemName, $path, $content, $config);
     }
@@ -316,11 +316,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function rename($filesystemName, $path, $newpath)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->rename($filesystemName, $path, $newpath);
     }
@@ -337,11 +337,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function update($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->update($filesystemName, $path, $content, $config);
     }
@@ -358,11 +358,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function write($filesystemName, $path, $content, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->write($filesystemName, $path, $content, $config);
     }
@@ -379,11 +379,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function putStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createStream()
             ->putStream($filesystemName, $path, $resource, $config);
     }
@@ -419,11 +419,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function updateStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createStream()
             ->updateStream($filesystemName, $path, $resource, $config);
     }
@@ -440,11 +440,11 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function writeStream($filesystemName, $path, $resource, array $config = [])
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createStream()
             ->writeStream($filesystemName, $path, $resource, $config);
     }

@@ -163,7 +163,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function markAsPrivate($filesystemName, $path);
 
@@ -180,7 +180,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function markAsPublic($filesystemName, $path);
 
@@ -198,7 +198,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function createDir($filesystemName, $dirname, array $config = []);
 
@@ -215,7 +215,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function deleteDir($filesystemName, $dirname);
 
@@ -233,7 +233,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function copy($filesystemName, $path, $newpath);
 
@@ -250,7 +250,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function delete($filesystemName, $path);
 
@@ -269,7 +269,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function put($filesystemName, $path, $content, array $config = []);
 
@@ -287,7 +287,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function rename($filesystemName, $path, $newpath);
 
@@ -306,7 +306,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function update($filesystemName, $path, $content, array $config = []);
 
@@ -325,7 +325,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
-     * @return bool
+     * @return void
      */
     public function write($filesystemName, $path, $content, array $config = []);
 
@@ -344,7 +344,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function putStream($filesystemName, $path, $resource, array $config = []);
 
@@ -380,7 +380,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function updateStream($filesystemName, $path, $resource, array $config = []);
 
@@ -399,7 +399,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
-     * @return bool
+     * @return void
      */
     public function writeStream($filesystemName, $path, $resource, array $config = []);
 

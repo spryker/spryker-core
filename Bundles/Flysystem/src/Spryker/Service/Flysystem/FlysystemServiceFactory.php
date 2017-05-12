@@ -8,7 +8,7 @@
 namespace Spryker\Service\Flysystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemInterface;
 use Spryker\Service\Flysystem\Exception\BuilderNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProvider;
 use Spryker\Service\Flysystem\Model\Reader;
@@ -139,7 +139,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
      *
      * @throws \Spryker\Service\Flysystem\Exception\BuilderNotFoundException
      *
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\FilesystemInterface
      */
     protected function buildFilesystemByType(FlysystemConfigTransfer $configTransfer)
     {
@@ -173,12 +173,12 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @param \League\Flysystem\Filesystem $filesystem
+     * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
      *
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\FilesystemInterface
      */
-    protected function provideFlysystemPlugins(Filesystem $filesystem, array $flysystemPluginCollection)
+    protected function provideFlysystemPlugins(FilesystemInterface $filesystem, array $flysystemPluginCollection)
     {
         foreach ($flysystemPluginCollection as $plugin) {
             $filesystem->addPlugin($plugin);
