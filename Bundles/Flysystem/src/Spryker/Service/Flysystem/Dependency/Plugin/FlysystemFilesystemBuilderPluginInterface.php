@@ -23,7 +23,7 @@ interface FlysystemFilesystemBuilderPluginInterface
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
      *
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\FilesystemInterface
      */
     public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = []);
 
