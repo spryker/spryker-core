@@ -31,17 +31,17 @@ class FileSystemStream implements FileSystemStreamInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->putStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemStream->putStream($fileSystemStreamTransfer, $stream);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return mixed|false
+     * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
@@ -52,22 +52,22 @@ class FileSystemStream implements FileSystemStreamInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->updateStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemStream->updateStream($fileSystemStreamTransfer, $stream);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->fileSystemStream->writeStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemStream->writeStream($fileSystemStreamTransfer, $stream);
     }
 
 }

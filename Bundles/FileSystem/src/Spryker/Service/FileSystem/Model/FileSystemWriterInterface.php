@@ -21,70 +21,90 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function put(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function update(FileSystemContentTransfer $fileSystemContentTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer);
 

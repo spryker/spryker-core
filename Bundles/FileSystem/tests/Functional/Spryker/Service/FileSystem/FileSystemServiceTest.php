@@ -21,8 +21,8 @@ use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use League\Flysystem\FileNotFoundException;
 use PHPUnit_Framework_TestCase;
+use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
@@ -157,9 +157,9 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $fileSystemQueryTransfer->setPath('invalid filename');
 
-        $result = $this->fileSystemService->has($fileSystemQueryTransfer);
+        $has = $this->fileSystemService->has($fileSystemQueryTransfer);
 
-        $this->assertFalse($result);
+        $this->assertFalse($has);
     }
 
     /**
@@ -170,9 +170,9 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $result = $this->fileSystemService->has($fileSystemQueryTransfer);
+        $has = $this->fileSystemService->has($fileSystemQueryTransfer);
 
-        $this->assertTrue($result);
+        $this->assertTrue($has);
     }
 
     /**
@@ -183,11 +183,9 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $fileSystemQueryTransfer->setPath('invalid path');
 
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(FileSystemReadException::class);
 
-        $contents = $this->fileSystemService->read($fileSystemQueryTransfer);
-
-        $this->assertNull($contents);
+        $this->fileSystemService->read($fileSystemQueryTransfer);
     }
 
     /**
@@ -211,9 +209,8 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemContentTransfer = $this->createContentTransfer();
         $this->createDocumentFile('Lorem Ipsum');
 
-        $result = $this->fileSystemService->put($fileSystemContentTransfer);
+        $this->fileSystemService->put($fileSystemContentTransfer);
 
-        $this->assertTrue($result);
         $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
@@ -224,9 +221,8 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     {
         $fileSystemContentTransfer = $this->createContentTransfer();
 
-        $result = $this->fileSystemService->write($fileSystemContentTransfer);
+        $this->fileSystemService->write($fileSystemContentTransfer);
 
-        $this->assertTrue($result);
         $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
@@ -238,12 +234,11 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemDeleteTransfer = new FileSystemDeleteTransfer();
         $fileSystemDeleteTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
         $fileSystemDeleteTransfer->setPath('foo/' . static::FILE_DOCUMENT);
-
         $this->createDocumentFile();
 
-        $result = $this->fileSystemService->delete($fileSystemDeleteTransfer);
+        $this->fileSystemService->delete($fileSystemDeleteTransfer);
 
-        $this->assertTrue($result);
+        $this->assertFileNotExists($this->getDocumentFIleName());
     }
 
     /**
@@ -257,12 +252,11 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemRenameTransfer->setNewPath('foo/NEW_' . static::FILE_DOCUMENT);
         $this->createDocumentFile();
 
-        $result = $this->fileSystemService->rename($fileSystemRenameTransfer);
+        $this->fileSystemService->rename($fileSystemRenameTransfer);
 
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertTrue($result);
         $this->assertFileNotExists($originalFile);
         $this->assertFileExists($renamedFile);
     }
@@ -273,12 +267,10 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
     public function testUpdate()
     {
         $this->createDocumentFile('Foo Bar');
-
         $fileSystemContentTransfer = $this->createContentTransfer();
 
-        $result = $this->fileSystemService->update($fileSystemContentTransfer);
+        $this->fileSystemService->update($fileSystemContentTransfer);
 
-        $this->assertTrue($result);
         $this->assertSame(static::FILE_CONTENT, $this->getDocumentFileContent());
     }
 
@@ -291,15 +283,13 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemCopyTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
         $fileSystemCopyTransfer->setSourcePath('foo/' . static::FILE_DOCUMENT);
         $fileSystemCopyTransfer->setDestinationPath('foo/NEW_' . static::FILE_DOCUMENT);
-
         $this->createDocumentFile();
 
-        $result = $this->fileSystemService->copy($fileSystemCopyTransfer);
+        $this->fileSystemService->copy($fileSystemCopyTransfer);
 
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $copiedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertTrue($result);
         $this->assertFileExists($originalFile);
         $this->assertFileExists($copiedFile);
     }
@@ -353,7 +343,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         $sizeExpected = filesize($file);
 
         $size = $this->fileSystemService->getSize($fileSystemQueryTransfer);
@@ -418,10 +408,9 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemCreateDirectoryTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
         $fileSystemCreateDirectoryTransfer->setPath('/foo/bar');
 
-        $result = $this->fileSystemService->createDirectory($fileSystemCreateDirectoryTransfer);
+        $this->fileSystemService->createDirectory($fileSystemCreateDirectoryTransfer);
 
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar/';
-        $this->assertTrue($result);
         $this->assertDirectoryExists($dir);
     }
 
@@ -437,9 +426,8 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
         mkdir($dir, 0777, true);
 
-        $result = $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
+        $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
 
-        $this->assertTrue($result);
         $this->assertDirectoryNotExists($dir);
     }
 
@@ -454,16 +442,15 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         fwrite($stream, static::FILE_CONTENT);
         rewind($stream);
 
-        $result = $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
 
         if (is_resource($stream)) {
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
@@ -498,16 +485,15 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->fileSystemService->updateStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemService->updateStream($fileSystemStreamTransfer, $stream);
 
         if (is_resource($stream)) {
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame('Lorem Ipsum', $content);
     }
@@ -522,16 +508,15 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $result = $this->fileSystemService->writeStream($fileSystemStreamTransfer, $stream);
+        $this->fileSystemService->writeStream($fileSystemStreamTransfer, $stream);
 
         if (is_resource($stream)) {
             fclose($stream);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         $content = file_get_contents($file);
 
-        $this->assertTrue($result);
         $this->assertFileExists($file);
         $this->assertSame(static::FILE_CONTENT, $content);
     }
@@ -566,7 +551,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
             mkdir($dir, 0777, true);
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
 
         $h = fopen($file, 'w');
         fwrite($h, $content ?: static::FILE_CONTENT);
@@ -601,7 +586,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function getDocumentFileContent()
     {
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         if (!is_file($file)) {
             return false;
         }
@@ -614,7 +599,7 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function directoryCleanup()
     {
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
+        $file = $this->getDocumentFIleName();
         if (is_file($file)) {
             unlink($file);
         }
@@ -712,6 +697,14 @@ class FileSystemServiceTest extends PHPUnit_Framework_TestCase
         $fileSystemStreamTransfer->setPath('foo/' . static::FILE_DOCUMENT);
 
         return $fileSystemStreamTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDocumentFIleName()
+    {
+        return $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
     }
 
 }

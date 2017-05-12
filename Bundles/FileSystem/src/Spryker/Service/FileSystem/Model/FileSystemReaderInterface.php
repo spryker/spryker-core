@@ -16,6 +16,8 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
@@ -23,12 +25,34 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
+     */
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return int
+     */
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -37,36 +61,28 @@ interface FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
-     */
-    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return int|false
-     */
-    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return bool
-     */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return string|false
+     * @return string
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
 }

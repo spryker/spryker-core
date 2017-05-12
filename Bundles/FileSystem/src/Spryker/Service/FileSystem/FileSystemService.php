@@ -33,6 +33,8 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
@@ -49,7 +51,9 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -65,7 +69,9 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -81,7 +87,9 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return int|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return int
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -96,6 +104,8 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -113,11 +123,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->markAsPrivate($fileSystemVisibilityTransfer);
     }
@@ -129,11 +141,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->markAsPublic($fileSystemVisibilityTransfer);
     }
@@ -145,11 +159,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->createDirectory($fileSystemCreateDirectoryTransfer);
     }
@@ -161,11 +177,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->deleteDirectory($fileSystemDeleteDirectoryTransfer);
     }
@@ -177,11 +195,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->copy($fileSystemCopyTransfer);
     }
@@ -193,11 +213,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->delete($fileSystemDeleteTransfer);
     }
@@ -209,11 +231,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->put($fileSystemContentTransfer);
     }
@@ -225,7 +249,9 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -241,11 +267,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->rename($fileSystemRenameTransfer);
     }
@@ -257,11 +285,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->update($fileSystemContentTransfer);
     }
@@ -273,11 +303,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemWriter()
             ->write($fileSystemContentTransfer);
     }
@@ -290,11 +322,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemStream()
             ->putStream($fileSystemStreamTransfer, $stream);
     }
@@ -306,7 +340,9 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return mixed|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
@@ -323,11 +359,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemStream()
             ->updateStream($fileSystemStreamTransfer, $stream);
     }
@@ -340,11 +378,13 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createFileSystemStream()
             ->writeStream($fileSystemStreamTransfer, $stream);
     }
@@ -355,6 +395,8 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
@@ -371,6 +413,8 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */

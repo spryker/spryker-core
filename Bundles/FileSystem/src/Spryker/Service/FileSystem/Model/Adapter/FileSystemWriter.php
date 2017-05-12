@@ -36,101 +36,101 @@ class FileSystemWriter implements FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @return void
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->fileSystemWriter->markAsPrivate($fileSystemVisibilityTransfer);
+        $this->fileSystemWriter->markAsPrivate($fileSystemVisibilityTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @return void
      */
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->fileSystemWriter->markAsPublic($fileSystemVisibilityTransfer);
+        $this->fileSystemWriter->markAsPublic($fileSystemVisibilityTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return bool
+     * @return void
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
-        return $this->fileSystemWriter->createDirectory($fileSystemCreateDirectoryTransfer);
+        $this->fileSystemWriter->createDirectory($fileSystemCreateDirectoryTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @return bool
+     * @return void
      */
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
-        return $this->fileSystemWriter->deleteDirectory($fileSystemDeleteDirectoryTransfer);
+        $this->fileSystemWriter->deleteDirectory($fileSystemDeleteDirectoryTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return bool
+     * @return void
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
-        return $this->fileSystemWriter->copy($fileSystemCopyTransfer);
+        $this->fileSystemWriter->copy($fileSystemCopyTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return bool
+     * @return void
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
-        return $this->fileSystemWriter->delete($fileSystemDeleteTransfer);
+        $this->fileSystemWriter->delete($fileSystemDeleteTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->fileSystemWriter->put($fileSystemContentTransfer);
+        $this->fileSystemWriter->put($fileSystemContentTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return bool
+     * @return void
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
-        return $this->fileSystemWriter->rename($fileSystemRenameTransfer);
+        $this->fileSystemWriter->rename($fileSystemRenameTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->fileSystemWriter->update($fileSystemContentTransfer);
+        $this->fileSystemWriter->update($fileSystemContentTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->fileSystemWriter->write($fileSystemContentTransfer);
+        $this->fileSystemWriter->write($fileSystemContentTransfer);
     }
 
 }

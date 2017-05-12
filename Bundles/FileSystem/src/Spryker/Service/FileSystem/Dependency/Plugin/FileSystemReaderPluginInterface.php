@@ -22,6 +22,8 @@ interface FileSystemReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
@@ -35,33 +37,24 @@ interface FileSystemReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * Specification:
-     * - Check if resource has private access rights
-     * - Return true if resource has private access rights
+     * - Get resource timestamp
+     * - Return resource timestamp, false on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return bool
-     */
-    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * Specification:
-     * - Mark resource with private access rights
-     * - Return true on success, false on failure
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return string|false
+     * @return string
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -74,22 +67,26 @@ interface FileSystemReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return int|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return int
      */
     public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * Specification:
-     * - Check if resource exists
-     * - Return true if resource exist, false otherwise
+     * - Check if resource has private access rights
+     * - Return true if resource has private access rights
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return bool
      */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * Specification:
@@ -100,7 +97,9 @@ interface FileSystemReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -113,8 +112,25 @@ interface FileSystemReaderPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
+
+    /**
+     * Specification:
+     * - Check if resource exists
+     * - Return true if resource exist, false otherwise
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
 }

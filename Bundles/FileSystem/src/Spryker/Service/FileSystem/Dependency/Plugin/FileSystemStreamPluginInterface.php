@@ -13,12 +13,18 @@ interface FileSystemStreamPluginInterface
 {
 
     /**
+     * Specification:
+     * - Create a file or update if exists using stream
+     * - Return true on success, false on failure
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
@@ -31,7 +37,9 @@ interface FileSystemStreamPluginInterface
      *
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return mixed|false
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
 
@@ -45,7 +53,9 @@ interface FileSystemStreamPluginInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 
@@ -59,7 +69,9 @@ interface FileSystemStreamPluginInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     *
+     * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
 

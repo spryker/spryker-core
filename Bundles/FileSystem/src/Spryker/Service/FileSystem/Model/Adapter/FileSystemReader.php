@@ -41,11 +41,31 @@ class FileSystemReader implements FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->fileSystemReader->getMimetype($fileSystemQueryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return string
+     */
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->fileSystemReader->getTimestamp($fileSystemQueryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return int
+     */
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->fileSystemReader->getSize($fileSystemQueryTransfer);
     }
 
     /**
@@ -61,37 +81,7 @@ class FileSystemReader implements FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
-     */
-    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->fileSystemReader->getTimestamp($fileSystemQueryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return int|false
-     */
-    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->fileSystemReader->getSize($fileSystemQueryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return bool
-     */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->fileSystemReader->has($fileSystemQueryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return false|string
+     * @return string
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -106,6 +96,16 @@ class FileSystemReader implements FileSystemReaderInterface
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {
         return $this->fileSystemReader->listContents($fileSystemListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->fileSystemReader->has($fileSystemQueryTransfer);
     }
 
 }
