@@ -24,7 +24,7 @@ interface FileSystemReaderPluginInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
@@ -90,6 +90,21 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
+     * - Check if resource exists
+     * - Return true if resource exist, false otherwise
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return bool
+     */
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
+
+    /**
+     * Specification:
      * - Read file
      * - Return file content, false on failure
      *
@@ -117,20 +132,5 @@ interface FileSystemReaderPluginInterface
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
-
-    /**
-     * Specification:
-     * - Check if resource exists
-     * - Return true if resource exist, false otherwise
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return bool
-     */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
 }

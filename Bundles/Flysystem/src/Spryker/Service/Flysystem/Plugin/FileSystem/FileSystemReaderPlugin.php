@@ -23,7 +23,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -41,11 +41,37 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
+     * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->getService()->getMimeType(
+            $fileSystemQueryTransfer->getFileSystemName(),
+            $fileSystemQueryTransfer->getPath()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return string
+     */
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->getService()->getTimestamp(
+            $fileSystemQueryTransfer->getFileSystemName(),
+            $fileSystemQueryTransfer->getPath()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return int
+     */
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->getService()->getSize(
             $fileSystemQueryTransfer->getFileSystemName(),
             $fileSystemQueryTransfer->getPath()
         );
@@ -67,32 +93,6 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return false|string
-     */
-    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->getService()->getTimestamp(
-            $fileSystemQueryTransfer->getFileSystemName(),
-            $fileSystemQueryTransfer->getPath()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return int|false
-     */
-    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->getService()->getSize(
-            $fileSystemQueryTransfer->getFileSystemName(),
-            $fileSystemQueryTransfer->getPath()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
      * @return bool
      */
     public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
@@ -106,7 +106,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string|false
+     * @return string
      */
     public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {

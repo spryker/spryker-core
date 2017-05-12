@@ -26,11 +26,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @return void
      */
     public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->getService()->markAsPrivate(
+        $this->getService()->markAsPrivate(
             $fileSystemVisibilityTransfer->getFileSystemName(),
             $fileSystemVisibilityTransfer->getPath()
         );
@@ -39,11 +39,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @return bool
+     * @return void
      */
     public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
     {
-        return $this->getService()->markAsPublic(
+        $this->getService()->markAsPublic(
             $fileSystemVisibilityTransfer->getFileSystemName(),
             $fileSystemVisibilityTransfer->getPath()
         );
@@ -52,11 +52,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @return bool
+     * @return void
      */
     public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
-        return $this->getService()->createDir(
+        $this->getService()->createDir(
             $fileSystemCreateDirectoryTransfer->getFileSystemName(),
             $fileSystemCreateDirectoryTransfer->getPath(),
             $fileSystemCreateDirectoryTransfer->getConfig()
@@ -66,11 +66,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @return bool
+     * @return void
      */
     public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
     {
-        return $this->getService()->deleteDir(
+        $this->getService()->deleteDir(
             $fileSystemDeleteDirectoryTransfer->getFileSystemName(),
             $fileSystemDeleteDirectoryTransfer->getPath()
         );
@@ -79,11 +79,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @return bool
+     * @return void
      */
     public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
     {
-        return $this->getService()->copy(
+        $this->getService()->copy(
             $fileSystemCopyTransfer->getFileSystemName(),
             $fileSystemCopyTransfer->getSourcePath(),
             $fileSystemCopyTransfer->getDestinationPath()
@@ -93,11 +93,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @return bool
+     * @return void
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
     {
-        return $this->getService()->delete(
+        $this->getService()->delete(
             $fileSystemDeleteTransfer->getFileSystemName(),
             $fileSystemDeleteTransfer->getPath()
         );
@@ -106,11 +106,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function put(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getService()->put(
+        $this->getService()->put(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
             $fileSystemContentTransfer->getContent(),
@@ -121,11 +121,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @return bool
+     * @return void
      */
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
-        return $this->getService()->rename(
+        $this->getService()->rename(
             $fileSystemRenameTransfer->getFileSystemName(),
             $fileSystemRenameTransfer->getPath(),
             $fileSystemRenameTransfer->getNewPath()
@@ -135,11 +135,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function update(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getService()->update(
+        $this->getService()->update(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
             $fileSystemContentTransfer->getContent(),
@@ -150,11 +150,11 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @return bool
+     * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
-        return $this->getService()->write(
+        $this->getService()->write(
             $fileSystemContentTransfer->getFileSystemName(),
             $fileSystemContentTransfer->getPath(),
             $fileSystemContentTransfer->getContent(),

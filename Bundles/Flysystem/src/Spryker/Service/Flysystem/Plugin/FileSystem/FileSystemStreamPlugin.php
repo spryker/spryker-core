@@ -21,11 +21,11 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getService()->putStream(
+        $this->getService()->putStream(
             $fileSystemStreamTransfer->getFileSystemName(),
             $fileSystemStreamTransfer->getPath(),
             $stream,
@@ -36,7 +36,7 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @return mixed|false
+     * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
@@ -50,11 +50,11 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getService()->updateStream(
+        $this->getService()->updateStream(
             $fileSystemStreamTransfer->getFileSystemName(),
             $fileSystemStreamTransfer->getPath(),
             $stream,
@@ -66,11 +66,11 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @return bool
+     * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
-        return $this->getService()->writeStream(
+        $this->getService()->writeStream(
             $fileSystemStreamTransfer->getFileSystemName(),
             $fileSystemStreamTransfer->getPath(),
             $stream,
