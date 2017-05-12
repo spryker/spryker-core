@@ -1,16 +1,22 @@
 {
   "name": "spryker/invoice",
+  "description": "Invoice bundle",
+  "license": "proprietary",
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
     }
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   },
-  "description": "Invoice bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -20,11 +26,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

@@ -1,5 +1,7 @@
 {
   "name": "spryker/ratepay",
+  "description": "Ratepay bundle",
+  "license": "proprietary",
   "require": {
     "spryker/checkout": "^3.0.0",
     "spryker/config": "^3.0.0",
@@ -33,18 +35,6 @@
     "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
     "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
   },
-  "description": "Ratepay bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -55,5 +45,15 @@
       "Functional": "tests/",
       "Unit": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

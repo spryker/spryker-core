@@ -1,16 +1,7 @@
 {
   "name": "spryker/zed-request",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
-  },
+  "description": "ZedRequest bundle",
+  "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.1.0",
@@ -27,8 +18,17 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
-  "description": "ZedRequest bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

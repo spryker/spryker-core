@@ -1,5 +1,7 @@
 {
   "name": "spryker/kernel",
+  "description": "Kernel bundle",
+  "license": "proprietary",
   "require": {
     "everon/collection": "^1.0.0",
     "php": ">=5.6.0",
@@ -16,24 +18,6 @@
     "spryker/testify": "*",
     "spryker/transfer": "^3.0.0"
   },
-  "description": "Kernel bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -44,5 +28,21 @@
       "Functional": "tests/",
       "Unit": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

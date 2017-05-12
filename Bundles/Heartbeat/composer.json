@@ -1,10 +1,7 @@
 {
   "name": "spryker/heartbeat",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Heartbeat bundle",
+  "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",
     "spryker/config": "^3.0.0",
@@ -20,8 +17,16 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Heartbeat bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -31,10 +36,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

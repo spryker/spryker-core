@@ -1,24 +1,29 @@
 {
   "name": "spryker/cms-user-connector",
+  "description": "CmsUserConnector bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/cms": "^5.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/user": "^3.0.1"
+  },
+  "require-dev": {
+    "spryker/PropelOrm": "^1.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
     }
   },
-  "require": {
-    "spryker/kernel": "^3.0.0",
-    "spryker/cms": "^5.0.0",
-    "spryker/user": "^3.0.1"
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/PropelOrm": "^1.0.0",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
-  },
-  "description": "CmsUserConnector bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -28,10 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
-    }
   }
 }

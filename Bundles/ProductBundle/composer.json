@@ -1,5 +1,7 @@
 {
   "name": "spryker/product-bundle",
+  "description": "ProductBundle bundle",
+  "license": "proprietary",
   "require": {
     "spryker/availability": "^5.0.1",
     "spryker/kernel": "^3.0.0",
@@ -23,18 +25,6 @@
     "spryker/oms": "If you want to use Oms plugins you need to install spryker/oms.",
     "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
   },
-  "description": "ProductBundle bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -46,5 +36,15 @@
       "Unit": "tests/",
       "Acceptance": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

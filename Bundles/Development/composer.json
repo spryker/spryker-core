@@ -1,11 +1,7 @@
 {
   "name": "spryker/development",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
+  "description": "Development bundle",
+  "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",
     "spryker/graph": "^3.0.0",
@@ -18,8 +14,18 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Development bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Function": "tests/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/",
+      "Functional": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -29,11 +35,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/",
-      "Functional": "tests/"
-    }
   }
 }

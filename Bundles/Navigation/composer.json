@@ -1,10 +1,7 @@
 {
   "name": "spryker/navigation",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Navigation bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
@@ -24,8 +21,16 @@
   "suggest": {
     "spryker/silex": "If you want to use the NavigationTwigServiceProvider you need to install spryker/silex."
   },
-  "description": "Navigation bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -35,10 +40,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
-    }
   }
 }
