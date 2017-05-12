@@ -159,7 +159,26 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSetAbstractProductRelationPersistsRelation()
+    public function testReadAbstractProductRelationsForLabelReturnsListOfAbstractProductIds()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $idAbstractProduct = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idAbstractProduct);
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $abstractProductIds = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
+
+        $this->assertCount(1, $abstractProductIds);
+        $this->assertSame($idAbstractProduct, $abstractProductIds[0]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetAbstractProductRelationsPersistsRelations()
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -167,7 +186,7 @@ class ProductLabelFacadeTest extends Test
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
         $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelFacade->setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+        $productLabelFacade->setAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
 
         $this->assertCount(1, $productLabelTransferCollection);
@@ -176,22 +195,19 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testDeleteAbstractProductRelationRemovesFromPersistence()
+    public function testSetAbstractProductRelationsRemovesExistingRelations()
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
         $productLabelTransfer = $this->tester->haveProductLabel();
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
 
         $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelFacade->setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+        $productLabelFacade->setAbstractProductRelationsForLabel($idProductLabel, []);
+        $abstractProductIds = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
 
-        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
-        $this->assertCount(1, $productLabelTransferCollection);
-
-        $productLabelFacade->removeAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
-        $productLabelTransferCollection = $productLabelFacade->readLabelsForAbstractProduct($idProductAbstract);
-        $this->assertCount(0, $productLabelTransferCollection);
+        $this->assertCount(0, $abstractProductIds);
     }
 
     /**

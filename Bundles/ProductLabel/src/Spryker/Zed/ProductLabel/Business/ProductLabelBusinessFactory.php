@@ -13,6 +13,8 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
+use Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleter;
+use Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationReader;
 use Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationWriter;
 
 /**
@@ -69,11 +71,30 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationReaderInterface
+     */
+    public function createProductRelationReader()
+    {
+        return new ProductRelationReader($this->getQueryContainer());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationWriterInterface
      */
     public function createProductRelationWriter()
     {
-        return new ProductRelationWriter();
+        return new ProductRelationWriter(
+            $this->getQueryContainer(),
+            $this->createProductRelationDeleter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleterInterface
+     */
+    public function createProductRelationDeleter()
+    {
+        return new ProductRelationDeleter($this->getQueryContainer());
     }
 
 }

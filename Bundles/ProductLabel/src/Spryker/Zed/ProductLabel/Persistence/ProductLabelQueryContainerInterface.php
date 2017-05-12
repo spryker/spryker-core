@@ -51,4 +51,19 @@ interface ProductLabelQueryContainerInterface
      */
     public function queryMaxPosition();
 
+    /**
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAbstractProductRelationsByProductLabel($idProductLabel);
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAbstractProductRelationsByProductLabelAndAbstractProduct($idProductLabel, $idProductAbstract);
+
 }

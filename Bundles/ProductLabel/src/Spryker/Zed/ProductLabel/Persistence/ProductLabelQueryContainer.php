@@ -98,4 +98,34 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ]);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAbstractProductRelationsByProductLabel($idProductLabel)
+    {
+        return $this
+            ->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel($idProductLabel);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAbstractProductRelationsByProductLabelAndAbstractProduct($idProductLabel, $idProductAbstract)
+    {
+        return $this
+            ->queryAbstractProductRelationsByProductLabel($idProductLabel)
+            ->filterByFkProductAbstract($idProductAbstract);
+    }
+
 }

@@ -17,6 +17,8 @@ class ProductLabelDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @param array $seedData
+     *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
     public function haveProductLabel(array $seedData = [])
@@ -26,6 +28,19 @@ class ProductLabelDataHelper extends Module
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 
         return $productLabelTransfer;
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idAbstractProduct
+     *
+     * @return void
+     */
+    public function haveProductLabelToAbstractProductRelation($idProductLabel, $idAbstractProduct)
+    {
+        $this
+            ->getProductLabelFacade()
+            ->setAbstractProductRelationsForLabel($idProductLabel, [$idAbstractProduct]);
     }
 
     /**

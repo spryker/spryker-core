@@ -7,21 +7,62 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
 
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationWriter implements ProductRelationWriterInterface
 {
 
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleterInterface
+     */
+    protected $productRelationDeleter;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleterInterface $productRelationDeleter
+     */
+    public function __construct(
+        ProductLabelQueryContainerInterface $queryContainer,
+        ProductRelationDeleterInterface $productRelationDeleter
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->productRelationDeleter = $productRelationDeleter;
+    }
+
     /**
      * @param int $idProductLabel
-     * @param int $idProductAbstract
+     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function setRelation($idProductLabel, $idProductAbstract)
+    public function setRelations($idProductLabel, array $idsProductAbstract)
     {
-        $relationEntity = $this->createRelationEntity($idProductLabel, $idProductAbstract);
-        $relationEntity->save();
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
+            $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract);
+        });
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract)
+    {
+        $this->productRelationDeleter->deleteRelationsForLabel($idProductLabel);
+
+        foreach ($idsProductAbstract as $idProductAbstract) {
+            $this->persistRelation($idProductLabel, $idProductAbstract);
+        }
     }
 
     /**
@@ -30,10 +71,10 @@ class ProductRelationWriter implements ProductRelationWriterInterface
      *
      * @return void
      */
-    public function removeRelation($idProductLabel, $idProductAbstract)
+    protected function persistRelation($idProductLabel, $idProductAbstract)
     {
         $relationEntity = $this->createRelationEntity($idProductLabel, $idProductAbstract);
-        $relationEntity->delete();
+        $relationEntity->save();
     }
 
     /**
@@ -44,7 +85,14 @@ class ProductRelationWriter implements ProductRelationWriterInterface
      */
     protected function createRelationEntity($idProductLabel, $idProductAbstract)
     {
-        $relationEntity = new SpyProductLabelProductAbstract();
+        $relationEntity = $this
+            ->queryContainer
+            ->queryAbstractProductRelationsByProductLabelAndAbstractProduct(
+                $idProductLabel,
+                $idProductAbstract
+            )
+            ->findOneOrCreate();
+
         $relationEntity->setFkProductLabel($idProductLabel);
         $relationEntity->setFkProductAbstract($idProductAbstract);
 

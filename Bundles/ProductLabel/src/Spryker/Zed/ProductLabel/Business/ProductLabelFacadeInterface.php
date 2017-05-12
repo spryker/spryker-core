@@ -59,20 +59,19 @@ interface ProductLabelFacadeInterface
      * @api
      *
      * @param int $idProductLabel
-     * @param int $idProductAbstract
      *
-     * @return void
+     * @return int[]
      */
-    public function setAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+    public function readAbstractProductRelationsForLabel($idProductLabel);
 
     /**
      * @api
      *
      * @param int $idProductLabel
-     * @param int $idProductAbstract
+     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function removeAbstractProductRelationForLabel($idProductLabel, $idProductAbstract);
+    public function setAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
 }

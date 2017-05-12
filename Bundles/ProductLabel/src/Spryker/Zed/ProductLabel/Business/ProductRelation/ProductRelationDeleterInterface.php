@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
 
-interface ProductRelationWriterInterface
+interface ProductRelationDeleterInterface
 {
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function setRelations($idProductLabel, array $idsProductAbstract);
+    public function deleteRelationsForLabel($idProductLabel);
 
 }
