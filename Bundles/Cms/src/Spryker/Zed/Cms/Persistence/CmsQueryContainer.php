@@ -13,6 +13,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
@@ -42,6 +43,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const VALUE = 'value';
     const IS_ACTIVE = 'is_active';
     const CMS_URLS = 'cmsUrls';
+    const CMS_VERSION_COUNT = 'cmsVersionCount';
+    const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
+    const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
+    const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
+    const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
+    const ALIAS_TRANSLATION = 'aliasTranslation';
+    const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
+    const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
 
     /**
      * @api
@@ -142,11 +151,55 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
                 Criteria::LEFT_JOIN
             )
-            ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::CMS_URLS)
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyUrlTableMap::COL_URL), static::CMS_URLS)
             ->innerJoinCmsTemplate()
             ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
             ->groupBy(static::TEMPLATE_NAME)
             ->groupBy('name');
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName)
+    {
+        return $this->queryPages()
+            ->filterByIdCmsPage($idCmsPage)
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyUrlTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(SpyLocaleTableMap::COL_LOCALE_NAME, $localName, Criteria::EQUAL)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::URL);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale)
+    {
+        return $this->queryPagesWithTemplatesForSelectedLocale($idLocale)
+            ->addJoin(
+                SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+                SpyCmsVersionTableMap::COL_FK_CMS_PAGE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(sprintf('COUNT(DISTINCT %s)', SpyCmsVersionTableMap::COL_VERSION), static::CMS_VERSION_COUNT);
     }
 
     /**
@@ -632,6 +685,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
+     * @param int $idPage
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idPage, $idLocale)
+    {
+        return $this->queryCmsPageLocalizedAttributesByFkPage($idPage)
+            ->filterByFkLocale($idLocale);
+    }
+
+    /**
+     * @api
+     *
      * @param array $placeholders
      * @param int $idCmsPage
      *
@@ -643,6 +710,96 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinGlossaryKey()
             ->filterByPlaceholder($placeholders, Criteria::IN)
             ->filterByFkPage($idCmsPage);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryCmsPageWithAllRelationsByIdPage($idPage)
+    {
+        return $this->getFactory()->createCmsPageQuery()
+            ->filterByIdCmsPage($idPage)
+            ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
+            ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
+                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
+                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
+                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->useSpyCmsPageLocalizedAttributesQuery(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+                ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
+                ->endUse()
+            ->endUse()
+            ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->with(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
+            ->with(self::ALIAS_CMS_PAGE_TEMPLATE)
+            ->with(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
+            ->with(self::ALIAS_GLOSSARY_KEY)
+            ->with(self::ALIAS_TRANSLATION)
+            ->with(self::ALIAS_LOCALE_FOR_TRANSLATION);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     * @param string $versionOrder
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPage($idPage, $versionOrder = Criteria::DESC)
+    {
+        return $this->getFactory()
+            ->createSpyCmsVersionQuery()
+            ->filterByFkCmsPage($idPage)
+            ->orderBy(SpyCmsVersionTableMap::COL_VERSION, $versionOrder);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsVersion
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionById($idCmsVersion)
+    {
+        return $this->getFactory()
+            ->createSpyCmsVersionQuery()
+            ->filterByIdCmsVersion($idCmsVersion);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     * @param int $version
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPageAndVersion($idPage, $version)
+    {
+        return $this->queryCmsVersionByIdPage($idPage)
+            ->filterByVersion($version);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->queryGlossaryKeyMappings()
+            ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
 
 }

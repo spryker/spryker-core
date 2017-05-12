@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface;
 use Spryker\Zed\CustomerApi\CustomerApiConfig;
@@ -32,14 +31,15 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
-     * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
+     * @internal param ApiFilterTransfer $apiFilterTransfer
+     *
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function get($idCustomer, ApiFilterTransfer $apiFilterTransfer)
+    public function get($id)
     {
-        return $this->getFacade()->getCustomer($idCustomer, $apiFilterTransfer);
+        return $this->getFacade()->getCustomer($id);
     }
 
     /**

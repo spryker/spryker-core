@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerApi;
 
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiBridge;
+use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,6 +18,7 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+    const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,9 +29,8 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
-            return new CustomerApiToApiBridge($container->getLocator()->api()->queryContainer());
-        };
+        $container = $this->provideApiQueryContainer($container);
+        $container = $this->provideApiQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -43,9 +44,8 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
-            return new CustomerApiToApiBridge($container->getLocator()->api()->queryContainer());
-        };
+        $container = $this->provideApiQueryContainer($container);
+        $container = $this->provideApiQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -59,6 +59,34 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideApiQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+            return new CustomerApiToApiBridge($container->getLocator()->api()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideApiQueryBuilderQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = function (Container $container) {
+            return new CustomerApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());
         };
 
         return $container;

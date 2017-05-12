@@ -20,6 +20,7 @@ class TransferMapper implements TransferMapperInterface
     public function toTransfer(array $data)
     {
         $productApiTransfer = new ProductApiTransfer();
+
         $data = $this->mapAttributes($data);
         $productApiTransfer->fromArray($data, true);
 

@@ -1537,6 +1537,9 @@ table.dataTable thead .sorting:after {
 .dataTables_wrapper {
   padding-bottom: 30px;
 }
+.dataTables_scrollBody {
+  overflow: inherit !important;
+}
 /* CIRCLE */
 .img-circle {
   border-radius: 50%;

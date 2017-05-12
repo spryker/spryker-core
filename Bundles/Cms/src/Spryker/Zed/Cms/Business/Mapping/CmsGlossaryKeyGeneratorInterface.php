@@ -11,12 +11,13 @@ interface CmsGlossaryKeyGeneratorInterface
 {
 
     /**
+     * @param int $idCmsPage
      * @param string $templateName
      * @param string $placeholder
      * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true);
+    public function generateGlossaryKeyName($idCmsPage, $templateName, $placeholder, $autoIncrement = true);
 
 }

@@ -402,4 +402,90 @@ interface CmsFacadeInterface
      */
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
+    /**
+     * Specification:
+     * - Creates a cms version for page.
+     * - Creates a generated version name if $versionName is null.
+     * - Touches cms page with given idCmsPage.
+     * - Executes PostSavePlugins
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param string|null $versionName
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function publishWithVersion($idCmsPage, $versionName = null);
+
+    /**
+     * Specification:
+     * - Rollbacks latest CmsPageVersion to older version.
+     * - Creates a reference cms version copy
+     * - Calls publishWithVersion() method
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function rollback($idCmsPage, $version);
+
+    /**
+     * Specification:
+     * - Revert all cms changes to the latest CmsPageVersion
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage);
+
+    /**
+     * Specification:
+     * - Returns the latest CmsPageVersionTransfer by IdCmsPage
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Returns All CmsPageVersions by IdCmsPage
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * Specification:
+     * - Returns the CmsPageVersionTransfer by IdCmsPage and specific version
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
 }

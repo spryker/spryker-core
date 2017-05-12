@@ -1,0 +1,50 @@
+{
+  "name": "spryker/api-query-builder",
+  "description": "ApiQueryBuilder bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/api": "^0.1.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.2.0",
+    "spryker/propel-query-builder": "^0.2.1",
+    "spryker/util-encoding": "^2.0.1"
+  },
+  "require-dev": {
+    "spryker/assertion": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/symfony": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  }
+}

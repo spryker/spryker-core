@@ -1,1 +1,9 @@
 class_name: FunctionalTester
+modules:
+    enabled:
+        - \Testify\Module\Environment
+        - \ProductApi\Module\Functional
+        - \Config\Module\ConfigInit
+        - \Propel\Module\PropelInstall
+        - \Propel\Module\Database
+        - \Transfer\Module\TransferGenerate

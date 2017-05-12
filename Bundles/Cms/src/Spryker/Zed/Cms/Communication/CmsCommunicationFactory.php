@@ -182,6 +182,8 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use getTemplateRealPaths instead
+     *
      * @param string $templateRelativePath
      *
      * @return string
@@ -190,6 +192,17 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()
             ->getTemplateRealPath($templateRelativePath);
+    }
+
+    /**
+     * @param string $templateRelativePath
+     *
+     * @return array
+     */
+    public function getTemplateRealPaths($templateRelativePath)
+    {
+        return $this->getConfig()
+            ->getTemplateRealPaths($templateRelativePath);
     }
 
     /**

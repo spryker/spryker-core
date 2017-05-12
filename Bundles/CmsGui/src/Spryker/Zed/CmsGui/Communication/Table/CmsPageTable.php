@@ -14,6 +14,7 @@ use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
 use Spryker\Zed\CmsGui\Communication\Controller\EditPageController;
 use Spryker\Zed\CmsGui\Communication\Controller\ListPageController;
+use Spryker\Zed\CmsGui\Communication\Controller\VersionPageController;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
@@ -30,7 +31,9 @@ class CmsPageTable extends AbstractTable
     const COL_URL = 'Url';
     const COL_TEMPLATE = 'template_name';
     const COL_NAME = 'name';
+    const COL_STATUS = 'status';
     const COL_CMS_URLS = 'cmsUrls';
+    const COL_CMS_VERSION_COUNT = 'cmsVersionCount';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
@@ -99,7 +102,7 @@ class CmsPageTable extends AbstractTable
         $cmsPageAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
 
         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
-        $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($localeTransfer->getIdLocale());
+        $query = $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocaleAndVersion($localeTransfer->getIdLocale());
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -132,13 +135,73 @@ class CmsPageTable extends AbstractTable
     {
         $buttons = [];
 
-        $buttons[] = $this->createViewButton($item);
-        $buttons[] = $this->createViewInShopButton($item, $urlPrefix);
-        $buttons[] = $this->createEditGlossaryButton($item);
-        $buttons[] = $this->createEditPageButton($item);
+        $buttons[] = $this->createPublishButton($item);
+        $buttons[] = $this->createViewButtonGroup($item, $urlPrefix);
+        $buttons[] = $this->createEditButtonGroup($item);
         $buttons[] = $this->createCmsStateChangeButton($item);
 
         return $buttons;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createPublishButton(array $item)
+    {
+        return $this->generateCreateButton(
+            Url::generate('/cms-gui/version-page/publish', [
+                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+                VersionPageController::URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
+            ]),
+            'Publish',
+            [
+                'icon' => 'fa-upload',
+            ]
+        );
+    }
+
+    /**
+     * @param array $item
+     * @param string $urlPrefix
+     *
+     * @return string
+     */
+    protected function createViewButtonGroup(array $item, $urlPrefix)
+    {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
+        $viewButtons = [
+            $this->createViewButton($item),
+            $this->createViewInShopButton($item, $urlPrefix),
+        ];
+
+        if ($this->hasMultipleVersions($item)) {
+            $viewButtons[] = $this->createVersionHistoryButton($item);
+        }
+
+        return $this->generateButtonGroup(
+            $viewButtons,
+            'View '
+        );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createViewButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/view-page/index', [
+                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'In Zed',
+        ];
     }
 
     /**
@@ -149,6 +212,10 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewInShopButton(array $item, $urlPrefix)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         $yvesHost = $this->cmsGuiConfig->findYvesHost();
         if ($yvesHost === null) {
             return '';
@@ -161,11 +228,77 @@ class CmsPageTable extends AbstractTable
 
         $cmsPageUrlInYves = $yvesHost . $currentLocaleUrl;
 
-        return $this->generateViewButton(
-            $cmsPageUrlInYves,
-            'View in Shop',
-            ['target' => '_blank']
+        return [
+            'url' => $cmsPageUrlInYves,
+            'title' => 'In Shop',
+            'options' => ['target' => '_blank'],
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createVersionHistoryButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/version-page/history', [
+                VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'Version History',
+            'separated' => true,
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditButtonGroup(array $item)
+    {
+        return $this->generateButtonGroup(
+            [
+                $this->createEditPageButton($item),
+                $this->createEditGlossaryButton($item),
+            ],
+            'Edit ',
+            [
+                'class' => 'btn-edit',
+                'icon' => 'fa-pencil-square-o',
+            ]
         );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditPageButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/edit-page/index', [
+                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'Page',
+        ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function createEditGlossaryButton(array $item)
+    {
+        return [
+            'url' => Url::generate('/cms-gui/create-glossary/index', [
+                CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'title' => 'Placeholders',
+        ];
     }
 
     /**
@@ -195,53 +328,12 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createViewButton(array $item)
-    {
-        return $this->generateViewButton(
-            Url::generate('/cms-gui/view-page/index', [
-                ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'View'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createEditGlossaryButton(array $item)
-    {
-        return $this->generateEditButton(
-            Url::generate('/cms-gui/create-glossary/index', [
-                CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'Edit Placeholders'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function createEditPageButton(array $item)
-    {
-        return $this->generateEditButton(
-            Url::generate('/cms-gui/edit-page/index', [
-                EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'Edit Page'
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
     protected function createCmsStateChangeButton(array $item)
     {
+        if ($this->isDraft($item)) {
+            return '';
+        }
+
         if ($item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
                 Url::generate(static::URL_CMS_PAGE_DEACTIVATE, [
@@ -266,13 +358,27 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStatusLabel($item)
+    protected function getActiveStatusLabel($item)
     {
         if (!$item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
             return '<span class="label label-danger">Inactive</span>';
         }
 
         return '<span class="label label-info">Active</span>';
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function getStatusLabel($item)
+    {
+        if ($item[static::COL_CMS_VERSION_COUNT] > 0) {
+            return $this->getActiveStatusLabel($item);
+        }
+
+        return '<span class="label label-default">Unpublished</span>';
     }
 
     /**
@@ -297,7 +403,7 @@ class CmsPageTable extends AbstractTable
             static::COL_NAME => 'Name',
             static::COL_URL => 'Url',
             static::COL_TEMPLATE => 'Template',
-            SpyCmsPageTableMap::COL_IS_ACTIVE => 'Active',
+            static::COL_STATUS => 'Status',
             static::ACTIONS => static::ACTIONS,
         ]);
     }
@@ -311,8 +417,8 @@ class CmsPageTable extends AbstractTable
     {
         $config->setRawColumns([
             static::ACTIONS,
-            SpyCmsPageTableMap::COL_IS_ACTIVE,
             static::COL_URL,
+            static::COL_STATUS,
         ]);
     }
 
@@ -325,7 +431,6 @@ class CmsPageTable extends AbstractTable
     {
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
-            SpyCmsPageTableMap::COL_IS_ACTIVE,
             static::COL_TEMPLATE,
             static::COL_NAME,
         ]);
@@ -369,9 +474,29 @@ class CmsPageTable extends AbstractTable
             static::COL_NAME => $item[static::COL_NAME],
             static::COL_URL => $this->buildUrlList($item),
             static::COL_TEMPLATE => $item[static::COL_TEMPLATE],
-            SpyCmsPageTableMap::COL_IS_ACTIVE => $this->getStatusLabel($item),
+            static::COL_STATUS => $this->getStatusLabel($item),
             static::ACTIONS => $actions,
         ];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return bool
+     */
+    protected function isDraft(array $item)
+    {
+        return $item[static::COL_CMS_VERSION_COUNT] <= 0;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return bool
+     */
+    protected function hasMultipleVersions(array $item)
+    {
+        return $item[static::COL_CMS_VERSION_COUNT] > 1;
     }
 
 }

@@ -451,4 +451,30 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->queryKeys()
+            ->filterByIdGlossaryKey($idGlossaryKeys, Criteria::IN);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys)
+    {
+        return $this->queryTranslations()
+            ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
+    }
+
 }

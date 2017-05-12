@@ -26,7 +26,7 @@ class ResourcePreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        // PUT orders/1/events/foobar/item/5
+        // GET orders/1
         $path = $apiRequestTransfer->getPath();
 
         $resource = $path;
