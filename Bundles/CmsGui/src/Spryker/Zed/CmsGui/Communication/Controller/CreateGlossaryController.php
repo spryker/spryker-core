@@ -74,11 +74,21 @@ class CreateGlossaryController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $cmsVersion = $this->getFactory()
+            ->getCmsFacade()
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+        $cmsPageTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->findCmsPageById($idCmsPage);
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
             'availableLocales' => $availableLocales,
             'idCmsPage' => $idCmsPage,
+            'cmsVersion' => $cmsVersion,
+            'cmsPage' => $cmsPageTransfer,
         ];
     }
 
@@ -97,12 +107,10 @@ class CreateGlossaryController extends AbstractController
             $result = $this->getFactory()
                 ->createAutocompleteDataProvider()
                 ->getAutocompleteDataForTranslationKey($key);
-
         } elseif ($value != null) {
             $result = $this->getFactory()
                 ->createAutocompleteDataProvider()
                 ->getAutocompleteDataForTranslationValue($value);
-
         }
 
         return $this->jsonResponse($result);

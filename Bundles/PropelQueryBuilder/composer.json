@@ -1,5 +1,19 @@
 {
   "name": "spryker/propel-query-builder",
+  "description": "PropelQueryBuilder bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.2.0",
+    "spryker/util-encoding": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/product": "^5.0.0",
+    "spryker/propel": "^3.0.0",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -16,20 +30,6 @@
       "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
     }
   },
-  "require": {
-    "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.2.0",
-    "spryker/util-encoding": "^2.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/product": "^5.0.0",
-    "spryker/propel": "^3.0.0",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
-  },
-  "description": "PropelQueryBuilder bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

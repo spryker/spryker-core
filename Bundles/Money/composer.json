@@ -1,5 +1,7 @@
 {
   "name": "spryker/money",
+  "description": "Money bundle",
+  "license": "proprietary",
   "require": {
     "moneyphp/money": "~3.0.0",
     "spryker/currency": "^2.0.0",
@@ -15,18 +17,6 @@
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex.",
     "spryker/twig": "If you want to use Money in Twig you need to install spryker/twig."
-  },
-  "description": "Money bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
   },
   "autoload": {
     "psr-0": {
@@ -44,10 +34,20 @@
       "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }

@@ -1,11 +1,7 @@
 {
   "name": "spryker/graph",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
+  "description": "Graph bundle",
+  "license": "proprietary",
   "require": {
     "spryker/graphviz": "^2.0.0",
     "spryker/kernel": "^3.0.0",
@@ -15,8 +11,17 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Graph bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Function": "tests/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -26,10 +31,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

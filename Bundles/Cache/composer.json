@@ -1,10 +1,7 @@
 {
   "name": "spryker/cache",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Cache bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0"
@@ -13,8 +10,16 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Cache bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -24,10 +29,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

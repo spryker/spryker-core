@@ -1,5 +1,7 @@
 {
   "name": "spryker/braintree",
+  "description": "Braintree bundle",
+  "license": "proprietary",
   "require": {
     "braintree/braintree_php": "~3.15.0",
     "spryker/checkout": "^3.0.0",
@@ -45,10 +47,14 @@
       "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
   },
-  "description": "Braintree bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -56,11 +62,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ]
+  }
 }

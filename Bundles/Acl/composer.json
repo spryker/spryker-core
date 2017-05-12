@@ -1,10 +1,7 @@
 {
   "name": "spryker/acl",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Acl bundle",
+  "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",
     "spryker/gui": "^3.0.0",
@@ -25,8 +22,16 @@
     "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
     "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
-  "description": "Acl bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -36,10 +41,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
-    }
   }
 }

@@ -1,10 +1,10 @@
 {
   "name": "spryker/elastica",
+  "description": "Elastica bundle",
+  "license": "proprietary",
   "require": {
     "ruflin/elastica": "~3.2.0"
   },
-  "description": "Elastica bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

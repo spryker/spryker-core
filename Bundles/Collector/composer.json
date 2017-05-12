@@ -1,15 +1,7 @@
 {
   "name": "spryker/collector",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
-  },
+  "description": "Collector bundle",
+  "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",
     "spryker/elastica": "^2.0.0 || ^3.0.0",
@@ -31,8 +23,16 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Collector bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

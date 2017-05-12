@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
@@ -28,10 +29,10 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
     ) {
         $abstractProductQuery = $this->joinProductLocalizedAttributes($abstractProductQuery, $abstractProductDataFeedTransfer);
+        $abstractProductQuery = $this->joinConcreteProducts($abstractProductQuery, $abstractProductDataFeedTransfer);
         $abstractProductQuery = $this->joinProductImages($abstractProductQuery, $abstractProductDataFeedTransfer);
         $abstractProductQuery = $this->joinProductCategories($abstractProductQuery, $abstractProductDataFeedTransfer);
         $abstractProductQuery = $this->joinProductPrices($abstractProductQuery, $abstractProductDataFeedTransfer);
-        $abstractProductQuery = $this->joinConcreteProducts($abstractProductQuery, $abstractProductDataFeedTransfer);
         $abstractProductQuery = $this->joinProductOptions($abstractProductQuery, $abstractProductDataFeedTransfer);
 
         return $abstractProductQuery;
@@ -84,6 +85,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         $abstractProductQuery
             ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->innerJoinNode()
                     ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                         ->filterByFkLocale(
                             $localeTransferConditions[self::LOCALE_FILTER_VALUE],
@@ -134,6 +136,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 
         $abstractProductQuery
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinStockProduct()
                 ->useSpyProductLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkLocale(
                         $localeTransferConditions[self::LOCALE_FILTER_VALUE],
@@ -146,6 +149,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
                     ->endUse()
                 ->endUse()
             ->endUse();
+
+        $abstractProductQuery->groupBy(SpyStockProductTableMap::COL_FK_STOCK);
 
         return $abstractProductQuery;
     }

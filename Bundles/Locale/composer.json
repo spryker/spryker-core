@@ -1,10 +1,7 @@
 {
   "name": "spryker/locale",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Locale bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"
   },
@@ -18,8 +15,17 @@
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer."
   },
-  "description": "Locale bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -29,11 +35,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

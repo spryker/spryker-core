@@ -1,10 +1,7 @@
 {
   "name": "spryker/availability-gui",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "AvailabilityGui bundle",
+  "license": "proprietary",
   "require": {
     "spryker/availability": "^5.0.0",
     "spryker/gui": "^3.0.0",
@@ -23,8 +20,18 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "AvailabilityGui bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Acceptance": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -34,12 +41,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Acceptance": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

@@ -1,10 +1,7 @@
 {
   "name": "spryker/product-relation",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "ProductRelation bundle",
+  "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",
     "spryker/category": "^3.0.0",
@@ -38,8 +35,18 @@
     "spryker/silex": "Is required by product relation Twig component.",
     "spryker/twig": "Is required because of the product relation component."
   },
-  "description": "ProductRelation bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "Acceptance": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -49,12 +56,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
-    }
   }
 }

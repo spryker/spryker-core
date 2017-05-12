@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
-class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterface
+class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterface
 {
 
     /**
@@ -58,6 +58,37 @@ class CmsGuiToCmsQueryContainerBrige implements CmsGuiToCmsQueryContainerInterfa
     public function queryPagesWithTemplatesForSelectedLocale($idLocale)
     {
         return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
+    }
+
+    /**
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName)
+    {
+        return $this->cmsQueryContainer->queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPage($idPage)
+    {
+        return $this->cmsQueryContainer->queryCmsPageLocalizedAttributesByFkPage($idPage);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale)
+    {
+        return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale);
     }
 
     /**

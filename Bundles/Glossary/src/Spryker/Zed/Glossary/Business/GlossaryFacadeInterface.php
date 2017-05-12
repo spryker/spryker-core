@@ -65,6 +65,18 @@ interface GlossaryFacadeInterface
     public function deleteKey($keyName);
 
     /**
+     * Specification:
+     *  - Deletes keys from database with the given idKeys
+     *
+     * @api
+     *
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteKeys(array $idKeys);
+
+    /**
      * @api
      *
      * @param string $keyName
@@ -205,6 +217,18 @@ interface GlossaryFacadeInterface
      * @return bool
      */
     public function deleteTranslation($keyName, LocaleTransfer $locale);
+
+    /**
+     * Specification:
+     *  - Deletes translations from database with the given idKeys
+     *
+     * @api
+     *
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys);
 
     /**
      * @api

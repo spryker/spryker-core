@@ -1,0 +1,96 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
+{% block widget_content %}
+
+        <table class="has-{{ versionDiffClass }}">
+            <tr>
+                <td><strong>{{ 'Template:' | trans }}</strong></td>
+                <td class="{{ prettyDiffClass }}">{{ cmsPage.templateName }}</td>
+                {% if prettyDiffClass != 'original' %}
+                    <td class="original hidden"></td>
+                {% endif %}
+            </tr>
+        </table>
+        <p>
+            {% for pageAttribute in cmsPage.pageAttributes %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+                    {% block content %}
+                        <table class="has-{{ versionDiffClass }}">
+                            <tr>
+                                <td><strong>{{ 'Name:' | trans }}</strong> </td>
+                                <td class="{{ prettyDiffClass }}">{{ pageAttribute.name }}</td>
+                                {% if prettyDiffClass != 'original' %}
+                                    <td class="original hidden"></td>
+                                {% endif %}
+                            </tr>
+                        </table>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </p>
+{% endblock %}
+{% endembed %}
+
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO' } %}
+{% block widget_content %}
+        <p>
+    {% for pageMetaAttribute in cmsPage.metaAttributes %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': pageMetaAttribute.localeName, 'collapsed': false , 'hasError': false} %}
+            {% block content %}
+                <table class="has-{{ versionDiffClass }}">
+                    <tr>
+                        <td><strong>{{ 'Title:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }} text-left">{{ pageMetaAttribute.metaTitle }}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><strong>{{ 'Keywords:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }}">{{ pageMetaAttribute.metaKeywords }}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><strong>{{ 'Description:' | trans }}</strong></td>
+                        <td class="{{ prettyDiffClass }}">{{ pageMetaAttribute.metaDescription}}</td>
+                        {% if prettyDiffClass != 'original' %}
+                            <td class="original hidden"></td>
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+        </p>
+{% endblock %}
+{% endembed %}
+
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+{% block widget_content %}
+
+    {% if hasTemplateDiff == false and versionDiffClass == 'diff' %}
+    <div class="well">
+        {% filter trans|raw %}
+            <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> The Template has changed, Auto-Diff is not possible for placeholders.</p>
+        {% endfilter %}
+    </div>
+    {% endif %}
+
+    {% set locales = [] %}
+    {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+        {% for translation in glossaryAttribute.translations %}
+            {% set locales = locales|merge({(translation.localeName) : ''}) %}
+        {% endfor %}
+    {% endfor %}
+
+    {% for localeName,value in locales %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localeName, 'collapsed': false , 'hasError': false} %}
+            {% block content %}
+                {{ include ('@CmsGui/_partial/placeholders.twig') }}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+{% endblock %}
+{% endembed %}

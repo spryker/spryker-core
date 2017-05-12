@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
@@ -207,6 +208,16 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idPage
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idPage, $idLocale);
+
+    /**
+     * @api
+     *
      * @param string $key
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -234,6 +245,25 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idCmsPage
+     * @param string $localName
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale);
+
+    /**
+     * @api
+     *
      * @param string $value
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -249,5 +279,52 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageWithAllRelationsByIdPage($idPage);
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     * @param string $versionOrder
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPage($idPage, $versionOrder = Criteria::DESC);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsVersion
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionById($idCmsVersion);
+
+    /**
+     * @api
+     *
+     * @param int $idPage
+     * @param int $version
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryCmsVersionByIdPageAndVersion($idPage, $version);
+
+    /**
+     * @api
+     *
+     * @param array $idGlossaryKeys
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
 
 }

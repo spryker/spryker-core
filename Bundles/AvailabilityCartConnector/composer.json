@@ -1,10 +1,7 @@
 {
   "name": "spryker/availability-cart-connector",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "AvailabilityCartConnector bundle",
+  "license": "proprietary",
   "require": {
     "spryker/availability": "^5.0.0",
     "spryker/kernel": "^3.0.0"
@@ -16,8 +13,16 @@
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
   },
-  "description": "AvailabilityCartConnector bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -27,10 +32,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }
