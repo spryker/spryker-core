@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
 class LocatorHelper extends ConfigHelper
@@ -24,11 +25,30 @@ class LocatorHelper extends ConfigHelper
     ];
 
     /**
+     * @return void
+     */
+    public function _initialize()
+    {
+        parent::_initialize();
+
+        $this->configureNamespacesForClassResolver();
+    }
+
+    /**
+     * @return void
+     */
+    private function configureNamespacesForClassResolver()
+    {
+        $this->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
+        $this->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
      */
     public function getLocator()
     {
-        return new BusinessLocator($this->config['projectNamespaces'], $this->config['coreNamespaces']);
+        return new BusinessLocator();
     }
 
     /**
