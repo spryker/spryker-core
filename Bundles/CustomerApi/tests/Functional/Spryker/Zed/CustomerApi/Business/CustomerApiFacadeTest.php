@@ -9,6 +9,7 @@ namespace Functional\Spryker\Zed\CustomerApi\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
@@ -58,6 +59,9 @@ class CustomerApiFacadeTest extends Test
         $resultTransfer = $customerApiFacade->getCustomer($idCustomer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $data = $resultTransfer->getData();
+        //$this->assertNotEmpty($resultTransfer->getData()['customer_reference']);
     }
 
     /**
@@ -65,15 +69,39 @@ class CustomerApiFacadeTest extends Test
      */
     public function testFind()
     {
-        $productApiFacade = new CustomerApiFacade();
+        $customerApiFacade = new CustomerApiFacade();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiFilterTransfer = new ApiFilterTransfer();
         $apiRequestTransfer->setFilter($apiFilterTransfer);
 
-        $resultTransfer = $productApiFacade->findCustomers($apiRequestTransfer);
+        $resultTransfer = $customerApiFacade->findCustomers($apiRequestTransfer);
 
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
+
+        $data = $resultTransfer->getData();
+        $this->assertNotEmpty($data[0]['customer_reference']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAdd()
+    {
+        $customerApiFacade = new CustomerApiFacade();
+
+        $apiDataTransfer = new ApiDataTransfer();
+        $apiDataTransfer->setData([
+            'email' => 'foo' . time() . '@example.de',
+            'customer_reference' => 'foobar' . time() . 'example',
+        ]);
+
+        $resultTransfer = $customerApiFacade->addCustomer($apiDataTransfer);
+
+        $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $data = $resultTransfer->getData();
+        //$this->assertNotEmpty($data['id_customer']);
     }
 
 }

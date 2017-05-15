@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerApiTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -19,6 +20,7 @@ use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
+use Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
@@ -52,6 +54,11 @@ class CustomerApi implements CustomerApiInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
      * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
      * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
@@ -63,13 +70,15 @@ class CustomerApi implements CustomerApiInterface
         CustomerApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
         CustomerApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
-        TransferMapperInterface $transferMapper
+        TransferMapperInterface $transferMapper,
+        CustomerApiToCustomerInterface $customerFacade
     ) {
         $this->apiQueryContainer = $apiQueryContainer;
         $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -79,23 +88,36 @@ class CustomerApi implements CustomerApiInterface
      */
     public function add(ApiDataTransfer $apiDataTransfer)
     {
-        $customerEntity = $this->entityMapper->toEntity($apiDataTransfer->getData());
-        $customerApiTransfer = $this->persist($customerEntity);
+        $data = (array)$apiDataTransfer->getData();
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($data, true);
+
+        $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
+
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+
+        return $this->apiQueryContainer->createApiItem($customerTransfer);
     }
 
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function get($idCustomer)
     {
-        $customerData = $this->getCustomerData($idCustomer);
-        $customerApiTransfer = $this->transferMapper->toTransfer($customerData);
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
 
-        return $this->apiQueryContainer->createApiItem($customerApiTransfer, $customerApiTransfer->getIdCustomer());
+        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+        if (!$customerTransfer) {
+            throw new EntityNotFoundException(sprintf('Customer not found for id %s', $idCustomer));
+        }
+
+        return $this->apiQueryContainer->createApiItem($customerTransfer, $idCustomer);
     }
 
     /**

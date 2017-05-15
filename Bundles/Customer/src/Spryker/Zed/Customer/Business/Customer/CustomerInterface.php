@@ -68,6 +68,13 @@ interface CustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
+    public function add($customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
     public function update(CustomerTransfer $customerTransfer);
 
     /**
@@ -83,5 +90,12 @@ interface CustomerInterface
      * @return bool
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     */
+    public function findById($customerTransfer);
 
 }

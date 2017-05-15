@@ -31,6 +31,15 @@ interface CustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
+    public function addCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
@@ -88,6 +97,15 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer);
 
     /**
      * @api
