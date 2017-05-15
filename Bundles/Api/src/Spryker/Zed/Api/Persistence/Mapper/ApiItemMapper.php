@@ -24,11 +24,10 @@ class ApiItemMapper implements ApiItemMapperInterface
         $apiItemTransfer = new ApiItemTransfer();
         $apiItemTransfer->setId($id);
 
-        $itemData = [];
         if ($data instanceof AbstractTransfer) {
-            $itemData[] = $data->modifiedToArray();
+            $itemData = $data->modifiedToArray();
         } else {
-            $itemData[] = $data;
+            $itemData = $data;
         }
 
         $apiItemTransfer->setData($itemData);

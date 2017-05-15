@@ -45,4 +45,24 @@ class CustomerApiToCustomerBridge implements CustomerApiToCustomerInterface
         return $this->customerFacade->addCustomer($customerTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->updateCustomer($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function deleteCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->deleteCustomer($customerTransfer);
+    }
+
 }

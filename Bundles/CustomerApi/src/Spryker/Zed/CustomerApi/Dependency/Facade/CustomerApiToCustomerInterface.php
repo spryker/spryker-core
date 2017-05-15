@@ -26,4 +26,18 @@ interface CustomerApiToCustomerInterface
      */
     public function addCustomer(CustomerTransfer $customerTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function deleteCustomer(CustomerTransfer $customerTransfer);
+
 }

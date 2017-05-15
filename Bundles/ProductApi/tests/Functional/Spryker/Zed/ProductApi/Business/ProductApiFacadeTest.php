@@ -38,6 +38,12 @@ class ProductApiFacadeTest extends Test
         $resultTransfer = $productApiFacade->getProduct($idProduct);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $id = $resultTransfer->getId();
+        $this->assertNotEmpty($id);
+
+        $newData = $resultTransfer->getData();
+        $this->assertNotEmpty($newData['id_product_abstract']);
     }
 
     /**
@@ -55,6 +61,9 @@ class ProductApiFacadeTest extends Test
 
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
         $this->assertGreaterThan(1, count($resultTransfer->getData()));
+
+        $data = $resultTransfer->getData();
+        $this->assertNotEmpty($data[0]['id_product_abstract']);
     }
 
     /**
@@ -75,6 +84,41 @@ class ProductApiFacadeTest extends Test
         $resultTransfer = $productApiFacade->addProduct($apiDataTransfer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $id = $resultTransfer->getId();
+        $this->assertNotEmpty($id);
+
+        $newData = $resultTransfer->getData();
+        $this->assertNotEmpty($newData['id_product_abstract']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEdit()
+    {
+        $productApiFacade = new ProductApiFacade();
+
+        $apiDataTransfer = new ApiDataTransfer();
+        $data = [
+            'sku' => 'sku' . time(). 'new',
+            'attributes' => [],
+            'product_concretes' => [],
+            'id_tax_set' => 1,
+        ];
+        $apiDataTransfer->setData($data);
+
+        $idProduct = 1;
+        $resultTransfer = $productApiFacade->updateProduct($idProduct, $apiDataTransfer);
+
+        $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $id = $resultTransfer->getId();
+        $this->assertNotEmpty($id);
+
+        $newData = $resultTransfer->getData();
+        $this->assertNotEmpty($newData['id_product_abstract']);
+        $this->assertSame($data['sku'], $newData['sku']);
     }
 
     /**

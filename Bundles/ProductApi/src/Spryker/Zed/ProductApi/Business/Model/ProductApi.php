@@ -146,6 +146,7 @@ class ProductApi implements ProductApiInterface
 
         $data = (array)$apiDataTransfer->getData();
         $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $productAbstractTransfer->fromArray($data, true);
 
         $productConcreteCollection = [];
@@ -159,26 +160,6 @@ class ProductApi implements ProductApiInterface
         $idProductAbstract = $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
 
         return $this->get($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function remove($idProductAbstract)
-    {
-        $deletedRows = $this->queryContainer
-            ->queryRemove($idProductAbstract)
-            ->delete();
-
-        $productApiTransfer = new ProductApiTransfer();
-
-        if ($deletedRows > 0) {
-            $productApiTransfer->setIdProductAbstract($idProductAbstract);
-        }
-
-        return $this->apiQueryContainer->createApiItem($productApiTransfer, $idProductAbstract);
     }
 
     /**
@@ -238,7 +219,7 @@ class ProductApi implements ProductApiInterface
     protected function buildColumnSelection()
     {
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        $tableColumns = SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
+        $tableColumns = ['id_product_abstract'];
 
         foreach ($tableColumns as $columnAlias) {
             $columnTransfer = new PropelQueryBuilderColumnTransfer();
@@ -249,40 +230,6 @@ class ProductApi implements ProductApiInterface
         }
 
         return $columnSelectionTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $entity
-     *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer
-     */
-    protected function persist(SpyProductAbstract $entity)
-    {
-        $entity->save();
-
-        return $this->transferMapper->toTransfer($entity->toArray());
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
-     *
-     * @return array
-     */
-    protected function getProductData($idProduct)
-    {
-        //TODO column filtering
-        $productArray = (array)$this->queryContainer
-            ->queryGet($idProduct)
-            ->findOne()
-            ->toArray();
-
-        if (!$productArray) {
-            throw new EntityNotFoundException(sprintf('Product not found: %s', $idProduct));
-        }
-
-        return $productArray;
     }
 
 }

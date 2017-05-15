@@ -54,16 +54,6 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function remove($idProductAbstract)
-    {
-        return $this->getFacade()->removeProduct($idProductAbstract);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
