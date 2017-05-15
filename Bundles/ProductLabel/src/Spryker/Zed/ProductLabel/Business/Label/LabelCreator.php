@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
+use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -29,15 +30,23 @@ class LabelCreator implements LabelCreatorInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
+     */
+    protected $dictionaryTouchManager;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
-        ProductLabelQueryContainerInterface $queryContainer
+        ProductLabelQueryContainerInterface $queryContainer,
+        LabelDictionaryTouchManagerInterface $dictionaryTouchManager
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->queryContainer = $queryContainer;
+        $this->dictionaryTouchManager = $dictionaryTouchManager;
     }
 
     /**
@@ -76,6 +85,8 @@ class LabelCreator implements LabelCreatorInterface
     {
         $productLabelTransfer = $this->persistLabel($productLabelTransfer);
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
+
+        $this->dictionaryTouchManager->touchActive();
     }
 
     /**

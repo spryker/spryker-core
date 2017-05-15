@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
 
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
-class ProductRelationReader implements ProductRelationReaderInterface
+class AbstractProductRelationReader implements AbstractProductRelationReaderInterface
 {
 
     /**

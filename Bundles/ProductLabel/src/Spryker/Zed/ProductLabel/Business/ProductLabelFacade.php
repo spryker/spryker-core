@@ -104,7 +104,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     {
         return $this
             ->getFactory()
-            ->createProductRelationReader()
+            ->createAbstractProductRelationReader()
             ->readForProductLabel($idProductLabel);
     }
 
@@ -120,7 +120,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     {
         $this
             ->getFactory()
-            ->createProductRelationWriter()
+            ->createAbstractProductRelationWriter()
             ->setRelations($idProductLabel, $idsProductAbstract);
     }
 

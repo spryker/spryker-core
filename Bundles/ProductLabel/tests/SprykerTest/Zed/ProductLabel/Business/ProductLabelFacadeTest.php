@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductLabel\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
+use Spryker\Shared\ProductLabel\ProductLabelConfig;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadLabelReturnsProductLabelTransfer()
+    public function testReadLabelShouldReturnProductLabelTransfer()
     {
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
@@ -48,7 +49,7 @@ class ProductLabelFacadeTest extends Test
      *
      * @return void
      */
-    public function testRealLabelThrowsExceptionIfLabelDoesNotExist()
+    public function testRealLabelShouldThrowExceptionIfLabelDoesNotExist()
     {
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->readLabel(1);
@@ -57,7 +58,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testRealLabelReturnsCollectionOfLocalizedAttributes()
+    public function testRealLabelShouldReturnCollectionOfLocalizedAttributes()
     {
         $localeTransfer = $this->tester->haveLocale();
 
@@ -76,7 +77,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadAllLabelsReturnsCollectionSortedByPosition()
+    public function testReadAllLabelsShouldReturnCollectionSortedByPosition()
     {
         $this->tester->haveProductLabel();
         $this->tester->haveProductLabel();
@@ -96,7 +97,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCreateLabelPersistsDataAndUpdatesTransferIdField()
+    public function testCreateLabelShouldPersistDataAndUpdatesTransferIdField()
     {
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
@@ -111,7 +112,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testUpdateLabelPersistsChanges()
+    public function testUpdateLabelShouldPersistChanges()
     {
         $productLabelTransfer = $this->tester->haveProductLabel([
             'idActive' => true,
@@ -135,7 +136,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCreateLabelPersistsLocalizedAttributes()
+    public function testCreateLabelShouldPersistLocalizedAttributes()
     {
         $localeTransfer = $this->tester->haveLocale();
 
@@ -159,7 +160,22 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadAbstractProductRelationsForLabelReturnsListOfAbstractProductIds()
+    public function testCreateLabelShouldTouchDictionaryActive()
+    {
+        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->createLabel($productLabelTransfer);
+
+        $this->tester->assertTouchActive(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReadAbstractProductRelationsForLabelShouldReturnListOfAbstractProductIds()
     {
         $productTransfer = $this->tester->haveProduct();
         $idAbstractProduct = $productTransfer->getFkProductAbstract();
@@ -178,7 +194,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSetAbstractProductRelationsPersistsRelations()
+    public function testSetAbstractProductRelationsShouldPersistRelations()
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -195,7 +211,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSetAbstractProductRelationsRemovesExistingRelations()
+    public function testSetAbstractProductRelationsShouldRemoveExistingRelations()
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -208,6 +224,25 @@ class ProductLabelFacadeTest extends Test
         $abstractProductIds = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
 
         $this->assertCount(0, $abstractProductIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetAbstractProductRelationsShouldTouchRelationsActive()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->setAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+
+        $this->tester->assertTouchActive(
+            ProductLabelConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT_PRODUCT_LABEL_RELATIONS,
+            $idProductAbstract
+        );
     }
 
     /**

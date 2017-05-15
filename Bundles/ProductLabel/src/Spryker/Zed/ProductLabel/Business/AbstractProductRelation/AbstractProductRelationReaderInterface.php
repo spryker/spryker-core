@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
 
-interface ProductRelationReaderInterface
+interface AbstractProductRelationReaderInterface
 {
 
     /**

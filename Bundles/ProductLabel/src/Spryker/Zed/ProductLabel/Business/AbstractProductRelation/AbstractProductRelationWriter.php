@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
 
+use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class ProductRelationWriter implements ProductRelationWriterInterface
+class AbstractProductRelationWriter implements AbstractProductRelationWriterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -21,20 +22,28 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleterInterface
+     * @var \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleterInterface
      */
     protected $productRelationDeleter;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface
+     */
+    protected $productRelationTouchManager;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductLabel\Business\ProductRelation\ProductRelationDeleterInterface $productRelationDeleter
+     * @param \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleterInterface $productRelationDeleter
+     * @param AbstractProductRelationTouchManagerInterface $productRelationTouchManager
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductRelationDeleterInterface $productRelationDeleter
+        AbstractProductRelationDeleterInterface $productRelationDeleter,
+        AbstractProductRelationTouchManagerInterface $productRelationTouchManager
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationDeleter = $productRelationDeleter;
+        $this->productRelationTouchManager = $productRelationTouchManager;
     }
 
     /**
@@ -62,6 +71,8 @@ class ProductRelationWriter implements ProductRelationWriterInterface
 
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
+
+            $this->productRelationTouchManager->touchActiveForAbstractProduct($idProductAbstract);
         }
     }
 

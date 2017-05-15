@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\ProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
 
+use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class ProductRelationDeleter implements ProductRelationDeleterInterface
+class AbstractProductRelationDeleter implements AbstractProductRelationDeleterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -21,11 +22,20 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface
      */
-    public function __construct(ProductLabelQueryContainerInterface $queryContainer)
-    {
+    protected $productRelationTouchManager;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+     */
+    public function __construct(
+        ProductLabelQueryContainerInterface $queryContainer,
+        AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->productRelationTouchManager = $productRelationTouchManager;
     }
 
     /**
@@ -49,6 +59,8 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
     {
         foreach ($this->findEntitiesForLabel($idProductLabel) as $relationEntity) {
             $relationEntity->delete();
+
+            $this->productRelationTouchManager->touchActiveForAbstractProduct($relationEntity->getFkProductAbstract());
         }
     }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -23,11 +24,20 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
      */
-    public function __construct(ProductLabelQueryContainerInterface $queryContainer)
-    {
+    protected $dictionaryTouchManager;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+     */
+    public function __construct(
+        ProductLabelQueryContainerInterface $queryContainer,
+        LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->dictionaryTouchManager = $dictionaryTouchManager;
     }
 
     /**
@@ -66,7 +76,9 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
     {
-        $productLabelTransfer = $this->persistLabel($productLabelTransfer);
+        $this->persistLabel($productLabelTransfer);
+
+        $this->dictionaryTouchManager->touchActive();
     }
 
     /**
