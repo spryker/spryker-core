@@ -104,4 +104,26 @@ class CustomerApiFacadeTest extends Test
         //$this->assertNotEmpty($data['id_customer']);
     }
 
+    /**
+     * @return void
+     */
+    public function testEdit()
+    {
+        $customerApiFacade = new CustomerApiFacade();
+
+        $apiDataTransfer = new ApiDataTransfer();
+        $apiDataTransfer->setData([
+            'email' => 'foo' . time() . '@example.de',
+            'customer_reference' => 'foobar' . time() . 'example',
+        ]);
+
+        $idCustomer = $this->idCustomer;
+        $resultTransfer = $customerApiFacade->updateCustomer($idCustomer, $apiDataTransfer);
+
+        $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+
+        $data = $resultTransfer->getData();
+        //$this->assertNotEmpty($data['id_customer']);
+    }
+
 }
