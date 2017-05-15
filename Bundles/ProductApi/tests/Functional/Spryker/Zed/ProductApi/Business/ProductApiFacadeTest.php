@@ -27,6 +27,22 @@ class ProductApiFacadeTest extends Test
 {
 
     /**
+     * @var array
+     */
+    protected $jsonDataForPagination = [
+        "rules" => [
+            [
+                "id" => "spy_product_abstract.id_product_abstract",
+                "field" => "spy_product_abstract.id_product_abstract",
+                "type" => "number",
+                "input" => "text",
+                "operator" => "greater_or_equal",
+                "value" => "209",
+            ],
+        ],
+    ];
+
+    /**
      * @return void
      */
     public function testGet()
@@ -64,6 +80,32 @@ class ProductApiFacadeTest extends Test
 
         $data = $resultTransfer->getData();
         $this->assertNotEmpty($data[0]['id_product_abstract']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConditionsAndSortAndLimit()
+    {
+        $productApiFacade = new ProductApiFacade();
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiFilterTransfer = new ApiFilterTransfer();
+        $apiFilterTransfer->setCriteriaJson(json_encode($this->jsonDataForPagination));
+        $apiFilterTransfer->setSort(['sku' => '-']);
+        $apiFilterTransfer->setLimit(2);
+        $apiFilterTransfer->setOffset(2);
+
+        $apiRequestTransfer->setFilter($apiFilterTransfer);
+
+        $resultTransfer = $productApiFacade->findProducts($apiRequestTransfer);
+
+        $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
+        $this->assertSame(2, count($resultTransfer->getData()));
+
+        $data = $resultTransfer->getData();
+        $this->assertGreaterThanOrEqual(209, $data[0]['sku']);
+        $this->assertGreaterThanOrEqual(209, $data[1]['sku']);
     }
 
     /**

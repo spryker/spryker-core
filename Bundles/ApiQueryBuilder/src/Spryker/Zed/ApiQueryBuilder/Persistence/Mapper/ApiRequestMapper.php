@@ -94,7 +94,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
         $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();
 
         $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            trim($apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson())
+            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();

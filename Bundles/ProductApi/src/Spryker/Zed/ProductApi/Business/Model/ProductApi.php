@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
@@ -216,7 +217,7 @@ class ProductApi implements ProductApiInterface
     protected function buildColumnSelection()
     {
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        $tableColumns = ['id_product_abstract'];
+        $tableColumns = SpyProductAbstractTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
 
         foreach ($tableColumns as $columnAlias) {
             $columnTransfer = new PropelQueryBuilderColumnTransfer();

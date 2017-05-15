@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
@@ -232,7 +233,7 @@ class CustomerApi implements CustomerApiInterface
     protected function buildColumnSelection()
     {
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        $tableColumns = ['id_customer'];
+        $tableColumns = SpyCustomerTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);;
 
         foreach ($tableColumns as $columnAlias) {
             $columnTransfer = new PropelQueryBuilderColumnTransfer();
