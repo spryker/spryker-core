@@ -30,7 +30,9 @@ class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
      */
     public function getLocaleCollection()
     {
-        return $this->localeFacade->getLocaleCollection();
+        return $this
+            ->localeFacade
+            ->getLocaleCollection();
     }
 
     /**
@@ -40,7 +42,19 @@ class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
      */
     public function getLocaleById($idLocale)
     {
-        return $this->localeFacade->getLocaleById($idLocale);
+        return $this
+            ->localeFacade
+            ->getLocaleById($idLocale);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this
+            ->localeFacade
+            ->getCurrentLocale();
     }
 
 }

@@ -7,8 +7,18 @@
 
 namespace Spryker\Zed\ProductLabelGui;
 
+use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelGuiConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceType()
+    {
+        return $this->get(PriceConstants::DEFAULT_PRICE_TYPE);
+    }
+
 }

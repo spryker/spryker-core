@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -16,7 +17,7 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
 {
 
     /**
-     * @param mixed $value
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -29,6 +30,10 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueProductLabelNameConstraint::class);
         }
 
+        if (!($value instanceof ProductLabelTransfer)) {
+            throw new UnexpectedTypeException($value, ProductLabelTransfer::class);
+        }
+
         if (!$this->isNameChanged($value, $constraint)) {
             return;
         }
@@ -39,52 +44,42 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
 
         $this
             ->context
-            ->buildViolation($constraint->getMessage($value))
+            ->buildViolation($constraint->getMessage($value->getName()))
             ->atPath(ProductLabelFormType::FIELD_NAME)
             ->addViolation();
     }
 
     /**
-     * @param string $value
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      * @param \Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
      * @return bool
      */
-    protected function isNameChanged($value, UniqueProductLabelNameConstraint $constraint)
-    {
-        $idProductLabel = $this->getProductLabelIdFromContext();
+    protected function isNameChanged(
+        ProductLabelTransfer $productLabelTransfer,
+        UniqueProductLabelNameConstraint $constraint
+    ) {
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
         if (!$idProductLabel) {
             return true;
         }
 
         $productLabelEntity = $constraint->findProductLabelById($idProductLabel);
 
-        return ($productLabelEntity->getName() !== $value);
+        return ($productLabelEntity->getName() !== $productLabelTransfer->getName());
     }
 
     /**
-     * @return int|null
-     */
-    protected function getProductLabelIdFromContext()
-    {
-        /** @var \Symfony\Component\Form\FormInterface $root */
-        $root = $this->context->getRoot();
-
-        /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
-        $productLabelTransfer = $root->getData();
-
-        return $productLabelTransfer->getIdProductLabel();
-    }
-
-    /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      * @param \Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
      * @return bool
      */
-    protected function isUniqueName($name, UniqueProductLabelNameConstraint $constraint)
-    {
-        $productLabelEntity = $constraint->findProductLabelByName($name);
+    protected function isUniqueName(
+        ProductLabelTransfer $productLabelTransfer,
+        UniqueProductLabelNameConstraint $constraint
+    ) {
+        $productLabelEntity = $constraint->findProductLabelByName($productLabelTransfer->getName());
 
         return ($productLabelEntity ? false : true);
     }

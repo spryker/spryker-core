@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  */
 class EditController extends AbstractController
 {
@@ -31,16 +31,21 @@ class EditController extends AbstractController
         $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
         $productLabelTransfer = $this->getProductLabelById($idProductLabel);
 
-        $productLabelForm = $this->createProductLabelForm($productLabelTransfer);
-        $productLabelForm->handleRequest($request);
+        $productLabelAggregateForm = $this->createProductLabelAggregateForm($productLabelTransfer);
+        $isFormSuccessfullyHandled = $this->handleProductLabelAggregateForm(
+            $request,
+            $productLabelAggregateForm
+        );
 
-        if ($this->isFormSubmittedSuccessfully($productLabelForm)) {
+        if ($isFormSuccessfullyHandled) {
             return $this->redirectResponse('/product-label-gui');
         }
 
         return $this->viewResponse([
             'productLabelTransfer' => $productLabelTransfer,
-            'productLabelForm' => $productLabelForm->createView(),
+            'productLabelFormTabs' => $this->getFactory()->createProductLabelFormTabs()->createView(),
+            'aggregateForm' => $productLabelAggregateForm->createView(),
+            'relatedProductTable' => $this->getFactory()->createRelatedProductTable($idProductLabel)->render(),
         ]);
     }
 
@@ -58,50 +63,94 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param ProductLabelTransfer $productLabelTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createProductLabelForm(ProductLabelTransfer $productLabelTransfer)
+    protected function createProductLabelAggregateForm(ProductLabelTransfer $productLabelTransfer)
     {
-        $productLabelFormDataProvider = $this
+        $aggregateFormDataProvider = $this
             ->getFactory()
-            ->createProductLabelFormDataProvider();
+            ->createProductLabelAggregateFormDataProvider();
 
-        $productLabelForm = $this
+        $aggregateForm = $this
             ->getFactory()
-            ->createProductLabelForm(
-                $productLabelFormDataProvider->getData($productLabelTransfer->getIdProductLabel()),
-                $productLabelFormDataProvider->getOptions()
+            ->createProductLabelAggregateForm(
+                $aggregateFormDataProvider->getData($productLabelTransfer->getIdProductLabel()),
+                $aggregateFormDataProvider->getOptions()
             );
 
-        return $productLabelForm;
+        return $aggregateForm;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productLabelForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $aggregateForm
      *
      * @return bool
      */
-    protected function isFormSubmittedSuccessfully(FormInterface $productLabelForm)
+    protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm)
     {
-        if (!$productLabelForm->isValid()) {
+        $aggregateForm->handleRequest($request);
+
+        if (!$aggregateForm->isValid()) {
             return false;
         }
 
-        /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
-        $productLabelTransfer = $productLabelForm->getData();
-        $this
-            ->getFactory()
-            ->getProductLabelFacade()
-            ->updateLabel($productLabelTransfer);
+        /** @var \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer */
+        $aggregateFormTransfer = $aggregateForm->getData();
+
+        $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
+        $this->storeRelatedProduct($aggregateFormTransfer->getAbstractProductRelations());
 
         $this->addSuccessMessage(sprintf(
             'Product label #%d successfully updated.',
             $productLabelTransfer->getIdProductLabel()
         ));
+    }
 
-        return true;
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected function storeProductLabel(ProductLabelTransfer $productLabelTransfer)
+    {
+        $this
+            ->getFactory()
+            ->getProductLabelFacade()
+            ->updateLabel($productLabelTransfer);
+
+        return $productLabelTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     *
+     * @return void
+     */
+    protected function storeRelatedProduct(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    {
+        $this
+            ->getFactory()
+            ->getProductLabelFacade()
+            ->setAbstractProductRelationsForLabel(
+                $relationsTransfer->getIdProductLabel(),
+                $relationsTransfer->getAbstractProductIds()
+            );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
+        $productLabelTable = $this->getFactory()->createRelatedProductTable($idProductLabel);
+
+        return $this->jsonResponse($productLabelTable->fetchData());
     }
 
 }

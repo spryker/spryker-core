@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -33,16 +34,25 @@ class ProductLabelFormType extends AbstractType
     const FIELD_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
 
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface
+     * @var \Symfony\Component\Validator\Constraint
      */
-    protected $queryContainer;
+    protected $uniqueNameConstraint;
 
     /**
-     * @param \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface $queryContainer
+     * @var \Symfony\Component\Form\FormTypeInterface
      */
-    public function __construct(ProductLabelGuiQueryContainerInterface $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
+    protected $localizedAttributesFormType;
+
+    /**
+     * @param FormTypeInterface $localizedAttributesFormType
+     * @param Constraint $uniqueNameConstraints
+     */
+    public function __construct(
+        FormTypeInterface $localizedAttributesFormType,
+        Constraint $uniqueNameConstraints
+    ) {
+        $this->localizedAttributesFormType = $localizedAttributesFormType;
+        $this->uniqueNameConstraint = $uniqueNameConstraints;
     }
 
     /**
@@ -64,6 +74,9 @@ class ProductLabelFormType extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => ProductLabelTransfer::class,
+            'constraints' => [
+                $this->uniqueNameConstraint,
+            ],
         ]);
     }
 
@@ -100,9 +113,6 @@ class ProductLabelFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                    new UniqueProductLabelNameConstraint([
-                        UniqueProductLabelNameConstraint::OPTION_QUERY_CONTAINER => $this->queryContainer,
-                    ]),
                 ]
             ]
         );
@@ -224,7 +234,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_LOCALIZED_ATTRIBUTES,
             CollectionType::class,
             [
-                'entry_type' => new ProductLabelLocalizedAttributesType(),
+                'entry_type' => $this->localizedAttributesFormType,
                 'property_path' => 'localizedAttributesCollection',
             ]
         );

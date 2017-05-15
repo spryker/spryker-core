@@ -7,11 +7,20 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication;
 
-use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint;
+use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggregateFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
+use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelAggregateFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelLocalizedAttributesFormType;
+use Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
+use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable;
+use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
+use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 
 /**
@@ -30,18 +39,20 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param ProductLabelTransfer $productLabelTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductLabelForm(ProductLabelTransfer $productLabelTransfer = null, array $options = [])
-    {
+    public function createProductLabelAggregateForm(
+        ProductLabelAggregateFormTransfer $aggregateFormTransfer,
+        array $options = []
+    ) {
         return $this
             ->getFormFactory()
             ->create(
-                $this->createProductLabelFormType(),
-                $productLabelTransfer,
+                $this->createProductLabelAggregateFormType(),
+                $aggregateFormTransfer,
                 $options
             );
     }
@@ -49,20 +60,79 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
+    protected function createProductLabelAggregateFormType()
+    {
+        return new ProductLabelAggregateFormType(
+            $this->createProductLabelFormType(),
+            $this->createRelatedProductFormType()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
     protected function createProductLabelFormType()
     {
-        return new ProductLabelFormType($this->getQueryContainer());
+        return new ProductLabelFormType(
+            $this->createProductLabelLocalizedAttributesFormType(),
+            $this->createUniqueProductLabelNameConstraint()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createProductLabelLocalizedAttributesFormType()
+    {
+        return new ProductLabelLocalizedAttributesFormType();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUniqueProductLabelNameConstraint()
+    {
+        return new UniqueProductLabelNameConstraint([
+            UniqueProductLabelNameConstraint::OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createRelatedProductFormType()
+    {
+        return new RelatedProductFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggregateFormDataProvider
+     */
+    public function createProductLabelAggregateFormDataProvider()
+    {
+        return new ProductLabelAggregateFormDataProvider(
+            $this->createProductLabelFormDataProvider(),
+            $this->createRelatedProductFormDataProvider()
+        );
     }
 
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider
      */
-    public function createProductLabelFormDataProvider()
+    protected function createProductLabelFormDataProvider()
     {
         return new ProductLabelFormDataProvider(
             $this->getLocaleFacade(),
             $this->getProductLabelFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider
+     */
+    protected function createRelatedProductFormDataProvider()
+    {
+        return new RelatedProductFormDataProvider($this->getProductLabelFacade());
     }
 
     /**
@@ -81,9 +151,54 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRODUCT_LABEL);
     }
 
-    protected function getProductLabelQueryContainer()
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createProductLabelFormTabs()
     {
+        return new ProductLabelFormTabs();
+    }
 
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable
+     */
+    public function createRelatedProductTable($idProductLabel = null)
+    {
+        return new RelatedProductTable(
+            $this->createRelatedProductTableQueryBuilder(),
+            $this->getMoneyFacade(),
+            $idProductLabel
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface
+     */
+    protected function createRelatedProductTableQueryBuilder()
+    {
+        return new RelatedProductTableQueryBuilder(
+            $this->getProductQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
+     */
+    protected function getProductQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
     }
 
 }

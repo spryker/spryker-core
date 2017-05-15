@@ -9,4 +9,14 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="ProductLabelAbstractProductRelations">
+        <property name="idProductLabel" type="int"/>
+        <property name="abstractProductIds" type="array"/>
+    </transfer>
+
+    <transfer name="ProductLabelAggregateForm">
+        <property name="productLabel" type="ProductLabel"/>
+        <property name="abstractProductRelations" type="ProductLabelAbstractProductRelations"/>
+    </transfer>
+
 </transfers>

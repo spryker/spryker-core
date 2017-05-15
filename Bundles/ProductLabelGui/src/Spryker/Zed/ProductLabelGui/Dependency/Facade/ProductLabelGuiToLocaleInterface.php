@@ -22,4 +22,9 @@ interface ProductLabelGuiToLocaleInterface
      */
     public function getLocaleById($idLocale);
 
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale();
+
 }

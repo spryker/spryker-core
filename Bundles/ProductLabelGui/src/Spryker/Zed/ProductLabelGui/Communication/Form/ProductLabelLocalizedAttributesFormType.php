@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductLabelLocalizedAttributesType extends AbstractType
+class ProductLabelLocalizedAttributesFormType extends AbstractType
 {
 
     const FIELD_LOCALE_ID = 'localeId';

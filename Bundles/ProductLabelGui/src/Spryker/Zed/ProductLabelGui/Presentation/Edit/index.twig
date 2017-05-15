@@ -8,41 +8,18 @@
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' %}
+    {{ form_start(aggregateForm) }}
 
-        {% block widget_content %}
+    {{ tabs(
+        productLabelFormTabs,
+        {
+            'productLabelForm': aggregateForm.productLabel,
+            'relatedProductForm': aggregateForm.abstractProductRelations,
+            'relatedProductTable': relatedProductTable
+        }
+    ) }}
 
-            {{ form_start(productLabelForm) }}
-            {{ form_row(productLabelForm.name) }}
-            {{ form_row(productLabelForm.isActive) }}
-            {{ form_row(productLabelForm.isExclusive) }}
-            {{ form_row(productLabelForm.validFrom) }}
-            {{ form_row(productLabelForm.validTo) }}
-            {{ form_row(productLabelForm.frontEndReference) }}
-
-            <label class="control-label">{{ 'Translations' | trans }}</label>
-            {% for localizedAttributes in productLabelForm.localizedAttributes %}
-                {% set localeName = localizedAttributes.vars.value.getLocale().getLocaleName() %}
-
-                {% embed '@Gui/Partials/localized-ibox.twig' with {
-                localeName: localeName,
-                collapsed: false
-                } %}
-                    {% block content %}
-                        {{ form_errors(localizedAttributes) }}
-                        {{ form_widget(localizedAttributes) }}
-                    {% endblock %}
-                {% endembed %}
-            {% endfor %}
-
-            <hr />
-
-            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(productLabelForm) }}
-
-        {% endblock %}
-
-    {% endembed %}
+    {{ form_end(aggregateForm) }}
 {% endblock %}
 
 {% block head_css %}
