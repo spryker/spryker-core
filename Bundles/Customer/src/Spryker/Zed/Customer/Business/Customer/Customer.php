@@ -126,7 +126,8 @@ class Customer implements CustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity) {
+    protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
+    {
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
             $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
@@ -724,4 +725,5 @@ class Customer implements CustomerInterface
 
         return $customerTransfer;
     }
+
 }

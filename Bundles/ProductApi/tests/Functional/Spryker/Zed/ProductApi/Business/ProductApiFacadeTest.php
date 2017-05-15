@@ -101,7 +101,7 @@ class ProductApiFacadeTest extends Test
 
         $apiDataTransfer = new ApiDataTransfer();
         $data = [
-            'sku' => 'sku' . time(). 'new',
+            'sku' => 'sku' . time() . 'new',
             'attributes' => [],
             'product_concretes' => [],
             'id_tax_set' => 1,
