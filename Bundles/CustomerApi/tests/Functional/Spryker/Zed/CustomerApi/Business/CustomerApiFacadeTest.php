@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use RuntimeException;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
 
@@ -34,6 +35,8 @@ class CustomerApiFacadeTest extends Test
     protected $idCustomer;
 
     /**
+     * @throws \RuntimeException
+     *
      * @return void
      */
     public function setUp()
@@ -47,7 +50,7 @@ class CustomerApiFacadeTest extends Test
         $customerEntity->save();
         $this->idCustomer = $customerEntity->getIdCustomer();
         if ($this->idCustomer === null) {
-            throw new \RuntimeException('Adding test data failed');
+            throw new RuntimeException('Adding test data failed');
         }
     }
 
