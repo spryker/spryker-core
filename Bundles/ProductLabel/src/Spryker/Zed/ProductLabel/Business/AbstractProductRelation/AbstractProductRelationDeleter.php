@@ -60,7 +60,7 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
         foreach ($this->findEntitiesForLabel($idProductLabel) as $relationEntity) {
             $relationEntity->delete();
 
-            $this->productRelationTouchManager->touchActiveForAbstractProduct($relationEntity->getFkProductAbstract());
+            $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
         }
     }
 
@@ -75,6 +75,37 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
             ->queryContainer
             ->queryAbstractProductRelationsByProductLabel($idProductLabel)
             ->find();
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return void
+     */
+    protected function touchRelationsForAbstractProduct($idAbstractProduct)
+    {
+        if ($this->isEmptyRelationForAbstractProduct($idAbstractProduct)) {
+            $this->productRelationTouchManager->touchDeletedForAbstractProduct($idAbstractProduct);
+
+            return;
+        }
+
+        $this->productRelationTouchManager->touchActiveForAbstractProduct($idAbstractProduct);
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return bool
+     */
+    protected function isEmptyRelationForAbstractProduct($idAbstractProduct)
+    {
+        $relationCount = $this
+            ->queryContainer
+            ->queryProductLabelByAbstractProduct($idAbstractProduct)
+            ->count();
+
+        return ($relationCount === 0);
     }
 
 }

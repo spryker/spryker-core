@@ -37,4 +37,15 @@ class ProductLabelToTouchBridge implements ProductLabelToTouchInterface
         return $this->touchFacade->touchActive($itemType, $itemId, $keyChange);
     }
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $itemId)
+    {
+        return $this->touchFacade->touchDeleted($itemType, $itemId);
+    }
+
 }

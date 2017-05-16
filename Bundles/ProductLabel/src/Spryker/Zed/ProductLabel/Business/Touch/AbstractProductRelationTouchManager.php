@@ -39,4 +39,17 @@ class AbstractProductRelationTouchManager implements AbstractProductRelationTouc
         );
     }
 
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return void
+     */
+    public function touchDeletedForAbstractProduct($idAbstractProduct)
+    {
+        $this->touchFacade->touchDeleted(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            $idAbstractProduct
+        );
+    }
+
 }

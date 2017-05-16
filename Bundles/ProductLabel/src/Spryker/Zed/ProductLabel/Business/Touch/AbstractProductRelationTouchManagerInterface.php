@@ -17,4 +17,11 @@ interface AbstractProductRelationTouchManagerInterface
      */
     public function touchActiveForAbstractProduct($idAbstractProduct);
 
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return void
+     */
+    public function touchDeletedForAbstractProduct($idAbstractProduct);
+
 }
