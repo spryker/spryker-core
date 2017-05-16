@@ -9,6 +9,7 @@ namespace Spryker\Zed\Api\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
+use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiMetaTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
@@ -157,15 +158,26 @@ class Dispatcher implements DispatcherInterface
      */
     protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer)
     {
-        return [];
-        /*if (!$apiRequestTransfer->getData()) {
+        $resourceParameters = $apiRequestTransfer->getResourceParameters();
+
+        $apiDataTransfer = null;
+        foreach ($resourceParameters as $resourceParameter) {
+            if (!$resourceParameter instanceof ApiDataTransfer) {
+                continue;
+            }
+
+            $apiDataTransfer = $resourceParameter;
+            break;
+        }
+
+        if ($apiDataTransfer === null) {
             return [];
         }
 
         return $this->validator->validate(
             $apiRequestTransfer->getResource(),
-            $apiRequestTransfer->getData()
-        );*/
+            $apiDataTransfer
+        );
     }
 
 }
