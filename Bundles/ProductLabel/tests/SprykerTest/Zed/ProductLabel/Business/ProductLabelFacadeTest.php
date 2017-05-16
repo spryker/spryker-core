@@ -240,7 +240,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->setAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
         $this->tester->assertTouchActive(
-            ProductLabelConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT_PRODUCT_LABEL_RELATIONS,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
     }

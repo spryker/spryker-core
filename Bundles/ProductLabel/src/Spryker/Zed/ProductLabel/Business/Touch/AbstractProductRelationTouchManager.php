@@ -34,7 +34,7 @@ class AbstractProductRelationTouchManager implements AbstractProductRelationTouc
     public function touchActiveForAbstractProduct($idAbstractProduct)
     {
         $this->touchFacade->touchActive(
-            ProductLabelConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT_PRODUCT_LABEL_RELATIONS,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idAbstractProduct
         );
     }

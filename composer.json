@@ -104,6 +104,7 @@
     "spryker/product-discount-connector": "*",
     "spryker/product-image": "*",
     "spryker/product-label": "*",
+    "spryker/product-label-collector": "*",
     "spryker/product-label-gui": "*",
     "spryker/product-management": "*",
     "spryker/product-option": "*",
