@@ -339,6 +339,7 @@ class QueryContainerTest extends Test
 
     /**
      * @deprecated Use limit/offset instead
+     *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
     protected function getCriteriaForPaginationPageAndItemsPerPage()

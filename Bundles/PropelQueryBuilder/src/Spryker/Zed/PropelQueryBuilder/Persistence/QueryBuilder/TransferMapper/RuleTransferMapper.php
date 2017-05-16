@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\TransferMapper;
 
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
-use RuntimeException;
 use Spryker\Zed\PropelQueryBuilder\Dependency\Service\PropelQueryBuilderToUtilEncodingInterface;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Exception\QueryBuilderException;
 
 class RuleTransferMapper implements RuleTransferMapperInterface
 {
@@ -30,7 +30,7 @@ class RuleTransferMapper implements RuleTransferMapperInterface
     /**
      * @param string $json
      *
-     * @throws \RuntimeException
+     * @throws \Spryker\Zed\PropelQueryBuilder\Persistence\Exception\QueryBuilderException
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
@@ -45,7 +45,7 @@ class RuleTransferMapper implements RuleTransferMapperInterface
 
         $conditions = $this->utilEncodingService->decodeJson($json, true);
         if (!is_array($conditions)) {
-            throw new RuntimeException('Invalid criteria JSON string.');
+            throw new QueryBuilderException('Invalid criteria JSON string.');
         }
 
         $querySetTransfer->fromArray($conditions);
