@@ -14,7 +14,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 {
 
-    const RANGE = 'range';
+    const RANGE = 'Range';
 
     /**
      * @var \Spryker\Zed\Api\ApiConfig
@@ -41,7 +41,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
             return $apiRequestTransfer;
         }
 
-        preg_match('/[a-z]+ ([0-9]+)-([0-9]+)/', $headers[static::RANGE][0], $matches);
+        preg_match('/[a-z]+=([0-9]+)-([0-9]+)/', $headers[static::RANGE][0], $matches);
         if (!$matches) {
             return $apiRequestTransfer;
         }
