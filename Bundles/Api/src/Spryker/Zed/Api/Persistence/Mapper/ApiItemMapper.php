@@ -27,7 +27,7 @@ class ApiItemMapper implements ApiItemMapperInterface
         if ($data instanceof AbstractTransfer) {
             $itemData = $data->modifiedToArray();
         } else {
-            $itemData = $data;
+            $itemData = (array)$data;
         }
 
         $apiItemTransfer->setData($itemData);
