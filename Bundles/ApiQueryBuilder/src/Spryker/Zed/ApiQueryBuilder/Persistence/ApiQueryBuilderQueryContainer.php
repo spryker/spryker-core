@@ -35,9 +35,6 @@ class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements Ap
     /**
      * @api
      *
-     * @internal param ApiRequestTransfer $apiRequestTransfer
-     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
-     *
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductApi\Business\Model;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -173,11 +174,21 @@ class ProductApi implements ProductApiInterface
             $query->find()->toArray()
         );
 
-        foreach ($collection as $k => $productAbstractTransfer) {
-            $collection[$k] = $this->get($productAbstractTransfer->getIdProductAbstract())->getData();
+        foreach ($collection as $k => $productApiTransfer) {
+            $collection[$k] = $this->get($productApiTransfer->getIdProductAbstract())->getData();
         }
 
-        return $this->apiQueryContainer->createApiCollection($collection);
+        //FIXME
+        $apiPaginationTransfer = new ApiPaginationTransfer();
+        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());
+        $page = $apiRequestTransfer->getFilter()->getLimit() ? $apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1 : 1;
+        $apiPaginationTransfer->setPage($page);
+
+        $collection = $this->apiQueryContainer->createApiCollection($collection);
+
+        $collection->setPagination($apiPaginationTransfer);
+
+        return $collection;
     }
 
     /**

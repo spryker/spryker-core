@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
@@ -83,8 +84,6 @@ class CustomerApi implements CustomerApiInterface
 
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotSavedException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
@@ -196,11 +195,21 @@ class CustomerApi implements CustomerApiInterface
             $query->find()->toArray()
         );
 
-        foreach ($collection as $k => $customerTransfer) {
-            $collection[$k] = $this->get($customerTransfer->getIdCustomer())->getData();
+        foreach ($collection as $k => $customerApiTransfer) {
+            $collection[$k] = $this->get($customerApiTransfer->getIdCustomer())->getData();
         }
 
-        return $this->apiQueryContainer->createApiCollection($collection);
+        $collection = $this->apiQueryContainer->createApiCollection($collection);
+
+        //FIXME
+        $apiPaginationTransfer = new ApiPaginationTransfer();
+        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());
+        $page = $apiRequestTransfer->getFilter()->getLimit() ? $apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1 : 1;
+        $apiPaginationTransfer->setPage($page);
+
+        $collection->setPagination($apiPaginationTransfer);
+
+        return $collection;
     }
 
     /**
@@ -273,6 +282,7 @@ class CustomerApi implements CustomerApiInterface
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
      * @throws \Spryker\Zed\Api\Business\Exception\EntityNotSavedException
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomerFromResponse(CustomerResponseTransfer $customerResponseTransfer)
