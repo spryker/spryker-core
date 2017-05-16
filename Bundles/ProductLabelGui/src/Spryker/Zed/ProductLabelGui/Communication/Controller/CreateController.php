@@ -80,7 +80,10 @@ class CreateController extends AbstractController
         $aggregateFormTransfer = $aggregateForm->getData();
 
         $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
-        $this->storeRelatedProduct($aggregateFormTransfer->getAbstractProductRelations());
+        $this->storeRelatedProduct(
+            $aggregateFormTransfer->getAbstractProductRelations(),
+            $productLabelTransfer->getIdProductLabel()
+        );
 
         $this->addSuccessMessage(sprintf(
             'Product label #%d successfully created.',
@@ -91,7 +94,7 @@ class CreateController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
     protected function storeProductLabel(ProductLabelTransfer $productLabelTransfer)
     {
@@ -105,16 +108,23 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     * @param int $idProductLabel
      *
      * @return void
      */
-    protected function storeRelatedProduct(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
-    {
+    protected function storeRelatedProduct(
+        ProductLabelAbstractProductRelationsTransfer $relationsTransfer,
+        $idProductLabel
+    ) {
+        if (!count($relationsTransfer->getAbstractProductIds())) {
+            return;
+        }
+
         $this
             ->getFactory()
             ->getProductLabelFacade()
             ->setAbstractProductRelationsForLabel(
-                $relationsTransfer->getIdProductLabel(),
+                $idProductLabel,
                 $relationsTransfer->getAbstractProductIds()
             );
     }

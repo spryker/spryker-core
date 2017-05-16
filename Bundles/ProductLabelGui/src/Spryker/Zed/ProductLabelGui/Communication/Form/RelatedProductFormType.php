@@ -105,9 +105,17 @@ class RelatedProductFormType extends AbstractType
             ->get(static::FIELD_ABSTRACT_PRODUCT_IDS_CSV)
             ->addModelTransformer(new CallbackTransformer(
                 function (array $abstractProductIdsAsArray) {
+                    if (!count($abstractProductIdsAsArray)) {
+                        return [];
+                    }
+
                     return implode(',', $abstractProductIdsAsArray);
                 },
                 function ($abstractProductIdsAsCsv) {
+                    if (empty($abstractProductIdsAsCsv)) {
+                        return [];
+                    }
+
                     return explode(',', $abstractProductIdsAsCsv);
                 }
             ));
