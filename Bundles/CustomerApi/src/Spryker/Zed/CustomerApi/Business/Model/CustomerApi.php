@@ -140,6 +140,8 @@ class CustomerApi implements CustomerApiInterface
         $data = (array)$apiDataTransfer->getData();
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
+
+        $data = $this->processSecureFields($data);
         $customerTransfer->fromArray($data, true);
 
         $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
@@ -244,6 +246,22 @@ class CustomerApi implements CustomerApiInterface
         }
 
         return $columnSelectionTransfer;
+    }
+
+    /**
+     * Overwrite on project level to allow patching of secure fields.
+     *
+     * Customize to allow hashing and storing of password or registration key fields.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function processSecureFields(array $data)
+    {
+        unset($data['password'], $data['registration_key']);
+
+        return $data;
     }
 
 }
