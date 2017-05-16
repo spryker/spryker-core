@@ -345,6 +345,22 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createRemoveAllCalculatedDiscountsCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

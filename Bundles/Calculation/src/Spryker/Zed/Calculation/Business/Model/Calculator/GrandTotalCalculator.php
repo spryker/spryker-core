@@ -9,6 +9,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Service\UtilText\Model\Hash;
+
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class GrandTotalCalculator implements CalculatorInterface
@@ -24,6 +27,9 @@ class GrandTotalCalculator implements CalculatorInterface
         $calculableObjectTransfer->requireTotals();
 
         $grandTotal = $this->calculateGrandTotal($calculableObjectTransfer->getTotals());
+
+        $totalsTransfer = $calculableObjectTransfer->getTotals();
+        $totalsTransfer->setHash($this->generateTotalsHash($grandTotal));
 
         $calculableObjectTransfer->getTotals()->setGrandTotal($grandTotal);
     }
@@ -47,6 +53,18 @@ class GrandTotalCalculator implements CalculatorInterface
         }
 
         return $grandTotal;
+    }
+
+    /**
+     * @param int $grandTotal
+     *
+     * @return string
+     */
+    protected function generateTotalsHash($grandTotal)
+    {
+        $utilTextService = new UtilTextService();
+
+        return $utilTextService->hashValue($grandTotal, Hash::SHA256);
     }
 
 }

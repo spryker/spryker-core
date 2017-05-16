@@ -113,7 +113,7 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]),
+                static::GRAND_TOTAL => $this->getGrandTotal($item),
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
@@ -121,6 +121,16 @@ class OrdersTable extends AbstractTable
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return int
+     */
+    protected function getGrandTotal(array $item)
+    {
+        return $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
     }
 
     /**

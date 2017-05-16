@@ -93,7 +93,10 @@ class OrderUpdater implements OrderUpdaterInterface
      */
     protected function saveOrderTotals(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
     {
-         $taxTotal = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
+         $taxTotal = 0;
+        if ($orderTransfer->getTotals()->getTaxTotal()) {
+            $taxTotal = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
+        }
 
          $salesOrderTotalsEntity = new SpySalesOrderTotals();
          $salesOrderTotalsEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());

@@ -279,4 +279,17 @@ interface CalculationFacadeInterface
      */
     public function calculateOrderTaxTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
+    /**
+     * Specification:
+     *  - Loops over items and expense
+     *  - Sets empty \ArrayObject for calculated discounts
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer);
+
 }

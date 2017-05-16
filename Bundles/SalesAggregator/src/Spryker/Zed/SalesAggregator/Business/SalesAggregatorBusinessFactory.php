@@ -206,7 +206,7 @@ class SalesAggregatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesAggregator\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts
+     * @return \Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
      */
     public function createItemProductOptionsAndDiscountsTaxCalculator()
     {
