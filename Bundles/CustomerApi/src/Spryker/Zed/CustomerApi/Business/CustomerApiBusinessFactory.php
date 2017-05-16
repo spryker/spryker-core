@@ -57,9 +57,7 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerApiValidator()
     {
-        return new CustomerApiValidator(
-            $this->createCustomerTransferMapper()
-        );
+        return new CustomerApiValidator();
     }
 
     /**
