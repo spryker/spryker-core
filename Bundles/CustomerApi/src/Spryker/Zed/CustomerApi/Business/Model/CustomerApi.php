@@ -10,12 +10,14 @@ namespace Spryker\Zed\CustomerApi\Business\Model;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\Api\Business\Exception\EntityNotSavedException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface;
@@ -82,6 +84,8 @@ class CustomerApi implements CustomerApiInterface
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotSavedException
+     *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function add(ApiDataTransfer $apiDataTransfer)
@@ -93,7 +97,7 @@ class CustomerApi implements CustomerApiInterface
 
         $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
 
-        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        $customerTransfer = $this->getCustomerFromResponse($customerResponseTransfer);
 
         return $this->apiQueryContainer->createApiItem($customerTransfer, $customerTransfer->getIdCustomer());
     }
@@ -146,7 +150,8 @@ class CustomerApi implements CustomerApiInterface
 
         $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
 
-        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        $customerTransfer = $this->getCustomerFromResponse($customerResponseTransfer);
+
         return $this->apiQueryContainer->createApiItem($customerTransfer, $idCustomer);
     }
 
@@ -191,8 +196,8 @@ class CustomerApi implements CustomerApiInterface
             $query->find()->toArray()
         );
 
-        foreach ($collection as $k => $productAbstractTransfer) {
-            $collection[$k] = $this->get($productAbstractTransfer->getIdCustomer())->getData();
+        foreach ($collection as $k => $customerTransfer) {
+            $collection[$k] = $this->get($customerTransfer->getIdCustomer())->getData();
         }
 
         return $this->apiQueryContainer->createApiCollection($collection);
@@ -262,6 +267,27 @@ class CustomerApi implements CustomerApiInterface
         unset($data['password'], $data['registration_key']);
 
         return $data;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotSavedException
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerFromResponse(CustomerResponseTransfer $customerResponseTransfer)
+    {
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+        if (!$customerTransfer) {
+            $errors = [];
+            foreach ($customerResponseTransfer->getErrors() as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            throw new EntityNotSavedException('Could not save customer: ' . implode(',', $errors));
+        }
+
+        return $this->customerFacade->findCustomerById($customerTransfer);
     }
 
 }
