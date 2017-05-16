@@ -101,14 +101,14 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
                 continue;
             }
 
-            $unitOptionTaxAmount = (int)$this->calculateTaxAmount(
+            $unitOptionTaxAmount = $this->calculateTaxAmount(
                 $productOptionTransfer->getUnitGrossPriceWithDiscounts(),
                 $productOptionTransfer->getTaxRate()
             );
 
             $unitOptionTaxTotalAmount += $unitOptionTaxAmount;
 
-            $productOptionTransfer->setUnitTaxAmountWithDiscounts($unitOptionTaxAmount);
+            $productOptionTransfer->setUnitTaxAmountWithDiscounts((int)$unitOptionTaxAmount);
         }
 
         return $unitOptionTaxTotalAmount;
@@ -134,9 +134,9 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
                 $productOptionTransfer->getTaxRate()
             );
 
-            $sumOptionTaxTotalAmount += (int)$sumOptionTaxAmount;
+            $sumOptionTaxTotalAmount += $sumOptionTaxAmount;
 
-            $productOptionTransfer->setSumTaxAmountWithDiscounts($sumOptionTaxAmount);
+            $productOptionTransfer->setSumTaxAmountWithDiscounts((int)$sumOptionTaxAmount);
         }
 
         return $sumOptionTaxTotalAmount;
