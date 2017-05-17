@@ -37,8 +37,6 @@ class UpdateActionPreProcessor implements PreProcessorInterface
         $apiDataTransfer = new ApiDataTransfer();
         $apiDataTransfer->setData($postData);
 
-        $apiRequestTransfer->setData($apiDataTransfer);
-
         $params = [
             $idResource,
             $apiDataTransfer,

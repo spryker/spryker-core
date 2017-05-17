@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductApi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
 
@@ -19,6 +20,8 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
     const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
+
+    const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +34,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->provideApiQueryContainer($container);
         $container = $this->provideApiQueryBuilderQueryContainer($container);
+        $container = $this->provideProductFacade($container);
 
         return $container;
     }
@@ -99,6 +103,19 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function provideProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductApiToProductBridge($container->getLocator()->product()->facade());
         };
         return $container;
     }

@@ -18,6 +18,7 @@ class FindActionPostProcessor implements PostProcessorInterface
 {
 
     const QUERY_PAGE = 'page';
+    const QUERY_PAGES = 'pages';
 
     /**
      * @var \Spryker\Zed\Api\ApiConfig
@@ -54,8 +55,8 @@ class FindActionPostProcessor implements PostProcessorInterface
         $pagination = $this->generatePaginationUris($pagination, $apiRequestTransfer);
 
         // Return "Partial Content" as the result doesn't fit on a single page.
-        if ($pagination->getPages() > 1) {
-            $apiResponseTransfer->setCode(206);
+        if ($pagination->getPageTotal() > 1) {
+            $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_PARTIAL_CONTENT);
         }
 
         // Add pagination to Meta links
@@ -68,10 +69,10 @@ class FindActionPostProcessor implements PostProcessorInterface
         $apiResponseTransfer->getMeta()->setLinks($links);
 
         $data = $apiResponseTransfer->getMeta()->getData();
-        $data[self::QUERY_PAGE] = $pagination->getPage();
-        $data['pages'] = $pagination->getPages();
+        $data[static::QUERY_PAGE] = $pagination->getPage();
+        $data[static::QUERY_PAGES] = $pagination->getPageTotal();
         $data['records'] = count($apiResponseTransfer->getData());
-        $data['records_per_page'] = $pagination->getLimit();
+        $data['records_per_page'] = $pagination->getItemsPerPage();
         $data['records_total'] = $pagination->getTotal();
 
         $apiResponseTransfer->getMeta()->setData($data);
@@ -90,13 +91,13 @@ class FindActionPostProcessor implements PostProcessorInterface
         $query = $apiRequestTransfer->getQueryData();
 
         $paginationTransfer->setFirst($this->generateUri($apiRequestTransfer->getResource(), 1, $query));
-        $paginationTransfer->setLast($this->generateUri($apiRequestTransfer->getResource(), $paginationTransfer->getPages(), $query));
+        $paginationTransfer->setLast($this->generateUri($apiRequestTransfer->getResource(), $paginationTransfer->getPageTotal(), $query));
 
         $currentPage = $paginationTransfer->getPage();
         if ($currentPage > 1) {
             $paginationTransfer->setPrev($this->generateUri($apiRequestTransfer->getResource(), $currentPage - 1, $query));
         }
-        if ($currentPage < $paginationTransfer->getPages()) {
+        if ($currentPage < $paginationTransfer->getPageTotal()) {
             $paginationTransfer->setNext($this->generateUri($apiRequestTransfer->getResource(), $currentPage + 1, $query));
         }
 
@@ -114,7 +115,7 @@ class FindActionPostProcessor implements PostProcessorInterface
     protected function generateUri($resource, $page, $query)
     {
         $query[static::QUERY_PAGE] = $page;
-        $url = (new Url())->generate($this->apiConfig->getBaseUri() . $resource, $query);
+        $url = Url::generate($this->apiConfig->getBaseUri() . $resource, $query);
 
         return $url->build();
     }

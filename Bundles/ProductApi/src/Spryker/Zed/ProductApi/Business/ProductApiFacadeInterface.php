@@ -55,17 +55,6 @@ interface ProductApiFacadeInterface
      *
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function removeProduct($idProductAbstract);
-
-    /**
-     * Specification:
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function findProducts(ApiRequestTransfer $apiRequestTransfer);

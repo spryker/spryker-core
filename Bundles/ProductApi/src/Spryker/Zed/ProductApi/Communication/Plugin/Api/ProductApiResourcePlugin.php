@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductApi\Communication\Plugin\Api;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use RuntimeException;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductApi\ProductApiConfig;
@@ -56,11 +58,13 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     /**
      * @param int $idProductAbstract
      *
+     * @throws \RuntimeException
+     *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function remove($idProductAbstract)
     {
-        return $this->getFacade()->removeProduct($idProductAbstract);
+        throw new RuntimeException('Remove action not implemented on core level', ApiConfig::HTTP_CODE_NOT_FOUND);
     }
 
     /**

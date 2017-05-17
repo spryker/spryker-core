@@ -8,23 +8,11 @@
 namespace Spryker\Zed\CustomerApi\Business\Model\Validator;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Validation;
 
 class CustomerApiValidator implements CustomerApiValidatorInterface
 {
-
-    /**
-     * @var \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface
-     */
-    protected $transferMapper;
-
-    /**
-     * @param \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface $transferMapper
-     */
-    public function __construct(TransferMapperInterface $transferMapper)
-    {
-        $this->transferMapper = $transferMapper;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
@@ -37,7 +25,7 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
 
         $errors = [];
         $errors = $this->assertRequiredField($data, 'email', $errors);
-        $errors = $this->assertRequiredField($data, 'fk_locale', $errors);
+        $errors = $this->assertValidEmail($data, 'email', $errors);
 
         return $errors;
     }
@@ -54,6 +42,29 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
         if (!isset($data[$field]) || (array_key_exists($field, $data) && !$data[$field])) {
             $message = sprintf('Missing value for required field "%s"', $field);
             $errors[$field][] = $message;
+        }
+
+        return $errors;
+    }
+
+    /**
+     * @param array $data
+     * @param string $field
+     * @param array $errors
+     *
+     * @return array
+     */
+    protected function assertValidEmail(array $data, $field, array $errors)
+    {
+        if (isset($data[$field])) {
+            $validator = Validation::createValidator();
+            $violations = $validator->validate($data[$field], [
+                new Email(),
+            ]);
+            /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+            foreach ($violations as $violation) {
+                $errors[$field] = $violation->getMessage();
+            }
         }
 
         return $errors;
