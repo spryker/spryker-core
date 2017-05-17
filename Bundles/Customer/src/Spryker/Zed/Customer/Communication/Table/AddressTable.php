@@ -100,7 +100,6 @@ class AddressTable extends AbstractTable
     {
         $query = $this->customerQueryContainer->queryAddresses()
             ->filterByFkCustomer($this->idCustomer)
-            ->filterByAnonymizedAt(null)
             ->leftJoinCountry('country')
             ->withColumn('country.name', self::COL_COMPANY);
         $lines = $this->runQuery($query, $config);

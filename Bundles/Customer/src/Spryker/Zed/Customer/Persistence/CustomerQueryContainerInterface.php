@@ -93,16 +93,20 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param bool $withAnonymized
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
-    public function queryAddresses();
+    public function queryAddresses($withAnonymized = false);
 
     /**
      * @api
      *
+     * @param bool $withAnonymized
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomers();
+    public function queryCustomers($withAnonymized = false);
 
     /**
      * @api

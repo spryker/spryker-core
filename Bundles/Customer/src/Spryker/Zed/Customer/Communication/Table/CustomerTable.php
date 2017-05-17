@@ -187,7 +187,6 @@ class CustomerTable extends AbstractTable
     protected function prepareQuery()
     {
         $query = $this->customerQueryContainer->queryCustomers()
-            ->filterByAnonymizedAt(null)
             ->leftJoinBillingAddress()
             ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
