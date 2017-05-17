@@ -93,4 +93,24 @@ class PaginationByQueryFilterPreProcessorTest extends Test
         $this->assertSame(40, $apiRequestTransferAfter->getFilter()->getOffset());
     }
 
+    /**
+     * @return void
+     */
+    public function testProcessWithTooHighLimit()
+    {
+        $config = new ApiConfig();
+        $processor = new PaginationByQueryFilterPreProcessor($config);
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiRequestTransfer->setFilter(new ApiFilterTransfer());
+        $apiRequestTransfer->setQueryData([
+            PaginationByQueryFilterPreProcessor::LIMIT => 999,
+            PaginationByQueryFilterPreProcessor::PAGE => 3,
+        ]);
+
+        $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
+        $this->assertSame(100, $apiRequestTransferAfter->getFilter()->getLimit());
+        $this->assertSame(200, $apiRequestTransferAfter->getFilter()->getOffset());
+    }
+
 }
