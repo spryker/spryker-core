@@ -108,38 +108,50 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      * @api
      *
      * @param int $idProductAbstract
+     * @param array $excludeIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryImageSetByProductAbstractId($idProductAbstract)
+    public function queryImageSetByProductAbstractId($idProductAbstract, array $excludeIdProductImageSets = [])
     {
         return $this->getFactory()
             ->createProductImageSetQuery()
-                ->filterByFkProductAbstract($idProductAbstract)
-                ->useSpyProductImageSetToProductImageQuery()
-                    ->useSpyProductImageQuery()
-                    ->endUse()
-                ->orderBySortOrder(Criteria::DESC)
-                ->endUse();
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN);
     }
 
     /**
      * @api
      *
      * @param int $idProduct
+     * @param array $excludeIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryImageSetByProductId($idProduct)
+    public function queryImageSetByProductId($idProduct, array $excludeIdProductImageSets = [])
     {
         return $this->getFactory()
             ->createProductImageSetQuery()
-                ->filterByFkProduct($idProduct)
-                ->useSpyProductImageSetToProductImageQuery()
-                    ->useSpyProductImageQuery()
-                    ->endUse()
-                ->orderBySortOrder(Criteria::DESC)
-                ->endUse();
+            ->filterByFkProduct($idProduct)
+            ->filterByIdProductImageSet($excludeIdProductImageSets, Criteria::NOT_IN);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductImageSet
+     * @param array $excludeIdProductImage
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryProductImageSetToProductImageByProductImageSetId($idProductImageSet, array $excludeIdProductImage = [])
+    {
+        return $this
+            ->queryProductImageSetToProductImage()
+            ->useSpyProductImageQuery()
+                ->filterByIdProductImage($excludeIdProductImage, Criteria::NOT_IN)
+                ->endUse()
+            ->filterByFkProductImageSet($idProductImageSet);
     }
 
 }

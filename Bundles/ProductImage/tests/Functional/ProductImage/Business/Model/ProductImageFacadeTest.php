@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductImage\Business\Model;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -412,6 +413,159 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testRemovalProductImageSetFromProductConcrete()
+    {
+        $productConcreteTransfer = $this->createProductConcreteTransfer();
+        $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductId(
+            $productConcreteTransfer->getIdProductConcrete()
+        ));
+
+        $productImageTransfer = (new ProductImageTransfer())
+            ->setExternalUrlSmall(self::URL_SMALL)
+            ->setExternalUrlLarge(self::URL_LARGE);
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setName(self::SET_NAME)
+            ->setIdProduct($this->productConcreteEntity->getIdProduct())
+            ->addProductImage($productImageTransfer);
+
+        $this->assertConcreteHasNumberOfProductImageSet($productImageSetTransfers->count());
+
+        $productImageSetTransfers->append($productImageSetTransfer);
+        $productConcreteTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->createProductConcreteImageSetCollection($productConcreteTransfer);
+
+        $this->assertConcreteHasNumberOfProductImageSet($productImageSetTransfers->count());
+
+        $productImageSetTransfers->offsetUnset($productImageSetTransfers->count() - 1);
+        $productConcreteTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductConcreteImageSetCollection($productConcreteTransfer);
+
+        $this->assertConcreteHasNumberOfProductImageSet($productImageSetTransfers->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovalProductImageSetFromProductAbstract()
+    {
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
+        $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
+            $productAbstractTransfer->getIdProductAbstract()
+        ));
+
+        $productImageTransfer = (new ProductImageTransfer())
+            ->setExternalUrlSmall(self::URL_SMALL)
+            ->setExternalUrlLarge(self::URL_LARGE);
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setName(self::SET_NAME)
+            ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->addProductImage($productImageTransfer);
+
+        $this->assertAbstractHasNumberOfProductImageSet($productImageSetTransfers->count());
+
+        $productImageSetTransfers->append($productImageSetTransfer);
+        $productAbstractTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductAbstractImageSetCollection($productAbstractTransfer);
+
+        $this->assertAbstractHasNumberOfProductImageSet($productImageSetTransfers->count());
+
+        $productImageSetTransfers->offsetUnset($productImageSetTransfers->count() - 1);
+        $productAbstractTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductAbstractImageSetCollection($productAbstractTransfer);
+
+        $this->assertAbstractHasNumberOfProductImageSet($productImageSetTransfers->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovalProductImageFromProductConcrete()
+    {
+        $productConcreteTransfer = $this->createProductConcreteTransfer();
+        $productImageSetTransfers = new ArrayObject();
+
+        $productImageTransfer = (new ProductImageTransfer())
+            ->setExternalUrlSmall(self::URL_SMALL)
+            ->setExternalUrlLarge(self::URL_LARGE);
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setName(self::SET_NAME)
+            ->setIdProduct($this->productConcreteEntity->getIdProduct())
+            ->addProductImage($productImageTransfer);
+
+        $productImageSetTransfers->append($productImageSetTransfer);
+        $productConcreteTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductConcreteImageSetCollection($productConcreteTransfer);
+
+        $this->assertConcreteHasNumberOfProductImage($productImageSetTransfers->count());
+
+        $productImageSetTransfers->offsetUnset($productImageSetTransfers->count() - 1);
+        $productConcreteTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductConcreteImageSetCollection($productConcreteTransfer);
+
+        $this->assertConcreteHasNumberOfProductImage($productImageSetTransfers->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovalProductImageFromProductAbstract()
+    {
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
+        $productImageSetTransfers = new ArrayObject();
+
+        $productImageTransfer = (new ProductImageTransfer())
+            ->setExternalUrlSmall(self::URL_SMALL)
+            ->setExternalUrlLarge(self::URL_LARGE);
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setName(self::SET_NAME)
+            ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->addProductImage($productImageTransfer);
+
+        $productImageSetTransfers->append($productImageSetTransfer);
+        $productAbstractTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductAbstractImageSetCollection($productAbstractTransfer);
+
+        $this->assertAbstractHasNumberOfProductImage($productImageSetTransfers->count());
+
+        $productImageSetTransfers->offsetUnset($productImageSetTransfers->count() - 1);
+        $productAbstractTransfer->setImageSets($productImageSetTransfers);
+        $this->productImageFacade->updateProductAbstractImageSetCollection($productAbstractTransfer);
+
+        $this->assertAbstractHasNumberOfProductImage($productImageSetTransfers->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteProductImageSet()
+    {
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
+
+        $imageSet = new SpyProductImageSet();
+        $imageSet
+            ->setName(self::SET_NAME)
+            ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->setFkProduct(null)
+            ->setFkLocale(null)
+            ->save();
+
+        $this->assertProductImageSetExists($imageSet->getIdProductImageSet());
+
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->setIdProductImageSet($imageSet->getIdProductImageSet());
+
+        $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
+
+        $this->assertProductImageSetNotExists($imageSet->getIdProductImageSet());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return void
@@ -465,6 +619,90 @@ class ProductImageFacadeTest extends Test
         );
 
         $this->assertNotEmpty($imageCollection);
+    }
+
+    /**
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    protected function assertConcreteHasNumberOfProductImageSet($expectedCount)
+    {
+        $imageSetCollection = $this->queryContainer->queryImageSetByProductId(
+            $this->productConcreteEntity->getIdProduct()
+        );
+
+        $this->assertCount($expectedCount, $imageSetCollection);
+    }
+
+    /**
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    protected function assertAbstractHasNumberOfProductImageSet($expectedCount)
+    {
+        $imageSetCollection = $this->queryContainer->queryImageSetByProductAbstractId(
+            $this->productAbstractEntity->getIdProductAbstract()
+        );
+
+        $this->assertCount($expectedCount, $imageSetCollection);
+    }
+
+    /**
+     * @param int $idProductImageSet
+     *
+     * @return void
+     */
+    protected function assertProductImageSetExists($idProductImageSet)
+    {
+        $exists = (new SpyProductImageSetQuery())
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->exists();
+
+        $this->assertTrue($exists);
+    }
+
+    /**
+     * @param int $idProductImageSet
+     *
+     * @return void
+     */
+    protected function assertProductImageSetNotExists($idProductImageSet)
+    {
+        $exists = (new SpyProductImageSetQuery())
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->exists();
+
+        $this->assertFalse($exists);
+    }
+
+    /**
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    protected function assertAbstractHasNumberOfProductImage($expectedCount)
+    {
+        $imageCollection = $this->queryContainer->queryImageCollectionByProductAbstractId(
+            $this->productAbstractEntity->getIdProductAbstract()
+        );
+
+        $this->assertCount($expectedCount, $imageCollection);
+    }
+
+    /**
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    protected function assertConcreteHasNumberOfProductImage($expectedCount)
+    {
+        $imageCollection = $this->queryContainer->queryImageCollectionByProductId(
+            $this->productConcreteEntity->getIdProduct()
+        );
+
+        $this->assertCount($expectedCount, $imageCollection);
     }
 
     /**
