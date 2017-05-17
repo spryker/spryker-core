@@ -224,7 +224,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalCalculator()
     {
-        return new GrandTotalCalculator();
+        return new GrandTotalCalculator($this->getUtilTextService());
     }
 
     /**
@@ -289,6 +289,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
+     */
+    public function getUtilTextService()
+    {
+        return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
 }
