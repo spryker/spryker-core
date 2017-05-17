@@ -17,16 +17,16 @@
     "spryker/symfony": "^3.0.0",
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
-    "spryker/util-text": "^1.1.0",
     "spryker/util-sanitize": "^2.0.0",
+    "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/price": "*",
     "spryker/shipment": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/price": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
