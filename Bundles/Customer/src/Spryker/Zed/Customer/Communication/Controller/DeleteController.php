@@ -20,6 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 class DeleteController extends AbstractController
 {
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
     public function indexAction(Request $request)
     {
         $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
@@ -39,6 +44,11 @@ class DeleteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function confirmAction(Request $request)
     {
         $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
@@ -47,20 +57,13 @@ class DeleteController extends AbstractController
         $customerTransfer->setIdCustomer($idCustomer);
 
         try {
-            $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+            $this->getFacade()->anonymizeCustomer($customerTransfer);
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
             return $this->redirectResponse('/customer');
         }
 
-        $isSuccessful = $this->getFacade()->anonymizeCustomer($customerTransfer);
-
-        if ($isSuccessful) {
-            $this->addSuccessMessage('Customer successfully deleted');
-        } else {
-            $this->addSuccessMessage('Customer anonymization is failed');
-        }
-
+        $this->addSuccessMessage('Customer successfully deleted');
         return $this->redirectResponse('/customer');
     }
 

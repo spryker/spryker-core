@@ -59,6 +59,9 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     public function process(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer->requireIdCustomer();
+        $customerTransfer = $this->getCustomer($customerTransfer);
+
         $connection = $this->queryContainer->getConnection();
         $connection->beginTransaction();
 
@@ -80,6 +83,16 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
             $connection->rollBack();
             throw $e;
         }
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
+    protected function getCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customer->get($customerTransfer);
     }
 
     /**
