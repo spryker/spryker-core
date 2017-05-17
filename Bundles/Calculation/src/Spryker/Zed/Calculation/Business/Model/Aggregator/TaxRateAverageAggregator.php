@@ -73,6 +73,10 @@ class TaxRateAverageAggregator implements CalculatorInterface
      */
     protected function calculateTaxRateAverage(ItemTransfer $itemTransfer, $unitPriceToPayAggregationNetPrice)
     {
+        if (!$unitPriceToPayAggregationNetPrice) {
+            return 0;
+        }
+
         return round(
             ($itemTransfer->getUnitPriceToPayAggregation() / $unitPriceToPayAggregationNetPrice - 1) * 100,
             2

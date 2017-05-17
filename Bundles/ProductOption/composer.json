@@ -25,7 +25,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
+    "spryker/calculation": "If you want to have tax rate calculation plugin"
   },
   "description": "ProductOption bundle",
   "license": "proprietary",
