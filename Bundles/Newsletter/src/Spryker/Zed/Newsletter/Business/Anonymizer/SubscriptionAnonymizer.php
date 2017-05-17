@@ -22,13 +22,13 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     protected $queryContainer;
 
     /**
-     * @var SubscriptionRequestHandler
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
      */
     protected $requestHandler;
 
     /**
-     * @param NewsletterQueryContainerInterface $queryContainer
-     * @param SubscriptionRequestHandler $subscriptionRequestHandler
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler $subscriptionRequestHandler
      */
     public function __construct(NewsletterQueryContainerInterface $queryContainer, SubscriptionRequestHandler $subscriptionRequestHandler)
     {

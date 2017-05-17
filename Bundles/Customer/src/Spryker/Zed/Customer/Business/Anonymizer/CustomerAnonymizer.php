@@ -51,7 +51,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Exception
      *
@@ -87,9 +87,9 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
