@@ -10,6 +10,7 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 {
 
     use LoggerTrait;
-
-    const HTTP_CODE_SUCCESS = 200;
-    const HTTP_CODE_INTERNAL_ERROR = 500;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
@@ -95,8 +93,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function resolveStatusCode($code)
     {
-        if ($code < static::HTTP_CODE_SUCCESS || $code > static::HTTP_CODE_INTERNAL_ERROR) {
-            return static::HTTP_CODE_INTERNAL_ERROR;
+        if ($code < ApiConfig::HTTP_CODE_SUCCESS || $code > ApiConfig::HTTP_CODE_INTERNAL_ERROR) {
+            return ApiConfig::HTTP_CODE_INTERNAL_ERROR;
         }
 
         return $code;

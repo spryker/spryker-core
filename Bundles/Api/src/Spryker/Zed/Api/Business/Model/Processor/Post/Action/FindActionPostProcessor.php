@@ -18,6 +18,7 @@ class FindActionPostProcessor implements PostProcessorInterface
 {
 
     const QUERY_PAGE = 'page';
+    const QUERY_PAGES = 'pages';
 
     /**
      * @var \Spryker\Zed\Api\ApiConfig
@@ -55,7 +56,7 @@ class FindActionPostProcessor implements PostProcessorInterface
 
         // Return "Partial Content" as the result doesn't fit on a single page.
         if ($pagination->getPageTotal() > 1) {
-            $apiResponseTransfer->setCode(206);
+            $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_PARTIAL_CONTENT);
         }
 
         // Add pagination to Meta links
@@ -68,8 +69,8 @@ class FindActionPostProcessor implements PostProcessorInterface
         $apiResponseTransfer->getMeta()->setLinks($links);
 
         $data = $apiResponseTransfer->getMeta()->getData();
-        $data[self::QUERY_PAGE] = $pagination->getPage();
-        $data['pages'] = $pagination->getPageTotal();
+        $data[static::QUERY_PAGE] = $pagination->getPage();
+        $data[static::QUERY_PAGES] = $pagination->getPageTotal();
         $data['records'] = count($apiResponseTransfer->getData());
         $data['records_per_page'] = $pagination->getItemsPerPage();
         $data['records_total'] = $pagination->getTotal();

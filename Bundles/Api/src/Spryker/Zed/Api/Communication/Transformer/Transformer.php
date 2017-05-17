@@ -10,14 +10,12 @@ namespace Spryker\Zed\Api\Communication\Transformer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Shared\Config\Environment;
-use Spryker\Zed\Api\Business\Model\Dispatcher;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Formatter\FormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class Transformer implements TransformerInterface
 {
-
-    const HTTP_CODE_NO_CONTENT = 204;
 
     /**
      * @var \Spryker\Zed\Api\Communication\Formatter\FormatterInterface
@@ -63,14 +61,14 @@ class Transformer implements TransformerInterface
      */
     protected function addResponseContent(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        if ($apiResponseTransfer->getCode() === static::HTTP_CODE_NO_CONTENT) {
+        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT) {
             return $response;
         }
 
         $content = [];
         $content['code'] = $apiResponseTransfer->getCode();
         $content['message'] = $apiResponseTransfer->getMessage();
-        if ($apiResponseTransfer->getCode() === Dispatcher::HTTP_CODE_VALIDATION_ERRORS) {
+        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_VALIDATION_ERRORS) {
             $content['errors'] = $apiResponseTransfer->getValidationErrors();
         }
 

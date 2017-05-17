@@ -54,7 +54,6 @@
         <property name="pageTotal" type="int"/>
         <property name="itemsPerPage" type="int"/>
         <property name="total" type="int"/>
-        <property name="sort" type="array"/>
         <property name="prev" type="string"/>
         <property name="next" type="string"/>
         <property name="first" type="string"/>

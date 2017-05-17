@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\Api\Business\Exception\EntityNotSavedException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
@@ -227,7 +228,7 @@ class CustomerApi implements CustomerApiInterface
         $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;
         $pageTotal = $apiRequestTransfer->getFilter()->getLimit() ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
         if ($page > $pageTotal) {
-            throw new NotFoundHttpException('Out of bounds.', null, 404);
+            throw new NotFoundHttpException('Out of bounds.', null, ApiConfig::HTTP_CODE_NOT_FOUND);
         }
 
         $apiPaginationTransfer = new ApiPaginationTransfer();
