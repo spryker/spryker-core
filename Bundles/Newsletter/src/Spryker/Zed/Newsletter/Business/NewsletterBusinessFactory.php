@@ -89,7 +89,8 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     public function createSubscriptionAnonymizer()
     {
         return new SubscriptionAnonymizer(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createSubscriptionRequestHandler()
         );
     }
 

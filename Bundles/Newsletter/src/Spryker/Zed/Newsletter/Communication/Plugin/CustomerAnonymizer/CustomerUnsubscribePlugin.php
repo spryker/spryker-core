@@ -49,7 +49,6 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     {
         $subscriptionRequestTransfer = $this->createSubscriptionRequest($customerTransfer);
 
-        $this->getFacade()->unsubscribe($subscriptionRequestTransfer);
         $this->getFacade()->anonymizeSubscription($subscriptionRequestTransfer);
     }
 

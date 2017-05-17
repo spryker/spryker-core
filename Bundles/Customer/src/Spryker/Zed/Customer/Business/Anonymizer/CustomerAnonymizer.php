@@ -79,6 +79,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
             $this->updateCustomerAddresses($customerTransfer->getAddresses());
             $this->updateCustomer($customerTransfer);
 
+            $connection->commit();
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
