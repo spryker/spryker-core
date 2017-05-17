@@ -35,11 +35,10 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $id
-     * @param bool $withAnonymized
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomerById($id, $withAnonymized = false);
+    public function queryCustomerById($id);
 
     /**
      * @api
