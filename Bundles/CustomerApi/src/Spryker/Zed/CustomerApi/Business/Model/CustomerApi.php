@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model;
 
+use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
@@ -16,6 +17,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\Api\Business\Exception\EntityNotSavedException;
@@ -25,6 +27,7 @@ use Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomerApi implements CustomerApiInterface
 {
@@ -198,18 +201,44 @@ class CustomerApi implements CustomerApiInterface
         foreach ($collection as $k => $customerApiTransfer) {
             $collection[$k] = $this->get($customerApiTransfer->getIdCustomer())->getData();
         }
+        $apiCollectionTransfer = $this->apiQueryContainer->createApiCollection($collection);
 
-        $collection = $this->apiQueryContainer->createApiCollection($collection);
+        $apiCollectionTransfer = $this->addPagination($query, $apiCollectionTransfer, $apiRequestTransfer);
 
-        //FIXME
+        return $apiCollectionTransfer;
+    }
+
+    /**
+     * //FIXME: Move to generic place
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\ApiCollectionTransfer $apiCollectionTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array|\Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    protected function addPagination(ModelCriteria $query, ApiCollectionTransfer $apiCollectionTransfer, ApiRequestTransfer $apiRequestTransfer)
+    {
+        $query->setOffset(0);
+        $query->setLimit(-1);
+        $total = $query->count();
+        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;
+        $pageTotal = $apiRequestTransfer->getFilter()->getLimit() ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
+        if ($page > $pageTotal) {
+            throw new NotFoundHttpException('Out of bounds.', null, 404);
+        }
+
         $apiPaginationTransfer = new ApiPaginationTransfer();
         $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());
-        $page = $apiRequestTransfer->getFilter()->getLimit() ? $apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1 : 1;
         $apiPaginationTransfer->setPage($page);
+        $apiPaginationTransfer->setTotal($total);
+        $apiPaginationTransfer->setPageTotal($pageTotal);
 
-        $collection->setPagination($apiPaginationTransfer);
+        $apiCollectionTransfer->setPagination($apiPaginationTransfer);
 
-        return $collection;
+        return $apiCollectionTransfer;
     }
 
     /**

@@ -106,6 +106,33 @@ class ProductApiFacadeTest extends Test
         $data = $resultTransfer->getData();
         $this->assertGreaterThanOrEqual(209, $data[0]['sku']);
         $this->assertGreaterThanOrEqual(209, $data[1]['sku']);
+
+        $apiPaginationTransfer = $resultTransfer->getPagination();
+        $this->assertSame(2, $apiPaginationTransfer->getPage());
+        $this->assertSame(2, $apiPaginationTransfer->getItemsPerPage());
+        $this->assertGreaterThan(2, $apiPaginationTransfer->getTotal());
+        $this->assertGreaterThan(2, $apiPaginationTransfer->getPageTotal());
+    }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @expectedExceptionCode 404
+     * @expectedExceptionMessage Out of bounds.
+     *
+     * @return void
+     */
+    public function testFindOutOfBounds()
+    {
+        $productApiFacade = new ProductApiFacade();
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiFilterTransfer = new ApiFilterTransfer();
+        $apiFilterTransfer->setLimit(20);
+        $apiFilterTransfer->setOffset(9999);
+
+        $apiRequestTransfer->setFilter($apiFilterTransfer);
+
+        $productApiFacade->findProducts($apiRequestTransfer);
     }
 
     /**
