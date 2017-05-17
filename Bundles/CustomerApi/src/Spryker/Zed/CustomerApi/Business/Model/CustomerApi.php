@@ -226,7 +226,7 @@ class CustomerApi implements CustomerApiInterface
         $query->setLimit(-1);
         $total = $query->count();
         $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;
-        $pageTotal = $apiRequestTransfer->getFilter()->getLimit() ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
+        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
         if ($page > $pageTotal) {
             throw new NotFoundHttpException('Out of bounds.', null, ApiConfig::HTTP_CODE_NOT_FOUND);
         }
