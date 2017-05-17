@@ -51,24 +51,35 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @throws \Exception
      *
      * @return void
      */
     public function process(CustomerTransfer $customerTransfer)
     {
-        foreach ($this->plugins as $plugin) {
-            $plugin->process($customerTransfer);
+        $connection = $this->queryContainer->getConnection();
+        $connection->beginTransaction();
+
+        try {
+            foreach ($this->plugins as $plugin) {
+                $plugin->process($customerTransfer);
+            }
+
+            $addressesTransfer = $customerTransfer->getAddresses();
+            $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);
+            $customerTransfer->setAddresses($addressesTransfer);
+
+            $customerTransfer = $this->anonymizeCustomer($customerTransfer);
+
+            $this->updateCustomerAddresses($customerTransfer->getAddresses());
+            $this->updateCustomer($customerTransfer);
+
+        } catch (\Exception $e) {
+            $connection->rollBack();
+            throw $e;
         }
-
-        $addressesTransfer = $customerTransfer->getAddresses();
-        $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);
-        $customerTransfer->setAddresses($addressesTransfer);
-
-        $customerTransfer = $this->anonymizeCustomer($customerTransfer);
-
-        $this->updateCustomerAddresses($customerTransfer->getAddresses());
-        $this->updateCustomer($customerTransfer);
     }
 
     /**

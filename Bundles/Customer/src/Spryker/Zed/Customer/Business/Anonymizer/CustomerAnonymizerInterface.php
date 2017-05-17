@@ -13,6 +13,11 @@ interface CustomerAnonymizerInterface
 {
 
     /**
+     * Specification
+     *  - execute customer anonimize plugins
+     *  - execute customer address anonymization
+     *  - execute customer anonymization
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
