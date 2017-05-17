@@ -39,8 +39,6 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected $plugins;
 
     /**
-     * CustomerAnonymizer constructor.
-     *
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param array $customerAnonymizerPlugins
      */
@@ -55,7 +53,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
     public function process(CustomerTransfer $customerTransfer)
     {
@@ -69,10 +67,8 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
 
         $customerTransfer = $this->anonymizeCustomer($customerTransfer);
 
-        $isSuccessful = $this->updateCustomerAddresses($customerTransfer->getAddresses());
-        $isSuccessful &= $this->updateCustomer($customerTransfer);
-
-        return $isSuccessful;
+        $this->updateCustomerAddresses($customerTransfer->getAddresses());
+        $this->updateCustomer($customerTransfer);
     }
 
     /**
@@ -88,14 +84,21 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
         $customerTransfer->setSalutation(null);
         $customerTransfer->setGender(null);
         $customerTransfer->setDateOfBirth(null);
+        $customerTransfer->setEmail($this->generateRandomEmail());
 
+        return $customerTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateRandomEmail()
+    {
         do {
             $randomEmail = md5(mt_rand());
         } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
 
-        $customerTransfer->setEmail($randomEmail);
-
-        return $customerTransfer;
+        return $randomEmail;
     }
 
     /**
@@ -140,30 +143,23 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
     protected function updateCustomer(CustomerTransfer $customerTransfer)
     {
-        $customerTransferResponse = $this->customer->update($customerTransfer);
-        return $customerTransferResponse->getIsSuccess();
+        $this->customer->update($customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
      *
-     * @return bool
+     * @return void
      */
     protected function updateCustomerAddresses(AddressesTransfer $addressesTransfer)
     {
-        $isSuccessful = true;
-
         foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
-            if (!$this->address->updateAddress($addressTransfer)) {
-                $isSuccessful = false;
-            }
+            $this->address->updateAddress($addressTransfer);
         }
-
-        return $isSuccessful;
     }
 
 }

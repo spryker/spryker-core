@@ -28,7 +28,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer
      *
-     * @return bool
+     * @return void
      */
     public function process(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer)
     {
@@ -39,11 +39,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
         if ($spyNewsletterSubscriber) {
             $spyNewsletterSubscriber = $this->anonymizeSubscriber($spyNewsletterSubscriber);
             $spyNewsletterSubscriber->save();
-
-            return true;
         }
-
-        return false;
     }
 
     /**

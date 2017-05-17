@@ -378,11 +378,11 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createCustomerAnonymizer()
             ->process($customerTransfer);
     }

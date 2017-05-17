@@ -15,7 +15,7 @@ interface SubscriptionAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer
      *
-     * @return bool
+     * @return void
      */
     public function process(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer);
 

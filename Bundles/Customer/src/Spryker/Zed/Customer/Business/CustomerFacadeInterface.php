@@ -255,7 +255,7 @@ interface CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 

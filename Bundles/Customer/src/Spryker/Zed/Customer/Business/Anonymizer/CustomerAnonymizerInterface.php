@@ -15,7 +15,7 @@ interface CustomerAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return void
      */
     public function process(CustomerTransfer $customerTransfer);
 
