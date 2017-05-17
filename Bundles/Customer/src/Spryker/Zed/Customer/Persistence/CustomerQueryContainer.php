@@ -49,9 +49,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      *
      * @inheritdoc
      */
-    public function queryCustomerById($id)
+    public function queryCustomerById($id, $withAnonymized = false)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers($withAnonymized);
         $query->filterByIdCustomer($id);
 
         return $query;
