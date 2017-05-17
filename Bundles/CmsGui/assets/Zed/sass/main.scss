@@ -51,6 +51,21 @@
     }
 }
 
+.has-original, .has-diff {
+    td {
+        padding: 5px;
+    }
+}
+.placeholder-title {
+    vertical-align: top;
+}
+
+.current-version-box {
+    height: 56px;
+    padding: 10px;
+    font-size: 16px;
+}
+
 select.key-list {
     border: 1px solid #999;
 

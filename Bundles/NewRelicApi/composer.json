@@ -1,13 +1,24 @@
 {
   "name": "spryker/new-relic-api",
+  "description": "NewRelicApi bundle",
+  "license": "proprietary",
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "NewRelicApi bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "Spryker\\Shared\\NewRelicApi\\": "src/Spryker/Shared/NewRelicApi"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -15,16 +26,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\Shared\\NewRelicApi\\": "src/Spryker/Shared/NewRelicApi"
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ]
+  }
 }

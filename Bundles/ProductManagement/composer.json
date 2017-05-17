@@ -1,10 +1,7 @@
 {
   "name": "spryker/product-management",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "ProductManagement bundle",
+  "license": "proprietary",
   "require": {
     "everon/collection": "^1.0.0",
     "spryker/availability": "^5.0.0",
@@ -31,19 +28,22 @@
     "spryker/propel": "*",
     "spryker/silex": "*"
   },
-  "license": "proprietary",
-  "description": "ProductManagement bundle",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
     }
   },
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

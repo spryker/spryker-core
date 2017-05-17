@@ -4,10 +4,10 @@
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1",
+    "spryker/api-query-builder": "^0.1",
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.2.0",
-    "spryker/propel-query-builder": "^0.2.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
@@ -20,19 +20,12 @@
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
     },
     "psr-4": {
-      "Product\\Module\\": "tests/"
+      "ProductApi\\Module\\": "tests/"
     }
   },
   "autoload-dev": {
@@ -42,12 +35,19 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
   ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
   "config": {
     "sort-packages": true
   }

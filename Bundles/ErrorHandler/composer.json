@@ -1,15 +1,7 @@
 {
   "name": "spryker/error-handler",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
-  },
+  "description": "ErrorHandler bundle",
+  "license": "proprietary",
   "require": {
     "filp/whoops": "^2.1",
     "spryker/config": "^3.0.0",
@@ -24,10 +16,24 @@
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider you need to add this bundle."
   },
-  "description": "ErrorHandler bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"
@@ -35,11 +41,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ]
+  }
 }

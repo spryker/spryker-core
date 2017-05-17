@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CustomerApi\Business;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
-use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface CustomerApiFacadeInterface
@@ -33,12 +32,13 @@ interface CustomerApiFacadeInterface
      *
      * @api
      *
+     * @internal param ApiFilterTransfer $apiFilterTransfer
+     *
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerApiTransfer $customerTransfer
      */
-    public function getCustomer($idCustomer, ApiFilterTransfer $apiFilterTransfer);
+    public function getCustomer($idCustomer);
 
     /**
      * Specification:

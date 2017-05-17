@@ -1,5 +1,7 @@
 {
   "name": "spryker/application",
+  "description": "Application bundle",
+  "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
@@ -18,10 +20,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Application bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -40,6 +38,8 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

@@ -15,7 +15,9 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
+use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
+use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
@@ -98,6 +100,26 @@ abstract class CmsMocks extends PHPUnit_Framework_TestCase
     protected function createCmsPageUrlBuilderMock()
     {
         return $this->getMockBuilder(CmsPageUrlBuilderInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
+     */
+    protected function createCmsGlossarySaverMock()
+    {
+        return $this->getMockBuilder(CmsGlossarySaverInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
+     */
+    protected function createTemplateManagerMock()
+    {
+        return $this->getMockBuilder(TemplateManager::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getTemplateById'])
             ->getMock();
     }
 

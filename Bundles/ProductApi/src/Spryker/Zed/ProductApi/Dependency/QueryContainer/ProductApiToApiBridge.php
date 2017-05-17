@@ -35,12 +35,13 @@ class ProductApiToApiBridge implements ProductApiToApiInterface
 
     /**
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param int|null $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function createApiItem($data)
+    public function createApiItem($data, $id = null)
     {
-        return $this->apiQueryContainer->createApiItem($data);
+        return $this->apiQueryContainer->createApiItem($data, $id);
     }
 
 }

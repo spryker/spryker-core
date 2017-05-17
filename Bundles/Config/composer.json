@@ -1,5 +1,15 @@
 {
   "name": "spryker/config",
+  "description": "Config bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -11,35 +21,25 @@
       "src/Spryker/Shared/Config.php"
     ]
   },
-  "require": {
-    "spryker/kernel": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
-  },
-  "description": "Config bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
   ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

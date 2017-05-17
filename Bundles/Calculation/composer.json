@@ -1,10 +1,7 @@
 {
   "name": "spryker/calculation",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Calculation bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/util-text": "^1.1.0",
@@ -17,8 +14,16 @@
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
-  "description": "Calculation bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -28,10 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

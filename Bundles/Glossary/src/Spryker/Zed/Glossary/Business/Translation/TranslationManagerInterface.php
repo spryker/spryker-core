@@ -124,6 +124,13 @@ interface TranslationManagerInterface
     public function deleteTranslation($keyName, LocaleTransfer $locale);
 
     /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys);
+
+    /**
      * @param string $keyName
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer

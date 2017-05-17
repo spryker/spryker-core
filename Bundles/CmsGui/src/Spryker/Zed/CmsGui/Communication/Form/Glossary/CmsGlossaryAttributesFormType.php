@@ -78,8 +78,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_GLOSSARY_KEY_SEARCH_OPTIONS);
-
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
@@ -103,12 +101,10 @@ class CmsGlossaryAttributesFormType extends AbstractType
     {
         $this
             ->addFkPageField($builder)
-            ->addGlossaryKeyField($builder)
             ->addIdCmsGlossaryKeyMappingField($builder)
             ->addTemplateNameField($builder)
             ->addPlaceholderField($builder)
-            ->addTranslationsField($builder)
-            ->addSearchOptionField($builder, $options);
+            ->addTranslationsField($builder);
     }
 
     /**
@@ -120,7 +116,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class, [
             'constraints' => [
-               $this->uniqueGlossaryForSearchTypeConstraint,
+                $this->uniqueGlossaryForSearchTypeConstraint,
             ],
         ]);
 

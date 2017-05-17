@@ -1,5 +1,7 @@
 {
   "name": "spryker/dummy-payment",
+  "description": "DummyPayment bundle",
+  "license": "proprietary",
   "require": {
     "spryker/checkout": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -15,18 +17,6 @@
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/testify": "*"
-  },
-  "description": "DummyPayment bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
   },
   "autoload": {
     "psr-0": {
@@ -45,10 +35,20 @@
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }

@@ -1,10 +1,7 @@
 {
   "name": "spryker/category-exporter",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "CategoryExporter bundle",
+  "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -15,8 +12,11 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "CategoryExporter bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

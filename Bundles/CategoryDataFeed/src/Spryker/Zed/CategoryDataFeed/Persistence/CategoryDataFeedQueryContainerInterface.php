@@ -18,7 +18,7 @@ interface CategoryDataFeedQueryContainerInterface extends QueryContainerInterfac
      *
      * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer
      *
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryDataFeed(CategoryDataFeedTransfer $categoryDataFeedTransfer);
 

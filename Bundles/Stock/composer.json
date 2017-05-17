@@ -1,5 +1,7 @@
 {
   "name": "spryker/stock",
+  "description": "Stock bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
@@ -12,10 +14,6 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "Stock bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -31,6 +29,8 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

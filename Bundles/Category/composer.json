@@ -20,8 +20,6 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -38,6 +36,8 @@
       "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

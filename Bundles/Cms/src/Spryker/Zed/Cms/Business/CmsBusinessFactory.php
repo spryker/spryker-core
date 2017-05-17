@@ -20,6 +20,15 @@ use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsGlossaryKeyMappingMigration;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsPageLocalizedAttributesMigration;
+use Spryker\Zed\Cms\Business\Version\Migration\CmsTemplateMigration;
+use Spryker\Zed\Cms\Business\Version\VersionFinder;
+use Spryker\Zed\Cms\Business\Version\VersionGenerator;
+use Spryker\Zed\Cms\Business\Version\VersionMigration;
+use Spryker\Zed\Cms\Business\Version\VersionPublisher;
+use Spryker\Zed\Cms\Business\Version\VersionRollback;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
@@ -155,7 +164,9 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getUrlFacade(),
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->createCmsUrlBuilder()
+            $this->createCmsUrlBuilder(),
+            $this->createCmsGlossarySaver(),
+            $this->createTemplateManager()
         );
     }
 
@@ -185,6 +196,138 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->createCmsGlossaryKeyGenerator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\VersionFinderInterface
+     */
+    public function createVersionFinder()
+    {
+        return new VersionFinder(
+            $this->getQueryContainer(),
+            $this->createVersionDataMapper(),
+            $this->getCmsVersionTransferExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\VersionPublisherInterface
+     */
+    public function createVersionPublisher()
+    {
+        return new VersionPublisher(
+            $this->createVersionGenerator(),
+            $this->createVersionDataMapper(),
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->getCmsVersionPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface
+     */
+    public function createVersionGenerator()
+    {
+        return new VersionGenerator(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\VersionMigrationInterface
+     */
+    public function createVersionMigration()
+    {
+        return new VersionMigration(
+            $this->getUtilEncodingService(),
+            [
+                $this->createCmsTemplateMigration(),
+                $this->createCmsPageLocalizedAttributeMigration(),
+                $this->createCmsGlossaryKeyMappingMigration(),
+            ]
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
+     */
+    public function createCmsTemplateMigration()
+    {
+        return new CmsTemplateMigration(
+            $this->createTemplateManager(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
+     */
+    public function createCmsPageLocalizedAttributeMigration()
+    {
+        return new CmsPageLocalizedAttributesMigration(
+            $this->getLocaleFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface
+     */
+    public function createCmsGlossaryKeyMappingMigration()
+    {
+        return new CmsGlossaryKeyMappingMigration(
+            $this->createCmsGlossarySaver(),
+            $this->getLocaleFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\VersionRollbackInterface
+     */
+    public function createVersionRollback()
+    {
+        return new VersionRollback(
+            $this->createVersionPublisher(),
+            $this->createVersionGenerator(),
+            $this->createVersionMigration(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
+     */
+    public function createVersionDataMapper()
+    {
+        return new VersionDataMapper(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
+     */
+    protected function getCmsVersionPostSavePlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
+     */
+    protected function getCmsVersionTransferExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

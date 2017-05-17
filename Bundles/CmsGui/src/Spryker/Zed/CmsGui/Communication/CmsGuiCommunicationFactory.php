@@ -14,11 +14,14 @@ use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
+use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
@@ -59,6 +62,24 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createPlaceholderTabs(CmsGlossaryTransfer $cmsGlossaryTransfer)
     {
         return new GlossaryTabs($cmsGlossaryTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
+     * @param int|null $idCmsPage
+     * @param int|null $version
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, $idCmsPage = null, $version = null)
+    {
+        $cmsVersionFormType = $this->createCmsVersionFormType();
+
+        return $this->getFormFactory()->create(
+            $cmsVersionFormType,
+            $cmsVersionDataProvider->getData($idCmsPage, $version),
+            $cmsVersionDataProvider->getOptions($idCmsPage)
+        );
     }
 
     /**
@@ -110,6 +131,16 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider
+     */
+    public function createCmsVersionFormDataProvider()
+    {
+        return new CmsVersionDataProvider(
+            $this->getCmsFacade()
+        );
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
     public function createCmsPageFormType()
@@ -118,6 +149,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createCmsPageAttributesFormType(),
             $this->createCmsPageMetaAttributesFormType()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType
+     */
+    protected function createCmsVersionFormType()
+    {
+        return new CmsVersionFormType();
     }
 
     /**
@@ -203,6 +242,17 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper
+     */
+    public function createCmsVersionDataHelper()
+    {
+        return new CmsVersionMapper(
+            $this->getCmsQueryContainer(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface
      */
     public function getLocaleFacade()
@@ -240,6 +290,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Service\CmsGuiToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

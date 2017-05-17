@@ -1,10 +1,7 @@
 {
   "name": "spryker/cart",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Cart bundle",
+  "license": "proprietary",
   "require": {
     "spryker/calculation": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -21,8 +18,18 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "Cart bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "ClientUnit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -32,12 +39,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "ClientUnit": "tests/"
-    }
   }
 }

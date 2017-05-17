@@ -13,17 +13,31 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsConfig extends AbstractBundleConfig
 {
 
+    const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+
     /**
+     * @deprecated use getTemplateRealPaths() instead
+     *
      * @param string $templateRelativePath
      *
      * @return string
      */
     public function getTemplateRealPath($templateRelativePath)
     {
-        $templateRelativePath = substr($templateRelativePath, 4);
-        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $this->get(CmsConstants::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $this->get(CmsConstants::YVES_THEME) . $templateRelativePath;
+        return $this->getAbsolutePath($templateRelativePath, 'Yves');
+    }
 
-        return $physicalAddress;
+    /**
+     * @param string $templateRelativePath
+     *
+     * @return array
+     */
+    public function getTemplateRealPaths($templateRelativePath)
+    {
+        return [
+            $this->getAbsolutePath($templateRelativePath, 'Yves'),
+            $this->getAbsolutePath($templateRelativePath, 'Shared'),
+        ];
     }
 
     /**
@@ -32,6 +46,26 @@ class CmsConfig extends AbstractBundleConfig
     public function appendPrefixToCmsPageUrl()
     {
         return false;
+    }
+
+    /**
+     * @param string $templateRelativePath
+     * @param string $twigLayer
+     *
+     * @return string
+     */
+    protected function getAbsolutePath($templateRelativePath, $twigLayer)
+    {
+        $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
+
+        return sprintf(
+            '%s/%s/%s/Cms/Theme/%s%s',
+            APPLICATION_SOURCE_DIR,
+            $this->get(CmsConstants::PROJECT_NAMESPACE),
+            $twigLayer,
+            $this->get(CmsConstants::YVES_THEME),
+            $templateRelativePath
+        );
     }
 
 }

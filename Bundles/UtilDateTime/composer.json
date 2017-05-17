@@ -2,13 +2,6 @@
   "name": "spryker/util-date-time",
   "description": "UtilDateTime bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -18,6 +11,13 @@
     "psr-0": {
       "Unit": "tests/",
       "Functional": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

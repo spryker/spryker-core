@@ -23,6 +23,10 @@ use Spryker\Zed\Cms\Business\CmsFacade;
 class CmsFacadePageTest extends Test
 {
 
+    const CMS_PAGE_NEW_TITLE = 'new title';
+    const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
+    const CMS_PAGE_NEW_DESCRIPTION = 'new description';
+
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
@@ -106,9 +110,9 @@ class CmsFacadePageTest extends Test
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
-        $persistedCmsPageMetaAttributes->setMetaTitle('new title');
-        $persistedCmsPageMetaAttributes->setMetaKeywords('new key words');
-        $persistedCmsPageMetaAttributes->setMetaDescription('new description');
+        $persistedCmsPageMetaAttributes->setMetaTitle(self::CMS_PAGE_NEW_TITLE);
+        $persistedCmsPageMetaAttributes->setMetaKeywords(self::CMS_PAGE_NEW_KEY_WORDS);
+        $persistedCmsPageMetaAttributes->setMetaDescription(self::CMS_PAGE_NEW_DESCRIPTION);
 
         $persistedCmsPageAttributes = $persistedCmsPageTransfer->getPageAttributes()[0];
         $persistedCmsPageAttributes->setName('new page name');
@@ -214,6 +218,165 @@ class CmsFacadePageTest extends Test
         $url = $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
 
         $this->assertEquals($cmsPageAttributesTransfer->getUrl(), $url);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishPageShouldPersistCmsVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $cmsVersionTransfer = $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $this->assertNotNull($cmsVersionTransfer);
+        $this->assertEquals($cmsVersionTransfer->getFkCmsPage(), $idCmsPage);
+        $this->assertEquals($cmsVersionTransfer->getVersion(), 1);
+        $this->assertNotEmpty($cmsVersionTransfer->getData());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishPageShouldGetNewVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
+        $cmsVersionTransferTwo = $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $this->assertGreaterThan($cmsVersionTransferOne->getVersion(), $cmsVersionTransferTwo->getVersion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRollbackPageShouldGetOldData()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        foreach ($persistedCmsPageTransfer->getMetaAttributes() as $metaAttribute) {
+            $metaAttribute->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+            $metaAttribute->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+            $metaAttribute->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
+        }
+
+        $updatedPageTransfer = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+        $updatedCmsPageMetaAttributes = $updatedPageTransfer->getMetaAttributes()[0];
+
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->rollback($idCmsPage, $cmsVersionTransferOne->getVersion());
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+        $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
+
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRevertPageShouldGetOldData()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        foreach ($persistedCmsPageTransfer->getMetaAttributes() as $metaAttribute) {
+            $metaAttribute->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+            $metaAttribute->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+            $metaAttribute->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
+        }
+
+        $updatedPageTransfer = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+        $updatedCmsPageMetaAttributes = $updatedPageTransfer->getMetaAttributes()[0];
+
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertEquals($updatedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+
+        $this->cmsFacade->revert($idCmsPage);
+
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+        $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
+
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaDescription(), static::CMS_PAGE_NEW_DESCRIPTION);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaKeywords(), static::CMS_PAGE_NEW_KEY_WORDS);
+        $this->assertNotEquals($persistedCmsPageMetaAttributes->getMetaTitle(), static::CMS_PAGE_NEW_TITLE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLatestCmsVersionReturnsLatestVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $cmsVersionTransferOne = $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $cmsVersionTransferTwo = $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+        $this->assertGreaterThan($cmsVersionTransferOne->getVersion(), $cmsVersionTransferTwo->getVersion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAllCmsVersionByReturnsAllVersions()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $versions = $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
+
+        $this->assertEquals(count($versions), 2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCmsVersionByVersionNumberReturnsSameVersion()
+    {
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+        $this->cmsFacade->publishWithVersion($idCmsPage);
+
+        $cmsVersion = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, 1);
+
+        $this->assertEquals($cmsVersion->getVersion(), 1);
+    }
+
+    /**
+     * @return int
+     */
+    protected function createCmsPageWithGlossaryAttributes()
+    {
+        $fixtures = $this->createCmsPageTransferFixtures();
+        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
+
+        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
+        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+
+        $cmsGlossaryAttributesTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
+
+        $translationFixtures = $this->getTranslationFixtures();
+
+        $translations = $cmsGlossaryAttributesTransfer->getTranslations();
+        foreach ($translations as $cmsPlaceholderTranslationTransfer) {
+            $cmsPlaceholderTranslationTransfer->setTranslation($translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]);
+        }
+        $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
+
+        return $idCmsPage;
     }
 
     /**
