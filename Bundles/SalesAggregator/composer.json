@@ -1,10 +1,7 @@
 {
   "name": "spryker/sales-aggregator",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "SalesAggregator bundle",
+  "license": "proprietary",
   "require": {
     "spryker/discount": "^4.0.0",
     "spryker/kernel": "^3.0.0",
@@ -22,8 +19,17 @@
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
-  "description": "SalesAggregator bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -33,11 +39,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

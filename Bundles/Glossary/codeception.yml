@@ -1,5 +1,10 @@
 namespace: Glossary
 actor: Tester
+
+include:
+    - tests/SprykerTest/Shared/Glossary
+    - tests/SprykerTest/Zed/Glossary
+
 paths:
     tests: tests
     log: tests/_output

@@ -1,5 +1,7 @@
 {
   "name": "spryker/discount",
+  "description": "Discount bundle",
+  "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -21,10 +23,6 @@
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
-  "description": "Discount bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -41,6 +39,14 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"
@@ -48,11 +54,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ]
+  }
 }

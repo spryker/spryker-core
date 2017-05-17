@@ -1,10 +1,7 @@
 {
   "name": "spryker/sql-criteria-builder",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "SqlCriteriaBuilder bundle",
+  "license": "proprietary",
   "require": {
     "everon/collection": "~1.0.3",
     "everon/criteria-builder": "~1.1.5",
@@ -15,8 +12,11 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "SqlCriteriaBuilder bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

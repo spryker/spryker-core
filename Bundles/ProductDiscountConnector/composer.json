@@ -1,10 +1,7 @@
 {
   "name": "spryker/product-discount-connector",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "ProductDiscountConnector bundle",
+  "license": "proprietary",
   "require": {
     "spryker/discount": "^4.0.0",
     "spryker/kernel": "^3.0.0",
@@ -19,8 +16,17 @@
     "spryker/tax": "*",
     "spryker/testify": "*"
   },
-  "description": "ProductDiscountConnector bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -30,11 +36,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

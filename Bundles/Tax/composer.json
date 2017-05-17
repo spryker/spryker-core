@@ -1,10 +1,7 @@
 {
   "name": "spryker/tax",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Tax bundle",
+  "license": "proprietary",
   "require": {
     "spryker/calculation": "^4.0.0",
     "spryker/country": "^3.0.0",
@@ -24,8 +21,17 @@
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation."
   },
-  "description": "Tax bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -35,11 +41,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }

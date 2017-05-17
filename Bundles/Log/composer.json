@@ -1,5 +1,19 @@
 {
   "name": "spryker/log",
+  "description": "Log bundle",
+  "license": "proprietary",
+  "require": {
+    "psr/log": "~1.0.0",
+    "spryker/config": "^3.0.0",
+    "spryker/monolog": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -10,20 +24,6 @@
       "Unit": "tests/"
     }
   },
-  "require": {
-    "psr/log": "~1.0.0",
-    "spryker/config": "^3.0.0",
-    "spryker/monolog": "^2.0.0"
-  },
-  "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
-  "description": "Log bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

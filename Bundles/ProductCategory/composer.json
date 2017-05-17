@@ -1,10 +1,7 @@
 {
   "name": "spryker/product-category",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "ProductCategory bundle",
+  "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",
     "spryker/event": "^1.0.0",
@@ -24,8 +21,18 @@
   "suggest": {
     "spryker/util-encoding": "Optional dependency. Add this bundle if you want to use it's functionality."
   },
-  "description": "ProductCategory bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "Acceptance": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -35,12 +42,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
-    }
   }
 }

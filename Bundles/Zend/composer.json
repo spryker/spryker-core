@@ -1,5 +1,7 @@
 {
   "name": "spryker/zend",
+  "description": "Zend bundle",
+  "license": "proprietary",
   "require": {
     "zendframework/zend-code": "^2.6.2",
     "zendframework/zend-config": "^2.5.1",
@@ -8,8 +10,6 @@
     "zendframework/zend-http": "^2.5.3",
     "zendframework/zend-servicemanager": "^2.7.4"
   },
-  "description": "Zend bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

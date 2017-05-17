@@ -1,5 +1,7 @@
 {
   "name": "spryker/product-option",
+  "description": "ProductOption bundle",
+  "license": "proprietary",
   "require": {
     "spryker/country": "^3.0.0",
     "spryker/glossary": "^3.0.0",
@@ -28,18 +30,6 @@
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
     "spryker/calculation": "If you want to have tax rate calculation plugin"
   },
-  "description": "ProductOption bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -51,5 +41,15 @@
       "Unit": "tests/",
       "Acceptance": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "4.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -1,23 +1,13 @@
 {
   "name": "spryker/key-builder",
+  "description": "KeyBuilder bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "description": "KeyBuilder bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
   },
   "autoload": {
     "psr-0": {
@@ -28,5 +18,15 @@
     "psr-0": {
       "Unit": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -1,5 +1,7 @@
 {
   "name": "spryker/product-relation-collector",
+  "description": "ProductRelationCollector bundle",
+  "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",
     "spryker/kernel": "^3.0.0",
@@ -19,18 +21,6 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "description": "ProductRelationCollector bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -40,5 +30,15 @@
     "psr-0": {
       "Functional": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

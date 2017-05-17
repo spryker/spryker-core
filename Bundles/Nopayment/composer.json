@@ -1,11 +1,7 @@
 {
   "name": "spryker/nopayment",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
+  "description": "Nopayment bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/sales": "^5.0.0"
@@ -17,8 +13,17 @@
   "suggest": {
     "spryker/oms": "If you want to use Oms command plugins you need to install spryker/oms."
   },
-  "description": "Nopayment bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Function": "tests/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -28,10 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
   }
 }

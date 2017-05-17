@@ -19,13 +19,6 @@
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -38,12 +31,19 @@
       "Unit": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
   ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
   "config": {
     "sort-packages": true
   }
