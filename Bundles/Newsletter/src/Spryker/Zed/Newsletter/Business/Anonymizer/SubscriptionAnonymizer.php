@@ -34,7 +34,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     {
         $newsletterSubscriberTransfer = $newsletterSubscriptionRequestTransfer->getNewsletterSubscriber();
 
-        $spyNewsletterSubscriber = $this->getSubscriber($newsletterSubscriberTransfer);
+        $spyNewsletterSubscriber = $this->findSubscriber($newsletterSubscriberTransfer);
 
         if ($spyNewsletterSubscriber) {
             $spyNewsletterSubscriber = $this->anonymizeSubscriber($spyNewsletterSubscriber);
@@ -47,7 +47,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber|null
      */
-    protected function getSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
+    protected function findSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
         return $this->queryContainer
             ->querySubscriberByIdCustomer($newsletterSubscriberTransfer->getFkCustomer())

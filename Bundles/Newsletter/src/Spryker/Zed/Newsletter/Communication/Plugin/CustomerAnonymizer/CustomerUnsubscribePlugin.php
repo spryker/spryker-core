@@ -39,6 +39,8 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void

@@ -15,8 +15,8 @@
 
         {% block widget_content %}
 
-            <a href="{{ url('/customer/view', {'id-customer': idCustomer}) }}" class="btn btn-back">Back</a>
-            <a href="{{ url('/customer/delete/confirm', {'id-customer': idCustomer}) }}" class="btn btn-danger">Delete account</a>
+            <a href="{{ url('/customer/view', {'id-customer': idCustomer}) }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+            <a href="{{ url('/customer/delete/confirm', {'id-customer': idCustomer}) }}" class="btn btn-danger">{{ 'Delete account' | trans}}</a>
 
         {% endblock %}
 

@@ -89,7 +89,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerDeletePlugins(Container $container)
     {
         $container[static::PLUGINS_CUSTOMER_ANONYMIZER] = function (Container $container) {
-            return $this->getCustomerDeletePlugins();
+            return $this->getCustomerAnonymizerPlugins();
         };
 
         return $container;
@@ -98,7 +98,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
      */
-    protected function getCustomerDeletePlugins()
+    protected function getCustomerAnonymizerPlugins()
     {
         return [];
     }

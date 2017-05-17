@@ -374,6 +374,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

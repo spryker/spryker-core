@@ -13,6 +13,9 @@ interface CustomerAnonymizerPluginInterface
 {
 
     /**
+     * Specification
+     *  - process anonymization on related to customer subject
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

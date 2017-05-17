@@ -132,8 +132,8 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function anonymizeCustomerAddresses(AddressesTransfer $addressesTransfer)
     {
-        foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
-            $addressTransfer = $this->anonymizeCustomerAddress($addressTransfer);
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+            $this->anonymizeCustomerAddress($addressTransfer);
         }
 
         return $addressesTransfer;
@@ -181,7 +181,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function updateCustomerAddresses(AddressesTransfer $addressesTransfer)
     {
-        foreach ($addressesTransfer->getAddresses() as &$addressTransfer) {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
             $this->address->updateAddress($addressTransfer);
         }
     }
