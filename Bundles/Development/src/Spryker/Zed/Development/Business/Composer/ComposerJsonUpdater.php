@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
+use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
 use Symfony\Component\Finder\SplFileInfo;
+use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
@@ -69,10 +71,12 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     {
         exec('./composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
         if ($return !== 0) {
-            throw new \RuntimeException('Invalid composer file ' . $composerJsonFile->getPathname() . ': ' . print_r($output, true));
+            throw new RuntimeException('Invalid composer file ' . $composerJsonFile->getPathname() . ': ' . print_r($output, true));
         }
 
         $composerJson = json_decode($composerJsonFile->getContents(), true);
+
+        $this->assertCorrectName($composerJson['name'], $bundleName = $composerJsonFile->getRelativePath());
 
         $composerJson = $this->updater->update($composerJson, $composerJsonFile);
 
@@ -166,6 +170,24 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         uksort($composerJson, $callable);
 
         return $composerJson;
+    }
+
+    /**
+     * @param string $vendorName
+     *
+     * @param $bundleName
+     *
+     * @return void
+     */
+    protected function assertCorrectName($vendorName, $bundleName)
+    {
+        $filter = new CamelCaseToDash();
+        $bundleName = strtolower($filter->filter($bundleName));
+
+        $expected = 'spryker/' . $bundleName;
+        if ($vendorName !== $expected) {
+            throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $vendorName));
+        }
     }
 
 }

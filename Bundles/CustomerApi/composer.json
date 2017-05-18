@@ -8,6 +8,7 @@
     "spryker/customer": "^4.3.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.2.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
@@ -17,7 +18,6 @@
     "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "autoload": {
