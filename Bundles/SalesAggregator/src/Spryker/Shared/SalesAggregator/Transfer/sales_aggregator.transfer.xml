@@ -38,8 +38,6 @@
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="quantity" type="int" />
-        <property name="unitItemTotal" type="int" />
-        <property name="sumItemTotal" type="int" />
     </transfer>
 
     <transfer name="Totals">

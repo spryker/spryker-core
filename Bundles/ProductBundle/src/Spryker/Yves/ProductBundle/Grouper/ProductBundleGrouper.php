@@ -52,6 +52,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                     $bundleGroupKey
                 );
 
+
                 $currentBundleItemTransfer = $this->getBundleProduct($groupedBundleItems, $bundleGroupKey);
                 if ($currentBundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
                     continue;
@@ -65,6 +66,8 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             }
 
         }
+
+        $groupedBundleItems = $this->updateGroupedBundleItemsAggregatedSubtotal($groupedBundleItems, $bundleItems);
 
         return array_merge(
             $singleItems,
@@ -174,6 +177,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         $bundleProduct = clone $bundleItemTransfer;
+
+        $bundleProduct->setSumSubtotalAggregation(0);
+        $bundleProduct->setUnitSubtotalAggregation(0);
         $bundleProduct->setQuantity($groupedBundleQuantity[$bundleGroupKey]);
 
         $bundleItems[$bundleGroupKey] = [
@@ -246,6 +252,36 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         return [];
+    }
+
+
+    /**
+     * @param array|ItemTransfer[] $groupedBundleItems
+     * @param ArrayObject|ItemTransfer[] $bundleItems
+     *
+     * @return array|ItemTransfer[]
+     */
+    protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
+    {
+        foreach ($groupedBundleItems as $groupedBundle) {
+            $groupedBundleItemTransfer = $groupedBundle[static::BUNDLE_PRODUCT];
+
+            foreach ($bundleItems as $bundleItemTransfer) {
+                if ($groupedBundleItemTransfer->getGroupKey() !== $bundleItemTransfer->getGroupKey()) {
+                    continue;
+                }
+
+                $groupedBundleItemTransfer->setUnitSubtotalAggregation(
+                    $groupedBundleItemTransfer->getUnitSubtotalAggregation() + $bundleItemTransfer->getUnitSubtotalAggregation()
+                );
+
+                $groupedBundleItemTransfer->setSumSubtotalAggregation(
+                    $groupedBundleItemTransfer->getSumSubtotalAggregation() + $bundleItemTransfer->getSumSubtotalAggregation()
+                );
+            }
+        }
+
+        return $groupedBundleItems;
     }
 
 }

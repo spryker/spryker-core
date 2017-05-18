@@ -19,6 +19,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
@@ -37,6 +38,8 @@ class SalesHelper extends Module
         $this->addShipment($salesOrderEntity);
 
         $salesOrderEntity->save();
+
+        $this->addOrderTotals($salesOrderEntity);
 
         $this->addExpenses($salesOrderEntity);
 
@@ -71,6 +74,7 @@ class SalesHelper extends Module
     protected function addOrderDetails(SpySalesOrder $salesOrderEntity)
     {
         $salesOrderEntity->setOrderReference(random_int(0, 9999999));
+        $salesOrderEntity->setTaxMode(0);
         $salesOrderEntity->setIsTest(true);
         $salesOrderEntity->setSalutation(SpySalesOrderTableMap::COL_SALUTATION_MR);
         $salesOrderEntity->setFirstName('FirstName');
@@ -269,6 +273,26 @@ class SalesHelper extends Module
         $shipmentExpense->setGrossPrice($shipmentEntity->getDefaultPrice());
 
         $shipmentExpense->save();
+    }
+
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addOrderTotals(SpySalesOrder $salesOrderEntity)
+    {
+        $salesOrderTotals = new SpySalesOrderTotals();
+
+        $salesOrderTotals->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $salesOrderTotals->setTaxTotal(10);
+        $salesOrderTotals->setSubtotal(100);
+        $salesOrderTotals->setDiscountTotal(10);
+        $salesOrderTotals->setGrandTotal(100);
+
+        $salesOrderTotals->save();
+
     }
 
 }
