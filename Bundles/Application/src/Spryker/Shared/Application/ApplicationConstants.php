@@ -69,10 +69,15 @@ interface ApplicationConstants
     /**
      * RabbitMQ
      */
+    /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
+    /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_PASSWORD = 'ZED_RABBITMQ_PASSWORD';
+    /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_HOST = 'ZED_RABBITMQ_HOST';
+    /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_PORT = 'ZED_RABBITMQ_PORT';
+    /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_VHOST = 'ZED_RABBITMQ_VHOST';
 
     /**
