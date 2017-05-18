@@ -87,7 +87,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     /**
      * @api
      *
-     * @param $idCustomer
+     * @param int $idCustomer
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
@@ -100,7 +100,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     /**
      * @api
      *
-     * @param $email
+     * @param string $email
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */

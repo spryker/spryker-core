@@ -43,7 +43,7 @@ interface NewsletterQueryContainerInterface
     /**
      * @api
      *
-     * @param $idCustomer
+     * @param int $idCustomer
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
@@ -52,7 +52,7 @@ interface NewsletterQueryContainerInterface
     /**
      * @api
      *
-     * @param $email
+     * @param string $email
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
