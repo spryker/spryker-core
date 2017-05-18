@@ -65,6 +65,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
+     * @throws \RuntimeException
+     *
      * @return void
      */
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile)
@@ -92,7 +94,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param SplFileInfo $composerJsonFile
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      * @param array $bundles
      *
      * @return bool
@@ -174,8 +176,9 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
     /**
      * @param string $vendorName
+     * @param string $bundleName
      *
-     * @param $bundleName
+     * @throws \RuntimeException
      *
      * @return void
      */
