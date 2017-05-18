@@ -76,7 +76,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = json_decode($composerJsonFile->getContents(), true);
 
-        $this->assertCorrectName($composerJson['name'], $bundleName = $composerJsonFile->getRelativePath());
+        $this->assertCorrectName($composerJson['name'], $composerJsonFile->getRelativePath());
 
         $composerJson = $this->updater->update($composerJson, $composerJsonFile);
 
