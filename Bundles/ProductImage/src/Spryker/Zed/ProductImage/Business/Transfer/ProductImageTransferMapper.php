@@ -143,7 +143,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     protected function setProductImages(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
     {
         $criteria = new Criteria();
-        $criteria->addDescendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
+        $criteria->addAscendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
 
         $imageEntityCollection = [];
         foreach ($productImageSetEntity->getSpyProductImageSetToProductImagesJoinSpyProductImage($criteria) as $entity) {

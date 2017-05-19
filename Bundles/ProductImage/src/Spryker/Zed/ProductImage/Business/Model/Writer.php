@@ -225,7 +225,6 @@ class Writer implements WriterInterface
      */
     public function updateProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        $this->deleteMissingProductImageInProductImageSet($productImageSetTransfer);
         return $this->saveProductImageSet($productImageSetTransfer);
     }
 
@@ -237,6 +236,10 @@ class Writer implements WriterInterface
     public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
         $this->productImageQueryContainer->getConnection()->beginTransaction();
+
+        if ($productImageSetTransfer->getIdProductImageSet()) {
+            $this->deleteMissingProductImageInProductImageSet($productImageSetTransfer);
+        }
 
         $productImageSetEntity = $this->productImageQueryContainer
             ->queryProductImageSet()
