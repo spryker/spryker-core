@@ -52,7 +52,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                     $bundleGroupKey
                 );
 
-
                 $currentBundleItemTransfer = $this->getBundleProduct($groupedBundleItems, $bundleGroupKey);
                 if ($currentBundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
                     continue;
@@ -254,12 +253,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         return [];
     }
 
-
     /**
-     * @param array|ItemTransfer[] $groupedBundleItems
-     * @param ArrayObject|ItemTransfer[] $bundleItems
+     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
-     * @return array|ItemTransfer[]
+     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
     {

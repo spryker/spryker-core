@@ -23,6 +23,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderExpens
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
+use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductBundlePrices;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductOptionDiscountTotalAmount;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductOptionOrderDiscounts;
@@ -219,6 +220,14 @@ class SalesAggregatorBusinessFactory extends AbstractBusinessFactory
     public function createOrderTotalWithDiscountsTaxCalculator()
     {
         return new OrderTaxAmountWithDiscounts();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ProductBundlePrices
+     */
+    public function createProductBundlePriceCalculator()
+    {
+        return new ProductBundlePrices($this->getSalesQueryContainer());
     }
 
     /**

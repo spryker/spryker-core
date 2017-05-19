@@ -275,7 +275,6 @@ class SalesHelper extends Module
         $shipmentExpense->save();
     }
 
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
@@ -292,7 +291,6 @@ class SalesHelper extends Module
         $salesOrderTotals->setGrandTotal(100);
 
         $salesOrderTotals->save();
-
     }
 
 }

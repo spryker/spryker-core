@@ -21,6 +21,23 @@
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
         <property name="quantity" type="int" />
+        <property name="unitGrossPriceWithDiscounts" type="int"/>
+        <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTaxAmountWithDiscounts" type="int" />
+        <property name="sumTaxAmountWithDiscounts" type="int" />
+        <property name="unitTotalDiscountAmount"  type="int" />
+        <property name="sumTotalDiscountAmount" type="int" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="unitTaxAmount" type="int" />
+        <property name="sumTaxAmount" type="int" />
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="unitItemTotal" type="int" />
+        <property name="sumItemTotal" type="int" />
+        <property name="unitTaxTotal" type="int" />
+        <property name="sumTaxTotal" type="int" />
+        <property name="finalUnitDiscountAmount" type="int" />
+        <property name="finalSumDiscountAmount" type="int" />
     </transfer>
 
     <transfer name="Quote">
@@ -38,6 +55,27 @@
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="quantity" type="int" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="unitGrossPriceWithDiscounts" type="int"/>
+        <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTotalDiscountAmount"  type="int" />
+        <property name="sumTotalDiscountAmount" type="int" />
+        <property name="unitGrossPriceWithProductOptions" type="int" />
+        <property name="sumGrossPriceWithProductOptions" type="int" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="unitGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="sumGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="unitTotalDiscountAmountWithProductOption" type="int" />
+        <property name="sumTotalDiscountAmountWithProductOption" type="int" />
+        <property name="unitTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="sumTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="unitTaxTotal" type="int" />
+        <property name="sumTaxTotal" type="int" />
+        <property name="unitItemTotal" type="int" />
+        <property name="sumItemTotal" type="int" />
+        <property name="sumItemTotal" type="int" />
+        <property name="finalUnitDiscountAmount" type="int" />
+        <property name="finalSumDiscountAmount" type="int" />
     </transfer>
 
     <transfer name="Totals">
@@ -51,5 +89,17 @@
         <property name="amount" type="int" />
         <property name="taxRate" type="float" />
     </transfer>
+
+    <transfer name="ProductOption">
+        <property name="unitGrossPriceWithDiscounts" type="int" />
+        <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTaxAmountWithDiscounts" type="int" />
+        <property name="sumTaxAmountWithDiscounts" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+    </transfer>
+
 
 </transfers>

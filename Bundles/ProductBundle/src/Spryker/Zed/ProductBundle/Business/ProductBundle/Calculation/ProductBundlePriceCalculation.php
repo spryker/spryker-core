@@ -7,51 +7,13 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
 class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInterface
 {
-
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
-     */
-    protected $salesQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
-     */
-    public function __construct(ProductBundleToSalesQueryContainerInterface $salesQueryContainer)
-    {
-        $this->salesQueryContainer = $salesQueryContainer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function aggregate(OrderTransfer $orderTransfer)
-    {
-        $orderItems = $this->findOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
-
-        $bundledProducts = [];
-        foreach ($orderItems as $salesOrderItemEntity) {
-            if (!$salesOrderItemEntity->getFkSalesOrderItemBundle()) {
-                continue;
-            }
-
-            $bundledProducts = $this->calculateForBundleItems($orderTransfer, $salesOrderItemEntity, $bundledProducts);
-        }
-
-        $orderTransfer->setBundleItems(new ArrayObject($bundledProducts));
-
-        return $orderTransfer;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -83,22 +45,11 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $this->addPrice($bundleItemTransfer, $itemTransfer);
-        $this->addItemSubtotalAggregation($bundleItemTransfer, $itemTransfer);
         $this->addNetPrice($bundleItemTransfer, $itemTransfer);
         $this->addGrossPrice($bundleItemTransfer, $itemTransfer);
+        $this->addItemSubtotalAggregation($bundleItemTransfer, $itemTransfer);
         $this->addDiscounts($bundleItemTransfer, $itemTransfer);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findOrderItemsByIdSalesOrder($idSalesOrder)
-    {
-        return $this->salesQueryContainer
-            ->querySalesOrderItem()
-            ->findByFkSalesOrder($idSalesOrder);
+        $this->addItemPriceToPayAggregation($bundleItemTransfer, $itemTransfer);
     }
 
     /**
@@ -210,13 +161,30 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addItemPriceToPayAggregation(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    {
+        $bundleItemTransfer->setUnitPriceToPayAggregation(
+            $bundleItemTransfer->getUnitPriceToPayAggregation() + $itemTransfer->getUnitPriceToPayAggregation()
+        );
+
+        $bundleItemTransfer->setSumPriceToPayAggregation(
+            $bundleItemTransfer->getSumPriceToPayAggregation() + $itemTransfer->getSumPriceToPayAggregation()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
      * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      *
      * @return array
      */
-    protected function calculateForBundleItems(
+    public function calculateForBundleItems(
         OrderTransfer $orderTransfer,
         SpySalesOrderItem $salesOrderItemEntity,
         array $bundledProducts
@@ -264,6 +232,8 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setSumDiscountAmountAggregation(0);
             $bundleItemTransfer->setUnitDiscountAmountFullAggregation(0);
             $bundleItemTransfer->setSumDiscountAmountFullAggregation(0);
+            $bundleItemTransfer->setUnitPriceToPayAggregation(0);
+            $bundleItemTransfer->setSumPriceToPayAggregation(0);
         }
     }
 

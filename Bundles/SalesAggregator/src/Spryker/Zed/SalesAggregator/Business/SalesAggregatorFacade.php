@@ -387,4 +387,18 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
         $this->getFactory()->createOrderTotalWithDiscountsTaxCalculator()->aggregate($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function aggregateBundlePrice(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createProductBundlePriceCalculator()->aggregate($orderTransfer);
+    }
+
 }

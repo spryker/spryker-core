@@ -316,4 +316,18 @@ interface SalesAggregatorFacadeInterface
      */
     public function aggregateOrderTotalTaxAmountWithDiscounts(OrderTransfer $orderTransfer);
 
+    /**
+     *
+     * Specification:
+     *
+     *  - Aggregates OrderTransfer::bundleItems prices
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function aggregateBundlePrice(OrderTransfer $orderTransfer);
+
 }

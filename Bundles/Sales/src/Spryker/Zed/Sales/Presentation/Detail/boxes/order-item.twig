@@ -1,5 +1,6 @@
 
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
+
 <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
     <td>{{ orderItem.Sku }}</td>
