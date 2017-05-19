@@ -8,9 +8,11 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader;
 
 use Countable;
+use Exception;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use SplFileObject;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
+use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -39,6 +41,16 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     protected $dataSet;
 
     /**
+     * @var int
+     */
+    protected $offset;
+
+    /**
+     * @var int
+     */
+    protected $limit;
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface $csvReaderConfiguration
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      */
@@ -58,6 +70,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
         $this->setCsvControl();
         $this->setFlags();
         $this->setDataSetKeys();
+        $this->setOffsetAndLimit();
     }
 
     /**
@@ -120,6 +133,15 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     }
 
     /**
+     * @return void
+     */
+    protected function setOffsetAndLimit()
+    {
+        $this->offset = $this->csvReaderConfiguration->getOffset();
+        $this->limit = $this->csvReaderConfiguration->getLimit();
+    }
+
+    /**
      * Header columns will not be counted.
      *
      * @return int
@@ -136,13 +158,24 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     }
 
     /**
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException
+     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
     public function current()
     {
         $dataSet = $this->fileObject->current();
         if ($this->dataSetKeys) {
-            $dataSet = array_combine($this->dataSetKeys, $dataSet);
+            try {
+                $dataSetBeforeCombine = $dataSet;
+                $dataSet = array_combine($this->dataSetKeys, $dataSet);
+            } catch (Exception $e) {
+                throw new DataSetWithHeaderCombineFailedException(sprintf(
+                    'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
+                    implode(', ', $this->dataSetKeys),
+                    implode(', ', array_values($dataSetBeforeCombine))
+                ));
+            }
         }
 
         $this->dataSet->exchangeArray($dataSet);
@@ -171,6 +204,12 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     public function valid()
     {
+        if ($this->limit !== null && $this->limit !== 0) {
+            if ($this->offset) {
+                return ($this->key() < $this->offset + $this->limit);
+            }
+        }
+
         return $this->fileObject->valid();
     }
 
@@ -180,6 +219,11 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     public function rewind()
     {
         $this->fileObject->rewind();
+
+        if ($this->offset) {
+            $this->fileObject->seek($this->offset - 1);
+        }
+
         if ($this->csvReaderConfiguration->hasHeader()) {
             $this->next();
         }

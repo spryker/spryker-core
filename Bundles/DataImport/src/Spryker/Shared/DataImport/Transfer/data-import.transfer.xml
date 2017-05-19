@@ -25,8 +25,43 @@
         <property name="importedDataSets" type="int" />
         <property name="expectedImportableDataSets" type="int" />
         <property name="isReaderCountable" type="bool" />
-        <property name="success" type="bool" />
+        <property name="isSuccess" type="bool" />
         <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport" />
+    </transfer>
+
+    <transfer name="BeforeImportEvent">
+        <property name="importType" type="string" />
+        <property name="importableDataSets" type="int" />
+        <property name="isReaderCountable" type="bool" />
+    </transfer>
+
+    <transfer name="AfterImportEvent">
+        <property name="importType" type="string" />
+        <property name="importedDataSets" type="int" />
+    </transfer>
+
+    <transfer name="BeforeDataSetImportEvent">
+        <property name="importType" type="string" />
+        <property name="dataSetKey" type="int" />
+    </transfer>
+
+    <transfer name="AfterDataSetImportEvent">
+        <property name="importType" type="string" />
+        <property name="isSuccess" type="bool" />
+        <property name="message" type="string" />
+        <property name="dataSetKey" type="int" />
+    </transfer>
+
+    <transfer name="BeforeDataSetImporterEvent">
+        <property name="importType" type="string" />
+        <property name="dataSetImporterClassName" type="string" />
+    </transfer>
+
+    <transfer name="AfterDataSetImporterEvent">
+        <property name="importType" type="string" />
+        <property name="isSuccess" type="bool" />
+        <property name="message" type="string" />
+        <property name="dataSetImporterClassName" type="string" />
     </transfer>
 
 </transfers>

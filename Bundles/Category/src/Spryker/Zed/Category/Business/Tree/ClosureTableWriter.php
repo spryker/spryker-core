@@ -152,8 +152,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     {
         $connection = Propel::getConnection();
 
-        echo '<pre>';
-
         $this->removeCircularRelations();
 
         $query = SpyCategoryNodeQuery::create();
@@ -168,17 +166,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
                 continue;
             }
 
-            echo 'Updated node closure table for: ' . $nodeEntity->getIdCategoryNode() . ', parent: ' . $nodeEntity->getFkParentCategoryNode() . "<br/>\n";
-
             $nodeToMove = (new NodeTransfer())->fromArray($nodeEntity->toArray());
             $this->delete($nodeToMove->getIdCategoryNode());
             $this->create($nodeToMove);
             $this->moveNode($nodeToMove);
         }
-
-        echo 'Done updated ' . $categoryNodes->count() . " nodes.<br/>\n";
-
-        echo '</pre>';
 
         $connection->commit();
     }

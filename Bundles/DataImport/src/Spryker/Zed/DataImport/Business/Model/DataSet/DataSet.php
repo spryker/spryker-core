@@ -23,7 +23,7 @@ class DataSet extends ArrayObject implements DataSetInterface
     public function offsetGet($index)
     {
         if (!$this->offsetExists($index)) {
-            throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Given (%s)', $index, implode(', ', $this->getArrayCopy())));
+            throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
         return parent::offsetGet($index);
@@ -39,7 +39,7 @@ class DataSet extends ArrayObject implements DataSetInterface
     public function offsetUnset($index)
     {
         if (!$this->offsetExists($index)) {
-            throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Given (%s)', $index, implode(', ', $this->getArrayCopy())));
+            throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
         parent::offsetUnset($index);

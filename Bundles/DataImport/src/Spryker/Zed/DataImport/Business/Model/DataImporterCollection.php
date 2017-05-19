@@ -63,7 +63,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         }
 
         if ($dataImporterReportTransfer->getImportedDataSets() !== 0) {
-            $dataImporterReportTransfer->setSuccess(true);
+            $dataImporterReportTransfer->setIsSuccess(true);
         }
 
         return $dataImporterReportTransfer;
@@ -95,6 +95,10 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         $dataImporterReportTransfer
             ->addDataImporterReport($innerDataImportReportTransfer)
             ->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets() + $innerDataImportReportTransfer->getImportedDataSets());
+
+        if (!$innerDataImportReportTransfer->getIsSuccess()) {
+            $dataImporterReportTransfer->setIsSuccess(false);
+        }
     }
 
     /**
@@ -121,7 +125,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
             ->setImportType($importType)
-            ->setSuccess(false)
+            ->setIsSuccess(true)
             ->setImportedDataSets(0);
 
         return $dataImporterReportTransfer;

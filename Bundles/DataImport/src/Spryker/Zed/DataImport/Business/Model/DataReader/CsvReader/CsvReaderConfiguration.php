@@ -39,7 +39,11 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
      */
     public function setDataImporterReaderConfigurationTransfer(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer)
     {
-        $this->dataImporterReaderConfigurationTransfer = $dataImporterReaderConfigurationTransfer;
+        $modified = $dataImporterReaderConfigurationTransfer->modifiedToArray();
+        $modified = array_filter($modified, function ($value) {
+            return ($value !== null);
+        });
+        $this->dataImporterReaderConfigurationTransfer->fromArray($modified);
 
         return $this;
     }
@@ -110,6 +114,22 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
         }
 
         return static::DEFAULT_HAS_HEADER;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffset()
+    {
+        return (int)$this->dataImporterReaderConfigurationTransfer->getOffset();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return (int)$this->dataImporterReaderConfigurationTransfer->getLimit();
     }
 
 }

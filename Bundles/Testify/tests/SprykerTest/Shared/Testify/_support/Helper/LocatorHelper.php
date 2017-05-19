@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
+use Codeception\Step;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
@@ -25,12 +26,22 @@ class LocatorHelper extends ConfigHelper
     ];
 
     /**
+     * @param array $settings
+     *
      * @return void
      */
-    public function _initialize()
+    public function _beforeSuite($settings = [])
     {
-        parent::_initialize();
+        $this->configureNamespacesForClassResolver();
+    }
 
+    /**
+     * @param \Codeception\Step $step
+     *
+     * @return void
+     */
+    public function _beforeStep(Step $step)
+    {
         $this->configureNamespacesForClassResolver();
     }
 

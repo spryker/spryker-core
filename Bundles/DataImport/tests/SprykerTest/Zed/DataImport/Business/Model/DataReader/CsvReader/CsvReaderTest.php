@@ -12,6 +12,7 @@ use Codeception\TestCase\Test;
 use Countable;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
+use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
@@ -126,6 +127,34 @@ class CsvReaderTest extends Test
     /**
      * @return void
      */
+    public function testDataReaderReturnSubsetOfTheDataSetsStartingAtGivenPositionWhenOffsetIsSet()
+    {
+        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, 2);
+
+        $csvReader->rewind();
+
+        $this->tester->assertDataSetWithKeys(2, $csvReader->current());
+        $csvReader->next();
+        $this->assertTrue($csvReader->valid(), 'Expected that DataReaderInterface::valid() returns true because no limit was set and after received data set there is still one.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDataReaderReturnSubsetOfTheDataSetsWhenOffsetAndLimitIsSet()
+    {
+        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, 2, 1);
+
+        $csvReader->rewind();
+
+        $this->tester->assertDataSetWithKeys(2, $csvReader->current());
+        $csvReader->next();
+        $this->assertFalse($csvReader->valid(), 'Expected that DataReaderInterface::valid() returns false because we limited the data set to one.');
+    }
+
+    /**
+     * @return void
+     */
     public function testEachDataSetShouldHaveCsvColumnNamesAsKeys()
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
@@ -182,14 +211,27 @@ class CsvReaderTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testThrowsExceptionWhenHeaderDataSetLengthLengthDoesNotMatch()
+    {
+        $this->expectException(DataSetWithHeaderCombineFailedException::class);
+        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');
+
+        $csvReader->current();
+    }
+
+    /**
      * @param string $fileName
      * @param bool $hasHeader
+     * @param int|null $offset
+     * @param int|null $limit
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface|\Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface
      */
-    protected function getCsvReader($fileName, $hasHeader = true)
+    protected function getCsvReader($fileName, $hasHeader = true, $offset = null, $limit = null)
     {
-        $configuration = $this->getCsvReaderConfigurationTransfer($fileName, $hasHeader);
+        $configuration = $this->getCsvReaderConfigurationTransfer($fileName, $hasHeader, $offset, $limit);
         $csvReader = $this->tester->getFactory()->createCsvReaderFromConfig($configuration);
 
         return $csvReader;
@@ -198,15 +240,19 @@ class CsvReaderTest extends Test
     /**
      * @param string $fileName
      * @param bool $hasHeader
+     * @param int|null $offset
+     * @param int|null $limit
      *
      * @return \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
      */
-    protected function getCsvReaderConfigurationTransfer($fileName, $hasHeader = true)
+    protected function getCsvReaderConfigurationTransfer($fileName, $hasHeader = true, $offset = null, $limit = null)
     {
         $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfiguration
             ->setFileName($fileName)
-            ->setCsvHasHeader($hasHeader);
+            ->setCsvHasHeader($hasHeader)
+            ->setOffset($offset)
+            ->setLimit($limit);
 
         return $dataImporterReaderConfiguration;
     }

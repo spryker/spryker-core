@@ -49,4 +49,14 @@ interface CsvReaderConfigurationInterface
      */
     public function hasHeader();
 
+    /**
+     * @return int|null
+     */
+    public function getOffset();
+
+    /**
+     * @return int|null
+     */
+    public function getLimit();
+
 }

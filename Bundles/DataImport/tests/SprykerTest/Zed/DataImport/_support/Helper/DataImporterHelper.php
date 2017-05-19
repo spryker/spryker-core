@@ -11,6 +11,7 @@ use Codeception\Module;
 use Codeception\Util\Stub;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
@@ -57,7 +58,20 @@ class DataImporterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface
+     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function getFailingDataImportStepMock()
+    {
+        $executeCallback = function () {
+            throw new DataImportException();
+        };
+        $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class, ['execute' => $executeCallback]);
+
+        return $dataSetStub;
+    }
+
+    /**
+     * @return object|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
      */
     public function getDataSetMock()
     {

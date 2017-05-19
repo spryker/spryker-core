@@ -51,7 +51,7 @@ class DataImporterCollectionTest extends Test
         $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A, true, $dataImporterReportTransfer));
 
         $dataImporterReportTransfer = $dataImporterCollection->import();
-        $this->assertTrue($dataImporterReportTransfer->getSuccess());
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
     }
 
 }

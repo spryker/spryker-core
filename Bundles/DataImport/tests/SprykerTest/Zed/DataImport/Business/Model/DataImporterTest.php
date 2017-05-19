@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\DataImport\Business\Model\DataImporter;
 
 /**
  * Auto-generated group annotations
@@ -74,6 +73,19 @@ class DataImporterTest extends Test
     {
         $dataImporter = $this->getDataImporter();
         $dataImporter->addDataSetImporter($this->tester->getDataSetMock());
+
+        $dataImporter->import();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportTriggersDataSetImporterFailedEventAndDataSetImportFailedEventIfThereWasAnException()
+    {
+        $dataImporter = $this->getDataImporter();
+        $dataSetImporter = $this->tester->getFactory()->createDataSetImporter();
+        $dataSetImporter->addDataImportStep($this->tester->getFailingDataImportStepMock());
+        $dataImporter->addDataSetImporter($dataSetImporter);
 
         $dataImporter->import();
     }
