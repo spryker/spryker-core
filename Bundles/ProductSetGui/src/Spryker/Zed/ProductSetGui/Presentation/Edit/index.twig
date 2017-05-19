@@ -1,0 +1,40 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% form_theme productSetForm with [
+    '@ProductSetGui/_template/product-image-set-theme.twig',
+    '@ProductSetGui/_template/product-image-collection-theme.twig',
+]%}
+
+{% set widget_title = 'Product Sets' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {#{{ createActionButton('/product-management/add', 'Create Product' | trans) }}#}
+    {#{{ createActionButton('/product-management/add?type=bundle', 'Create Bundle Product' | trans) }}#}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(productSetForm) }}
+    {{ form_errors(productSetForm) }}
+
+    {{ tabs(productSetFormTabs, {
+        'productSetForm': productSetForm,
+        'localeCollection': localeCollection,
+        'productTable': productTable,
+        'productAbstractSetTable': productAbstractSetTable
+    }) }}
+
+    {{ form_end(productSetForm) }}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productset-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productset-main.js"></script>
+{% endblock %}

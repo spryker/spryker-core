@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <sets>
+                <label>Product Sets</label>
+                <title>Product Sets</title>
+                <bundle>product-set-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <pages>
+                    <create>
+                        <label>Create Product Set</label>
+                        <title>Create Product Set</title>
+                        <bundle>product-set-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create>
+                    <edit>
+                        <label>Edit Product Set</label>
+                        <title>Edit Product Set</title>
+                        <bundle>product-set-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit>
+                    <view>
+                        <label>View Product Set</label>
+                        <title>View Product Set</title>
+                        <bundle>product-set-gui</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </view>
+                </pages>
+            </sets>
+        </pages>
+    </product>
+</config>

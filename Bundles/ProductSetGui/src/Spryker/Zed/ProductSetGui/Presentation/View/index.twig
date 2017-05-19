@@ -1,0 +1,32 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Sets' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {#{{ createActionButton('/product-management/add', 'Create Product' | trans) }}#}
+    {#{{ createActionButton('/product-management/add?type=bundle', 'Create Bundle Product' | trans) }}#}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Sets' } %}
+
+        {% block widget_content %}
+            Hi!
+            {#{{ productTable | raw }}#}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    {#<link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />#}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    {#<script src="/assets/js/spryker-zed-productmanagement-main.js"></script>#}
+{% endblock %}

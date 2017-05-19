@@ -1,0 +1,19 @@
+<div class="form-group">
+    {% for localeTransfer in localeCollection %}
+        {% for localizedSeoForm in productSetForm.seo_form.localized_seo_form_collection %}
+            {% if localeTransfer.idLocale == localizedSeoForm.fk_locale.vars.value %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {
+                'id': 'localized_attributes_container-' ~ localeTransfer.localeName,
+                'localeName': localeTransfer.localeName,
+                'collapsed': (not loop.parent.loop.first)
+                } %}
+                    {% block content %}
+                        {{ form_rest(localizedSeoForm) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{{ form_rest(productSetForm.seo_form) }}

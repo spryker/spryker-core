@@ -1,0 +1,19 @@
+<div class="form-group">
+    {% for localeTransfer in localeCollection %}
+        {% for localizedGeneralForm in productSetForm.general_form.localized_general_form_collection %}
+            {% if localeTransfer.idLocale == localizedGeneralForm.fk_locale.vars.value %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {
+                    'id': 'localized_attributes_container-' ~ localeTransfer.localeName,
+                    'localeName': localeTransfer.localeName,
+                    'collapsed': (not loop.parent.loop.first)
+                } %}
+                    {% block content %}
+                        {{ form_rest(localizedGeneralForm) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{{ form_rest(productSetForm.general_form) }}
