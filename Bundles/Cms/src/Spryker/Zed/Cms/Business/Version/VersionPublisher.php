@@ -47,7 +47,7 @@ class VersionPublisher implements VersionPublisherInterface
 
     /**
      * @param \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface $versionGenerator
-     * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface
+     * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface $versionDataMapper
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins

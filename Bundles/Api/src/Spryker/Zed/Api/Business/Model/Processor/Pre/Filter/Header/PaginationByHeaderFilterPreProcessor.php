@@ -56,7 +56,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
     }
 
     /**
-     * @param int $page
+     * @param int $offset
      *
      * @return int
      */

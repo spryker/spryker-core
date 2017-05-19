@@ -62,8 +62,8 @@ class Worker implements WorkerInterface
     }
 
     /**
+     * @param string $command
      * @param int $round
-     * @param string|int $command
      * @param array $processes
      *
      * @return void

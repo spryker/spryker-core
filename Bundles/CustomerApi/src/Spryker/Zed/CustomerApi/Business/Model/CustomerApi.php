@@ -69,6 +69,7 @@ class CustomerApi implements CustomerApiInterface
      * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface $customerFacade
      */
     public function __construct(
         CustomerApiToApiInterface $apiQueryContainer,

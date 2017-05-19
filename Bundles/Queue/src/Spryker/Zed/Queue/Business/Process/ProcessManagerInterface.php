@@ -11,8 +11,8 @@ interface ProcessManagerInterface
 {
 
     /**
-     * @param string $queue
      * @param string $command
+     * @param string $queue
      *
      * @return \Symfony\Component\Process\Process
      */

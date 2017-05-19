@@ -32,6 +32,8 @@ class FooTable extends AbstractTable
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return void
      */
     public function setRequest($request)

@@ -12,6 +12,7 @@ class AttributeInputManager
 
     /**
      * @param string $inputType
+     * @param string|null $value
      *
      * @return string
      */

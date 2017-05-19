@@ -55,6 +55,8 @@ interface ProductApiFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function findProducts(ApiRequestTransfer $apiRequestTransfer);

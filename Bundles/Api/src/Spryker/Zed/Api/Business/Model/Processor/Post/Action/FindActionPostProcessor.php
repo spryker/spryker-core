@@ -105,10 +105,9 @@ class FindActionPostProcessor implements PostProcessorInterface
     }
 
     /**
-     * @para, array $query
-     *
      * @param string $resource
      * @param int $page
+     * @param array $query
      *
      * @return string
      */

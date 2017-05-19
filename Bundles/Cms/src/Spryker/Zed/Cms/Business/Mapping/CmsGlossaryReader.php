@@ -137,7 +137,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     }
 
     /**
-     * @param array $placeholders,
+     * @param array $placeholders
      * @param int $idCmsPage
      *
      * @return array|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
