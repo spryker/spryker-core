@@ -8,13 +8,13 @@
         <property name="isActive" type="bool" />
         <property name="idProductAbstracts" type="array" singular="idProductAbstract" />
         <property name="localizedData" type="LocalizedProductSet[]" singular="localizedData" />
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
 
     <transfer name="LocalizedProductSet">
         <property name="locale" type="Locale" />
         <property name="productSetData" type="ProductSetData" />
         <property name="url" type="string" />
-        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
 
     <transfer name="ProductSetData">
@@ -27,10 +27,5 @@
         <property name="metaDescription" type="string" />
         <property name="metaKeywords" type="string" />
     </transfer>
-
-    <!--<transfer name="ProductAbstractSets">-->
-        <!--<property name="idProductAbstract" type="int" />-->
-        <!--<property name="idProductSets" type="array" singular="idProductSet" />-->
-    <!--</transfer>-->
 
 </transfers>

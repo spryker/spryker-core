@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductSet\Business\Model\Data;
 
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageDeleterInterface;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlDeleterInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -23,18 +22,11 @@ class ProductSetDataDeleter implements ProductSetDataDeleterInterface
     protected $productSetUrlDeleter;
 
     /**
-     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageDeleterInterface
-     */
-    protected $productSetImageDeleter;
-
-    /**
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlDeleterInterface $productSetUrlDeleter
-     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageDeleterInterface $productSetImageDeleter
      */
-    public function __construct(ProductSetUrlDeleterInterface $productSetUrlDeleter, ProductSetImageDeleterInterface $productSetImageDeleter)
+    public function __construct(ProductSetUrlDeleterInterface $productSetUrlDeleter)
     {
         $this->productSetUrlDeleter = $productSetUrlDeleter;
-        $this->productSetImageDeleter = $productSetImageDeleter;
     }
 
     /**
@@ -58,7 +50,6 @@ class ProductSetDataDeleter implements ProductSetDataDeleterInterface
     {
         $this->deleteProductSetDataEntities($productSetEntity);
         $this->productSetUrlDeleter->deleteUrl($productSetEntity->getIdProductSet());
-        $this->productSetImageDeleter->deleteImageSets($productSetEntity->getIdProductSet());
     }
 
     /**

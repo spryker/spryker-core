@@ -52,7 +52,7 @@ class ProductSetToProductImageBridge implements ProductSetToProductImageInterfac
      */
     public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        // TODO: call product image facade
+        $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
     }
 
 }

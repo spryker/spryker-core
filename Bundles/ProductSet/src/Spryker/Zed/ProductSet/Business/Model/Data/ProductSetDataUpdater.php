@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductSet\Business\Model\Data;
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\ProductSetDataTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetData;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlUpdaterInterface;
 use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -31,23 +30,13 @@ class ProductSetDataUpdater implements ProductSetDataUpdaterInterface
     protected $productSetUrlUpdater;
 
     /**
-     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface
-     */
-    protected $productSetImageCreator;
-
-    /**
      * @param \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface $productSetQueryContainer
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlUpdaterInterface $productSetUrlUpdater
-     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface $productSetImageCreator
      */
-    public function __construct(
-        ProductSetQueryContainerInterface $productSetQueryContainer,
-        ProductSetUrlUpdaterInterface $productSetUrlUpdater,
-        ProductSetImageSaverInterface $productSetImageCreator
-    ) {
+    public function __construct(ProductSetQueryContainerInterface $productSetQueryContainer, ProductSetUrlUpdaterInterface $productSetUrlUpdater)
+    {
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->productSetUrlUpdater = $productSetUrlUpdater;
-        $this->productSetImageCreator = $productSetImageCreator;
     }
 
     /**
@@ -78,7 +67,6 @@ class ProductSetDataUpdater implements ProductSetDataUpdaterInterface
         $localizedProductSetTransfer->setProductSetData($productSetDataTransfer);
 
         $localizedProductSetTransfer = $this->productSetUrlUpdater->updateUrl($localizedProductSetTransfer, $idProductSet);
-        $localizedProductSetTransfer = $this->productSetImageCreator->saveImageSets($localizedProductSetTransfer, $idProductSet);
 
         return $localizedProductSetTransfer;
     }

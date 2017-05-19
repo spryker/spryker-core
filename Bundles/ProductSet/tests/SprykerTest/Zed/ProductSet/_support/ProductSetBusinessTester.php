@@ -45,10 +45,10 @@ class ProductSetBusinessTester extends Actor
                         LocalizedProductSetTransfer::LOCALE => $localeTransfer,
                     ])
                     ->withProductSetData()
-                    ->withImageSet(
-                        (new ProductImageSetBuilder())
-                            ->withProductImage()
-                    )
+            )
+            ->withImageSet(
+                (new ProductImageSetBuilder())
+                    ->withProductImage()
             )
             ->build();
 

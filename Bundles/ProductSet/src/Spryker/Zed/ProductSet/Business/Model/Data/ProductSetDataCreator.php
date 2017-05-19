@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductSet\Business\Model\Data;
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetData;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlCreatorInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -30,18 +29,11 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
     protected $productSetUrlCreator;
 
     /**
-     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface
-     */
-    protected $productSetImageCreator;
-
-    /**
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlCreatorInterface $productSetUrlCreator
-     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface $productSetImageCreator
      */
-    public function __construct(ProductSetUrlCreatorInterface $productSetUrlCreator, ProductSetImageSaverInterface $productSetImageCreator)
+    public function __construct(ProductSetUrlCreatorInterface $productSetUrlCreator)
     {
         $this->productSetUrlCreator = $productSetUrlCreator;
-        $this->productSetImageCreator = $productSetImageCreator;
     }
 
     /**
@@ -82,7 +74,6 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
 
         $localizedProductSetTransfer = $this->createProductSetDataEntity($localizedProductSetTransfer, $idProductSet);
         $localizedProductSetTransfer = $this->productSetUrlCreator->createUrl($localizedProductSetTransfer, $idProductSet);
-        $localizedProductSetTransfer = $this->productSetImageCreator->saveImageSets($localizedProductSetTransfer, $idProductSet);
 
         return $localizedProductSetTransfer;
     }
@@ -96,6 +87,7 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
     {
         $localizedProductSetTransfer->requireLocale();
         $localizedProductSetTransfer->getLocale()->requireIdLocale();
+        $localizedProductSetTransfer->getProductSetData()->requireName();
     }
 
     /**
@@ -107,6 +99,8 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
     protected function createProductSetDataEntity(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet)
     {
         $productSetDataTransfer = $localizedProductSetTransfer->getProductSetData();
+        $productSetDataTransfer->requireName();
+
         $productSetDataTransfer
             ->setFkLocale($localizedProductSetTransfer->getLocale()->getIdLocale())
             ->setFkProductSet($idProductSet);

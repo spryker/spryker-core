@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSet\Business\Model\Data\Image;
+namespace Spryker\Zed\ProductSet\Business\Model\Image;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToProductImageInterface;
 use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
-class ProductSetImageReader implements ProductSetImageReaderInterface
+class ProductSetImageDeleter implements ProductSetImageDeleterInterface
 {
 
     /**
@@ -35,23 +36,21 @@ class ProductSetImageReader implements ProductSetImageReaderInterface
 
     /**
      * @param int $idProductSet
-     * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return void
      */
-    public function findProductSetImageSets($idProductSet, $idLocale)
+    public function deleteImageSets($idProductSet)
     {
-        $productImageSets = [];
-
         $productImageSetCollection = $this->productSetQueryContainer
-            ->queryProductImageSet($idProductSet, $idLocale)
+            ->queryProductImageSet($idProductSet)
             ->find();
 
         foreach ($productImageSetCollection as $productImageSetEntity) {
-            $productImageSets[] = $this->productImageFacade->getProductImagesSetById($productImageSetEntity->getIdProductImageSet());
-        }
+            $productImageSetTransfer = new ProductImageSetTransfer();
+            $productImageSetTransfer->setIdProductImageSet($productImageSetEntity->getIdProductImageSet());
 
-        return $productImageSets;
+            $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
+        }
     }
 
 }

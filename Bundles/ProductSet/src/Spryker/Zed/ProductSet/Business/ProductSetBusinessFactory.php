@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductSet\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaver;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageDeleter;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageReader;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaver;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageDeleter;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReader;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataCreator;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataDeleter;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataReader;
@@ -41,7 +41,11 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductSetCreator()
     {
-        return new ProductSetCreator($this->createProductSetDataCreator(), $this->createProductSetTouch());
+        return new ProductSetCreator(
+            $this->createProductSetDataCreator(),
+            $this->createProductSetTouch(),
+            $this->createProductSetImageCreator()
+        );
     }
 
     /**
@@ -49,7 +53,11 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductSetReader()
     {
-        return new ProductSetReader($this->getQueryContainer(), $this->createProductSetDataReader());
+        return new ProductSetReader(
+            $this->getQueryContainer(),
+            $this->createProductSetDataReader(),
+            $this->createProductSetImageReader()
+        );
     }
 
     /**
@@ -60,6 +68,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
         return new ProductSetUpdater(
             $this->createProductSetEntityReader(),
             $this->createProductSetDataUpdater(),
+            $this->createProductSetImageCreator(),
             $this->createProductSetTouch()
         );
     }
@@ -88,6 +97,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
         return new ProductSetDeleter(
             $this->createProductSetEntityReader(),
             $this->createProductSetDataDeleter(),
+            $this->createProductSetImageDeleter(),
             $this->createProductSetTouch()
         );
     }
@@ -97,7 +107,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetDataCreator()
     {
-        return new ProductSetDataCreator($this->createProductSetUrlCreator(), $this->createProductSetImageCreator());
+        return new ProductSetDataCreator($this->createProductSetUrlCreator());
     }
 
     /**
@@ -109,11 +119,11 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageSaverInterface
+     * @return \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface
      */
     protected function createProductSetImageCreator()
     {
-        return new ProductSetImageSaver($this->getProductImageFacade());
+        return new ProductSetImageSaver($this->getQueryContainer(), $this->getProductImageFacade());
     }
 
     /**
@@ -129,7 +139,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetDataReader()
     {
-        return new ProductSetDataReader($this->createProductSetUrlReader(), $this->createProductSetImageReader());
+        return new ProductSetDataReader($this->createProductSetUrlReader());
     }
 
     /**
@@ -141,7 +151,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageReaderInterface
+     * @return \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReaderInterface
      */
     protected function createProductSetImageReader()
     {
@@ -161,11 +171,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetDataUpdater()
     {
-        return new ProductSetDataUpdater(
-            $this->getQueryContainer(),
-            $this->createProductSetUrlUpdater(),
-            $this->createProductSetImageCreator()
-        );
+        return new ProductSetDataUpdater($this->getQueryContainer(), $this->createProductSetUrlUpdater());
     }
 
     /**
@@ -181,7 +187,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetDataDeleter()
     {
-        return new ProductSetDataDeleter($this->createProductSetUrlDeleter(), $this->createProductSetImageDeleter());
+        return new ProductSetDataDeleter($this->createProductSetUrlDeleter());
     }
 
     /**
@@ -193,7 +199,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageDeleterInterface
+     * @return \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageDeleterInterface
      */
     protected function createProductSetImageDeleter()
     {

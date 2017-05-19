@@ -19,6 +19,17 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSet()
+    {
+        return $this->getFactory()
+            ->createProductSetQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductSet
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -108,6 +119,25 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
         if ($idLocale) {
             $query->filterByFkLocale($idLocale);
         }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param array $excludedIdProductImageSets
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryExcludedProductImageSet($idProductSet, array $excludedIdProductImageSets)
+    {
+        $query = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->filterByFkResourceProductSet($idProductSet)
+            ->filterByIdProductImageSet($excludedIdProductImageSets, Criteria::NOT_IN);
 
         return $query;
     }

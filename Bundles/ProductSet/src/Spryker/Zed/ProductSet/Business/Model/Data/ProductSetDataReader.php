@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductSet\Business\Model\Data;
 
-use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\ProductSetDataTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetData;
-use Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageReaderInterface;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface;
 
 class ProductSetDataReader implements ProductSetDataReaderInterface
@@ -24,18 +22,11 @@ class ProductSetDataReader implements ProductSetDataReaderInterface
     protected $productSetUrlReader;
 
     /**
-     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageReaderInterface
-     */
-    protected $productSetImageReader;
-
-    /**
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface $productSetUrlReader
-     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Image\ProductSetImageReaderInterface $productSetImageReader
      */
-    public function __construct(ProductSetUrlReaderInterface $productSetUrlReader, ProductSetImageReaderInterface $productSetImageReader)
+    public function __construct(ProductSetUrlReaderInterface $productSetUrlReader)
     {
         $this->productSetUrlReader = $productSetUrlReader;
-        $this->productSetImageReader = $productSetImageReader;
     }
 
     /**
@@ -49,14 +40,12 @@ class ProductSetDataReader implements ProductSetDataReaderInterface
 
         $productSetDataTransfer = $this->mapProductSetDataEntityToTransfer($productSetDataEntity);
         $productSetUrlEntity = $this->productSetUrlReader->getProductSetUrlEntity($productSetDataEntity->getFkProductSet(), $localeTransfer->getIdLocale());
-        $productSetImageSets = $this->productSetImageReader->findProductSetImageSets($productSetDataEntity->getFkProductSet(), $localeTransfer->getIdLocale());
 
         $localizedProductSetDataTransfer = new LocalizedProductSetTransfer();
         $localizedProductSetDataTransfer
             ->setLocale($localeTransfer)
             ->setProductSetData($productSetDataTransfer)
-            ->setUrl($productSetUrlEntity->getUrl())
-            ->setImageSets(new ArrayObject($productSetImageSets));
+            ->setUrl($productSetUrlEntity->getUrl());
 
         return $localizedProductSetDataTransfer;
     }

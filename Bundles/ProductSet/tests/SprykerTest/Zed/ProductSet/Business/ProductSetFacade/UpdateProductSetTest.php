@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
@@ -136,28 +137,23 @@ class UpdateProductSetTest extends Test
         $productSetTransfer = $this->tester->generateProductSetTransfer();
         $productSetTransfer = $this->tester->getFacade()->createProductSet($productSetTransfer);
 
-        $productSetTransfer->getLocalizedData()[0]->getImageSets()[0]->setName('updated-image-set-name');
-        $productSetTransfer->getLocalizedData()[0]->getImageSets()[0]->getProductImages()[0]->setExternalUrlSmall('/updated-image-url');
+        $productSetTransfer->getImageSets()[0]->setName('updated-image-set-name');
+        $productSetTransfer->getImageSets()[0]->getProductImages()[0]->setExternalUrlSmall('/updated-image-url');
         $newImageSet = (new ProductImageSetBuilder())
             ->withProductImage()
             ->build();
-        $productSetTransfer->getLocalizedData()[0]->addImageSet($newImageSet);
+        $productSetTransfer->setImageSets(new ArrayObject([$newImageSet]));
 
         // Act
         $productSetTransfer = $this->tester->getFacade()->updateProductSet($productSetTransfer);
 
         // Assert
         $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
-        $this->assertCount(2, $actualProductSetTransfer->getLocalizedData()[0]->getImageSets(), 'ProductSet should have expected number of ProductImageSets.');
+        $this->assertCount(1, $actualProductSetTransfer->getImageSets(), 'ProductSet should have expected number of ProductImageSets.');
         $this->assertEquals(
-            $productSetTransfer->getLocalizedData()[0]->getImageSets()[0]->toArray(),
-            $actualProductSetTransfer->getLocalizedData()[0]->getImageSets()[0]->toArray(),
+            $productSetTransfer->getImageSets()[0]->toArray(),
+            $actualProductSetTransfer->getImageSets()[0]->toArray(),
             'Existing ImageSet should have expected data.'
-        );
-        $this->assertEquals(
-            $productSetTransfer->getLocalizedData()[0]->getImageSets()[1]->toArray(),
-            $actualProductSetTransfer->getLocalizedData()[0]->getImageSets()[1]->toArray(),
-            'New ImageSet should have expected data.'
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');

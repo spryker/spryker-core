@@ -51,7 +51,7 @@ class CreateProductSetTest extends Test
 
         $this->assertCount(2, $actualProductSetTransfer->getIdProductAbstracts(), 'ProductSet should have expected number of products.');
         $this->assertCount(1, $actualProductSetTransfer->getLocalizedData(), 'ProductSet should have expected number of localized data.');
-        $this->assertCount(1, $actualProductSetTransfer->getLocalizedData()[0]->getImageSets()[0]->getProductImages(), 'ProductImageSet should have expected number of images.');
+        $this->assertCount(1, $actualProductSetTransfer->getImageSets()[0]->getProductImages(), 'ProductImageSet should have expected number of images.');
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
     }

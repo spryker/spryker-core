@@ -13,6 +13,13 @@ interface ProductSetQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSet();
+
+    /**
+     * @api
+     *
      * @param int $idProductSet
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -57,6 +64,16 @@ interface ProductSetQueryContainerInterface
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryProductImageSet($idProductSet, $idLocale = null);
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param array $excludedIdProductImageSets
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryExcludedProductImageSet($idProductSet, array $excludedIdProductImageSets);
 
     /**
      * @api

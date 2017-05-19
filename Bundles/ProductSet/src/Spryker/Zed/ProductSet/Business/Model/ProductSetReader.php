@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductSet\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataReaderInterface;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReaderInterface;
 use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetReader implements ProductSetReaderInterface
@@ -26,15 +28,23 @@ class ProductSetReader implements ProductSetReaderInterface
     protected $productSetDataReader;
 
     /**
+     * @var \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReaderInterface
+     */
+    protected $productSetImageReader;
+
+    /**
      * @param \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface $productSetQueryContainer
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataReaderInterface $productSetDataReader
+     * @param \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReaderInterface $productSetImageReader
      */
     public function __construct(
         ProductSetQueryContainerInterface $productSetQueryContainer,
-        ProductSetDataReaderInterface $productSetDataReader
+        ProductSetDataReaderInterface $productSetDataReader,
+        ProductSetImageReaderInterface $productSetImageReader
     ) {
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->productSetDataReader = $productSetDataReader;
+        $this->productSetImageReader = $productSetImageReader;
     }
 
     /**
@@ -57,6 +67,7 @@ class ProductSetReader implements ProductSetReaderInterface
         $productSetTransfer = $this->mapProductSetEntity($productSetEntity);
         $productSetTransfer = $this->mapProductAbstractSets($productSetTransfer, $productSetEntity);
         $productSetTransfer = $this->mapProductSetData($productSetTransfer, $productSetEntity);
+        $productSetTransfer = $this->mapProductSetImageSets($productSetTransfer, $productSetEntity);
 
         return $productSetTransfer;
     }
@@ -110,6 +121,20 @@ class ProductSetReader implements ProductSetReaderInterface
         foreach ($productSetEntity->getSpyProductSetDatas() as $productSetDataEntity) {
             $productSetTransfer->addLocalizedData($this->productSetDataReader->getLocalizedData($productSetDataEntity));
         }
+
+        return $productSetTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
+     */
+    protected function mapProductSetImageSets(ProductSetTransfer $productSetTransfer, SpyProductSet $productSetEntity)
+    {
+        $productImageSetTransferCollection = $this->productSetImageReader->findProductSetImageSets($productSetEntity->getIdProductSet());
+        $productSetTransfer->setImageSets(new ArrayObject($productImageSetTransferCollection));
 
         return $productSetTransfer;
     }

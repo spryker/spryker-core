@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductAbstractSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataUpdaterInterface;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface;
 use Spryker\Zed\ProductSet\Business\Model\Touch\ProductSetTouchInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -35,18 +36,26 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
     protected $productSetTouch;
 
     /**
+     * @var \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface
+     */
+    protected $productSetImageSaver;
+
+    /**
      * @param \Spryker\Zed\ProductSet\Business\Model\ProductSetEntityReaderInterface $productSetEntityReader
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataUpdaterInterface $productSetDataUpdater
+     * @param \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface $productSetImageSaver
      * @param \Spryker\Zed\ProductSet\Business\Model\Touch\ProductSetTouchInterface $productSetTouch
      */
     public function __construct(
         ProductSetEntityReaderInterface $productSetEntityReader,
         ProductSetDataUpdaterInterface $productSetDataUpdater,
+        ProductSetImageSaverInterface $productSetImageSaver,
         ProductSetTouchInterface $productSetTouch
     ) {
         $this->productSetEntityReader = $productSetEntityReader;
         $this->productSetDataUpdater = $productSetDataUpdater;
         $this->productSetTouch = $productSetTouch;
+        $this->productSetImageSaver = $productSetImageSaver;
     }
 
     /**
@@ -73,6 +82,7 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
         $this->updateSpyProductSetEntity($productSetEntity, $productSetTransfer);
         $this->updateProductAbstractSetEntities($productSetEntity, $productSetTransfer);
         $this->updateProductSetData($productSetEntity, $productSetTransfer);
+        $this->updateImageSets($productSetTransfer);
         $this->touchProductSet($productSetTransfer);
 
         return $productSetTransfer;
@@ -145,6 +155,16 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
         foreach ($productSetTransfer->getLocalizedData() as $localizedProductSetTransfer) {
             $this->productSetDataUpdater->updateProductSetData($localizedProductSetTransfer, $productSetEntity->getIdProductSet());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
+     * @return void
+     */
+    protected function updateImageSets(ProductSetTransfer $productSetTransfer)
+    {
+        $this->productSetImageSaver->saveImageSets($productSetTransfer);
     }
 
     /**

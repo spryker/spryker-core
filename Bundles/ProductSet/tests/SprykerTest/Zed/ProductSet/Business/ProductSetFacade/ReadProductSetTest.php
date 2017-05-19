@@ -107,11 +107,10 @@ class ReadProductSetTest extends Test
         $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
 
         // Assert
-        $this->assertCount(1, $actualProductSetTransfer->getLocalizedData(), 'ProductSet should have expected number of localized data.');
-        $this->assertCount(1, $actualProductSetTransfer->getLocalizedData()[0]->getImageSets(), 'ProductSet should have expected number of ProductImageSets.');
+        $this->assertCount(1, $actualProductSetTransfer->getImageSets(), 'ProductSet should have expected number of ProductImageSets.');
         $this->assertEquals(
-            $productSetTransfer->getLocalizedData()[0]->getImageSets()[0]->toArray(),
-            $actualProductSetTransfer->getLocalizedData()[0]->getImageSets()[0]->toArray(),
+            $productSetTransfer->getImageSets()[0]->toArray(),
+            $actualProductSetTransfer->getImageSets()[0]->toArray(),
             'ImageSet should have expected data.'
         );
     }

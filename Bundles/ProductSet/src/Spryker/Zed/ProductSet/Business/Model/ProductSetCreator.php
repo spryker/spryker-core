@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductAbstractSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataCreatorInterface;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface;
 use Spryker\Zed\ProductSet\Business\Model\Touch\ProductSetTouchInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -30,13 +31,23 @@ class ProductSetCreator implements ProductSetCreatorInterface
     protected $productSetTouch;
 
     /**
+     * @var \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface
+     */
+    protected $productSetImageSaver;
+
+    /**
      * @param \Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataCreatorInterface $productSetDataCreator
      * @param \Spryker\Zed\ProductSet\Business\Model\Touch\ProductSetTouchInterface $productSetTouch
+     * @param \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaverInterface $productSetImageSaver
      */
-    public function __construct(ProductSetDataCreatorInterface $productSetDataCreator, ProductSetTouchInterface $productSetTouch)
-    {
+    public function __construct(
+        ProductSetDataCreatorInterface $productSetDataCreator,
+        ProductSetTouchInterface $productSetTouch,
+        ProductSetImageSaverInterface $productSetImageSaver
+    ) {
         $this->productSetTouch = $productSetTouch;
         $this->productSetDataCreator = $productSetDataCreator;
+        $this->productSetImageSaver = $productSetImageSaver;
     }
 
     /**
@@ -64,6 +75,7 @@ class ProductSetCreator implements ProductSetCreatorInterface
         $productSetTransfer->setIdProductSet($idProductSet);
 
         $productSetTransfer = $this->productSetDataCreator->createProductSetData($productSetTransfer);
+        $productSetTransfer = $this->productSetImageSaver->saveImageSets($productSetTransfer);
 
         $this->touchProductSet($productSetTransfer);
 
