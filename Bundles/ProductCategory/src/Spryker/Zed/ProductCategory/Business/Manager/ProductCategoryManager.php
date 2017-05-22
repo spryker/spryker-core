@@ -281,7 +281,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
