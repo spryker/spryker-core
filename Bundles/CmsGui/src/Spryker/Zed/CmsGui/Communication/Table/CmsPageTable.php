@@ -196,12 +196,12 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewButton(array $item)
     {
-        return [
-            'url' => Url::generate('/cms-gui/view-page/index', [
+        return $this->createButtonGroupItem(
+            'In Zed',
+            Url::generate('/cms-gui/view-page/index', [
                 ListPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'title' => 'In Zed',
-        ];
+            ])
+        );
     }
 
     /**
@@ -228,11 +228,14 @@ class CmsPageTable extends AbstractTable
 
         $cmsPageUrlInYves = $yvesHost . $currentLocaleUrl;
 
-        return [
-            'url' => $cmsPageUrlInYves,
-            'title' => 'In Shop',
-            'options' => ['target' => '_blank'],
-        ];
+        return $this->createButtonGroupItem(
+            'In Shop',
+            $cmsPageUrlInYves,
+            false,
+            [
+                'target' => '_blank'
+            ]
+        );
     }
 
     /**
@@ -242,13 +245,13 @@ class CmsPageTable extends AbstractTable
      */
     protected function createVersionHistoryButton(array $item)
     {
-        return [
-            'url' => Url::generate('/cms-gui/version-page/history', [
+        return $this->createButtonGroupItem(
+            'Version History',
+            Url::generate('/cms-gui/version-page/history', [
                 VersionPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
-            'title' => 'Version History',
-            'separated' => true,
-        ];
+            true
+        );
     }
 
     /**
@@ -278,12 +281,12 @@ class CmsPageTable extends AbstractTable
      */
     protected function createEditPageButton(array $item)
     {
-        return [
-            'url' => Url::generate('/cms-gui/edit-page/index', [
+        return $this->createButtonGroupItem(
+            'Page',
+            Url::generate('/cms-gui/edit-page/index', [
                 EditPageController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'title' => 'Page',
-        ];
+            ])
+        );
     }
 
     /**
@@ -293,12 +296,12 @@ class CmsPageTable extends AbstractTable
      */
     protected function createEditGlossaryButton(array $item)
     {
-        return [
-            'url' => Url::generate('/cms-gui/create-glossary/index', [
+        return $this->createButtonGroupItem(
+            'Placeholders',
+            Url::generate('/cms-gui/create-glossary/index', [
                 CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
-            ]),
-            'title' => 'Placeholders',
-        ];
+            ])
+        );
     }
 
     /**

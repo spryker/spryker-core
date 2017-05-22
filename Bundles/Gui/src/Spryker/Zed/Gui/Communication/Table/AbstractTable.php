@@ -779,20 +779,38 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $viewButtons
+     * @param string $title
+     * @param string $url
+     * @param bool $separated
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function createButtonGroupItem($title, $url, $separated = false ,array $options = [])
+    {
+        return [
+            'title' => $title,
+            'url' => $url,
+            'separated' => $separated,
+            'options' => $options
+        ];
+    }
+
+    /**
+     * @param array $buttonGroupItems
      * @param string $title
      * @param array $options
      *
      * @return string
      */
-    protected function generateButtonGroup(array $viewButtons, $title, array $options = [])
+    protected function generateButtonGroup(array $buttonGroupItems, $title, array $options = [])
     {
         $defaultOptions = [
             'class' => 'btn-view',
             'icon' => 'fa-caret-right',
         ];
 
-        return $this->generateButtonGroupHtml($viewButtons, $title, $defaultOptions, $options);
+        return $this->generateButtonGroupHtml($buttonGroupItems, $title, $defaultOptions, $options);
     }
 
     /**
@@ -915,7 +933,7 @@ abstract class AbstractTable
                 $url = $buttonUrl->buildEscaped();
             }
 
-            if (isset($button['separated'])) {
+            if (!empty($button['separated'])) {
                 $html .= '<li class="divider"></li>';
             }
 
