@@ -7,13 +7,13 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
-use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -33,7 +33,7 @@ class CalculatorForm extends AbstractType
     protected $calculatorFormDataProvider;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     protected $discountFacade;
 
@@ -43,19 +43,21 @@ class CalculatorForm extends AbstractType
     protected $calculatorPlugins;
 
     /**
-     * @var \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
+     * @var \Symfony\Component\Form\DataTransformerInterface|\Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
      */
     protected $calculatorAmountTransformer;
 
     /**
      * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
+     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Symfony\Component\Form\DataTransformerInterface|\Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer $calculatorAmountTransformer
      */
     public function __construct(
         CalculatorFormDataProvider $calculatorFormDataProvider,
-        DiscountFacade $discountFacade,
+        DiscountFacadeInterface $discountFacade,
         array $calculatorPlugins,
-        CalculatorAmountTransformer $calculatorAmountTransformer
+        DataTransformerInterface $calculatorAmountTransformer
     ) {
         $this->calculatorFormDataProvider = $calculatorFormDataProvider;
         $this->discountFacade = $discountFacade;

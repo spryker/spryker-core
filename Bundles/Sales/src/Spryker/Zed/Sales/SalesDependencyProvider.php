@@ -79,7 +79,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function addHydrateOrderPlugins(Container $container)
     {
         $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
-            return $this->getHydrateOrderPlugins();
+            return $this->getOrderHydrationPlugins();
         };
 
         return $container;
@@ -214,7 +214,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
-    protected function getHydrateOrderPlugins()
+    protected function getOrderHydrationPlugins()
     {
          return [];
     }
