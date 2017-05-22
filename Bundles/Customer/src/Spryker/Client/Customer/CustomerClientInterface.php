@@ -140,6 +140,18 @@ interface CustomerClientInterface
     public function getCustomerById($idCustomer);
 
     /**
+     * Specification:
+     * - Returns fresh Customer transfer or NULL, if it does not exist
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

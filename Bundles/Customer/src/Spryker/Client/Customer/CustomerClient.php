@@ -160,6 +160,26 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer)
+    {
+        $customerTransfer = $this->getCustomerById($customerTransfer->getIdCustomer());
+
+        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
+            return $customerTransfer;
+        }
+
+        return null;
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
