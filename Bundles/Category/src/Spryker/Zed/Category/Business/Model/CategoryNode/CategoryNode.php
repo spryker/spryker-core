@@ -36,7 +36,7 @@ class CategoryNode implements CategoryNodeInterface
     protected $transferGenerator;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface|\Spryker\Zed\Category\Business\Model\CategoryToucherFormerParentInterface
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
      */
     protected $categoryToucher;
 
@@ -49,7 +49,7 @@ class CategoryNode implements CategoryNodeInterface
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface|\Spryker\Zed\Category\Business\Model\CategoryToucherFormerParentInterface $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      */
     public function __construct(
@@ -197,7 +197,7 @@ class CategoryNode implements CategoryNodeInterface
      */
     protected function getPossibleFormerParentCategoryNodeId(
         SpyCategoryNode $categoryNodeEntity,
-            CategoryTransfer $categoryTransfer
+        CategoryTransfer $categoryTransfer
     ) {
         $parentCategoryNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
         $idFormerParentCategoryNode = $categoryNodeEntity->getFkParentCategoryNode();

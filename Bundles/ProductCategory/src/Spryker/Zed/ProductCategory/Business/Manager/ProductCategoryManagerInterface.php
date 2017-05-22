@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business\Manager;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryManagerInterface
@@ -69,5 +70,12 @@ interface ProductCategoryManagerInterface
      * @return void
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
 
 }

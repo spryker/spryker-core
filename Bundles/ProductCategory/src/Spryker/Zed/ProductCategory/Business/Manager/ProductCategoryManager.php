@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business\Manager;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -262,6 +263,34 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         $productCategoryTransfer = $this->createProductCategoryTransfer($idCategory, $idProductAbstract);
         $this->eventFacade->trigger($eventName, $productCategoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer)
+    {
+        $idCategoryNode = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
+        $productMappings = $this->findProductMappingsOfChildCategories($idCategoryNode);
+
+        foreach ($productMappings as $productMappingEntity) {
+            $this->touchProductAbstractActive($productMappingEntity->getFkProductAbstract());
+        }
+    }
+
+    /**
+     * @param $idCategoryNode
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     */
+    protected function findProductMappingsOfChildCategories($idCategoryNode)
+    {
+        return $this
+            ->productCategoryQueryContainer
+            ->queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode)
+            ->find();
     }
 
 }

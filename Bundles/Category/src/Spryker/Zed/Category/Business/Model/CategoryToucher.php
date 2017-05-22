@@ -175,7 +175,7 @@ class CategoryToucher implements CategoryToucherInterface, CategoryToucherFormer
     /**
      * @param int $idCategoryNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]
      */
     protected function findParentCategoryNodes($idCategoryNode)
     {
