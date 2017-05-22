@@ -157,8 +157,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 SpyPriceProductTableMap::COL_PRICE,
                 SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
             ])
-            ->withColumn(sprintf(
-                'GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
+            ->withColumn(
+                sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
                 static::COL_ASSIGNED_CATEGORIES
             )
             ->joinPriceProduct()

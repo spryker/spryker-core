@@ -108,8 +108,8 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param $idProductAbstract
-     * @param $idLocale
+     * @param int $idProductAbstract
+     * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
@@ -132,9 +132,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param $idProductConcrete
-     * @param $idProductAbstract
-     * @param $idLocale
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
@@ -158,7 +158,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $imageSets
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSets
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
@@ -166,7 +166,6 @@ class Reader implements ReaderInterface
     {
         $result = [];
 
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $imageSetEntity */
         foreach ($imageSets as $imageSetEntity) {
             $imageSetTransfer = $this->transferMapper->mapProductImageSet($imageSetEntity);
             $result[$imageSetEntity->getName()] = $imageSetTransfer;

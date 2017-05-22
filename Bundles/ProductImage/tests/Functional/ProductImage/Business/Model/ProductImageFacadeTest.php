@@ -566,6 +566,33 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetCombinedConcreteImageSets()
+    {
+        $imageSetTransfers = $this->productImageFacade->getCombinedConcreteImageSets(
+            $this->productConcreteEntity->getIdProduct(),
+            $this->productConcreteEntity->getFkProductAbstract(),
+            static::ID_LOCALE_DE
+        );
+
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME]);
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME_DE]);
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $defaultImageSetTransfer */
+        $defaultImageSetTransfer = $imageSetTransfers[static::SET_NAME];
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $localizedImageSetTransfer */
+        $localizedImageSetTransfer = $imageSetTransfers[static::SET_NAME_DE];
+
+        $defaultProductImages = $defaultImageSetTransfer->getProductImages();
+        $localizedProductImages = $localizedImageSetTransfer->getProductImages();
+
+        $this->assertEquals(1, count($defaultProductImages));
+        $this->assertEquals(1, count($localizedProductImages));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return void

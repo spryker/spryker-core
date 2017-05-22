@@ -164,7 +164,7 @@ interface ProductImageFacadeInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
 
@@ -179,7 +179,7 @@ interface ProductImageFacadeInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
 
