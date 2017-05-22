@@ -11,15 +11,7 @@ require('es6-promise/auto');
 
 // external dependencies
 require('jquery');
-
-if (DEV) {
-    require('jquery-migrate');
-}
-
-if (!DEV) {
-    require('jquery-migrate/dist/jquery-migrate.min');
-}
-
+require('jquery-migrate/dist/jquery-migrate.min');
 require('jquery-ui');
 require('bootstrap-sass');
 require('metismenu');
