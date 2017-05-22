@@ -26,7 +26,7 @@ class SubtotalTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */

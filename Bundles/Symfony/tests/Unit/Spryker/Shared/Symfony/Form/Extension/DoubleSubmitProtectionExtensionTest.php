@@ -114,6 +114,8 @@ class DoubleSubmitProtectionExtensionTest extends Test
     /**
      * @dataProvider booleanDataProvider
      *
+     * @param bool $valid
+     *
      * @return void
      */
     public function testValidateTokenOnSubmit($valid)

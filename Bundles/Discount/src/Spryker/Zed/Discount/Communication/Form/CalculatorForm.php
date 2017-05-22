@@ -49,7 +49,9 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer $calculatorAmountTransformer
      */
     public function __construct(
         CalculatorFormDataProvider $calculatorFormDataProvider,

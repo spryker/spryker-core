@@ -95,7 +95,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

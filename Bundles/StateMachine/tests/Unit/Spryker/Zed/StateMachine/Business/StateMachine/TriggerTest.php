@@ -256,8 +256,8 @@ class TriggerTest extends StateMachineMocks
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface|null $finderMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface|null $persistenceMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface|null $conditionMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface|null $stateUpdaterMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Trigger
      */

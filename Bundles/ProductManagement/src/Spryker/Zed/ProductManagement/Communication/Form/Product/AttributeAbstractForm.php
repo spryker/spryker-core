@@ -77,7 +77,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param string $name
-     * @param string $attributes
+     * @param array $attributes
      *
      * @return array
      */
@@ -190,6 +190,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
@@ -256,6 +257,8 @@ class AttributeAbstractForm extends AbstractSubForm
     /**
      * @param string $name
      * @param array $attributes
+     * @param mixed $existingValue
+     * @param int $idLocale
      *
      * @return array
      */

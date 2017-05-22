@@ -57,6 +57,8 @@ class TimeDecisionRule implements DecisionRuleInterface
     }
 
     /**
+     * @param string $timeFormatted
+     *
      * @return int
      */
     protected function convertToSeconds($timeFormatted)
