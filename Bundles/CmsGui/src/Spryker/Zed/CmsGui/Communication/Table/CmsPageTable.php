@@ -174,17 +174,17 @@ class CmsPageTable extends AbstractTable
             return '';
         }
 
-        $viewButtons = [
-            $this->createViewButton($item),
-            $this->createViewInShopButton($item, $urlPrefix),
+        $groupItems = [
+            $this->createViewButtonItem($item),
+            $this->createViewInShopButtonItem($item, $urlPrefix),
         ];
 
         if ($this->hasMultipleVersions($item)) {
-            $viewButtons[] = $this->createVersionHistoryButton($item);
+            $groupItems[] = $this->createVersionHistoryButton($item);
         }
 
         return $this->generateButtonGroup(
-            $viewButtons,
+            $groupItems,
             'View '
         );
     }
@@ -194,7 +194,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createViewButton(array $item)
+    protected function createViewButtonItem(array $item)
     {
         return $this->createButtonGroupItem(
             'In Zed',
@@ -210,7 +210,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createViewInShopButton(array $item, $urlPrefix)
+    protected function createViewInShopButtonItem(array $item, $urlPrefix)
     {
         if ($this->isDraft($item)) {
             return '';
@@ -233,7 +233,7 @@ class CmsPageTable extends AbstractTable
             $cmsPageUrlInYves,
             false,
             [
-                'target' => '_blank'
+                'target' => '_blank',
             ]
         );
     }
@@ -263,8 +263,8 @@ class CmsPageTable extends AbstractTable
     {
         return $this->generateButtonGroup(
             [
-                $this->createEditPageButton($item),
-                $this->createEditGlossaryButton($item),
+                $this->createEditPageButtonItem($item),
+                $this->createEditGlossaryButtonItem($item),
             ],
             'Edit ',
             [
@@ -279,7 +279,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditPageButton(array $item)
+    protected function createEditPageButtonItem(array $item)
     {
         return $this->createButtonGroupItem(
             'Page',
@@ -294,7 +294,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditGlossaryButton(array $item)
+    protected function createEditGlossaryButtonItem(array $item)
     {
         return $this->createButtonGroupItem(
             'Placeholders',

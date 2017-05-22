@@ -786,13 +786,13 @@ abstract class AbstractTable
      *
      * @return string
      */
-    protected function createButtonGroupItem($title, $url, $separated = false ,array $options = [])
+    protected function createButtonGroupItem($title, $url, $separated = false, array $options = [])
     {
         return [
             'title' => $title,
             'url' => $url,
             'separated' => $separated,
-            'options' => $options
+            'options' => $options,
         ];
     }
 
