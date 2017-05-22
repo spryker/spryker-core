@@ -15,6 +15,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
@@ -156,7 +157,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource = null, $idLocale = null)
     {
-        $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
+        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
 
         if ($idResource !== null) {
             $urlTransfer->setResourceId($idResource);

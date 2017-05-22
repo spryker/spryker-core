@@ -89,7 +89,7 @@ class TouchStep implements DataImportStepInterface
         $this->executed[$touchType] = ++$this->executed[$touchType];
 
         if ($this->bulkSize === count($this->touchAbles[$touchType])) {
-            $this->touchFacade->bulkTouchSetActive($touchType, $this->touchAbles[$touchType]);
+            $this->touchFacade->bulkTouchSetActive($touchType, array_unique($this->touchAbles[$touchType]));
             unset($this->touchAbles[$touchType]);
             $this->executed[$touchType] = 0;
         }
@@ -101,7 +101,7 @@ class TouchStep implements DataImportStepInterface
     public function __destruct()
     {
         foreach ($this->touchAbles as $touchType => $itemIds) {
-            $this->touchFacade->bulkTouchSetActive($touchType, $itemIds);
+            $this->touchFacade->bulkTouchSetActive($touchType, array_unique($itemIds));
             unset($this->touchAbles[$touchType]);
         }
     }

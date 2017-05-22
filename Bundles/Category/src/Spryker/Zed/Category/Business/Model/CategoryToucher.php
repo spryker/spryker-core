@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Category\Business\Model;
 
 use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -75,7 +76,7 @@ class CategoryToucher implements CategoryToucherInterface
      */
     public function touchCategoryNodeActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
         $this->touchNavigationActive($idCategoryNode);
     }
 
@@ -100,7 +101,7 @@ class CategoryToucher implements CategoryToucherInterface
      */
     public function touchCategoryNodeDeleted($idCategoryNode)
     {
-        $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
         $this->touchNavigationActive($idCategoryNode);
     }
 
@@ -115,7 +116,7 @@ class CategoryToucher implements CategoryToucherInterface
 
         if ($rootNodeEntity) {
             $this->touchFacade->touchActive(
-                CategoryConstants::RESOURCE_TYPE_NAVIGATION,
+                CategoryConfig::RESOURCE_TYPE_NAVIGATION,
                 $rootNodeEntity->getIdCategoryNode()
             );
         }

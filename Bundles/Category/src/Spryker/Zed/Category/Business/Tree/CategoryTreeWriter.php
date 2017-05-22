@@ -13,6 +13,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
 /**
@@ -217,7 +218,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
      */
     protected function touchCategoryActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
     /**
@@ -227,7 +228,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
      */
     protected function touchCategoryDeleted($idCategoryNode)
     {
-        $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
     /**
@@ -235,14 +236,14 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
      */
     protected function touchNavigationActive()
     {
-        $navigationItems = $this->touchFacade->getItemsByType(CategoryConstants::RESOURCE_TYPE_NAVIGATION);
+        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
 
         $itemIds = [];
         foreach ($navigationItems as $touchTransfer) {
             $itemIds[] = $touchTransfer->getItemId();
         }
 
-        $this->touchFacade->bulkTouchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, $itemIds);
+        $this->touchFacade->bulkTouchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
     /**

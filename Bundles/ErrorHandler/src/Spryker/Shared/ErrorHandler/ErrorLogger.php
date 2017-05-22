@@ -19,6 +19,23 @@ class ErrorLogger implements ErrorLoggerInterface
     use NewRelicApiTrait;
 
     /**
+     * @var self
+     */
+    protected static $instance;
+
+    /**
+     * @return \Spryker\Shared\ErrorHandler\ErrorLogger
+     */
+    public function getInstance()
+    {
+        if (!static::$instance) {
+            static::$instance = new self();
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * @param \Exception|\Throwable $exception
      *
      * @return void

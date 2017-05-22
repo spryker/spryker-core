@@ -52,7 +52,7 @@ class TransactionEndStep implements DataImportStepInterface
 
         if (!$this->propelConnection->inTransaction()) {
             throw new TransactionException(sprintf(
-                'There is no opened transaction. Make sure that your bulk size in "%s" and "%S" equals and both classes are added to your "%s".',
+                'There is no opened transaction. Make sure that your bulk size in "%s" and "%s" equals and both classes are added to your "%s".',
                 TransactionBeginStep::class,
                 TransactionEndStep::class,
                 DataSetInterface::class
