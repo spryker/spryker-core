@@ -1,13 +1,7 @@
 {
   "name": "spryker/oms",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    },
-    "psr-4": {
-      "Oms\\Module\\": "tests/_support/Module/"
-    }
-  },
+  "description": "Oms bundle",
+  "license": "proprietary",
   "require": {
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
@@ -31,23 +25,13 @@
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
   },
-  "description": "Oms bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "6.0.x-dev"
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    },
+    "psr-4": {
+      "Oms\\Module\\": "tests/_support/Module/"
     }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
-  "config": {
-    "sort-packages": true
   },
   "autoload-dev": {
     "psr-0": {
@@ -55,5 +39,21 @@
       "Functional": "tests/",
       "Unit": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "6.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

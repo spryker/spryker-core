@@ -11,10 +11,10 @@ interface FormatterInterface
 {
 
     /**
-     * @param mixed
+     * @param mixed $value
      *
      * @return string
      */
-    public function format($string);
+    public function format($value);
 
 }

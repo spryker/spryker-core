@@ -27,20 +27,21 @@
     </transfer>
 
     <transfer name="PropelQueryBuilderPagination">
-        <property name="page" type="int"/>
-        <property name="itemsPerPage" type="int"/>
-        <property name="total" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int" deprecated="Use limit/offset instead."/>
+        <property name="itemsPerPage" type="int" deprecated="Use limit/offset instead."/>
+        <property name="total" type="int" deprecated="Not in use anymore."/>
         <property name="sortItems" type="PropelQueryBuilderSort[]" singular="sortItem"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderSort">
-        <property name="columnName" type="string" />
+        <property name="column" type="PropelQueryBuilderColumn" />
         <property name="sortDirection" type="string" />
     </transfer>
 
     <transfer name="PropelQueryBuilderColumnSelection">
-        <property name="tableName" type="string" />
-        <property name="tableColumns" type="array"/>
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
         <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
     </transfer>
 

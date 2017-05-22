@@ -198,6 +198,24 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
 
     /**
      * Specification:
+     * - Deletes a ProductImageSet row from database
+     * - Deletes orphan ProductImages and relations to a ProductImageSet
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return void
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        $this->getFactory()
+            ->createProductImageWriter()
+            ->deleteProductImageSet($productImageSetTransfer);
+    }
+
+    /**
+     * Specification:
      * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
      *
      * @api

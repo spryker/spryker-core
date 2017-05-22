@@ -50,6 +50,12 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
         ModelCriteria $query,
         PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     ) {
+        if ($propelQueryBuilderPaginationTransfer->getLimit() || $propelQueryBuilderPaginationTransfer->getOffset()) {
+            $query->setLimit($propelQueryBuilderPaginationTransfer->getLimit());
+
+            return $query;
+        }
+
         $query->setLimit($this->getItemsPerPage($propelQueryBuilderPaginationTransfer));
 
         return $query;
@@ -65,6 +71,12 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
         ModelCriteria $query,
         PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     ) {
+        if ($propelQueryBuilderPaginationTransfer->getOffset() || $propelQueryBuilderPaginationTransfer->getOffset()) {
+            $query->setOffset($propelQueryBuilderPaginationTransfer->getOffset());
+
+            return $query;
+        }
+
         $itemsPerPage = $this->getItemsPerPage($propelQueryBuilderPaginationTransfer);
         $page = (int)$propelQueryBuilderPaginationTransfer->getPage();
 
@@ -92,10 +104,13 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
         $sortCollection = $propelQueryBuilderPaginationTransfer->getSortItems();
 
         foreach ($sortCollection as $sortItem) {
+            $sortItem->requireColumn();
+            $sortItem->getColumn()->requireName();
+
             if (strtolower($sortItem->getSortDirection()) === strtolower(Criteria::ASC)) {
-                $query->addAscendingOrderByColumn($sortItem->getColumnName());
+                $query->addAscendingOrderByColumn($sortItem->getColumn()->getName());
             } else {
-                $query->addDescendingOrderByColumn($sortItem->getColumnName());
+                $query->addDescendingOrderByColumn($sortItem->getColumn()->getName());
             }
         }
 

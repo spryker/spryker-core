@@ -63,6 +63,44 @@ JSON;
     /**
      * @return void
      */
+    public function testEncodeString()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson('A string!');
+
+        $this->assertEquals('"A string!"', $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEncodeBooleanAndNull()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson(true);
+
+        $this->assertEquals('true', $jsonEncodeValue);
+
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson(false);
+
+        $this->assertEquals('false', $jsonEncodeValue);
+
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson(null);
+
+        $this->assertEquals('null', $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEncodeInvalid()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson(['x' => ['y' => 'z']], JSON_NUMERIC_CHECK, 1);
+
+        $this->assertNull($jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
     public function testEncodeJsonWithPrettyPrintIncluded()
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
@@ -88,6 +126,34 @@ JSON;
         $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE);
 
         $this->assertEquals((object)$this->jsonData, $jsonDecodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodeString()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('"A string!"');
+
+        $this->assertEquals('A string!', $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodeBooleanAndNull()
+    {
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('true');
+
+        $this->assertEquals(true, $jsonEncodeValue);
+
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('false');
+
+        $this->assertEquals(false, $jsonEncodeValue);
+
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('null');
+
+        $this->assertEquals(null, $jsonEncodeValue);
     }
 
 }

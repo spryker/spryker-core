@@ -17,7 +17,7 @@ class RestController extends AbstractApiController
 {
 
     /**
-     * /api/customers/1
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */

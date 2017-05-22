@@ -1,11 +1,7 @@
 {
   "name": "spryker/newsletter",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
+  "description": "Newsletter bundle",
+  "license": "proprietary",
   "require": {
     "spryker/customer": "^4.0.0",
     "spryker/glossary": "^3.0.0",
@@ -24,8 +20,17 @@
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer."
   },
-  "description": "Newsletter bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Function": "tests/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -35,10 +40,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
-    }
   }
 }

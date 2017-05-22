@@ -8,8 +8,11 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,6 +23,7 @@ class EditPageController extends AbstractController
 
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -42,19 +46,11 @@ class EditPageController extends AbstractController
             ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
-            if ($pageForm->isValid()) {
-                $this->getFactory()
-                    ->getCmsFacade()
-                    ->updatePage($pageForm->getData());
+            $isUpdated = $this->updateCmsPage($pageForm);
 
-                $this->addSuccessMessage('Page successfully updated.');
-
+            if ($isUpdated) {
                 $redirectUrl = $this->createEditPageUrl($idCmsPage);
-
                 return $this->redirectResponse($redirectUrl);
-
-            } else {
-                $this->addErrorMessage('Invalid data provided.');
             }
         }
 
@@ -62,13 +58,51 @@ class EditPageController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $cmsVersion = $this->getFactory()
+            ->getCmsFacade()
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+        $cmsPageTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->findCmsPageById($idCmsPage);
+
         $pageTabs = $this->getFactory()->createPageTabs();
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
             'availableLocales' => $availableLocales,
             'idCmsPage' => $idCmsPage,
+            'cmsVersion' => $cmsVersion,
+            'cmsPage' => $cmsPageTransfer,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $pageForm
+     *
+     * @return bool
+     */
+    protected function updateCmsPage($pageForm)
+    {
+        if ($pageForm->isValid()) {
+            try {
+                $this->getFactory()
+                    ->getCmsFacade()
+                    ->updatePage($pageForm->getData());
+
+                $this->addSuccessMessage('Page successfully updated.');
+
+                return true;
+            } catch (TemplateFileNotFoundException $exception) {
+                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+                $error = $this->createTemplateErrorForm();
+                $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
+            }
+        } else {
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+        }
+
+        return false;
     }
 
     /**
@@ -125,6 +159,14 @@ class EditPageController extends AbstractController
             '/cms-gui/edit-page/index',
             [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
         )->build();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormError
+     */
+    protected function createTemplateErrorForm()
+    {
+        return new FormError("Selected template doesn't exist anymore");
     }
 
 }

@@ -329,6 +329,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductAbstract
      * @param string $touchType
+     * @param string $status
      *
      * @return void
      */

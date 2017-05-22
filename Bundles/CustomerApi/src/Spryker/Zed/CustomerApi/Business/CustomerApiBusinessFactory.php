@@ -28,9 +28,11 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerApi(
             $this->getApiQueryContainer(),
+            $this->getApiQueryBuilderQueryContainer(),
             $this->getQueryContainer(),
             $this->createCustomerEntityMapper(),
-            $this->createCustomerTransferMapper()
+            $this->createCustomerTransferMapper(),
+            $this->getCustomerFacade()
         );
     }
 
@@ -55,9 +57,7 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerApiValidator()
     {
-        return new CustomerApiValidator(
-            $this->createCustomerTransferMapper()
-        );
+        return new CustomerApiValidator();
     }
 
     /**
@@ -66,6 +66,22 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
     protected function getApiQueryContainer()
     {
         return $this->getProvidedDependency(CustomerApiDependencyProvider::QUERY_CONTAINER_API);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface
+     */
+    protected function getApiQueryBuilderQueryContainer()
+    {
+        return $this->getProvidedDependency(CustomerApiDependencyProvider::QUERY_CONTAINER_API_QUERY_BUILDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface
+     */
+    protected function getCustomerFacade()
+    {
+        return $this->getProvidedDependency(CustomerApiDependencyProvider::FACADE_CUSTOMER);
     }
 
 }

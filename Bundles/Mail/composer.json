@@ -1,5 +1,7 @@
 {
   "name": "spryker/mail",
+  "description": "Mail bundle",
+  "license": "proprietary",
   "require": {
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.0.0"
@@ -11,18 +13,6 @@
   },
   "suggest": {
     "swiftmailer/swiftmailer": "Default Mailer"
-  },
-  "description": "Mail bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
   },
   "autoload": {
     "psr-0": {
@@ -39,10 +29,20 @@
       "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
     {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "4.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }

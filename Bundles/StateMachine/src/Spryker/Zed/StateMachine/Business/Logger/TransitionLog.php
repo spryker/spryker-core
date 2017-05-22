@@ -36,6 +36,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface $pathFinder
+     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(PathFinderInterface $pathFinder, UtilNetworkServiceInterface $utilNetworkService)
     {
@@ -74,6 +75,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface $command
      *
      * @return void
      */

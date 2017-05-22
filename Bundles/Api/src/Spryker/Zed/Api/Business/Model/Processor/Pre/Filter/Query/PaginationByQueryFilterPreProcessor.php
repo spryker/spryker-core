@@ -38,20 +38,21 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        $apiRequestTransfer->getFilter()->getPagination()->setPage(1);
-        $apiRequestTransfer->getFilter()->getPagination()->setItemsPerPage($this->apiConfig->getLimitPerPage());
 
-        if (!empty($queryStrings[self::PAGE])) {
-            $apiRequestTransfer->getFilter()->getPagination()->setPage(
-                $this->validatePageInput($queryStrings[self::PAGE])
-            );
-        }
-
+        $limitPerPage = $this->apiConfig->getLimitPerPage();
         if (!empty($queryStrings[self::LIMIT])) {
-            $apiRequestTransfer->getFilter()->getPagination()->setItemsPerPage(
-                $this->validateLimitRange($queryStrings[self::LIMIT])
-            );
+            $limitPerPage = $this->validateLimitRange($queryStrings[self::LIMIT]);
         }
+
+        $page = 1;
+        if (!empty($queryStrings[self::PAGE])) {
+            $page = $this->validatePageInput($queryStrings[self::PAGE]);
+        }
+
+        $offset = ($page - 1) * $limitPerPage;
+
+        $apiRequestTransfer->getFilter()->setOffset($offset);
+        $apiRequestTransfer->getFilter()->setLimit($limitPerPage);
 
         return $apiRequestTransfer;
     }
@@ -77,8 +78,11 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
      */
     protected function validateLimitRange($limit)
     {
-        if ($limit < 0 || $limit > $this->apiConfig->getMaxLimitPerPage()) {
+        if ($limit < 0) {
             $limit = $this->apiConfig->getLimitPerPage();
+        }
+        if ($limit > $this->apiConfig->getMaxLimitPerPage()) {
+            $limit = $this->apiConfig->getMaxLimitPerPage();
         }
 
         return (int)$limit;

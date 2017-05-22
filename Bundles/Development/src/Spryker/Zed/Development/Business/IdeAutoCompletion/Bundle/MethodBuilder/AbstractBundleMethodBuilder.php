@@ -22,7 +22,6 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     protected $namespaceExtractor;
 
     /**
-     * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface $namespaceExtractor
      */
     public function __construct(NamespaceExtractorInterface $namespaceExtractor)
@@ -75,7 +74,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleDirectory
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
      * @return string
      */

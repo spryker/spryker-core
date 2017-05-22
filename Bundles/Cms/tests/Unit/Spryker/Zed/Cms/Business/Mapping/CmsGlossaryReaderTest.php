@@ -45,7 +45,7 @@ class CmsGlossaryReaderTest extends CmsMocks
             ->method('getCmsPageEntity')
             ->willReturn($cmsPageEntityMock);
 
-        $cmsGlossaryReaderMock->expects($this->once())
+        $cmsGlossaryReaderMock->expects($this->any())
             ->method('fileExists')
             ->willReturn(true);
 
@@ -92,6 +92,8 @@ class CmsGlossaryReaderTest extends CmsMocks
 
         if ($cmsConfigMock === null) {
             $cmsConfigMock = $this->createCmsConfigMock();
+            $cmsConfigMock->method('getTemplateRealPaths')
+                ->willReturn(['test_template']);
         }
 
         return $this->getMockBuilder(CmsGlossaryReader::class)

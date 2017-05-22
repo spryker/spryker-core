@@ -124,30 +124,37 @@ class ReaderTest extends Test
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $spyProductAbstractEntity
+     *
      * @return void
      */
-    protected function deletePriceEntitiesAbstract($requestProduct)
+    protected function deletePriceEntitiesAbstract($spyProductAbstractEntity)
     {
-        SpyPriceProductQuery::create()->filterBySpyProductAbstract($requestProduct)->delete();
+        SpyPriceProductQuery::create()->filterBySpyProductAbstract($spyProductAbstractEntity)->delete();
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $spyProductEntity
+     *
      * @return void
      */
-    protected function deletePriceEntitiesConcrete($requestProduct)
+    protected function deletePriceEntitiesConcrete($spyProductEntity)
     {
-        SpyPriceProductQuery::create()->filterByProduct($requestProduct)->delete();
+        SpyPriceProductQuery::create()->filterByProduct($spyProductEntity)->delete();
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $spyProductAbstractEntity
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     *
      * @return void
      */
-    protected function insertPriceEntity($requestProduct, $requestPriceType)
+    protected function insertPriceEntity($spyProductAbstractEntity, $priceType)
     {
         (new SpyPriceProduct())
             ->setPrice(100)
-            ->setSpyProductAbstract($requestProduct)
-            ->setPriceType($requestPriceType)
+            ->setSpyProductAbstract($spyProductAbstractEntity)
+            ->setPriceType($priceType)
             ->save();
     }
 

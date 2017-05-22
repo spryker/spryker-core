@@ -39,4 +39,14 @@ class CmsToLocaleBridge implements CmsToLocaleInterface
         return $this->localeFacade->getAvailableLocales();
     }
 
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName)
+    {
+        return $this->localeFacade->getLocale($localeName);
+    }
+
 }

@@ -779,6 +779,41 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $title
+     * @param string $url
+     * @param bool $separated
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function createButtonGroupItem($title, $url, $separated = false, array $options = [])
+    {
+        return [
+            'title' => $title,
+            'url' => $url,
+            'separated' => $separated,
+            'options' => $options,
+        ];
+    }
+
+    /**
+     * @param array $buttonGroupItems
+     * @param string $title
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function generateButtonGroup(array $buttonGroupItems, $title, array $options = [])
+    {
+        $defaultOptions = [
+            'class' => 'btn-view',
+            'icon' => 'fa-caret-right',
+        ];
+
+        return $this->generateButtonGroupHtml($buttonGroupItems, $title, $defaultOptions, $options);
+    }
+
+    /**
      * @param string $url
      * @param string $title
      * @param array $options
@@ -842,6 +877,77 @@ abstract class AbstractTable
 
         $html .= $title;
         $html .= '</a>';
+
+        return $html;
+    }
+
+    /**
+     * @param array $buttons
+     * @param string $title
+     * @param array $defaultOptions
+     * @param array $customOptions
+     *
+     * @return string
+     */
+    protected function generateButtonGroupHtml(array $buttons, $title, array $defaultOptions, array $customOptions = [])
+    {
+        $buttonOptions = $this->generateButtonOptions($defaultOptions, $customOptions);
+        $class = $this->getButtonClass($defaultOptions, $customOptions);
+        $parameters = $this->getButtonParameters($buttonOptions);
+
+        $icon = '';
+        if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
+            $icon .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+        }
+
+        return $this->generateButtonDropdownHtml($buttons, $title, $icon, $class, $parameters);
+    }
+
+    /**
+     * @param array $buttons
+     * @param string $title
+     * @param string $icon
+     * @param string $class
+     * @param string $parameters
+     *
+     * @return string
+     */
+    protected function generateButtonDropdownHtml(array $buttons, $title, $icon, $class, $parameters)
+    {
+        $html = sprintf(
+            '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-xs btn-outline %s dropdown-toggle" aria-expanded="true" %s>%s%s<span class="caret"></span></button>',
+            $class,
+            $parameters,
+            $icon,
+            $title
+        );
+
+        $html .= '<ul class="dropdown-menu">';
+
+        foreach ($buttons as $button) {
+            if (is_string($button['url'])) {
+                $utilSanitizeService = new UtilSanitizeService();
+                $url = $utilSanitizeService->escapeHtml($button['url']);
+            } else {
+                $buttonUrl = $button['url'];
+                $url = $buttonUrl->buildEscaped();
+            }
+
+            if (!empty($button['separated'])) {
+                $html .= '<li class="divider"></li>';
+            }
+
+            $buttonParameters = '';
+            if (isset($button['options'])) {
+                $buttonParameters = $this->getButtonParameters($button['options']);
+            }
+
+            $html .= sprintf('<li><a href="%s" %s>', $url, $buttonParameters);
+            $html .= $button['title'];
+            $html .= '</a></li>';
+        }
+
+        $html .= '</ul></div>';
 
         return $html;
     }

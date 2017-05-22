@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    const URI_SUFFIX_INDEX = '\/index$';
+    const URI_SUFFIX_SLASH = '\/$';
+
     /**
      * @param \Silex\Application $app
      *
@@ -46,9 +49,10 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     protected function getNavigation()
     {
         $request = Request::createFromGlobals();
+        $uri = $this->removeUriSuffix($request->getPathInfo());
 
         return (new ZedNavigation())
-            ->buildNavigation($request->getPathInfo());
+            ->buildNavigation($uri);
     }
 
     /**
@@ -58,6 +62,16 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      */
     public function boot(Application $app)
     {
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function removeUriSuffix($path)
+    {
+        return preg_replace('/' . self::URI_SUFFIX_INDEX . '|' . self::URI_SUFFIX_SLASH . '/m', '', $path);
     }
 
 }

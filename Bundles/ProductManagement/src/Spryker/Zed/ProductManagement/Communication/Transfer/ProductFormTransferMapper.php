@@ -57,7 +57,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
      */
     protected $utilTextService;
 
@@ -145,6 +145,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -198,6 +199,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param array $data
+     * @param array $attributes
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
@@ -404,6 +406,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

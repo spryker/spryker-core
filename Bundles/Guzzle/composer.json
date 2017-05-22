@@ -1,10 +1,10 @@
 {
   "name": "spryker/guzzle",
+  "description": "Guzzle bundle",
+  "license": "proprietary",
   "require": {
     "guzzlehttp/guzzle": "~6.2.1"
   },
-  "description": "Guzzle bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

@@ -20,17 +20,17 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      *
      * @api
      *
-     * @param string $jsonValue
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeJson($jsonValue, $options = null, $depth = null)
+    public function encodeJson($value, $options = null, $depth = null)
     {
         return $this->getFactory()
             ->createJsonEncoder()
-            ->encode($jsonValue, $options, $depth);
+            ->encode($value, $options, $depth);
     }
 
     /**
@@ -43,7 +43,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

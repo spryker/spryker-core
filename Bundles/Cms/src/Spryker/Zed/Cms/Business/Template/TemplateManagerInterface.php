@@ -68,4 +68,13 @@ interface TemplateManagerInterface
      */
     public function syncTemplate($cmsTemplateFolderPath);
 
+    /**
+     * @param string $path
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
+     *
+     * @return void
+     */
+    public function checkTemplateFileExists($path);
+
 }

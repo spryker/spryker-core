@@ -1,10 +1,7 @@
 {
   "name": "spryker/state-machine",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "StateMachine bundle",
+  "license": "proprietary",
   "require": {
     "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -19,28 +16,31 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "description": "StateMachine bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
-  "config": {
-    "sort-packages": true
   },
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

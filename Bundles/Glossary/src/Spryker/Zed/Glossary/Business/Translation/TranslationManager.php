@@ -89,11 +89,12 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
+        $translationKey = $keyTranslationTransfer->getGlossaryKey();
         try {
-            if (!$this->keyManager->hasKey($keyTranslationTransfer->getGlossaryKey())) {
-                $idGlossaryKey = $this->keyManager->createKey($keyTranslationTransfer->getGlossaryKey());
+            if (!$this->keyManager->hasKey($translationKey)) {
+                $idGlossaryKey = $this->keyManager->createKey($translationKey);
             } else {
-                $idGlossaryKey = $this->keyManager->getKey($keyTranslationTransfer->getGlossaryKey())
+                $idGlossaryKey = $this->keyManager->getKey($translationKey)
                     ->getIdGlossaryKey();
             }
 
@@ -103,8 +104,12 @@ class TranslationManager implements TranslationManagerInterface
                 $localeTransfer = $this->localeFacade->getLocale($localeName);
 
                 if (array_key_exists($localeName, $keyTranslationTransfer->getLocales())) {
-                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, (string)$keyTranslationTransfer->getLocales()[$localeName]);
+                    $translationValue = (string)$keyTranslationTransfer->getLocales()[$localeName];
+                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $translationValue);
                     $this->saveAndTouchTranslation($translationTransfer);
+                    if (!$translationValue) {
+                        $this->deleteTranslation($translationKey, $localeTransfer);
+                    }
                 }
             }
 
@@ -335,6 +340,24 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @param array $idKeys
+     *
+     * @return bool
+     */
+    public function deleteTranslationsByFkKeys(array $idKeys)
+    {
+        $translations = $this->glossaryQueryContainer
+            ->queryGlossaryTranslationByFkGlossaryKeys($idKeys)
+            ->find();
+
+        foreach ($translations as $translation) {
+            $this->insertDeletedTouchRecord($translation->getPrimaryKey());
+        }
+
+        $translations->delete();
+    }
+
+    /**
      * @param string $keyName
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -361,7 +384,7 @@ class TranslationManager implements TranslationManagerInterface
     {
         if ($this->hasTranslationByIds($translationTransfer->getFkGlossaryKey(), $translationTransfer->getFkLocale())) {
             $translationEntity = $this->getTranslationByIds($translationTransfer->getFkGlossaryKey(), $translationTransfer->getFkLocale());
-            $translationEntity->setValue($translationTransfer->getValue());
+            $translationEntity->fromArray($translationTransfer->modifiedToArray());
             $translationEntity->save();
 
             $translationTransfer = new TranslationTransfer();

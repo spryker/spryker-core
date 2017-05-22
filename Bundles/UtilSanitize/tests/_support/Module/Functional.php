@@ -27,9 +27,8 @@ class Functional extends Module
     }
 
     /**
-     * @apram $fail
-     *
      * @param \Codeception\TestCase $test
+     * @param \Exception $fail
      *
      * @return void
      */

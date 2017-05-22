@@ -1,10 +1,7 @@
 {
   "name": "spryker/auth",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "description": "Auth bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/session": "^3.0.0",
@@ -21,8 +18,19 @@
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
   },
-  "description": "Auth bundle",
-  "license": "proprietary",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "ClientUnit": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -32,13 +40,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "ClientUnit": "tests/"
-    }
   }
 }

@@ -1,5 +1,7 @@
 {
   "name": "spryker/product-option",
+  "description": "ProductOption bundle",
+  "license": "proprietary",
   "require": {
     "spryker/country": "^3.0.0",
     "spryker/glossary": "^3.0.0",
@@ -29,18 +31,6 @@
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
     "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
   },
-  "description": "ProductOption bundle",
-  "license": "proprietary",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
@@ -52,5 +42,15 @@
       "Unit": "tests/",
       "Acceptance": "tests/"
     }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "4.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

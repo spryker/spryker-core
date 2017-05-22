@@ -53,6 +53,8 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
         SpyCategoryQuery $categoryQuery,
         CategoryDataFeedTransfer $categoryDataFeedTransfer
     ) {
+        $categoryQuery->innerJoinNode();
+
         $categoryQuery = $this->joinProducts(
             $categoryQuery,
             $categoryDataFeedTransfer

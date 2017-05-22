@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface AS DependencyConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface as DependencyConditionInterface;
 
 /**
- * Deprecated use instead Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+ * @deprecated Use instead Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
  */
 interface ConditionInterface extends DependencyConditionInterface
 {

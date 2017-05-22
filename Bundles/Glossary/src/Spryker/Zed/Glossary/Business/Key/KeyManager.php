@@ -117,6 +117,18 @@ class KeyManager implements KeyManagerInterface
     }
 
     /**
+     * @param array $idKeys
+     *
+     * @return void
+     */
+    public function deleteKeys(array $idKeys)
+    {
+        $this->queryContainer
+            ->queryGlossaryKeyByIdGlossaryKeys($idKeys)
+            ->delete();
+    }
+
+    /**
      * @param string $keyName
      *
      * @return int

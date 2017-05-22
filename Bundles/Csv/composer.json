@@ -1,5 +1,7 @@
 {
   "name": "spryker/csv",
+  "description": "Csv bundle",
+  "license": "proprietary",
   "require": {
     "league/csv": "^8.1.0"
   },
@@ -7,8 +9,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Csv bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

@@ -128,6 +128,69 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     }
 
     /**
+     * @param int $idCmsPage
+     * @param string|null $versionName
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function publishWithVersion($idCmsPage, $versionName = null)
+    {
+        return $this->cmsFacade->publishWithVersion($idCmsPage, $versionName);
+    }
+
+    /**
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function rollback($idCmsPage, $version)
+    {
+        return $this->cmsFacade->rollback($idCmsPage, $version);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage)
+    {
+        return $this->cmsFacade->revert($idCmsPage);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage)
+    {
+        return $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage)
+    {
+        return $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
+    }
+
+    /**
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
+    {
+        return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+    }
+
+    /**
      * @param string $cmsTemplateFolderPath
      *
      * @return bool

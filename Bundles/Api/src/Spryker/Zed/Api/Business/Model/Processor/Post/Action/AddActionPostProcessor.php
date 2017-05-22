@@ -47,7 +47,7 @@ class AddActionPostProcessor implements PostProcessorInterface
             return $apiResponseTransfer;
         }
 
-        $apiResponseTransfer->setCode(201);
+        $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_CREATED);
 
         $resourceId = $apiResponseTransfer->getMeta()->getResourceId();
         $baseUri = $this->apiConfig->getBaseUri();

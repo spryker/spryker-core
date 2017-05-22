@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -42,30 +41,82 @@ class QueryContainerTest extends Test
     const EXPECTED_COUNT = 8;
     const EXPECTED_OFFSET = 10;
     const EXPECTED_SKU_COLLECTION = [
-        '001_25904004',
-        '019_30395396',
-        '019_31080444',
-        '029_13374503',
-        '029_20370432',
-        '029_13391322',
-        '031_19618271',
-        '031_21927455',
+        'test_concrete_sku_1',
+        'test_concrete_sku_2',
+        'test_concrete_sku_3',
+        'test_concrete_sku_4',
+        'test_concrete_sku_5',
+        'test_concrete_sku_6',
+        'test_concrete_sku_7',
+        'test_concrete_sku_8',
     ];
 
     /**
      * @var string
      */
-    protected $jsonDataWithMappings = '{"condition":"OR","rules":[{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"product_sku","field":"product_sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
+    protected $jsonDataWithMappings = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "product_sku",
+          "field": "product_sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_abstract_sku_1,test_abstract_sku_2,test_abstract_sku_3,test_abstract_sku_4"
+        },
+        {
+          "id": "product_sku",
+          "field": "product_sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_concrete_sku_5,test_concrete_sku_6,test_concrete_sku_7,test_concrete_sku_8"
+        }
+      ]
+    }';
 
     /**
      * @var string
      */
-    protected $jsonDataNoMappings = '{"condition":"OR","rules":[{"id":"spy_product_abstract.sku","field":"spy_product_abstract.sku","type":"string","input":"text","operator":"in","value":"019,029,031"},{"id":"spy_product_abstract.sku","field":"spy_product.sku","type":"string","input":"text","operator":"in","value":"001_25904004"}]}';
+    protected $jsonDataNoMappings = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "spy_product_abstract.sku",
+          "field": "spy_product_abstract.sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_abstract_sku_1,test_abstract_sku_2,test_abstract_sku_3,test_abstract_sku_4"
+        },
+        {
+          "id": "spy_product_abstract.sku",
+          "field": "spy_product.sku",
+          "type": "string",
+          "input": "text",
+          "operator": "in",
+          "value": "test_concrete_sku_5,test_concrete_sku_6,test_concrete_sku_7,test_concrete_sku_8"
+        }
+      ]
+    }';
 
     /**
      * @var string
      */
-    protected $jsonDataForPagination = '{"condition":"OR","rules":[{"id":"spy_product_abstract.id_product_abstract","field":"spy_product_abstract.id_product_abstract","type":"number","input":"text","operator":"greater_or_equal","value":"1"}]}';
+    protected $jsonDataForPagination = '{
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "spy_product_abstract.id_product_abstract",
+          "field": "spy_product_abstract.id_product_abstract",
+          "type": "number",
+          "input": "text",
+          "operator": "greater_or_equal",
+          "value": "1"
+        }
+      ]
+    }';
 
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
@@ -73,11 +124,28 @@ class QueryContainerTest extends Test
     protected $queryContainer;
 
     /**
+     * @var \PropelQueryBuilder\FunctionalTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected $query;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->queryContainer = new PropelQueryBuilderQueryContainer();
+
+        $this->query = SpyProductQuery::create();
+        $this->query->innerJoinSpyProductAbstract();
+
+        $this->prepareTestProducts();
     }
 
     /**
@@ -87,12 +155,9 @@ class QueryContainerTest extends Test
     {
         $this->expectException(RequiredTransferPropertyException::class);
 
-        $query = SpyProductQuery::create();
-        $query->innerJoinSpyProductAbstract();
-
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
 
-        $this->queryContainer->createQuery($query, $criteriaTransfer);
+        $this->queryContainer->createQuery($this->query, $criteriaTransfer);
     }
 
     /**
@@ -100,14 +165,11 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithoutMappings()
     {
-        $query = SpyProductQuery::create();
-        $query->innerJoinSpyProductAbstract();
-
         $criteriaTransfer = $this->getCriteriaWithoutMappings();
 
-        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
-        $results = $query->find();
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
+        $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
@@ -117,14 +179,11 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithMappings()
     {
-        $query = SpyProductQuery::create();
-        $query->innerJoinSpyProductAbstract();
-
         $criteriaTransfer = $this->getCriteriaWithMappings();
 
-        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
-        $results = $query->find();
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
+        $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
@@ -134,10 +193,9 @@ class QueryContainerTest extends Test
      */
     public function testCreateRuleSetFromJson()
     {
-        $query = SpyProductAbstractQuery::create();
-        $query->innerJoinSpyProduct();
+        $json = $this->jsonDataWithMappings;
 
-        $ruleQuerySetTransfer = $this->queryContainer->createPropelQueryBuilderCriteriaFromJson($this->jsonDataWithMappings);
+        $ruleQuerySetTransfer = $this->queryContainer->createPropelQueryBuilderCriteriaFromJson($json);
 
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, $ruleQuerySetTransfer);
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, current($ruleQuerySetTransfer->getRules()));
@@ -148,19 +206,29 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithoutMappingsWithPagination()
     {
-        $query = SpyProductQuery::create();
-        $query->innerJoinSpyProductAbstract();
-
         $criteriaTransfer = $this->getCriteriaForPagination();
 
-        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
-        $count = $query->count();
-        $results = $query->find();
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
         $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
         $this->assertEquals(self::LIMIT, $query->getLimit());
-        $this->assertEquals(self::LIMIT, $count);
-        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $results->getFirst()->getIdProduct());
+        $this->assertEquals(self::LIMIT, $query->count());
+        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPropelCreateQueryWithoutMappingsWithPaginationAndItemsPerPage()
+    {
+        $criteriaTransfer = $this->getCriteriaForPaginationPageAndItemsPerPage();
+
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
+
+        $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
+        $this->assertEquals(self::LIMIT, $query->getLimit());
+        $this->assertEquals(self::LIMIT, $query->count());
+        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
     }
 
     /**
@@ -168,14 +236,11 @@ class QueryContainerTest extends Test
      */
     public function testPropelCreateQueryWithoutMappingsWithoutPaginationWithSelectedColumns()
     {
-        $query = SpyProductQuery::create();
-        $query->innerJoinSpyProductAbstract();
-
         $criteriaTransfer = $this->getCriteriaWithoutMappingsWithSelectedColumns();
 
-        $query = $this->queryContainer->createQuery($query, $criteriaTransfer);
-        $results = $query->find();
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
+        $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollectionWithSelectedColumns($results->toArray(), static::EXPECTED_SKU_COLLECTION);
     }
@@ -212,6 +277,7 @@ class QueryContainerTest extends Test
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->fromArray($json);
+
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
 
@@ -224,10 +290,7 @@ class QueryContainerTest extends Test
     protected function getCriteriaWithoutMappingsWithSelectedColumns()
     {
         $criteriaTransfer = $this->getCriteriaWithoutMappings();
-
-        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
-        $columnSelectionTransfer->setTableName(SpyProductTableMap::TABLE_NAME);
-        $columnSelectionTransfer->setTableColumns(SpyProductTableMap::getFieldNames(TableMap::TYPE_COLNAME));
+        $columnSelectionTransfer = $this->getColumnSelectionTransfer();
 
         $columnTransfer = new PropelQueryBuilderColumnTransfer();
         $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
@@ -251,8 +314,44 @@ class QueryContainerTest extends Test
     {
         $json = json_decode($this->jsonDataForPagination, true);
 
+        $columnTransfer = new PropelQueryBuilderColumnTransfer();
+        $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
+        $columnTransfer->setAlias('id_product');
+
         $sortItems[] = (new PropelQueryBuilderSortTransfer())
-            ->setColumnName(SpyProductTableMap::COL_ID_PRODUCT)
+            ->setColumn($columnTransfer)
+            ->setSortDirection(Criteria::DESC);
+
+        $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
+        $paginationTransfer->setOffset(10);
+        $paginationTransfer->setLimit(self::LIMIT);
+        $paginationTransfer->setSortItems(new ArrayObject($sortItems));
+
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
+        $ruleQuerySetTransfer->fromArray($json);
+
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer->setPagination($paginationTransfer);
+
+        return $criteriaTransfer;
+    }
+
+    /**
+     * @deprecated Use limit/offset instead
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function getCriteriaForPaginationPageAndItemsPerPage()
+    {
+        $json = json_decode($this->jsonDataForPagination, true);
+
+        $columnTransfer = new PropelQueryBuilderColumnTransfer();
+        $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
+        $columnTransfer->setAlias('id_product');
+
+        $sortItems[] = (new PropelQueryBuilderSortTransfer())
+            ->setColumn($columnTransfer)
             ->setSortDirection(Criteria::DESC);
 
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
@@ -287,6 +386,25 @@ class QueryContainerTest extends Test
     }
 
     /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
+     */
+    protected function getColumnSelectionTransfer()
+    {
+        $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
+
+        $tableAliases = SpyProductTableMap::getFieldNames(TableMap::TYPE_FIELDNAME);
+        foreach ($tableAliases as $columnAlias) {
+            $columnTransfer = new PropelQueryBuilderColumnTransfer();
+            $columnTransfer->setName(SpyProductTableMap::TABLE_NAME . '.' . $columnAlias);
+            $columnTransfer->setAlias($columnAlias);
+
+            $columnSelectionTransfer->addTableColumn($columnTransfer);
+        }
+
+        return $columnSelectionTransfer;
+    }
+
+    /**
      * @param mixed $collection
      * @param array $expectedSkuCollection
      *
@@ -313,6 +431,21 @@ class QueryContainerTest extends Test
         foreach ($collection as $productData) {
             $this->assertContains($productData['sku'], $expectedSkuCollection);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareTestProducts()
+    {
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_1'], ['sku' => 'test_abstract_sku_1']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_2'], ['sku' => 'test_abstract_sku_2']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_3'], ['sku' => 'test_abstract_sku_3']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_4'], ['sku' => 'test_abstract_sku_4']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_5'], ['sku' => 'test_abstract_sku_5']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_6'], ['sku' => 'test_abstract_sku_6']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_7'], ['sku' => 'test_abstract_sku_7']);
+        $this->tester->haveProduct(['sku' => 'test_concrete_sku_8'], ['sku' => 'test_abstract_sku_8']);
     }
 
 }

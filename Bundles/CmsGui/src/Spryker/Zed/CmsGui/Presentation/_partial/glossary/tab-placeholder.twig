@@ -7,21 +7,6 @@
 {% endfor %}
 
 <div class="placeholder-translation-container">
-    {{ form_row(attributeForm.searchOption) }}
-
-    <div class="form-group {% if attributeForm.translationKey.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_label(attributeForm.translationKey) }}
-        {{ form_widget(attributeForm.translationKey, { 'attr': {'autocomplete' : 'off'} }) }}
-
-        <div class="loading loading-{{ tab.name }}">
-            <img src="/assets/img/cms-loader.gif">
-            Loading...
-        </div>
-
-        <div class="keyListCanvas"></div>
-        {{ form_errors(attributeForm.translationKey) }}
-    </div>
-
 
     {{ form_row(attributeForm.fkCmsGlossaryMapping) }}
     {{ form_row(attributeForm.templateName) }}

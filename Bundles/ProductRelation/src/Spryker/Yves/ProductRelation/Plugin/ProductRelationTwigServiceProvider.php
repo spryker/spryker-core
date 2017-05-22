@@ -77,19 +77,13 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
     }
 
     /**
-     * @return \Spryker\Client\ProductRelation\ProductRelationClientInterface
-     */
-    protected function getProductRelationClient()
-    {
-        return $this->getClient();
-    }
-
-    /**
      * Bootstraps the application.
      *
      * This method is called after all services are registered
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */

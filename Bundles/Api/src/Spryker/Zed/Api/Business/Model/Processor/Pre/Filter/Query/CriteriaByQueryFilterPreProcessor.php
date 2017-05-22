@@ -24,13 +24,13 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         if (empty($queryStrings[self::FILTER])) {
-            $apiRequestTransfer->getFilter()->setFilter('{}');
+            $apiRequestTransfer->getFilter()->setCriteriaJson('{}');
             return $apiRequestTransfer;
         }
 
         $filter = $queryStrings[self::FILTER];
 
-        $apiRequestTransfer->getFilter()->setFilter($filter);
+        $apiRequestTransfer->getFilter()->setCriteriaJson($filter);
 
         return $apiRequestTransfer;
     }

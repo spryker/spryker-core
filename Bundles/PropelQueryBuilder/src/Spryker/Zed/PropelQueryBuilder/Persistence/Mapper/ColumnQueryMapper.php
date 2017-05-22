@@ -35,7 +35,6 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
      */
     protected function assertTransferFields(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
-        $columnSelectionTransfer->requireTableName();
         $columnSelectionTransfer->requireTableColumns();
     }
 
@@ -74,21 +73,18 @@ class ColumnQueryMapper implements ColumnQueryMapperInterface
     protected function getSelectedColumns(PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
         $selectedColumns = [];
-        $tableName = $columnSelectionTransfer->getTableName();
-        $tableColumns = (array)$columnSelectionTransfer->getTableColumns();
 
         if ($columnSelectionTransfer->getSelectedColumns()->count()) {
-            foreach ($tableColumns as $columnName) {
-                foreach ($columnSelectionTransfer->getSelectedColumns() as $columnTransfer) {
-                    if (mb_strtolower($columnName) === mb_strtolower($columnTransfer->getName())) {
-                        $selectedColumns[$columnTransfer->getName()] = $columnTransfer->getAlias();
+            foreach ($columnSelectionTransfer->getTableColumns() as $tableColumnTransfer) {
+                foreach ($columnSelectionTransfer->getSelectedColumns() as $selectedColumnTransfer) {
+                    if (mb_strtolower($tableColumnTransfer->getName()) === mb_strtolower($selectedColumnTransfer->getName())) {
+                        $selectedColumns[$selectedColumnTransfer->getName()] = $selectedColumnTransfer->getAlias();
                     }
                 }
             }
         } else {
-            foreach ($tableColumns as $columnName) {
-                $fieldName = str_replace($tableName . '.', '', $columnName);
-                $selectedColumns[$columnName] = $fieldName;
+            foreach ($columnSelectionTransfer->getTableColumns() as $columnTransfer) {
+                $selectedColumns[$columnTransfer->getName()] = $columnTransfer->getAlias();
             }
         }
 

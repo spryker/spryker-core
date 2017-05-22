@@ -1,10 +1,10 @@
 {
   "name": "spryker/monolog",
+  "description": "Monolog bundle",
+  "license": "proprietary",
   "require": {
     "monolog/monolog": "~1.21.0"
   },
-  "description": "Monolog bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

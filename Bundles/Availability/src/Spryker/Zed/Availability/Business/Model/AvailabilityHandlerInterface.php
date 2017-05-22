@@ -17,7 +17,7 @@ interface AvailabilityHandlerInterface
     public function updateAvailability($sku);
 
     /**
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

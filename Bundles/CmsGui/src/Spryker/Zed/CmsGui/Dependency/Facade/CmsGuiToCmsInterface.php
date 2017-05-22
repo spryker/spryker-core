@@ -86,6 +86,51 @@ interface CmsGuiToCmsInterface
     public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
 
     /**
+     * @param int $idCmsPage
+     * @param string|null $versionName
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function publishWithVersion($idCmsPage, $versionName = null);
+
+    /**
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function rollback($idCmsPage, $version);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage);
+
+    /**
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
+    /**
      * @param string $cmsTemplateFolderPath
      *
      * @return bool

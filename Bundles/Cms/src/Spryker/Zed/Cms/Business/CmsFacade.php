@@ -550,4 +550,107 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->buildPageUrl($cmsPageAttributesTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param string|null $versionName
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function publishWithVersion($idCmsPage, $versionName = null)
+    {
+        return $this->getFactory()
+            ->createVersionPublisher()
+            ->publishWithVersion($idCmsPage, $versionName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     */
+    public function rollback($idCmsPage, $version)
+    {
+        return $this->getFactory()
+            ->createVersionRollback()
+            ->rollback($idCmsPage, $version);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    public function revert($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createVersionRollback()
+            ->revert($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
+     */
+    public function findLatestCmsVersionByIdCmsPage($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createVersionFinder()
+            ->findLatestCmsVersionByIdCmsPage($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
+     */
+    public function findAllCmsVersionByIdCmsPage($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createVersionFinder()
+            ->findAllCmsVersionByIdCmsPage($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param int $version
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
+     */
+    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
+    {
+        return $this->getFactory()
+            ->createVersionFinder()
+            ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+    }
+
 }

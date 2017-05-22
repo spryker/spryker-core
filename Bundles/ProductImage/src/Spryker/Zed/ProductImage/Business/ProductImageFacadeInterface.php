@@ -144,6 +144,19 @@ interface ProductImageFacadeInterface
 
     /**
      * Specification:
+     * - Deletes a ProductImageSet row from database
+     * - Deletes orphan ProductImages and relations to a ProductImageSet
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return void
+     */
+    public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+
+    /**
+     * Specification:
      * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
      *
      * @api

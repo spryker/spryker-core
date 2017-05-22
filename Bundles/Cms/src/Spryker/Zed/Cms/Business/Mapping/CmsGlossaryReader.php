@@ -89,9 +89,16 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity)
     {
         $cmsPageArray = $cmsPageEntity->toArray();
-        $templateFile = $this->cmsConfig->getTemplateRealPath($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
+        $templateFiles = $this->cmsConfig->getTemplateRealPaths($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
 
-        $placeholders = $this->getTemplatePlaceholders($templateFile);
+        $placeholders = [];
+        foreach ($templateFiles as $templateFile) {
+            if (!$this->fileExists($templateFile)) {
+                continue;
+            }
+
+            $placeholders = $this->getTemplatePlaceholders($templateFile);
+        }
 
         return $placeholders;
     }
@@ -130,7 +137,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     }
 
     /**
-     * @param array $placeholders,
+     * @param array $placeholders
      * @param int $idCmsPage
      *
      * @return array|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]

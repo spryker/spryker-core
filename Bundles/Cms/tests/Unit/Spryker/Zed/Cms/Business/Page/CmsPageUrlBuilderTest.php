@@ -73,7 +73,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
     }
 
     /**
-     * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock|null
+     * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock
      *
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder
      */

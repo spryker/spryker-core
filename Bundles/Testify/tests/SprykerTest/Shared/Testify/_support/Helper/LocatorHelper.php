@@ -37,7 +37,8 @@ class LocatorHelper extends ConfigHelper
     public function getFacade()
     {
         $currentNamespace = Configuration::config()['namespace'];
-        $bundleName = lcfirst($currentNamespace);
+        $namespaceParts = explode('\\', $currentNamespace);
+        $bundleName = lcfirst(end($namespaceParts));
 
         return $this->getLocator()->$bundleName()->facade();
     }

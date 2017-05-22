@@ -104,6 +104,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     protected function mapProductRelation(array $relationProduct)
     {
         return [
+            StorageProductAbstractRelationTransfer::ID_PRODUCT_ABSTRACT => $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             StorageProductAbstractRelationTransfer::NAME => $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
             StorageProductAbstractRelationTransfer::PRICE => $this->getPriceBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
             StorageProductAbstractRelationTransfer::SKU => $relationProduct[SpyProductAbstractTableMap::COL_SKU],

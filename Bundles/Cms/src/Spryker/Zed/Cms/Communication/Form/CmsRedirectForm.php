@@ -226,6 +226,8 @@ class CmsRedirectForm extends AbstractType
     }
 
     /**
+     * @param int $max
+     *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
     protected function createLengthConstraint($max)

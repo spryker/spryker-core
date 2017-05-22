@@ -256,9 +256,22 @@ class GlossaryController extends AbstractController
     protected function findPagePlaceholders(SpyCmsPage $pageUrl)
     {
         $pageUrlArray = $pageUrl->toArray();
-        $tempFile = $this->getFactory()
-            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
-        $placeholders = $this->findTemplatePlaceholders($tempFile);
+        $tempFiles = $this->getFactory()
+            ->getTemplateRealPaths($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
+
+        /* Added for keeping BC */
+        if (!is_array($tempFiles)) {
+            $tempFiles = [$tempFiles];
+        }
+
+        $placeholders = [];
+        foreach ($tempFiles as $tempFile) {
+            if (!file_exists($tempFile)) {
+                continue;
+            }
+
+            $placeholders = $this->findTemplatePlaceholders($tempFile);
+        }
 
         return $placeholders;
     }

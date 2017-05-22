@@ -35,7 +35,7 @@ class RemoveActionPostProcessor implements PostProcessorInterface
             return $apiResponseTransfer;
         }
 
-        $apiResponseTransfer->setCode(204);
+        $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_NO_CONTENT);
 
         return $apiResponseTransfer;
     }
