@@ -119,6 +119,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

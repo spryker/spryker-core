@@ -148,7 +148,7 @@ class CategoryNode implements CategoryNodeInterface
         $idCategoryNode = $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
         $categoryNodeEntity = $this->getCategoryNodeEntity($idCategoryNode);
 
-        $idFormerParentCategoryNode = $this->getPossibleFormerParentCategoryNodeId(
+        $idFormerParentCategoryNode = $this->findPossibleFormerParentCategoryNodeId(
             $categoryNodeEntity,
             $categoryTransfer
         );
@@ -195,7 +195,7 @@ class CategoryNode implements CategoryNodeInterface
      *
      * @return int|null
      */
-    protected function getPossibleFormerParentCategoryNodeId(
+    protected function findPossibleFormerParentCategoryNodeId(
         SpyCategoryNode $categoryNodeEntity,
         CategoryTransfer $categoryTransfer
     ) {
