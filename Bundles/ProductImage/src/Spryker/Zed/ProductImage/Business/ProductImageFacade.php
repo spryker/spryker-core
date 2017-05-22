@@ -196,4 +196,42 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->expandProductConcreteWithImageSets($productConcreteTransfer);
     }
 
+    /**
+     * Specification:
+     * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * Specification:
+     * - Returns merged image sets for concrete product with the following inheritance:
+     *  Abstract Default > Abstract Localized > Concrete Default > Concrete Localized
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+    }
+
 }

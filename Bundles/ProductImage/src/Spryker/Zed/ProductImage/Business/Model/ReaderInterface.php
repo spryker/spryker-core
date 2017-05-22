@@ -41,4 +41,21 @@ interface ReaderInterface
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
 
+    /**
+     * @param $idProductAbstract
+     * @param $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+
+    /**
+     * @param $idProductConcrete
+     * @param $idProductAbstract
+     * @param $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+
 }

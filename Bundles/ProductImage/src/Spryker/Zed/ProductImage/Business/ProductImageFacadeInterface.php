@@ -142,4 +142,32 @@ interface ProductImageFacadeInterface
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
 
+    /**
+     * Specification:
+     * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return mixed
+     */
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+
+    /**
+     * Specification:
+     * - Returns merged image sets for concrete product with the following inheritance:
+     *  Abstract Default > Abstract Localized > Concrete Default > Concrete Localized
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return mixed
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+
 }
