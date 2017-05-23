@@ -65,7 +65,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_KEY, 'text', [
-            'label' => 'Attribute key *',
+            'label' => 'Attribute key',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
             'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);

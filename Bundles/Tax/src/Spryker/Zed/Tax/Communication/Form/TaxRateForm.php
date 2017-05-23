@@ -69,8 +69,8 @@ class TaxRateForm extends AbstractType
             self::FIELD_NAME,
             'text',
             [
-                'label' => 'Name*',
-                'required' => false,
+                'label' => 'Name',
+                'required' => true,
                 'constraints' => [
                     new NotBlank()
                 ],
@@ -90,7 +90,7 @@ class TaxRateForm extends AbstractType
         $builder->add(self::FIELD_COUNTRY, 'choice', [
             'expanded' => false,
             'multiple' => false,
-            'label' => 'Country*',
+            'label' => 'Country',
             'choices' => $this->taxRateFormDataProvider->getOptions()[self::FIELD_COUNTRY],
             'constraints' => [
                 new GreaterThan([
@@ -115,8 +115,8 @@ class TaxRateForm extends AbstractType
             self::FIELD_RATE,
             'text',
             [
-                'label' => 'Percentage*',
-                'required' => false,
+                'label' => 'Percentage',
+                'required' => true,
                 'constraints' => [
                     new Range([
                         'min' => 0,

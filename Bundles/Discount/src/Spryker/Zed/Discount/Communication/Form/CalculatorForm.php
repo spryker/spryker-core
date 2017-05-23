@@ -126,7 +126,7 @@ class CalculatorForm extends AbstractType
     protected function addAmountField($builder, array $options = [])
     {
         $defaultOptions = [
-            'label' => 'Amount*',
+            'label' => 'Amount',
             'attr' => [
                 'class' => 'input-group',
             ],
@@ -154,7 +154,7 @@ class CalculatorForm extends AbstractType
     protected function addCalculatorType(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-            'label' => 'Calculator type*',
+            'label' => 'Calculator type',
             'placeholder' => 'Select one',
             'choices' => $this->calculatorFormDataProvider->getData()[self::FIELD_CALCULATOR_PLUGIN],
             'required' => true,
