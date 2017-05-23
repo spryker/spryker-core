@@ -13,6 +13,19 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class SessionConfig extends AbstractBundleConfig
 {
 
+    const PROTOCOL_TCP = 'tcp';
+
+    const DATA_SOURCE_NAME_TEMPLATE_TCP = '[protocol]://[host]:[port]?database=[database][authFragment]';
+    const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
+
+    const DATA_SOURCE_NAME_TEMPLATE_REDIS = '[protocol]://[authFragment][host]:[port]/[database]';
+    const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
+
+    /**
+     * Default Redis database number
+     */
+    const DEFAULT_REDIS_DATABASE = 0;
+
     /**
      * @return array
      */
@@ -73,19 +86,66 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisDataSourceName()
     {
-        $authFragment = '';
-        if ($this->getConfig()->hasKey(SessionConstants::YVES_SESSION_REDIS_PASSWORD)) {
-            $authFragment = sprintf('h:%s@', $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD));
-        }
-
-        return sprintf(
-            '%s://%s%s:%s?database=%s',
+        return $this->buildDataSourceName(
             $this->get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL),
-            $authFragment,
             $this->get(SessionConstants::YVES_SESSION_REDIS_HOST),
             $this->get(SessionConstants::YVES_SESSION_REDIS_PORT),
-            $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, 0)
+            $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
+            $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false)
         );
+    }
+
+    /**
+     * @param string $protocol
+     * @param string $host
+     * @param int $port
+     * @param int $database
+     * @param string $password
+     *
+     * @return string
+     */
+    protected function buildDataSourceName($protocol, $host, $port, $database, $password)
+    {
+        $authFragmentTemplate = $this->getAuthFragmentTemplate($protocol);
+        $dataSourceNameTemplate = $this->getDataSourceNameTemplate($protocol);
+        $authFragment = '';
+        if ($password) {
+            $authFragment = sprintf($authFragmentTemplate, $password);
+        }
+
+        $dataSourceNameElements = [
+            '[protocol]' => $protocol,
+            '[host]' => $host,
+            '[port]' => $port,
+            '[database]' => $database,
+            '[authFragment]' => $authFragment,
+        ];
+
+        return str_replace(
+            array_keys($dataSourceNameElements),
+            array_values($dataSourceNameElements),
+            $dataSourceNameTemplate
+        );
+    }
+
+    /**
+     * @param string $protocol
+     *
+     * @return string
+     */
+    protected function getAuthFragmentTemplate($protocol)
+    {
+        return ($protocol === static::PROTOCOL_TCP) ? static::AUTH_FRAGMENT_TEMPLATE_TCP : static::AUTH_FRAGMENT_TEMPLATE_REDIS;
+    }
+
+    /**
+     * @param string $protocol
+     *
+     * @return string
+     */
+    protected function getDataSourceNameTemplate($protocol)
+    {
+        return ($protocol === static::PROTOCOL_TCP) ? static::DATA_SOURCE_NAME_TEMPLATE_TCP : static::DATA_SOURCE_NAME_TEMPLATE_REDIS;
     }
 
     /**

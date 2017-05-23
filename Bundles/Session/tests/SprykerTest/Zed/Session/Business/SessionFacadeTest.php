@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Session\Business;
 
 use Codeception\TestCase\Test;
+use Silex\Application;
 use Spryker\Shared\Session\SessionConstants;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
 
@@ -34,7 +34,7 @@ class SessionFacadeTest extends Test
     {
         parent::setUp();
 
-        $application = (new Pimple())->getApplication();
+        $application = new Application();
         $application['session.test'] = false;
         $sessionServiceProvider = new SessionServiceProvider();
         $sessionServiceProvider->register($application);

@@ -29,13 +29,21 @@ class Environment extends Module
             $path = self::MODE_ISOLATED_ROOT;
         }
 
-        $applicationRoot = realpath(Configuration::projectDir() . $path);
+        $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
+        $vendorDirectoryPosition = array_search('vendor', $pathParts);
+
+        $rootDirPathParts = array_slice($pathParts, 0, $vendorDirectoryPosition);
+        $rootDir = implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+
+
+//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($rootDir) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+//        $applicationRoot = realpath(Configuration::projectDir() . $path);
 
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', (isset($_SERVER['APPLICATION_STORE'])) ? $_SERVER['APPLICATION_STORE'] : 'DE');
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
-        defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $applicationRoot);
+        defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $rootDir);
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
         defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
     }

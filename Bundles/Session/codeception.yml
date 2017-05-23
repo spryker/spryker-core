@@ -3,8 +3,8 @@ actor: Tester
 
 include:
     - tests/SprykerTest/Shared/Session
-    - tests/SprykerTest/Yves/Session
-    - tests/SprykerTest/Zed/Session
+    - tests/SprykerTest/Yves
+    - tests/SprykerTest/Zed
 
 paths:
     tests: tests

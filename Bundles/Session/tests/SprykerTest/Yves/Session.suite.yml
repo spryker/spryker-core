@@ -1,0 +1,5 @@
+class_name: SessionTester
+modules:
+    enabled:
+        - \SprykerTest\Shared\Testify\Helper\Environment
+        - \SprykerTest\Shared\Testify\Helper\ConfigHelper
