@@ -3,7 +3,7 @@
 {% block form_label %}
     {{ parent() }}
 
-    {% if required %}
+    {% if label and required %}
         <span class="required">*</span>
     {% endif %}
 
