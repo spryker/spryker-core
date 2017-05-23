@@ -265,12 +265,12 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $shipmentMethodEntity = $orderEntity->getShipmentMethod();
-        if (!empty($shipmentMethodEntity)) {
-            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
-            $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
-
-            $orderTransfer->setShipmentMethod($shipmentMethodTransfer);
+        $salesShipments = $orderEntity->getSpySalesShipments();
+        if (count($salesShipments) > 0) {
+            foreach ($salesShipments as $salesShipmentEntity) {
+                $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
+                $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
+            }
         }
     }
 

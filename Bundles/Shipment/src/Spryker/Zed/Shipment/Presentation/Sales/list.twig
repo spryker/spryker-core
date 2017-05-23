@@ -5,6 +5,7 @@
 
             {% block widget_content %}
 
+                {% for shipmentMethod in order.shipmentMethods %}
                 <table class="footable table table-striped toggle-arrow-tiny">
                     <thead>
                         <tr>
@@ -15,11 +16,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ order.shipmentMethod.carrierName }}</td>
-                            <td>{{ order.shipmentMethod.name }}</td>
+                            <td>{{ shipmentMethod.carrierName }}</td>
+                            <td>{{ shipmentMethod.name }}</td>
                             <td>
                                 {% for expense in order.expenses %}
-                                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' and expense.idSalesExpense == shipmentMethod.fkSalesExpense %}
                                       {{ expense.unitPriceToPayAggregation | money }}
                                     {% endif %}
                                 {% endfor %}
@@ -27,6 +28,7 @@
                         </tr>
                     </tbody>
                 </table>
+                {% endfor %}
 
             {% endblock %}
 
