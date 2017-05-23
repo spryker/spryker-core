@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence\Propel;
 
 use Orm\Zed\Customer\Persistence\Base\SpyCustomerQuery as BaseSpyCustomerQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_customer' table.
@@ -20,4 +21,23 @@ use Orm\Zed\Customer\Persistence\Base\SpyCustomerQuery as BaseSpyCustomerQuery;
  */
 abstract class AbstractSpyCustomerQuery extends BaseSpyCustomerQuery
 {
+
+    /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     * @param bool $withAnonymized
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public static function create($modelAlias = null, Criteria $criteria = null, $withAnonymized = false)
+    {
+        $query = parent::create($modelAlias, $criteria);
+
+        if (!$withAnonymized) {
+            $query->filterByAnonymizedAt(null);
+        }
+
+        return $query;
+    }
+
 }

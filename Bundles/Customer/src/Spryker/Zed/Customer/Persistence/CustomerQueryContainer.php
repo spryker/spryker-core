@@ -146,16 +146,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      *
      * @inheritdoc
      */
-    public function queryAddresses($withAnonymized = false)
+    public function queryAddresses()
     {
-        $query = $this->getFactory()
-            ->createSpyCustomerAddressQuery();
-
-        if (!$withAnonymized) {
-            $query->filterByAnonymizedAt(null);
-        }
-
-        return $query;
+        return $this->getFactory()->createSpyCustomerAddressQuery();
     }
 
     /**
@@ -163,15 +156,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      *
      * @inheritdoc
      */
-    public function queryCustomers($withAnonymized = false)
+    public function queryCustomers()
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
-
-        if (!$withAnonymized) {
-            $query->filterByAnonymizedAt(null);
-        }
-
-        return $query;
+        return $this->getFactory()->createSpyCustomerQuery();
     }
 
 }

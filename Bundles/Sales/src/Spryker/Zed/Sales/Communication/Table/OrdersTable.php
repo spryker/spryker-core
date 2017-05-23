@@ -145,7 +145,7 @@ class OrdersTable extends AbstractTable
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && !$item[OrdersTableQueryBuilder::FIELD_CUSTOMER_ANONYMIZED_AT]) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
             ]);

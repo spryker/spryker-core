@@ -40,10 +40,17 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
+     * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
      * @param array $customerAnonymizerPlugins
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, CustomerInterface $customer, AddressInterface $address, array $customerAnonymizerPlugins)
-    {
+    public function __construct(
+        CustomerQueryContainerInterface
+        $customerQueryContainer,
+        CustomerInterface $customer,
+        AddressInterface $address,
+        array $customerAnonymizerPlugins
+    ) {
         $this->queryContainer = $customerQueryContainer;
         $this->customer = $customer;
         $this->address = $address;
