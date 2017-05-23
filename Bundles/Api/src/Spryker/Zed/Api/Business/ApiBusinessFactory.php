@@ -12,6 +12,7 @@ use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\OptionsActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
@@ -132,6 +133,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getPostProcessorStack()
     {
         return [
+            $this->createOptionsActionPostProcessor(),
             $this->createAddActionPostProcessor(),
             $this->createRemoveActionPostProcessor(),
             $this->createFindActionPostProcessor(),
@@ -287,6 +289,14 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createRemoveActionPostProcessor()
     {
         return new RemoveActionPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
+     */
+    protected function createOptionsActionPostProcessor()
+    {
+        return new OptionsActionPostProcessor();
     }
 
     /**

@@ -21,6 +21,7 @@ class ApiConfig extends AbstractBundleConfig
     const ACTION_UPDATE = 'update';
     const ACTION_DELETE = 'remove';
     const ACTION_INDEX = 'find';
+    const ACTION_OPTIONS = 'options';
 
     const HTTP_CODE_SUCCESS = 200;
     const HTTP_CODE_CREATED = 201;

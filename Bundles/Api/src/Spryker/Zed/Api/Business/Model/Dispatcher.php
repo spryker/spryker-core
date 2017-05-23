@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiMetaTransfer;
+use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
@@ -92,6 +93,10 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
             } else {
                 $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $params);
+                if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
+                    return $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
+                }
+
                 $data = (array)$apiPluginCallResponseTransfer->getData();
                 $apiResponseTransfer->setData($data);
 

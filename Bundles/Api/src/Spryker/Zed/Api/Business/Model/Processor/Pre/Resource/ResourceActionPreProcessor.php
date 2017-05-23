@@ -35,9 +35,11 @@ class ResourceActionPreProcessor implements PreProcessorInterface
         $requestType = $apiRequestTransfer->getRequestType();
 
         $resourceAction = null;
-        if ($identifier === '' && $requestType === 'GET') {
+        if ($identifier === '' && $requestType === 'OPTIONS') {
+            $resourceAction = ApiConfig::ACTION_OPTIONS;
+        } elseif ($identifier === '' && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_INDEX;
-        } if ($identifier !== '' && $requestType === 'GET') {
+        } elseif ($identifier !== '' && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_READ;
         } elseif ($identifier === '' && $requestType === 'POST') {
             $resourceAction = ApiConfig::ACTION_CREATE;

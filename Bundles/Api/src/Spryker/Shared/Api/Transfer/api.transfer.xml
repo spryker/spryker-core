@@ -29,6 +29,7 @@
         <property name="pagination" type="ApiPagination" />
         <property name="data" type="array" />
         <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+        <property name="options" type="array"/>
     </transfer>
 
     <transfer name="ApiValidationError">
@@ -68,6 +69,10 @@
     <transfer name="ApiItem">
         <property name="id" type="string"/>
         <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ApiOptions">
+        <property name="options" type="array"/>
     </transfer>
 
     <transfer name="ApiMeta">
