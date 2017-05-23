@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorBridge;
-use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge AS PersistenceOmsToSalesBridge;
+use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;

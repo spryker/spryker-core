@@ -48,10 +48,11 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
         $apiRequestTransfer->setHeaderData([
-            PaginationByHeaderFilterPreProcessor::RANGE => ['users 0-19/200'],
+            PaginationByHeaderFilterPreProcessor::RANGE => ['users=0-19'],
         ]);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
+
         $this->assertSame(20, $apiRequestTransferAfter->getFilter()->getLimit());
         $this->assertSame(0, $apiRequestTransferAfter->getFilter()->getOffset());
     }
@@ -67,7 +68,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
         $apiRequestTransfer->setHeaderData([
-            PaginationByHeaderFilterPreProcessor::RANGE => ['users 20-39/200'],
+            PaginationByHeaderFilterPreProcessor::RANGE => ['users=20-39'],
         ]);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
@@ -86,7 +87,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
         $apiRequestTransfer->setHeaderData([
-            PaginationByHeaderFilterPreProcessor::RANGE => ['users 20-29/200'],
+            PaginationByHeaderFilterPreProcessor::RANGE => ['users=20-29'],
         ]);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);

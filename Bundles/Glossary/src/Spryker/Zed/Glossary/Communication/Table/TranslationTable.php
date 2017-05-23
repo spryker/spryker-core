@@ -132,7 +132,7 @@ class TranslationTable extends AbstractTable
     {
         $query = $this->glossaryKeyQuery
             ->leftJoinSpyGlossaryTranslation()
-            ->filterByKey(self::GENERATED_CMS, Criteria::NOT_ILIKE)
+            ->filterByKey(self::GENERATED_CMS, Criteria::NOT_LIKE)
             ->groupByIdGlossaryKey();
 
         $lines = $this->runQuery($query, $config);

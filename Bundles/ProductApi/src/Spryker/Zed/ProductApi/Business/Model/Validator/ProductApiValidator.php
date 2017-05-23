@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductApi\Business\Model\Validator;
 
-use Exception;
 use Generated\Shared\Transfer\ApiDataTransfer;
 
 class ProductApiValidator implements ProductApiValidatorInterface
@@ -16,13 +15,36 @@ class ProductApiValidator implements ProductApiValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @throws \Exception
-     *
      * @return array
      */
     public function validate(ApiDataTransfer $apiDataTransfer)
     {
-        throw new Exception('Implement similar to CustomerApi');
+        $data = $apiDataTransfer->getData();
+
+        $errors = [];
+        $errors = $this->assertRequiredField($data, 'name', $errors);
+        $errors = $this->assertRequiredField($data, 'sku', $errors);
+        $errors = $this->assertRequiredField($data, 'fk_locale', $errors);
+        $errors = $this->assertRequiredField($data, 'id_tax_set', $errors);
+
+        return $errors;
+    }
+
+    /**
+     * @param array $data
+     * @param string $field
+     * @param array $errors
+     *
+     * @return array
+     */
+    protected function assertRequiredField(array $data, $field, array $errors)
+    {
+        if (!isset($data[$field]) || (array_key_exists($field, $data) && !$data[$field])) {
+            $message = sprintf('Missing value for required field "%s"', $field);
+            $errors[$field][] = $message;
+        }
+
+        return $errors;
     }
 
 }

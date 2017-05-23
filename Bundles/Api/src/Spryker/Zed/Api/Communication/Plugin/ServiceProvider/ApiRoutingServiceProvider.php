@@ -17,6 +17,8 @@ class ApiRoutingServiceProvider implements ServiceProviderInterface
 {
 
     /**
+     * @param \Silex\Application $app
+     *
      * @throws \RuntimeException
      *
      * @return void
@@ -31,6 +33,8 @@ class ApiRoutingServiceProvider implements ServiceProviderInterface
     }
 
     /**
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function boot(Application $app)

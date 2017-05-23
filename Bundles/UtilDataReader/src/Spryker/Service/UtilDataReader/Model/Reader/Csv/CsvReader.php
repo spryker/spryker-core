@@ -218,7 +218,6 @@ class CsvReader implements CsvReaderInterface
 
         if ($skipColumns) {
             $this->getFile()->fseek($this->getCsvMeta()->getColumnsOffset());
-            return;
         }
     }
 

@@ -211,19 +211,23 @@ class WriterTest extends Test
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $spyProductAbstractEntity
+     *
      * @return void
      */
-    protected function deletePriceEntitiesAbstract($requestProduct)
+    protected function deletePriceEntitiesAbstract($spyProductAbstractEntity)
     {
-        SpyPriceProductQuery::create()->filterBySpyProductAbstract($requestProduct)->delete();
+        SpyPriceProductQuery::create()->filterBySpyProductAbstract($spyProductAbstractEntity)->delete();
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $spyProductEntity
+     *
      * @return void
      */
-    protected function deletePriceEntitiesConcrete($requestProduct)
+    protected function deletePriceEntitiesConcrete($spyProductEntity)
     {
-        SpyPriceProductQuery::create()->filterByProduct($requestProduct)->delete();
+        SpyPriceProductQuery::create()->filterByProduct($spyProductEntity)->delete();
     }
 
     /**

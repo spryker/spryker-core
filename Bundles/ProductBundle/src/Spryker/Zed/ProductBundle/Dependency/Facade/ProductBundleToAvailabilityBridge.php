@@ -45,7 +45,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

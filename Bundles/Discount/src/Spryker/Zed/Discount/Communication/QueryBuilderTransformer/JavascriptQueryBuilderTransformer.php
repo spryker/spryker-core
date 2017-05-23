@@ -41,6 +41,8 @@ class JavascriptQueryBuilderTransformer
     }
 
     /**
+     * @param string $type
+     *
      * @return string[]
      */
     public function getFilters($type)

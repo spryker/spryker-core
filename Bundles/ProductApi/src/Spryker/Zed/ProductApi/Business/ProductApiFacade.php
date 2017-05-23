@@ -73,21 +73,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      *
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function removeProduct($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductApi()
-            ->remove($idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */

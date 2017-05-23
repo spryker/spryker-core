@@ -40,6 +40,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
+    public function addCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomer()
+            ->add($customerTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getFactory()
@@ -115,6 +129,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
         return $this->getFactory()
             ->createCustomer()
             ->delete($customerTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomer()
+            ->findById($customerTransfer);
     }
 
     /**

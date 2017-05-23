@@ -6,7 +6,7 @@
  */
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface AS DependencyConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface as DependencyConditionCollectionInterface;
 
 interface ConditionCollectionInterface extends DependencyConditionCollectionInterface
 {

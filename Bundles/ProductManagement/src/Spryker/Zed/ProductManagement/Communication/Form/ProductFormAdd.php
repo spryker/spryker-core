@@ -566,6 +566,7 @@ class ProductFormAdd extends AbstractType
     }
 
     /**
+     * @param string $prefix
      * @param string $localeCode
      *
      * @return string

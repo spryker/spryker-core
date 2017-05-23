@@ -107,7 +107,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

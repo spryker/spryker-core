@@ -102,6 +102,8 @@ class GroupKeyExpanderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $cartItems
+     *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer(array $cartItems)

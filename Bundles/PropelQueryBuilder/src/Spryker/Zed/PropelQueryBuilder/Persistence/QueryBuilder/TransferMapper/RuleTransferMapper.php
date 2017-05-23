@@ -9,6 +9,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\TransferMapper
 
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\PropelQueryBuilder\Dependency\Service\PropelQueryBuilderToUtilEncodingInterface;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Exception\QueryBuilderException;
 
 class RuleTransferMapper implements RuleTransferMapperInterface
 {
@@ -29,6 +30,8 @@ class RuleTransferMapper implements RuleTransferMapperInterface
     /**
      * @param string $json
      *
+     * @throws \Spryker\Zed\PropelQueryBuilder\Persistence\Exception\QueryBuilderException
+     *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createRuleQuerySetFromJson($json)
@@ -36,9 +39,16 @@ class RuleTransferMapper implements RuleTransferMapperInterface
         $json = trim($json);
 
         $querySetTransfer = new PropelQueryBuilderRuleSetTransfer();
-        $querySetTransfer->fromArray(
-            (array)$this->utilEncodingService->decodeJson($json, true)
-        );
+        if ($json === '') {
+            return $querySetTransfer;
+        }
+
+        $conditions = $this->utilEncodingService->decodeJson($json, true);
+        if (!is_array($conditions)) {
+            throw new QueryBuilderException('Invalid criteria JSON string.');
+        }
+
+        $querySetTransfer->fromArray($conditions);
 
         return $querySetTransfer;
     }

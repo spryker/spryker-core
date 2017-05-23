@@ -20,7 +20,7 @@ class Json implements JsonInterface
      *
      * @throws \Exception
      *
-     * @return string
+     * @return string|null
      */
     public function encode($value, $options = null, $depth = null)
     {
@@ -32,7 +32,9 @@ class Json implements JsonInterface
             $depth = static::DEFAULT_DEPTH;
         }
 
-        return json_encode($value, $options, $depth);
+        $value = json_encode($value, $options, $depth);
+
+        return $value !== false ? $value : null;
     }
 
     /**
@@ -43,7 +45,7 @@ class Json implements JsonInterface
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function decode($jsonString, $assoc = false, $depth = null, $options = null)
     {

@@ -78,8 +78,11 @@ class PaginationByQueryFilterPreProcessor implements PreProcessorInterface
      */
     protected function validateLimitRange($limit)
     {
-        if ($limit < 0 || $limit > $this->apiConfig->getMaxLimitPerPage()) {
+        if ($limit < 0) {
             $limit = $this->apiConfig->getLimitPerPage();
+        }
+        if ($limit > $this->apiConfig->getMaxLimitPerPage()) {
+            $limit = $this->apiConfig->getMaxLimitPerPage();
         }
 
         return (int)$limit;
