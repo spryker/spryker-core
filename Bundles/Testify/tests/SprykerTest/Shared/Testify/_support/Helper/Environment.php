@@ -35,7 +35,6 @@ class Environment extends Module
         $rootDirPathParts = array_slice($pathParts, 0, $vendorDirectoryPosition);
         $rootDir = implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
 
-
 //        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($rootDir) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 //        $applicationRoot = realpath(Configuration::projectDir() . $path);
 

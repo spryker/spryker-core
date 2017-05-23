@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Yves\Session;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Yves\Session;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class SessionTester extends \Codeception\Actor
+ */
+class SessionTester extends Actor
 {
+
     use _generated\SessionTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }
