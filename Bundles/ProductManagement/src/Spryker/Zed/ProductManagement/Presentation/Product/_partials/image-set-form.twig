@@ -2,7 +2,7 @@
     data-image-set-prototype="{{ form_widget(form[formKey].vars.prototype) | e }}"
 >
     {% for productImageSet in form[formKey] %}
-        {% if not productImageSet.vars.value.id_product_image_set and productImageSet.vars.valid %}
+        {% if not productImageSet.vars.value.id_product_image_set and productImageSet.parent.parent.vars.valid %}
             {% do productImageSet.setRendered %}
         {% endif %}
 
