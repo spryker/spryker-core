@@ -52,6 +52,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
