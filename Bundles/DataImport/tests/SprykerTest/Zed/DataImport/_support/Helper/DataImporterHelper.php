@@ -58,6 +58,8 @@ class DataImporterHelper extends Module
     }
 
     /**
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     *
      * @return object|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     public function getFailingDataImportStepMock()

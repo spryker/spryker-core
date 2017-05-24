@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporter;
 
 /**
  * Auto-generated group annotations
@@ -31,7 +30,6 @@ class DataSetImporterTest extends Test
      */
     public function testExecutesDataImportSteps()
     {
-
         $dataSetImporter = $this->tester->getFactory()->createDataSetImporter();
         $dataSetImporter->addDataImportStep($this->tester->getDataImportStepMock());
 

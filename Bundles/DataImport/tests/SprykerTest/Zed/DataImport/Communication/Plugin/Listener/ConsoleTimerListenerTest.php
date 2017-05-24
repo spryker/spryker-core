@@ -15,9 +15,7 @@ use Generated\Shared\Transfer\BeforeDataSetImporterEventTransfer;
 use Generated\Shared\Transfer\BeforeDataSetImportEventTransfer;
 use Generated\Shared\Transfer\BeforeImportEventTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\DataImport\Communication\Plugin\Listener\DataImportConsoleDebugListener;
 use Spryker\Zed\DataImport\Communication\Plugin\Listener\DataImportConsoleTimerListener;
-use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface;
 
 /**

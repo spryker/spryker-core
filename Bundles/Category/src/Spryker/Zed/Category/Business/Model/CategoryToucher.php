@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;

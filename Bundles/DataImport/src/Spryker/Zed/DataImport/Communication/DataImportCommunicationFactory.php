@@ -9,8 +9,6 @@ namespace Spryker\Zed\DataImport\Communication;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Symfony\Component\Console\Logger\ConsoleLogger;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()

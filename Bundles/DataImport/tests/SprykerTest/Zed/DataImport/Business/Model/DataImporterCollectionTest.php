@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\DataImport\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 
 /**
