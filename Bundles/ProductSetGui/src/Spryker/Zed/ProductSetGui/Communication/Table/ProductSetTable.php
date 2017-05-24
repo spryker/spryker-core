@@ -13,11 +13,15 @@ use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductSetGui\Communication\Controller\DeleteController;
+use Spryker\Zed\ProductSetGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetInterface;
 
 class ProductSetTable extends AbstractTable
 {
+
+    const TABLE_IDENTIFIER = 'product-set-table';
 
     const COL_ID_PRODUCT_SET = 'id_product_set';
     const COL_NAME = 'name';
@@ -54,6 +58,8 @@ class ProductSetTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
+        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+
         $config->setHeader([
             self::COL_ID_PRODUCT_SET => 'ID',
             self::COL_NAME => 'Name',
@@ -135,7 +141,7 @@ class ProductSetTable extends AbstractTable
     }
 
     /**
-     * @param SpyProductSet $productSetEntity
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
      *
      * @return string
      */
@@ -152,16 +158,16 @@ class ProductSetTable extends AbstractTable
 
         $actions[] = $this->generateEditButton(
             Url::generate('/product-set-gui/edit', [
-                ViewController::PARAM_ID => $productSetEntity->getIdProductSet(), // FIXME
+                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Edit'
         );
 
-        $actions[] = $productSetEntity->getIsActive() ? $this->createDeactivateButton($productSetEntity) : $this->createActivateButton($productSetEntity);
+        $actions[] = $productSetEntity->getIsActive() ? $this->generateDeactivateButton($productSetEntity) : $this->generateActivateButton($productSetEntity);
 
         $actions[] = $this->generateRemoveButton(
             Url::generate('/product-set-gui/delete', [
-                ViewController::PARAM_ID => $productSetEntity->getIdProductSet(), // FIXME
+                DeleteController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Delete'
         );
@@ -170,30 +176,30 @@ class ProductSetTable extends AbstractTable
     }
 
     /**
-     * @param SpyProductSet $productSetEntity
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
      *
      * @return string
      */
-    protected function createActivateButton(SpyProductSet $productSetEntity)
+    protected function generateActivateButton(SpyProductSet $productSetEntity)
     {
         return $this->generateViewButton(
-            Url::generate('/product-set-gui/activate', [
-                ViewController::PARAM_ID => $productSetEntity->getIdProductSet(), // FIXME
+            Url::generate('/product-set-gui/edit/activate', [
+                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Activate'
         );
     }
 
     /**
-     * @param SpyProductSet $productSetEntity
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
      *
      * @return string
      */
-    protected function createDeactivateButton(SpyProductSet $productSetEntity)
+    protected function generateDeactivateButton(SpyProductSet $productSetEntity)
     {
         return $this->generateRemoveButton(
-            Url::generate('/product-set-gui/activate', [
-                ViewController::PARAM_ID => $productSetEntity->getIdProductSet(), // FIXME
+            Url::generate('/product-set-gui/edit/deactivate', [
+                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Deactivate'
         );

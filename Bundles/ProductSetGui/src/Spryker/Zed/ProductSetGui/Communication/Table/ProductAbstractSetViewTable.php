@@ -9,27 +9,26 @@ namespace Spryker\Zed\ProductSetGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
-use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
-class ProductTable extends AbstractTable
+class ProductAbstractSetViewTable extends AbstractTable
 {
 
-    const TABLE_IDENTIFIER = 'product-table';
+    const TABLE_IDENTIFIER = 'product-abstract-set-view-table';
+
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_PREVIEW = 'preview';
-    const COL_SKU = 'sku';
+    const COL_IMAGE = 'image';
+    const COL_DETAILS = 'details';
     const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-    const COL_PRICE = 'price';
-    const COL_STATUS = 'status';
-    const COL_CHECKBOX = 'checkbox';
+    const COL_ORDER = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface
@@ -37,14 +36,9 @@ class ProductTable extends AbstractTable
     protected $productSetGuiQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
-
-    /**
      * @var int
      */
-    protected $idProductSetGuiGroup;
+    protected $idProductSet;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -53,20 +47,17 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int|null $idProductSetGuiGroup
+     * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
-        ProductSetGuiToUtilEncodingInterface $utilEncodingService,
         LocaleTransfer $localeTransfer,
-        $idProductSetGuiGroup = null
+        $idProductSet
     ) {
         $this->productSetGuiQueryContainer = $productSetGuiQueryContainer;
-        $this->utilEncodingService = $utilEncodingService;
-        $this->idProductSetGuiGroup = (int)$idProductSetGuiGroup;
         $this->localeTransfer = $localeTransfer;
+        $this->idProductSet = $idProductSet;
     }
 
     /**
@@ -76,36 +67,27 @@ class ProductTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $urlSuffix = $this->idProductSetGuiGroup ? sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSetGuiGroup) : null;
+        $urlSuffix = sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSet);
         $this->defaultUrl = self::TABLE_IDENTIFIER . $urlSuffix;
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
 
+        $this->disableSearch();
+
         $config->setHeader([
             self::COL_ID_PRODUCT_ABSTRACT => 'ID',
-            self::COL_PREVIEW => 'Preview',
-            self::COL_SKU => 'SKU',
-            self::COL_NAME => 'Name',
-            self::COL_PRICE => 'Price',
-            self::COL_STATUS => 'Status',
-            self::COL_CHECKBOX => 'Selected',
+            self::COL_IMAGE => 'Preview',
+            self::COL_DETAILS => 'Product details',
+            self::COL_ORDER => 'Order',
         ]);
 
         $config->setSortable([
             self::COL_ID_PRODUCT_ABSTRACT,
-            self::COL_SKU,
-            self::COL_NAME,
-        ]);
-
-        $config->setSearchable([
-            self::COL_ID_PRODUCT_ABSTRACT,
-            self::COL_SKU,
-            self::COL_NAME,
+            self::COL_ORDER,
         ]);
 
         $config->setRawColumns([
-            self::COL_PREVIEW,
-            self::COL_STATUS,
-            self::COL_CHECKBOX,
+            self::COL_IMAGE,
+            self::COL_DETAILS,
         ]);
 
         $config->setDefaultSortField(self::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
@@ -120,7 +102,7 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productSetGuiQueryContainer->queryProductAbstract($this->localeTransfer);
+        $query = $this->productSetGuiQueryContainer->queryProductAbstractByIdProductSet($this->idProductSet, $this->localeTransfer);
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -141,28 +123,10 @@ class ProductTable extends AbstractTable
     {
         return [
             self::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
-            self::COL_PREVIEW => $this->getProductPreview($productAbstractEntity),
-            self::COL_SKU => $productAbstractEntity->getSku(),
-            self::COL_NAME => $productAbstractEntity->getVirtualColumn(self::COL_NAME),
-            self::COL_PRICE => $this->getProductPrice($productAbstractEntity),
-            self::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            self::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
+            self::COL_IMAGE => $this->getProductPreview($productAbstractEntity),
+            self::COL_DETAILS => $this->generateDetailsColumn($productAbstractEntity),
+            self::COL_ORDER => $productAbstractEntity->getVirtualColumn(self::COL_ORDER),
         ];
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getSelectField(SpyProductAbstract $productAbstractEntity)
-    {
-        $checkbox_html = sprintf(
-            '<input id="all_products_checkbox_%1$d" class="all-products-checkbox" type="checkbox" data-id="%1$s">',
-            $productAbstractEntity->getIdProductAbstract()
-        );
-
-        return $checkbox_html;
     }
 
     /**
@@ -205,21 +169,26 @@ class ProductTable extends AbstractTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
-     * @return string|null
+     * @return string
      */
-    protected function getProductPrice(SpyProductAbstract $productAbstractEntity)
+    protected function generateDetailsColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $priceFacade = new PriceFacade(); // FIXME
-        $priceProductTransfer = $priceFacade->findProductAbstractPrice($productAbstractEntity->getIdProductAbstract());
+        $rawContent = '<p>' .
+            '<strong><a href="%s">%s</a></strong><br />' .
+            '<small>SKU: %s</small><br/>' .
+            '<small>Price: %s</small>' .
+            '</p> %s';
 
-        if (!$priceProductTransfer) {
-            return null;
-        }
+        $content = sprintf(
+            $rawContent,
+            Url::generate('/product-management/view', ['id-product-abstract' => $productAbstractEntity->getIdProductAbstract()])->build(),
+            $productAbstractEntity->getVirtualColumn(self::COL_NAME),
+            $productAbstractEntity->getSku(),
+            $this->getProductPrice($productAbstractEntity),
+            $this->getAbstractProductStatusLabel($productAbstractEntity)
+        );
 
-        $moneyFacade = new MoneyFacade(); // FIXME
-        $moneyTransfer = $moneyFacade->fromInteger($priceProductTransfer->getPrice());
-
-        return $moneyFacade->formatWithSymbol($moneyTransfer);
+        return $content;
     }
 
     /**
@@ -251,6 +220,26 @@ class ProductTable extends AbstractTable
         }
 
         return '<span class="label label-info">Active</span>';
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string|null
+     */
+    protected function getProductPrice(SpyProductAbstract $productAbstractEntity)
+    {
+        $priceFacade = new PriceFacade(); // FIXME
+        $priceProductTransfer = $priceFacade->findProductAbstractPrice($productAbstractEntity->getIdProductAbstract());
+
+        if (!$priceProductTransfer) {
+            return null;
+        }
+
+        $moneyFacade = new MoneyFacade(); // FIXME
+        $moneyTransfer = $moneyFacade->fromInteger($priceProductTransfer->getPrice());
+
+        return $moneyFacade->formatWithSymbol($moneyTransfer);
     }
 
 }

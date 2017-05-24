@@ -4,29 +4,29 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {#{{ createActionButton('/product-management/add', 'Create Product' | trans) }}#}
-    {#{{ createActionButton('/product-management/add?type=bundle', 'Create Bundle Product' | trans) }}#}
+    {{ editActionButton(url('/product-set-gui/edit', {'id': productSetTransfer.idProductSet}), 'Edit' | trans) }}
+    {% if productSetTransfer.isActive %}
+        {{ removeActionButton(url('/product-set-gui/edit/deactivate', {'id': productSetTransfer.idProductSet}), 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton(url('/product-set-gui/edit/activate', {'id': productSetTransfer.idProductSet}), 'Activate' | trans) }}
+    {% endif %}
+    {{ backActionButton(url('/product-set-gui'), 'List of Sets' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Sets' } %}
-
-        {% block widget_content %}
-            Hi!
-            {#{{ productTable | raw }}#}
-        {% endblock %}
-
-    {% endembed %}
+    {% include '@ProductSetGui/View/_partials/general.twig' %}
+    {% include '@ProductSetGui/View/_partials/products.twig' %}
+    {% include '@ProductSetGui/View/_partials/seo.twig' %}
+    {% include '@ProductSetGui/View/_partials/images.twig' %}
 
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    {#<link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />#}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productset-main.css" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    {#<script src="/assets/js/spryker-zed-productmanagement-main.js"></script>#}
 {% endblock %}

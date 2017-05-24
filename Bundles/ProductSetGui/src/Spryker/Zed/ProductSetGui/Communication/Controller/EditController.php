@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -64,6 +64,62 @@ class EditController extends AbstractProductSetController
             'productTable' => $this->getFactory()->createProductTable($localeTransfer, $idProductSet)->render(),
             'productAbstractSetTable' => $this->getFactory()->createProductAbstractSetTable($localeTransfer, $idProductSet)->render(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function activateAction(Request $request)
+    {
+        $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
+
+        $productSetTransfer = new ProductSetTransfer();
+        $productSetTransfer
+            ->setIdProductSet($idProductSet)
+            ->setIsActive(true);
+
+        $this->getFactory()
+            ->getProductSetFacade()
+            ->updateProductSet($productSetTransfer);
+
+        $this->addSuccessMessage(sprintf(
+            'Product Set #%d activated successfully.',
+            $productSetTransfer->getIdProductSet()
+        ));
+
+        return $this->redirectResponse(
+            Url::generate('/product-set-gui')->build()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateAction(Request $request)
+    {
+        $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
+
+        $productSetTransfer = new ProductSetTransfer();
+        $productSetTransfer
+            ->setIdProductSet($idProductSet)
+            ->setIsActive(false);
+
+        $this->getFactory()
+            ->getProductSetFacade()
+            ->updateProductSet($productSetTransfer);
+
+        $this->addSuccessMessage(sprintf(
+            'Product Set #%d deactivated successfully.',
+            $productSetTransfer->getIdProductSet()
+        ));
+
+        return $this->redirectResponse(
+            Url::generate('/product-set-gui')->build()
+        );
     }
 
 }

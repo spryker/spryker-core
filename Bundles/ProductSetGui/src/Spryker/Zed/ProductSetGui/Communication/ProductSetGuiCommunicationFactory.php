@@ -9,13 +9,14 @@ namespace Spryker\Zed\ProductSetGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\CreateFormDataToTransferMapper;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\UpdateFormDataToTransferMapper;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\CreateFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\UpdateFormDataProvider;
-use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetTable;
+use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetViewTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductTable;
 use Spryker\Zed\ProductSetGui\Communication\Tabs\ProductSetFormTabs;
@@ -115,11 +116,22 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idProductSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return ProductAbstractSetTable
+     * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetTable
      */
     public function createProductAbstractSetTable(LocaleTransfer $localeTransfer, $idProductSet)
     {
         return new ProductAbstractSetTable($this->getQueryContainer(), $this->getUtilEncodingService(), $localeTransfer, $idProductSet);
+    }
+
+    /**
+     * @param int $idProductSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetViewTable
+     */
+    public function createProductAbstractSetViewTable(LocaleTransfer $localeTransfer, $idProductSet)
+    {
+        return new ProductAbstractSetViewTable($this->getQueryContainer(), $localeTransfer, $idProductSet);
     }
 
     /**

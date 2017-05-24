@@ -13,8 +13,6 @@ use Spryker\Zed\ProductSetGui\Communication\Form\Products\ProductsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateProductSetFormType extends AbstractType

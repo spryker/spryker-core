@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetBridge;
-use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetBridge as ProductSetGuiToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToUrlBridge;
+use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetBridge as ProductSetGuiToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingBridge;
 
 class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider

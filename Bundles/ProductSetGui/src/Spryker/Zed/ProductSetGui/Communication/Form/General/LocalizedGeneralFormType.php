@@ -108,7 +108,7 @@ class LocalizedGeneralFormType extends AbstractType
                 ]),
                 new Callback([
                     'methods' => [
-                        [$this, 'validateUniqueUrl']
+                        [$this, 'validateUniqueUrl'],
                     ],
                     'groups' => [self::GROUP_UNIQUE_URL_CHECK],
                 ]),
@@ -158,7 +158,7 @@ class LocalizedGeneralFormType extends AbstractType
 
     /**
      * @param string $url
-     * @param ExecutionContextInterface $context
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      *
      * @return void
      */

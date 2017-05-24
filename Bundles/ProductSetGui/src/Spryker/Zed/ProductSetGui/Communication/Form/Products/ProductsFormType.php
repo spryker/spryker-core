@@ -11,8 +11,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -51,7 +49,7 @@ class ProductsFormType extends AbstractType
                                 $context->addViolation('You need to select minimum 2 products.');
                             }
                         },
-                    ]
+                    ],
                 ]),
             ],
         ]);

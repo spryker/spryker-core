@@ -9,8 +9,8 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {#{{ createActionButton('/product-management/add', 'Create Product' | trans) }}#}
-    {#{{ createActionButton('/product-management/add?type=bundle', 'Create Bundle Product' | trans) }}#}
+    {{ viewActionButton(url('/product-set-gui/view', {'id': productSetForm.general_form.id_product_set.vars.data}), 'View' | trans) }}
+    {{ backActionButton(url('/product-set-gui'), 'List of Sets' | trans) }}
 {% endblock %}
 
 {% block content %}

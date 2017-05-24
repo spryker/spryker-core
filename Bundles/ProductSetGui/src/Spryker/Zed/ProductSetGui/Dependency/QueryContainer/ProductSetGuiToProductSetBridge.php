@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,12 +13,12 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
 {
 
     /**
-     * @var ProductSetQueryContainerInterface
+     * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
     protected $productSetQueryContainer;
 
     /**
-     * @param ProductSetQueryContainerInterface $productSetQueryContainer
+     * @param \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface $productSetQueryContainer
      */
     public function __construct(ProductSetQueryContainerInterface $productSetQueryContainer)
     {

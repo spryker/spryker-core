@@ -120,7 +120,7 @@ class ProductImageFormType extends AbstractType
                 new Length([
                     'min' => 0,
                     'max' => 2048,
-                ])
+                ]),
             ],
         ]);
 
@@ -142,7 +142,7 @@ class ProductImageFormType extends AbstractType
                 new Length([
                     'min' => 0,
                     'max' => 2048,
-                ])
+                ]),
             ],
         ]);
 

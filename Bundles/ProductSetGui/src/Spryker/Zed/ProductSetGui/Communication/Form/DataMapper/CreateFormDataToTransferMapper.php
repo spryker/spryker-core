@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetDataTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
+use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\General\GeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\General\LocalizedGeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\ImagesFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\LocalizedProductImageSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Products\ProductsFormType;
-use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface;
 use Symfony\Component\Form\FormInterface;
@@ -129,9 +129,9 @@ class CreateFormDataToTransferMapper
     }
 
     /**
-     * @param FormInterface $imageSetFormCollection
-     * @param ProductSetTransfer $productSetTransfer
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Symfony\Component\Form\FormInterface $imageSetFormCollection
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
