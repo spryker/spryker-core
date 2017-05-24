@@ -101,7 +101,8 @@ interface CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
+
 }

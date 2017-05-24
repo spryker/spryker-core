@@ -1,20 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
-
 class SalesToCustomerBridge implements SalesToCustomerInterface
 {
+
     /**
-     * @var CustomerFacadeInterface
+     * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
     protected $customerFacade;
 
     /**
-     * @param CustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade
      */
     public function __construct($customerFacade)
     {
@@ -22,7 +24,7 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
     }
 
     /**
-     * @param $customerReference
+     * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
@@ -30,4 +32,5 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
     {
         return $this->customerFacade->findCustomerByReference($customerReference);
     }
+
 }

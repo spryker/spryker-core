@@ -424,7 +424,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param string $customerReference
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function findCustomerByReference($customerReference)
     {
@@ -432,4 +432,5 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->createCustomer()
             ->findByReference($customerReference);
     }
+
 }

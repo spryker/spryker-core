@@ -56,7 +56,7 @@ class OrdersTable extends AbstractTable
     protected $sanitizeService;
 
     /**
-     * @var SalesToCustomerInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
      */
     protected $customerFacade;
 
@@ -66,7 +66,7 @@ class OrdersTable extends AbstractTable
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param SalesToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,

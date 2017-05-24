@@ -755,7 +755,7 @@ class Customer implements CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference)
     {
@@ -773,4 +773,5 @@ class Customer implements CustomerInterface
 
         return $customerTransfer;
     }
+
 }

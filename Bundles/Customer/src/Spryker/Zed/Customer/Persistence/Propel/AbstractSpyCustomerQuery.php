@@ -23,7 +23,7 @@ abstract class AbstractSpyCustomerQuery extends BaseSpyCustomerQuery
 {
 
     /**
-     * @param null $modelAlias
+     * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      * @param bool $withAnonymized
      *

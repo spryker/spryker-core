@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
@@ -46,7 +45,7 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $customerReference
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerByReference($customerReference);
 

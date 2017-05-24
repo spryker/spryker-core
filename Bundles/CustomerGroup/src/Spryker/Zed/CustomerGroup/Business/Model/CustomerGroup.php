@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -212,6 +213,49 @@ class CustomerGroup implements CustomerGroupInterface
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
         return $customerGroupTransfer;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer[]
+     */
+    public function findCustomerGroupsByIdCustomer($idCustomer)
+    {
+        $customerGroupEntities = $this->queryContainer
+            ->queryCustomerGroupByFkCustomer($idCustomer)
+            ->find();
+
+        $groups = [];
+
+        foreach ($customerGroupEntities as $customerGroupEntity) {
+            $customerGroupTransfer = new CustomerGroupTransfer();
+            $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+            $groups[] = $customerGroupTransfer;
+        }
+
+        return $groups;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function removeCustomerFromAllGroups(CustomerTransfer $customerTransfer)
+    {
+        $customerTransfer->requireIdCustomer();
+
+        $customerGroupTransfers = $this->findCustomerGroupsByIdCustomer($customerTransfer->getIdCustomer());
+
+        foreach ($customerGroupTransfers as $customerGroupTransfer) {
+            $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+            $customerGroupToCustomerTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+
+            $customerGroupTransfer->getCustomers()->append($customerGroupToCustomerTransfer);
+            $this->removeCustomersFromGroup($customerGroupTransfer);
+        }
     }
 
 }
