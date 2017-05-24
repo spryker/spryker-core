@@ -27,8 +27,7 @@ trait WriteOperationHandlerTrait
         try {
             $result = $callback();
             if (is_bool($result) && !$result) {
-                throw new Exception('Write  b b 
-                 ]operation failed');
+                throw new Exception('Write operation failed');
             }
 
             return $result;

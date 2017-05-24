@@ -31,7 +31,7 @@ class FileSystemReader implements FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {

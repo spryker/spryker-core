@@ -36,7 +36,7 @@ interface FileSystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer|null
+     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
      */
     public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
