@@ -15,10 +15,10 @@ class SessionConfig extends AbstractBundleConfig
 
     const PROTOCOL_TCP = 'tcp';
 
-    const DATA_SOURCE_NAME_TEMPLATE_TCP = '[protocol]://[host]:[port]?database=[database][authFragment]';
+    const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
     const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
 
-    const DATA_SOURCE_NAME_TEMPLATE_REDIS = '[protocol]://[authFragment][host]:[port]/[database]';
+    const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
     const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
 
     /**
@@ -118,7 +118,6 @@ class SessionConfig extends AbstractBundleConfig
         }
 
         $dataSourceNameElements = [
-            '[protocol]' => $protocol,
             '[host]' => $host,
             '[port]' => $port,
             '[database]' => $database,
