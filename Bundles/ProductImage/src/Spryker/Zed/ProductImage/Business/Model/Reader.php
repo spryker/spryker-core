@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
@@ -105,73 +104,6 @@ class Reader implements ReaderInterface
         $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
-    {
-        $abstractDefaultImageSets = $this->productImageContainer
-            ->queryProductImageSet()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByFkLocale(null)
-            ->find();
-
-        $abstractLocalizedImageSets = $this->productImageContainer
-            ->queryProductImageSet()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByFkLocale($idLocale)
-            ->find();
-
-        return $this->getImageSetsIndexedByName($abstractLocalizedImageSets)
-            + $this->getImageSetsIndexedByName($abstractDefaultImageSets);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
-    {
-        $concreteDefaultImageSets = $this->productImageContainer
-            ->queryProductImageSet()
-            ->filterByFkProduct($idProductConcrete)
-            ->filterByFkLocale(null)
-            ->find();
-
-        $concreteLocalizedImageSets = $this->productImageContainer
-            ->queryProductImageSet()
-            ->filterByFkProduct($idProductConcrete)
-            ->filterByFkLocale($idLocale)
-            ->find();
-
-        return $this->getImageSetsIndexedByName($concreteLocalizedImageSets)
-            + $this->getImageSetsIndexedByName($concreteDefaultImageSets)
-            + $this->getCombinedAbstractImageSets($idProductAbstract, $idLocale);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSets
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getImageSetsIndexedByName(ObjectCollection $imageSets)
-    {
-        $result = [];
-
-        foreach ($imageSets as $imageSetEntity) {
-            $imageSetTransfer = $this->transferMapper->mapProductImageSet($imageSetEntity);
-            $result[$imageSetEntity->getName()] = $imageSetTransfer;
-        }
-
-        return $result;
     }
 
 }

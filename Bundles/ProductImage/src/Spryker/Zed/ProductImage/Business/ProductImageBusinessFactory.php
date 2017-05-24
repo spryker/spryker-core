@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductImage\Business\Model\ProductImageSetCombiner;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Model\Writer;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
@@ -48,6 +49,17 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductImageTransferMapper(
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Business\Model\ProductImageSetCombinerInterface
+     */
+    public function createProductImageSetCombiner()
+    {
+        return new ProductImageSetCombiner(
+            $this->getQueryContainer(),
+            $this->createTransferGenerator()
         );
     }
 

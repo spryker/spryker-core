@@ -197,9 +197,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Deletes a ProductImageSet row from database
-     * - Deletes orphan ProductImages and relations to a ProductImageSet
+     * {@inheritdoc}
      *
      * @api
      *
@@ -215,8 +213,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
+     * {@inheritdoc}
      *
      * @api
      *
@@ -228,14 +225,12 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
     {
         return $this->getFactory()
-            ->createProductImageReader()
+            ->createProductImageSetCombiner()
             ->getCombinedAbstractImageSets($idProductAbstract, $idLocale);
     }
 
     /**
-     * Specification:
-     * - Returns merged image sets for concrete product with the following inheritance:
-     *  Abstract Default > Abstract Localized > Concrete Default > Concrete Localized
+     * {@inheritdoc}
      *
      * @api
      *
@@ -248,7 +243,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
     {
         return $this->getFactory()
-            ->createProductImageReader()
+            ->createProductImageSetCombiner()
             ->getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
     }
 
