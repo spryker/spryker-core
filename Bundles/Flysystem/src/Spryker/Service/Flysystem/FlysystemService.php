@@ -311,8 +311,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @api
      *
      * @param string $filesystemName
-     * @param string $newpath
      * @param string $path
+     * @param string $newpath
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      *
