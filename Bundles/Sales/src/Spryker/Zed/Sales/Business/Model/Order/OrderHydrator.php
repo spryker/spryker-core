@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -89,9 +88,9 @@ class OrderHydrator implements OrderHydratorInterface
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(sprintf(
-                'Order could not be found for ID %s and customer ID %s',
+                'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
-                $orderTransfer->getFkCustomer()
+                $orderTransfer->getCustomerReference()
             ));
         }
 
@@ -112,7 +111,12 @@ class OrderHydrator implements OrderHydratorInterface
             ->findOne();
 
         if ($orderEntity === null) {
-            throw new InvalidSalesOrderException(sprintf('Order could not be found for ID %s', $idSalesOrder));
+            throw new InvalidSalesOrderException(
+                sprintf(
+                    'Order could not be found for ID %s',
+                    $idSalesOrder
+                )
+            );
         }
 
         $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
@@ -135,10 +139,9 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateBillingAddressToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
-        $this->hydrateShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
 
-        $orderTransfer->setTotalOrderCount($this->getTotalCustomerOrderCount($orderTransfer->getFkCustomer()));
+        $orderTransfer->setTotalOrderCount($this->getTotalCustomerOrderCount($orderTransfer->getCustomerReference()));
 
         $uniqueProductQuantity = (int)$this->queryContainer
             ->queryCountUniqueProductsForOrder($orderEntity->getIdSalesOrder())
@@ -188,6 +191,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
 
         return $orderTransfer;
     }
@@ -262,24 +266,6 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function hydrateShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
-    {
-        $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $salesShipments = $orderEntity->getSpySalesShipments();
-        if (count($salesShipments) > 0) {
-            foreach ($salesShipments as $salesShipmentEntity) {
-                $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
-                $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
-            }
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
     protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         foreach ($orderEntity->getExpenses() as $expenseEntity) {
@@ -333,15 +319,16 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param int $idCustomer
+     * @param int $customerReference
      *
      * @return int
      */
-    protected function getTotalCustomerOrderCount($idCustomer)
+    protected function getTotalCustomerOrderCount($customerReference)
     {
         $totalOrderCount = $this->queryContainer
             ->querySalesOrder()
-            ->findByFkCustomer($idCustomer)->count();
+            ->findByCustomerReference($customerReference)
+            ->count();
 
         return $totalOrderCount;
     }
@@ -353,9 +340,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function createOrderTransfer(SpySalesOrder $orderEntity)
     {
-        $orderTransfer = $this->applyOrderTransferHydrators($orderEntity);
-
-        return $orderTransfer;
+        return $this->applyOrderTransferHydrators($orderEntity);
     }
 
     /**

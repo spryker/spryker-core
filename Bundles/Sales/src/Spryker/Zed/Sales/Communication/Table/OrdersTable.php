@@ -14,6 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
+use Spryker\Zed\Sales\Persistence\Propel\AbstractSpySalesOrder;
 
 class OrdersTable extends AbstractTable
 {
@@ -83,7 +84,7 @@ class OrdersTable extends AbstractTable
         $config->setSortable($this->getSortableFields());
 
         $config->addRawColumn(static::URL);
-        $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
+        $config->addRawColumn(SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE);
         $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
 
         $config->setDefaultSortColumnIndex(0);
@@ -110,7 +111,7 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
+                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
                 static::GRAND_TOTAL => $this->getGrandTotal($item),
@@ -151,9 +152,9 @@ class OrdersTable extends AbstractTable
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
+        if ($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]) {
             $url = Url::generate('/customer/view', [
-                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+                'id-customer' => $item[AbstractSpySalesOrder::COL_FK_CUSTOMER],
             ]);
             $customer = '<a href="' . $url . '">' . $customer . '</a>';
         }
@@ -269,7 +270,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
             SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
             SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Full Name',
+            SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             static::ITEM_STATE_NAMES_CSV => 'Order State',
             static::GRAND_TOTAL => 'GrandTotal',

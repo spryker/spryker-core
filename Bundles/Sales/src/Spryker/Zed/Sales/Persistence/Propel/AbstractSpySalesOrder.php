@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -23,6 +27,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
 
+    const COL_FK_CUSTOMER = 'fk_customer';
+
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
      */
@@ -34,6 +40,86 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
             ->findOne();
 
         return $salesOrderTotalsEntity;
+    }
+
+    /**
+     * This is for bc reasons, because we don't have database foreign key from fk_customer.
+     * Will be removed in the future.
+     *
+     * @return int|null
+     */
+    public function getFkCustomer()
+    {
+        if (!$this->getCustomerReference()) {
+            return null;
+        }
+
+        $idCustomer = SpyCustomerQuery::create()
+            ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
+            ->filterByCustomerReference($this->getCustomerReference())
+            ->findOne();
+
+        return (int)$idCustomer;
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    public function getCustomer()
+    {
+        return SpyCustomerQuery::create()
+            ->filterByCustomerReference($this->getCustomerReference())
+            ->findOne();
+    }
+
+    /**
+     * This is for bc reasons, because we don't have database foreign key from fk_customer.
+     * Will be removed in the future.
+     *
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return $this
+     */
+    public function setCustomer(SpyCustomer $customerEntity)
+    {
+        $this->setCustomerReference($customerEntity->getCustomerReference());
+
+        $customerEntity->save();
+
+        return $this;
+    }
+
+    /**
+     *
+     * This is for bc reasons, because we don't have database foreign key from fk_customer.
+     * Will be removed in the future.
+     *
+     * Exports the object as an array.
+     *
+     * You can specify the key type of the array by passing one of the class
+     * type constants.
+     *
+     * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
+     *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *                    Defaults to TableMap::TYPE_FIELDNAME.
+     * @param boolean|bool $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
+     * @param array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param boolean|bool $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
+     *
+     * @return array an associative array containing the field names (as keys) and field values
+     */
+    public function toArray(
+        $keyType = TableMap::TYPE_FIELDNAME,
+        $includeLazyLoadColumns = true,
+        $alreadyDumpedObjects = [],
+        $includeForeignObjects = false
+    ) {
+        $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
+
+        $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+
+        return $array;
+
     }
 
 }

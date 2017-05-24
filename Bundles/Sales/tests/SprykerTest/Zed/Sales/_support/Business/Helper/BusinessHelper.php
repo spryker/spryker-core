@@ -16,7 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
@@ -36,7 +36,7 @@ class BusinessHelper extends Module
         $omsStateEntity = $this->createOmsState();
         $omsProcessEntity = $this->createOmsProcess();
         $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
-        $this->createSalesExpense($salesOrderEntity);
+        $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
         $this->createOrderItem(
             $omsStateEntity,
@@ -55,6 +55,8 @@ class BusinessHelper extends Module
             800,
             19
         );
+
+        $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
 
         return $salesOrderEntity;
     }
@@ -98,19 +100,36 @@ class BusinessHelper extends Module
      */
     protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity)
     {
-        $shipmentMethodEntity = SpyShipmentMethodQuery::create()->findOne();
-
         $customerEntity = $this->createCustomer();
 
         $salesOrderEntity = new SpySalesOrder();
         $salesOrderEntity->setCustomer($customerEntity);
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
-        $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
         $salesOrderEntity->setOrderReference('123');
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesExpense
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
+     */
+    protected function createSpySalesShipment($idSalesOrder, $idSalesExpense)
+    {
+        $salesShipmentEntity = new SpySalesShipment();
+        $salesShipmentEntity->setDeliveryTime('1 h');
+        $salesShipmentEntity->setCarrierName('Carrier name');
+        $salesShipmentEntity->setName('Shipment name');
+        $salesShipmentEntity->setFkSalesOrder($idSalesOrder);
+        $salesShipmentEntity->setFkSalesExpense($idSalesExpense);
+
+        $salesShipmentEntity->save();
+
+        return $salesShipmentEntity;
     }
 
     /**
@@ -156,7 +175,7 @@ class BusinessHelper extends Module
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return void
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
      */
     protected function createSalesExpense(SpySalesOrder $salesOrderEntity)
     {
@@ -166,6 +185,8 @@ class BusinessHelper extends Module
         $salesExpenseEntity->setGrossPrice(100);
         $salesExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesExpenseEntity->save();
+
+        return $salesExpenseEntity;
     }
 
     /**

@@ -208,7 +208,7 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        $salesOrderEntity->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
+        $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setTaxMode($quoteTransfer->getTaxMode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
@@ -224,8 +224,6 @@ class OrderSaver implements OrderSaverInterface
     protected function hydrateSalesOrderCustomer(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $customerTransfer = $quoteTransfer->getCustomer();
-
-        $salesOrderEntity->setFkCustomer($customerTransfer->getIdCustomer());
         $customerData = $customerTransfer->modifiedToArray();
 
         if (isset($customerData['created_at'])) {

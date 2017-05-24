@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery as BaseSpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -14,6 +16,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\PropelException;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_sales_order' table.
@@ -189,6 +192,31 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
                 ->filterByLastStateChange($lastStateChange, $comparison)
             ->endUse()
             ->groupByIdSalesOrder();
+    }
+
+    /**
+     * This is for bc reasons, because we don't have database foreign key from fk_customer.
+     * Will be removed in the future.
+     *
+     * @param int $idCustomer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return $this
+     */
+    public function filterByFkCustomer($idCustomer)
+    {
+        $customerReference = SpyCustomerQuery::create()
+            ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
+            ->filterByIdCustomer($idCustomer)
+            ->findOne();
+
+        if (!$customerReference) {
+            throw new PropelException('Customer not found');
+        }
+        $this->filterByCustomerReference($customerReference);
+
+        return $this;
     }
 
 } // SpySalesOrderQuery

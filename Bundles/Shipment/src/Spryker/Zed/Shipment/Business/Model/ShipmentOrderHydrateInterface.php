@@ -5,24 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Dependency\Plugin;
+namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface HydrateOrderPluginInterface
+interface ShipmentOrderHydrateInterface
 {
 
     /**
-     * Specification:
-     *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
-     *   - Can be used to add additional data to OrderTransfer
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrate(OrderTransfer $orderTransfer);
+    public function hydrateOrderWithShipment(OrderTransfer $orderTransfer);
 
 }
