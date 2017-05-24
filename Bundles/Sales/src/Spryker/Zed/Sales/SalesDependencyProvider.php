@@ -11,6 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
@@ -28,6 +29,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
+    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
@@ -68,6 +70,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -151,6 +154,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_USER] = function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCustomerFacade(Container $container)
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new SalesToCustomerBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

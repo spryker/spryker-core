@@ -12,6 +12,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
@@ -55,24 +56,32 @@ class OrdersTable extends AbstractTable
     protected $sanitizeService;
 
     /**
+     * @var SalesToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
+     * @param SalesToCustomerInterface $customerFacade
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToSalesAggregatorInterface $salesAggregatorFacade,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
-        UtilDateTimeServiceInterface $utilDateTimeService
+        UtilDateTimeServiceInterface $utilDateTimeService,
+        SalesToCustomerInterface $customerFacade
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -143,9 +152,10 @@ class OrdersTable extends AbstractTable
             $item[SpySalesOrderTableMap::COL_LAST_NAME]
         );
 
+        $customerTransfer = $this->customerFacade->findCustomerByReference($item[OrdersTableQueryBuilder::FIELD_CUSTOMER_REFERENCE]);
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && !$item[OrdersTableQueryBuilder::FIELD_CUSTOMER_ANONYMIZED_AT]) {
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $customerTransfer) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
             ]);

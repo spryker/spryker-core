@@ -62,6 +62,19 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      *
      * @inheritdoc
      */
+    public function queryCustomerByReference($customerReference)
+    {
+        $query = $this->queryCustomers();
+        $query->filterByCustomerReference($customerReference);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @inheritdoc
+     */
     public function queryCustomerByRegistrationKey($token)
     {
         $query = $this->queryCustomers();

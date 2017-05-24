@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Communication\Table;
 
 use DateTime;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
@@ -18,7 +19,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 
     const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
-    const FIELD_CUSTOMER_ANONYMIZED_AT = 'customer_anonymized_at';
+    const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
     const DATE_FILTER_DAY = 'day';
     const DATE_FILTER_WEEK = 'week';
 
@@ -81,7 +82,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     protected function addCustomerFields(SpySalesOrderQuery $query)
     {
         $query->leftJoinCustomer();
-        $query->withColumn(SpyCustomerTableMap::COL_ANONYMIZED_AT, static::FIELD_CUSTOMER_ANONYMIZED_AT);
+        $query->withColumn(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, static::FIELD_CUSTOMER_REFERENCE);
 
         return $query;
     }

@@ -98,4 +98,10 @@ interface CustomerInterface
      */
     public function findById($customerTransfer);
 
+    /**
+     * @param string $customerReference
+     *
+     * @return CustomerTransfer|null
+     */
+    public function findByReference($customerReference);
 }
