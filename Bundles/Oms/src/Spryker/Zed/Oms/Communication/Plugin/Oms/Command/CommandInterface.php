@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface AS DependencyCommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface as DependencyCommandInterface;
 
 /**
- * Deprecated use instead Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+ * @deprecated Use instead Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
  */
 interface CommandInterface extends DependencyCommandInterface
 {

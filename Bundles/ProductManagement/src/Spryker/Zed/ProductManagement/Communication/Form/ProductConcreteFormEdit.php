@@ -194,37 +194,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->add(self::FORM_PRICE_AND_STOCK, 'collection', [
                 'type' => new StockForm(),
                 'label' => false,
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-
-                            $rootData = $context->getRoot()->getData();
-                            if (isset($rootData[static::FORM_ASSIGNED_BUNDLED_PRODUCTS]) &&
-                                count($rootData[static::FORM_ASSIGNED_BUNDLED_PRODUCTS]) > 0) {
-                                return;
-                            }
-
-                            foreach ($dataToValidate as $data) {
-
-                                $stockCount = (int)$data[StockForm::FIELD_QUANTITY];
-                                $stockType = $data[StockForm::FIELD_TYPE];
-
-                                $isNeverOutOfStock = (bool)$data[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK];
-
-                                if ($stockCount === 0 && !$isNeverOutOfStock) {
-                                    $context->addViolation(
-                                        sprintf(
-                                            'Please enter Stock information under Price & Stock for stock type: %s',
-                                            $stockType
-                                        ),
-                                        [$context->getGroup()]
-                                    );
-                                }
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK],
-                ])],
             ]);
 
         return $this;

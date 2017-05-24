@@ -18,7 +18,7 @@ class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterfac
     protected $salesAggregatorFacade;
 
     /**
-     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade
+     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade $salesAggregatorFacade
      */
     public function __construct($salesAggregatorFacade)
     {

@@ -27,6 +27,7 @@ class AttributeSuperForm extends AttributeAbstractForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */

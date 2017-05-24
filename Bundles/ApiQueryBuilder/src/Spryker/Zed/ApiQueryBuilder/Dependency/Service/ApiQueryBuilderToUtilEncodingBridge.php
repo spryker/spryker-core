@@ -24,15 +24,15 @@ class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodi
     }
 
     /**
-     * @param string $jsonValue
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
      * @return string
      */
-    public function encodeJson($jsonValue, $options = null, $depth = null)
+    public function encodeJson($value, $options = null, $depth = null)
     {
-        return $this->utilEncodingService->encodeJson($jsonValue, $options, $depth);
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
 
     /**
@@ -41,7 +41,7 @@ class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodi
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

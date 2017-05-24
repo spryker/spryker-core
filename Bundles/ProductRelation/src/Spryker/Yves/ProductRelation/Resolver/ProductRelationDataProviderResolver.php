@@ -24,7 +24,7 @@ class ProductRelationDataProviderResolver implements ProductRelationDataProvider
     }
 
     /**
-     * @param string
+     * @param string $type
      *
      * @return \Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface|null
      */

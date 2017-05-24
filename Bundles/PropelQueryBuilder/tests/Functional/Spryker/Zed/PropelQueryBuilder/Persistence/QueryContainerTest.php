@@ -219,6 +219,21 @@ class QueryContainerTest extends Test
     /**
      * @return void
      */
+    public function testPropelCreateQueryWithoutMappingsWithPaginationAndItemsPerPage()
+    {
+        $criteriaTransfer = $this->getCriteriaForPaginationPageAndItemsPerPage();
+
+        $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
+
+        $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
+        $this->assertEquals(self::LIMIT, $query->getLimit());
+        $this->assertEquals(self::LIMIT, $query->count());
+        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
+    }
+
+    /**
+     * @return void
+     */
     public function testPropelCreateQueryWithoutMappingsWithoutPaginationWithSelectedColumns()
     {
         $criteriaTransfer = $this->getCriteriaWithoutMappingsWithSelectedColumns();
@@ -296,6 +311,38 @@ class QueryContainerTest extends Test
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
     protected function getCriteriaForPagination()
+    {
+        $json = json_decode($this->jsonDataForPagination, true);
+
+        $columnTransfer = new PropelQueryBuilderColumnTransfer();
+        $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
+        $columnTransfer->setAlias('id_product');
+
+        $sortItems[] = (new PropelQueryBuilderSortTransfer())
+            ->setColumn($columnTransfer)
+            ->setSortDirection(Criteria::DESC);
+
+        $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
+        $paginationTransfer->setOffset(10);
+        $paginationTransfer->setLimit(self::LIMIT);
+        $paginationTransfer->setSortItems(new ArrayObject($sortItems));
+
+        $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
+        $ruleQuerySetTransfer->fromArray($json);
+
+        $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $criteriaTransfer->setRuleSet($ruleQuerySetTransfer);
+        $criteriaTransfer->setPagination($paginationTransfer);
+
+        return $criteriaTransfer;
+    }
+
+    /**
+     * @deprecated Use limit/offset instead
+     *
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function getCriteriaForPaginationPageAndItemsPerPage()
     {
         $json = json_decode($this->jsonDataForPagination, true);
 

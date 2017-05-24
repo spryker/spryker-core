@@ -17,7 +17,7 @@ interface JsonInterface
      *
      * @throws \Exception
      *
-     * @return string
+     * @return string|null
      */
     public function encode($value, $options = null, $depth = null);
 
@@ -29,7 +29,7 @@ interface JsonInterface
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function decode($jsonString, $assoc = false, $depth = null, $options = null);
 

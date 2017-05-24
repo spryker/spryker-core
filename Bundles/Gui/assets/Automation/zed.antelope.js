@@ -66,6 +66,7 @@ let config = {
         }),
         new webpack.DefinePlugin({
             PRODUCTION: antelope.options.production,
+            DEV: !antelope.options.production,
             WATCH: antelope.options.watch,
             'require.specified': 'require.resolve'
         })

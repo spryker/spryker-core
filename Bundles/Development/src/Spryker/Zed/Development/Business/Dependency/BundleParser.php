@@ -371,7 +371,7 @@ class BundleParser implements BundleParserInterface
     }
 
     /**
-     * @param string
+     * @param string $folder
      *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */

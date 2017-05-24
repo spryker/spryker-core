@@ -31,7 +31,8 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
             $this->getApiQueryBuilderQueryContainer(),
             $this->getQueryContainer(),
             $this->createEntityMapper(),
-            $this->createTransferMapper()
+            $this->createTransferMapper(),
+            $this->getProductFacade()
         );
     }
 
@@ -73,6 +74,14 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     protected function getApiQueryBuilderQueryContainer()
     {
         return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API_QUERY_BUILDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductApiDependencyProvider::FACADE_PRODUCT);
     }
 
 }

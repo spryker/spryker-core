@@ -32,12 +32,12 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
             return $apiResponseTransfer;
         }
 
-        if ($pagination->getOffset() && $pagination->getLimit()) {
+        if ($pagination->getPage() && $pagination->getItemsPerPage() && $pagination->getTotal()) {
             $headers = $apiResponseTransfer->getHeaders();
             $headers['Accept-Ranges'] = $apiRequestTransfer->getResource();
 
-            $from = $pagination->getOffset();
-            $to = $pagination->getOffset() + $pagination->getLimit();
+            $from = $pagination->getPage() * $pagination->getItemsPerPage() - 1;
+            $to = $from + $pagination->getItemsPerPage();
             $total = $pagination->getTotal();
             $headers['Content-Range'] = $apiRequestTransfer->getResource() . ' ' . $from . '-' . $to . '/' . $total;
             $apiResponseTransfer->setHeaders($headers);

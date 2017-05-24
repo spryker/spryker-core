@@ -30,9 +30,6 @@ interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @internal param ApiRequestTransfer $apiRequestTransfer
-     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
-     *
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer

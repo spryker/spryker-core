@@ -54,6 +54,7 @@ class CsvMeta implements CsvMetaInterface
 
     /**
      * @param \SplFileObject $csvFile
+     * @param string $lineSeparator
      */
     public function __construct(SplFileObject $csvFile, $lineSeparator = "\n")
     {

@@ -225,7 +225,9 @@ interface DevelopmentFacadeInterface
      *
      * @api
      *
-     * @return string
+     * @param string $bundle
+     *
+     * @return array
      */
     public function runArchitectureSniffer($bundle);
 

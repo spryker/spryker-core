@@ -26,7 +26,7 @@ interface ProductBundleToAvailabilityInterface
     public function calculateStockForProduct($sku);
 
     /**
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

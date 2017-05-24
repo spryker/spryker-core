@@ -41,6 +41,9 @@ abstract class AbstractStepEngineTest extends PHPUnit_Framework_TestCase
     const STEP_ROUTE_C = 'step-route-c';
     const STEP_URL_C = '/step/url/c';
 
+    const STEP_ROUTE_D = 'step-route-d';
+    const STEP_URL_D = '/step/url/d';
+
     const EXTERNAL_URL = 'http://external.de';
 
     /**

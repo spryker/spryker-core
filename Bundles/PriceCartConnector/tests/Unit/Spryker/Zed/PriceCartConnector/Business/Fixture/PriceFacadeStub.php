@@ -49,6 +49,9 @@ class PriceFacadeStub extends PriceFacade
     }
 
     /**
+     * @param string $sku
+     * @param int $price
+     *
      * @return void
      */
     public function addPriceStub($sku, $price)
@@ -57,6 +60,9 @@ class PriceFacadeStub extends PriceFacade
     }
 
     /**
+     * @param string $sku
+     * @param bool $validity
+     *
      * @return void
      */
     public function addValidityStub($sku, $validity = true)
