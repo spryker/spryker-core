@@ -15,7 +15,7 @@ interface FileSystemStreamPluginInterface
     /**
      * Specification:
      * - Create a file or update if exists using stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface FileSystemStreamPluginInterface
     /**
      * Specification:
      * - Retrieve stream for a file
-     * - Return a read-stream for the path, false on failure
+     * - Return a read-stream for the path, throw exception on failure
      *
      * @api
      *
@@ -46,7 +46,7 @@ interface FileSystemStreamPluginInterface
     /**
      * Specification:
      * - Update an existing file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -62,7 +62,7 @@ interface FileSystemStreamPluginInterface
     /**
      * Specification:
      * - Write a new file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *

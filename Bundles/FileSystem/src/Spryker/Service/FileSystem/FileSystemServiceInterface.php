@@ -28,7 +28,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Get resource metadata
-     * - Return resource metadata transfer, null on failure
+     * - Return resource metadata transfer, throw exception on failure
      *
      * @api
      *
@@ -43,7 +43,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Get resource mime type
-     * - Return resource mime type, false on failure
+     * - Return resource mime type, throw exception on failure
      *
      * @api
      *
@@ -58,7 +58,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Get resource timestamp
-     * - Return resource timestamp, false on failure
+     * - Return resource timestamp, throw exception on failure
      *
      * @api
      *
@@ -73,7 +73,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Get resource size
-     * - Return resource size, false on failure
+     * - Return resource size, throw exception on failure
      *
      * @api
      *
@@ -103,7 +103,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Read file
-     * - Return file content, false on failure
+     * - Return file content, throw exception on failure
      *
      * @api
      *
@@ -118,7 +118,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - List contents under a path
-     * - Return array of FileSystemResourceTransfer objects located under given path
+     * - Return array of FileSystemResourceTransfer objects located under given path, throw exception on failure
      *
      * @api
      *
@@ -148,7 +148,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Mark resource with private access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -163,7 +163,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Mark resource with public access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -178,7 +178,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Create directory with its path
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -193,7 +193,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Delete empty directory
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -208,7 +208,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Copy file, the destination must not exist
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -223,7 +223,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Delete file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -238,7 +238,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -253,7 +253,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -268,7 +268,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Update an existing file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -283,7 +283,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Write a new file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -298,7 +298,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Create a file or update if exists using stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -314,7 +314,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Retrieve stream for a file
-     * - Return a read-stream for the path, false on failure
+     * - Return a read-stream for the path, throw exception on failure
      *
      * @api
      *
@@ -329,7 +329,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Update an existing file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -345,7 +345,7 @@ interface FileSystemServiceInterface
     /**
      * Specification:
      * - Write a new file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *

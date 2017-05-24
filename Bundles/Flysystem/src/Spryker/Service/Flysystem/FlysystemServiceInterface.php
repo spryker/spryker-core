@@ -34,7 +34,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Get resource mime type
-     * - Return resource mime type, false on failure
+     * - Return resource mime type, throw exception on failure
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Get resource timestamp
-     * - Return resource timestamp, false on failure
+     * - Return resource timestamp, throw exception on failure
      *
      * @api
      *
@@ -68,7 +68,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Get resource size
-     * - Return resource size, false on failure
+     * - Return resource size, throw exception on failure
      *
      * @api
      *
@@ -119,7 +119,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Read file
-     * - Return file content, false on failure
+     * - Return file content, throw exception on failure
      *
      * @api
      *
@@ -154,7 +154,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Mark resource with private access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -171,7 +171,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Mark resource with public access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -188,7 +188,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Create directory with its path
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -206,7 +206,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Delete empty directory
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -223,7 +223,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Copy file, the destination must not exist
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -241,7 +241,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Delete file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -258,7 +258,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -277,7 +277,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -295,7 +295,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Update an existing file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -314,7 +314,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Write a new file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -333,7 +333,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Create a file or update if exists using stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -352,7 +352,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Retrieve stream for a file
-     * - Return a read-stream for the path, false on failure
+     * - Return a read-stream for the path, throw exception on failure
      *
      * @api
      *
@@ -369,7 +369,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Update an existing file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -388,7 +388,7 @@ interface FlysystemServiceInterface
      * Specification:
      * - Select pre-configured filesystem
      * - Write a new file using a stream
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *

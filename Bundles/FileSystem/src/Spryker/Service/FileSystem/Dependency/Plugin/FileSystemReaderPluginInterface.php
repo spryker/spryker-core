@@ -16,7 +16,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - Get resource metadata
-     * - Return resource metadata transfer, null on failure
+     * - Return resource metadata transfer, throw exception on failure
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - Get resource mime type
-     * - Return resource mime type, false on failure
+     * - Return resource mime type, throw exception on failure
      *
      * @api
      *
@@ -46,7 +46,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - Get resource timestamp
-     * - Return resource timestamp, false on failure
+     * - Return resource timestamp, throw exception on failure
      *
      * @api
      *
@@ -61,7 +61,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - Get resource size
-     * - Return resource size, false on failure
+     * - Return resource size, throw exception on failure
      *
      * @api
      *
@@ -106,7 +106,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - Read file
-     * - Return file content, false on failure
+     * - Return file content, throw exception on failure
      *
      * @api
      *
@@ -121,7 +121,7 @@ interface FileSystemReaderPluginInterface
     /**
      * Specification:
      * - List contents under a path
-     * - Return array of FileSystemResourceTransfer objects located under given path
+     * - Return array of FileSystemResourceTransfer objects located under given path, throw exception on failure
      *
      * @api
      *

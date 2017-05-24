@@ -21,7 +21,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Mark resource with private access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -36,7 +36,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Mark resource with public access rights
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Create directory with its path
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -66,7 +66,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Delete empty directory
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -81,7 +81,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Copy file, the destination must not exist
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -96,7 +96,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Delete file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -111,7 +111,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -126,7 +126,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Create a file or update if exists
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -141,7 +141,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Update an existing file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
@@ -156,7 +156,7 @@ interface FileSystemWriterPluginInterface
     /**
      * Specification:
      * - Write a new file
-     * - Return true on success, false on failure
+     * - Return true on success, throw exception on failure
      *
      * @api
      *
