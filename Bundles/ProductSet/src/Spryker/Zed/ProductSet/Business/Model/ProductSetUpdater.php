@@ -96,7 +96,7 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
      */
     protected function updateSpyProductSetEntity(SpyProductSet $productSetEntity, ProductSetTransfer $productSetTransfer)
     {
-        $productSetEntity->fromArray($productSetTransfer->toArray());
+        $productSetEntity->fromArray($productSetTransfer->modifiedToArray());
         $productSetEntity->save();
     }
 
@@ -108,6 +108,10 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
      */
     protected function updateProductAbstractSetEntities(SpyProductSet $productSetEntity, ProductSetTransfer $productSetTransfer)
     {
+        if (!$productSetTransfer->isModified(ProductSetTransfer::ID_PRODUCT_ABSTRACTS)) {
+            return;
+        }
+
         $this->cleanProductAbstractSets($productSetEntity);
 
         foreach ($productSetTransfer->getIdProductAbstracts() as $position => $idProductAbstract) {
@@ -164,6 +168,10 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
      */
     protected function updateImageSets(ProductSetTransfer $productSetTransfer)
     {
+        if (!$productSetTransfer->isModified(ProductSetTransfer::IMAGE_SETS)) {
+            return;
+        }
+
         $this->productSetImageSaver->saveImageSets($productSetTransfer);
     }
 

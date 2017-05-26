@@ -4,8 +4,8 @@
     <table name="spy_product_set" idMethod="native" allowPkInsert="true">
         <column name="id_product_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
+        <column name="weight" required="true" type="INTEGER" default="0"/>
         <!-- TODO: add key for importing reasons -->
-        <!-- TODO: add weight for ordering -->
 
         <behavior name="timestampable"/>
 
@@ -16,7 +16,6 @@
         <column name="fk_product_set" required="true" type="INTEGER" primaryKey="true"/>
         <column name="fk_product_abstract" required="true" type="INTEGER" primaryKey="true"/>
         <column name="position" required="true" type="INTEGER" default="0"/>
-        <!-- TODO: add quantity? -->
 
         <foreign-key name="spy_product_abstract_set-fk_product_set" foreignTable="spy_product_set">
             <reference local="fk_product_set" foreign="id_product_set"/>

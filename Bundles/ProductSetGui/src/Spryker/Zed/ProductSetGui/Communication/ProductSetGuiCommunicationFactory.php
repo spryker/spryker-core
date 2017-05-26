@@ -11,12 +11,16 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\CreateFormDataToTransferMapper;
+use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\ReorderFormDataToTransferMapper;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\UpdateFormDataToTransferMapper;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\CreateFormDataProvider;
+use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\ReorderProductSetsFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\UpdateFormDataProvider;
+use Spryker\Zed\ProductSetGui\Communication\Form\ReorderProductSetsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetViewTable;
+use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetReorderTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductTable;
 use Spryker\Zed\ProductSetGui\Communication\Tabs\ProductSetFormTabs;
@@ -84,6 +88,14 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\ReorderFormDataToTransferMapper
+     */
+    public function createReorderFormDataToTransferMapper()
+    {
+        return new ReorderFormDataToTransferMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\AbstractTabs
      */
     public function createProductSetFormTabs()
@@ -98,7 +110,17 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductSetTable(LocaleTransfer $localeTransfer)
     {
-        return new ProductSetTable($this->getProductSetQueryContainer(), $localeTransfer);
+        return new ProductSetTable($this->getQueryContainer(), $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductSetReorderTable
+     */
+    public function createProductSetReorderTable(LocaleTransfer $localeTransfer)
+    {
+        return new ProductSetReorderTable($this->getQueryContainer(), $localeTransfer);
     }
 
     /**
@@ -148,6 +170,33 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createUpdateProductSetFormType()
     {
         return new UpdateProductSetFormType();
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createReorderProductSetsForm(array $data = [], $options = [])
+    {
+        return $this->getFormFactory()->create($this->createReorderProductSetsFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    protected function createReorderProductSetsFormType()
+    {
+        return new ReorderProductSetsFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\ReorderProductSetsFormDataProvider
+     */
+    public function createReorderProductSetsFormDataProvider()
+    {
+        return new ReorderProductSetsFormDataProvider($this->getQueryContainer());
     }
 
     /**

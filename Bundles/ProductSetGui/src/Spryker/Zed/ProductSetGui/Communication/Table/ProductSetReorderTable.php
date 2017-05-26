@@ -18,17 +18,16 @@ use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
-class ProductSetTable extends AbstractTable
+class ProductSetReorderTable extends AbstractTable
 {
 
-    const TABLE_IDENTIFIER = 'product-set-table';
+    const TABLE_IDENTIFIER = 'product-set-reorder-table';
 
     const COL_ID_PRODUCT_SET = 'id_product_set';
     const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
     const COL_PRODUCT_COUNT = 'product_count';
     const COL_WEIGHT = 'weight';
     const COL_IS_ACTIVE = 'is_active';
-    const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface
@@ -67,12 +66,11 @@ class ProductSetTable extends AbstractTable
             self::COL_PRODUCT_COUNT => '# of Products',
             self::COL_WEIGHT => 'Weight',
             self::COL_IS_ACTIVE => 'Status',
-            self::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_IS_ACTIVE,
-            static::COL_ACTIONS,
+            static::COL_WEIGHT,
         ]);
 
         $config->setSearchable([
@@ -122,9 +120,8 @@ class ProductSetTable extends AbstractTable
             self::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
             self::COL_NAME => $productSetEntity->getVirtualColumn(self::COL_NAME),
             self::COL_PRODUCT_COUNT => $productSetEntity->countSpyProductAbstractSets(), // TODO: get this in query time?
-            self::COL_WEIGHT => $productSetEntity->getWeight(),
+            self::COL_WEIGHT => $this->getWeightField($productSetEntity),
             self::COL_IS_ACTIVE => $this->getStatusLabel($productSetEntity->getIsActive()),
-            self::COL_ACTIONS => $this->createActionButtons($productSetEntity),
         ];
     }
 
@@ -204,6 +201,20 @@ class ProductSetTable extends AbstractTable
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Deactivate'
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getWeightField(SpyProductSet $productAbstractEntity)
+    {
+        return sprintf(
+            '<input type="text" value="%2$d" id="product_set_weight_%1$d" class="product_set_weight" size="4" data-id="%1$s">',
+            $productAbstractEntity->getIdProductSet(),
+            $productAbstractEntity->getWeight()
         );
     }
 

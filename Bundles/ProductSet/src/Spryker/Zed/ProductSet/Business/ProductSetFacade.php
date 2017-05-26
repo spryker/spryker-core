@@ -112,4 +112,20 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
             ->deleteProductSet($productSetTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param ProductSetTransfer[] $productSetTransfers
+     *
+     * @return void
+     */
+    public function reorderProductSets(array $productSetTransfers)
+    {
+        $this->getFactory()
+            ->createProductSetOrganizer()
+            ->reorderProductSets($productSetTransfers);
+    }
+
 }

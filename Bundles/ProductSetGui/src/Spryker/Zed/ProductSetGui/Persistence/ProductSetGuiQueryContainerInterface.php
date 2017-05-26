@@ -17,6 +17,15 @@ interface ProductSetGuiQueryContainerInterface
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductSet(LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract(LocaleTransfer $localeTransfer);
@@ -30,5 +39,10 @@ interface ProductSetGuiQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractByIdProductSet($idProductSet, LocaleTransfer $localeTransfer);
+
+    /**
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetWeights();
 
 }

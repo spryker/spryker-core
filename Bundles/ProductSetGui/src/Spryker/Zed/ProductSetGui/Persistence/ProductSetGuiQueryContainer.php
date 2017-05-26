@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductSetGui\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
+use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
+use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -20,6 +22,24 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
 
     const COL_ALIAS_NAME = 'name';
     const COL_ALIAS_POSITION = 'position';
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductSet(LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet()
+            ->useSpyProductSetDataQuery()
+                ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->endUse()
+            ->withColumn(SpyProductSetDataTableMap::COL_NAME, self::COL_ALIAS_NAME);
+    }
 
     /**
      * @api
@@ -60,6 +80,18 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, self::COL_ALIAS_NAME)
             ->withColumn(SpyProductAbstractSetTableMap::COL_POSITION, self::COL_ALIAS_POSITION);
+
+        return $query;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetWeights()
+    {
+        $query = $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet();
 
         return $query;
     }

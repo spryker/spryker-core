@@ -109,6 +109,7 @@ class ProductTable extends AbstractTable
         ]);
 
         $config->setDefaultSortField(self::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
+        $config->setStateSave(false);
 
         return $config;
     }

@@ -65,4 +65,14 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
         $this->productSetFacade->deleteProductSet($productSetTransfer);
     }
 
+    /**
+     * @param array $productSetTransfers
+     *
+     * @return void
+     */
+    public function reorderProductSets(array $productSetTransfers)
+    {
+        $this->productSetFacade->reorderProductSets($productSetTransfers);
+    }
+
 }

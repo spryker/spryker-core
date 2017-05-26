@@ -102,4 +102,16 @@ interface ProductSetFacadeInterface
      */
     public function deleteProductSet(ProductSetTransfer $productSetTransfer);
 
+    /**
+     * Specification:
+     * - Updates weights of existing product sets in database.
+     *
+     * @api
+     *
+     * @param ProductSetTransfer[] $productSetTransfers
+     *
+     * @return void
+     */
+    public function reorderProductSets(array $productSetTransfers);
+
 }

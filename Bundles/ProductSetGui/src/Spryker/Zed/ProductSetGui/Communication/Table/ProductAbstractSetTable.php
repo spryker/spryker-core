@@ -113,7 +113,8 @@ class ProductAbstractSetTable extends AbstractTable
             self::COL_ORDER,
         ]);
 
-        $config->setDefaultSortField(self::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(self::COL_ORDER, TableConfiguration::SORT_ASC);
+        $config->setStateSave(false);
 
         return $config;
     }
@@ -164,7 +165,7 @@ class ProductAbstractSetTable extends AbstractTable
     protected function getOrderField(SpyProductAbstract $productAbstractEntity)
     {
         return sprintf(
-            '<input type="text" value="%2$d" id="product_order_%1$d" class="product_order" size="4" data-info="%1$s">',
+            '<input type="text" value="%2$d" id="product_order_%1$d" class="product_order" size="4" data-id="%1$s">',
             $productAbstractEntity->getIdProductAbstract(),
             $productAbstractEntity->getVirtualColumn(self::COL_ORDER)
         );

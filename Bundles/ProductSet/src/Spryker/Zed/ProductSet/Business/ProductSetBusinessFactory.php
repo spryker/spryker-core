@@ -8,9 +8,6 @@
 namespace Spryker\Zed\ProductSet\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaver;
-use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageDeleter;
-use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReader;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataCreator;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataDeleter;
 use Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataReader;
@@ -19,10 +16,14 @@ use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlCreator;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlDeleter;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReader;
 use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlUpdater;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageDeleter;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReader;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaver;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetCreator;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetDeleter;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetEntityReader;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetExpander;
+use Spryker\Zed\ProductSet\Business\Model\ProductSetOrganizer;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetReader;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetReducer;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetUpdater;
@@ -103,6 +104,14 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductSet\Business\Model\ProductSetOrganizerInterface
+     */
+    public function createProductSetOrganizer()
+    {
+        return new ProductSetOrganizer($this->createProductSetEntityReader(), $this->createProductSetTouch());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductSet\Business\Model\Data\ProductSetDataCreatorInterface
      */
     protected function createProductSetDataCreator()
@@ -129,7 +138,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSet\Business\Model\Touch\ProductSetTouchInterface
      */
-    public function createProductSetTouch()
+    protected function createProductSetTouch()
     {
         return new ProductSetTouch($this->getTouchFacade(), $this->getQueryContainer());
     }

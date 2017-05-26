@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ProductSetGui\Communication\Form\General;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -21,6 +24,7 @@ class GeneralFormType extends AbstractType
     const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
+    const FIELD_WEIGHT = 'weight';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -31,6 +35,7 @@ class GeneralFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addProductSetDataFieldCollection($builder)
+            ->addWeightField($builder)
             ->addIsActiveField($builder)
             ->addIdProductSetField($builder);
     }
@@ -63,6 +68,33 @@ class GeneralFormType extends AbstractType
                 ]),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addWeightField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_WEIGHT, NumberType::class, [
+            'label' => 'Weight',
+            'attr' => [
+                'placeholder' => 'higher numbers listed first'
+            ],
+        ]);
+
+        $builder->get(self::FIELD_WEIGHT)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($weight) {
+                    return $weight;
+                },
+                function ($weight) {
+                    return (int)$weight;
+                }
+            ));
 
         return $this;
     }

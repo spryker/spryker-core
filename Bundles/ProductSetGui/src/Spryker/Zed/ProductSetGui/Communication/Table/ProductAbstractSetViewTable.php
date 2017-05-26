@@ -90,7 +90,8 @@ class ProductAbstractSetViewTable extends AbstractTable
             self::COL_DETAILS,
         ]);
 
-        $config->setDefaultSortField(self::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(self::COL_ORDER, TableConfiguration::SORT_ASC);
+        $config->setStateSave(false);
 
         return $config;
     }

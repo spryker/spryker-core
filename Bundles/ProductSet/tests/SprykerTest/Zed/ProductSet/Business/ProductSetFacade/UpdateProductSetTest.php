@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
+use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Propel\Runtime\Propel;
@@ -235,6 +236,49 @@ class UpdateProductSetTest extends Test
 
         $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
         $this->assertEquals($productSetTransfer->toArray(), $actualProductSetTransfer->toArray(), 'Persisted ProductSet should match with returned values.');
+
+        $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPartiallyUpdateProductSetPersistsOnlyRequestedChangesToDatabase()
+    {
+        // Arrange
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+
+        $productSetTransfer = $this->tester->generateProductSetTransfer([
+            ProductSetTransfer::IS_ACTIVE => false,
+            ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer1->getIdProductAbstract(),
+                $productAbstractTransfer2->getIdProductAbstract(),
+            ],
+        ]);
+        $productSetTransfer = $this->tester->getFacade()->createProductSet($productSetTransfer);
+
+        $productSetTransferToUpdate = (new ProductSetBuilder([
+            ProductSetTransfer::ID_PRODUCT_SET => $productSetTransfer->getIdProductSet(),
+            ProductSetTransfer::IS_ACTIVE => true,
+        ]))->build();
+
+        // Act
+        $this->tester->getFacade()->updateProductSet($productSetTransferToUpdate);
+
+        // Assert
+        $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
+        $this->assertTrue($actualProductSetTransfer->getIsActive(), 'ProductSet should have been set to active.');
+        $this->assertCount(2, $actualProductSetTransfer->getIdProductAbstracts(), 'Persisted ProductSet should have expected number of products assigned.');
+
+        $this->assertCount(1, $actualProductSetTransfer->getImageSets(), 'ProductSet should have expected number of ProductImageSets.');
+
+        $this->assertCount(1, $actualProductSetTransfer->getLocalizedData(), 'ProductSet should have expected number of localized data.');
+        $this->assertSame(
+            $productSetTransfer->getLocalizedData()[0]->getUrl(),
+            $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
+            'ProductSet should have expected URL.'
+        );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
     }

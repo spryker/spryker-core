@@ -1,0 +1,34 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Reorder Product Sets' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/product-set-gui'), 'List of Sets' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Reorder Product Sets' } %}
+
+        {% block widget_content %}
+            {{ form_start(reorderProductSetsForm) }}
+                {{ productSetReorderTable | raw }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Submit' | trans }}"/>
+            {{ form_end(reorderProductSetsForm) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productset-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productset-reorder.js"></script>
+{% endblock %}

@@ -192,7 +192,7 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
 $(document).ready(function() {
     var rawProductOrder = $('#product_set_form_products_form_product_order').attr('value');
     if (rawProductOrder) {
-        productOrder = $.parseJSON($('#product_set_form_products_form_product_order').attr('value'));
+        productOrder = $.parseJSON(rawProductOrder);
     }
 
     $('#selectedProductsTable').DataTable({destroy: true});

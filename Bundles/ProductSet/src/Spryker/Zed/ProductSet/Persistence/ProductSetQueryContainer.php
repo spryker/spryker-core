@@ -30,14 +30,24 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
+     */
+    public function queryProductAbstractSet()
+    {
+        return $this->getFactory()
+            ->createProductAbstractSetQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductSet
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSetById($idProductSet)
     {
-        return $this->getFactory()
-            ->createProductSetQuery()
+        return $this->queryProductSet()
             ->filterByIdProductSet($idProductSet);
     }
 
@@ -50,8 +60,7 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
      */
     public function queryProductAbstractSetsById($idProductSet)
     {
-        return $this->getFactory()
-            ->createProductAbstractSetQuery()
+        return $this->queryProductAbstractSet()
             ->filterByFkProductSet($idProductSet)
             ->orderByPosition(Criteria::ASC);
     }
@@ -66,8 +75,7 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
      */
     public function queryProductAbstractSetsByIdProductAbstract($idProductAbstract, $excludedIdProductSet = null)
     {
-        $query = $this->getFactory()
-            ->createProductAbstractSetQuery()
+        $query = $this->queryProductAbstractSet()
             ->filterByFkProductAbstract($idProductAbstract)
             ->orderByFkProductSet();
 

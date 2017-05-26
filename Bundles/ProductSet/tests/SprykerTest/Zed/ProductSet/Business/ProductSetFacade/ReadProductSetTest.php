@@ -78,6 +78,10 @@ class ReadProductSetTest extends Test
 
         // Assert
         $this->assertCount(1, $actualProductSetTransfer->getLocalizedData(), 'ProductSet should have expected number of localized data.');
+        $this->assertNotNull(
+            $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
+            'ProductSet should have URL.'
+        );
         $this->assertSame(
             $productSetTransfer->getLocalizedData()[0]->getUrl(),
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),

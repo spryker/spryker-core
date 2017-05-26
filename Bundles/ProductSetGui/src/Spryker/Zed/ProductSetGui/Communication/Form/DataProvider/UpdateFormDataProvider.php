@@ -85,6 +85,7 @@ class UpdateFormDataProvider
             GeneralFormType::FIELD_ID_PRODUCT_SET => $productSetTransfer->getIdProductSet(),
             GeneralFormType::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION => $this->getLocalizedGeneralFormCollectionData($productSetTransfer),
             GeneralFormType::FIELD_IS_ACTIVE => $productSetTransfer->getIsActive(),
+            GeneralFormType::FIELD_WEIGHT => $productSetTransfer->getWeight(),
         ];
     }
 

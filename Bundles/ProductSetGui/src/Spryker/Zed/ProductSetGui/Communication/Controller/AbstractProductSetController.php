@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  */
-class AbstractProductSetController extends AbstractController
+abstract class AbstractProductSetController extends AbstractController
 {
 
     const PARAM_ID = 'id';

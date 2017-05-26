@@ -97,6 +97,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addUrlField(FormBuilderInterface $builder)
     {
+        // TODO: add locale separator
         $builder->add(self::FIELD_URL, TextType::class, [
             'label' => 'URL *',
             'required' => true,

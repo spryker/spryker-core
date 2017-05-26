@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateController extends AbstractProductSetController
@@ -15,7 +16,7 @@ class CreateController extends AbstractProductSetController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -41,6 +42,12 @@ class CreateController extends AbstractProductSetController
                 'Product Set "%s" created successfully.',
                 $productSetTransfer->getLocalizedData()[0]->getProductSetData()->getName()
             ));
+
+            return $this->redirectResponse(
+                Url::generate('/product-set-gui/view', [
+                    static::PARAM_ID => $productSetTransfer->getIdProductSet(),
+                ])->build()
+            );
         }
 
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();

@@ -90,7 +90,7 @@ class ProductSetCreator implements ProductSetCreatorInterface
     protected function createProductSetEntity(ProductSetTransfer $productSetTransfer)
     {
         $productSetEntity = new SpyProductSet();
-        $productSetEntity->fromArray($productSetTransfer->toArray());
+        $productSetEntity->fromArray($productSetTransfer->modifiedToArray());
 
         foreach ($productSetTransfer->getIdProductAbstracts() as $position => $idProductAbstract) {
             $productAbstractSetEntity = $this->createProductAbstractSetEntity($idProductAbstract, $position);

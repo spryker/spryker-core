@@ -49,7 +49,7 @@ class EditController extends AbstractProductSetController
             ));
 
             return $this->redirectResponse(
-                Url::generate('/product-set-gui/edit', [
+                Url::generate('/product-set-gui/view', [
                     static::PARAM_ID => $idProductSet,
                 ])->build()
             );

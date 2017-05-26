@@ -40,4 +40,11 @@ interface ProductSetGuiToProductSetInterface
      */
     public function deleteProductSet(ProductSetTransfer $productSetTransfer);
 
+    /**
+     * @param array $productSetTransfers
+     *
+     * @return void
+     */
+    public function reorderProductSets(array $productSetTransfers);
+
 }

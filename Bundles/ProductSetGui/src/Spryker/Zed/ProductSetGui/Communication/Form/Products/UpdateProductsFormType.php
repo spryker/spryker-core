@@ -53,17 +53,6 @@ class UpdateProductsFormType extends AbstractType
             'attr' => [
                 'id' => self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS,
             ],
-//            'constraints' => [
-//                new Callback([
-//                    'methods' => [
-//                        function (array $productAbstractIds, ExecutionContextInterface $context) {
-//                            if (count($productAbstractIds) < 2) {
-//                                $context->addViolation('You need to select minimum 2 products.');
-//                            }
-//                        },
-//                    ]
-//                ]),
-//            ],
         ]);
 
         // TODO: reuse
@@ -91,17 +80,6 @@ class UpdateProductsFormType extends AbstractType
             'attr' => [
                 'id' => self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS,
             ],
-//            'constraints' => [
-//                new Callback([
-//                    'methods' => [
-//                        function (array $productAbstractIds, ExecutionContextInterface $context) {
-//                            if (count($productAbstractIds) < 2) {
-//                                $context->addViolation('You need to select minimum 2 products.');
-//                            }
-//                        },
-//                    ]
-//                ]),
-//            ],
         ]);
 
         $builder->get(self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS)
@@ -167,7 +145,7 @@ class UpdateProductsFormType extends AbstractType
         $builder->get(self::FIELD_PRODUCT_ORDER)
             ->addModelTransformer(new CallbackTransformer(
                 function ($productAbstractIds = null) {
-                    return json_encode((array)$productAbstractIds);
+                    return json_encode((array)$productAbstractIds); // FIXME
                 },
                 function ($productAbstractIds = '{}') {
                     return json_decode($productAbstractIds, true);

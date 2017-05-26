@@ -37,9 +37,19 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideLocaleFacade($container);
         $this->provideUrlFacade($container);
 
-        $this->provideProductSetQueryContainer($container);
-
         $this->provideUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $this->provideProductSetQueryContainer($container);
 
         return $container;
     }
