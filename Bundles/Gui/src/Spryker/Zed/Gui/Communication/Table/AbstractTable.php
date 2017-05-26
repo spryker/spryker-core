@@ -517,6 +517,7 @@ abstract class AbstractTable
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
+                'stateSave' => $this->config->isStateSave(),
             ];
 
             $configArray = array_merge($configArray, $configTableArray);

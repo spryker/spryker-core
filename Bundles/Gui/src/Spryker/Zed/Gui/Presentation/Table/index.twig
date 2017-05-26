@@ -4,7 +4,7 @@
     id="{{ config.tableId }}"
     data-processing="true"
     data-server-side="true"
-    data-state-save="true"
+    data-state-save="{{ config.stateSave is defined and config.stateSave ? 'true' : 'false' }}"
     {% if config.pageLength is defined -%}
         data-page-length="{{ config.pageLength }}"
     {% endif -%}
