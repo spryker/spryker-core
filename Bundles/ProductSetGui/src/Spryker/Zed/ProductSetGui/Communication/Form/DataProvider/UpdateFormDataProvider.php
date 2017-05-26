@@ -21,6 +21,7 @@ use Spryker\Zed\ProductSetGui\Communication\Form\Seo\LocalizedSeoFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetInterface;
+use Spryker\Zed\ProductSetGui\ProductSetGuiConfig;
 
 class UpdateFormDataProvider
 {
@@ -34,15 +35,24 @@ class UpdateFormDataProvider
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface
      */
     protected $localeFacade;
+    /**
+     * @var ProductSetGuiConfig
+     */
+    protected $productSetGuiConfig;
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetInterface $productSetFacade
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface $localeFacade
+     * @param ProductSetGuiConfig $productSetGuiConfig
      */
-    public function __construct(ProductSetGuiToProductSetInterface $productSetFacade, ProductSetGuiToLocaleInterface $localeFacade)
-    {
+    public function __construct(
+        ProductSetGuiToProductSetInterface $productSetFacade,
+        ProductSetGuiToLocaleInterface $localeFacade,
+        ProductSetGuiConfig $productSetGuiConfig
+    ) {
         $this->localeFacade = $localeFacade;
         $this->productSetFacade = $productSetFacade;
+        $this->productSetGuiConfig = $productSetGuiConfig;
     }
 
     /**
@@ -123,6 +133,7 @@ class UpdateFormDataProvider
                 LocalizedGeneralFormType::FIELD_FK_LOCALE => $localeTransfer->getIdLocale(),
                 LocalizedGeneralFormType::FIELD_NAME => $localizedProductSetTransfer->getProductSetData()->getName(),
                 LocalizedGeneralFormType::FIELD_URL => $localizedProductSetTransfer->getUrl(),
+                LocalizedGeneralFormType::FIELD_URL_PREFIX => $this->getUrlPrefix($localeTransfer),
                 LocalizedGeneralFormType::FIELD_ORIGINAL_URL => $localizedProductSetTransfer->getUrl(),
                 LocalizedGeneralFormType::FIELD_DESCRIPTION => $localizedProductSetTransfer->getProductSetData()->getDescription(),
             ];
@@ -287,6 +298,33 @@ class UpdateFormDataProvider
         $productImageData[ProductImageFormType::FIELD_IMAGE_PREVIEW_LARGE_URL] = $productImageTransfer->getExternalUrlLarge();
 
         return $productImageData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return null|string
+     */
+    protected function getUrlPrefix(LocaleTransfer $localeTransfer)
+    {
+        if ($this->productSetGuiConfig->prependLocaleForProductSetUrl()) {
+            return '/' . $this->extractLanguageCode($localeTransfer->getLocaleName()) . '/';
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return string
+     */
+    protected function extractLanguageCode($localeName)
+    {
+        $localeNameParts = explode('_', $localeName);
+        $languageCode = $localeNameParts[0];
+
+        return $languageCode;
     }
 
 }

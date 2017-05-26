@@ -8,6 +8,19 @@
                 'collapsed': (not loop.parent.loop.first)
                 } %}
                     {% block content %}
+
+                        <div class="form-group {% if localizedSeoForm.meta_title.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(localizedSeoForm.meta_title) }}
+                            {{ form_widget(localizedSeoForm.meta_title, {'attr': {'data-translation-key': localizedSeoForm.meta_title.vars.name}}) }}
+                            {{ form_errors(localizedSeoForm.meta_title) }}
+                        </div>
+
+                        <div class="form-group {% if localizedSeoForm.meta_keywords.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(localizedSeoForm.meta_keywords) }}
+                            {{ form_widget(localizedSeoForm.meta_keywords, {'attr': {'data-translation-key': localizedSeoForm.meta_keywords.vars.name}}) }}
+                            {{ form_errors(localizedSeoForm.meta_keywords) }}
+                        </div>
+                        
                         {{ form_rest(localizedSeoForm) }}
                     {% endblock %}
                 {% endembed %}

@@ -15,7 +15,9 @@ use Spryker\Zed\ProductSetGui\Communication\Form\Images\ImagesFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\LocalizedProductImageSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface;
+use Spryker\Zed\ProductSetGui\ProductSetGuiConfig;
 
+// TODO: merge common parts with UpdateFormDataProvider
 class CreateFormDataProvider
 {
 
@@ -25,11 +27,18 @@ class CreateFormDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface $localeFacade
+     * @var \Spryker\Zed\ProductSetGui\ProductSetGuiConfig
      */
-    public function __construct(ProductSetGuiToLocaleInterface $localeFacade)
+    protected $productSetGuiConfig;
+
+    /**
+     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductSetGui\ProductSetGuiConfig $productSetGuiConfig
+     */
+    public function __construct(ProductSetGuiToLocaleInterface $localeFacade, ProductSetGuiConfig $productSetGuiConfig)
     {
         $this->localeFacade = $localeFacade;
+        $this->productSetGuiConfig = $productSetGuiConfig;
     }
 
     /**
@@ -66,6 +75,7 @@ class CreateFormDataProvider
 
         foreach ($localeCollection as $localeTransfer) {
             $results[] = [
+                LocalizedGeneralFormType::FIELD_URL_PREFIX => $this->getUrlPrefix($localeTransfer),
                 LocalizedGeneralFormType::FIELD_FK_LOCALE => $localeTransfer->getIdLocale(),
             ];
         }
@@ -100,6 +110,33 @@ class CreateFormDataProvider
             LocalizedProductImageSetFormType::FIELD_FK_LOCALE => ($localeTransfer ? $localeTransfer->getIdLocale() : null),
             LocalizedProductImageSetFormType::FIELD_PRODUCT_IMAGE_COLLECTION => [[]],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return null|string
+     */
+    protected function getUrlPrefix(LocaleTransfer $localeTransfer)
+    {
+        if ($this->productSetGuiConfig->prependLocaleForProductSetUrl()) {
+            return '/' . $this->extractLanguageCode($localeTransfer->getLocaleName()) . '/';
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return string
+     */
+    protected function extractLanguageCode($localeName)
+    {
+        $localeNameParts = explode('_', $localeName);
+        $languageCode = $localeNameParts[0];
+
+        return $languageCode;
     }
 
 }

@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -33,9 +35,10 @@ class LocalizedGeneralFormType extends AbstractType
     const FIELD_DESCRIPTION = 'description';
     const FIELD_FK_LOCALE = 'fk_locale';
 
-    const URL_PATH_PATTERN = '#^/([^\s\\\\]+)$#i';
+    const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const FIELD_URL_PREFIX = 'url_prefix';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -54,6 +57,14 @@ class LocalizedGeneralFormType extends AbstractType
                 }
                 return [Constraint::DEFAULT_GROUP];
             },
+            'constraints' => [
+                new Callback([
+                    'methods' => [
+                        [$this, 'validateUniqueUrl'],
+                    ],
+                    'groups' => [self::GROUP_UNIQUE_URL_CHECK],
+                ]),
+            ],
         ]);
     }
 
@@ -67,9 +78,20 @@ class LocalizedGeneralFormType extends AbstractType
     {
         $this->addNameField($builder)
             ->addUrlField($builder)
+            ->addUrlPrefixField($builder)
             ->addOriginalUrlField($builder)
             ->addDescriptionField($builder)
             ->addFkLocaleField($builder);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            [$this, 'onPreSetData']
+        );
+
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            [$this, 'onSubmit']
+        );
     }
 
     /**
@@ -97,7 +119,6 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addUrlField(FormBuilderInterface $builder)
     {
-        // TODO: add locale separator
         $builder->add(self::FIELD_URL, TextType::class, [
             'label' => 'URL *',
             'required' => true,
@@ -105,16 +126,22 @@ class LocalizedGeneralFormType extends AbstractType
                 new NotBlank(),
                 new Regex([
                     'pattern' => static::URL_PATH_PATTERN,
-                    'message' => 'URL must start wth "/". "Space" and "\" characters are not allowed.',
-                ]),
-                new Callback([
-                    'methods' => [
-                        [$this, 'validateUniqueUrl'],
-                    ],
-                    'groups' => [self::GROUP_UNIQUE_URL_CHECK],
+                    'message' => 'Invalid path provided. "Space" and "\" character is not allowed.',
                 ]),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUrlPrefixField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_URL_PREFIX, HiddenType::class);
 
         return $this;
     }
@@ -158,13 +185,14 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param string $url
+     * @param array $data
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      *
      * @return void
      */
-    public function validateUniqueUrl($url, ExecutionContextInterface $context)
+    public function validateUniqueUrl(array $data, ExecutionContextInterface $context)
     {
+        $url = $data[static::FIELD_URL];
         if (!$url) {
             return;
         }
@@ -173,8 +201,84 @@ class LocalizedGeneralFormType extends AbstractType
         $urlTransfer->setUrl($url);
 
         if ($this->getFactory()->getUrlFacade()->hasUrl($urlTransfer)) {
-            $context->addViolation('URL is already used.');
+            $context
+                ->buildViolation('URL is already used.')
+                ->atPath('[' . static::FIELD_URL . ']')
+                ->addViolation();
         }
+    }
+
+    /**
+     * @param FormEvent $event
+     *
+     * @return void
+     */
+    public function onPreSetData(FormEvent $event)
+    {
+        $this->formatUrlOnPreSetData($event);
+    }
+
+    /**
+     * @param FormEvent $event
+     *
+     * @return void
+     */
+    public function onSubmit(FormEvent $event)
+    {
+        $this->formatUrlOnSubmit($event);
+    }
+
+    /**
+     * @param FormEvent $event
+     *
+     * @return void
+     */
+    protected function formatUrlOnPreSetData(FormEvent $event)
+    {
+        $data = $event->getData();
+
+        if (!isset($data[static::FIELD_URL])) {
+            return;
+        }
+
+        $url = $data[static::FIELD_URL];
+        $urlPrefix = $data[static::FIELD_URL_PREFIX];
+        if ($urlPrefix) {
+            $data[static::FIELD_URL] = preg_replace('#^' . $urlPrefix . '#i', '', $url);
+        }
+
+        $event->setData($data);
+    }
+
+    /**
+     * @param FormEvent $event
+     *
+     * @return void
+     */
+    protected function formatUrlOnSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+        $url = $this->generateUrlFromFormData($data);
+        $data[static::FIELD_URL] = $url;
+
+        $event->setData($data);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function generateUrlFromFormData(array $data)
+    {
+        $url = $data[static::FIELD_URL];
+        $urlPrefix = $data[static::FIELD_URL_PREFIX];
+
+        if ($urlPrefix) {
+            return $urlPrefix . $url;
+        }
+
+        return $url;
     }
 
 }

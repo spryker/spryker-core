@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSetGuiConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return bool
+     */
+    public function prependLocaleForProductSetUrl()
+    {
+        return true;
+    }
+
 }

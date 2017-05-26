@@ -38,7 +38,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCreateFormDataProvider()
     {
-        return new CreateFormDataProvider($this->getLocaleFacade());
+        return new CreateFormDataProvider($this->getLocaleFacade(), $this->getConfig());
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateFormDataProvider()
     {
-        return new UpdateFormDataProvider($this->getProductSetFacade(), $this->getLocaleFacade());
+        return new UpdateFormDataProvider($this->getProductSetFacade(), $this->getLocaleFacade(), $this->getConfig());
     }
 
     /**

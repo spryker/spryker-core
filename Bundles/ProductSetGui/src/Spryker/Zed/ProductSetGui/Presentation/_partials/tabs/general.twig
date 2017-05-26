@@ -8,6 +8,27 @@
                     'collapsed': (not loop.parent.loop.first)
                 } %}
                     {% block content %}
+                        <div class="form-group {% if localizedGeneralForm.name.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(localizedGeneralForm.name) }}
+                            {{ form_widget(localizedGeneralForm.name, {'attr': {'data-translation-key': localizedGeneralForm.name.vars.name}}) }}
+                            {{ form_errors(localizedGeneralForm.name) }}
+                        </div>
+
+                        <div class="form-group {% if localizedGeneralForm.url.vars.errors|length > 0 %}has-error{% endif %}" >
+                            {{ form_label(localizedGeneralForm.url) }}
+                            {% if localizedGeneralForm.url_prefix.vars.data %}
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon">
+                                        {{ localizedGeneralForm.url_prefix.vars.data }}
+                                    </span>
+                                    {{ form_widget(localizedGeneralForm.url) }}
+                                </div>
+                            {% else %}
+                                {{ form_widget(localizedGeneralForm.url) }}
+                            {% endif %}
+                            {{ form_errors(localizedGeneralForm.url) }}
+                        </div>
+
                         {{ form_rest(localizedGeneralForm) }}
                     {% endblock %}
                 {% endembed %}
