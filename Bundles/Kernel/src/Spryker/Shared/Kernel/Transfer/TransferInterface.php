@@ -32,4 +32,11 @@ interface TransferInterface
      */
     public function fromArray(array $values, $fuzzyMatch = false);
 
+    /**
+     * @param string $propertyName
+     *
+     * @return bool
+     */
+    public function isModified($propertyName);
+
 }
