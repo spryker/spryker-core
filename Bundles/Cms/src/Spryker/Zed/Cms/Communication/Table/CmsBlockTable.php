@@ -19,6 +19,7 @@ class CmsBlockTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const COL_STATUS = 'Status';
     const REQUEST_ID_BLOCK = 'id-block';
     const REQUEST_ID_PAGE = 'id-page';
     const PARAM_CMS_GLOSSARY = '/cms/glossary';
@@ -52,11 +53,12 @@ class CmsBlockTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             SpyCmsBlockTableMap::COL_TYPE => 'Type',
             SpyCmsBlockTableMap::COL_VALUE => 'Value',
-            CmsQueryContainer::IS_ACTIVE => 'Active',
-            self::ACTIONS => self::ACTIONS,
+            static::COL_STATUS => 'Status',
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
+        $config->addRawColumn(static::COL_STATUS);
 
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
@@ -64,7 +66,7 @@ class CmsBlockTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME,
             SpyCmsBlockTableMap::COL_TYPE,
             SpyCmsBlockTableMap::COL_VALUE,
-            CmsQueryContainer::IS_ACTIVE,
+            static::COL_STATUS,
         ]);
 
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -100,8 +102,8 @@ class CmsBlockTable extends AbstractTable
                 SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 SpyCmsBlockTableMap::COL_TYPE => $item[SpyCmsBlockTableMap::COL_TYPE],
                 SpyCmsBlockTableMap::COL_VALUE => $this->buildValueItem($item),
-                CmsQueryContainer::IS_ACTIVE => $item[CmsQueryContainer::IS_ACTIVE],
-                self::ACTIONS => implode(' ', $this->buildLinks($item)),
+                static::COL_STATUS => $this->generateStatusLabels($item),
+                static::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
         unset($queryResults);
@@ -118,15 +120,15 @@ class CmsBlockTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::PARAM_CMS_GLOSSARY, [
-                self::REQUEST_ID_PAGE => $item[SpyCmsBlockTableMap::COL_FK_PAGE],
+            Url::generate(static::PARAM_CMS_GLOSSARY, [
+                static::REQUEST_ID_PAGE => $item[SpyCmsBlockTableMap::COL_FK_PAGE],
             ]),
             'Edit Placeholder'
         );
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::PARAM_CMS_BLOCK_EDIT, [
-                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+            Url::generate(static::PARAM_CMS_BLOCK_EDIT, [
+                static::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
             'Edit Block'
         );
@@ -157,10 +159,10 @@ class CmsBlockTable extends AbstractTable
     {
         if ($item[CmsQueryContainer::IS_ACTIVE]) {
             $name = 'Deactivate';
-            $url = self::URL_CMS_BLOCK_DEACTIVATE;
+            $url = static::URL_CMS_BLOCK_DEACTIVATE;
         } else {
             $name = 'Activate';
-            $url = self::URL_CMS_BLOCK_ACTIVATE;
+            $url = static::URL_CMS_BLOCK_ACTIVATE;
         }
 
         return $this->generateViewButton(
@@ -171,4 +173,17 @@ class CmsBlockTable extends AbstractTable
         );
     }
 
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function generateStatusLabels(array $item)
+    {
+        if ($item[CmsQueryContainer::IS_ACTIVE]) {
+            return '<span class="label label-info">Active</span>';
+        }
+
+        return '<span class="label label-danger">Inactive</span>';
+    }
 }
