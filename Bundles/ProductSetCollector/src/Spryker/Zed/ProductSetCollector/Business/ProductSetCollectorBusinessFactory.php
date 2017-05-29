@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ProductSetCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSetCollector\Business\Collector\Storage\ProductSetCollector;
+use Spryker\Zed\ProductSetCollector\Business\Collector\Search\ProductSetCollector as ProductSetSearchCollector;
+use Spryker\Zed\ProductSetCollector\Business\Collector\Storage\ProductSetCollector as ProductSetStorageCollector;
+use Spryker\Zed\ProductSetCollector\Business\Map\ProductSetPageMapBuilder;
 use Spryker\Zed\ProductSetCollector\Persistence\Storage\Propel\ProductSetCollectorQuery;
 use Spryker\Zed\ProductSetCollector\ProductSetCollectorDependencyProvider;
+use Spryker\Zed\Search\Business\SearchFacade;
 
 /**
  * @method \Spryker\Zed\ProductSetCollector\ProductSetCollectorConfig getConfig()
@@ -23,8 +26,25 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createStorageProductSetCollector()
     {
-        $storageProductSetCollector = new ProductSetCollector(
+        $storageProductSetCollector = new ProductSetStorageCollector(
             $this->getUtilDataReaderService()
+        );
+
+        $storageProductSetCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $storageProductSetCollector->setQueryBuilder($this->createProductSetCollectorQuery());
+
+        return $storageProductSetCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetCollector\Business\Collector\Search\ProductSetCollector
+     */
+    public function createSearchProductSetCollector()
+    {
+        $storageProductSetCollector = new ProductSetSearchCollector(
+            $this->getUtilDataReaderService(),
+            new ProductSetPageMapBuilder(),
+            new SearchFacade()
         );
 
         $storageProductSetCollector->setTouchQueryContainer($this->getTouchQueryContainer());

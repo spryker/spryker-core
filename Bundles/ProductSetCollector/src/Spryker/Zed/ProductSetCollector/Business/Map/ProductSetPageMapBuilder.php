@@ -5,57 +5,63 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetCollector\Business\Collector\Storage;
+namespace Spryker\Zed\ProductSetCollector\Business\Map;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
-use Spryker\Shared\ProductSet\ProductSetConfig;
-use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductSetCollector\ProductSetCollectorConfig;
 use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
-use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
-use Spryker\Zed\ProductSetCollector\Persistence\Storage\Propel\ProductSetCollectorQuery;
+use Spryker\Zed\ProductSetCollector\Persistence\Search\Propel\ProductSetCollectorQuery;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
-class ProductSetCollector extends AbstractStoragePropelCollector
+/**
+ * @method \Pyz\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
+ */
+class ProductSetPageMapBuilder implements PageMapInterface
 {
 
     /**
-     * @var ProductSetQueryContainerInterface
+     * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
     protected $productSetQueryContainer;
 
     /**
-     * @return string
-     */
-    protected function collectResourceType()
-    {
-        return ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET;
-    }
-
-    /**
-     * @param string $touchKey
-     * @param array $collectItemData
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productSetData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function collectItem($touchKey, array $collectItemData)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)
     {
+        $pageMapTransfer = (new PageMapTransfer())
+            ->setStore(Store::getInstance()->getStoreName()) // TODO: inject Store?
+            ->setLocale($localeTransfer->getLocaleName())
+            ->setType(ProductSetCollectorConfig::SEARCH_TYPE_PRODUCT_SET);
+
         $productSetStorageTransfer = new ProductSetStorageTransfer();
-        $productSetStorageTransfer = $this->setIdProductAbstract($collectItemData, $productSetStorageTransfer);
+        $productSetStorageTransfer = $this->setIdProductAbstract($productSetData, $productSetStorageTransfer);
 
-        unset($collectItemData[ProductSetCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]);
+        unset($productSetData[ProductSetCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]);
 
-        $productSetStorageTransfer->fromArray($collectItemData, true);
+        // TODO: clean up
+        $productSetStorageTransfer->fromArray($productSetData, true);
         $productSetStorageTransfer = $this->setProductSetImageSets($productSetStorageTransfer);
 
-        return $productSetStorageTransfer->modifiedToArray();
-    }
+        foreach ($productSetStorageTransfer->modifiedToArray() as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+            $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $value);
+        }
 
-    /**
-     * @return bool
-     */
-    protected function isStorageTableJoinWithLocaleEnabled()
-    {
-        return true;
+        $pageMapBuilder->addIntegerSort($pageMapTransfer, ProductSetStorageTransfer::WEIGHT, $productSetStorageTransfer->getWeight());
+
+        return $pageMapTransfer;
     }
 
     /**
@@ -75,9 +81,9 @@ class ProductSetCollector extends AbstractStoragePropelCollector
     }
 
     /**
-     * @param ProductSetStorageTransfer $productSetStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
      *
-     * @return ProductSetStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
      */
     protected function setProductSetImageSets(ProductSetStorageTransfer $productSetStorageTransfer)
     {
