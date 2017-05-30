@@ -195,20 +195,29 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     }
 
     /**
+     * @deprecated
+     *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
      *
-     * @param int $idCustomer
+     * @deprecated
      *
+     * @param null $fkCustomer
+     * @param string $comparison
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
      * @throws \Propel\Runtime\Exception\PropelException
+     * @internal param int $idCustomer
      *
-     * @return $this
      */
-    public function filterByFkCustomer($idCustomer)
+    public function filterByFkCustomer($fkCustomer = null, $comparison = Criteria::EQUAL)
     {
+        if (property_exists($this, 'fk_customer')) {
+            return parent::filterByFkCustomer($fkCustomer, $comparison);
+        }
+
         $customerReference = SpyCustomerQuery::create()
             ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
-            ->filterByIdCustomer($idCustomer)
+            ->filterByIdCustomer($fkCustomer)
             ->findOne();
 
         if (!$customerReference) {

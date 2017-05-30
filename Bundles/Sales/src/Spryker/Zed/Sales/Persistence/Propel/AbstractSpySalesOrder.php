@@ -12,6 +12,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -43,6 +44,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
+     * @deprecated
+     *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
      *
@@ -50,6 +53,10 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      */
     public function getFkCustomer()
     {
+        if (property_exists($this, static::COL_FK_CUSTOMER)) {
+            return parent::getFkCustomer();
+        }
+
         if (!$this->getCustomerReference()) {
             return null;
         }
@@ -63,16 +70,29 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     *
+     * @deprecated
+     *
+     * Get the associated SpyCustomer object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return SpyCustomer The associated SpyCustomer object.
+     * @throws PropelException
      */
-    public function getCustomer()
+    public function getCustomer(ConnectionInterface $con = null)
     {
+        if (property_exists($this, static::COL_FK_CUSTOMER)) {
+            return parent::getCustomer($con);
+        }
+
         return SpyCustomerQuery::create()
             ->filterByCustomerReference($this->getCustomerReference())
             ->findOne();
     }
 
     /**
+     * @deprecated
+     *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
      *
@@ -80,8 +100,12 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      *
      * @return $this
      */
-    public function setCustomer(SpyCustomer $customerEntity)
+    public function setCustomer(SpyCustomer $customerEntity = null)
     {
+        if (property_exists($this, static::COL_FK_CUSTOMER)) {
+            return $this->setCustomer($customerEntity);
+        }
+
         $this->setCustomerReference($customerEntity->getCustomerReference());
 
         $customerEntity->save();
@@ -116,7 +140,9 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     ) {
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
 
-        $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+        if (!property_exists($this, static::COL_FK_CUSTOMER)) {
+            $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+        }
 
         return $array;
 
