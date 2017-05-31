@@ -18,13 +18,4 @@ interface DataImportToTouchInterface
      */
     public function bulkTouchSetActive($itemType, array $itemIds);
 
-    /**
-     * @param string $itemType
-     * @param int $itemId
-     * @param bool $keyChange
-     *
-     * @return void
-     */
-    public function touchActive($itemType, $itemId, $keyChange = false);
-
 }

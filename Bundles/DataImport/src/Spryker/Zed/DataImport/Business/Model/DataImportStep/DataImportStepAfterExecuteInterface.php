@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
-interface DataImportStepAwareInterface
+interface DataImportStepAfterExecuteInterface
 {
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataImportStep
-     *
-     * @return $this
+     * @return void
      */
-    public function addStep(DataImportStepInterface $dataImportStep);
+    public function afterExecute();
 
 }

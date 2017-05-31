@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 
 class DataImporterHelper extends Module
 {
@@ -73,11 +73,11 @@ class DataImporterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     * @return object|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
      */
     public function getDataSetMock()
     {
-        $dataSetStub = Stub::makeEmpty(DataSetImporterInterface::class);
+        $dataSetStub = Stub::makeEmpty(DataSetStepBrokerInterface::class);
 
         return $dataSetStub;
     }

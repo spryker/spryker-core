@@ -13,14 +13,13 @@ use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\ReNameDataSetKeysStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\TouchStep;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\TransactionBeginStep;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\TransactionEndStep;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporter;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -70,7 +69,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function getCsvDataImporterFromConfig(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
     {
@@ -104,11 +103,21 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
      */
-    public function createDataSetImporter()
+    public function createDataSetStepBroker()
     {
-        return new DataSetImporter();
+        return new DataSetStepBroker();
+    }
+
+    /**
+     * @param int|null $bulkSize
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     */
+    public function createTransactionAwareDataSetStepBroker($bulkSize = null)
+    {
+        return new DataSetStepBrokerTransactionAware($this->getPropelConnection(), $bulkSize);
     }
 
     /**
@@ -134,54 +143,11 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $itemTypeKey
-     * @param string $itemIdKey
-     * @param null|int $bulkSize
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\TouchStep
-     */
-    public function createTouchStep($itemTypeKey, $itemIdKey, $bulkSize = null)
-    {
-        return new TouchStep(
-            $itemTypeKey,
-            $itemIdKey,
-            $this->getTouchFacade(),
-            $bulkSize
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * @param null|int $bulkSize
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\TransactionBeginStep
-     */
-    public function createTransactionBeginStep($bulkSize = null)
-    {
-        return new TransactionBeginStep(
-            $this->getPropelConnection(),
-            $bulkSize
-        );
-    }
-
-    /**
-     * @param null|int $bulkSize
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\TransactionEndStep
-     */
-    public function createTransactionEndStep($bulkSize = null)
-    {
-        return new TransactionEndStep(
-            $this->getPropelConnection(),
-            $bulkSize
-        );
     }
 
     /**

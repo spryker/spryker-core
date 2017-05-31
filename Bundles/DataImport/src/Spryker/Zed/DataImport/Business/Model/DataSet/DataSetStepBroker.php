@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAfterExecuteInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepBeforeExecuteInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
-class DataSetImporter implements DataSetImporterInterface, DataImportStepAwareInterface
+class DataSetStepBroker implements DataSetStepBrokerInterface, DataImportStepAwareInterface
 {
 
     /**
@@ -23,7 +25,7 @@ class DataSetImporter implements DataSetImporterInterface, DataImportStepAwareIn
      *
      * @return $this
      */
-    public function addDataImportStep(DataImportStepInterface $dataImportStep)
+    public function addStep(DataImportStepInterface $dataImportStep)
     {
         $this->dataImportSteps[] = $dataImportStep;
 
@@ -38,7 +40,15 @@ class DataSetImporter implements DataSetImporterInterface, DataImportStepAwareIn
     public function execute(DataSetInterface $dataSet)
     {
         foreach ($this->dataImportSteps as $dataImportStep) {
+            if ($dataImportStep instanceof DataImportStepBeforeExecuteInterface) {
+                $dataImportStep->beforeExecute();
+            }
+
             $dataImportStep->execute($dataSet);
+
+            if ($dataImportStep instanceof DataImportStepAfterExecuteInterface) {
+                $dataImportStep->afterExecute();
+            }
         }
     }
 

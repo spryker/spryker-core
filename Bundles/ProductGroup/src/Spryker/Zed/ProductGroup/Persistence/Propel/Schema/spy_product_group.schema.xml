@@ -3,6 +3,7 @@
 
     <table name="spy_product_group" idMethod="native" allowPkInsert="true">
         <column name="id_product_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="product_group_key" required="false" type="VARCHAR"/>
 
         <id-method-parameter value="spy_product_group_pk_seq"/>
     </table>

@@ -19,13 +19,13 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterAwareInterface;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 use Spryker\Zed\DataImport\Dependency\DataImportEvents;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface;
 
-class DataImporter implements DataImporterInterface, DataSetImporterAwareInterface
+class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInterface
 {
 
     /**
@@ -39,7 +39,7 @@ class DataImporter implements DataImporterInterface, DataSetImporterAwareInterfa
     protected $dataReader;
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface[]
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
      */
     protected $dataSetImporter = [];
 
@@ -61,13 +61,13 @@ class DataImporter implements DataImporterInterface, DataSetImporterAwareInterfa
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface $dataSetHandler
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStepBroker
      *
      * @return $this
      */
-    public function addDataSetImporter(DataSetImporterInterface $dataSetHandler)
+    public function addDataSetStepBroker(DataSetStepBrokerInterface $dataSetStepBroker)
     {
-        $this->dataSetImporter[] = $dataSetHandler;
+        $this->dataSetImporter[] = $dataSetStepBroker;
 
         return $this;
     }
@@ -206,11 +206,11 @@ class DataImporter implements DataImporterInterface, DataSetImporterAwareInterfa
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface $dataSetImporter
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetImporter
      *
      * @return void
      */
-    protected function triggerBeforeDataSetImporterEvent(DataSetImporterInterface $dataSetImporter)
+    protected function triggerBeforeDataSetImporterEvent(DataSetStepBrokerInterface $dataSetImporter)
     {
         $beforeDataSetImporterEventTransfer = new BeforeDataSetImporterEventTransfer();
         $beforeDataSetImporterEventTransfer

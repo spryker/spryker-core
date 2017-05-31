@@ -7,17 +7,14 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
-interface DataSetImporterAwareInterface
+interface DataSetStepBrokerAwareInterface
 {
 
     /**
-     * Specification:
-     * - Adds a DataSetImporterInterface.
-     *
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetImporterInterface $dataSetHandler
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStepBroker
      *
      * @return $this
      */
-    public function addDataSetImporter(DataSetImporterInterface $dataSetHandler);
+    public function addDataSetStepBroker(DataSetStepBrokerInterface $dataSetStepBroker);
 
 }

@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
+namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface;
 
-class TransactionEndStep implements DataImportStepInterface
+class DataSetStepBrokerTransactionAware extends DataSetStepBroker
 {
 
     /**
@@ -42,21 +41,42 @@ class TransactionEndStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\TransactionException
-     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet)
     {
+        $this->beforeDataSetExecution();
+
+        parent::execute($dataSet);
+
+        $this->afterDataSetExecution();
+    }
+
+    /**
+     * @return void
+     */
+    protected function beforeDataSetExecution()
+    {
+        if ($this->count === 0 && !$this->propelConnection->inTransaction()) {
+            $this->propelConnection->beginTransaction();
+        }
+
+        if (!$this->bulkSize || ($this->count === $this->bulkSize)) {
+            $this->count = 0;
+        }
+    }
+
+    /**
+     * @throws \Spryker\Zed\DataImport\Business\Exception\TransactionException
+     *
+     * @return void
+     */
+    protected function afterDataSetExecution()
+    {
         $this->count++;
 
         if (!$this->propelConnection->inTransaction()) {
-            throw new TransactionException(sprintf(
-                'There is no opened transaction. Make sure that your bulk size in "%s" and "%s" equals and both classes are added to your "%s".',
-                TransactionBeginStep::class,
-                TransactionEndStep::class,
-                DataSetInterface::class
-            ));
+            throw new TransactionException('There is no opened transaction.');
         }
 
         if (!$this->bulkSize || $this->bulkSize === $this->count) {
@@ -66,7 +86,7 @@ class TransactionEndStep implements DataImportStepInterface
     }
 
     /**
-     * Make sure that a opened transaction is always closed.
+     * Make sure that an opened transaction is always closed.
      */
     public function __destruct()
     {

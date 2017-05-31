@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
-interface DataSetImporterInterface
+interface DataSetStepBrokerInterface
 {
 
     /**
