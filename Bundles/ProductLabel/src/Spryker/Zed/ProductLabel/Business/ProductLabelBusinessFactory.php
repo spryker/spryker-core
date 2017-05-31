@@ -108,7 +108,6 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new AbstractProductRelationWriter(
             $this->getQueryContainer(),
-            $this->createAbstractProductRelationDeleter(),
             $this->createAbstractProductRelationTouchManager()
         );
     }

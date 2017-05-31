@@ -12,9 +12,10 @@ interface AbstractProductRelationDeleterInterface
 
     /**
      * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function deleteRelationsForLabel($idProductLabel);
+    public function removeRelations($idProductLabel, array $idsProductAbstract);
 
 }

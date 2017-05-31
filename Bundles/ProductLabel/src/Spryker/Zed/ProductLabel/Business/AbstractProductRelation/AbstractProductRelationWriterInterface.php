@@ -16,6 +16,6 @@ interface AbstractProductRelationWriterInterface
      *
      * @return void
      */
-    public function setRelations($idProductLabel, array $idsProductAbstract);
+    public function addRelations($idProductLabel, array $idsProductAbstract);
 
 }

@@ -40,7 +40,7 @@ class ProductLabelDataHelper extends Module
     {
         $this
             ->getProductLabelFacade()
-            ->setAbstractProductRelationsForLabel($idProductLabel, [$idAbstractProduct]);
+            ->addAbstractProductRelationsForLabel($idProductLabel, [$idAbstractProduct]);
     }
 
     /**

@@ -70,8 +70,18 @@ interface ProductLabelFacadeInterface
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
-     * @return void
+     * @return mixed
      */
-    public function setAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return mixed
+     */
+    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
 }

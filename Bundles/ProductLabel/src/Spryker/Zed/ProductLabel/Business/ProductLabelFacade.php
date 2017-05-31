@@ -109,19 +109,31 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * @api
-     *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function setAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
     {
         $this
             ->getFactory()
             ->createAbstractProductRelationWriter()
-            ->setRelations($idProductLabel, $idsProductAbstract);
+            ->addRelations($idProductLabel, $idsProductAbstract);
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
+    {
+        $this
+            ->getFactory()
+            ->createAbstractProductRelationDeleter()
+            ->removeRelations($idProductLabel, $idsProductAbstract);
     }
 
 }

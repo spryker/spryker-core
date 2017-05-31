@@ -40,24 +40,27 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
 
     /**
      * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    public function deleteRelationsForLabel($idProductLabel)
+    public function removeRelations($idProductLabel, array $idsProductAbstract)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel) {
-            $this->executeDeleteRelationsTransaction($idProductLabel);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
+            $this->executeDeleteRelationsTransaction($idProductLabel, $idsProductAbstract);
         });
     }
 
     /**
      * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction($idProductLabel)
+    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract)
     {
-        foreach ($this->findEntitiesForLabel($idProductLabel) as $relationEntity) {
+        foreach ($idsProductAbstract as $idProductAbstract) {
+            $relationEntity = $this->findRelationEntity($idProductLabel, $idProductAbstract);
             $relationEntity->delete();
 
             $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
@@ -66,15 +69,19 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
 
     /**
      * @param int $idProductLabel
+     * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract
      */
-    protected function findEntitiesForLabel($idProductLabel)
+    protected function findRelationEntity($idProductLabel, $idProductAbstract)
     {
         return $this
             ->queryContainer
-            ->queryAbstractProductRelationsByProductLabel($idProductLabel)
-            ->find();
+            ->queryAbstractProductRelationsByProductLabelAndAbstractProduct(
+                $idProductLabel,
+                $idProductAbstract
+            )
+            ->findOne();
     }
 
     /**

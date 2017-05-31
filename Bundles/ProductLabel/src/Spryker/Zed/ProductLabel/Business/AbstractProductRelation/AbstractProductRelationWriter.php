@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
 use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -22,27 +23,19 @@ class AbstractProductRelationWriter implements AbstractProductRelationWriterInte
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleterInterface
-     */
-    protected $productRelationDeleter;
-
-    /**
      * @var \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface
      */
     protected $productRelationTouchManager;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleterInterface $productRelationDeleter
-     * @param AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface $productRelationTouchManager
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        AbstractProductRelationDeleterInterface $productRelationDeleter,
         AbstractProductRelationTouchManagerInterface $productRelationTouchManager
     ) {
         $this->queryContainer = $queryContainer;
-        $this->productRelationDeleter = $productRelationDeleter;
         $this->productRelationTouchManager = $productRelationTouchManager;
     }
 
@@ -52,7 +45,7 @@ class AbstractProductRelationWriter implements AbstractProductRelationWriterInte
      *
      * @return void
      */
-    public function setRelations($idProductLabel, array $idsProductAbstract)
+    public function addRelations($idProductLabel, array $idsProductAbstract)
     {
         $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
             $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract);
@@ -67,8 +60,6 @@ class AbstractProductRelationWriter implements AbstractProductRelationWriterInte
      */
     protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract)
     {
-        $this->productRelationDeleter->deleteRelationsForLabel($idProductLabel);
-
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
 
@@ -96,14 +87,7 @@ class AbstractProductRelationWriter implements AbstractProductRelationWriterInte
      */
     protected function createRelationEntity($idProductLabel, $idProductAbstract)
     {
-        $relationEntity = $this
-            ->queryContainer
-            ->queryAbstractProductRelationsByProductLabelAndAbstractProduct(
-                $idProductLabel,
-                $idProductAbstract
-            )
-            ->findOneOrCreate();
-
+        $relationEntity = new SpyProductLabelProductAbstract();
         $relationEntity->setFkProductLabel($idProductLabel);
         $relationEntity->setFkProductAbstract($idProductAbstract);
 
