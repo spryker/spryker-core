@@ -36,16 +36,6 @@ class RelatedProductFormDataProvider
         $relationsTransfer = new ProductLabelAbstractProductRelationsTransfer();
         $relationsTransfer->setIdProductLabel($idProductLabel);
 
-        if (!$idProductLabel) {
-            return $relationsTransfer;
-        }
-
-        $abstractProductIds = $this
-            ->productLabelFacade
-            ->readAbstractProductRelationsForLabel($idProductLabel);
-
-        $relationsTransfer->setAbstractProductIds($abstractProductIds);
-
         return $relationsTransfer;
     }
 

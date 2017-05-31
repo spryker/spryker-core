@@ -11,7 +11,8 @@
 
     <transfer name="ProductLabelAbstractProductRelations">
         <property name="idProductLabel" type="int"/>
-        <property name="abstractProductIds" type="array"/>
+        <property name="abstractProductIdsToAssign" type="array"/>
+        <property name="abstractProductIdsToDeAssign" type="array"/>
     </transfer>
 
     <transfer name="ProductLabelAggregateForm">

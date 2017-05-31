@@ -17,6 +17,8 @@ use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelAggregateFormType
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelLocalizedAttributesFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType;
+use Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable;
+use Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
@@ -157,6 +159,34 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductLabelFormTabs()
     {
         return new ProductLabelFormTabs();
+    }
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable
+     */
+    public function createAvailableProductTable($idProductLabel = null)
+    {
+        return new AvailableProductTable(
+            $this->createRelatedProductTableQueryBuilder(),
+            $this->getMoneyFacade(),
+            $idProductLabel
+        );
+    }
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable
+     */
+    public function createAssignedProductTable($idProductLabel = null)
+    {
+        return new AssignedProductTable(
+            $this->createRelatedProductTableQueryBuilder(),
+            $this->getMoneyFacade(),
+            $idProductLabel
+        );
     }
 
     /**

@@ -15,6 +15,13 @@ interface RelatedProductTableQueryBuilderInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function build($idProductLabel = null);
+    public function buildAvailableProductQuery($idProductLabel = null);
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function buildAssignedProductQuery($idProductLabel = null);
 
 }

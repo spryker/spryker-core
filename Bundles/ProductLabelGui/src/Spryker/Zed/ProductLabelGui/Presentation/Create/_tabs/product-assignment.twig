@@ -1,8 +1,28 @@
-{{ relatedProductTable | raw }}
+{% include '@ProductLabelGui/Create/_tabs/product-assigment-table-set.twig' with {
+    sourceTabId: 'available-products-source-tab',
+    sourceTabLabel: 'Available products' | trans,
+    destinationTabId: 'available-products-destination-tab',
+    destinationTabLabel: 'Selected products to assign' | trans,
+    table: availableProductTable
+} %}
+
+{% include '@ProductLabelGui/Create/_tabs/product-assigment-table-set.twig' with {
+    sourceTabId: 'assigned-products-source-tab',
+    sourceTabLabel: 'Assigned products',
+    destinationTabId: 'assigned-products-destination-tab',
+    destinationTabLabel: 'Selected products to de-assign',
+    table: assignedProductTable
+} %}
 
 {{ form_row(
-    relatedProductForm.abstractProductIdsCsv,
+    relatedProductForm.abstractProductsToAssignIdsCsv,
     {
-        'id': 'js-abstract-product-ids-csv-field'
+        'id': 'js-abstract-products-to-assign-ids-csv-field'
+    }
+) }}
+{{ form_row(
+    relatedProductForm.abstractProductsToDeAssignIdsCsv,
+    {
+        'id': 'js-abstract-products-to-de-assign-ids-csv-field'
     }
 ) }}

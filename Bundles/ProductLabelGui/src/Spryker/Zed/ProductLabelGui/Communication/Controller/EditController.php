@@ -45,7 +45,8 @@ class EditController extends AbstractController
             'productLabelTransfer' => $productLabelTransfer,
             'productLabelFormTabs' => $this->getFactory()->createProductLabelFormTabs()->createView(),
             'aggregateForm' => $productLabelAggregateForm->createView(),
-            'relatedProductTable' => $this->getFactory()->createRelatedProductTable($idProductLabel)->render(),
+            'availableProductTable' => $this->getFactory()->createAvailableProductTable($idProductLabel)->render(),
+            'assignedProductTable' => $this->getFactory()->createAssignedProductTable($idProductLabel)->render(),
         ]);
     }
 
@@ -131,12 +132,47 @@ class EditController extends AbstractController
      */
     protected function storeRelatedProduct(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
     {
+        $this->storeNewProductRelations($relationsTransfer);
+        $this->storeRemovedProductRelations($relationsTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     *
+     * @return void
+     */
+    protected function storeNewProductRelations(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    {
+        if (!count($relationsTransfer->getAbstractProductIdsToAssign())) {
+            return;
+        }
+
         $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->setAbstractProductRelationsForLabel(
+            ->addAbstractProductRelationsForLabel(
                 $relationsTransfer->getIdProductLabel(),
-                $relationsTransfer->getAbstractProductIds()
+                $relationsTransfer->getAbstractProductIdsToAssign()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     *
+     * @return void
+     */
+    protected function storeRemovedProductRelations(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    {
+        if (!count($relationsTransfer->getAbstractProductIdsToDeAssign())) {
+            return;
+        }
+
+        $this
+            ->getFactory()
+            ->getProductLabelFacade()
+            ->removeAbstractProductRelationsForLabel(
+                $relationsTransfer->getIdProductLabel(),
+                $relationsTransfer->getAbstractProductIdsToDeAssign()
             );
     }
 
@@ -145,12 +181,25 @@ class EditController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(Request $request)
+    public function availableProductTableAction(Request $request)
     {
         $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
-        $productLabelTable = $this->getFactory()->createRelatedProductTable($idProductLabel);
+        $availableProductTable = $this->getFactory()->createAvailableProductTable($idProductLabel);
 
-        return $this->jsonResponse($productLabelTable->fetchData());
+        return $this->jsonResponse($availableProductTable->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedProductTableAction(Request $request)
+    {
+        $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
+        $assignedProductTable = $this->getFactory()->createAssignedProductTable($idProductLabel);
+
+        return $this->jsonResponse($assignedProductTable->fetchData());
     }
 
 }

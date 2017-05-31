@@ -60,13 +60,47 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function build($idProductLabel = null)
+    public function buildAvailableProductQuery($idProductLabel = null)
+    {
+        $query = $this->build($idProductLabel);
+
+        $query->where(sprintf(
+            '%s IS NULL',
+            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL
+        ));
+
+        return $query;
+    }
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function buildAssignedProductQuery($idProductLabel = null)
+    {
+        $query = $this->build($idProductLabel);
+
+        $query->where(sprintf(
+            '%s IS NOT NULL',
+            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL
+        ));
+
+        return $query;
+    }
+
+    /**
+     * @param int|null $idProductLabel
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function build($idProductLabel = null)
     {
         $query = $this->productQueryContainer->queryProductAbstract();
 
         $this->addProductName($query);
         $this->addProductPrice($query);
-        $this->addHasRelationFlag($query, $idProductLabel);
+        $this->addRelation($query, $idProductLabel);
 
         return $query;
     }
@@ -113,14 +147,8 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
      *
      * @return void
      */
-    protected function addHasRelationFlag(SpyProductAbstractQuery $query, $idProductLabel)
+    protected function addRelation(SpyProductAbstractQuery $query, $idProductLabel)
     {
-        if (!$idProductLabel) {
-            $query->withColumn('FALSE', static::RESULT_FIELD_ABSTRACT_PRODUCT_LABEL_HAS_RELATION_FLAG);
-
-            return;
-        }
-
         $relationJoin = new Join(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
@@ -134,16 +162,8 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             sprintf(
                 '%s = %s',
                 SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
-                $idProductLabel
+                $idProductLabel ?: 'NULL'
             )
-        );
-
-        $query->withColumn(
-            sprintf(
-                '%s IS NOT NULL',
-                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL
-            ),
-            static::RESULT_FIELD_ABSTRACT_PRODUCT_LABEL_HAS_RELATION_FLAG
         );
     }
 

@@ -39,7 +39,8 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'productLabelFormTabs' => $this->getFactory()->createProductLabelFormTabs()->createView(),
             'aggregateForm' => $productLabelAggregateForm->createView(),
-            'relatedProductTable' => $this->getFactory()->createRelatedProductTable()->render(),
+            'availableProductTable' => $this->getFactory()->createAvailableProductTable()->render(),
+            'assignedProductTable' => $this->getFactory()->createAssignedProductTable()->render(),
         ]);
     }
 
@@ -89,6 +90,8 @@ class CreateController extends AbstractController
             'Product label #%d successfully created.',
             $productLabelTransfer->getIdProductLabel()
         ));
+
+        return true;
     }
 
     /**
@@ -116,27 +119,37 @@ class CreateController extends AbstractController
         ProductLabelAbstractProductRelationsTransfer $relationsTransfer,
         $idProductLabel
     ) {
-        if (!count($relationsTransfer->getAbstractProductIds())) {
+        if (!count($relationsTransfer->getAbstractProductIdsToAssign())) {
             return;
         }
 
         $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->setAbstractProductRelationsForLabel(
+            ->addAbstractProductRelationsForLabel(
                 $idProductLabel,
-                $relationsTransfer->getAbstractProductIds()
+                $relationsTransfer->getAbstractProductIdsToAssign()
             );
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function availableProductTableAction()
     {
-        $productLabelTable = $this->getFactory()->createRelatedProductTable();
+        $availableProductTable = $this->getFactory()->createAvailableProductTable();
 
-        return $this->jsonResponse($productLabelTable->fetchData());
+        return $this->jsonResponse($availableProductTable->fetchData());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedProductTableAction()
+    {
+        $assignedProductTable = $this->getFactory()->createAssignedProductTable();
+
+        return $this->jsonResponse($assignedProductTable->fetchData());
     }
 
 }
