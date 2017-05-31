@@ -22,6 +22,14 @@ class ApiConfig extends AbstractBundleConfig
     const ACTION_DELETE = 'remove';
     const ACTION_INDEX = 'find';
 
+    const HTTP_CODE_SUCCESS = 200;
+    const HTTP_CODE_CREATED = 201;
+    const HTTP_CODE_NO_CONTENT = 204;
+    const HTTP_CODE_PARTIAL_CONTENT = 206;
+    const HTTP_CODE_NOT_FOUND = 404;
+    const HTTP_CODE_VALIDATION_ERRORS = 422;
+    const HTTP_CODE_INTERNAL_ERROR = 500;
+
     /**
      * @return int
      */

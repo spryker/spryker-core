@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
@@ -115,6 +116,19 @@ class Customer implements CustomerInterface
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
+        $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
+    {
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
             $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
@@ -131,7 +145,7 @@ class Customer implements CustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function register(CustomerTransfer $customerTransfer)
+    public function add($customerTransfer)
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
@@ -157,11 +171,23 @@ class Customer implements CustomerInterface
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
 
-        $this->sendRegistrationToken($customerTransfer);
-
         $customerResponseTransfer
             ->setIsSuccess(true)
             ->setCustomerTransfer($customerTransfer);
+
+        return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function register(CustomerTransfer $customerTransfer)
+    {
+        $customerResponseTransfer = $this->add($customerTransfer);
+
+        $this->sendRegistrationToken($customerTransfer);
 
         return $customerResponseTransfer;
     }
@@ -173,6 +199,10 @@ class Customer implements CustomerInterface
      */
     protected function addLocale(SpyCustomer $customerEntity)
     {
+        if ($customerEntity->getLocale()) {
+            return;
+        }
+
         $localeName = $this->store->getCurrentLocale();
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
@@ -678,6 +708,48 @@ class Customer implements CustomerInterface
         $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
 
         return $encoder->isPasswordValid($hash, $rawPassword, self::BCRYPT_SALT);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     */
+    public function findById($customerTransfer)
+    {
+        $customerTransfer->requireIdCustomer();
+
+        $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+            ->findOne();
+        if ($customerEntity === null) {
+            return null;
+        }
+
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
+        $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function attachLocale(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
+    {
+        $localeEntity = $customerEntity->getLocale();
+        if (!$localeEntity) {
+            return $customerTransfer;
+        }
+
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->fromArray($localeEntity->toArray(), true);
+        $customerTransfer->setLocale($localeTransfer);
+
+        return $customerTransfer;
     }
 
 }

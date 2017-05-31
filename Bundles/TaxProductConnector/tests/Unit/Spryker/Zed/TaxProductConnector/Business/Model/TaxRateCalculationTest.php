@@ -51,6 +51,7 @@ class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $mockData
      *
      * @return float
      */

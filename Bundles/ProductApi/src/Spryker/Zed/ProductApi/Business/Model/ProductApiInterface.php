@@ -38,13 +38,6 @@ interface ProductApiInterface
     public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
-     */
-    public function remove($idProductAbstract);
-
-    /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer

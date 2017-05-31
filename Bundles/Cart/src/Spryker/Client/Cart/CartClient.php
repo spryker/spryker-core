@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -77,7 +76,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Adds an item (identfied by SKU and quantity) makes zed request, stored cart into persistant store if used.
+     * Adds an item (identified by SKU and quantity) makes zed request, stored cart into persistant store if used.
      *
      * @api
      *
@@ -124,6 +123,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function removeItem($sku, $groupKey = null)
     {
         $itemTransfer = $this->findItem($sku, $groupKey);
+        if (!$itemTransfer) {
+            return $this->getQuote();
+        }
+
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
 
         return $this->getZedStub()->removeItem($cartChangeTransfer);
@@ -152,9 +155,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected function findItem($sku, $groupKey = null)
     {
@@ -168,9 +169,7 @@ class CartClient extends AbstractClient implements CartClientInterface
             }
         }
 
-        throw new CartItemNotFoundException(
-            sprintf('No item with sku "%s" found in cart.', $sku)
-        );
+        return null;
     }
 
     /**
@@ -192,6 +191,10 @@ class CartClient extends AbstractClient implements CartClientInterface
         }
 
         $itemTransfer = $this->findItem($sku, $groupKey);
+        if (!$itemTransfer) {
+            return $this->getQuote();
+        }
+
         $delta = abs($itemTransfer->getQuantity() - $quantity);
 
         if ($delta === 0) {
@@ -218,7 +221,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        $itemTransfer = clone $this->findItem($sku, $groupKey);
+        $decreaseItemTransfer = $this->findItem($sku, $groupKey);
+        if (!$decreaseItemTransfer) {
+            return $this->getQuote();
+        }
+
+        $itemTransfer = clone $decreaseItemTransfer;
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
@@ -239,7 +247,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        $itemTransfer = clone $this->findItem($sku, $groupKey);
+        $increaseItemTransfer = $this->findItem($sku, $groupKey);
+        if (!$increaseItemTransfer) {
+            return $this->getQuote();
+        }
+
+        $itemTransfer = clone $increaseItemTransfer;
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);

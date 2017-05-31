@@ -46,9 +46,6 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @internal param ApiRequestTransfer $apiRequestTransfer
-     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
-     *
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
@@ -65,9 +62,6 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @internal param ApiRequestTransfer $apiRequestTransfer
-     * @internal param PropelQueryBuilderTableTransfer $tableTransfer
-     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
@@ -94,7 +88,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
         $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();
 
         $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            trim($apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson())
+            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();

@@ -170,7 +170,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int
+     * @param int $idAvailabilityAbstract
      *
      * @return void
      */

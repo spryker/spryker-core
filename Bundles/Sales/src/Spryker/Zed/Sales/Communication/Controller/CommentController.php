@@ -23,7 +23,7 @@ class CommentController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
@@ -61,9 +61,10 @@ class CommentController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
     protected function submitCommentForm(Request $request, FormInterface $form)
     {
@@ -85,10 +86,10 @@ class CommentController extends AbstractController
 
             $this->addSuccessMessage('Comment successfully added');
             return $this->redirectResponse($request->headers->get('referer'));
-        } else {
-            foreach ($form->getErrors(true) as $error) {
-                $this->addErrorMessage($error->getMessage());
-            }
+        }
+
+        foreach ($form->getErrors(true) as $error) {
+            $this->addErrorMessage($error->getMessage());
         }
     }
 

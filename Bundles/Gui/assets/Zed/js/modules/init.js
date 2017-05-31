@@ -15,11 +15,18 @@ $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
 
+    /* Data tables custom error handling */
+    dataTable.setTableErrorMode('none');
+
     /* Draw data tables */
-    $('.gui-table-data').dataTable(dataTable.defaultConfiguration);
+    $('.gui-table-data')
+        .on('error.dt', dataTable.onError)
+        .dataTable(dataTable.defaultConfiguration);
 
     /* Draw data tables without search */
-    $('.gui-table-data-no-search').dataTable(dataTable.noSearchConfiguration);
+    $('.gui-table-data-no-search')
+        .on('error.dt', dataTable.onError)
+        .dataTable(dataTable.noSearchConfiguration);
 
     /* All elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();

@@ -27,6 +27,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
+     * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
      */
     public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
     {

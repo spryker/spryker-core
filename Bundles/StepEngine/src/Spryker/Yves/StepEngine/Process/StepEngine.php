@@ -162,7 +162,7 @@ class StepEngine implements StepEngineInterface
      */
     protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
     {
-        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep);
+        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $dataTransfer);
         if ($this->stepBreadcrumbGenerator) {
             $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
                 $this->stepCollection,

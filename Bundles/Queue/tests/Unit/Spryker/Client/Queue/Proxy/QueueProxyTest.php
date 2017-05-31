@@ -148,6 +148,9 @@ class QueueProxyTest extends Test
     }
 
     /**
+     * @param string $body
+     * @param string $queueName
+     *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     protected function createDummyQueueReceiveMessageTransfer($body, $queueName)

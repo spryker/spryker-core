@@ -53,6 +53,8 @@ interface CsvReaderInterface
     public function valid();
 
     /**
+     * @param bool $skipColumns
+     *
      * @return void
      */
     public function rewind($skipColumns = true);

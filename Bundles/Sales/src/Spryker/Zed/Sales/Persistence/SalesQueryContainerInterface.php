@@ -34,7 +34,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @var int
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -43,7 +43,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @var int
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */

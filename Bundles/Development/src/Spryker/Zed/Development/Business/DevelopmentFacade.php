@@ -299,7 +299,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @return string
+     * @param string $bundle
+     *
+     * @return array
      */
     public function runArchitectureSniffer($bundle)
     {

@@ -261,8 +261,8 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSet
      */

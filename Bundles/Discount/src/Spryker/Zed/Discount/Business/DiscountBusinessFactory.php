@@ -260,6 +260,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $type
+     *
      * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
      */
     protected function createClauseValidator($type)

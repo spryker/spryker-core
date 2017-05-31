@@ -41,7 +41,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
             return $apiRequestTransfer;
         }
 
-        preg_match('/[a-z]+ ([0-9]+)-([0-9]+)/', $headers[static::RANGE][0], $matches);
+        preg_match('/[A-Za-z]+=([0-9]+)-([0-9]+)/', $headers[static::RANGE][0], $matches);
         if (!$matches) {
             return $apiRequestTransfer;
         }
@@ -56,7 +56,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
     }
 
     /**
-     * @param int $page
+     * @param int $offset
      *
      * @return int
      */

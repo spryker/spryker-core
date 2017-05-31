@@ -25,6 +25,26 @@ interface CustomerFacadeInterface
     public function hasEmail($email);
 
     /**
+     * Specification:
+     * - Hashes password if provided
+     * - Saves customer
+     * - Returns CustomerResponseTransfer with success flag
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function addCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Hashes password if provided
+     * - Saves customer
+     * - Sends registration email if desired
+     * - Returns CustomerResponseTransfer with success flag
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -90,6 +110,21 @@ interface CustomerFacadeInterface
     public function getCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Hashes password if provided
+     * - Saves customer
+     * - Sends password restore email if applicable
+     * - Returns CustomerResponseTransfer with success flag
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
