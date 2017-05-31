@@ -39,11 +39,17 @@ class DiscountAmountAggregator implements CalculatorInterface
             $this->calculateDiscountAmountForProductOptions($itemTransfer);
 
             $itemTransfer->setSumDiscountAmountAggregation(
-                $this->calculateSumDiscountAmountAggregation($itemTransfer->getCalculatedDiscounts())
+                $this->calculateSumDiscountAmountAggregation(
+                    $itemTransfer->getCalculatedDiscounts(),
+                    $itemTransfer->getSumPrice()
+                )
             );
 
             $itemTransfer->setUnitDiscountAmountAggregation(
-                $this->calculateUnitDiscountAmountAggregation($itemTransfer->getCalculatedDiscounts())
+                $this->calculateUnitDiscountAmountAggregation(
+                    $itemTransfer->getCalculatedDiscounts(),
+                    $itemTransfer->getUnitPrice()
+                )
             );
         }
     }
@@ -57,10 +63,16 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         foreach ($expenses as $expenseTransfer) {
 
-            $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation($expenseTransfer->getCalculatedDiscounts());
+            $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
+                $expenseTransfer->getCalculatedDiscounts(),
+                $expenseTransfer->getUnitPrice()
+            );
             $expenseTransfer->setSumDiscountAmountAggregation($unitDiscountAmountAggregation);
 
-            $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation($expenseTransfer->getCalculatedDiscounts());
+            $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
+                $expenseTransfer->getCalculatedDiscounts(),
+                $expenseTransfer->getSumPrice()
+            );
             $expenseTransfer->setSumDiscountAmountAggregation($sumDiscountAmountAggregation);
         }
     }
@@ -87,21 +99,28 @@ class DiscountAmountAggregator implements CalculatorInterface
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
 
             $productOptionTransfer->setUnitDiscountAmountAggregation(
-                $this->calculateUnitDiscountAmountAggregation($productOptionTransfer->getCalculatedDiscounts())
+                $this->calculateUnitDiscountAmountAggregation(
+                    $productOptionTransfer->getCalculatedDiscounts(),
+                    $productOptionTransfer->getUnitPrice()
+                )
             );
 
             $productOptionTransfer->setSumDiscountAmountAggregation(
-                $this->calculateSumDiscountAmountAggregation($productOptionTransfer->getCalculatedDiscounts())
+                $this->calculateSumDiscountAmountAggregation(
+                    $productOptionTransfer->getCalculatedDiscounts(),
+                    $productOptionTransfer->getSumPrice()
+                )
             );
         }
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param int $maxAmount
      *
      * @return int
      */
-    protected function calculateSumDiscountAmountAggregation(ArrayObject $calculateDiscounts)
+    protected function calculateSumDiscountAmountAggregation(ArrayObject $calculateDiscounts, $maxAmount)
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
@@ -109,15 +128,20 @@ class DiscountAmountAggregator implements CalculatorInterface
             $itemSumDiscountAmountAggregation += $calculatedDiscountTransfer->getSumGrossAmount();
         }
 
+        if ($itemSumDiscountAmountAggregation > $maxAmount) {
+            return $maxAmount;
+        }
+
         return $itemSumDiscountAmountAggregation;
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param int $maxAmount
      *
      * @return int
      */
-    protected function calculateUnitDiscountAmountAggregation(ArrayObject $calculateDiscounts)
+    protected function calculateUnitDiscountAmountAggregation(ArrayObject $calculateDiscounts, $maxAmount)
     {
         $itemUnitDiscountAmountAggregation = 0;
         $appliedDiscounts = [];
@@ -128,6 +152,10 @@ class DiscountAmountAggregator implements CalculatorInterface
             }
             $itemUnitDiscountAmountAggregation += $calculatedDiscountTransfer->getUnitGrossAmount();
             $appliedDiscounts[$idDiscount] = true;
+        }
+
+        if ($itemUnitDiscountAmountAggregation > $maxAmount) {
+            return $maxAmount;
         }
 
         return $itemUnitDiscountAmountAggregation;
