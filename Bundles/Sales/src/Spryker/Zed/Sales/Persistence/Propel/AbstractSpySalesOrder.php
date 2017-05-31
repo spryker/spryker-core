@@ -70,14 +70,13 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     *
      * @deprecated
      *
      * Get the associated SpyCustomer object
      *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return SpyCustomer The associated SpyCustomer object.
-     * @throws PropelException
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con Optional Connection object.
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer The associated SpyCustomer object.
      */
     public function getCustomer(ConnectionInterface $con = null)
     {
@@ -96,7 +95,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
      *
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer|null $customerEntity
      *
      * @return $this
      */

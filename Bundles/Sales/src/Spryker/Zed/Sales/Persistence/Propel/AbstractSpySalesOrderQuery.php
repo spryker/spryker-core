@@ -195,19 +195,20 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     }
 
     /**
+     * @internal param int $idCustomer
+     *
      * @deprecated
      *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
-     *
      * @deprecated
      *
      * @param null $fkCustomer
      * @param string $comparison
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @internal param int $idCustomer
      *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
      */
     public function filterByFkCustomer($fkCustomer = null, $comparison = Criteria::EQUAL)
     {

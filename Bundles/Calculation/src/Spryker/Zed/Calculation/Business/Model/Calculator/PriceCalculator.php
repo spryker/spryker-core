@@ -54,7 +54,7 @@ class PriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Business\Calculator\CalculatorInterface[] $calculators
+     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
