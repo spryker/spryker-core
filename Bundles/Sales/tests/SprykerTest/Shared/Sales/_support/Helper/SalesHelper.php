@@ -20,6 +20,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
@@ -35,13 +36,12 @@ class SalesHelper extends Module
 
         $this->addOrderDetails($salesOrderEntity);
         $this->addAddresses($salesOrderEntity);
-        $this->addShipment($salesOrderEntity);
-
         $salesOrderEntity->save();
 
         $this->addOrderTotals($salesOrderEntity);
 
-        $this->addExpenses($salesOrderEntity);
+        $idSalesExpense = $this->addExpenses($salesOrderEntity);
+        $this->addShipment($salesOrderEntity, $idSalesExpense);
 
         return $salesOrderEntity->getIdSalesOrder();
     }
@@ -59,11 +59,11 @@ class SalesHelper extends Module
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return void
+     * @return int
      */
     protected function addExpenses(SpySalesOrder $salesOrderEntity)
     {
-        $this->addShipmentExpense($salesOrderEntity);
+        return $this->addShipmentExpense($salesOrderEntity);
     }
 
     /**
@@ -120,14 +120,23 @@ class SalesHelper extends Module
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param int $idSalesExpense
      *
      * @return void
      */
-    protected function addShipment(SpySalesOrder $salesOrderEntity)
+    protected function addShipment(SpySalesOrder $salesOrderEntity, $idSalesExpense)
     {
         $shipmentMethodQuery = new SpyShipmentMethodQuery();
         $shipmentMethodEntity = $shipmentMethodQuery->filterByName('Standard')->findOne();
-        $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
+
+        $shipmentMethod = new SpySalesShipment();
+        $shipmentMethod->setName($shipmentMethodEntity->getName());
+        $shipmentMethod->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
+        $shipmentMethod->setFkSalesExpense($idSalesExpense);
+        $shipmentMethod->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $shipmentMethod->save();
+
+        $salesOrderEntity->addSpySalesShipment($shipmentMethod);
     }
 
     /**
@@ -261,18 +270,18 @@ class SalesHelper extends Module
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return void
+     * @return int
      */
     protected function addShipmentExpense(SpySalesOrder $salesOrderEntity)
     {
-        $shipmentEntity = $salesOrderEntity->getShipmentMethod();
         $shipmentExpense = new SpySalesExpense();
         $shipmentExpense->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $shipmentExpense->setName($shipmentEntity->getName());
+        $shipmentExpense->setName('default');
         $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
-        $shipmentExpense->setGrossPrice($shipmentEntity->getDefaultPrice());
-
+        $shipmentExpense->setGrossPrice(100);
         $shipmentExpense->save();
+
+        return $shipmentExpense->getIdSalesExpense();
     }
 
     /**
