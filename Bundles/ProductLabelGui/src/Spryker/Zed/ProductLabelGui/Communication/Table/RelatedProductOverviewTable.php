@@ -14,12 +14,11 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
 
-class RelatedProductTable extends AbstractTable
+class RelatedProductOverviewTable extends AbstractTable
 {
 
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const TABLE_IDENTIFIER = 'related-products-table';
-    const COL_SELECT_CHECKBOX = 'select-checkbox';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
@@ -61,25 +60,15 @@ class RelatedProductTable extends AbstractTable
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         $config->setHeader([
-            static::COL_SELECT_CHECKBOX => 'Select',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => 'Price',
-        ]);
-
-        $config->setRawColumns([
-            static::COL_SELECT_CHECKBOX,
         ]);
 
         $config->setDefaultSortField(
             SpyProductAbstractTableMap::COL_SKU,
             TableConfiguration::SORT_ASC
         );
-
-        $config->setSearchable([
-            SpyProductAbstractTableMap::COL_SKU,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-        ]);
 
         $config->setUrl(sprintf(
             '%s?%s=%s',
@@ -98,7 +87,7 @@ class RelatedProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->tableQueryBuilder->build($this->idProductLabel);
+        $query = $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
 
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract[] $abstractProductEntities */
         $abstractProductEntities = $this->runQuery($query, $config, true);
@@ -107,33 +96,13 @@ class RelatedProductTable extends AbstractTable
 
         foreach ($abstractProductEntities as $abstractProductEntity) {
             $tableRows[] = [
-                static::COL_SELECT_CHECKBOX => $this->getSelectCheckboxColumn($abstractProductEntity),
                 SpyProductAbstractTableMap::COL_SKU => $abstractProductEntity->getSku(),
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $this->getNameColumn($abstractProductEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => $this->getPriceColumn($abstractProductEntity),
+                RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => $this->getPriceColumn($abstractProductEntity)
             ];
         }
 
         return $tableRows;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
-     *
-     * @return string
-     */
-    protected function getSelectCheckboxColumn(SpyProductAbstract $abstractProductEntity)
-    {
-        $hasRelation = $abstractProductEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_LABEL_HAS_RELATION_FLAG
-        );
-        $checkedAttribute = $hasRelation ? 'checked="checked"' : '';
-
-        return sprintf(
-            '<input class="js-abstract-product-checkbox" type="checkbox" name="abstractProduct[]" value="%s" %s />',
-            $abstractProductEntity->getIdProductAbstract(),
-            $checkedAttribute
-        );
     }
 
     /**
@@ -162,5 +131,4 @@ class RelatedProductTable extends AbstractTable
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
-
 }

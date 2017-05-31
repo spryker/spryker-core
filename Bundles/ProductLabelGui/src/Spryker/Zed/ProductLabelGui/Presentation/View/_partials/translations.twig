@@ -1,0 +1,31 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Translations' } %}
+    {% block widget_content %}
+
+        <div class="form-group" id="option-value-translations">
+
+            {% for localizedAttributesTransfer in productLabelTransfer.getLocalizedAttributesCollection() %}
+                {% set isCollapsed = not loop.first %}
+                {% set localeTransfer = localizedAttributesTransfer.getLocale() %}
+
+                <div data-locale-code="{{ localeTransfer.getLocaleName() }}">
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {
+                        localeName: localeTransfer.getLocaleName(),
+                        collapsed: isCollapsed ,
+                        hasError: false
+                    } %}
+                        {% block content %}
+                            <table class="table">
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{ localizedAttributesTransfer.getName() }}</td>
+                                </tr>
+                            </table>
+                        {% endblock %}
+
+                    {% endembed %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+{% endembed %}

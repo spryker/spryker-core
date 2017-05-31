@@ -1,0 +1,28 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View "' ~ productLabelTransfer.getName() ~ '"' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block content %}
+
+    {% include '@ProductLabelGui/View/_partials/general-information.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/translations.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/related-products.twig' with {
+        relatedProductTable: relatedProductTable
+    } %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

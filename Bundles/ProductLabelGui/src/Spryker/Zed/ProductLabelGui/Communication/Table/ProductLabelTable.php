@@ -14,6 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\SetStatusController;
+use Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 
 class ProductLabelTable extends AbstractTable
@@ -152,6 +153,7 @@ class ProductLabelTable extends AbstractTable
     {
         $idProductLabel = $productLabelEntity->getIdProductLabel();
         $actionButtons = [
+            $this->createViewButton($idProductLabel),
             $this->createEditButton($idProductLabel),
             $this->createStatusToggleButton($idProductLabel, $productLabelEntity->getIsActive()),
         ];
@@ -164,11 +166,29 @@ class ProductLabelTable extends AbstractTable
      *
      * @return string
      */
+    protected function createViewButton($idProductLabel)
+    {
+        return $this->generateViewButton(
+            Url::generate(
+                '/product-label-gui/view',
+                [
+                    ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
+                ]
+            ),
+            'View'
+        );
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return string
+     */
     protected function createEditButton($idProductLabel)
     {
         return $this->generateEditButton(
             Url::generate(
-                'product-label-gui/edit',
+                '/product-label-gui/edit',
                 [
                     EditController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]

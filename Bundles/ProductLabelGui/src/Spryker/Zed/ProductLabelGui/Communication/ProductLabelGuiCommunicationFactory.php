@@ -20,6 +20,7 @@ use Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
+use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
@@ -140,7 +141,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
      */
-    protected function getLocaleFacade()
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_LOCALE);
     }
@@ -190,13 +191,13 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int|null $idProductLabel
+     * @param int $idProductLabel
      *
-     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable
      */
-    public function createRelatedProductTable($idProductLabel = null)
+    public function createRelatedProductOverviewTable($idProductLabel)
     {
-        return new RelatedProductTable(
+        return new RelatedProductOverviewTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
             $idProductLabel

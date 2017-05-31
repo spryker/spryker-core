@@ -1,0 +1,40 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
+    {% block widget_content %}
+        <table class="table">
+            <tr>
+                <td>Name</td>
+                <td>{{ productLabelTransfer.getName() }}</td>
+            </tr>
+            <tr>
+                <td>Is exclusive</td>
+                <td>
+                    {% if productLabelTransfer.getIsExclusive() == true %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Valid from</td>
+                <td>
+                    {% if productLabelTransfer.getValidFrom() %}
+                        {{ productLabelTransfer.getValidFrom() }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Valid to</td>
+                <td>
+                    {% if productLabelTransfer.getValidTo() %}
+                        {{ productLabelTransfer.getValidTo() }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    {% endblock %}
+{% endembed %}

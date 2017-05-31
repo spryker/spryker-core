@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
+    {% block widget_content %}
+        {{ relatedProductTable | raw }}
+    {% endblock %}
+{% endembed %}
