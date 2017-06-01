@@ -77,11 +77,22 @@ abstract class SessionFactory
      */
     public function registerRedisSessionHandler($savePath)
     {
-        $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerRedis($savePath, $lifetime, $this->createNewRelicApi());
-        $this->setSessionSaveHandler($handler);
+        $handler = $this->createSessionHandlerRedis($savePath);
+        $this->setSessionSaveHandler($this->createSessionHandlerRedis($savePath));
 
         return $handler;
+    }
+
+    /**
+     * @param string $savePath
+     *
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
+     */
+    public function createSessionHandlerRedis($savePath)
+    {
+        $lifetime = $this->getSessionLifetime();
+
+        return new SessionHandlerRedis($savePath, $lifetime, $this->createNewRelicApi());
     }
 
     /**
@@ -162,11 +173,22 @@ abstract class SessionFactory
      */
     public function registerFileSessionHandler($savePath)
     {
-        $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerFile($savePath, $lifetime, $this->createNewRelicApi());
+        $handler = $this->createSessionHandlerFile($savePath);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
+    }
+
+    /**
+     * @param string $savePath
+     *
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerFile
+     */
+    public function createSessionHandlerFile($savePath)
+    {
+        $lifetime = $this->getSessionLifetime();
+
+        return new SessionHandlerFile($savePath, $lifetime, $this->createNewRelicApi());
     }
 
     /**
