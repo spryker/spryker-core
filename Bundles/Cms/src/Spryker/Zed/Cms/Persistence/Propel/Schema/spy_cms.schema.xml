@@ -16,6 +16,7 @@
 
     <table name="spy_cms_page" phpName="SpyCmsPage">
         <column name="id_cms_page" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="page_key" type="VARCHAR" size="32" required="false"/>
         <column name="fk_template" type="INTEGER" required="true"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
