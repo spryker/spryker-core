@@ -7,7 +7,6 @@
 
 require('ZedGui');
 require('jquery');
-require('jstree');
 
 var $list = null;
 var $button = null;
@@ -30,22 +29,8 @@ function initialize(listSelector, buttonSelector) {
  * @return {void}
  */
 function initializeDragAndDrop() {
-    $list.jstree({
-        'plugins': ['types', 'wholerow', 'dnd'],
-        'core': {
-            'check_callback': true
-        },
-        'types': {
-            'default': {
-                'icon': 'fa fa-tag',
-                'max_depth': 0
-            }
-        },
-        'dnd': {
-            'is_draggable': true,
-            'large_drag_target': true,
-            'large_drop_target': true
-        }
+    $list.nestable({
+        depth: 1
     });
 }
 
@@ -60,11 +45,16 @@ function initializeSaveButton() {
 
     disableSaveButton();
 
-    $list.on('move_node.jstree', function() {
+    $list.on('change', function() {
         enableSaveButton();
     });
 }
 
+/**
+ * @param {bool} showLoader
+ *
+ * @return {void}
+ */
 function disableSaveButton(showLoader) {
     $button.attr('disabled', '');
 
@@ -75,6 +65,9 @@ function disableSaveButton(showLoader) {
     }
 }
 
+/**
+ * @return {void}
+ */
 function enableSaveButton() {
     $button.removeAttr('disabled');
     $button.children('.js-loader').hide();
@@ -110,12 +103,12 @@ function sendListData() {
  * @return {object}
  */
 function readCurrentListOrder() {
-    var listData = $list.jstree(true).get_json();
+    var listData = $list.nestable('serialize');
     var productLabelPositions = {};
 
     $.each(listData, function(index, item) {
-        productLabelPositions[item.data.idProductLabel] = {
-            'idProductLabel': item.data.idProductLabel,
+        productLabelPositions[item.idProductLabel] = {
+            'idProductLabel': item.idProductLabel,
             'position': (index + 1)
         };
     });

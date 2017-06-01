@@ -9,6 +9,14 @@
                 <controller>index</controller>
                 <action>index</action>
                 <pages>
+                    <view-product-label-gui>
+                        <label>View Product Label</label>
+                        <title>View Product Label</title>
+                        <bundle>product-label-gui</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </view-product-label-gui>
                     <create-product-label-gui>
                         <label>Create a Product Label</label>
                         <title>Create a Product Label</title>

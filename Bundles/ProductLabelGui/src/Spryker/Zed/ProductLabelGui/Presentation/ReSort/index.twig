@@ -11,14 +11,14 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Prioritize Product Labels' } %}
 
         {% block widget_content %}
-            <div id="js-re-sort-list">
-                <ul>
+            <div id="js-re-sort-list" class="dd">
+                <ol class="dd-list">
                     {% for productLabelTransfer in productLabelTransferCollection %}
-                        <li data-id-product-label="{{ productLabelTransfer.getIdProductLabel() }}">
-                            {{ productLabelTransfer.getName() }}
+                        <li class="dd-item" data-id-product-label="{{ productLabelTransfer.getIdProductLabel() }}">
+                            <span class="dd-handle">{{ productLabelTransfer.getName() }}</span>
                         </li>
                     {% endfor %}
-                </ul>
+                </ol>
             </div>
 
             <hr />
