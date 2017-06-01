@@ -1,11 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Yves\Cart;
 
-
+use Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Cart\Mapper\AttributeMapper;
 
 class CartFactory extends AbstractFactory
 {
@@ -26,10 +29,21 @@ class CartFactory extends AbstractFactory
         return $this->getProvidedDependency(CartDependencyProvider::CLIENT_PRODUCT_OPTION);
     }
 
-    public function createAttributeMapper()
+    /**
+     * @return \Spryker\Client\Product\ProductClientInterface
+     */
+    public function getProductClient()
     {
-        return new AttributeMapper(
-            $this->getProductOptionClient(),
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper
+     */
+    public function createCartItemsAttributeMapper()
+    {
+        return new CartItemsAttributeMapper(
+            $this->getProductClient(),
             $this->getAvailabilityClient()
         );
     }

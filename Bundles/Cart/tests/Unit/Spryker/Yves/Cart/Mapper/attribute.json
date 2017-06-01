@@ -1,0 +1,42 @@
+{
+  "productConcreteIds":[
+    166,
+    167,
+    168
+  ],
+  "superAttributes":{
+    "processor_frequency":[
+      "3 GHz",
+      "3.5 GHz",
+      "2.8 GHz"
+    ],
+    "color":[
+      "red",
+      "blue",
+      "green"
+    ]
+  },
+  "attributeVariants":{
+    "processor_frequency:3 GHz":{
+      "id_product_concrete":166
+    },
+    "processor_frequency:3.5 GHz":{
+      "id_product_concrete":167
+    },
+    "processor_frequency:2.8 GHz":{
+      "id_product_concrete":168
+    },
+    "color:red":{
+      "id_product_concrete":[
+        167,
+        166
+      ]
+    },
+    "color:blue":{
+      "id_product_concrete":167
+    },
+    "color:green":{
+      "id_product_concrete":168
+    }
+  }
+}
