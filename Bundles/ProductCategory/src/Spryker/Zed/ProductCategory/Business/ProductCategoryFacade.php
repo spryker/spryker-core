@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -115,6 +116,23 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->getFactory()
             ->createProductCategoryManager()
             ->getAbstractProductTransferCollectionByCategory($idCategory, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createProductCategoryManager()
+            ->updateProductMappingsForUpdatedCategory($categoryTransfer);
     }
 
 }

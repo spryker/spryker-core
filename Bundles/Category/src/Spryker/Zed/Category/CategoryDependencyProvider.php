@@ -28,6 +28,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_GRAPH = 'graph plugin';
     const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
     const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
+    const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
@@ -53,12 +54,16 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new CategoryToEventBridge($container->getLocator()->event()->facade());
         };
 
-        $container[self::PLUGIN_GRAPH] = function (Container $container) {
+        $container[self::PLUGIN_GRAPH] = function () {
             return $this->createGraphPlugin();
         };
 
         $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
             return $this->getRelationDeletePluginStack();
+        });
+
+        $container[static::PLUGIN_STACK_RELATION_UPDATE] = Container::share(function () {
+            return $this->getRelationUpdatePluginStack();
         });
 
         return $container;
@@ -76,6 +81,14 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected function getRelationDeletePluginStack()
+    {
+        return [];
+    }
+
+    /**
+     * @return array \Spryker\Zed\Category\Dependency\Plugin\CategoryUpdatePluginInterface[]
+     */
+    protected function getRelationUpdatePluginStack()
     {
         return [];
     }
