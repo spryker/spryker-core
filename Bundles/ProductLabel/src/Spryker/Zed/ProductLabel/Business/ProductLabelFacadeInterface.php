@@ -84,4 +84,11 @@ interface ProductLabelFacadeInterface
      */
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function checkLabelValidityDateRangeAndTouch();
+
 }

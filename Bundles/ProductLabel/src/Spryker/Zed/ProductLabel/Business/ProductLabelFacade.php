@@ -109,6 +109,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
@@ -123,6 +125,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
@@ -134,6 +138,19 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createAbstractProductRelationDeleter()
             ->removeRelations($idProductLabel, $idsProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function checkLabelValidityDateRangeAndTouch()
+    {
+        $this
+            ->getFactory()
+            ->createLabelValidityUpdater()
+            ->checkAndTouchAllLabels();
     }
 
 }

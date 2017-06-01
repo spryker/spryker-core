@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabel\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
@@ -244,6 +245,102 @@ class ProductLabelFacadeTest extends Test
         $this->tester->assertTouchActive(
             ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckLabelValidityDateRangeAndTouchTouchesUnpublishedLabelsActiveWhenEnteringValidityDateRange()
+    {
+        $this->tester->haveProductLabel([
+            'validFrom' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
+            'validTo' => (new DateTime())->setTimestamp(strtotime('+1 day'))->format('Y-m-d'),
+            'isPublished' => false,
+        ]);
+
+        sleep(1);
+
+        $referenceTime = new DateTime('now');
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->checkLabelValidityDateRangeAndTouch();
+
+        $this->tester->assertTouchActiveAfter(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            $referenceTime
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckLabelValidityDateRangeAndTouchTouchesPublishedLabelsDeletedWhenLeavingValidityDateRange()
+    {
+        $this->tester->haveProductLabel([
+            'validFrom' => (new DateTime())->setTimestamp(strtotime('-3 day'))->format('Y-m-d'),
+            'validTo' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
+            'isPublished' => true,
+        ]);
+
+        sleep(1);
+
+        $referenceTime = new DateTime('now');
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->checkLabelValidityDateRangeAndTouch();
+
+        $this->tester->assertTouchActiveAfter(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            $referenceTime
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchActiveWhenAlreadyPublished()
+    {
+        $this->tester->haveProductLabel([
+            'validFrom' => (new DateTime())->setTimestamp(strtotime('-2 day'))->format('Y-m-d'),
+            'validTo' => (new DateTime())->setTimestamp(strtotime('+1 day'))->format('Y-m-d'),
+            'isPublished' => true,
+        ]);
+        $referenceTime = new DateTime('now');
+
+        sleep(1);
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->checkLabelValidityDateRangeAndTouch();
+
+        $this->tester->assertNoTouchAfter(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            $referenceTime
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchDeletedWhenAlreadyUnpublished()
+    {
+        $this->tester->haveProductLabel([
+            'validFrom' => (new DateTime())->setTimestamp(strtotime('-3 day'))->format('Y-m-d'),
+            'validTo' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
+            'isPublished' => false,
+        ]);
+        $referenceTime = new DateTime('now');
+
+        sleep(1);
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelFacade->checkLabelValidityDateRangeAndTouch();
+
+        $this->tester->assertNoTouchAfter(
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            $referenceTime
         );
     }
 

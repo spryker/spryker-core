@@ -11,11 +11,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleter;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationReader;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationWriter;
+use Spryker\Zed\ProductLabel\Business\Label\DateRangeValidator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
+use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
 use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManager;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManager;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
@@ -129,6 +131,35 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     protected function createAbstractProductRelationTouchManager()
     {
         return new AbstractProductRelationTouchManager($this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\ValidityUpdaterInterface
+     */
+    public function createLabelValidityUpdater()
+    {
+        return new ValidityUpdater(
+            $this->createLabelReader(),
+            $this->createLabelUpdater(),
+            $this->createLabelDateRangeValidator(),
+            $this->createLabelDictionaryTouchManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\DateRangeValidatorInterface
+     */
+    protected function createLabelDateRangeValidator()
+    {
+        return new DateRangeValidator($this->getDateTimeService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Service\ProductLabelToUtilDateTimeInterface
+     */
+    protected function getDateTimeService()
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::SERVICE_DATE_TIME);
     }
 
 }
