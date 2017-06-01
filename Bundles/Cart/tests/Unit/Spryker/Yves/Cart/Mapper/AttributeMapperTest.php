@@ -68,7 +68,7 @@ class AttributeMapperTest extends Test
     {
         $total = 0;
 
-        foreach ($attributes as $attribute => $selected) {
+        foreach ($attributes as $selected) {
             if ($selected === true) {
                 $total++;
             }

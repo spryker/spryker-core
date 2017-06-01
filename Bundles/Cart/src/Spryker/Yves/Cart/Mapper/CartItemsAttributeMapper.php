@@ -75,7 +75,7 @@ class CartItemsAttributeMapper
         $attributes = $this->getAttributesMapByProductAbstract($item);
 
         foreach ($attributes['attributeVariants'] as $variantName => $variant) {
-            foreach ($variant as $productId => $options) {
+            foreach ($variant as $options) {
                 foreach ((array)$options as $option) {
                     if ($option === $item->getId()) {
                         $this->extractKeyValue($selectedAttributes, $variantName);
@@ -134,8 +134,8 @@ class CartItemsAttributeMapper
      */
     protected function extractKeyValue(array &$selectedAttributes, $strVal, $delimiter = ':')
     {
-        list($k, $v) = explode($delimiter, $strVal);
-        $selectedAttributes[$k] = $v;
+        list($key, $value) = explode($delimiter, $strVal);
+        $selectedAttributes[$key] = $value;
     }
 
     /**
