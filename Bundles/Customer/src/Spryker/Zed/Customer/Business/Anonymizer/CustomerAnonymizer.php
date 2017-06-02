@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CustomerAnonymizer implements CustomerAnonymizerInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -69,28 +72,30 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
         $customerTransfer->requireIdCustomer();
         $customerTransfer = $this->getCustomer($customerTransfer);
 
-        $connection = $this->queryContainer->getConnection();
-        $connection->beginTransaction();
+        $this->handleDatabaseTransaction(function () use ($customerTransfer) {
+            $this->processTransaction($customerTransfer);
+        });
+    }
 
-        try {
-            foreach ($this->plugins as $plugin) {
-                $plugin->process($customerTransfer);
-            }
-
-            $addressesTransfer = $customerTransfer->getAddresses();
-            $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);
-            $customerTransfer->setAddresses($addressesTransfer);
-
-            $customerTransfer = $this->anonymizeCustomer($customerTransfer);
-
-            $this->updateCustomerAddresses($customerTransfer->getAddresses());
-            $this->updateCustomer($customerTransfer);
-
-            $connection->commit();
-        } catch (\Exception $e) {
-            $connection->rollBack();
-            throw $e;
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function processTransaction(CustomerTransfer $customerTransfer)
+    {
+        foreach ($this->plugins as $plugin) {
+            $plugin->process($customerTransfer);
         }
+
+        $addressesTransfer = $customerTransfer->getAddresses();
+        $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);
+        $customerTransfer->setAddresses($addressesTransfer);
+
+        $customerTransfer = $this->anonymizeCustomer($customerTransfer);
+
+        $this->updateCustomerAddresses($customerTransfer->getAddresses());
+        $this->updateCustomer($customerTransfer);
     }
 
     /**
@@ -110,13 +115,14 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer->setAnonymizedAt(new DateTime());
-        $customerTransfer->setFirstName(null);
-        $customerTransfer->setLastName(null);
-        $customerTransfer->setSalutation(null);
-        $customerTransfer->setGender(null);
-        $customerTransfer->setDateOfBirth(null);
-        $customerTransfer->setEmail($this->generateRandomEmail());
+        $customerTransfer
+            ->setAnonymizedAt((new DateTime())->format("Y-m-d H:i:s.u"))
+            ->setFirstName(null)
+            ->setLastName(null)
+            ->setSalutation(null)
+            ->setGender(null)
+            ->setDateOfBirth(null)
+            ->setEmail($this->generateRandomEmail());
 
         return $customerTransfer;
     }
@@ -154,20 +160,19 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function anonymizeCustomerAddress(AddressTransfer $addressTransfer)
     {
-        $addressTransfer->setAnonymizedAt(new DateTime());
-        $addressTransfer->setIsDeleted(true);
-
-        $addressTransfer->setFirstName('');
-        $addressTransfer->setLastName('');
-
-        $addressTransfer->setSalutation(null);
-        $addressTransfer->setAddress1(null);
-        $addressTransfer->setAddress2(null);
-        $addressTransfer->setAddress3(null);
-        $addressTransfer->setCompany(null);
-        $addressTransfer->setCity(null);
-        $addressTransfer->setZipCode(null);
-        $addressTransfer->setPhone(null);
+        $addressTransfer
+            ->setAnonymizedAt((new DateTime())->format("Y-m-d H:i:s.u"))
+            ->setIsDeleted(true)
+            ->setFirstName('')
+            ->setLastName('')
+            ->setSalutation(null)
+            ->setAddress1(null)
+            ->setAddress2(null)
+            ->setAddress3(null)
+            ->setCompany(null)
+            ->setCity(null)
+            ->setZipCode(null)
+            ->setPhone(null);
 
         return $addressTransfer;
     }

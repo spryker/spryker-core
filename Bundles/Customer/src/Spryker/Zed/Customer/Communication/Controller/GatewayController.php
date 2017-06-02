@@ -292,10 +292,8 @@ class GatewayController extends AbstractGatewayController
      */
     public function anonymizeCustomerAction(CustomerTransfer $customerTransfer)
     {
-        $result = $this->getFacade()
+        $this->getFacade()
             ->anonymizeCustomer($customerTransfer);
-
-        $this->setSuccess($result);
 
         return $customerTransfer;
     }
