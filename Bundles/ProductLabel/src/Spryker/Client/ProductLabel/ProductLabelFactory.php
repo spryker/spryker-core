@@ -13,6 +13,9 @@ use Spryker\Client\ProductLabel\Storage\LabelDictionaryReader;
 use Spryker\Shared\ProductLabel\KeyBuilder\AbstractProductRelationKeyBuilder;
 use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
 
+/**
+ * @method ProductLabelConfig getConfig()
+ */
 class ProductLabelFactory extends AbstractFactory
 {
 
@@ -43,7 +46,8 @@ class ProductLabelFactory extends AbstractFactory
     {
         return new LabelDictionaryReader(
             $this->getStorageClient(),
-            $this->createLabelDictionaryKeyBuilder()
+            $this->createLabelDictionaryKeyBuilder(),
+            $this->getConfig()->getMaxNumberOfLabels()
         );
     }
 

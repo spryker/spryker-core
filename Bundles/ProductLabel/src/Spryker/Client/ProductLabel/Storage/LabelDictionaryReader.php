@@ -26,15 +26,23 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     protected $keyBuilder;
 
     /**
+     * @var int
+     */
+    protected $maxNumberOfLabels;
+
+    /**
      * @param \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface $storageClient
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param int $maxNumberOfLabels
      */
     public function __construct(
         ProductLabelToStorageInterface $storageClient,
-        KeyBuilderInterface $keyBuilder
+        KeyBuilderInterface $keyBuilder,
+        $maxNumberOfLabels
     ) {
         $this->storageClient = $storageClient;
         $this->keyBuilder = $keyBuilder;
+        $this->maxNumberOfLabels = $maxNumberOfLabels;
     }
 
     /**
@@ -65,6 +73,10 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
 
         foreach ($productLabelIds as $idProductLabel) {
             $productLabelCollection[] = $dictionary[$idProductLabel];
+
+            if (count($productLabelCollection) === $this->maxNumberOfLabels) {
+                break;
+            }
         }
 
         return $productLabelCollection;
