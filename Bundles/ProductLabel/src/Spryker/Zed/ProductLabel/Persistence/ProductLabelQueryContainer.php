@@ -128,4 +128,33 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->filterByFkProductAbstract($idProductAbstract);
     }
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryUnpublishedProductLabelBecomingValid()
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->filterByIsPublished(false)
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->filterByValidTo('now', Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryPublishedProductLabelBecomingInvalid()
+    {
+        return $this
+            ->getFactory()
+            ->createProductLabelQuery()
+            ->filterByIsPublished(true)
+            ->filterByValidTo('now', Criteria::LESS_THAN);
+    }
+
 }

@@ -7,26 +7,17 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
-use Generated\Shared\Transfer\ProductLabelTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class ValidityUpdater implements ValidityUpdaterInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
-    protected $labelReader;
-
-    /**
-     * @var \Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface
-     */
-    protected $labelWriter;
-
-    /**
-     * @var \Spryker\Zed\ProductLabel\Business\Label\DateRangeValidatorInterface
-     */
-    protected $dateRangeValidator;
+    protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
@@ -34,20 +25,14 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected $dictionaryTouchManager;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface $labelReader
-     * @param \Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface $labelWriter
-     * @param \Spryker\Zed\ProductLabel\Business\Label\DateRangeValidatorInterface $dateRangeValidator
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      */
     public function __construct(
-        LabelReaderInterface $labelReader,
-        LabelUpdaterInterface $labelWriter,
-        DateRangeValidatorInterface $dateRangeValidator,
+        ProductLabelQueryContainerInterface $queryContainer,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager
     ) {
-        $this->labelReader = $labelReader;
-        $this->labelWriter = $labelWriter;
-        $this->dateRangeValidator = $dateRangeValidator;
+        $this->queryContainer = $queryContainer;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
     }
 
@@ -56,43 +41,65 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     public function checkAndTouchAllLabels()
     {
-        $hasValidityChange = false;
+        $productLabelsBecomingActive = $this->getLabelsBecomingActive();
+        $productLabelsBecomingInactive = $this->getLabelsBecomingInactive();
 
-        foreach ($this->labelReader->readAll() as $productLabelTransfer) {
-            if ($this->dateRangeValidator->isBecomingValid($productLabelTransfer)) {
-                $this->setPublished($productLabelTransfer);
-                $hasValidityChange = true;
-            } elseif ($this->dateRangeValidator->isBecomingInvalid($productLabelTransfer)) {
-                $this->setUnpublished($productLabelTransfer);
-                $hasValidityChange = true;
-            }
+        if (!$productLabelsBecomingActive->count() && !$productLabelsBecomingInactive->count()) {
+            return;
         }
 
-        if ($hasValidityChange) {
-            $this->dictionaryTouchManager->touchActive();
+        $this->setPublished($productLabelsBecomingActive);
+        $this->setUnpublished($productLabelsBecomingInactive);
+
+        $this->dictionaryTouchManager->touchActive();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getLabelsBecomingActive()
+    {
+        return $this
+            ->queryContainer
+            ->queryUnpublishedProductLabelBecomingValid()
+            ->find();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getLabelsBecomingInactive()
+    {
+        return $this
+            ->queryContainer
+            ->queryPublishedProductLabelBecomingInvalid()
+            ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
+     *
+     * @return void
+     */
+    protected function setPublished(ObjectCollection $productLabelEntities)
+    {
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelEntity->setIsPublished(true);
+            $productLabelEntity->save();
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
      *
      * @return void
      */
-    protected function setPublished(ProductLabelTransfer $productLabelTransfer)
+    protected function setUnpublished(ObjectCollection $productLabelEntities)
     {
-        $productLabelTransfer->setIsPublished(true);
-        $this->labelWriter->update($productLabelTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
-    protected function setUnpublished(ProductLabelTransfer $productLabelTransfer)
-    {
-        $productLabelTransfer->setIsPublished(false);
-        $this->labelWriter->update($productLabelTransfer);
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelEntity->setIsPublished(false);
+            $productLabelEntity->save();
+        }
     }
 
 }

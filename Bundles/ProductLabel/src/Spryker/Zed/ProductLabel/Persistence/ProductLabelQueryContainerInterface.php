@@ -52,6 +52,8 @@ interface ProductLabelQueryContainerInterface
     public function queryMaxPosition();
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
@@ -59,11 +61,27 @@ interface ProductLabelQueryContainerInterface
     public function queryAbstractProductRelationsByProductLabel($idProductLabel);
 
     /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryAbstractProductRelationsByProductLabelAndAbstractProduct($idProductLabel, $idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryUnpublishedProductLabelBecomingValid();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryPublishedProductLabelBecomingInvalid();
 
 }

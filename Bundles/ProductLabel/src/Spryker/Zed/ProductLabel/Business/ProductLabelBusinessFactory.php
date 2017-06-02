@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleter;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationReader;
 use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationWriter;
-use Spryker\Zed\ProductLabel\Business\Label\DateRangeValidator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
@@ -139,27 +138,9 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createLabelValidityUpdater()
     {
         return new ValidityUpdater(
-            $this->createLabelReader(),
-            $this->createLabelUpdater(),
-            $this->createLabelDateRangeValidator(),
+            $this->getQueryContainer(),
             $this->createLabelDictionaryTouchManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabel\Business\Label\DateRangeValidatorInterface
-     */
-    protected function createLabelDateRangeValidator()
-    {
-        return new DateRangeValidator($this->getDateTimeService());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabel\Dependency\Service\ProductLabelToUtilDateTimeInterface
-     */
-    protected function getDateTimeService()
-    {
-        return $this->getProvidedDependency(ProductLabelDependencyProvider::SERVICE_DATE_TIME);
     }
 
 }

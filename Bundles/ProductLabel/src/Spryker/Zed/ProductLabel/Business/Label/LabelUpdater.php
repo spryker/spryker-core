@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
@@ -76,7 +77,15 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
     {
-        $this->persistLabel($productLabelTransfer);
+        $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
+        $isModified = (count($productLabelEntity->getModifiedColumns()) > 0);
+
+        if (!$isModified) {
+            return;
+        }
+
+        $productLabelEntity->save();
+        $this->updateTransferFromEntity($productLabelTransfer, $productLabelEntity);
 
         $this->dictionaryTouchManager->touchActive();
     }
@@ -84,15 +93,14 @@ class LabelUpdater implements LabelUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
      */
-    protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
+    protected function getUpdatedLabelEntity(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelEntity = $this->getEntityById($productLabelTransfer->getIdProductLabel());
         $productLabelEntity = $this->updateEntityFromTransfer($productLabelEntity, $productLabelTransfer);
-        $productLabelEntity->save();
 
-        return $this->updateTransferFromEntity($productLabelTransfer, $productLabelEntity);
+        return $productLabelEntity;
     }
 
     /**
@@ -133,15 +141,13 @@ class LabelUpdater implements LabelUpdaterInterface
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return void
      */
     protected function updateTransferFromEntity(
         ProductLabelTransfer $productLabelTransfer,
         SpyProductLabel $productLabelEntity
     ) {
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
-
-        return $productLabelTransfer;
     }
 
 }
