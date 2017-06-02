@@ -9,9 +9,11 @@ namespace Spryker\Zed\CmsGui\Communication;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Block\CmsBlockForm;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
@@ -22,9 +24,11 @@ use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
+use Spryker\Zed\CmsGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -99,6 +103,18 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    public function createCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
+    {
+        $cmsBlockForm = new CmsBlockForm(
+            $this->getProvidedDependency(CmsGuiDependencyProvider::QUERY_CONTAINER_CMS_BLOCK)
+        );
+
+        return $this->getFormFactory()->create(
+            $cmsBlockForm,
+            $cmsBlockFormDataProvider->getOptions()
+        );
+    }
+
     /**
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
      * @param int $idCmsPage
@@ -124,6 +140,18 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsPageFormTypeDataProvider()
     {
         return new CmsPageFormTypeDataProvider(
+            $this->getCmsQueryContainer(),
+            $this->getCmsFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return CmsBlockFormDataProvider
+     */
+    public function createCmsBlockFormDataProvider()
+    {
+        return new CmsBlockFormDataProvider(
             $this->getCmsQueryContainer(),
             $this->getCmsFacade(),
             $this->getLocaleFacade()
@@ -277,6 +305,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return CmsGuiToCmsBlockQueryContainerInterface
+     */
+    public function getCmsBlockQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::QUERY_CONTAINER_CMS_BLOCK);
+    }
+
+    /**
      * @return \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface
      */
     public function getUrlFacade()
@@ -298,6 +334,17 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Table\CmsBlockTable
+     */
+    public function createCmsBlockTable()
+    {
+        $cmsBlockQuery = $this->getCmsBlockQueryContainer()
+            ->queryCmsBlockWithTemplate();
+
+        return new CmsBlockTable($cmsBlockQuery);
     }
 
 }

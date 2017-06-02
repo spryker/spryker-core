@@ -43,19 +43,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idLocale
-     *
-     * @return \Spryker\Zed\Cms\Communication\Table\CmsBlockTable
-     */
-    public function createCmsBlockTable($idLocale)
-    {
-        $blockQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocks($idLocale);
-
-        return new CmsBlockTable($blockQuery);
-    }
-
-    /**
      * @return \Spryker\Zed\Cms\Communication\Table\CmsRedirectTable
      */
     public function createCmsRedirectTable()

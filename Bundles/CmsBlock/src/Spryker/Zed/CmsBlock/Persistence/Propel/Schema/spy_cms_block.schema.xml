@@ -39,11 +39,12 @@
         <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_page" type="INTEGER" required="false" description="Deprecated"/>
         <column name="fk_template" type="INTEGER" required="false" />
+        <column name="is_active" type="BOOLEAN" required="true" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
         <column name="type" type="VARCHAR" size="255"/>
-        <column name="value" type="INTEGER" />
+        <column name="value" type="INTEGER" description="Deprecated"/>
         <foreign-key name="spy_cms_block-fk_template" foreignTable="spy_cms_block_template" phpName="CmsTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_block_template" local="fk_template"/>
         </foreign-key>

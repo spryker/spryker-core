@@ -15,4 +15,16 @@ interface CmsBlockQueryContainerInterface
      */
     public function queryCmsBlockById($idCmsBlock);
 
+    /**
+     * @param string $name
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockByName($name);
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockWithTemplate();
+
 }
