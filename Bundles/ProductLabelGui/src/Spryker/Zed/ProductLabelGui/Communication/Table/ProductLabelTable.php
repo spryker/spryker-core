@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -22,6 +24,7 @@ class ProductLabelTable extends AbstractTable
 
     const TABLE_IDENTIFIER = 'product-label-table';
     const COL_VALIDITY = 'validity';
+    const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
     const COL_ACTIONS = 'actions';
 
     /**
@@ -48,9 +51,11 @@ class ProductLabelTable extends AbstractTable
 
         $config->setHeader([
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => '#',
+            SpyProductLabelTableMap::COL_POSITION => 'Priority',
             SpyProductLabelTableMap::COL_NAME => 'Name',
             SpyProductLabelTableMap::COL_IS_EXCLUSIVE => 'Is Exclusive',
             static::COL_VALIDITY => 'Validity',
+            static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => 'Products Applied to',
             SpyProductLabelTableMap::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
@@ -65,6 +70,7 @@ class ProductLabelTable extends AbstractTable
 
         $config->setSortable([
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
+            SpyProductLabelTableMap::COL_POSITION,
             SpyProductLabelTableMap::COL_NAME,
             SpyProductLabelTableMap::COL_IS_EXCLUSIVE,
             SpyProductLabelTableMap::COL_IS_ACTIVE,
@@ -81,6 +87,7 @@ class ProductLabelTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->queryContainer->queryProductLabels();
+        $this->addAbstractProductRelationCountToQuery($query);
         /** @var \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities */
         $productLabelEntities = $this->runQuery($query, $config, true);
 
@@ -89,15 +96,34 @@ class ProductLabelTable extends AbstractTable
         foreach ($productLabelEntities as $productLabelEntity) {
             $tableRows[] = [
                 SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
+                SpyProductLabelTableMap::COL_POSITION => $productLabelEntity->getPosition(),
                 SpyProductLabelTableMap::COL_NAME => $productLabelEntity->getName(),
                 SpyProductLabelTableMap::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
                 static::COL_VALIDITY => $this->getValidityDateRangeLabel($productLabelEntity),
+                static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
                 SpyProductLabelTableMap::COL_IS_ACTIVE => $this->createStatusMarker($productLabelEntity->getIsActive()),
                 static::COL_ACTIONS => $this->createActionButtons($productLabelEntity),
             ];
         }
 
         return $tableRows;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $query
+     *
+     * @return void
+     */
+    protected function addAbstractProductRelationCountToQuery(SpyProductLabelQuery $query)
+    {
+        $query
+            ->useSpyProductLabelProductAbstractQuery()
+                ->withColumn(
+                    sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
+                    static::COL_ABSTRACT_PRODUCT_RELATION_COUNT
+                )
+                ->groupByFkProductLabel()
+            ->endUse();
     }
 
     /**
