@@ -28,4 +28,12 @@ class AssignedProductTable extends AbstractRelatedProductRelationTable
         return $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
     }
 
+    /**
+     * @return string
+     */
+    protected function getCheckboxCheckedAttribute()
+    {
+        return 'checked="checked"';
+    }
+
 }

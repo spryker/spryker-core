@@ -28,4 +28,12 @@ class AvailableProductTable extends AbstractRelatedProductRelationTable
         return $this->tableQueryBuilder->buildAvailableProductQuery($this->idProductLabel);
     }
 
+    /**
+     * @return string
+     */
+    protected function getCheckboxCheckedAttribute()
+    {
+        return '';
+    }
+
 }

@@ -152,9 +152,10 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     protected function getSelectCheckboxColumn(SpyProductAbstract $abstractProductEntity)
     {
         return sprintf(
-            '<input class="%s" type="checkbox" name="abstractProduct[]" value="%s" data-info="%s"/>',
+            '<input class="%s" type="checkbox" name="abstractProduct[]" value="%s" %s data-info="%s"/>',
             'js-abstract-product-checkbox',
             $abstractProductEntity->getIdProductAbstract(),
+            $this->getCheckboxCheckedAttribute(),
             htmlspecialchars(json_encode([
                 'id' => $abstractProductEntity->getIdProductAbstract(),
                 'sku' => $abstractProductEntity->getSku(),
@@ -162,5 +163,10 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
             ]))
         );
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getCheckboxCheckedAttribute();
 
 }

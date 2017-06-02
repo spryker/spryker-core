@@ -5,6 +5,9 @@
 
 'use strict';
 
+var CHECKBOX_CHECKED_STATE_CHECKED = 'checked';
+var CHECKBOX_CHECKED_STATE_UN_CHECKED = 'un_checked';
+
 //TODO fix later, see here: https://spryker.atlassian.net/browse/CD-446
 function ProductSelector() {
     var productSelector = {};
@@ -64,7 +67,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
 
     tableHandler.selectAll = function() {
         var nodes = sourceTable.dataTable().fnGetNodes();
-        $('input[type="checkbox"]', nodes).prop('checked', true);
+        tableHandler.checkCheckbox($('input[type="checkbox"]', nodes));
 
         var sourceTableData = sourceTable.DataTable().rows().data();
         sourceTableData.each(function(cellData, index) {
@@ -74,7 +77,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
 
     tableHandler.deSelectAll = function() {
         var nodes = sourceTable.dataTable().fnGetNodes();
-        $('input[type="checkbox"]', nodes).prop('checked', false);
+        tableHandler.unCheckCheckbox($('input[type="checkbox"]', nodes));
 
         var sourceTableData = sourceTable.DataTable().rows().data();
         sourceTableData.each(function(cellData, index) {
@@ -123,7 +126,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
             this.remove();
 
             var $checkbox = $('input[value="' + idProduct + '"]', sourceTable);
-            $checkbox.prop('checked', false);
+            tableHandler.unCheckCheckbox($checkbox);
         });
 
         destinationTable.DataTable().draw();
@@ -162,6 +165,41 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         return tableHandler.destinationTable;
     };
 
+    /**
+     * @returns {string}
+     */
+    tableHandler.getInitialCheckboxCheckedState = function() {
+        return CHECKBOX_CHECKED_STATE_UN_CHECKED;
+    };
+
+    /**
+     * @param {jQuery} $checkbox
+     * @return {boolean}
+     */
+    tableHandler.isCheckboxActive = function($checkbox) {
+        if (tableHandler.getInitialCheckboxCheckedState() === CHECKBOX_CHECKED_STATE_UN_CHECKED) {
+            return $checkbox.prop('checked');
+        }
+
+        return !$checkbox.prop('checked');
+    };
+
+    /**
+     * @param {jQuery} $checkbox
+     */
+    tableHandler.checkCheckbox = function($checkbox) {
+        var checkedState = (tableHandler.getInitialCheckboxCheckedState() === CHECKBOX_CHECKED_STATE_UN_CHECKED);
+        $checkbox.prop('checked', checkedState);
+    };
+
+    /**
+     * @param {jQuery} $checkbox
+     */
+    tableHandler.unCheckCheckbox = function($checkbox) {
+        var checkedState = (tableHandler.getInitialCheckboxCheckedState() !== CHECKBOX_CHECKED_STATE_UN_CHECKED);
+        $checkbox.prop('checked', checkedState);
+    };
+
     return tableHandler;
 }
 
@@ -184,7 +222,7 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
             var $checkbox = $(this);
             var info = $.parseJSON($checkbox.attr('data-info'));
 
-            if ($checkbox.prop('checked')) {
+            if (tableHandler.isCheckboxActive($checkbox)) {
                 tableHandler.addSelectedProduct(info.id, info.sku, info.name);
             } else {
                 tableHandler.removeSelectedProduct(info.id);
@@ -197,7 +235,7 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
 
             var selector = tableHandler.getSelector();
             if (selector.isProductSelected(idProduct)) {
-                $('input[value="' + idProduct + '"]', $(sourceTableSelector)).prop('checked', true);
+                tableHandler.checkCheckbox($('input[value="' + idProduct + '"]', $(sourceTableSelector)));
             }
         }
     });
@@ -207,5 +245,7 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
 
 module.exports = {
     create: create,
-    TableHandler: TableHandler
+    TableHandler: TableHandler,
+    CHECKBOX_CHECKED_STATE_CHECKED: CHECKBOX_CHECKED_STATE_CHECKED,
+    CHECKBOX_CHECKED_STATE_UN_CHECKED: CHECKBOX_CHECKED_STATE_UN_CHECKED
 };

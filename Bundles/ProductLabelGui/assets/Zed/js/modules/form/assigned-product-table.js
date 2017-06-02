@@ -29,40 +29,8 @@ function initialize()
         onRemove
     );
 
-    tableHandler.deSelectAll = function() {
-        var sourceTableData = tableHandler.getSourceTable().DataTable().rows().data();
-        var nodes = tableHandler.getSourceTable().dataTable().fnGetNodes();
-        $('input[type="checkbox"]', nodes).prop('checked', false);
-
-        sourceTableData.each(function(cellData, index) {
-            tableHandler.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
-        });
-    };
-
-    tableHandler.removeSelectedProduct = function(idProduct) {
-        idProduct = parseInt(idProduct, 10);
-
-        var destinationTable = tableHandler.destinationTable;
-        destinationTable.DataTable().rows().every(function(rowIndex, tableLoop, rowLoop) {
-            if (!this.data()) {
-                return;
-            }
-
-            var rowProductId = parseInt(this.data()[0], 10);
-            if (idProduct !== rowProductId) {
-                return;
-            }
-
-            tableHandler.getSelector().removeProductFromSelection(idProduct);
-
-            this.remove();
-
-            var $checkbox = $('input[value="' + idProduct + '"]', $(sourceTableSelector));
-            $checkbox.prop('checked', true);
-        });
-
-        destinationTable.DataTable().draw();
-        tableHandler.updateSelectedProductsLabelCount();
+    tableHandler.getInitialCheckboxCheckedState = function() {
+        return TableHandler.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
     $(sourceTabSelector + ' .js-toggle-selection-button a').on('click', tableHandler.toggleSelection);
