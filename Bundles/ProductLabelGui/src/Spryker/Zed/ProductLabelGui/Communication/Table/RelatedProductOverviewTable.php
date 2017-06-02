@@ -10,45 +10,18 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
+use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
-class RelatedProductOverviewTable extends AbstractTable
+class RelatedProductOverviewTable extends AbstractRelatedProductTable
 {
 
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const TABLE_IDENTIFIER = 'related-products-table';
-
-    /**
-     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface
-     */
-    protected $tableQueryBuilder;
-
-    /**
-     * @var int|null
-     */
-    protected $idProductLabel;
-
-    /**
-     * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
-     * @param int|null $idProductLabel
-     */
-    public function __construct(
-        RelatedProductTableQueryBuilderInterface $tableQueryBuilder,
-        ProductLabelGuiToMoneyInterface $moneyFacade,
-        $idProductLabel = null
-    ) {
-        $this->tableQueryBuilder = $tableQueryBuilder;
-        $this->moneyFacade = $moneyFacade;
-        $this->idProductLabel = $idProductLabel;
-    }
+    const COL_ACTIONS = 'actions';
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -59,23 +32,10 @@ class RelatedProductOverviewTable extends AbstractTable
     {
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
-        $config->setHeader([
-            SpyProductAbstractTableMap::COL_SKU => 'SKU',
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => 'Price',
-        ]);
-
-        $config->setDefaultSortField(
-            SpyProductAbstractTableMap::COL_SKU,
-            TableConfiguration::SORT_ASC
-        );
-
-        $config->setUrl(sprintf(
-            '%s?%s=%s',
-            $this->defaultUrl,
-            static::PARAM_ID_PRODUCT_LABEL,
-            (int)$this->idProductLabel
-        ));
+        $this->configureHeader($config);
+        $this->configureRawColumns($config);
+        $this->configureSorting($config);
+        $this->configureUrl($config);
 
         return $config;
     }
@@ -83,26 +43,79 @@ class RelatedProductOverviewTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return void
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function configureHeader(TableConfiguration $config)
     {
-        $query = $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
+        $config->setHeader([
+            SpyProductAbstractTableMap::COL_SKU => 'SKU',
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV => 'Categories',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => 'Price',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT => '# of Other Labels',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV => 'Status',
+            static::COL_ACTIONS => 'Actions',
+        ]);
+    }
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract[] $abstractProductEntities */
-        $abstractProductEntities = $this->runQuery($query, $config, true);
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureRawColumns(TableConfiguration $config)
+    {
+        $config->setRawColumns([
+            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV,
+            static::COL_ACTIONS
+        ]);
+    }
 
-        $tableRows = [];
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureSorting(TableConfiguration $config)
+    {
+        $config->setDefaultSortField(
+            SpyProductAbstractTableMap::COL_SKU,
+            TableConfiguration::SORT_ASC
+        );
+    }
 
-        foreach ($abstractProductEntities as $abstractProductEntity) {
-            $tableRows[] = [
-                SpyProductAbstractTableMap::COL_SKU => $abstractProductEntity->getSku(),
-                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $this->getNameColumn($abstractProductEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => $this->getPriceColumn($abstractProductEntity)
-            ];
-        }
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureUrl(TableConfiguration $config)
+    {
+        $config->setUrl(sprintf(
+            '%s?%s=%s',
+            $this->defaultUrl,
+            static::PARAM_ID_PRODUCT_LABEL,
+            (int)$this->idProductLabel
+        ));
+    }
 
-        return $tableRows;
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function getQuery()
+    {
+        return $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
+    }
+
+    protected function getRow(SpyProductAbstract $productAbstractEntity)
+    {
+        $row = parent::getRow($productAbstractEntity);
+
+        $row[SpyProductAbstractTableMap::COL_SKU] = $productAbstractEntity->getSku();
+        $row[RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT] = $this->getAdditionalRelationCountColumn($productAbstractEntity);
+        $row[static::COL_ACTIONS] = $this->getActionsColumn($productAbstractEntity);
+
+        return $row;
     }
 
     /**
@@ -110,11 +123,13 @@ class RelatedProductOverviewTable extends AbstractTable
      *
      * @return string
      */
-    protected function getNameColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getAdditionalRelationCountColumn(SpyProductAbstract $abstractProductEntity)
     {
-        return $abstractProductEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_NAME
+        $relationCount = (int)$abstractProductEntity->getVirtualColumn(
+            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT
         );
+
+        return ($relationCount - 1);
     }
 
     /**
@@ -122,13 +137,31 @@ class RelatedProductOverviewTable extends AbstractTable
      *
      * @return string
      */
-    protected function getPriceColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getActionsColumn(SpyProductAbstract $abstractProductEntity)
     {
-        $price = (int)$abstractProductEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE
-        );
-        $moneyTransfer = $this->moneyFacade->fromInteger($price);
+        $actionButtons = [
+            $this->generateViewProductInZedButton($abstractProductEntity),
+        ];
 
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        return implode(' ', $actionButtons);
     }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     *
+     * @return string
+     */
+    protected function generateViewProductInZedButton(SpyProductAbstract $abstractProductEntity)
+    {
+        return $this->generateViewButton(
+            Url::generate(
+                '/product-management/view',
+                [
+                    ViewController::PARAM_ID_PRODUCT_ABSTRACT => $abstractProductEntity->getIdProductAbstract(),
+                ]
+            ),
+            'View'
+        );
+    }
+
 }

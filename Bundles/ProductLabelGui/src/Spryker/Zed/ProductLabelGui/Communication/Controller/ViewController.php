@@ -71,7 +71,7 @@ class ViewController extends AbstractController
     /**
      * @param int $idProductLabel
      *
-     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedRelatedProductOverviewTable
      */
     protected function getRelatedProductTable($idProductLabel)
     {

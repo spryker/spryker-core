@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-
-class AssignedProductTable extends AbstractProductTable
+class AssignedProductTable extends AbstractRelatedProductRelationTable
 {
 
     /**
@@ -18,21 +15,17 @@ class AssignedProductTable extends AbstractProductTable
      */
     protected $tableIdentifier = 'assigned-product-table';
 
+    /**
+     * @var string
+     */
     protected $defaultUrl = 'assigned-product-table';
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function getQuery()
     {
-        $query = $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
-
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
-        $productAbstractEntities = $this->runQuery($query, $config, true);
-
-        return $this->buildResultData($productAbstractEntities);
+        return $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
     }
 
 }

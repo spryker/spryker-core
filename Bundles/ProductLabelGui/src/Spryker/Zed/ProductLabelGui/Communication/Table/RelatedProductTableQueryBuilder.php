@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
@@ -23,7 +26,9 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
     const RESULT_FIELD_ABSTRACT_PRODUCT_NAME = 'abstract_product_name';
     const RESULT_FIELD_ABSTRACT_PRODUCT_PRICE = 'abstract_product_price';
-    const RESULT_FIELD_ABSTRACT_PRODUCT_LABEL_HAS_RELATION_FLAG = 'abstract_product_has_label_relation_flag';
+    const RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
+    const RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+    const RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV = 'concrete_product_states_csv';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
@@ -97,9 +102,12 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     protected function build($idProductLabel = null)
     {
         $query = $this->productQueryContainer->queryProductAbstract();
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        $this->addProductName($query);
+        $this->addProductName($query, $localeTransfer);
         $this->addProductPrice($query);
+        $this->addProductCategories($query, $localeTransfer);
+        $this->addConcreteProductStates($query);
         $this->addRelation($query, $idProductLabel);
 
         return $query;
@@ -107,10 +115,11 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function addProductName(SpyProductAbstractQuery $query)
+    protected function addProductName(SpyProductAbstractQuery $query, LocaleTransfer $localeTransfer)
     {
         $query
             ->useSpyProductAbstractLocalizedAttributesQuery()
@@ -118,7 +127,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
                     static::RESULT_FIELD_ABSTRACT_PRODUCT_NAME
                 )
-                ->filterByFkLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
+                ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse();
     }
 
@@ -139,6 +148,46 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     ->filterByName($this->bundleConfig->getDefaultPriceType())
                 ->endUse()
             ->endUse();
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function addProductCategories(SpyProductAbstractQuery $query, LocaleTransfer $localeTransfer)
+    {
+        $query
+            ->useSpyProductCategoryQuery()
+                ->useSpyCategoryQuery()
+                    ->useAttributeQuery()
+                        ->withColumn(
+                            sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
+                            static::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV
+                        )
+                        ->filterByFkLocale($localeTransfer->getIdLocale())
+                    ->endUse()
+                ->endUse()
+                ->groupByFkProductAbstract()
+            ->endUse();
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     *
+     * @return void
+     */
+    protected function addConcreteProductStates(SpyProductAbstractQuery $query)
+    {
+        $query
+            ->useSpyProductQuery()
+                ->withColumn(
+                    sprintf('GROUP_CONCAT(%s)', SpyProductTableMap::COL_IS_ACTIVE),
+                    static::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV
+                )
+            ->endUse()
+            ->groupByIdProductAbstract();
     }
 
     /**
@@ -165,6 +214,13 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                 $idProductLabel ?: 'NULL'
             )
         );
+
+        $query
+            ->withColumn(
+                sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
+                static::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT
+            )
+            ->groupByIdProductAbstract();
     }
 
 }

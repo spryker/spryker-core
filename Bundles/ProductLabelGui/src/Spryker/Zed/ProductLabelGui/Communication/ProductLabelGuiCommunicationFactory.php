@@ -21,7 +21,6 @@ use Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable;
-use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
