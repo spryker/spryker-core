@@ -97,6 +97,8 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
                 $dataImporterReportTransfer->setIsSuccess(false);
                 $this->triggerDataSetImportFailedEvent($dataImportException, $dataReader);
             }
+
+            unset($dataSet);
         }
 
         $this->triggerAfterImportEvent($dataImporterReportTransfer);
