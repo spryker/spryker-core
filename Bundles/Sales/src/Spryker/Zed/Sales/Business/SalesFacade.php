@@ -187,4 +187,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->update($addressesTransfer, $idAddress);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandSalesOrder($quoteTransfer);
+    }
+
 }

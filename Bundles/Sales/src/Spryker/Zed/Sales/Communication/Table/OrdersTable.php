@@ -131,6 +131,10 @@ class OrdersTable extends AbstractTable
      */
     protected function getGrandTotal(array $item)
     {
+        if (!isset($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL])) {
+            return $this->formatPrice(0);
+        }
+
         return $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
     }
 

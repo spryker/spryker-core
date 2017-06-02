@@ -56,6 +56,13 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
 
             $expenseTransfer->setUnitTaxAmountWithDiscounts((int)round($itemUnitTaxAmount));
             $expenseTransfer->setUnitTaxTotal((int)round($itemUnitTaxAmount));
+        }
+
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            if (!$expenseTransfer->getTaxRate()) {
+                continue;
+            }
 
             $itemSumTaxAmount = $this->calculateTaxAmount(
                 $expenseTransfer->getSumGrossPriceWithDiscounts(),

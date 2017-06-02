@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
@@ -36,6 +37,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Will be removed in the next major version.
      */
     const FACADE_LOCALE = 'LOCALE_FACADE';
+    const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +52,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addHydrateOrderPlugins($container);
+        $container = $this->addCalculationFacade($container);
 
         return $container;
     }
@@ -206,6 +209,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new SalesToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCalculationFacade(Container $container)
+    {
+        $container[static::FACADE_CALCULATION] = function (Container $container) {
+            return new SalesToCalculationBridge($container->getLocator()->calculation()->facade());
         };
 
         return $container;

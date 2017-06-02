@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -241,10 +240,7 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function saveOrderItems(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        $items = $this->expandItems($quoteTransfer->getItems());
-        $quoteTransfer->setItems($items);
-
-        foreach ($items as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
@@ -252,26 +248,6 @@ class OrderSaver implements OrderSaverInterface
             $salesOrderItemEntity->save();
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function expandItems(ArrayObject $items)
-    {
-        $expandedItems = new ArrayObject();
-        foreach ($items as $itemTransfer) {
-            $quantity = $itemTransfer->getQuantity();
-            for ($i = 1; $quantity >= $i; $i++) {
-                $expandedItemTransfer = clone $itemTransfer;
-                $expandedItemTransfer->setQuantity(1);
-                $expandedItems->append($expandedItemTransfer);
-            }
-        }
-
-        return $expandedItems;
     }
 
     /**

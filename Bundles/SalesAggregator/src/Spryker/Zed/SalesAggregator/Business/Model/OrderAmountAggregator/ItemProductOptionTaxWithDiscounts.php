@@ -60,27 +60,35 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
         foreach ($items as $itemTransfer) {
 
             $unitOptionTaxTotalAmount = $this->getProductOptionWithDiscountsUnitTotalTaxAmount($itemTransfer);
-            $sumOptionTaxTotalAmount = $this->getProductOptionWithDiscountsSumTotalTaxAmount($itemTransfer);
 
             $itemUnitAmount = 0;
-            $itemSumTaxAmount = 0;
 
             if ($itemTransfer->getTaxRate()) {
                 $itemUnitAmount = $this->calculateTaxAmount(
                     $itemTransfer->getUnitGrossPriceWithDiscounts(),
                     $itemTransfer->getTaxRate()
                 );
+            }
 
+            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts((int)round($itemUnitAmount + $unitOptionTaxTotalAmount));
+            $itemTransfer->setUnitTaxTotal($itemTransfer->getUnitTaxAmountWithProductOptionAndDiscountAmounts());
+
+        }
+
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+        foreach ($items as $itemTransfer) {
+
+            $sumOptionTaxTotalAmount = $this->getProductOptionWithDiscountsSumTotalTaxAmount($itemTransfer);
+            $itemSumTaxAmount = 0;
+
+            if ($itemTransfer->getTaxRate()) {
                 $itemSumTaxAmount = $this->calculateTaxAmount(
                     $itemTransfer->getSumGrossPriceWithDiscounts(),
                     $itemTransfer->getTaxRate()
                 );
             }
 
-            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts((int)round($itemUnitAmount + $unitOptionTaxTotalAmount));
             $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts((int)round($itemSumTaxAmount + $sumOptionTaxTotalAmount));
-
-            $itemTransfer->setUnitTaxTotal($itemTransfer->getUnitTaxAmountWithProductOptionAndDiscountAmounts());
             $itemTransfer->setSumTaxTotal($itemTransfer->getSumTaxAmountWithProductOptionAndDiscountAmounts());
 
         }
