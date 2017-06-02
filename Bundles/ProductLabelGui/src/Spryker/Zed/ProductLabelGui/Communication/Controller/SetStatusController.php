@@ -19,6 +19,7 @@ class SetStatusController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    const PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,7 +35,26 @@ class SetStatusController extends AbstractController
 
         $this->updateProductLabel($productLabelTransfer);
 
-        return $this->redirectResponse('/product-label-gui');
+        $this->addSuccessMessage(sprintf(
+            'Product label #%d successfully activated.',
+            $productLabelTransfer->getIdProductLabel()
+        ));
+
+        return $this->redirectResponse($this->getRedirectUrl($request));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getRedirectUrl(Request $request)
+    {
+        if ($request->query->get(static::PARAM_REDIRECT_URL)) {
+            return $request->query->get(static::PARAM_REDIRECT_URL);
+        }
+
+        return '/product-label-gui';
     }
 
     /**
@@ -51,7 +71,12 @@ class SetStatusController extends AbstractController
 
         $this->updateProductLabel($productLabelTransfer);
 
-        return $this->redirectResponse('/product-label-gui');
+        $this->addSuccessMessage(sprintf(
+            'Product label #%d successfully deactivated.',
+            $productLabelTransfer->getIdProductLabel()
+        ));
+
+        return $this->redirectResponse($this->getRedirectUrl($request));
     }
 
     /**

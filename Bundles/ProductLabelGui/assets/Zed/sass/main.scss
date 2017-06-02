@@ -5,6 +5,12 @@
 
 @import '~jstree/dist/themes/default/style';
 
+/* Deactivate button */
+#product-label-table .btn-danger {
+    >.fa-trash {
+        display: none;
+    }
+}
 
 /* Wave Loader on Buttons */
 .btn > .sk-spinner-three-bounce {

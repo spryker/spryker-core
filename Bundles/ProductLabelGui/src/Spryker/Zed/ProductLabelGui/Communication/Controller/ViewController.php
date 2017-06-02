@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
-
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  */
 class ViewController extends AbstractController
 {
@@ -71,7 +69,7 @@ class ViewController extends AbstractController
     /**
      * @param int $idProductLabel
      *
-     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedRelatedProductOverviewTable
+     * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable
      */
     protected function getRelatedProductTable($idProductLabel)
     {

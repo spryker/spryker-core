@@ -12,6 +12,7 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonUrlGenerator;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
@@ -270,7 +271,10 @@ class ProductLabelTable extends AbstractTable
                     SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
-            'Activate'
+            'Activate',
+            [
+                static::BUTTON_ICON => '',
+            ]
         );
     }
 
