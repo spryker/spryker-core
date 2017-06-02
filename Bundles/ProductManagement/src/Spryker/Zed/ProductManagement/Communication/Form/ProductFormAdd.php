@@ -19,6 +19,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -82,6 +83,11 @@ class ProductFormAdd extends AbstractType
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
      */
     protected $utilTextService;
@@ -92,20 +98,22 @@ class ProductFormAdd extends AbstractType
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
      */
     public function __construct(
         LocaleProvider $localeProvider,
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
-        ProductManagementToUtilTextInterface $utilTextService
+        ProductManagementToUtilTextInterface $utilTextService,
+        ProductManagementToCurrencyInterface $currencyFacade
     ) {
-
         $this->localeProvider = $localeProvider;
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->moneyFacade = $moneyFacade;
         $this->utilTextService = $utilTextService;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -446,7 +454,7 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_PRICE_AND_TAX, new PriceForm($this->moneyFacade), [
+            ->add(self::FORM_PRICE_AND_TAX, new PriceForm($this->moneyFacade, $this->currencyFacade), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
