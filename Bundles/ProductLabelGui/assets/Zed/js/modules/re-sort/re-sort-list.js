@@ -30,7 +30,7 @@ function initialize(listSelector, buttonSelector) {
  */
 function initializeDragAndDrop() {
     $list.nestable({
-        depth: 1
+        maxDepth: 1
     });
 }
 
