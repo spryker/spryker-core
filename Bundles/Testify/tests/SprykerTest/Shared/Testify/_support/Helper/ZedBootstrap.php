@@ -45,7 +45,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     public function _depends()
     {
         return [
-            BundleConfig::class => 'You need to enable \Testify\Helper\BundleConfig in order to mock bundle configurations',
+            BundleConfig::class => 'You need to enable \SprykerTest\Shared\Testify\Helper\BundleConfig in order to mock bundle configurations',
         ];
     }
 

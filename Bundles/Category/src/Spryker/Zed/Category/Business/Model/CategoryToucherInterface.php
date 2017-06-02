@@ -44,4 +44,11 @@ interface CategoryToucherInterface
      */
     public function touchCategoryActive($idCategory);
 
+    /**
+     * @param int $idFormerParentCategoryNode
+     *
+     * @return void
+     */
+    public function touchFormerParentCategoryNodeActiveRecursively($idFormerParentCategoryNode);
+
 }

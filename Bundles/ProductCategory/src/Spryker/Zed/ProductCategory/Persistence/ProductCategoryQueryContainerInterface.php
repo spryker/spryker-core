@@ -61,4 +61,13 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale);
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode);
+
 }

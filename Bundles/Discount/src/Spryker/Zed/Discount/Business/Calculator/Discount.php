@@ -11,7 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -129,11 +131,11 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection $voucherDiscounts
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $voucherDiscounts
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function filterUniqueVoucherDiscounts(ObjectCollection $voucherDiscounts)
+    protected function filterUniqueVoucherDiscounts(Collection $voucherDiscounts)
     {
         $uniqueVoucherDiscounts = new ObjectCollection();
         foreach ($voucherDiscounts as $discountEntity) {
