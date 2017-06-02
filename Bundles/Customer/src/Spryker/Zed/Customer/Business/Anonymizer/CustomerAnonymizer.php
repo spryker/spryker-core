@@ -63,8 +63,6 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function process(CustomerTransfer $customerTransfer)
@@ -78,7 +76,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
