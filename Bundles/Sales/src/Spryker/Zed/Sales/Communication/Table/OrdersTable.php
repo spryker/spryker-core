@@ -35,11 +35,6 @@ class OrdersTable extends AbstractTable
     protected $queryBuilder;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\SalesFacade
-     */
-    protected $salesAggregatorFacade;
-
-    /**
      * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected $utilDateTimeService;
