@@ -23,7 +23,7 @@ class LocaleDataHelper extends Module
      */
     public function haveLocale($seedData = [])
     {
-        $localeTransfer = (new LocaleBuilder($seedData))->build();
+        $localeTransfer = $this->generateLocaleTransfer($seedData);
 
         if ($this->getLocaleFacade()->hasLocale($localeTransfer->getLocaleName())) {
             return $this->getLocaleFacade()->getLocale($localeTransfer->getLocaleName());
@@ -38,6 +38,22 @@ class LocaleDataHelper extends Module
     protected function getLocaleFacade()
     {
         return $this->getLocator()->locale()->facade();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function generateLocaleTransfer(array $seedData = [])
+    {
+        $localeTransfer = (new LocaleBuilder($seedData))->build();
+
+        if (strlen($localeTransfer->getLocaleName()) > 5) {
+            return $this->generateLocaleTransfer($seedData);
+        }
+
+        return $localeTransfer;
     }
 
 }
