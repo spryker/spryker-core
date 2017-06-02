@@ -50,7 +50,7 @@ class ProductImageExpander implements ProductImageExpanderInterface
      */
     protected function expandItemsWithImages(ItemTransfer $itemTransfer)
     {
-        $imageSets = $this->productImageFacade->getProductImagesSetCollectionByProductId($itemTransfer->getProductConcrete()->getIdProductConcrete());
+        $imageSets = $this->productImageFacade->getProductImagesSetCollectionByProductId($itemTransfer->getId());
         $itemTransfer->setImageSets(new ArrayObject($imageSets));
     }
 
