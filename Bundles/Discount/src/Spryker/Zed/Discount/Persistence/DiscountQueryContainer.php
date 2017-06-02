@@ -13,6 +13,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Formatter\OnDemandFormatter;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -81,6 +82,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = [])
     {
         $query = $this->queryActiveAndRunningDiscounts()
+            ->setFormatter(OnDemandFormatter::class)
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
                     ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)

@@ -10,7 +10,7 @@
         <property name="subject" type="string" />
         <property name="templates" type="MailTemplate[]" singular="template" />
         <property name="headers" type="MailHeader[]" singular="header" />
-        <property name="attachments" type="Attachment[]" singular="attachment" />
+        <property name="attachments" type="MailAttachment[]" singular="attachment" />
         <property name="locale" type="Locale" />
     </transfer>
 

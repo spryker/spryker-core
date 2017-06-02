@@ -152,6 +152,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     public function buildProductConcreteTransfer(ProductAbstractTransfer $productAbstractTransfer, FormInterface $form, $idProduct)
     {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
+        $attributeValues = $this->generateAbstractAttributeArrayFromData($form->getData());
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer
@@ -168,9 +169,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         foreach ($localeCollection as $localeTransfer) {
             $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
 
+            $localizedAttributeValues = [];
+            if (isset($attributeValues[$localeTransfer->getLocaleName()])) {
+                $localizedAttributeValues = $attributeValues[$localeTransfer->getLocaleName()];
+            }
+
             $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
                 $form->get($formName),
-                [],
+                $localizedAttributeValues,
                 $localeTransfer
             );
 

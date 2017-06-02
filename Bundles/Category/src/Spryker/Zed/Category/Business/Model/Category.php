@@ -51,6 +51,11 @@ class Category
     protected $deletePlugins;
 
     /**
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     */
+    protected $updatePlugins;
+
+    /**
      * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
      */
     protected $eventFacade;
@@ -63,6 +68,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
+     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
      */
     public function __construct(
@@ -73,6 +79,7 @@ class Category
         CategoryExtraParentsInterface $categoryExtraParents,
         CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
+        array $updatePlugins,
         CategoryToEventInterface $eventFacade = null
     ) {
         $this->category = $category;
@@ -82,6 +89,7 @@ class Category
         $this->categoryExtraParents = $categoryExtraParents;
         $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
+        $this->updatePlugins = $updatePlugins;
         $this->eventFacade = $eventFacade;
     }
 
@@ -141,9 +149,23 @@ class Category
         $this->categoryUrl->update($categoryTransfer);
         $this->categoryExtraParents->update($categoryTransfer);
 
+        $this->runUpdatePlugins($categoryTransfer);
+
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function runUpdatePlugins(CategoryTransfer $categoryTransfer)
+    {
+        foreach ($this->updatePlugins as $updatePlugin) {
+            $updatePlugin->update($categoryTransfer);
+        }
     }
 
     /**

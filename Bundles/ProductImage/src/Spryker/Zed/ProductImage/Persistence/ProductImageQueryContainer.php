@@ -154,4 +154,62 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
             ->filterByFkProductImageSet($idProductImageSet);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryDefaultAbstractProductImageSets($idProductAbstract)
+    {
+        return $this->queryProductImageSet()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByFkLocale(null);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryLocalizedAbstractProductImageSets($idProductAbstract, $idLocale)
+    {
+        return $this->queryProductImageSet()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByFkLocale($idLocale);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryDefaultConcreteProductImageSets($idProductConcrete)
+    {
+        return $this->queryProductImageSet()
+            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkLocale(null);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale)
+    {
+        return $this->queryProductImageSet()
+            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkLocale($idLocale);
+    }
+
 }
