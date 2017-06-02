@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
@@ -57,7 +57,7 @@ class CalculationFacadeTest extends Test
         );
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setTaxMode(CalculationTaxMode::TAX_MODE_GROSS);
+        $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(2);
@@ -77,7 +77,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addExpense($expenseTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         //item
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
@@ -124,7 +124,7 @@ class CalculationFacadeTest extends Test
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
 
@@ -145,22 +145,29 @@ class CalculationFacadeTest extends Test
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
+        $itemTransfer->setUnitPrice(200);
+        $itemTransfer->setSumPrice(200);
+
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitGrossAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitGrossAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitGrossAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitGrossAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
@@ -168,15 +175,18 @@ class CalculationFacadeTest extends Test
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setUnitPrice(200);
+        $expenseTransfer->setSumPrice(200);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitGrossAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $quoteTransfer->addExpense($expenseTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
@@ -208,7 +218,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
 
@@ -238,7 +248,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $this->assertSame(20, $calculatedItemTransfer->getSumTaxAmountFullAggregation());
@@ -273,7 +283,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $this->assertSame(40, $calculatedItemTransfer->getSumSubtotalAggregation());
@@ -300,7 +310,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $this->assertSame(35, $calculatedItemTransfer->getSumPriceToPayAggregation());
@@ -330,7 +340,7 @@ class CalculationFacadeTest extends Test
         $totalsTransfer = new TotalsTransfer();
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedTotalsTransfer = $quoteTransfer->getTotals();
         $this->assertSame(20, $calculatedTotalsTransfer->getSubtotal());
@@ -360,7 +370,7 @@ class CalculationFacadeTest extends Test
         $totalsTransfer = new TotalsTransfer();
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedOrderExpenseTotal = $quoteTransfer->getTotals()->getExpenseTotal();
         $this->assertSame(20, $calculatedOrderExpenseTotal);
@@ -394,7 +404,7 @@ class CalculationFacadeTest extends Test
         $totalsTransfer = new TotalsTransfer();
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedTotalDiscountAmount = $quoteTransfer->getTotals()->getDiscountTotal();
         $this->assertSame(30, $calculatedTotalDiscountAmount);
@@ -428,7 +438,7 @@ class CalculationFacadeTest extends Test
         $totalsTransfer = new TotalsTransfer();
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedTaxAmount = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
 
@@ -468,7 +478,7 @@ class CalculationFacadeTest extends Test
         $totalsTransfer = new TotalsTransfer();
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedRefundTotal = $quoteTransfer->getTotals()->getRefundTotal();
 
@@ -499,7 +509,7 @@ class CalculationFacadeTest extends Test
         $expenseTransfer->setCanceledAmount(2);
         $quoteTransfer->addExpense($expenseTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
@@ -529,7 +539,7 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer->setTotals($totalsTransfer);
 
-        $calculationFacade->recalculate($quoteTransfer);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedGrandTotal = $quoteTransfer->getTotals()->getGrandTotal();
 

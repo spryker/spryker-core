@@ -23,7 +23,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function recalculateAction(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->recalculate($quoteTransfer);
+        return $this->getFacade()->recalculateQuote($quoteTransfer);
     }
 
 }

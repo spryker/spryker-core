@@ -41,11 +41,6 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
         $taxAmount += static::$roundingErrorDelta;
 
         $taxAmountRounded = (int)round($taxAmount);
-       /* if ($round) {
-            $taxAmountRounded = (int)round($taxAmount);
-        } else {
-            $taxAmountRounded = round($taxAmount, 2);
-        }*/
         static::$roundingErrorDelta = $taxAmount - $taxAmountRounded;
 
         return $taxAmountRounded;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Price\PriceTaxMode;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 
@@ -45,14 +45,24 @@ class PriceManager implements PriceManagerInterface
      */
     public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $cartChangeTransfer->setQuote($this->setQuoteTaxMode($cartChangeTransfer->getQuote()));
+        $cartChangeTransfer->setQuote($this->setQuotePriceMode($cartChangeTransfer->getQuote()));
 
-        foreach ($cartChangeTransfer->getItems() as $cartItem) {
-            if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {
-                throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getSku()));
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$this->priceFacade->hasValidPrice($itemTransfer->getSku(), $this->grossPriceType)) {
+                throw new PriceMissingException(
+                    sprintf(
+                        'Cart item %s can not be priced',
+                        $itemTransfer->getSku()
+                    )
+                );
             }
 
-            $cartItem->setUnitGrossPrice($this->priceFacade->getPriceBySku($cartItem->getSku(), $this->grossPriceType));
+            $itemTransfer->setUnitGrossPrice(
+                $this->priceFacade->getPriceBySku(
+                    $itemTransfer->getSku(),
+                    $this->grossPriceType
+                )
+            );
         }
 
         return $cartChangeTransfer;
@@ -63,9 +73,9 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setQuoteTaxMode(QuoteTransfer $quoteTransfer)
+    protected function setQuotePriceMode(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setTaxMode(PriceTaxMode::TAX_MODE_GROSS);
+        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
 
         return $quoteTransfer;
     }

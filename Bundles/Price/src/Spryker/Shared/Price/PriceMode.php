@@ -7,10 +7,10 @@
 
 namespace Spryker\Shared\Price;
 
-interface PriceTaxMode
+interface PriceMode
 {
 
-    const TAX_MODE_NET = 'NET_MODE';
-    const TAX_MODE_GROSS = 'GROSS_MODE';
+    const PRICE_MODE_NET = 'NET_MODE';
+    const PRICE_MODE_GROSS = 'GROSS_MODE';
 
 }

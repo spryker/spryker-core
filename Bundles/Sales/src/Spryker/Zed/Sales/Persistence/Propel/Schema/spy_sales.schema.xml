@@ -86,7 +86,7 @@
         <column name="order_reference" type="VARCHAR" size="45" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
 
-        <column name="tax_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
+        <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
 
         <behavior name="timestampable"/>
 

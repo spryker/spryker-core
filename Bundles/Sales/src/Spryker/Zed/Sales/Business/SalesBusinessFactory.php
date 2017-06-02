@@ -126,6 +126,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderExpander($this->getCalculationFacade());
     }
 
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
+     */
     protected function getCalculationFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CALCULATION);

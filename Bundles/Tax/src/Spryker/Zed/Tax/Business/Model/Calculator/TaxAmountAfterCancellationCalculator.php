@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Tax\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountAfterCancellationCalculator implements CalculatorInterface
@@ -56,7 +56,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             $taxAmount = $this->calculateTaxAmount(
                 $canceledTaxableAmount,
                 $itemTransfer->getTaxRateAverageAggregation(),
-                $calculableObjectTransfer->getTaxMode()
+                $calculableObjectTransfer->getPriceMode()
             );
 
             $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getUnitTaxAmountFullAggregation() - $taxAmount);
@@ -81,7 +81,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             $taxAmount = $this->calculateTaxAmount(
                 $canceledTaxableAmount,
                 $expenseTransfer->getTaxRate(),
-                $calculableObjectTransfer->getTaxMode()
+                $calculableObjectTransfer->getPriceMode()
             );
 
             $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getUnitTaxAmount() - $taxAmount);
@@ -91,13 +91,13 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     /**
      * @param int $price
      * @param float $taxRate
-     * @param string $taxMode
+     * @param string $priceMode
      *
      * @return int
      */
-    protected function calculateTaxAmount($price, $taxRate, $taxMode = CalculationTaxMode::TAX_MODE_GROSS)
+    protected function calculateTaxAmount($price, $taxRate, $priceMode = CalculationPriceMode::PRICE_MODE_GROSS)
     {
-        if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
+        if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
             return $this->accruedTaxCalculator->getTaxValueFromNetPrice($price, $taxRate);
         } else {
             return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);

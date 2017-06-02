@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceCalculator implements CalculatorInterface
@@ -44,9 +44,9 @@ class PriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $calculableObjectTransfer->requireTaxMode();
+        $calculableObjectTransfer->requirePriceMode();
 
-        if ($calculableObjectTransfer->getTaxMode() === CalculationTaxMode::TAX_MODE_NET) {
+        if ($calculableObjectTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
             $this->executeCalculatorStack($this->netPriceCalculators, $calculableObjectTransfer);
         } else {
             $this->executeCalculatorStack($this->grossPriceCalculators, $calculableObjectTransfer);

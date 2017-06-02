@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
@@ -51,8 +50,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMockBuilder('Spryker\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface')->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], []);
 
         $quoteTransfer = new QuoteTransfer();
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -78,8 +76,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1, $mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1, $mock2], [], []);
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -104,8 +101,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2]);
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
     }
@@ -125,8 +121,7 @@ class CheckoutWorkflowTest extends Test
 
         $quoteTransfer = new QuoteTransfer();
 
-        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [$mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [$mock2], []);
 
         $mock2->expects($this->once())->method('saveOrder')->with(
             $this->isInstanceOf(QuoteTransfer::class),
@@ -151,8 +146,7 @@ class CheckoutWorkflowTest extends Test
         $mock1 = new MockOrderSaver($checkoutResponse);
         $mock2 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
 
-        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1], [$mock2], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1], [$mock2]);
         $quoteTransfer = new QuoteTransfer();
 
         $mock2->expects($this->never())->method('executeHook');
@@ -174,8 +168,7 @@ class CheckoutWorkflowTest extends Test
 
         $mock = new MockPostHook($checkoutResponse);
 
-        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock]);
         $quoteTransfer = new QuoteTransfer();
 
         $result = $checkoutWorkflow->placeOrder($quoteTransfer);

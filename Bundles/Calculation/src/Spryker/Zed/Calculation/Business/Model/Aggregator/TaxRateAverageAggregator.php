@@ -10,7 +10,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Shared\Calculation\CalculationTaxMode;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
@@ -25,21 +25,21 @@ class TaxRateAverageAggregator implements CalculatorInterface
     {
         $this->calculateTaxAverageAggregationForItems(
             $calculableObjectTransfer->getItems(),
-            $calculableObjectTransfer->getTaxMode()
+            $calculableObjectTransfer->getPriceMode()
         );
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $taxMode
+     * @param string $priceMode
      *
      * @return void
      */
-    protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $taxMode)
+    protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $priceMode)
     {
         foreach ($items as $itemTransfer) {
 
-            $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $taxMode);
+            $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $priceMode);
             $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $unitPriceToPayAggregationNetPrice);
 
             $itemTransfer->setTaxRateAverageAggregation($taxRateAverageAggregation);
@@ -49,16 +49,16 @@ class TaxRateAverageAggregator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $taxMode
+     * @param string $priceMode
      *
      * @return int
      */
     protected function getUnitNetPriceToPayAggregationNetPrice(
         ItemTransfer $itemTransfer,
-        $taxMode = CalculationTaxMode::TAX_MODE_GROSS
+        $priceMode = CalculationPriceMode::PRICE_MODE_GROSS
     ) {
 
-        if ($taxMode === CalculationTaxMode::TAX_MODE_NET) {
+        if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
             return $itemTransfer->getUnitPriceToPayAggregation();
         }
 

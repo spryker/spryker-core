@@ -419,6 +419,10 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
+            return [];
+        };
+
         $container[CustomerDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[CustomerDependencyProvider::STORE] = Store::getInstance();
 

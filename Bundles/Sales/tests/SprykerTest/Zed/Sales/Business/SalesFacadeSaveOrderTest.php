@@ -27,7 +27,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
-use Spryker\Shared\Price\PriceTaxMode;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
@@ -157,7 +157,7 @@ class SalesFacadeSaveOrderTest extends Test
         $country->save();
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setTaxMode(PriceTaxMode::TAX_MODE_GROSS);
+        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
         $billingAddress = new AddressTransfer();
 
         $billingAddress->setIso2Code('ix')
@@ -305,14 +305,14 @@ class SalesFacadeSaveOrderTest extends Test
         $item1->setName('item-test-1')
             ->setSku('sku1')
             ->setUnitGrossPrice(120)
-            ->setQuantity(2)
+            ->setQuantity(1)
             ->setTaxRate(19);
 
         $item2 = new ItemTransfer();
         $item2->setName('item-test-2')
             ->setSku('sku2')
             ->setUnitGrossPrice(130)
-            ->setQuantity(3)
+            ->setQuantity(1)
             ->setTaxRate(19);
 
         $quoteTransfer->addItem($item1);
@@ -343,12 +343,12 @@ class SalesFacadeSaveOrderTest extends Test
         $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
         $this->assertSame(1, $item1Entity->getQuantity());
 
-        $this->assertSame($savedItems[3]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
         $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
-        $this->assertSame($savedItems[3]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
+        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
         $this->assertSame(1, $item2Entity->getQuantity());
     }
 
