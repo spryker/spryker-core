@@ -83,20 +83,4 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
         return CustomerApiConfig::RESOURCE_CUSTOMERS;
     }
 
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [
-            'options',
-            'get',
-            'post',
-            'patch',
-            'delete',
-        ];
-    }
-
 }
