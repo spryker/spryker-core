@@ -100,11 +100,12 @@ class DataImportConsole extends Console
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType()));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
-        $this->info('<fg=white>Import status: </>' . $this->getImportStatus($dataImportReportTransfer));
-
         if ($dataImportReportTransfer->getDataImporterReports()) {
             $this->printDataImporterReports($dataImportReportTransfer->getDataImporterReports());
         }
+
+        $this->info('<fg=green>---------------------------------</>');
+        $this->info('<fg=white;options=bold>Overall Import status: </>' . $this->getImportStatus($dataImportReportTransfer));
 
         if ($dataImportReportTransfer->getIsSuccess()) {
             return static::CODE_SUCCESS;

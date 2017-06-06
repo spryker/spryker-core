@@ -12,6 +12,8 @@ use Codeception\Util\Stub;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
@@ -80,6 +82,30 @@ class DataImporterHelper extends Module
         $dataSetStub = Stub::makeEmpty(DataSetStepBrokerInterface::class);
 
         return $dataSetStub;
+    }
+
+    /**
+     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface
+     */
+    public function getBeforeImportHookMock()
+    {
+        $beforeHook = Stub::makeEmpty(DataImporterBeforeImportInterface::class, [
+            'beforeImport' => Stub::exactly(1),
+        ]);
+
+        return $beforeHook;
+    }
+
+    /**
+     * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
+     */
+    public function getAfterImportHookMock()
+    {
+        $beforeHook = Stub::makeEmpty(DataImporterAfterImportInterface::class, [
+            'afterImport' => Stub::exactly(1),
+        ]);
+
+        return $beforeHook;
     }
 
     /**

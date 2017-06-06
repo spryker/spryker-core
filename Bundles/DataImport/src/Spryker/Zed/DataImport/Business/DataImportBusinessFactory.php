@@ -50,7 +50,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      * @param string $importType
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $reader
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface
      */
     public function createDataImporter($importType, DataReaderInterface $reader)
     {
@@ -68,7 +68,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function getCsvDataImporterFromConfig(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
     {

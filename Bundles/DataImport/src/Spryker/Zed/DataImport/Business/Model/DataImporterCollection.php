@@ -62,8 +62,8 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
             );
         }
 
-        if ($dataImporterReportTransfer->getImportedDataSets() !== 0) {
-            $dataImporterReportTransfer->setIsSuccess(true);
+        if ($dataImporterReportTransfer->getImportedDataSets() === 0) {
+            $dataImporterReportTransfer->setIsSuccess(false);
         }
 
         return $dataImporterReportTransfer;

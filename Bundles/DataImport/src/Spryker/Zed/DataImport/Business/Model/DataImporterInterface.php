@@ -15,12 +15,10 @@ interface DataImporterInterface
     /**
      * Specification:
      * - Reads data from an DataReaderInterface.
-     * - Executes hook before all DataSetHandlerInterfaces are executed.
+     * - Executes hook before all DataSetStepBrokerInterfaces are executed.
      * - Iterates over DataReaderInterface.
-     * // Belongs to DataSetHandlerInterface - Executes hook before DataSetHandlerInterface is executed.
-     * - Iterates of over all applied DataSetHandlerInterfaces
+     * - Iterates of over all applied DataSetStepBrokerInterfaces
      *   and passes DataSetInterface retrieved from the DataReaderInterface to it.
-     * // Belongs to DataSetHandlerInterface - Executes hook after DataSetHandlerInterface is executed.
      * - Executes hook after all DataSetHandlerInterfaces are executed.
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer

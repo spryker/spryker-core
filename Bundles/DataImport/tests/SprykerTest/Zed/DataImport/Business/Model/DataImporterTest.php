@@ -80,6 +80,28 @@ class DataImporterTest extends Test
     /**
      * @return void
      */
+    public function testImportExecutesBeforeImportHooks()
+    {
+        $dataImporter = $this->getDataImporter();
+        $dataImporter->addBeforeImportHook($this->tester->getBeforeImportHookMock());
+
+        $dataImporter->import();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportExecutesAfterImportHooks()
+    {
+        $dataImporter = $this->getDataImporter();
+        $dataImporter->addAfterImportHook($this->tester->getAfterImportHookMock());
+
+        $dataImporter->import();
+    }
+
+    /**
+     * @return void
+     */
     public function testImportTriggersDataSetImporterFailedEventAndDataSetImportFailedEventIfThereWasAnException()
     {
         $dataImporter = $this->getDataImporter();
@@ -91,7 +113,7 @@ class DataImporterTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     private function getDataImporter()
     {

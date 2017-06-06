@@ -44,7 +44,9 @@ class DataImporterCollectionTest extends Test
     public function testImportReturnsSuccessfulDataImportReportWhenAtLeastOneDataSetWasImported()
     {
         $dataImporterReportTransfer = new DataImporterReportTransfer();
-        $dataImporterReportTransfer->setImportedDataSets(1);
+        $dataImporterReportTransfer
+            ->setIsSuccess(true)
+            ->setImportedDataSets(1);
 
         $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A, true, $dataImporterReportTransfer));

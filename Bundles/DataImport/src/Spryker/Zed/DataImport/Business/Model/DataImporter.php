@@ -25,7 +25,11 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 use Spryker\Zed\DataImport\Dependency\DataImportEvents;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface;
 
-class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInterface
+class DataImporter implements
+    DataImporterBeforeImportAwareInterface,
+    DataImporterInterface,
+    DataImporterAfterImportAwareInterface,
+    DataSetStepBrokerAwareInterface
 {
 
     /**
@@ -39,6 +43,16 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
     protected $dataReader;
 
     /**
+     * @var \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface[]
+     */
+    protected $beforeImportHooks = [];
+
+    /**
+     * @var \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface[]
+     */
+    protected $afterImportHooks = [];
+
+    /**
      * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
      */
     protected $dataSetImporter = [];
@@ -46,18 +60,18 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface
      */
-    protected $facadeEvent;
+    protected $eventFacade;
 
     /**
      * @param string $importType
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface $facadeEvent
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface $eventFacade
      */
-    public function __construct($importType, DataReaderInterface $dataReader, DataImportToEventInterface $facadeEvent)
+    public function __construct($importType, DataReaderInterface $dataReader, DataImportToEventInterface $eventFacade)
     {
         $this->importType = $importType;
         $this->dataReader = $dataReader;
-        $this->facadeEvent = $facadeEvent;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -70,6 +84,40 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
         $this->dataSetImporter[] = $dataSetStepBroker;
 
         return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface $beforeImportHook
+     *
+     * @return $this
+     */
+    public function addBeforeImportHook(DataImporterBeforeImportInterface $beforeImportHook)
+    {
+        $this->beforeImportHooks[] = $beforeImportHook;
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface $afterImportHook
+     *
+     * @return $this
+     */
+    public function addAfterImportHook(DataImporterAfterImportInterface $afterImportHook)
+    {
+        $this->afterImportHooks[] = $afterImportHook;
+
+        return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function beforeImport()
+    {
+        foreach ($this->beforeImportHooks as $beforeImportHook) {
+            $beforeImportHook->beforeImport();
+        }
     }
 
     /**
@@ -86,9 +134,12 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
 
         $this->triggerBeforeImportEvent($dataReader);
 
+        $this->beforeImport();
+
         foreach ($dataReader as $dataSet) {
             try {
                 $this->triggerBeforeDataSetImportEvent($dataReader);
+
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets() + 1);
 
@@ -103,7 +154,19 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
 
         $this->triggerAfterImportEvent($dataImporterReportTransfer);
 
+        $this->afterImport();
+
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function afterImport()
+    {
+        foreach ($this->afterImportHooks as $afterImportHook) {
+            $afterImportHook->afterImport();
+        }
     }
 
     /**
@@ -189,7 +252,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setIsReaderCountable(($dataReader instanceof Countable))
             ->setImportableDataSets(($dataReader instanceof Countable) ? $dataReader->count() : 0);
 
-        $this->facadeEvent->trigger(DataImportEvents::BEFORE_IMPORT, $beforeImportEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::BEFORE_IMPORT, $beforeImportEventTransfer);
     }
 
     /**
@@ -204,7 +267,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setImportType($this->getImportType())
             ->setDataSetKey($dataReader->key());
 
-        $this->facadeEvent->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORT, $beforeDataSetImportEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORT, $beforeDataSetImportEventTransfer);
     }
 
     /**
@@ -219,7 +282,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setImportType($this->getImportType())
             ->setDataSetImporterClassName(get_class($dataSetImporter));
 
-        $this->facadeEvent->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORTER, $beforeDataSetImporterEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORTER, $beforeDataSetImporterEventTransfer);
     }
 
     /**
@@ -232,7 +295,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setImportType($this->getImportType())
             ->setIsSuccess(true);
 
-        $this->facadeEvent->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
     }
 
     /**
@@ -248,7 +311,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setMessage($this->buildExceptionMessage($exception))
             ->setIsSuccess(false);
 
-        $this->facadeEvent->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
     }
 
     /**
@@ -264,7 +327,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setDataSetKey($dataReader->key())
             ->setIsSuccess(true);
 
-        $this->facadeEvent->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
     }
 
     /**
@@ -282,7 +345,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setMessage($this->buildExceptionMessage($exception))
             ->setIsSuccess(false);
 
-        $this->facadeEvent->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
     }
 
     /**
@@ -297,7 +360,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
             ->setImportType($this->getImportType())
             ->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets());
 
-        $this->facadeEvent->trigger(DataImportEvents::AFTER_IMPORT, $afterImportEventTransfer);
+        $this->eventFacade->trigger(DataImportEvents::AFTER_IMPORT, $afterImportEventTransfer);
     }
 
     /**
@@ -307,7 +370,7 @@ class DataImporter implements DataImporterInterface, DataSetStepBrokerAwareInter
      */
     protected function buildExceptionMessage(Exception $exception)
     {
-        return sprintf('%s:%s %s', $exception->getFile(), $exception->getLine(), $exception->getMessage());
+        return sprintf('%s:%s %s %s', $exception->getFile(), $exception->getLine(), $exception->getMessage(), PHP_EOL . PHP_EOL . $exception->getTraceAsString());
     }
 
 }
