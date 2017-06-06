@@ -49,8 +49,8 @@
             <block>
                 <label>Blocks</label>
                 <title>Blocks</title>
-                <bundle>cms</bundle>
-                <controller>block</controller>
+                <bundle>cms-gui</bundle>
+                <controller>list-block</controller>
                 <action>index</action>
             </block>
             <redirects>

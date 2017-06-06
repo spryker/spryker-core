@@ -14,14 +14,6 @@
                 <action>index</action>
                 <icon>fa-file-o</icon>
             </page>
-            <block>
-                <label>Blocks</label>
-                <title>Blocks</title>
-                <bundle>cms</bundle>
-                <controller>block</controller>
-                <action>index</action>
-                <icon>fa-cubes</icon>
-            </block>
             <redirects>
                 <label>Redirects</label>
                 <title>Redirects</title>
