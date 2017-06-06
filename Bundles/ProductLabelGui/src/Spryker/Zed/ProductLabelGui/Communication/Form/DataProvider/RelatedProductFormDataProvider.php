@@ -8,23 +8,9 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 
 class RelatedProductFormDataProvider
 {
-
-    /**
-     * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
-     */
-    protected $productLabelFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
-     */
-    public function __construct(ProductLabelFacadeInterface $productLabelFacade)
-    {
-        $this->productLabelFacade = $productLabelFacade;
-    }
 
     /**
      * @param int|null $idProductLabel

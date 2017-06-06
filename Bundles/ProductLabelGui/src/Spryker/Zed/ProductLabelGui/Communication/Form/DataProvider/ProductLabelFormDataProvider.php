@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelInterface;
 
 class ProductLabelFormDataProvider
 {
@@ -21,17 +21,17 @@ class ProductLabelFormDataProvider
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelInterface
      */
     protected $productLabelFacade;
 
     /**
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelInterface $productLabelFacade
      */
     public function __construct(
         ProductLabelGuiToLocaleInterface $localeFacade,
-        ProductLabelFacadeInterface $productLabelFacade
+        ProductLabelGuiToProductLabelInterface $productLabelFacade
     ) {
         $this->localeFacade = $localeFacade;
         $this->productLabelFacade = $productLabelFacade;

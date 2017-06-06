@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyBridge;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
 
 class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -58,7 +59,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function provideProductLabelFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
-            return $container->getLocator()->productLabel()->facade();
+            return new ProductLabelGuiToProductLabelBridge($container->getLocator()->productLabel()->facade());
         };
 
         return $container;

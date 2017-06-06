@@ -63,7 +63,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @return \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface
      */
     protected function getProductLabelFacade()
     {

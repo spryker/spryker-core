@@ -7,28 +7,29 @@
 
 namespace Spryker\Zed\ProductLabelCollector\Business\Collector\Storage;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface;
 
 class LabelDictionaryCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @var \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface
      */
     protected $productLabelFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
+     * @param \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface $productLabelFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        ProductLabelFacadeInterface $productLabelFacade
+        ProductLabelCollectorToProductLabelInterface $productLabelFacade
     ) {
         parent::__construct($utilDataReaderService);
 
@@ -89,7 +90,7 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
             return true;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
 
         /** @var \DateTime $validFromDate */
         $validFromDate = $productLabelTransfer->getValidFrom();
@@ -113,7 +114,8 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
      *
      * @return string
      */
-    protected function getNameAttributeForCurrentLocale(ProductLabelTransfer $productLabelTransfer) {
+    protected function getNameAttributeForCurrentLocale(ProductLabelTransfer $productLabelTransfer)
+    {
         foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $attributesTransfer) {
             if ($attributesTransfer->getFkLocale() === $this->locale->getIdLocale()) {
                 return $attributesTransfer->getName();

@@ -134,7 +134,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createRelatedProductFormDataProvider()
     {
-        return new RelatedProductFormDataProvider($this->getProductLabelFacade());
+        return new RelatedProductFormDataProvider();
     }
 
     /**
@@ -146,7 +146,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelInterface
      */
     public function getProductLabelFacade()
     {

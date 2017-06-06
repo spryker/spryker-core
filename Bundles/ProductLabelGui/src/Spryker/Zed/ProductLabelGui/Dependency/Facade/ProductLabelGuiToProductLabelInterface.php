@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business;
+namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
-interface ProductLabelFacadeInterface
+interface ProductLabelGuiToProductLabelInterface
 {
 
     /**
-     * @api
-     *
      * @param int $idProductLabel
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
@@ -22,24 +20,11 @@ interface ProductLabelFacadeInterface
     public function readLabel($idProductLabel);
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
     public function readAllLabels();
 
     /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function readLabelsForAbstractProduct($idProductAbstract);
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
@@ -47,8 +32,6 @@ interface ProductLabelFacadeInterface
     public function createLabel(ProductLabelTransfer $productLabelTransfer);
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
@@ -56,17 +39,6 @@ interface ProductLabelFacadeInterface
     public function updateLabel(ProductLabelTransfer $productLabelTransfer);
 
     /**
-     * @api
-     *
-     * @param int $idProductLabel
-     *
-     * @return int[]
-     */
-    public function readAbstractProductRelationsForLabel($idProductLabel);
-
-    /**
-     * @api
-     *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
@@ -75,20 +47,11 @@ interface ProductLabelFacadeInterface
     public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
     /**
-     * @api
-     *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
      *
      * @return void
      */
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function checkLabelValidityDateRangeAndTouch();
 
 }

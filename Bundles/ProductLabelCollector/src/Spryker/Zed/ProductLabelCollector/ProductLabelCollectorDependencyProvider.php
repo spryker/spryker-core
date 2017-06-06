@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabelCollector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorBridge;
+use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelBridge;
 
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -42,7 +43,7 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
     protected function provideProductLabelFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
-            return $container->getLocator()->productLabel()->facade();
+            return new ProductLabelCollectorToProductLabelBridge($container->getLocator()->productLabel()->facade());
         };
 
         return $container;
