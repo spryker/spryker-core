@@ -72,6 +72,10 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
         $productLabelCollection = [];
 
         foreach ($productLabelIds as $idProductLabel) {
+            if (!array_key_exists($idProductLabel, $dictionary)) {
+                continue;
+            }
+
             $productLabelCollection[] = $dictionary[$idProductLabel];
 
             if (count($productLabelCollection) === $this->maxNumberOfLabels) {
