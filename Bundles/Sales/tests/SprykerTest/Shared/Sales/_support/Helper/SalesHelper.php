@@ -74,7 +74,7 @@ class SalesHelper extends Module
     protected function addOrderDetails(SpySalesOrder $salesOrderEntity)
     {
         $salesOrderEntity->setOrderReference(random_int(0, 9999999));
-        $salesOrderEntity->setTaxMode(0);
+        $salesOrderEntity->setPriceMode(0);
         $salesOrderEntity->setIsTest(true);
         $salesOrderEntity->setSalutation(SpySalesOrderTableMap::COL_SALUTATION_MR);
         $salesOrderEntity->setFirstName('FirstName');
