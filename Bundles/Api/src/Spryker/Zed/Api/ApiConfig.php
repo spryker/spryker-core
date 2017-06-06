@@ -72,7 +72,6 @@ class ApiConfig extends AbstractBundleConfig
     {
         return [
             static::HTTP_METHOD_GET,
-            static::HTTP_METHOD_POST,
             static::HTTP_METHOD_PATCH,
             static::HTTP_METHOD_DELETE,
         ];
@@ -85,6 +84,7 @@ class ApiConfig extends AbstractBundleConfig
     {
         return [
             static::HTTP_METHOD_GET,
+            static::HTTP_METHOD_POST,
         ];
     }
 
