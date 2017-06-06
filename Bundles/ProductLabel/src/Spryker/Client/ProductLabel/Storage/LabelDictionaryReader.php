@@ -56,6 +56,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
         $productLabelCollection = $this->getProductLabelsFromDictionary($productLabelIds, $localeName);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
+        $productLabelCollection = $this->truncateCollection($productLabelCollection);
 
         return $productLabelCollection;
     }
@@ -77,10 +78,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
             }
 
             $productLabelCollection[] = $dictionary[$idProductLabel];
-
-            if (count($productLabelCollection) === $this->maxNumberOfLabels) {
-                break;
-            }
         }
 
         return $productLabelCollection;
@@ -171,11 +168,22 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
             ProductLabelStorageProjectionTransfer $productLabelTransferA,
             ProductLabelStorageProjectionTransfer $productLabelTransferB
         ) {
-
             return ($productLabelTransferA->getPosition() > $productLabelTransferB->getPosition()) ? 1 : -1;
         });
 
         return $productLabelCollection;
+    }
+
+    /**
+     * @param array $productLabelCollection
+     *
+     * @return array
+     */
+    protected function truncateCollection(array $productLabelCollection)
+    {
+        $truncatedLabelCollection = array_slice($productLabelCollection, 0, $this->maxNumberOfLabels);
+
+        return $truncatedLabelCollection;
     }
 
 }
