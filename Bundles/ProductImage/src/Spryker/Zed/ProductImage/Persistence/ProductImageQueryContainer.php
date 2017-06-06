@@ -223,12 +223,10 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     {
         return $this->getFactory()
             ->createProductImageSetQuery()
-                ->filterByIdProductImageSet($idProductImageSet)
-                ->useSpyProductImageSetToProductImageQuery()
-                    ->useSpyProductImageQuery()
-                    ->endUse()
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
                 ->orderBySortOrder(Criteria::DESC)
-                ->endUse();
+            ->endUse();
     }
 
 }

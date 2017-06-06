@@ -792,12 +792,33 @@ class ProductImageFacadeTest extends Test
      */
     public function testGetProductImagesSetById()
     {
-        $productImageSetTransfer = $this->productImageFacade->getProductImagesSetById(
+        $productImageSetTransfer = $this->productImageFacade->getProductImageSetById(
             $this->imageSetAbstract->getIdProductImageSet()
         );
 
         $this->assertNotEmpty($productImageSetTransfer);
         $this->assertCount(1, $productImageSetTransfer->getProductImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetByIdWithoutImages()
+    {
+        $imageSetEntity = new SpyProductImageSet();
+        $imageSetEntity
+            ->setName(self::SET_NAME)
+            ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->setFkProduct(null)
+            ->setFkLocale(null)
+            ->save();
+
+        $productImageSetTransfer = $this->productImageFacade->getProductImageSetById(
+            $imageSetEntity->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(0, $productImageSetTransfer->getProductImages());
     }
 
 }

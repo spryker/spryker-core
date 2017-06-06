@@ -193,6 +193,6 @@ interface ProductImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function getProductImagesSetById($idProductImageSet);
+    public function getProductImageSetById($idProductImageSet);
 
 }
