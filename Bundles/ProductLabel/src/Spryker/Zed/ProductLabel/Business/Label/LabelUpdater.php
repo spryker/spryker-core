@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -106,6 +106,8 @@ class LabelUpdater implements LabelUpdaterInterface
     /**
      * @param int $idProductLabel
      *
+     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
      */
     protected function getEntityById($idProductLabel)
@@ -116,7 +118,10 @@ class LabelUpdater implements LabelUpdaterInterface
             ->findOne();
 
         if (!$productLabelEntity) {
-
+            throw new MissingProductLabelException(sprintf(
+                'Could not find product label for id "%s"',
+                $idProductLabel
+            ));
         }
 
         return $productLabelEntity;

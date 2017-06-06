@@ -23,6 +23,8 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -64,6 +66,8 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

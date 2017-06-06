@@ -32,15 +32,15 @@ class ProductLabelDataHelper extends Module
 
     /**
      * @param int $idProductLabel
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function haveProductLabelToAbstractProductRelation($idProductLabel, $idAbstractProduct)
+    public function haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract)
     {
         $this
             ->getProductLabelFacade()
-            ->addAbstractProductRelationsForLabel($idProductLabel, [$idAbstractProduct]);
+            ->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 
     /**

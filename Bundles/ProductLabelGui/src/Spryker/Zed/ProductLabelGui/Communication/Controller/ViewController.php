@@ -56,8 +56,7 @@ class ViewController extends AbstractController
      */
     protected function hydrateLocaleTransferIntoLocalizedAttributes(ProductLabelTransfer $productLabelTransfer)
     {
-        foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer)
-        {
+        foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer) {
             $localeTransfer = $this
                 ->getFactory()
                 ->getLocaleFacade()

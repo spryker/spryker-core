@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
-use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;

@@ -14,7 +14,7 @@ use Spryker\Shared\ProductLabel\KeyBuilder\AbstractProductRelationKeyBuilder;
 use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
 
 /**
- * @method ProductLabelConfig getConfig()
+ * @method \Spryker\Client\ProductLabel\ProductLabelConfig getConfig()
  */
 class ProductLabelFactory extends AbstractFactory
 {

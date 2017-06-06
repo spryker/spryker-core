@@ -28,7 +28,7 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
-     * @param AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface $productRelationTouchManager
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
@@ -85,31 +85,31 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    protected function touchRelationsForAbstractProduct($idAbstractProduct)
+    protected function touchRelationsForAbstractProduct($idProductAbstract)
     {
-        if ($this->isEmptyRelationForAbstractProduct($idAbstractProduct)) {
-            $this->productRelationTouchManager->touchDeletedForAbstractProduct($idAbstractProduct);
+        if ($this->isEmptyRelationForAbstractProduct($idProductAbstract)) {
+            $this->productRelationTouchManager->touchDeletedForAbstractProduct($idProductAbstract);
 
             return;
         }
 
-        $this->productRelationTouchManager->touchActiveForAbstractProduct($idAbstractProduct);
+        $this->productRelationTouchManager->touchActiveForAbstractProduct($idProductAbstract);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return bool
      */
-    protected function isEmptyRelationForAbstractProduct($idAbstractProduct)
+    protected function isEmptyRelationForAbstractProduct($idProductAbstract)
     {
         $relationCount = $this
             ->queryContainer
-            ->queryProductLabelByAbstractProduct($idAbstractProduct)
+            ->queryProductLabelByAbstractProduct($idProductAbstract)
             ->count();
 
         return ($relationCount === 0);

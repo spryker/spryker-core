@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\ProductLabelGui;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\ProductLabelGui;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CommunicationTester extends \Codeception\Actor
+ */
+class CommunicationTester extends Actor
 {
+
     use _generated\CommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

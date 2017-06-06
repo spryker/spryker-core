@@ -131,19 +131,19 @@ class RelatedProductFormType extends AbstractType
         $builder
             ->get($fieldName)
             ->addModelTransformer(new CallbackTransformer(
-                function (array $abstractProductIdsAsArray) {
-                    if (!count($abstractProductIdsAsArray)) {
+                function (array $idsProductAbstractAsArray) {
+                    if (!count($idsProductAbstractAsArray)) {
                         return [];
                     }
 
-                    return implode(',', $abstractProductIdsAsArray);
+                    return implode(',', $idsProductAbstractAsArray);
                 },
-                function ($abstractProductIdsAsCsv) {
-                    if (empty($abstractProductIdsAsCsv)) {
+                function ($idsProductAbstractAsCsv) {
+                    if (empty($idsProductAbstractAsCsv)) {
                         return [];
                     }
 
-                    return explode(',', $abstractProductIdsAsCsv);
+                    return explode(',', $idsProductAbstractAsCsv);
                 }
             ));
     }

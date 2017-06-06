@@ -214,6 +214,8 @@ class ProductLabelTable extends AbstractTable
     }
 
     /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
      * @return string
      */
     protected function createActionButtons(SpyProductLabel $productLabelEntity)

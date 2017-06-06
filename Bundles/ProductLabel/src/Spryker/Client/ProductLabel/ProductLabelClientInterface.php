@@ -11,6 +11,9 @@ interface ProductLabelClientInterface
 {
 
     /**
+     * Specification:
+     * - Finds product labels for the given abstract-product in the key-value storage
+     *
      * @api
      *
      * @param int $idProductAbstract

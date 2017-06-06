@@ -32,13 +32,13 @@ class AbstractProductRelationReader implements AbstractProductRelationReaderInte
      */
     public function readForProductLabel($idProductLabel)
     {
-        $abstractProductIds = [];
+        $idsProductAbstract = [];
 
         foreach ($this->findRelationEntities($idProductLabel) as $relationEntity) {
-            $abstractProductIds[] = (int)$relationEntity->getFkProductAbstract();
+            $idsProductAbstract[] = (int)$relationEntity->getFkProductAbstract();
         }
 
-        return $abstractProductIds;
+        return $idsProductAbstract;
     }
 
     /**

@@ -90,25 +90,25 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getNameColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getNameColumn(SpyProductAbstract $productAbstractEntity)
     {
-        return $abstractProductEntity->getVirtualColumn(
+        return $productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_NAME
         );
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getCategoriesColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getCategoriesColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $categoriesCsv = $abstractProductEntity->getVirtualColumn(
+        $categoriesCsv = $productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV
         );
         $categories = explode(',', $categoriesCsv);
@@ -118,13 +118,13 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getPriceColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getPriceColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $price = (int)$abstractProductEntity->getVirtualColumn(
+        $price = (int)$productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE
         );
         $moneyTransfer = $this->moneyFacade->fromInteger($price);

@@ -8,15 +8,12 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint;
-use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -44,8 +41,8 @@ class ProductLabelFormType extends AbstractType
     protected $localizedAttributesFormType;
 
     /**
-     * @param FormTypeInterface $localizedAttributesFormType
-     * @param Constraint $uniqueNameConstraints
+     * @param \Symfony\Component\Form\FormTypeInterface $localizedAttributesFormType
+     * @param \Symfony\Component\Validator\Constraint $uniqueNameConstraints
      */
     public function __construct(
         FormTypeInterface $localizedAttributesFormType,
@@ -113,7 +110,7 @@ class ProductLabelFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ]
         );
 

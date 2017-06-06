@@ -9,11 +9,10 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  */
 class SetStatusController extends AbstractController
 {

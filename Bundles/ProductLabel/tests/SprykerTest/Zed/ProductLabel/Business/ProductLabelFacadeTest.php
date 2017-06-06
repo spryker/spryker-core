@@ -179,17 +179,17 @@ class ProductLabelFacadeTest extends Test
     public function testReadAbstractProductRelationsForLabelShouldReturnListOfAbstractProductIds()
     {
         $productTransfer = $this->tester->haveProduct();
-        $idAbstractProduct = $productTransfer->getFkProductAbstract();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
         $productLabelTransfer = $this->tester->haveProductLabel();
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
-        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idAbstractProduct);
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
 
         $productLabelFacade = $this->createProductLabelFacade();
-        $abstractProductIds = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
+        $idsProductAbstract = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
 
-        $this->assertCount(1, $abstractProductIds);
-        $this->assertSame($idAbstractProduct, $abstractProductIds[0]);
+        $this->assertCount(1, $idsProductAbstract);
+        $this->assertSame($idProductAbstract, $idsProductAbstract[0]);
     }
 
     /**
@@ -224,9 +224,9 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->removeAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
-        $abstractProductIds = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
+        $idsProductAbstract = $productLabelFacade->readAbstractProductRelationsForLabel($idProductLabel);
 
-        $this->assertCount(0, $abstractProductIds);
+        $this->assertCount(0, $idsProductAbstract);
     }
 
     /**

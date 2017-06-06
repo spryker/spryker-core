@@ -145,21 +145,21 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getSelectCheckboxColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getSelectCheckboxColumn(SpyProductAbstract $productAbstractEntity)
     {
         return sprintf(
             '<input class="%s" type="checkbox" name="abstractProduct[]" value="%s" %s data-info="%s"/>',
             'js-abstract-product-checkbox',
-            $abstractProductEntity->getIdProductAbstract(),
+            $productAbstractEntity->getIdProductAbstract(),
             $this->getCheckboxCheckedAttribute(),
             htmlspecialchars(json_encode([
-                'id' => $abstractProductEntity->getIdProductAbstract(),
-                'sku' => $abstractProductEntity->getSku(),
-                'name' => $this->getNameColumn($abstractProductEntity),
+                'id' => $productAbstractEntity->getIdProductAbstract(),
+                'sku' => $productAbstractEntity->getSku(),
+                'name' => $this->getNameColumn($productAbstractEntity),
             ]))
         );
     }

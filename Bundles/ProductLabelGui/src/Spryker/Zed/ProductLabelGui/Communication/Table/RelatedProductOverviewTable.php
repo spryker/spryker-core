@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
@@ -85,7 +84,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
 
         $config->setSortable([
             SpyProductAbstractTableMap::COL_SKU,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
 
@@ -125,6 +124,11 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
         return $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
     }
 
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return array
+     */
     protected function getRow(SpyProductAbstract $productAbstractEntity)
     {
         $row = parent::getRow($productAbstractEntity);
@@ -137,13 +141,13 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getAdditionalRelationCountColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getAdditionalRelationCountColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $relationCount = (int)$abstractProductEntity->getVirtualColumn(
+        $relationCount = (int)$productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT
         );
 
@@ -151,31 +155,31 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function getActionsColumn(SpyProductAbstract $abstractProductEntity)
+    protected function getActionsColumn(SpyProductAbstract $productAbstractEntity)
     {
         $actionButtons = [
-            $this->generateViewProductInZedButton($abstractProductEntity),
+            $this->generateViewProductInZedButton($productAbstractEntity),
         ];
 
         return implode(' ', $actionButtons);
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    protected function generateViewProductInZedButton(SpyProductAbstract $abstractProductEntity)
+    protected function generateViewProductInZedButton(SpyProductAbstract $productAbstractEntity)
     {
         return $this->generateViewButton(
             Url::generate(
                 '/product-management/view',
                 [
-                    ViewController::PARAM_ID_PRODUCT_ABSTRACT => $abstractProductEntity->getIdProductAbstract(),
+                    ViewController::PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
                 ]
             ),
             'View'

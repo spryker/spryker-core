@@ -19,6 +19,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -36,6 +38,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
@@ -49,6 +53,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -64,6 +70,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
@@ -79,9 +87,13 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
      *
      * @return void
      */
@@ -94,6 +106,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -109,6 +123,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -125,6 +141,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -141,6 +159,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void

@@ -53,6 +53,4 @@ class ProductLabelDictionaryCollectorStoragePlugin extends AbstractCollectorPlug
         );
     }
 
-
-
 }

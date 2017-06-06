@@ -19,6 +19,10 @@ interface ProductLabelCollectorFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Collects all active and valid product-labels
+     * - Exports list of product-labels as dictionary to key-value storage
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -42,6 +46,10 @@ interface ProductLabelCollectorFacadeInterface
     );
 
     /**
+     * Specification:
+     * - Collections all touched product-label to abstract-product relations
+     * - Exports list of product-labels for each abstract-product to key-value storage
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
