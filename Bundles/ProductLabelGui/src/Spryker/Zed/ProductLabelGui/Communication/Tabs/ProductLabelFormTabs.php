@@ -26,6 +26,8 @@ class ProductLabelFormTabs extends AbstractTabs
             ->addProductAssignmentTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
+        $tabsViewTransfer->setIsNavigable(true);
+
         return $tabsViewTransfer;
     }
 
