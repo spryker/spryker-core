@@ -67,7 +67,7 @@ class DiscountAmountAggregator implements CalculatorInterface
                 $expenseTransfer->getCalculatedDiscounts(),
                 $expenseTransfer->getUnitPrice()
             );
-            $expenseTransfer->setSumDiscountAmountAggregation($unitDiscountAmountAggregation);
+            $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
