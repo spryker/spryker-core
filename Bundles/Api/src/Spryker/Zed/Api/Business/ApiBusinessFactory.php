@@ -29,6 +29,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPrePro
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceIdPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
@@ -60,7 +61,8 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createResourceHandler()
     {
         return new ResourceHandler(
-            $this->getApiPlugins()
+            $this->getApiPlugins(),
+            $this->getConfig()
         );
     }
 
@@ -111,6 +113,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createFormatTypeByHeaderPreProcessor(),
             $this->createFormatTypeByPathPreProcessor(),
             $this->createResourcePreProcessor(),
+            $this->createResourceIdPreProcessor(),
             $this->createResourceActionPreProcessor(),
             $this->createResourceParametersPreProcessor(),
 
@@ -171,6 +174,14 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createResourcePreProcessor()
     {
         return new ResourcePreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
+     */
+    protected function createResourceIdPreProcessor()
+    {
+        return new ResourceIdPreProcessor();
     }
 
     /**

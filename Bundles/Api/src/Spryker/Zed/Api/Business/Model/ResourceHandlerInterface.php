@@ -13,12 +13,11 @@ interface ResourceHandlerInterface
     /**
      * @param string $resource
      * @param string $method
+     * @param int|null $id
      * @param mixed $params
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
      *
      * @return mixed
      */
-    public function execute($resource, $method, $params);
+    public function execute($resource, $method, $id, $params);
 
 }

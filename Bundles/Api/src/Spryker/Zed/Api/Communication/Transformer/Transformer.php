@@ -61,7 +61,7 @@ class Transformer implements TransformerInterface
      */
     protected function addResponseContent(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT) {
+        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getOptions()) {
             return $response;
         }
 

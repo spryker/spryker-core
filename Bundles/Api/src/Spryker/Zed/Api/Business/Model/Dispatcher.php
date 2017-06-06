@@ -80,6 +80,7 @@ class Dispatcher implements DispatcherInterface
     {
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
+        $id = $apiRequestTransfer->getResourceId();
         $params = $apiRequestTransfer->getResourceParameters();
 
         $apiResponseTransfer = new ApiResponseTransfer();
@@ -92,7 +93,7 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
             } else {
-                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $params);
+                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
                 if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
                     return $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
                 }
@@ -143,13 +144,14 @@ class Dispatcher implements DispatcherInterface
     /**
      * @param string $resource
      * @param string $method
+     * @param int|null $id
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer
      */
-    protected function callApiPlugin($resource, $method, $params)
+    protected function callApiPlugin($resource, $method, $id, $params)
     {
-        return $this->resourceHandler->execute($resource, $method, $params);
+        return $this->resourceHandler->execute($resource, $method, $id, $params);
     }
 
     /**

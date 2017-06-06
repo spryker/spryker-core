@@ -87,19 +87,4 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
         return ProductApiConfig::RESOURCE_PRODUCTS;
     }
 
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [
-            'options',
-            'get',
-            'post',
-            'patch',
-        ];
-    }
-
 }

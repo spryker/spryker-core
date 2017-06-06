@@ -26,26 +26,21 @@ class ResourceActionPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $path = $apiRequestTransfer->getPath();
-        $identifier = $path;
-        if (strpos($identifier, '/') !== false) {
-            $identifier = substr($identifier, 0, strpos($identifier, '/'));
-        }
-
+        $resourceId = $apiRequestTransfer->getResourceId();
         $requestType = $apiRequestTransfer->getRequestType();
 
         $resourceAction = null;
-        if ($identifier === '' && $requestType === 'OPTIONS') {
+        if ($requestType === 'OPTIONS') {
             $resourceAction = ApiConfig::ACTION_OPTIONS;
-        } elseif ($identifier === '' && $requestType === 'GET') {
+        } elseif (!$resourceId && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_INDEX;
-        } elseif ($identifier !== '' && $requestType === 'GET') {
+        } elseif ($resourceId && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_READ;
-        } elseif ($identifier === '' && $requestType === 'POST') {
+        } elseif (!$resourceId && $requestType === 'POST') {
             $resourceAction = ApiConfig::ACTION_CREATE;
-        } elseif ($identifier !== '' && $requestType === 'PATCH') {
+        } elseif ($resourceId && $requestType === 'PATCH') {
             $resourceAction = ApiConfig::ACTION_UPDATE;
-        } elseif ($identifier !== '' && $requestType === 'DELETE') {
+        } elseif ($resourceId && $requestType === 'DELETE') {
             $resourceAction = ApiConfig::ACTION_DELETE;
         }
         if ($resourceAction === null) {
