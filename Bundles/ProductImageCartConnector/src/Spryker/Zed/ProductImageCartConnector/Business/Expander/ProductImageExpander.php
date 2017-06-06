@@ -16,7 +16,7 @@ class ProductImageExpander implements ProductImageExpanderInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductImageInterface
+     * @var \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface
      */
     protected $productImageFacade;
 
