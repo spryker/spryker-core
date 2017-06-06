@@ -66,8 +66,8 @@ class ResourceHandler implements ResourceHandlerInterface
 
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
-     * @param array $params
      * @param int|null $resourceId
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer
      */
