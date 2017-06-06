@@ -46,7 +46,7 @@ class ResourceIdPreProcessorTest extends Test
         $apiRequestTransfer->setPath('1');
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame(1, $apiRequestTransferAfter->getResourceId());
+        $this->assertSame('1', $apiRequestTransferAfter->getResourceId());
     }
 
     /**
@@ -76,7 +76,7 @@ class ResourceIdPreProcessorTest extends Test
         $apiRequestTransfer->setPath('1/foo/bar');
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame(1, $apiRequestTransferAfter->getResourceId());
+        $this->assertSame('1', $apiRequestTransferAfter->getResourceId());
         $this->assertSame('foo/bar', $apiRequestTransferAfter->getPath());
     }
 

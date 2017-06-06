@@ -13,7 +13,7 @@ interface ResourceHandlerInterface
     /**
      * @param string $resource
      * @param string $method
-     * @param int|null $id
+     * @param string|null $id
      * @param mixed $params
      *
      * @return mixed

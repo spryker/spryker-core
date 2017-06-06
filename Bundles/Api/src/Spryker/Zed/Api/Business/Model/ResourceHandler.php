@@ -38,7 +38,7 @@ class ResourceHandler implements ResourceHandlerInterface
     /**
      * @param string $resource
      * @param string $method
-     * @param int|null $id
+     * @param string|null $id
      * @param mixed $params
      *
      * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
@@ -66,7 +66,7 @@ class ResourceHandler implements ResourceHandlerInterface
 
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
-     * @param int|null $resourceId
+     * @param string|null $resourceId
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer
@@ -99,7 +99,9 @@ class ResourceHandler implements ResourceHandlerInterface
             $options = $this->config->getHttpMethodsForItem();
         }
 
-        $options[] = ApiConfig::HTTP_METHOD_OPTIONS;
+        if (!in_array(ApiConfig::HTTP_METHOD_OPTIONS, $options)) {
+            $options[] = ApiConfig::HTTP_METHOD_OPTIONS;
+        }
 
         return $options;
     }
@@ -118,7 +120,9 @@ class ResourceHandler implements ResourceHandlerInterface
             $options = $this->config->getHttpMethodsForCollection();
         }
 
-        $options[] = ApiConfig::HTTP_METHOD_OPTIONS;
+        if (!in_array(ApiConfig::HTTP_METHOD_OPTIONS, $options)) {
+            $options[] = ApiConfig::HTTP_METHOD_OPTIONS;
+        }
 
         return $options;
     }

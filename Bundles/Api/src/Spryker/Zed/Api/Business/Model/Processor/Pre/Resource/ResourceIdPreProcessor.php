@@ -30,8 +30,9 @@ class ResourceIdPreProcessor implements PreProcessorInterface
         }
 
         $resourceId = null;
-        if ($identifier) {
-            $resourceId = (int)$identifier;
+        $identifier = trim($identifier);
+        if ($identifier !== '') {
+            $resourceId = $identifier;
         }
 
         $apiRequestTransfer->setResourceId($resourceId);
