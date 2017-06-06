@@ -14,12 +14,10 @@
                         hasError: false
                     } %}
                         {% block content %}
-                            <table class="table">
-                                <tr>
-                                    <td>Name:</td>
-                                    <td>{{ localizedAttributesTransfer.getName() }}</td>
-                                </tr>
-                            </table>
+                            <dl class="row">
+                                <dt class="col-xs-3">Name:</dt>
+                                <dd class="col-xs-9">{{ localizedAttributesTransfer.getName() }}</dd>
+                            </dl>
                         {% endblock %}
 
                     {% endembed %}

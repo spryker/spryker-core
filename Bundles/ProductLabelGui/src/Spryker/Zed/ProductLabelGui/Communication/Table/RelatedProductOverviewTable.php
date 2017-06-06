@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
@@ -33,6 +34,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
         $this->configureHeader($config);
         $this->configureRawColumns($config);
         $this->configureSorting($config);
+        $this->configureSearching($config);
         $this->configureUrl($config);
 
         return $config;
@@ -80,6 +82,24 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             SpyProductAbstractTableMap::COL_SKU,
             TableConfiguration::SORT_ASC
         );
+
+        $config->setSortable([
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME
+        ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureSearching(TableConfiguration $config)
+    {
+        $config->setSearchable([
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+        ]);
     }
 
     /**

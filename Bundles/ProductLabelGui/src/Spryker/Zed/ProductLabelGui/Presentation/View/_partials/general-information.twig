@@ -19,7 +19,7 @@
                 <td>Valid from</td>
                 <td>
                     {% if productLabelTransfer.getValidFrom() %}
-                        {{ productLabelTransfer.getValidFrom() }}
+                        {{ productLabelTransfer.getValidFrom() | formatDate }}
                     {% else %}
                         N/A
                     {% endif %}
@@ -29,7 +29,7 @@
                 <td>Valid to</td>
                 <td>
                     {% if productLabelTransfer.getValidTo() %}
-                        {{ productLabelTransfer.getValidTo() }}
+                        {{ productLabelTransfer.getValidTo() | formatDate }}
                     {% else %}
                         N/A
                     {% endif %}

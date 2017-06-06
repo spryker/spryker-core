@@ -11,6 +11,7 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -158,7 +159,7 @@ class ProductLabelTable extends AbstractTable
     protected function addAbstractProductRelationCountToQuery(SpyProductLabelQuery $query)
     {
         $query
-            ->useSpyProductLabelProductAbstractQuery()
+            ->useSpyProductLabelProductAbstractQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
                     static::COL_ABSTRACT_PRODUCT_RELATION_COUNT
