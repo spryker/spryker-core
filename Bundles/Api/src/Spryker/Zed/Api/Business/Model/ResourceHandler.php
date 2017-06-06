@@ -39,13 +39,13 @@ class ResourceHandler implements ResourceHandlerInterface
      * @param string $resource
      * @param string $method
      * @param string|null $id
-     * @param mixed $params
+     * @param array $params
      *
      * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ApiOptionsTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer
      */
-    public function execute($resource, $method, $id, $params)
+    public function execute($resource, $method, $id, array $params)
     {
         foreach ($this->pluginCollection as $plugin) {
             if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resource)) {

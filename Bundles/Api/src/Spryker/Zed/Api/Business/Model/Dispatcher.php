@@ -149,7 +149,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer
      */
-    protected function callApiPlugin($resource, $method, $id, $params)
+    protected function callApiPlugin($resource, $method, $id, array $params)
     {
         return $this->resourceHandler->execute($resource, $method, $id, $params);
     }
