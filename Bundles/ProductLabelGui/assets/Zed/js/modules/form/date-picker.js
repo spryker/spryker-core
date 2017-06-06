@@ -15,11 +15,23 @@ require('jquery');
  * @return {void}
  */
 function initialize(validFromSelector, validToSelector) {
-    initDatePicker(validFromSelector, function(selectedDate) {
+    initDatePicker(validFromSelector, function(e) {
+        var selectedDate = $(validFromSelector).datepicker('getDate');
+        if (!selectedDate) {
+            return;
+        }
+
+        selectedDate.setDate(selectedDate.getDate() + 1);
         $(validToSelector).datepicker('option', 'minDate', selectedDate);
     });
 
-    initDatePicker(validToSelector, function(selectedDate) {
+    initDatePicker(validToSelector, function() {
+        var selectedDate = $(validToSelector).datepicker('getDate');
+        if (!selectedDate) {
+            return;
+        }
+
+        selectedDate.setDate(selectedDate.getDate() - 1);
         $(validFromSelector).datepicker('option', 'maxDate', selectedDate);
     });
 }
