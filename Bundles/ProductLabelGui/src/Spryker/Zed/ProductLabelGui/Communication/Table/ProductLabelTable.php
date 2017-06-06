@@ -12,7 +12,6 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonUrlGenerator;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
@@ -50,6 +49,21 @@ class ProductLabelTable extends AbstractTable
     {
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
+        $this->configureHeader($config);
+        $this->configureRawColumns($config);
+        $this->configureSorting($config);
+        $this->configureSearching($config);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureHeader(TableConfiguration $config)
+    {
         $config->setHeader([
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => '#',
             SpyProductLabelTableMap::COL_POSITION => 'Priority',
@@ -60,10 +74,26 @@ class ProductLabelTable extends AbstractTable
             SpyProductLabelTableMap::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
+    }
 
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureRawColumns(TableConfiguration $config)
+    {
         $config->addRawColumn(SpyProductLabelTableMap::COL_IS_ACTIVE);
         $config->addRawColumn(static::COL_ACTIONS);
+    }
 
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureSorting(TableConfiguration $config)
+    {
         $config->setDefaultSortField(
             SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
             TableConfiguration::SORT_ASC
@@ -76,8 +106,18 @@ class ProductLabelTable extends AbstractTable
             SpyProductLabelTableMap::COL_IS_EXCLUSIVE,
             SpyProductLabelTableMap::COL_IS_ACTIVE,
         ]);
+    }
 
-        return $config;
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function configureSearching(TableConfiguration $config)
+    {
+        $config->setSearchable([
+            SpyProductLabelTableMap::COL_NAME,
+        ]);
     }
 
     /**
@@ -128,7 +168,7 @@ class ProductLabelTable extends AbstractTable
     }
 
     /**
-     * @param SpyProductLabel $productLabelEntity
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
      *
      * @return string
      */
@@ -147,7 +187,6 @@ class ProductLabelTable extends AbstractTable
         if (!$productLabelEntity->getValidFrom() || !$productLabelEntity->getValidTo()) {
             return 'n/a';
         }
-
 
         return sprintf(
             '%s - %s',
