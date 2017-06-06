@@ -1,6 +1,6 @@
 {
-  "name": "spryker/product-group-collector",
-  "description": "ProductGroupCollector bundle",
+  "name": "spryker/product-label-collector",
+  "description": "ProductLabelCollector bundle",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",

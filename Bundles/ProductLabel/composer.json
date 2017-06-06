@@ -1,36 +1,37 @@
 {
   "name": "spryker/product-label",
+  "description": "ProductLabel bundle",
+  "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.1.0"
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/touch": "^3.0.0",
+    "spryker/twig": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*"
+    "spryker/propel": "^3.0.0",
+    "spryker/silex": "^2.0.0",
+    "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/silex": "If you want to use the NavigationTwigServiceProvider you need to install spryker/silex."
   },
-  "description": "ProductLabel bundle",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Discount\\": "tests/SprykerTest/Zed/ProductLabel/_support/"
+      "SprykerTest\\Zed\\ProductLabel\\": "tests/SprykerTest/Zed/ProductLabel/_support/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
-    },
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
     }
   },
   "extra": {

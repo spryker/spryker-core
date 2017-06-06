@@ -1,17 +1,20 @@
 {
   "name": "spryker/product-label-gui",
   "description": "ProductLabelGui bundle",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
+  "license": "proprietary",
   "require": {
+    "spryker/category": "^3.2.0",
     "spryker/gui": "^3.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/price": "^4.0.0",
+    "spryker/product": "^5.1.0",
     "spryker/product-label": "^1.0.0",
-    "spryker/propel-orm": "^1.1.0"
+    "spryker/product-management": "^0.6.0",
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -19,9 +22,13 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -29,10 +36,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
-    }
   }
 }
