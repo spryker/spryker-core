@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 
-// TODO: add test
 abstract class AbstractType extends SymfonyAbstractType
 {
 

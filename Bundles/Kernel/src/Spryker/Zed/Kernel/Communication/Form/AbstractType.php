@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 
-// TODO: add test
 abstract class AbstractType extends SymfonyAbstractType
 {
 
