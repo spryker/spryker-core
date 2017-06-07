@@ -81,15 +81,6 @@ class CsvReaderTest extends Test
     /**
      * @return void
      */
-    protected function testKeyReturnsCurrentDataRowNumber()
-    {
-        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
-        $this->assertInternalType('int', $csvReader->key());
-    }
-
-    /**
-     * @return void
-     */
     public function testDataReaderCanBeConfiguredToUseNewFileAfterInstantiation()
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-semicolon-delimiter.csv');
@@ -213,7 +204,7 @@ class CsvReaderTest extends Test
     /**
      * @return void
      */
-    public function testThrowsExceptionWhenHeaderDataSetLengthLengthDoesNotMatch()
+    public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch()
     {
         $this->expectException(DataSetWithHeaderCombineFailedException::class);
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Communication\Plugin;
 
-use Spryker\Zed\DataImport\Communication\Plugin\Listener\DataImportConsoleTimerListener;
+use Spryker\Zed\DataImport\Communication\Plugin\Listener\DataImportTransactionListener;
 use Spryker\Zed\DataImport\Dependency\DataImportEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -27,10 +27,10 @@ class DataImportTransactionEventSubscriberPlugin extends AbstractPlugin implemen
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $dataImportConsoleTimerListener = new DataImportConsoleTimerListener();
+        $dataImportTransactionListener = new DataImportTransactionListener();
         $eventCollection
-            ->addListener(DataImportEvents::BEFORE_DATA_SET_IMPORTER, $dataImportConsoleTimerListener)
-            ->addListener(DataImportEvents::AFTER_DATA_SET_IMPORTER, $dataImportConsoleTimerListener);
+            ->addListener(DataImportEvents::BEFORE_DATA_SET_IMPORTER, $dataImportTransactionListener)
+            ->addListener(DataImportEvents::AFTER_DATA_SET_IMPORTER, $dataImportTransactionListener);
 
         return $eventCollection;
     }

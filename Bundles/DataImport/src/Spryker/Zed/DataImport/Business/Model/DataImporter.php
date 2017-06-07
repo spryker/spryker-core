@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\BeforeDataSetImportEventTransfer;
 use Generated\Shared\Transfer\BeforeImportEventTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -55,7 +56,7 @@ class DataImporter implements
     /**
      * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
      */
-    protected $dataSetImporter = [];
+    protected $dataSetStepBroker = [];
 
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface
@@ -81,7 +82,7 @@ class DataImporter implements
      */
     public function addDataSetStepBroker(DataSetStepBrokerInterface $dataSetStepBroker)
     {
-        $this->dataSetImporter[] = $dataSetStepBroker;
+        $this->dataSetStepBroker[] = $dataSetStepBroker;
 
         return $this;
     }
@@ -145,6 +146,7 @@ class DataImporter implements
 
                 $this->triggerAfterDataSetImportEvent($dataReader);
             } catch (Exception $dataImportException) {
+                ErrorLogger::getInstance()->log($dataImportException);
                 $dataImporterReportTransfer->setIsSuccess(false);
                 $this->triggerDataSetImportFailedEvent($dataImportException, $dataReader);
             }
@@ -178,7 +180,7 @@ class DataImporter implements
      */
     protected function importDataSet(DataSetInterface $dataSet)
     {
-        foreach ($this->dataSetImporter as $dataSetImporter) {
+        foreach ($this->dataSetStepBroker as $dataSetImporter) {
             $this->triggerBeforeDataSetImporterEvent($dataSetImporter);
             try {
                 $dataSetImporter->execute($dataSet);

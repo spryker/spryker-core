@@ -10,17 +10,18 @@ namespace SprykerTest\Zed\DataImport\Helper;
 use Codeception\Module;
 use Countable;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class DataReaderHelper extends Module
 {
 
     /**
      * @param int $expectedRow
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSet $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
      */
-    public function assertDataSetWithKeys($expectedRow, DataSet $dataSet)
+    public function assertDataSetWithKeys($expectedRow, DataSetInterface $dataSet)
     {
         $dataSetWithKeys = $this->getDataSetWithKeys($expectedRow);
         $this->assertEquals(new DataSet($dataSetWithKeys), $dataSet);
@@ -28,11 +29,11 @@ class DataReaderHelper extends Module
 
     /**
      * @param int $expectedRow
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSet $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
      */
-    public function assertDataSetWithoutKeys($expectedRow, DataSet $dataSet)
+    public function assertDataSetWithoutKeys($expectedRow, DataSetInterface $dataSet)
     {
         $dataSetWithKeys = $this->getDataSetWithKeys($expectedRow);
         $this->assertEquals(new DataSet(array_values($dataSetWithKeys)), $dataSet);

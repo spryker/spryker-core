@@ -26,7 +26,7 @@ class ErrorLogger implements ErrorLoggerInterface
     /**
      * @return \Spryker\Shared\ErrorHandler\ErrorLogger
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (!static::$instance) {
             static::$instance = new self();
