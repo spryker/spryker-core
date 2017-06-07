@@ -14,7 +14,7 @@ use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_TOUCH = 'facade_touch';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,7 +23,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->provideTouchFacade($container);
+        $container = $this->addTouchFacade($container);
 
         return $container;
     }
@@ -33,7 +33,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideTouchFacade(Container $container)
+    protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductLabelToTouchBridge($container->getLocator()->touch()->facade());

@@ -16,6 +16,8 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

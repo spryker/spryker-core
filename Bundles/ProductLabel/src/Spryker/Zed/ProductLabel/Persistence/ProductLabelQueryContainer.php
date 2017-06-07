@@ -117,15 +117,17 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      * @api
      *
      * @param int $idProductLabel
-     * @param int $idProductAbstract
+     * @param int[] $idsProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabelAndAbstractProduct($idProductLabel, $idProductAbstract)
-    {
+    public function queryAbstractProductRelationsByProductLabelAndAbstractProducts(
+        $idProductLabel,
+        array $idsProductAbstract
+    ) {
         return $this
             ->queryAbstractProductRelationsByProductLabel($idProductLabel)
-            ->filterByFkProductAbstract($idProductAbstract);
+            ->filterByFkProductAbstract($idsProductAbstract, Criteria::IN);
     }
 
     /**
@@ -139,7 +141,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->getFactory()
             ->createProductLabelQuery()
             ->filterByIsPublished(false)
+            ->_or()
+            ->filterByIsPublished(null, Criteria::ISNULL)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->filterByValidTo(null,Criteria::ISNULL)
+            ->_or()
             ->filterByValidTo('now', Criteria::GREATER_EQUAL);
     }
 
@@ -154,6 +160,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->getFactory()
             ->createProductLabelQuery()
             ->filterByIsPublished(true)
+            ->_or()
+            ->filterByIsPublished(null, Criteria::ISNULL)
             ->filterByValidTo('now', Criteria::LESS_THAN);
     }
 

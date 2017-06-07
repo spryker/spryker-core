@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
 use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class AbstractProductRelationWriter implements AbstractProductRelationWriterInterface
+class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInterface
 {
 
     use DatabaseTransactionHandlerTrait;

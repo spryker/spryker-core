@@ -86,17 +86,45 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
      */
     protected function isValidByDate(ProductLabelTransfer $productLabelTransfer)
     {
-        if (!$productLabelTransfer->getValidFrom() || !$productLabelTransfer->getValidTo()) {
+        $now = new DateTime();
+        $isValidFromDate = $this->isValidByDateFrom($productLabelTransfer, $now);
+        $isValidToDate = $this->isValidByDateTo($productLabelTransfer, $now);
+
+        return ($isValidFromDate && $isValidToDate);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \DateTime $now
+     *
+     * @return bool
+     */
+    protected function isValidByDateFrom(ProductLabelTransfer $productLabelTransfer, DateTime $now)
+    {
+        if (!$productLabelTransfer->getValidFrom()) {
             return true;
         }
-
-        $now = new DateTime();
 
         /** @var \DateTime $validFromDate */
         $validFromDate = $productLabelTransfer->getValidFrom();
 
-        if ($validFromDate->getTimestamp() > $now->getTimestamp()) {
+        if ($now->getTimestamp() < $validFromDate->getTimestamp()) {
             return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \DateTime $now
+     *
+     * @return bool
+     */
+    protected function isValidByDateTo(ProductLabelTransfer $productLabelTransfer, DateTime $now)
+    {
+        if (!$productLabelTransfer->getValidTo()) {
+            return true;
         }
 
         /** @var \DateTime $validToDate */

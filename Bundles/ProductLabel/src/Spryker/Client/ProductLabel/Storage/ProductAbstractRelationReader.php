@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductLabel\Storage;
 use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
-class AbstractProductRelationReader implements AbstractProductRelationReaderInterface
+class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
 
     /**

@@ -185,7 +185,7 @@ class ProductLabelTable extends AbstractTable
      */
     protected function getValidityDateRangeLabel(SpyProductLabel $productLabelEntity)
     {
-        if (!$productLabelEntity->getValidFrom() || !$productLabelEntity->getValidTo()) {
+        if (!$productLabelEntity->getValidFrom() && !$productLabelEntity->getValidTo()) {
             return 'n/a';
         }
 

@@ -54,8 +54,8 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     public function getSortedLabelsById(array $productLabelIds, $localeName)
     {
         $productLabelCollection = $this->getProductLabelsFromDictionary($productLabelIds, $localeName);
-        $productLabelCollection = $this->extractExclusive($productLabelCollection);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
+        $productLabelCollection = $this->extractExclusive($productLabelCollection);
         $productLabelCollection = $this->truncateCollection($productLabelCollection);
 
         return $productLabelCollection;

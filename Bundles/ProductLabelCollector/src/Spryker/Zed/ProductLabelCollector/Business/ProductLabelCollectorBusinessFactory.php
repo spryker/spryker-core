@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductLabelCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\AbstractProductRelationCollector;
+use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\ProductAbstractRelationCollector;
 use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\LabelDictionaryCollector;
-use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\AbstractProductRelationCollectorQuery;
+use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\LabelDictionaryCollectorQuery;
 use Spryker\Zed\ProductLabelCollector\ProductLabelCollectorDependencyProvider;
 
@@ -46,7 +46,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createAbstractProductRelationStorageCollector()
     {
-        $collector = new AbstractProductRelationCollector($this->getDataReaderService());
+        $collector = new ProductAbstractRelationCollector($this->getDataReaderService());
 
         $collector->setTouchQueryContainer($this->getTouchQueryContainer());
         $collector->setQueryBuilder($this->createAbstractProductRelationCollectorQuery());
@@ -91,7 +91,7 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createAbstractProductRelationCollectorQuery()
     {
-        return new AbstractProductRelationCollectorQuery();
+        return new ProductAbstractRelationCollectorQuery();
     }
 
 }

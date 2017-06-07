@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class AbstractProductRelationDeleter implements AbstractProductRelationDeleterInterface
+class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -59,8 +59,7 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
      */
     protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract)
     {
-        foreach ($idsProductAbstract as $idProductAbstract) {
-            $relationEntity = $this->findRelationEntity($idProductLabel, $idProductAbstract);
+        foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
             $relationEntity->delete();
 
             $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
@@ -69,19 +68,19 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param int $idProductAbstract
+     * @param int[] $idsProductAbstract
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findRelationEntity($idProductLabel, $idProductAbstract)
+    protected function findRelationEntities($idProductLabel, array $idsProductAbstract)
     {
         return $this
             ->queryContainer
-            ->queryAbstractProductRelationsByProductLabelAndAbstractProduct(
+            ->queryAbstractProductRelationsByProductLabelAndAbstractProducts(
                 $idProductLabel,
-                $idProductAbstract
+                $idsProductAbstract
             )
-            ->findOne();
+            ->find();
     }
 
     /**
@@ -107,12 +106,10 @@ class AbstractProductRelationDeleter implements AbstractProductRelationDeleterIn
      */
     protected function isEmptyRelationForAbstractProduct($idProductAbstract)
     {
-        $relationCount = $this
+        return $this
             ->queryContainer
             ->queryProductLabelByAbstractProduct($idProductAbstract)
-            ->count();
-
-        return ($relationCount === 0);
+            ->exists();
     }
 
 }

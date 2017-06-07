@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Business\AbstractProductRelation;
+namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
-class AbstractProductRelationReader implements AbstractProductRelationReaderInterface
+class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
 
     /**
@@ -35,7 +35,7 @@ class AbstractProductRelationReader implements AbstractProductRelationReaderInte
         $idsProductAbstract = [];
 
         foreach ($this->findRelationEntities($idProductLabel) as $relationEntity) {
-            $idsProductAbstract[] = (int)$relationEntity->getFkProductAbstract();
+            $idsProductAbstract[] = $relationEntity->getFkProductAbstract();
         }
 
         return $idsProductAbstract;

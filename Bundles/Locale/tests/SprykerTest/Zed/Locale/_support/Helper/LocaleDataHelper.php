@@ -16,6 +16,8 @@ class LocaleDataHelper extends Module
 
     use LocatorHelperTrait;
 
+    const LOCALE_NAME_LENGTH_LIMIT = 5;
+
     /**
      * @param array $seedData
      *
@@ -49,7 +51,7 @@ class LocaleDataHelper extends Module
     {
         $localeTransfer = (new LocaleBuilder($seedData))->build();
 
-        if (strlen($localeTransfer->getLocaleName()) > 5) {
+        if (strlen($localeTransfer->getLocaleName()) > static::LOCALE_NAME_LENGTH_LIMIT) {
             return $this->generateLocaleTransfer($seedData);
         }
 

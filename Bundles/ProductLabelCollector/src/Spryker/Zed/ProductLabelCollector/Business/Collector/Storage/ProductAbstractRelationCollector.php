@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductLabelCollector\Business\Collector\Storage;
 
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\AbstractProductRelationCollectorQuery;
+use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 
-class AbstractProductRelationCollector extends AbstractStoragePropelCollector
+class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
 {
 
     /**
@@ -34,7 +34,7 @@ class AbstractProductRelationCollector extends AbstractStoragePropelCollector
      */
     protected function getProductLabelIds(array $collectItemData)
     {
-        $productLabelIdsCsv = $collectItemData[AbstractProductRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV];
+        $productLabelIdsCsv = $collectItemData[ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV];
         $productLabelIds = explode(',', $productLabelIdsCsv);
         $productLabelIds = array_map('intval', $productLabelIds);
 

@@ -64,11 +64,14 @@ interface ProductLabelQueryContainerInterface
      * @api
      *
      * @param int $idProductLabel
-     * @param int $idProductAbstract
+     * @param int[] $idsProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabelAndAbstractProduct($idProductLabel, $idProductAbstract);
+    public function queryAbstractProductRelationsByProductLabelAndAbstractProducts(
+        $idProductLabel,
+        array $idsProductAbstract
+    );
 
     /**
      * @api

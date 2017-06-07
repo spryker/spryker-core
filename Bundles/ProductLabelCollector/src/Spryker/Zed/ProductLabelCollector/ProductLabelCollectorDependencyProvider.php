@@ -15,10 +15,10 @@ use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToP
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_PRODUCT_LABEL = 'facade_product_label';
-    const FACADE_COLLECTOR = 'facade_collector';
-    const SERVICE_DATA_READER = 'service_data_reader';
-    const QUERY_CONTAINER_TOUCH = 'query_container_touch';
+    const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,10 +27,10 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->provideProductLabelFacade($container);
-        $container = $this->provideCollectorFacade($container);
-        $container = $this->provideDataReaderService($container);
-        $container = $this->provideTouchQueryContainer($container);
+        $container = $this->addProductLabelFacade($container);
+        $container = $this->addCollectorFacade($container);
+        $container = $this->addDataReaderService($container);
+        $container = $this->addTouchQueryContainer($container);
 
         return $container;
     }
@@ -40,7 +40,7 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideProductLabelFacade(Container $container)
+    protected function addProductLabelFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
             return new ProductLabelCollectorToProductLabelBridge($container->getLocator()->productLabel()->facade());
@@ -54,7 +54,7 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideCollectorFacade(Container $container)
+    protected function addCollectorFacade(Container $container)
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new ProductLabelCollectorToCollectorBridge($container->getLocator()->collector()->facade());
@@ -68,7 +68,7 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideDataReaderService(Container $container)
+    protected function addDataReaderService(Container $container)
     {
         $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
@@ -82,7 +82,7 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideTouchQueryContainer(Container $container)
+    protected function addTouchQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();

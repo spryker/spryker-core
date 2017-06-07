@@ -20,19 +20,12 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
-     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     *
      * @return void
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!($constraint instanceof UniqueProductLabelNameConstraint)) {
-            throw new UnexpectedTypeException($constraint, UniqueProductLabelNameConstraint::class);
-        }
-
-        if (!($value instanceof ProductLabelTransfer)) {
-            throw new UnexpectedTypeException($value, ProductLabelTransfer::class);
-        }
+        $this->assertConstraintType($constraint);
+        $this->assertValueType($value);
 
         if (!$this->isNameChanged($value, $constraint)) {
             return;
@@ -47,6 +40,34 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
             ->buildViolation($constraint->getMessage($value->getName()))
             ->atPath(ProductLabelFormType::FIELD_NAME)
             ->addViolation();
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\Constraint $constraint
+     *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
+     * @return void
+     */
+    protected function assertConstraintType(Constraint $constraint)
+    {
+        if (!($constraint instanceof UniqueProductLabelNameConstraint)) {
+            throw new UnexpectedTypeException($constraint, UniqueProductLabelNameConstraint::class);
+        }
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
+     * @return void
+     */
+    protected function assertValueType($value)
+    {
+        if (!($value instanceof ProductLabelTransfer)) {
+            throw new UnexpectedTypeException($value, ProductLabelTransfer::class);
+        }
     }
 
     /**

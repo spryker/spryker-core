@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleter;
-use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationReader;
-use Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationWriter;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
@@ -95,30 +95,30 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationReaderInterface
+     * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface
      */
     public function createAbstractProductRelationReader()
     {
-        return new AbstractProductRelationReader($this->getQueryContainer());
+        return new ProductAbstractRelationReader($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationWriterInterface
+     * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriterInterface
      */
     public function createAbstractProductRelationWriter()
     {
-        return new AbstractProductRelationWriter(
+        return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
             $this->createAbstractProductRelationTouchManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\AbstractProductRelation\AbstractProductRelationDeleterInterface
+     * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleterInterface
      */
     public function createAbstractProductRelationDeleter()
     {
-        return new AbstractProductRelationDeleter(
+        return new ProductAbstractRelationDeleter(
             $this->getQueryContainer(),
             $this->createAbstractProductRelationTouchManager()
         );

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductLabel\Storage;
 
-interface AbstractProductRelationReaderInterface
+interface ProductAbstractRelationReaderInterface
 {
 
     /**
