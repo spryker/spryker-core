@@ -197,7 +197,9 @@ class SalesFacadeSaveOrderTest extends Test
         $quoteTransfer->setShipment($shipmentTransfer);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitGrossPrice(1)
+        $itemTransfer
+            ->setUnitPrice(1)
+            ->setUnitGrossPrice(1)
             ->setQuantity(1)
             ->setName('test-name')
             ->setSku('sku-test');
@@ -304,6 +306,7 @@ class SalesFacadeSaveOrderTest extends Test
         $item1 = new ItemTransfer();
         $item1->setName('item-test-1')
             ->setSku('sku1')
+            ->setUnitPrice(130)
             ->setUnitGrossPrice(120)
             ->setQuantity(1)
             ->setTaxRate(19);
@@ -311,6 +314,7 @@ class SalesFacadeSaveOrderTest extends Test
         $item2 = new ItemTransfer();
         $item2->setName('item-test-2')
             ->setSku('sku2')
+            ->setUnitPrice(130)
             ->setUnitGrossPrice(130)
             ->setQuantity(1)
             ->setTaxRate(19);

@@ -40,7 +40,7 @@ class PriceManager implements PriceManagerInterface
     public function __construct(
         PriceCartToPriceInterface $priceFacade,
         $grossPriceType,
-        $priceMode
+        $priceMode = PriceMode::PRICE_MODE_GROSS
     ) {
         $this->priceFacade = $priceFacade;
         $this->grossPriceType = $grossPriceType;
