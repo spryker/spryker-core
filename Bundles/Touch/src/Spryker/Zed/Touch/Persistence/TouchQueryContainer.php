@@ -162,16 +162,24 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @api
      *
      * @param string $itemType
+     * @param int|null $idLocale
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryTouchDeleteStorageAndSearch($itemType)
+    public function queryTouchDeleteStorageAndSearch($itemType, $idLocale = null)
     {
-        $query = $this->getFactory()->createTouchQuery();
-        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+        $query = $this->getFactory()
+            ->createTouchQuery()
+            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType)
             ->leftJoinTouchSearch('search')
             ->leftJoinTouchStorage('storage');
+
+        if ($idLocale){
+            $query
+                ->addJoinCondition('search', 'search.fk_locale = ' . $idLocale)
+                ->addJoinCondition('storage', 'storage.fk_locale = ' . $idLocale);
+        }
 
         return $query;
     }

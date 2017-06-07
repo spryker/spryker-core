@@ -43,6 +43,7 @@ class CollectorManager implements CollectorManagerInterface
         OutputInterface $output
     ) {
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
+        $collector->setLocale($locale);
         $collector->deleteDataFromStore($touchUpdater, $dataWriter, $itemType);
         $batchCollection = $collector->collectDataFromDatabase($baseQuery, $locale);
         $collector->exportDataToStore($batchCollection, $touchUpdater, $result, $dataReader, $dataWriter, $locale, $output);

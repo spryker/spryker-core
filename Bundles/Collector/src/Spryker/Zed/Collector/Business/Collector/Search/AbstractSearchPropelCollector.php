@@ -27,8 +27,8 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
     protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
         $touchQuery->addJoin(
-            SpyTouchTableMap::COL_ID_TOUCH,
-            SpyTouchSearchTableMap::COL_FK_TOUCH,
+            [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchSearchTableMap::COL_FK_LOCALE],
+            [SpyTouchSearchTableMap::COL_FK_TOUCH, $locale->getIdLocale()],
             Criteria::LEFT_JOIN
         );
 
