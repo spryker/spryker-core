@@ -29,12 +29,12 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
-    protected $customer;
+    protected $customerModel;
 
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\AddressInterface
      */
-    protected $address;
+    protected $addressModel;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
@@ -43,20 +43,20 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
-     * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
+     * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customerModel
+     * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $addressModel
      * @param array $customerAnonymizerPlugins
      */
     public function __construct(
         CustomerQueryContainerInterface
         $customerQueryContainer,
-        CustomerInterface $customer,
-        AddressInterface $address,
+        CustomerInterface $customerModel,
+        AddressInterface $addressModel,
         array $customerAnonymizerPlugins
     ) {
         $this->queryContainer = $customerQueryContainer;
-        $this->customer = $customer;
-        $this->address = $address;
+        $this->customerModel = $customerModel;
+        $this->addressModel = $addressModel;
         $this->plugins = $customerAnonymizerPlugins;
     }
 
@@ -103,7 +103,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->customer->get($customerTransfer);
+        return $this->customerModel->get($customerTransfer);
     }
 
     /**
@@ -182,7 +182,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      */
     protected function updateCustomer(CustomerTransfer $customerTransfer)
     {
-        $this->customer->update($customerTransfer);
+        $this->customerModel->update($customerTransfer);
     }
 
     /**
@@ -193,7 +193,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected function updateCustomerAddresses(AddressesTransfer $addressesTransfer)
     {
         foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-            $this->address->updateAddress($addressTransfer);
+            $this->addressModel->updateAddress($addressTransfer);
         }
     }
 

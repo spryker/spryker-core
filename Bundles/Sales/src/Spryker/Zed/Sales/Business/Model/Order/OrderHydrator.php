@@ -128,10 +128,6 @@ class OrderHydrator implements OrderHydratorInterface
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
-        if (!$orderEntity->getCustomer()) {
-            $orderTransfer->setFkCustomer(null);
-        }
-
         return $orderTransfer;
     }
 
@@ -149,6 +145,7 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateMissingCustomer($orderEntity, $orderTransfer);
 
         $orderTransfer->setTotalOrderCount($this->getTotalCustomerOrderCount($orderTransfer->getFkCustomer()));
 
@@ -334,6 +331,19 @@ class OrderHydrator implements OrderHydratorInterface
         $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param SpySalesOrder $orderEntity
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    {
+        if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setFkCustomer(null);
+        }
     }
 
 }

@@ -75,11 +75,15 @@ interface NewsletterFacadeInterface
     public function install();
 
     /**
+     * Specification
+     * - Unsubscribes from signed newsletters
+     * - Anonymizes personal information of the subscriber
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return bool
+     * @return void
      */
     public function anonymizeSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
 
