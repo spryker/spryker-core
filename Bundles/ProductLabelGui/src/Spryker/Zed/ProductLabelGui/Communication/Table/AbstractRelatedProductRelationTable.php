@@ -71,9 +71,15 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     protected function configureSorting(TableConfiguration $config)
     {
         $config->setDefaultSortField(
-            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             TableConfiguration::SORT_ASC
         );
+
+        $config->setSortable([
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+        ]);
     }
 
     /**
