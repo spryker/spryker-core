@@ -17,7 +17,7 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\ProductSetCollector\Business\ProductSetCollectorFacade getFacade()
+ * @method \Spryker\Zed\ProductSetCollector\Business\ProductSetCollectorFacadeInterface getFacade()
  */
 class ProductSetCollectorStoragePlugin extends AbstractCollectorPlugin
 {

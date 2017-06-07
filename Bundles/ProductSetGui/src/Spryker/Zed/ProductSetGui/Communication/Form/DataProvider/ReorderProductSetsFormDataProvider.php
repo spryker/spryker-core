@@ -40,6 +40,9 @@ class ReorderProductSetsFormDataProvider
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         return [];

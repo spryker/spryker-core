@@ -26,8 +26,8 @@ abstract class AbstractProductSetController extends AbstractController
     public function productTableAction(Request $request)
     {
         $idProductSet = null;
-        if ($request->query->has(self::PARAM_ID)) {
-            $idProductSet = $this->castId($request->query->get(self::PARAM_ID));
+        if ($request->query->has(static::PARAM_ID)) {
+            $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
         }
 
         $localeTransfer = $this->getFactory()
@@ -48,7 +48,7 @@ abstract class AbstractProductSetController extends AbstractController
      */
     public function productAbstractSetTableAction(Request $request)
     {
-        $idProductSet = $this->castId($request->query->get(self::PARAM_ID));
+        $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -56,7 +56,7 @@ abstract class AbstractProductSetController extends AbstractController
 
         return $this->jsonResponse(
             $this->getFactory()
-                ->createProductAbstractSetTable($localeTransfer, $idProductSet)
+                ->createProductAbstractSetUpdateTable($localeTransfer, $idProductSet)
                 ->fetchData()
         );
     }

@@ -10,11 +10,15 @@ namespace Spryker\Zed\ProductSetCollector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToCollectorBridge;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProductSetBridge;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchBridge;
 
 class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    const FACADE_SEARCH = 'FACADE_SEARCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
@@ -28,6 +32,8 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addCollectorFacade($container);
+        $this->addSearchFacade($container);
+        $this->addProductSetFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
 
@@ -43,6 +49,30 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new ProductSetCollectorToCollectorBridge($container->getLocator()->collector()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addSearchFacade(Container $container)
+    {
+        $container[static::FACADE_SEARCH] = function (Container $container) {
+            return new ProductSetCollectorToSearchBridge($container->getLocator()->search()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addProductSetFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT_SET] = function (Container $container) {
+            return new ProductSetCollectorToProductSetBridge($container->getLocator()->productSet()->facade());
         };
     }
 

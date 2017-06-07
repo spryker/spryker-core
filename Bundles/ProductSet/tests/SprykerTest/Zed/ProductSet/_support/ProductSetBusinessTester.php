@@ -5,7 +5,9 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 
 /**
  * Inherited Methods
@@ -30,12 +32,15 @@ class ProductSetBusinessTester extends Actor
 
     /**
      * @param array $productSetSeed
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function generateProductSetTransfer(array $productSetSeed = [])
+    public function generateProductSetTransfer(array $productSetSeed = [], LocaleTransfer $localeTransfer = null)
     {
-        $localeTransfer = $this->haveLocale();
+        if (!$localeTransfer) {
+            $localeTransfer = $this->haveLocale();
+        }
 
         $productSetTransfer = (new ProductSetBuilder())
             ->seed($productSetSeed)
@@ -47,7 +52,9 @@ class ProductSetBusinessTester extends Actor
                     ->withProductSetData()
             )
             ->withImageSet(
-                (new ProductImageSetBuilder())
+                (new ProductImageSetBuilder([
+                    ProductImageSetTransfer::LOCALE => null,
+                ]))
                     ->withProductImage()
             )
             ->build();

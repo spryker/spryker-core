@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductSetGui\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductSetGui\ProductSetGuiDependencyProvider;
 
@@ -27,12 +26,11 @@ class ProductSetGuiPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductInterface
      */
-    public function createProductAbstractQuery()
+    public function getProductQueryContainer()
     {
-        // TODO: use ProductSetGuiToProductInterface instead
-        return SpyProductAbstractQuery::create();
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
 }

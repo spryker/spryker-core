@@ -18,7 +18,8 @@ use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\ReorderProductSets
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\UpdateFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\ReorderProductSetsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
-use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetTable;
+use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelper;
+use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetUpdateTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetViewTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetReorderTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetTable;
@@ -131,29 +132,29 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductTable(LocaleTransfer $localeTransfer, $idProductSet = null)
     {
-        return new ProductTable($this->getQueryContainer(), $this->getUtilEncodingService(), $localeTransfer, $idProductSet);
+        return new ProductTable($this->getQueryContainer(), $this->createProductAbstractTableHelper(), $localeTransfer, $idProductSet);
     }
 
     /**
-     * @param int $idProductSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idProductSet
      *
-     * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetTable
+     * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetUpdateTable
      */
-    public function createProductAbstractSetTable(LocaleTransfer $localeTransfer, $idProductSet)
+    public function createProductAbstractSetUpdateTable(LocaleTransfer $localeTransfer, $idProductSet)
     {
-        return new ProductAbstractSetTable($this->getQueryContainer(), $this->getUtilEncodingService(), $localeTransfer, $idProductSet);
+        return new ProductAbstractSetUpdateTable($this->getQueryContainer(), $this->createProductAbstractTableHelper(), $localeTransfer, $idProductSet);
     }
 
     /**
-     * @param int $idProductSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idProductSet
      *
      * @return \Spryker\Zed\ProductSetGui\Communication\Table\ProductAbstractSetViewTable
      */
     public function createProductAbstractSetViewTable(LocaleTransfer $localeTransfer, $idProductSet)
     {
-        return new ProductAbstractSetViewTable($this->getQueryContainer(), $localeTransfer, $idProductSet);
+        return new ProductAbstractSetViewTable($this->getQueryContainer(), $this->createProductAbstractTableHelper(), $localeTransfer, $idProductSet);
     }
 
     /**
@@ -200,6 +201,18 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
+     */
+    protected function createProductAbstractTableHelper()
+    {
+        return new ProductAbstractTableHelper(
+            $this->getProductImageFacade(),
+            $this->getPriceFacade(),
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetInterface
      */
     public function getProductSetFacade()
@@ -224,19 +237,43 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetInterface
-     */
-    public function getProductSetQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface
      */
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ProductSetGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface
+     */
+    protected function getProductImageFacade()
+    {
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetInterface
+     */
+    protected function getProductSetQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
     }
 
 }

@@ -11,15 +11,14 @@ use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductSet\ProductSetConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
-use Spryker\Zed\Search\Business\SearchFacadeInterface;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class ProductSetCollector extends AbstractSearchPropelCollector
 {
 
     /**
-     * @var ProductSetQueryContainerInterface
+     * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
     protected $productSetQueryContainer;
 
@@ -29,19 +28,19 @@ class ProductSetCollector extends AbstractSearchPropelCollector
     protected $productSetPageMapPlugin;
 
     /**
-     * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
+     * @var \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchInterface
      */
     protected $searchFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $productSetPageMapPlugin
-     * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
+     * @param \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchInterface $searchFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         PageMapInterface $productSetPageMapPlugin,
-        SearchFacadeInterface $searchFacade // FIXME: use bridge
+        ProductSetCollectorToSearchInterface $searchFacade
     ) {
         parent::__construct($utilDataReaderService);
 

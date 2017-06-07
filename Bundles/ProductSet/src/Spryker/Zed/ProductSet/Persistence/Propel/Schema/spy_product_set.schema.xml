@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductSet\Persistence" package="src.Orm.Zed.ProductSet.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          name="zed" namespace="Orm\Zed\ProductSet\Persistence"
+          package="src.Orm.Zed.ProductSet.Persistence">
 
     <table name="spy_product_set" idMethod="native" allowPkInsert="true">
         <column name="id_product_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -23,6 +25,14 @@
         <foreign-key name="spy_product_abstract_set-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
+
+        <index name="spy_product_abstract_set-fi_product_set">
+            <index-column name="fk_product_set"/>
+        </index>
+
+        <index name="spy_product_abstract_set-fi_product_abstract">
+            <index-column name="fk_product_abstract"/>
+        </index>
     </table>
 
     <table name="spy_product_set_data" idMethod="native" allowPkInsert="true" identifierQuoting="true">
@@ -48,6 +58,14 @@
             <unique-column name="fk_product_set"/>
             <unique-column name="fk_locale"/>
         </unique>
+
+        <index name="spy_product_set_data-fi_product_set">
+            <index-column name="fk_product_set"/>
+        </index>
+
+        <index name="spy_product_set_data-fi_locale">
+            <index-column name="fk_locale"/>
+        </index>
 
         <id-method-parameter value="spy_product_set_data_pk_seq"/>
     </table>

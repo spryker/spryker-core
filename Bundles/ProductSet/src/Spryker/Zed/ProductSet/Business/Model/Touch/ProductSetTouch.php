@@ -62,11 +62,39 @@ class ProductSetTouch implements ProductSetTouchInterface
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
+     * @return bool
+     */
+    public function touchProductSetByStatus(ProductSetTransfer $productSetTransfer)
+    {
+        $this->assertProductSetForTouchByStatus($productSetTransfer);
+
+        if ($productSetTransfer->getIsActive()) {
+            return $this->touchProductSetActive($productSetTransfer);
+        }
+
+        return $this->touchProductSetDeleted($productSetTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
      * @return void
      */
     protected function assertProductSetForTouch(ProductSetTransfer $productSetTransfer)
     {
         $productSetTransfer->requireIdProductSet();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
+     * @return void
+     */
+    protected function assertProductSetForTouchByStatus(ProductSetTransfer $productSetTransfer)
+    {
+        $productSetTransfer
+            ->requireIdProductSet()
+            ->requireIsActive();
     }
 
 }

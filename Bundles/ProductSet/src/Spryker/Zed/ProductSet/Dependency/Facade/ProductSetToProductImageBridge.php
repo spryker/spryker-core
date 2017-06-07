@@ -30,9 +30,9 @@ class ProductSetToProductImageBridge implements ProductSetToProductImageInterfac
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function getProductImagesSetById($idProductImageSet)
+    public function getProductImageSetById($idProductImageSet)
     {
-        return $this->productImageFacade->getProductImagesSetById($idProductImageSet);
+        return $this->productImageFacade->getProductImageSetById($idProductImageSet);
     }
 
     /**

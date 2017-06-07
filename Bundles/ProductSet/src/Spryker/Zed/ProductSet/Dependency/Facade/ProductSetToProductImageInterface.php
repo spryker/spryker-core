@@ -17,7 +17,7 @@ interface ProductSetToProductImageInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function getProductImagesSetById($idProductImageSet);
+    public function getProductImageSetById($idProductImageSet);
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer

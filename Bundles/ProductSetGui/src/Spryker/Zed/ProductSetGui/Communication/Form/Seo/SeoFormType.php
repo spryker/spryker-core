@@ -35,7 +35,7 @@ class SeoFormType extends AbstractType
      */
     protected function addLocalizedSeoFormCollection(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LOCALIZED_SEO_FORM_COLLECTION, CollectionType::class, [
+        $builder->add(static::FIELD_LOCALIZED_SEO_FORM_COLLECTION, CollectionType::class, [
             'type' => LocalizedSeoFormType::class,
         ]);
 

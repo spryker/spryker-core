@@ -61,7 +61,7 @@ class ViewController extends AbstractController
      */
     public function productAbstractSetViewTableAction(Request $request)
     {
-        $idProductSet = $this->castId($request->query->get(self::PARAM_ID));
+        $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()

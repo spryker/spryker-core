@@ -12,10 +12,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Money\Business\MoneyFacade;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
+use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -36,6 +34,11 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected $productSetGuiQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
+     */
+    protected $productAbstractTableHelper;
+
+    /**
      * @var int
      */
     protected $idProductSet;
@@ -47,17 +50,20 @@ class ProductAbstractSetViewTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
+     * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
+        ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
         $idProductSet
     ) {
         $this->productSetGuiQueryContainer = $productSetGuiQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->idProductSet = $idProductSet;
+        $this->productAbstractTableHelper = $productAbstractTableHelper;
     }
 
     /**
@@ -68,29 +74,29 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $urlSuffix = sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSet);
-        $this->defaultUrl = self::TABLE_IDENTIFIER . $urlSuffix;
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         $this->disableSearch();
 
         $config->setHeader([
-            self::COL_ID_PRODUCT_ABSTRACT => 'ID',
-            self::COL_IMAGE => 'Preview',
-            self::COL_DETAILS => 'Product details',
-            self::COL_ORDER => 'Order',
+            static::COL_ID_PRODUCT_ABSTRACT => 'ID',
+            static::COL_IMAGE => 'Preview',
+            static::COL_DETAILS => 'Product details',
+            static::COL_ORDER => 'Order',
         ]);
 
         $config->setSortable([
-            self::COL_ID_PRODUCT_ABSTRACT,
-            self::COL_ORDER,
+            static::COL_ID_PRODUCT_ABSTRACT,
+            static::COL_ORDER,
         ]);
 
         $config->setRawColumns([
-            self::COL_IMAGE,
-            self::COL_DETAILS,
+            static::COL_IMAGE,
+            static::COL_DETAILS,
         ]);
 
-        $config->setDefaultSortField(self::COL_ORDER, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_ORDER, TableConfiguration::SORT_ASC);
         $config->setStateSave(false);
 
         return $config;
@@ -123,48 +129,11 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected function formatRow(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            self::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
-            self::COL_IMAGE => $this->getProductPreview($productAbstractEntity),
-            self::COL_DETAILS => $this->generateDetailsColumn($productAbstractEntity),
-            self::COL_ORDER => $productAbstractEntity->getVirtualColumn(self::COL_ORDER),
+            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_IMAGE => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
+            static::COL_DETAILS => $this->generateDetailsColumn($productAbstractEntity),
+            static::COL_ORDER => $productAbstractEntity->getVirtualColumn(static::COL_ORDER),
         ];
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getProductPreview(SpyProductAbstract $productAbstractEntity)
-    {
-        return sprintf(
-            '<img src="%s">',
-            $this->getProductPreviewUrl($productAbstractEntity)
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return null|string
-     */
-    protected function getProductPreviewUrl(SpyProductAbstract $productAbstractEntity)
-    {
-        $productImageFacade = new ProductImageFacade(); // FIXME
-
-        $productImageSetTransferCollection = $productImageFacade->getProductImagesSetCollectionByProductAbstractId($productAbstractEntity->getIdProductAbstract());
-
-        foreach ($productImageSetTransferCollection as $productImageSetTransfer) {
-            foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                $previewUrl = $productImageTransfer->getExternalUrlSmall();
-
-                if ($previewUrl) {
-                    return $previewUrl;
-                }
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -183,64 +152,13 @@ class ProductAbstractSetViewTable extends AbstractTable
         $content = sprintf(
             $rawContent,
             Url::generate('/product-management/view', ['id-product-abstract' => $productAbstractEntity->getIdProductAbstract()])->build(),
-            $productAbstractEntity->getVirtualColumn(self::COL_NAME),
+            $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             $productAbstractEntity->getSku(),
-            $this->getProductPrice($productAbstractEntity),
-            $this->getAbstractProductStatusLabel($productAbstractEntity)
+            $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
+            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity)
         );
 
         return $content;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity)
-    {
-        $isActive = false;
-        foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
-            if ($spyProductEntity->getIsActive()) {
-                $isActive = true;
-            }
-        }
-
-        return $this->getStatusLabel($isActive);
-    }
-
-    /**
-     * @param string $status
-     *
-     * @return string
-     */
-    protected function getStatusLabel($status)
-    {
-        if (!$status) {
-            return '<span class="label label-danger">Inactive</span>';
-        }
-
-        return '<span class="label label-info">Active</span>';
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string|null
-     */
-    protected function getProductPrice(SpyProductAbstract $productAbstractEntity)
-    {
-        $priceFacade = new PriceFacade(); // FIXME
-        $priceProductTransfer = $priceFacade->findProductAbstractPrice($productAbstractEntity->getIdProductAbstract());
-
-        if (!$priceProductTransfer) {
-            return null;
-        }
-
-        $moneyFacade = new MoneyFacade(); // FIXME
-        $moneyTransfer = $moneyFacade->fromInteger($priceProductTransfer->getPrice());
-
-        return $moneyFacade->formatWithSymbol($moneyTransfer);
     }
 
 }

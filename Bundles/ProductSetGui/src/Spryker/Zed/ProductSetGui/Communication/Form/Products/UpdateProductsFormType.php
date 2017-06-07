@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Products;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ */
 class UpdateProductsFormType extends AbstractType
 {
 
@@ -49,22 +52,14 @@ class UpdateProductsFormType extends AbstractType
      */
     protected function addAssignProductAbstractIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
+        $builder->add(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
             'attr' => [
-                'id' => self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS,
+                'id' => static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS,
             ],
         ]);
 
-        // TODO: reuse
-        $builder->get(self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
-            ->addModelTransformer(new CallbackTransformer(
-                function (array $productAbstractIds = null) {
-                    return implode(',', (array)$productAbstractIds);
-                },
-                function ($productAbstractIds = '') {
-                    return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-                }
-            ));
+        $builder->get(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
+            ->addModelTransformer($this->createProductAbstractIdsFieldTransformer());
 
         return $this;
     }
@@ -76,21 +71,14 @@ class UpdateProductsFormType extends AbstractType
      */
     protected function addDeassignProductAbstractIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
+        $builder->add(static::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
             'attr' => [
-                'id' => self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS,
+                'id' => static::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS,
             ],
         ]);
 
-        $builder->get(self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS)
-            ->addModelTransformer(new CallbackTransformer(
-                function (array $productAbstractIds = null) {
-                    return implode(',', (array)$productAbstractIds);
-                },
-                function ($productAbstractIds = '') {
-                    return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-                }
-            ));
+        $builder->get(static::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS)
+            ->addModelTransformer($this->createProductAbstractIdsFieldTransformer());
 
         return $this;
     }
@@ -102,29 +90,10 @@ class UpdateProductsFormType extends AbstractType
      */
     protected function addProductAbstractIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
-//            'constraints' => [
-//                new Callback([
-//                    'methods' => [
-//                        function (array $productAbstractIds, ExecutionContextInterface $context) {
-//                            if (count($productAbstractIds) < 2) {
-//                                $context->addViolation('You need to select minimum 2 products.');
-//                            }
-//                        },
-//                    ]
-//                ]),
-//            ],
-        ]);
+        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, HiddenType::class);
 
-        $builder->get(self::FIELD_ID_PRODUCT_ABSTRACTS)
-            ->addModelTransformer(new CallbackTransformer(
-                function (array $productAbstractIds = null) {
-                    return implode(',', (array)$productAbstractIds);
-                },
-                function ($productAbstractIds = '') {
-                    return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-                }
-            ));
+        $builder->get(static::FIELD_ID_PRODUCT_ABSTRACTS)
+            ->addModelTransformer($this->createProductAbstractIdsFieldTransformer());
 
         return $this;
     }
@@ -136,19 +105,19 @@ class UpdateProductsFormType extends AbstractType
      */
     protected function addProductOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PRODUCT_ORDER, HiddenType::class, [
+        $builder->add(static::FIELD_PRODUCT_ORDER, HiddenType::class, [
             'attr' => [
                 'id' => 'product_order',
             ],
         ]);
 
-        $builder->get(self::FIELD_PRODUCT_ORDER)
+        $builder->get(static::FIELD_PRODUCT_ORDER)
             ->addModelTransformer(new CallbackTransformer(
                 function ($productAbstractIds = null) {
-                    return json_encode((array)$productAbstractIds); // FIXME
+                    return $this->getFactory()->getUtilEncodingService()->encodeJson((array)$productAbstractIds);
                 },
                 function ($productAbstractIds = '{}') {
-                    return json_decode($productAbstractIds, true);
+                    return $this->getFactory()->getUtilEncodingService()->decodeJson($productAbstractIds, true);
                 }
             ));
 
@@ -164,22 +133,73 @@ class UpdateProductsFormType extends AbstractType
     {
         $data = $event->getData();
 
-        // sort by given order
-        $productOrder = $data[self::FIELD_PRODUCT_ORDER];
-        asort($productOrder);
-        $idProductAbstracts = array_keys($productOrder);
+        $idProductAbstracts = $this->getSortedIdProductAbstracts($data);
+        $idProductAbstracts = $this->addAssignedProducts($idProductAbstracts, $data);
+        $idProductAbstracts = $this->removeDeassignedProducts($idProductAbstracts, $data);
+        $idProductAbstracts = $this->reindexProductPositions($idProductAbstracts);
 
-        // add assigned products
-        $idProductAbstracts = array_unique(array_merge($idProductAbstracts, $data[self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS]));
-
-        // remove deassigned products
-        $idProductAbstracts = array_diff($idProductAbstracts, $data[self::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS]);
-
-        // reindex product positions
-        $idProductAbstracts = array_values($idProductAbstracts);
-
-        $data[self::FIELD_ID_PRODUCT_ABSTRACTS] = $idProductAbstracts;
+        $data[static::FIELD_ID_PRODUCT_ABSTRACTS] = $idProductAbstracts;
         $event->setData($data);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getSortedIdProductAbstracts(array $data)
+    {
+        $productOrder = $data[static::FIELD_PRODUCT_ORDER];
+        asort($productOrder);
+
+        return array_keys($productOrder);
+    }
+
+    /**
+     * @param array $idProductAbstracts
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function addAssignedProducts(array $idProductAbstracts, array $data)
+    {
+        return array_unique(array_merge($idProductAbstracts, $data[static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS]));
+    }
+
+    /**
+     * @param array $idProductAbstracts
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function removeDeassignedProducts(array $idProductAbstracts, array $data)
+    {
+        return array_diff($idProductAbstracts, $data[static::FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS]);
+    }
+
+    /**
+     * @param array $idProductAbstracts
+     *
+     * @return array
+     */
+    protected function reindexProductPositions(array $idProductAbstracts)
+    {
+        return array_values($idProductAbstracts);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createProductAbstractIdsFieldTransformer()
+    {
+        return new CallbackTransformer(
+            function (array $productAbstractIds = null) {
+                return implode(',', (array)$productAbstractIds);
+            },
+            function ($productAbstractIds = '') {
+                return $productAbstractIds ? explode(',', $productAbstractIds) : [];
+            }
+        );
     }
 
 }

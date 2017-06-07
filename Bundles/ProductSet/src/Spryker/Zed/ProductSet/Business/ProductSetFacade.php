@@ -117,7 +117,7 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
      *
      * @api
      *
-     * @param ProductSetTransfer[] $productSetTransfers
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
      *
      * @return void
      */
@@ -126,6 +126,23 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
         $this->getFactory()
             ->createProductSetOrganizer()
             ->reorderProductSets($productSetTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductSet
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedProductSetImageSets($idProductSet, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductSetImageSetCombiner()
+            ->getCombinedProductSetImageSets($idProductSet, $idLocale);
     }
 
 }

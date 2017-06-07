@@ -42,7 +42,7 @@ class LocalizedSeoFormType extends AbstractType
      */
     protected function addTitleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_META_TITLE, TextType::class, [
+        $builder->add(static::FIELD_META_TITLE, TextType::class, [
             'label' => 'Title',
         ]);
 
@@ -56,7 +56,7 @@ class LocalizedSeoFormType extends AbstractType
      */
     protected function addKeywordsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_META_KEYWORDS, TextType::class, [
+        $builder->add(static::FIELD_META_KEYWORDS, TextType::class, [
             'label' => 'Keywords',
         ]);
 
@@ -70,7 +70,7 @@ class LocalizedSeoFormType extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_META_DESCRIPTION, TextareaType::class, [
+        $builder->add(static::FIELD_META_DESCRIPTION, TextareaType::class, [
             'label' => 'Description',
         ]);
 
@@ -84,7 +84,7 @@ class LocalizedSeoFormType extends AbstractType
      */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }

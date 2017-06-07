@@ -108,10 +108,23 @@ interface ProductSetFacadeInterface
      *
      * @api
      *
-     * @param ProductSetTransfer[] $productSetTransfers
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
      *
      * @return void
      */
     public function reorderProductSets(array $productSetTransfers);
+
+    /**
+     * Specification:
+     * - Returns merged image sets for product set with the following inheritance: Default > Localized
+     *
+     * @api
+     *
+     * @param int $idProductSet
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedProductSetImageSets($idProductSet, $idLocale);
 
 }

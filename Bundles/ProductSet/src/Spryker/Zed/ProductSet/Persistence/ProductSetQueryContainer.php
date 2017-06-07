@@ -135,6 +135,25 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
      * @api
      *
      * @param int $idProductSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryDefaultProductImageSet($idProductSet)
+    {
+        $query = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->filterByFkResourceProductSet($idProductSet)
+            ->filterByFkLocale(null, Criteria::ISNULL)
+            ->orderByIdProductImageSet(Criteria::ASC);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
      * @param array $excludedIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery

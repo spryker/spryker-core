@@ -58,7 +58,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      */
     protected function addIdProductImageSet(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_IMAGE_SET, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_IMAGE_SET, HiddenType::class);
 
         return $this;
     }
@@ -70,7 +70,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'required' => true,
             'label' => 'Image Set Name *',
             'constraints' => [
@@ -88,7 +88,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }
@@ -100,7 +100,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      */
     protected function addFkResourceProductSetField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_RESOURCE_PRODUCT_SET, HiddenType::class);
+        $builder->add(static::FIELD_FK_RESOURCE_PRODUCT_SET, HiddenType::class);
 
         return $this;
     }
@@ -113,7 +113,7 @@ class LocalizedProductImageSetFormType extends AbstractType
     protected function addProductImageCollectionForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_PRODUCT_IMAGE_COLLECTION, CollectionType::class, [
+            ->add(static::FIELD_PRODUCT_IMAGE_COLLECTION, CollectionType::class, [
                 'type' => ProductImageFormType::class,
                 'label' => false,
                 'allow_add' => true,

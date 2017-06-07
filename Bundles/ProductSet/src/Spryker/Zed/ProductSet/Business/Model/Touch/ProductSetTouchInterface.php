@@ -26,4 +26,11 @@ interface ProductSetTouchInterface
      */
     public function touchProductSetDeleted(ProductSetTransfer $productSetTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
+     * @return bool
+     */
+    public function touchProductSetByStatus(ProductSetTransfer $productSetTransfer);
+
 }

@@ -19,6 +19,7 @@ use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlUpdater;
 use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageDeleter;
 use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageReader;
 use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSaver;
+use Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSetCombiner;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetCreator;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetDeleter;
 use Spryker\Zed\ProductSet\Business\Model\ProductSetEntityReader;
@@ -109,6 +110,17 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     public function createProductSetOrganizer()
     {
         return new ProductSetOrganizer($this->createProductSetEntityReader(), $this->createProductSetTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSet\Business\Model\Image\ProductSetImageSetCombinerInterface
+     */
+    public function createProductSetImageSetCombiner()
+    {
+        return new ProductSetImageSetCombiner(
+            $this->getQueryContainer(),
+            $this->getProductImageFacade()
+        );
     }
 
     /**

@@ -62,7 +62,7 @@ class EditController extends AbstractProductSetController
             'productSetFormTabs' => $this->getFactory()->createProductSetFormTabs()->createView(),
             'localeCollection' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'productTable' => $this->getFactory()->createProductTable($localeTransfer, $idProductSet)->render(),
-            'productAbstractSetTable' => $this->getFactory()->createProductAbstractSetTable($localeTransfer, $idProductSet)->render(),
+            'productAbstractSetTable' => $this->getFactory()->createProductAbstractSetUpdateTable($localeTransfer, $idProductSet)->render(),
         ]);
     }
 

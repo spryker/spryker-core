@@ -47,7 +47,7 @@ class ProductSetImageReader implements ProductSetImageReaderInterface
             ->find();
 
         foreach ($productImageSetCollection as $productImageSetEntity) {
-            $productImageSets[] = $this->productImageFacade->getProductImagesSetById($productImageSetEntity->getIdProductImageSet());
+            $productImageSets[] = $this->productImageFacade->getProductImageSetById($productImageSetEntity->getIdProductImageSet());
         }
 
         return $productImageSets;

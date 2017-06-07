@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ */
 class ReorderProductSetsFormType extends AbstractType
 {
 
@@ -35,15 +38,15 @@ class ReorderProductSetsFormType extends AbstractType
      */
     protected function addProductOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PRODUCT_SET_WEIGHTS, HiddenType::class);
+        $builder->add(static::FIELD_PRODUCT_SET_WEIGHTS, HiddenType::class);
 
-        $builder->get(self::FIELD_PRODUCT_SET_WEIGHTS)
+        $builder->get(static::FIELD_PRODUCT_SET_WEIGHTS)
             ->addModelTransformer(new CallbackTransformer(
                 function ($productSetIds = null) {
-                    return json_encode((array)$productSetIds); // FIXME
+                    return $this->getFactory()->getUtilEncodingService()->encodeJson((array)$productSetIds);
                 },
                 function ($productSetIds = '{}') {
-                    return json_decode($productSetIds, true);
+                    return $this->getFactory()->getUtilEncodingService()->decodeJson($productSetIds, true);
                 }
             ));
 

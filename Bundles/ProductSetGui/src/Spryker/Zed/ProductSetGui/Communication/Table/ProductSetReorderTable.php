@@ -58,14 +58,14 @@ class ProductSetReorderTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         $config->setHeader([
-            self::COL_ID_PRODUCT_SET => 'ID',
-            self::COL_NAME => 'Name',
-            self::COL_PRODUCT_COUNT => '# of Products',
-            self::COL_WEIGHT => 'Weight',
-            self::COL_IS_ACTIVE => 'Status',
+            static::COL_ID_PRODUCT_SET => 'ID',
+            static::COL_NAME => 'Name',
+            static::COL_PRODUCT_COUNT => '# of Products',
+            static::COL_WEIGHT => 'Weight',
+            static::COL_IS_ACTIVE => 'Status',
         ]);
 
         $config->setRawColumns([
@@ -74,8 +74,8 @@ class ProductSetReorderTable extends AbstractTable
         ]);
 
         $config->setSearchable([
-            self::COL_ID_PRODUCT_SET,
-            self::COL_NAME,
+            static::COL_ID_PRODUCT_SET,
+            static::COL_NAME,
         ]);
 
         $config->setSortable([
@@ -117,11 +117,11 @@ class ProductSetReorderTable extends AbstractTable
     protected function generateItem(SpyProductSet $productSetEntity)
     {
         return [
-            self::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
-            self::COL_NAME => $productSetEntity->getVirtualColumn(self::COL_NAME),
-            self::COL_PRODUCT_COUNT => $productSetEntity->countSpyProductAbstractSets(), // TODO: get this in query time?
-            self::COL_WEIGHT => $this->getWeightField($productSetEntity),
-            self::COL_IS_ACTIVE => $this->getStatusLabel($productSetEntity->getIsActive()),
+            static::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
+            static::COL_NAME => $productSetEntity->getVirtualColumn(static::COL_NAME),
+            static::COL_PRODUCT_COUNT => $productSetEntity->countSpyProductAbstractSets(),
+            static::COL_WEIGHT => $this->getWeightField($productSetEntity),
+            static::COL_IS_ACTIVE => $this->getStatusLabel($productSetEntity->getIsActive()),
         ];
     }
 

@@ -95,7 +95,7 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
             return new ProductSetToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
         };
     }
@@ -107,7 +107,7 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductImageQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductSetToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
         };
     }

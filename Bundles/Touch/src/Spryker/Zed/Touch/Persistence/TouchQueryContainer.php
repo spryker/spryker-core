@@ -175,7 +175,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->leftJoinTouchSearch('search')
             ->leftJoinTouchStorage('storage');
 
-        if ($idLocale){
+        if ($idLocale) {
             $query
                 ->addJoinCondition('search', 'search.fk_locale = ' . $idLocale)
                 ->addJoinCondition('storage', 'storage.fk_locale = ' . $idLocale);

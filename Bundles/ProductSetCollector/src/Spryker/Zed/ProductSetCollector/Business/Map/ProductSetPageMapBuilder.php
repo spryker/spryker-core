@@ -10,10 +10,9 @@ namespace Spryker\Zed\ProductSetCollector\Business\Map;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
-use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductSetCollector\ProductSetCollectorConfig;
-use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
+use Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface;
 use Spryker\Zed\ProductSetCollector\Persistence\Search\Propel\ProductSetCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -25,9 +24,24 @@ class ProductSetPageMapBuilder implements PageMapInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
+     * @var \Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface
      */
-    protected $productSetQueryContainer;
+    protected $storageProductImageReader;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @param \Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface $storageProductImageReader
+     * @param \Spryker\Shared\Kernel\Store $store
+     */
+    public function __construct(StorageProductImageReaderInterface $storageProductImageReader, Store $store)
+    {
+        $this->storageProductImageReader = $storageProductImageReader;
+        $this->store = $store;
+    }
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -38,30 +52,37 @@ class ProductSetPageMapBuilder implements PageMapInterface
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)
     {
+        $productSetStorageTransfer = $this->mapProductSetStorageTransfer($productSetData, $localeTransfer);
+
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName()) // TODO: inject Store?
+            ->setStore($this->store->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(ProductSetCollectorConfig::SEARCH_TYPE_PRODUCT_SET);
 
+        $pageMapBuilder->addIntegerSort($pageMapTransfer, ProductSetStorageTransfer::WEIGHT, $productSetStorageTransfer->getWeight());
+
+        $this->setSearchResultData($pageMapTransfer, $pageMapBuilder, $productSetStorageTransfer);
+
+        return $pageMapTransfer;
+    }
+
+    /**
+     * @param array $productSetData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     */
+    protected function mapProductSetStorageTransfer(array $productSetData, LocaleTransfer $localeTransfer)
+    {
         $productSetStorageTransfer = new ProductSetStorageTransfer();
-        $productSetStorageTransfer = $this->setIdProductAbstract($productSetData, $productSetStorageTransfer);
+        $productSetStorageTransfer = $this->setIdProductAbstracts($productSetData, $productSetStorageTransfer);
 
         unset($productSetData[ProductSetCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]);
 
-        // TODO: clean up
         $productSetStorageTransfer->fromArray($productSetData, true);
-        $productSetStorageTransfer = $this->setProductSetImageSets($productSetStorageTransfer);
+        $productSetStorageTransfer = $this->setProductSetImageSets($productSetStorageTransfer, $localeTransfer);
 
-        foreach ($productSetStorageTransfer->modifiedToArray() as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-            $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $value);
-        }
-
-        $pageMapBuilder->addIntegerSort($pageMapTransfer, ProductSetStorageTransfer::WEIGHT, $productSetStorageTransfer->getWeight());
-
-        return $pageMapTransfer;
+        return $productSetStorageTransfer;
     }
 
     /**
@@ -70,7 +91,7 @@ class ProductSetPageMapBuilder implements PageMapInterface
      *
      * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
      */
-    protected function setIdProductAbstract(array $collectItemData, ProductSetStorageTransfer $productSetStorageTransfer)
+    protected function setIdProductAbstracts(array $collectItemData, ProductSetStorageTransfer $productSetStorageTransfer)
     {
         $idProductAbstracts = explode(',', $collectItemData[ProductSetCollectorQuery::FIELD_ID_PRODUCT_ABSTRACTS]);
         $idProductAbstracts = array_map('intval', $idProductAbstracts);
@@ -82,34 +103,36 @@ class ProductSetPageMapBuilder implements PageMapInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
      */
-    protected function setProductSetImageSets(ProductSetStorageTransfer $productSetStorageTransfer)
+    protected function setProductSetImageSets(ProductSetStorageTransfer $productSetStorageTransfer, LocaleTransfer $localeTransfer)
     {
-        $this->productSetQueryContainer = new ProductSetQueryContainer(); // FIXME: probably should use ProductSetCollectorQueryContainer
-
-        $imageSetEntities = $this->productSetQueryContainer
-            ->queryProductImageSet($productSetStorageTransfer->getIdProductSet())
-            ->find();
-
-        // TODO: use new ProductImageFacade methods to get only relevant image sets
-
-        $imageSets = [];
-        foreach ($imageSetEntities as $imageSetEntity) {
-            $result[$imageSetEntity->getName()] = [];
-            foreach ($imageSetEntity->getSpyProductImageSetToProductImages() as $productsToImageEntity) {
-                $imageEntity = $productsToImageEntity->getSpyProductImage();
-                $storageProductImageTransfer = new StorageProductImageTransfer();
-                $storageProductImageTransfer->fromArray($imageEntity->toArray(), true);
-
-                $imageSets[$imageSetEntity->getName()][] = $storageProductImageTransfer->modifiedToArray();
-            }
-        }
+        $imageSets = $this->storageProductImageReader->getProductSetImageSets(
+            $productSetStorageTransfer->getIdProductSet(),
+            $localeTransfer->getIdLocale()
+        );
 
         $productSetStorageTransfer->setImageSets($imageSets);
 
         return $productSetStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
+     *
+     * @return void
+     */
+    protected function setSearchResultData(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, ProductSetStorageTransfer $productSetStorageTransfer)
+    {
+        foreach ($productSetStorageTransfer->modifiedToArray() as $key => $value) {
+            if ($value !== null) {
+                $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $value);
+            }
+        }
     }
 
 }

@@ -41,6 +41,8 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductAbstractByIdProductSet($idProductSet, LocaleTransfer $localeTransfer);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSetWeights();

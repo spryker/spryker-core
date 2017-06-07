@@ -76,6 +76,15 @@ interface ProductSetQueryContainerInterface
      * @api
      *
      * @param int $idProductSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryDefaultProductImageSet($idProductSet);
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
      * @param array $excludedIdProductImageSets
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery

@@ -61,7 +61,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addProductImageIdHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_IMAGE, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_IMAGE, HiddenType::class);
 
         return $this;
     }
@@ -73,7 +73,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class);
 
         return $this;
     }
@@ -85,7 +85,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addImageSetIdHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_IMAGE_SET_ID, HiddenType::class);
+        $builder->add(static::FIELD_FK_IMAGE_SET_ID, HiddenType::class);
 
         return $this;
     }
@@ -97,7 +97,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addImagePreviewField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
+        $builder->add(static::FIELD_IMAGE_PREVIEW, ImageType::class, [
             'label' => false,
             ImageType::OPTION_IMAGE_WIDTH => 150,
         ]);
@@ -112,7 +112,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addImageSmallField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_SMALL, TextType::class, [
+        $builder->add(static::FIELD_IMAGE_SMALL, TextType::class, [
             'label' => 'Small Image URL *',
             'required' => true,
             'constraints' => [
@@ -134,7 +134,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addImageBigField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGE_LARGE, TextType::class, [
+        $builder->add(static::FIELD_IMAGE_LARGE, TextType::class, [
             'label' => 'Large Image URL *',
             'required' => true,
             'constraints' => [
@@ -156,7 +156,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addOrderHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SORT_ORDER, HiddenType::class);
+        $builder->add(static::FIELD_SORT_ORDER, HiddenType::class);
 
         return $this;
     }

@@ -65,7 +65,7 @@ class CreateProductSetFormType extends AbstractType
      */
     protected function addGeneralForm(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GENERAL_FORM, GeneralFormType::class);
+        $builder->add(static::FIELD_GENERAL_FORM, GeneralFormType::class);
 
         return $this;
     }
@@ -77,7 +77,7 @@ class CreateProductSetFormType extends AbstractType
      */
     protected function addProductsForm(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PRODUCTS_FORM, ProductsFormType::class);
+        $builder->add(static::FIELD_PRODUCTS_FORM, ProductsFormType::class);
 
         return $this;
     }
@@ -89,7 +89,7 @@ class CreateProductSetFormType extends AbstractType
      */
     protected function addSeoForm(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SEO_FORM, SeoFormType::class);
+        $builder->add(static::FIELD_SEO_FORM, SeoFormType::class);
 
         return $this;
     }
@@ -101,7 +101,7 @@ class CreateProductSetFormType extends AbstractType
      */
     protected function addImagesForm(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IMAGES_FORM, ImagesFormType::class);
+        $builder->add(static::FIELD_IMAGES_FORM, ImagesFormType::class);
 
         return $this;
     }

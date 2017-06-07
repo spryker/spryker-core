@@ -11,11 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Money\Business\MoneyFacade;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
-use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface;
+use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -37,9 +34,9 @@ class ProductTable extends AbstractTable
     protected $productSetGuiQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface
+     * @var \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
      */
-    protected $utilEncodingService;
+    protected $productAbstractTableHelper;
 
     /**
      * @var int
@@ -53,20 +50,20 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int|null $idProductSetGuiGroup
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
-        ProductSetGuiToUtilEncodingInterface $utilEncodingService,
+        ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
         $idProductSetGuiGroup = null
     ) {
         $this->productSetGuiQueryContainer = $productSetGuiQueryContainer;
-        $this->utilEncodingService = $utilEncodingService;
-        $this->idProductSetGuiGroup = (int)$idProductSetGuiGroup;
+        $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
+        $this->idProductSetGuiGroup = (int)$idProductSetGuiGroup;
     }
 
     /**
@@ -77,38 +74,38 @@ class ProductTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $urlSuffix = $this->idProductSetGuiGroup ? sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSetGuiGroup) : null;
-        $this->defaultUrl = self::TABLE_IDENTIFIER . $urlSuffix;
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         $config->setHeader([
-            self::COL_ID_PRODUCT_ABSTRACT => 'ID',
-            self::COL_PREVIEW => 'Preview',
-            self::COL_SKU => 'SKU',
-            self::COL_NAME => 'Name',
-            self::COL_PRICE => 'Price',
-            self::COL_STATUS => 'Status',
-            self::COL_CHECKBOX => 'Selected',
+            static::COL_ID_PRODUCT_ABSTRACT => 'ID',
+            static::COL_PREVIEW => 'Preview',
+            static::COL_SKU => 'SKU',
+            static::COL_NAME => 'Name',
+            static::COL_PRICE => 'Price',
+            static::COL_STATUS => 'Status',
+            static::COL_CHECKBOX => 'Selected',
         ]);
 
         $config->setSortable([
-            self::COL_ID_PRODUCT_ABSTRACT,
-            self::COL_SKU,
-            self::COL_NAME,
+            static::COL_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU,
+            static::COL_NAME,
         ]);
 
         $config->setSearchable([
-            self::COL_ID_PRODUCT_ABSTRACT,
-            self::COL_SKU,
-            self::COL_NAME,
+            static::COL_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU,
+            static::COL_NAME,
         ]);
 
         $config->setRawColumns([
-            self::COL_PREVIEW,
-            self::COL_STATUS,
-            self::COL_CHECKBOX,
+            static::COL_PREVIEW,
+            static::COL_STATUS,
+            static::COL_CHECKBOX,
         ]);
 
-        $config->setDefaultSortField(self::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
         $config->setStateSave(false);
 
         return $config;
@@ -141,13 +138,13 @@ class ProductTable extends AbstractTable
     protected function formatRow(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            self::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
-            self::COL_PREVIEW => $this->getProductPreview($productAbstractEntity),
-            self::COL_SKU => $productAbstractEntity->getSku(),
-            self::COL_NAME => $productAbstractEntity->getVirtualColumn(self::COL_NAME),
-            self::COL_PRICE => $this->getProductPrice($productAbstractEntity),
-            self::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            self::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
+            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_PREVIEW => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
+            static::COL_SKU => $productAbstractEntity->getSku(),
+            static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
+            static::COL_PRICE => $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
+            static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
+            static::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
         ];
     }
 
@@ -164,94 +161,6 @@ class ProductTable extends AbstractTable
         );
 
         return $checkbox_html;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getProductPreview(SpyProductAbstract $productAbstractEntity)
-    {
-        return sprintf(
-            '<img src="%s">',
-            $this->getProductPreviewUrl($productAbstractEntity)
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return null|string
-     */
-    protected function getProductPreviewUrl(SpyProductAbstract $productAbstractEntity)
-    {
-        $productImageFacade = new ProductImageFacade(); // FIXME
-
-        $productImageSetTransferCollection = $productImageFacade->getProductImagesSetCollectionByProductAbstractId($productAbstractEntity->getIdProductAbstract());
-
-        foreach ($productImageSetTransferCollection as $productImageSetTransfer) {
-            foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                $previewUrl = $productImageTransfer->getExternalUrlSmall();
-
-                if ($previewUrl) {
-                    return $previewUrl;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string|null
-     */
-    protected function getProductPrice(SpyProductAbstract $productAbstractEntity)
-    {
-        $priceFacade = new PriceFacade(); // FIXME
-        $priceProductTransfer = $priceFacade->findProductAbstractPrice($productAbstractEntity->getIdProductAbstract());
-
-        if (!$priceProductTransfer) {
-            return null;
-        }
-
-        $moneyFacade = new MoneyFacade(); // FIXME
-        $moneyTransfer = $moneyFacade->fromInteger($priceProductTransfer->getPrice());
-
-        return $moneyFacade->formatWithSymbol($moneyTransfer);
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity)
-    {
-        $isActive = false;
-        foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
-            if ($spyProductEntity->getIsActive()) {
-                $isActive = true;
-            }
-        }
-
-        return $this->getStatusLabel($isActive);
-    }
-
-    /**
-     * @param string $status
-     *
-     * @return string
-     */
-    protected function getStatusLabel($status)
-    {
-        if (!$status) {
-            return '<span class="label label-danger">Inactive</span>';
-        }
-
-        return '<span class="label label-info">Active</span>';
     }
 
 }

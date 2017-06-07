@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -47,7 +46,7 @@ class GeneralFormType extends AbstractType
      */
     protected function addProductSetDataFieldCollection(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION, CollectionType::class, [
+        $builder->add(static::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION, CollectionType::class, [
             'type' => LocalizedGeneralFormType::class,
 
             'constraints' => [
@@ -79,14 +78,14 @@ class GeneralFormType extends AbstractType
      */
     protected function addWeightField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_WEIGHT, NumberType::class, [
+        $builder->add(static::FIELD_WEIGHT, NumberType::class, [
             'label' => 'Weight',
             'attr' => [
-                'placeholder' => 'higher numbers listed first'
+                'placeholder' => 'higher numbers listed first',
             ],
         ]);
 
-        $builder->get(self::FIELD_WEIGHT)
+        $builder->get(static::FIELD_WEIGHT)
             ->addModelTransformer(new CallbackTransformer(
                 function ($weight) {
                     return $weight;
@@ -106,7 +105,7 @@ class GeneralFormType extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
             'label' => 'Active',
         ]);
 
@@ -120,7 +119,7 @@ class GeneralFormType extends AbstractType
      */
     protected function addIdProductSetField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_SET, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_SET, HiddenType::class);
 
         return $this;
     }

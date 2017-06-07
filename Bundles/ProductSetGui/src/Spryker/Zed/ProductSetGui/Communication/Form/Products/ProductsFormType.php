@@ -37,9 +37,9 @@ class ProductsFormType extends AbstractType
      */
     protected function addAssignProductAbstractIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
+        $builder->add(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS, HiddenType::class, [
             'attr' => [
-                'id' => self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS,
+                'id' => static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS,
             ],
             'constraints' => [
                 new Callback([
@@ -54,7 +54,7 @@ class ProductsFormType extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
+        $builder->get(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
             ->addModelTransformer(new CallbackTransformer(
                 function (array $productAbstractIds = null) {
                     return implode(',', (array)$productAbstractIds);

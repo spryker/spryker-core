@@ -83,7 +83,7 @@ class ProductSetReducer implements ProductSetReducerInterface
      */
     protected function touchProductSet(ProductSetTransfer $productSetTransfer)
     {
-        $this->productSetTouch->touchProductSetActive($productSetTransfer);
+        $this->productSetTouch->touchProductSetByStatus($productSetTransfer);
     }
 
     /**

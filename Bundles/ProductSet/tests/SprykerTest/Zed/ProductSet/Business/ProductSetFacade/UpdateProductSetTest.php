@@ -63,7 +63,7 @@ class UpdateProductSetTest extends Test
 
         // Act
         $productSetTransfer
-            ->setIsActive(false)
+            ->setWeight(10)
             ->setIdProductAbstracts([
                 $productAbstractTransfer1->getIdProductAbstract(),
                 $productAbstractTransfer3->getIdProductAbstract(),
@@ -72,7 +72,7 @@ class UpdateProductSetTest extends Test
 
         // Assert
         $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
-        $this->assertFalse($actualProductSetTransfer->getIsActive(), 'ProductSet should have been set to inactive.');
+        $this->assertSame(10, $actualProductSetTransfer->getWeight(), 'ProductSet should have expected weight.');
         $this->assertCount(2, $actualProductSetTransfer->getIdProductAbstracts(), 'ProductSet should have expected number of products.');
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');

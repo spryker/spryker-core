@@ -49,11 +49,11 @@ class LocalizedGeneralFormType extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                $originalUrl = $form->get(static::FIELD_ORIGINAL_URL)->getData();
-                $updatedUrl = $form->get(static::FIELD_URL)->getData();
+                $originalUrl = $form->getData()[static::FIELD_ORIGINAL_URL];
+                $updatedUrl = $form->getData()[static::FIELD_URL];
 
                 if ($originalUrl !== $updatedUrl) {
-                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
+                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_URL_CHECK];
                 }
                 return [Constraint::DEFAULT_GROUP];
             },
@@ -62,7 +62,7 @@ class LocalizedGeneralFormType extends AbstractType
                     'methods' => [
                         [$this, 'validateUniqueUrl'],
                     ],
-                    'groups' => [self::GROUP_UNIQUE_URL_CHECK],
+                    'groups' => [static::GROUP_UNIQUE_URL_CHECK],
                 ]),
             ],
         ]);
@@ -101,7 +101,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name *',
             'required' => true,
             'constraints' => [
@@ -119,7 +119,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_URL, TextType::class, [
+        $builder->add(static::FIELD_URL, TextType::class, [
             'label' => 'URL *',
             'required' => true,
             'constraints' => [
@@ -141,7 +141,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addUrlPrefixField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_URL_PREFIX, HiddenType::class);
+        $builder->add(static::FIELD_URL_PREFIX, HiddenType::class);
 
         return $this;
     }
@@ -153,7 +153,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addOriginalUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ORIGINAL_URL, HiddenType::class);
+        $builder->add(static::FIELD_ORIGINAL_URL, HiddenType::class);
 
         return $this;
     }
@@ -165,7 +165,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DESCRIPTION, TextareaType::class, [
+        $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'label' => 'Description',
         ]);
 
@@ -179,7 +179,7 @@ class LocalizedGeneralFormType extends AbstractType
      */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }
@@ -209,7 +209,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param FormEvent $event
+     * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return void
      */
@@ -219,7 +219,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param FormEvent $event
+     * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return void
      */
@@ -229,7 +229,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param FormEvent $event
+     * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return void
      */
@@ -251,7 +251,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param FormEvent $event
+     * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return void
      */
