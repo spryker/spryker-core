@@ -103,7 +103,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     public function setCustomer(SpyCustomer $customerEntity = null)
     {
         if (property_exists($this, static::COL_FK_CUSTOMER)) {
-            return $this->setCustomer($customerEntity);
+            parent::setCustomer($customerEntity);
+            return $this;
         }
 
         $this->setCustomerReference($customerEntity->getCustomerReference());
