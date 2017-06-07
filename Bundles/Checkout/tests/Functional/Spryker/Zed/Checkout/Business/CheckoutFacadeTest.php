@@ -141,7 +141,7 @@ class CheckoutFacadeTest extends Test
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $product1->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku()])
+            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
