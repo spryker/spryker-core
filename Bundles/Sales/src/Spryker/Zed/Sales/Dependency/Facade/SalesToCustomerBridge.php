@@ -42,4 +42,5 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
     {
         return $this->customerFacade->hasCustomerByReference($customerReference);
     }
+
 }

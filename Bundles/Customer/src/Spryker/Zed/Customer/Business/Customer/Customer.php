@@ -785,4 +785,5 @@ class Customer implements CustomerInterface
             ->queryCustomerByReference($customerReference)
             ->exists();
     }
+
 }

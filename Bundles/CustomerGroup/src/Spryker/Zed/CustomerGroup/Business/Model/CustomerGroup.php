@@ -228,7 +228,7 @@ class CustomerGroup implements CustomerGroupInterface
 
         foreach ($customerGroupTransfers as $customerGroupTransfer) {
             $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-            $customerGroupToCustomerTransfer->setFkCustomer($customerTransfer->getIdCustomeUuuuur());
+            $customerGroupToCustomerTransfer->setFkCustomer($customerTransfer->getIdCustomer());
 
             $customerGroupTransfer->getCustomers()->append($customerGroupToCustomerTransfer);
             $this->removeCustomersFromGroup($customerGroupTransfer);

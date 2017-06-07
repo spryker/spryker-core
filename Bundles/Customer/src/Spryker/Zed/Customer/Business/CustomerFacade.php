@@ -448,4 +448,5 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->createCustomer()
             ->hasByReference($customerReference);
     }
+
 }
