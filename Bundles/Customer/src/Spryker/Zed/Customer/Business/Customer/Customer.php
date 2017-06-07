@@ -774,4 +774,15 @@ class Customer implements CustomerInterface
         return $customerTransfer;
     }
 
+    /**
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasByReference($customerReference)
+    {
+        return $this->queryContainer
+            ->queryCustomerByReference($customerReference)
+            ->exists();
+    }
 }

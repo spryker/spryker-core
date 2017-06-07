@@ -311,4 +311,16 @@ interface CustomerFacadeInterface
      */
     public function findCustomerByReference($customerReference);
 
+    /**
+     * Specification:
+     * - Check reference on existing customer
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasCustomerByReference($customerReference);
+
 }

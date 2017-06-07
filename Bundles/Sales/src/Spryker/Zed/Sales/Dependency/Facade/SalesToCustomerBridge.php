@@ -33,4 +33,13 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
         return $this->customerFacade->findCustomerByReference($customerReference);
     }
 
+    /**
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasCustomerByReference($customerReference)
+    {
+        return $this->customerFacade->hasCustomerByReference($customerReference);
+    }
 }

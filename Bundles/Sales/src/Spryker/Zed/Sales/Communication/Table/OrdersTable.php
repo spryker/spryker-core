@@ -152,10 +152,10 @@ class OrdersTable extends AbstractTable
             $item[SpySalesOrderTableMap::COL_LAST_NAME]
         );
 
-        $customerTransfer = $this->customerFacade->findCustomerByReference($item[OrdersTableQueryBuilder::FIELD_CUSTOMER_REFERENCE]);
+        $isReferenceValid = $this->customerFacade->hasCustomerByReference($item[OrdersTableQueryBuilder::FIELD_CUSTOMER_REFERENCE]);
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $customerTransfer) {
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $isReferenceValid) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
             ]);

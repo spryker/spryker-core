@@ -105,4 +105,11 @@ interface CustomerInterface
      */
     public function findByReference($customerReference);
 
+    /**
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasByReference($customerReference);
+
 }

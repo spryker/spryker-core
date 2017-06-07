@@ -17,4 +17,11 @@ interface SalesToCustomerInterface
      */
     public function findCustomerByReference($customerReference);
 
+    /**
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasCustomerByReference($customerReference);
+
 }

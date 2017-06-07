@@ -433,4 +433,19 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->findByReference($customerReference);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return bool
+     */
+    public function hasCustomerByReference($customerReference)
+    {
+        return $this->getFactory()
+            ->createCustomer()
+            ->hasByReference($customerReference);
+    }
 }
