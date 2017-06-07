@@ -108,6 +108,8 @@ class EditController extends AbstractController
             'Product label #%d successfully updated.',
             $productLabelTransfer->getIdProductLabel()
         ));
+
+        return true;
     }
 
     /**
