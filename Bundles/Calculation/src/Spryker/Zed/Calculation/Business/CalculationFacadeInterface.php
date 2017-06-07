@@ -19,7 +19,9 @@ interface CalculationFacadeInterface
 
     /**
      * Specification:
+     *  - Maps Quote to CalculableObject
      *  - Run all calculator plugins
+     *  - Maps CalculableObject to Quote
      *  - Return the updated quote
      *
      * @api

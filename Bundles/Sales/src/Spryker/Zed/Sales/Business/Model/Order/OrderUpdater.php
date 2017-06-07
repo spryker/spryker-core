@@ -47,7 +47,7 @@ class OrderUpdater implements OrderUpdaterInterface
         $this->hydrateEntityFromOrderTransfer($orderTransfer, $orderEntity);
         $orderEntity->save();
 
-        $this->saveOrderTotals($orderTransfer, $orderEntity);
+        $this->createOrderTotals($orderTransfer, $orderEntity);
         $this->updateOrderItems($orderTransfer, $orderEntity);
         $this->updateOrderExpenses($orderTransfer, $orderEntity);
 
@@ -91,20 +91,20 @@ class OrderUpdater implements OrderUpdaterInterface
      *
      * @return void
      */
-    protected function saveOrderTotals(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    protected function createOrderTotals(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
     {
-         $taxTotal = 0;
+        $taxTotal = 0;
         if ($orderTransfer->getTotals()->getTaxTotal()) {
             $taxTotal = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
         }
 
-         $salesOrderTotalsEntity = new SpySalesOrderTotals();
-         $salesOrderTotalsEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());
-         $salesOrderTotalsEntity->fromArray($orderTransfer->getTotals()->toArray());
-         $salesOrderTotalsEntity->setTaxTotal($taxTotal);
-         $salesOrderTotalsEntity->setCanceledTotal($orderTransfer->getTotals()->getCanceledTotal());
-         $salesOrderTotalsEntity->setOrderExpenseTotal($orderTransfer->getTotals()->getExpenseTotal());
-         $salesOrderTotalsEntity->save();
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());
+        $salesOrderTotalsEntity->fromArray($orderTransfer->getTotals()->toArray());
+        $salesOrderTotalsEntity->setTaxTotal($taxTotal);
+        $salesOrderTotalsEntity->setCanceledTotal($orderTransfer->getTotals()->getCanceledTotal());
+        $salesOrderTotalsEntity->setOrderExpenseTotal($orderTransfer->getTotals()->getExpenseTotal());
+        $salesOrderTotalsEntity->save();
     }
 
     /**

@@ -102,6 +102,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * - Adds username to comment
      * - Saves comment to database
      *
+     * @CR check why return wrong
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer

@@ -11,6 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Map\TableMap;
@@ -53,7 +54,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      */
     public function getFkCustomer()
     {
-        if (property_exists($this, static::COL_FK_CUSTOMER)) {
+        if (property_exists($this, static::COL_FK_CUSTOMER) && !$this->getCustomerReference()) {
             return parent::getFkCustomer();
         }
 
@@ -139,7 +140,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     ) {
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
 
-        if (!property_exists($this, static::COL_FK_CUSTOMER)) {
+        if (!property_exists($this, static::COL_FK_CUSTOMER) || isset($array[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
             $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
         }
 

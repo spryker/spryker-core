@@ -27,8 +27,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
-    "spryker/calculation": "If you want to have tax rate calculation plugin"
+    "spryker/checkout": "If checkout plugins are needed.",
+    "spryker/calculation": "If tax rate calculation for options is needed."
   },
   "autoload": {
     "psr-0": {

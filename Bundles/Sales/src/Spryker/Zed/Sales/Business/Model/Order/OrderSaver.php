@@ -403,7 +403,7 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
-        $itemTransfer->requireUnitGrossPrice()
+        $itemTransfer->requireUnitPrice()
             ->requireQuantity()
             ->requireName()
             ->requireSku();

@@ -19,6 +19,8 @@ class DiscountOrderHydratePlugin extends AbstractPlugin implements HydrateOrderP
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

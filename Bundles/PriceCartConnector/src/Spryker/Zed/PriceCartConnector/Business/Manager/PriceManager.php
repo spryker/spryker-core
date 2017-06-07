@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
@@ -19,21 +20,31 @@ class PriceManager implements PriceManagerInterface
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
-    private $priceFacade;
+    protected $priceFacade;
 
     /**
      * @var string
      */
-    private $grossPriceType;
+    protected $grossPriceType;
+
+    /**
+     * @var string
+     */
+    protected $priceMode;
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param string|null $grossPriceType
+     * @param string $priceMode
      */
-    public function __construct(PriceCartToPriceInterface $priceFacade, $grossPriceType = null)
-    {
+    public function __construct(
+        PriceCartToPriceInterface $priceFacade,
+        $grossPriceType,
+        $priceMode
+    ) {
         $this->priceFacade = $priceFacade;
         $this->grossPriceType = $grossPriceType;
+        $this->priceMode = $priceMode;
     }
 
     /**
@@ -57,12 +68,7 @@ class PriceManager implements PriceManagerInterface
                 );
             }
 
-            $itemTransfer->setUnitGrossPrice(
-                $this->priceFacade->getPriceBySku(
-                    $itemTransfer->getSku(),
-                    $this->grossPriceType
-                )
-            );
+            $this->setPrice($itemTransfer, $cartChangeTransfer->getQuote()->getPriceMode());
         }
 
         return $cartChangeTransfer;
@@ -75,9 +81,36 @@ class PriceManager implements PriceManagerInterface
      */
     protected function setQuotePriceMode(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
+        $quoteTransfer->setPriceMode($this->priceMode);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function setPrice(ItemTransfer $itemTransfer, $priceMode)
+    {
+        if ($priceMode === PriceMode::PRICE_MODE_NET) {
+            $itemTransfer->setUnitNetPrice(
+                $this->priceFacade->getPriceBySku(
+                    $itemTransfer->getSku(),
+                    $this->grossPriceType
+                )
+            );
+            $itemTransfer->setUnitGrossPrice(0);
+        } else {
+            $itemTransfer->setUnitGrossPrice(
+                $this->priceFacade->getPriceBySku(
+                    $itemTransfer->getSku(),
+                    $this->grossPriceType
+                )
+            );
+            $itemTransfer->setUnitNetPrice(0);
+        }
     }
 
 }
