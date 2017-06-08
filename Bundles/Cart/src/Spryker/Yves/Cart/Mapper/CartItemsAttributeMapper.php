@@ -174,6 +174,8 @@ class CartItemsAttributeMapper
     protected function getAttributesMapByProductAbstract($item)
     {
         if (array_key_exists($item->getSku(), $this->attributes) === false) {
+            $data = $this->productClient->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
+            //$storageProductTransfer = $this->storageProductMapper->mapStorageProduct($data, $request); this need to go away but we need it
             $this->attributes[$item->getSku()] = $this->productClient->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
         }
         return $this->attributes[$item->getSku()];
