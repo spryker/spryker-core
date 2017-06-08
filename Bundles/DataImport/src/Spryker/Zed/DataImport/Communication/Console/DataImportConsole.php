@@ -170,8 +170,8 @@ class DataImportConsole extends Console
         $this->info(sprintf(
             $messageTemplate,
             $dataImporterReport->getImportType(),
-            $dataImporterReport->getExpectedImportableDataSets(),
-            $dataImporterReport->getImportedDataSets(),
+            $dataImporterReport->getExpectedImportableDataSetCount(),
+            $dataImporterReport->getImportedDataSetCount(),
             $this->getImportStatus($dataImporterReport)
         ));
     }

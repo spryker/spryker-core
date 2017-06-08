@@ -9,7 +9,7 @@ namespace Spryker\Zed\DataImport;
 
 use PHP_Timer;
 use Propel\Runtime\Propel;
-use Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleBridge;
+use Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
@@ -91,7 +91,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     protected function addConsoleLogger(Container $container)
     {
         $container[static::CONSOLE_LOGGER] = function () {
-            return new DataImportToConsoleBridge(
+            return new DataImportToConsoleLoggerBridge(
                 new ConsoleLogger(new ConsoleOutput(ConsoleOutput::VERBOSITY_VERY_VERBOSE))
             );
         };

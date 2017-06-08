@@ -17,7 +17,7 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
      */
     public function getConsoleMessenger()
     {
@@ -25,7 +25,7 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
      */
     public function getTimer()
     {

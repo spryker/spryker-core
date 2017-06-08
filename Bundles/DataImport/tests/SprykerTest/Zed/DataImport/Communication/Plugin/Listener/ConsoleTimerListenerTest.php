@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\BeforeDataSetImportEventTransfer;
 use Generated\Shared\Transfer\BeforeImportEventTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\DataImport\Communication\Plugin\Listener\DataImportConsoleTimerListener;
-use Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface;
+use Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface;
 
 /**
  * Auto-generated group annotations
@@ -67,11 +67,11 @@ class ConsoleTimerListenerTest extends Test
     /**
      * @param bool $isCalled
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
      */
     protected function getConsoleInterfaceMock($isCalled)
     {
-        $mockBuilder = $this->getMockBuilder(DataImportToConsoleInterface::class)
+        $mockBuilder = $this->getMockBuilder(DataImportToConsoleLoggerInterface::class)
             ->setMethods(['notice']);
 
         $consoleInterfaceMock = $mockBuilder->getMock();

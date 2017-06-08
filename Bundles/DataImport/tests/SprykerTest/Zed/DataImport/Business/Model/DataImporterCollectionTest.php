@@ -46,7 +46,7 @@ class DataImporterCollectionTest extends Test
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
             ->setIsSuccess(true)
-            ->setImportedDataSets(1);
+            ->setImportedDataSetCount(1);
 
         $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A, true, $dataImporterReportTransfer));

@@ -9,7 +9,7 @@ namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class ReNameDataSetKeysStep implements DataImportStepInterface
+class RenameDataSetKeysStep implements DataImportStepInterface
 {
 
     /**

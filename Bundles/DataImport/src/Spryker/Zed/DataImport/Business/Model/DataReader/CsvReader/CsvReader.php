@@ -148,7 +148,6 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      */
     public function count()
     {
-        $this->rewind();
         $dataSetCount = iterator_count($this->fileObject);
         if ($this->dataSetKeys) {
             --$dataSetCount;

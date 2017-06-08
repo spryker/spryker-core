@@ -20,12 +20,12 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     /**
      * @var array
      */
-    protected $mainTouchAbles = [];
+    protected $mainTouchables = [];
 
     /**
      * @var array
      */
-    protected $subTouchAbles = [];
+    protected $subTouchables = [];
 
     /**
      * @var int|null
@@ -50,7 +50,7 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function addMainTouchable($itemType, $itemId)
     {
-        $this->mainTouchAbles[$itemType][] = $itemId;
+        $this->mainTouchables[$itemType][] = $itemId;
     }
 
     /**
@@ -61,7 +61,7 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function addSubTouchable($itemType, $itemId)
     {
-        $this->subTouchAbles[$itemType][] = $itemId;
+        $this->subTouchables[$itemType][] = $itemId;
     }
 
     /**
@@ -69,22 +69,22 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function afterExecute()
     {
-        $mainTouchAblesItemKey = key($this->mainTouchAbles);
+        $mainTouchAblesItemKey = key($this->mainTouchables);
 
-        if (!$this->bulkSize || $this->bulkSize === 1 || $this->bulkSize >= count($this->mainTouchAbles[$mainTouchAblesItemKey])) {
-            $itemIds = $this->mainTouchAbles[$mainTouchAblesItemKey];
+        if (!$this->bulkSize || $this->bulkSize === 1 || $this->bulkSize >= count($this->mainTouchables[$mainTouchAblesItemKey])) {
+            $itemIds = $this->mainTouchables[$mainTouchAblesItemKey];
             if ($itemIds) {
                 $this->touchFacade->bulkTouchSetActive($mainTouchAblesItemKey, array_unique($itemIds));
             }
-            $this->mainTouchAbles = [];
+            $this->mainTouchables = [];
 
-            if (count($this->subTouchAbles) > 0) {
-                foreach ($this->subTouchAbles as $subTouchAbleItemKey => $itemIds) {
+            if (count($this->subTouchables) > 0) {
+                foreach ($this->subTouchables as $subTouchAbleItemKey => $itemIds) {
                     if ($itemIds) {
                         $this->touchFacade->bulkTouchSetActive($subTouchAbleItemKey, array_unique($itemIds));
                     }
                 }
-                $this->subTouchAbles = [];
+                $this->subTouchables = [];
             }
         }
     }
@@ -94,15 +94,15 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function __destruct()
     {
-        foreach ($this->mainTouchAbles as $touchType => $itemIds) {
+        foreach ($this->mainTouchables as $touchType => $itemIds) {
             $this->touchFacade->bulkTouchSetActive($touchType, array_unique($itemIds));
-            $this->mainTouchAbles = [];
+            $this->mainTouchables = [];
         }
 
-        foreach ($this->subTouchAbles as $touchType => $itemIds) {
+        foreach ($this->subTouchables as $touchType => $itemIds) {
             $this->touchFacade->bulkTouchSetActive($touchType, array_unique($itemIds));
         }
-        $this->mainTouchAbles = [];
+        $this->mainTouchables = [];
     }
 
 }

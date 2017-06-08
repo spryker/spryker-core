@@ -30,7 +30,7 @@ class DataImportConsoleTimerListener extends AbstractPlugin implements EventList
     protected $timer;
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface
+     * @var \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
      */
     protected $consoleMessenger;
 
@@ -107,7 +107,7 @@ class DataImportConsoleTimerListener extends AbstractPlugin implements EventList
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
      */
     protected function getConsoleMessenger()
     {

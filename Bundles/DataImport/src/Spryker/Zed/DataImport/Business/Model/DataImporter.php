@@ -142,7 +142,7 @@ class DataImporter implements
                 $this->triggerBeforeDataSetImportEvent($dataReader);
 
                 $this->importDataSet($dataSet);
-                $dataImporterReportTransfer->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets() + 1);
+                $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
 
                 $this->triggerAfterDataSetImportEvent($dataReader);
             } catch (Exception $dataImportException) {
@@ -213,13 +213,13 @@ class DataImporter implements
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
             ->setImportType($this->getImportType())
-            ->setImportedDataSets(0)
+            ->setImportedDataSetCount(0)
             ->setIsSuccess(true)
             ->setIsReaderCountable(false);
 
         if ($dataReader instanceof Countable) {
             $dataImporterReportTransfer->setIsReaderCountable(true);
-            $dataImporterReportTransfer->setExpectedImportableDataSets($dataReader->count());
+            $dataImporterReportTransfer->setExpectedImportableDataSetCount($dataReader->count());
         }
 
         return $dataImporterReportTransfer;
@@ -252,7 +252,7 @@ class DataImporter implements
         $beforeImportEventTransfer
             ->setImportType($this->getImportType())
             ->setIsReaderCountable(($dataReader instanceof Countable))
-            ->setImportableDataSets(($dataReader instanceof Countable) ? $dataReader->count() : 0);
+            ->setImportableDataSetCount(($dataReader instanceof Countable) ? $dataReader->count() : 0);
 
         $this->eventFacade->trigger(DataImportEvents::BEFORE_IMPORT, $beforeImportEventTransfer);
     }
@@ -360,7 +360,7 @@ class DataImporter implements
         $afterImportEventTransfer = new AfterImportEventTransfer();
         $afterImportEventTransfer
             ->setImportType($this->getImportType())
-            ->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets());
+            ->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount());
 
         $this->eventFacade->trigger(DataImportEvents::AFTER_IMPORT, $afterImportEventTransfer);
     }

@@ -34,7 +34,7 @@ class DataImporterHelper extends Module
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
-                ->setImportedDataSets(0);
+                ->setImportedDataSetCount(0);
         }
 
         $dataImporterStub = Stub::makeEmpty(DataImporterInterface::class, [

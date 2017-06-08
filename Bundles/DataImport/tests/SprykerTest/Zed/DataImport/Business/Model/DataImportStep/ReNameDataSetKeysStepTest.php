@@ -38,7 +38,7 @@ class ReNameDataSetKeysStepTest extends Test
             static::ORIGINAL_KEY_A => static::VALUE_A,
         ]);
 
-        $keyMapStep = $this->tester->getFactory()->createReNameDataSetKeysStep([
+        $keyMapStep = $this->tester->getFactory()->createRenameDataSetKeysStep([
             static::ORIGINAL_KEY_A => static::NEW_KEY_A,
         ]);
 

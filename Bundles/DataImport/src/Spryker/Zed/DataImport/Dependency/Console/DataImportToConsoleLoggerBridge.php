@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Dependency\Console;
 
-class DataImportToConsoleBridge implements DataImportToConsoleInterface
+class DataImportToConsoleLoggerBridge implements DataImportToConsoleLoggerInterface
 {
 
     /**

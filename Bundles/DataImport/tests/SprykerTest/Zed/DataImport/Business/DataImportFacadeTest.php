@@ -50,7 +50,7 @@ class DataImportFacadeTest extends Test
         $dataImporterReportTransfer = $dataImportFacade->import();
 
         $this->assertSame(static::IMPORT_TYPE_FULL_IMPORT, $dataImporterReportTransfer->getImportType());
-        $this->assertSame(0, $dataImporterReportTransfer->getImportedDataSets(), 'Expected that number of imported data sets is 0');
+        $this->assertSame(0, $dataImporterReportTransfer->getImportedDataSetCount(), 'Expected that number of imported data sets is 0');
     }
 
     /**

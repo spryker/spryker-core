@@ -41,7 +41,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
-        $importType = $this->getOuterImportType($dataImporterConfigurationTransfer);
+        $importType = $this->getCurrentImportType($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImporterReport($importType);
 
         if ($importType !== $this->getImportType()) {
@@ -60,10 +60,6 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
                 $dataImporterReportTransfer,
                 $dataImporterConfigurationTransfer
             );
-        }
-
-        if ($dataImporterReportTransfer->getImportedDataSets() === 0) {
-            $dataImporterReportTransfer->setIsSuccess(false);
         }
 
         return $dataImporterReportTransfer;
@@ -94,7 +90,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         $innerDataImportReportTransfer = $dataImporter->import($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer
             ->addDataImporterReport($innerDataImportReportTransfer)
-            ->setImportedDataSets($dataImporterReportTransfer->getImportedDataSets() + $innerDataImportReportTransfer->getImportedDataSets());
+            ->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + $innerDataImportReportTransfer->getImportedDataSetCount());
 
         if (!$innerDataImportReportTransfer->getIsSuccess()) {
             $dataImporterReportTransfer->setIsSuccess(false);
@@ -106,7 +102,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
      *
      * @return string
      */
-    protected function getOuterImportType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    protected function getCurrentImportType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getImportType()) {
             return $dataImporterConfigurationTransfer->getImportType();
@@ -126,7 +122,7 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         $dataImporterReportTransfer
             ->setImportType($importType)
             ->setIsSuccess(true)
-            ->setImportedDataSets(0);
+            ->setImportedDataSetCount(0);
 
         return $dataImporterReportTransfer;
     }

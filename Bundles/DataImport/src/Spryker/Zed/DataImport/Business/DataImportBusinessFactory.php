@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\ReNameDataSetKeysStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface;
@@ -130,15 +130,15 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * Use this one to re-name keys in your data set. `$map` has as key the current data set key and as value the new expected key.
+     * Use this one to rename keys in your data set. `$map` has as key the current data set key and as value the new expected key.
      *
      * @param array $map
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\ReNameDataSetKeysStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createReNameDataSetKeysStep(array $map)
+    public function createRenameDataSetKeysStep(array $map)
     {
-        return new ReNameDataSetKeysStep($map);
+        return new RenameDataSetKeysStep($map);
     }
 
     /**
