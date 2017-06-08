@@ -13,7 +13,6 @@ use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemProductOptionPriceAggr
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemSubtotalAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemTaxAmountFullAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\PriceToPayAggregator;
-use Spryker\Zed\Calculation\Business\Model\Aggregator\TaxRateAverageAggregator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CanceledTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\DiscountTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalCalculator;
@@ -233,14 +232,6 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createCanceledTotalCalculator()
     {
         return new CanceledTotalCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\TaxRateAverageAggregator
-     */
-    public function createTaxRateAverageAggregationCalculator()
-    {
-        return new TaxRateAverageAggregator();
     }
 
     /**

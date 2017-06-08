@@ -301,22 +301,6 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @return void
      */
-    public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer)
-    {
-        $this->getFactory()
-            ->createTaxRateAverageAggregationCalculator()
-            ->recalculate($calculableObjectTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
     public function calculateOrderTaxTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()

@@ -5,16 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
+namespace Spryker\Zed\Tax\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     */
+    protected $priceCalculationHelper;
+
+    /**
+     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
+     */
+    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
+    {
+        $this->priceCalculationHelper = $priceCalculationHelper;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -62,7 +76,9 @@ class TaxRateAverageAggregator implements CalculatorInterface
             return $itemTransfer->getUnitPriceToPayAggregation();
         }
 
-        return $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getUnitTaxAmountFullAggregation();
+        $taxAmount = $this->calculateTax($itemTransfer);
+
+        return $itemTransfer->getUnitPriceToPayAggregation() - $taxAmount;
     }
 
     /**
@@ -81,6 +97,24 @@ class TaxRateAverageAggregator implements CalculatorInterface
             ($itemTransfer->getUnitPriceToPayAggregation() / $unitPriceToPayAggregationNetPrice - 1) * 100,
             2
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function calculateTax(ItemTransfer $itemTransfer)
+    {
+        $unitPriceAfterDiscounts = $itemTransfer->getUnitPrice() - $itemTransfer->getUnitDiscountAmountAggregation();
+        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($unitPriceAfterDiscounts, $itemTransfer->getTaxRate(), false);
+
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $optionPriceAfterDiscounts = $productOptionTransfer->getUnitPrice() - $productOptionTransfer->getUnitDiscountAmountAggregation();
+            $optionTax = $this->priceCalculationHelper->getTaxValueFromPrice($optionPriceAfterDiscounts, $productOptionTransfer->getTaxRate(), false);
+            $taxAmount += $optionTax;
+        }
+        return $taxAmount;
     }
 
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator;
 use Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountAfterCancellationCalculator;
 use Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountCalculator;
+use Spryker\Zed\Tax\Business\Model\Calculator\TaxRateAverageAggregator;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
@@ -43,6 +44,14 @@ class TaxBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getTaxChangePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\Calculator\TaxRateAverageAggregator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createTaxRateAverageAggregationCalculator()
+    {
+        return new TaxRateAverageAggregator($this->createPriceCalculationHelper());
     }
 
     /**

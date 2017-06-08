@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Calculation\Communication\Plugin\Calculator;
+namespace Spryker\Zed\Tax\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
- * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class TaxRateAverageAggregatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {

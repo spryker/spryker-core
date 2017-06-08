@@ -257,18 +257,6 @@ interface CalculationFacadeInterface
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     * Specification:
-     *  - Calculate tax average for item and expenses, used when recalculate taxable amount after refund
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
-
-    /**
      *
      * Specification:
      *  - Calculate total tax amount for order, take into account canceled amount

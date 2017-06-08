@@ -390,4 +390,20 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->recalculate($calculableObjectTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxRateAverageAggregationCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
 }
