@@ -10,7 +10,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Shared\Price\PriceMode;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface;
 
@@ -87,7 +87,7 @@ class GrandTotalCalculator implements CalculatorInterface
      */
     protected function getGrandTotalWithTax(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
     {
-        if ($calculableObjectTransfer->getPriceMode() === PriceMode::PRICE_MODE_NET) {
+        if ($calculableObjectTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
             $grandTotal += $calculableObjectTransfer->getTotals()->getTaxTotal()->getAmount();
         }
         return $grandTotal;

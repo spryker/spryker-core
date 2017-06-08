@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
@@ -248,7 +247,7 @@ class DiscountAmountAggregator implements CalculatorInterface
      */
     protected function updateDiscountTotals(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        if ($calculableObjectTransfer->getPriceMode() === PriceMode::PRICE_MODE_GROSS) {
+        if ($calculableObjectTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_GROSS) {
             return;
         }
 
