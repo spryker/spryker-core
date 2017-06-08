@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  */
 class ReSortController extends AbstractController
@@ -56,8 +57,10 @@ class ReSortController extends AbstractController
         }
 
         $productLabelTransferCollection = $this->findAllProductLabelsSorted();
-        $productLabelTransferCollection = $this->updatePositions($productLabelTransferCollection, $sortOrderData);
-        $this->storeUpdatedPositions($productLabelTransferCollection);
+        $this->getFacade()->updateLabelPositions(
+            $productLabelTransferCollection,
+            $this->getLabelPositionMap($sortOrderData)
+        );
 
         return $this->jsonResponse([
             'success' => true,
@@ -66,34 +69,19 @@ class ReSortController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
      * @param array $sortOrderData
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return int[]
      */
-    protected function updatePositions(array $productLabelTransferCollection, array $sortOrderData)
+    protected function getLabelPositionMap($sortOrderData)
     {
-        foreach ($productLabelTransferCollection as $productLabelTransfer) {
-            $position = $sortOrderData[$productLabelTransfer->getIdProductLabel()]['position'];
-            $productLabelTransfer->setPosition($position);
+        $positionMap = [];
+
+        foreach ($sortOrderData as $idProductLabel => $positionData) {
+            $positionMap[$idProductLabel] = $positionData['position'];
         }
 
-        return $productLabelTransferCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
-     *
-     * @return void
-     */
-    protected function storeUpdatedPositions(array $productLabelTransferCollection)
-    {
-        foreach ($productLabelTransferCollection as $productLabelTransfer) {
-            $this
-                ->getFactory()
-                ->getProductLabelFacade()
-                ->updateLabel($productLabelTransfer);
-        }
+        return $positionMap;
     }
 
 }
