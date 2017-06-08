@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
-use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface;
+use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -23,17 +23,17 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface
      */
     protected $productRelationTouchManager;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        AbstractProductRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
@@ -63,7 +63,7 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
 
-            $this->productRelationTouchManager->touchActiveForAbstractProduct($idProductAbstract);
+            $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
         }
     }
 

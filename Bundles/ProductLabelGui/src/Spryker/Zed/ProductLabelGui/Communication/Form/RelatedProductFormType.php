@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
-use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -17,10 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RelatedProductFormType extends AbstractType
 {
 
-    const FIELD_PRODUCT_LABEL_ID = 'productLabelId';
-    const FIELD_ABSTRACT_PRODUCT_IDS_CSV = 'abstractProductIdsCsv';
-    const FIELD_ABSTRACT_PRODUCTS_TO_ASSIGN_IDS_CSV = 'abstractProductsToAssignIdsCsv';
-    const FIELD_ABSTRACT_PRODUCTS_TO_DE_ASSIGN_IDS_CSV = 'abstractProductsToDeAssignIdsCsv';
+    const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
+    const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
+    const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
+    const FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV = 'idsProductAbstractToDeAssignCsv';
 
     /**
      * @return string
@@ -38,7 +38,7 @@ class RelatedProductFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProductLabelAbstractProductRelationsTransfer::class,
+            'data_class' => ProductLabelProductAbstractRelationsTransfer::class,
         ]);
     }
 
@@ -52,8 +52,8 @@ class RelatedProductFormType extends AbstractType
     {
         $this
             ->addProductLabelIdField($builder)
-            ->addAbstractProductsToAssignIdsCsvField($builder)
-            ->addAbstractProductsToDeAssignIdsCsvField($builder);
+            ->addIdsProductAbstractToAssignCsvField($builder)
+            ->addIdsProductAbstractToDeAssignCsvField($builder);
     }
 
     /**
@@ -64,7 +64,7 @@ class RelatedProductFormType extends AbstractType
     protected function addProductLabelIdField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_PRODUCT_LABEL_ID,
+            static::FIELD_ID_PRODUCT_LABEL,
             HiddenType::class,
             [
                 'property_path' => 'idProductLabel',
@@ -79,20 +79,20 @@ class RelatedProductFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addAbstractProductsToAssignIdsCsvField(FormBuilderInterface $builder)
+    protected function addIdsProductAbstractToAssignCsvField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_ABSTRACT_PRODUCTS_TO_ASSIGN_IDS_CSV,
+            static::FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV,
             HiddenType::class,
             [
-                'property_path' => 'abstractProductIdsToAssign',
+                'property_path' => 'idsProductAbstractToAssign',
                 'attr' => [
                     'id' => 'js-abstract-products-to-assign-ids-csv-field',
                 ],
             ]
         );
 
-        $this->addIdsCsvModelTransformer(static::FIELD_ABSTRACT_PRODUCTS_TO_ASSIGN_IDS_CSV, $builder);
+        $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV, $builder);
 
         return $this;
     }
@@ -102,20 +102,20 @@ class RelatedProductFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addAbstractProductsToDeAssignIdsCsvField(FormBuilderInterface $builder)
+    protected function addIdsProductAbstractToDeAssignCsvField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_ABSTRACT_PRODUCTS_TO_DE_ASSIGN_IDS_CSV,
+            static::FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV,
             HiddenType::class,
             [
-                'property_path' => 'abstractProductIdsToDeAssign',
+                'property_path' => 'idsProductAbstractToDeAssign',
                 'attr' => [
                     'id' => 'js-abstract-products-to-de-assign-ids-csv-field',
                 ],
             ]
         );
 
-        $this->addIdsCsvModelTransformer(static::FIELD_ABSTRACT_PRODUCTS_TO_DE_ASSIGN_IDS_CSV, $builder);
+        $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV, $builder);
 
         return $this;
     }

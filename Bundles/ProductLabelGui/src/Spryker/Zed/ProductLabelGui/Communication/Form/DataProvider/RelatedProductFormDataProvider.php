@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 
 class RelatedProductFormDataProvider
 {
@@ -15,11 +15,11 @@ class RelatedProductFormDataProvider
     /**
      * @param int|null $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer
      */
     public function getData($idProductLabel = null)
     {
-        $relationsTransfer = new ProductLabelAbstractProductRelationsTransfer();
+        $relationsTransfer = new ProductLabelProductAbstractRelationsTransfer();
         $relationsTransfer->setIdProductLabel($idProductLabel);
 
         return $relationsTransfer;

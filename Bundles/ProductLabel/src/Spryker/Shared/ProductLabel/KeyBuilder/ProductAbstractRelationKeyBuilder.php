@@ -10,7 +10,7 @@ namespace Spryker\Shared\ProductLabel\KeyBuilder;
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
 
-class AbstractProductRelationKeyBuilder extends SharedResourceKeyBuilder
+class ProductAbstractRelationKeyBuilder extends SharedResourceKeyBuilder
 {
 
     /**

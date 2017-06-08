@@ -78,9 +78,8 @@ class LabelUpdater implements LabelUpdaterInterface
     protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
-        $isModified = (count($productLabelEntity->getModifiedColumns()) > 0);
 
-        if (!$isModified) {
+        if (!$productLabelEntity->isModified()) {
             return;
         }
 
@@ -97,7 +96,7 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function getUpdatedLabelEntity(ProductLabelTransfer $productLabelTransfer)
     {
-        $productLabelEntity = $this->getEntityById($productLabelTransfer->getIdProductLabel());
+        $productLabelEntity = $this->getEntityByIdProductLabel($productLabelTransfer->getIdProductLabel());
         $productLabelEntity = $this->updateEntityFromTransfer($productLabelEntity, $productLabelTransfer);
 
         return $productLabelEntity;
@@ -110,7 +109,7 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
      */
-    protected function getEntityById($idProductLabel)
+    protected function getEntityByIdProductLabel($idProductLabel)
     {
         $productLabelEntity = $this
             ->queryContainer

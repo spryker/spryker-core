@@ -46,14 +46,14 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int[] $productLabelIds
+     * @param int[] $idsProductLabel
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    public function getSortedLabelsById(array $productLabelIds, $localeName)
+    public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName)
     {
-        $productLabelCollection = $this->getProductLabelsFromDictionary($productLabelIds, $localeName);
+        $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
         $productLabelCollection = $this->truncateCollection($productLabelCollection);
@@ -62,17 +62,17 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param array $productLabelIds
+     * @param int[] $idsProductLabel
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    protected function getProductLabelsFromDictionary(array $productLabelIds, $localeName)
+    protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
     {
         $dictionary = $this->getLabelDictionary($localeName);
         $productLabelCollection = [];
 
-        foreach ($productLabelIds as $idProductLabel) {
+        foreach ($idsProductLabel as $idProductLabel) {
             if (!array_key_exists($idProductLabel, $dictionary)) {
                 continue;
             }

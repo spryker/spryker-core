@@ -17,18 +17,18 @@ interface LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function read($idProductLabel);
+    public function getByIdProductLabel($idProductLabel);
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAll();
+    public function findAll();
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllForAbstractProduct($idProductAbstract);
+    public function findAllByIdProductAbstract($idProductAbstract);
 
 }

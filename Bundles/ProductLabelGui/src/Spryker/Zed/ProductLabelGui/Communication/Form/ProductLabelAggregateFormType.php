@@ -99,7 +99,7 @@ class ProductLabelAggregateFormType extends AbstractType
     protected function addRelatedProductSubForm(FormBuilderInterface $builder)
     {
         $builder->add(
-            ProductLabelAggregateFormTransfer::ABSTRACT_PRODUCT_RELATIONS,
+            ProductLabelAggregateFormTransfer::PRODUCT_ABSTRACT_RELATIONS,
             $this->relatedProductFormType,
             [
                 'label' => false,

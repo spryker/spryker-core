@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Touch;
 
-interface AbstractProductRelationTouchManagerInterface
+interface ProductAbstractRelationTouchManagerInterface
 {
 
     /**
@@ -15,13 +15,13 @@ interface AbstractProductRelationTouchManagerInterface
      *
      * @return void
      */
-    public function touchActiveForAbstractProduct($idProductAbstract);
+    public function touchActiveByIdProductAbstract($idProductAbstract);
 
     /**
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function touchDeletedForAbstractProduct($idProductAbstract);
+    public function touchDeletedByIdProductAbstract($idProductAbstract);
 
 }

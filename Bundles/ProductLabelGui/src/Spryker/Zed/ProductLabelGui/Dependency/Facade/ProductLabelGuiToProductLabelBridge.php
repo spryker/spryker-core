@@ -83,7 +83,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      */
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
     {
-        $this->productLabelFacade->removeAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
 
 }

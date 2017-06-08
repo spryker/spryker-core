@@ -65,7 +65,7 @@ class ProductLabelTwigExtension extends TwigExtension
     {
         $productLabelTransferCollection = $this
             ->productLabelClient
-            ->getLabelsForAbstractProduct($idProductAbstract, $this->localeName);
+            ->findLabelsByIdProductAbstract($idProductAbstract, $this->localeName);
 
         if (!count($productLabelTransferCollection)) {
             return '';

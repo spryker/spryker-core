@@ -47,7 +47,7 @@ class ProductLabelAggregateFormDataProvider
         $aggregateFormTransfer->setProductLabel($productLabelTransfer);
 
         $relationsTransfer = $this->relatedProductFormDataProvider->getData($idProductLabel);
-        $aggregateFormTransfer->setAbstractProductRelations($relationsTransfer);
+        $aggregateFormTransfer->setProductAbstractRelations($relationsTransfer);
 
         return $aggregateFormTransfer;
     }

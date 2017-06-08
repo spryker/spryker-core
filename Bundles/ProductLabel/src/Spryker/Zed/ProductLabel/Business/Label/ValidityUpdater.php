@@ -41,8 +41,8 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     public function checkAndTouchAllLabels()
     {
-        $productLabelsBecomingActive = $this->getLabelsBecomingActive();
-        $productLabelsBecomingInactive = $this->getLabelsBecomingInactive();
+        $productLabelsBecomingActive = $this->findLabelsBecomingActive();
+        $productLabelsBecomingInactive = $this->findLabelsBecomingInactive();
 
         if (!$productLabelsBecomingActive->count() && !$productLabelsBecomingInactive->count()) {
             return;
@@ -57,22 +57,22 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getLabelsBecomingActive()
+    protected function findLabelsBecomingActive()
     {
         return $this
             ->queryContainer
-            ->queryUnpublishedProductLabelBecomingValid()
+            ->queryUnpublishedProductLabelsBecomingValid()
             ->find();
     }
 
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getLabelsBecomingInactive()
+    protected function findLabelsBecomingInactive()
     {
         return $this
             ->queryContainer
-            ->queryPublishedProductLabelBecomingInvalid()
+            ->queryPublishedProductLabelsBecomingInvalid()
             ->find();
     }
 

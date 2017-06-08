@@ -15,6 +15,6 @@ interface ProductAbstractRelationReaderInterface
      *
      * @return int[]
      */
-    public function readForProductLabel($idProductLabel);
+    public function findIdsProductAbstractByIdProductLabel($idProductLabel);
 
 }

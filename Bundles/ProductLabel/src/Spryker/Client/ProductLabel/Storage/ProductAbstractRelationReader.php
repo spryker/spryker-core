@@ -49,15 +49,15 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    public function getLabelsForAbstractProduct($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
     {
-        $productLabelIds = $this->getProductLabelIdsForAbstractProduct($idProductAbstract, $localeName);
+        $idsProductLabel = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract, $localeName);
 
-        if (!count($productLabelIds)) {
+        if (!count($idsProductLabel)) {
             return [];
         }
 
-        return $this->getSortedProductLabelsFromDictionary($productLabelIds, $localeName);
+        return $this->findSortedProductLabelsInDictionary($idsProductLabel, $localeName);
     }
 
     /**
@@ -66,7 +66,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return array
      */
-    protected function getProductLabelIdsForAbstractProduct($idProductAbstract, $localeName)
+    protected function findIdsProductLabelByIdAbstractProduct($idProductAbstract, $localeName)
     {
         $storageKey = $this->keyBuilder->generateKey($idProductAbstract, $localeName);
         $storageData = $this->storageClient->get($storageKey);
@@ -80,9 +80,9 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    protected function getSortedProductLabelsFromDictionary($productLabelIds, $localeName)
+    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName)
     {
-        return $this->labelDictionaryReader->getSortedLabelsById($productLabelIds, $localeName);
+        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
     }
 
 }

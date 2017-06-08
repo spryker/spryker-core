@@ -30,11 +30,11 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return int[]
      */
-    public function readForProductLabel($idProductLabel)
+    public function findIdsProductAbstractByIdProductLabel($idProductLabel)
     {
         $idsProductAbstract = [];
 
-        foreach ($this->findRelationEntities($idProductLabel) as $relationEntity) {
+        foreach ($this->findRelationEntitiesByIdProductLabel($idProductLabel) as $relationEntity) {
             $idsProductAbstract[] = $relationEntity->getFkProductAbstract();
         }
 
@@ -46,11 +46,11 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]
      */
-    protected function findRelationEntities($idProductLabel)
+    protected function findRelationEntitiesByIdProductLabel($idProductLabel)
     {
         return $this
             ->queryContainer
-            ->queryAbstractProductRelationsByProductLabel($idProductLabel)
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
             ->find();
     }
 

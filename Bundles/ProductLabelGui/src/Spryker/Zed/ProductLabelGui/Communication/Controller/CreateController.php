@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -82,7 +82,7 @@ class CreateController extends AbstractController
 
         $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
         $this->storeRelatedProduct(
-            $aggregateFormTransfer->getAbstractProductRelations(),
+            $aggregateFormTransfer->getProductAbstractRelations(),
             $productLabelTransfer->getIdProductLabel()
         );
 
@@ -110,16 +110,16 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $relationsTransfer
      * @param int $idProductLabel
      *
      * @return void
      */
     protected function storeRelatedProduct(
-        ProductLabelAbstractProductRelationsTransfer $relationsTransfer,
+        ProductLabelProductAbstractRelationsTransfer $relationsTransfer,
         $idProductLabel
     ) {
-        if (!count($relationsTransfer->getAbstractProductIdsToAssign())) {
+        if (!count($relationsTransfer->getIdsProductAbstractToAssign())) {
             return;
         }
 
@@ -128,7 +128,7 @@ class CreateController extends AbstractController
             ->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel(
                 $idProductLabel,
-                $relationsTransfer->getAbstractProductIdsToAssign()
+                $relationsTransfer->getIdsProductAbstractToAssign()
             );
     }
 

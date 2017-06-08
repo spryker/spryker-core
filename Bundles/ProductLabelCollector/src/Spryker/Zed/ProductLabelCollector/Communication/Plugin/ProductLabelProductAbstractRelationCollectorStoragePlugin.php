@@ -42,7 +42,7 @@ class ProductLabelProductAbstractRelationCollectorStoragePlugin extends Abstract
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $this->getFacade()->runAbstractProductRelationStorageCollector(
+        $this->getFacade()->runProductAbstractRelationStorageCollector(
             $baseQuery,
             $locale,
             $result,

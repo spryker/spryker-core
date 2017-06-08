@@ -9,15 +9,15 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
-    <transfer name="ProductLabelAbstractProductRelations">
-        <property name="idProductLabel" type="int"/>
-        <property name="abstractProductIdsToAssign" type="array"/>
-        <property name="abstractProductIdsToDeAssign" type="array"/>
-    </transfer>
-
     <transfer name="ProductLabelAggregateForm">
         <property name="productLabel" type="ProductLabel"/>
-        <property name="abstractProductRelations" type="ProductLabelAbstractProductRelations"/>
+        <property name="productAbstractRelations" type="ProductLabelProductAbstractRelations"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idProductLabel" type="int"/>
+        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idsProductAbstractToDeAssign" type="array"/>
     </transfer>
 
 </transfers>

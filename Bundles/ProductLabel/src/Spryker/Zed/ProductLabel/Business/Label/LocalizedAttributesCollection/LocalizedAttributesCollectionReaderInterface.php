@@ -15,6 +15,6 @@ interface LocalizedAttributesCollectionReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
      */
-    public function read($idProductLabel);
+    public function findAllByIdProductLabel($idProductLabel);
 
 }

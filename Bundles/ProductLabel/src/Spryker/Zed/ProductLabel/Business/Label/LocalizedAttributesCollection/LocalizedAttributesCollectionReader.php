@@ -33,9 +33,9 @@ class LocalizedAttributesCollectionReader implements LocalizedAttributesCollecti
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
      */
-    public function read($idProductLabel)
+    public function findAllByIdProductLabel($idProductLabel)
     {
-        $localizedAttributesEntities = $this->findEntities($idProductLabel);
+        $localizedAttributesEntities = $this->findEntitiesByIdProductLabel($idProductLabel);
         $localizedAttributesTransferCollection = new ArrayObject();
 
         foreach ($localizedAttributesEntities as $localizedAttributesEntity) {
@@ -50,11 +50,11 @@ class LocalizedAttributesCollectionReader implements LocalizedAttributesCollecti
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]
      */
-    protected function findEntities($idProductLabel)
+    protected function findEntitiesByIdProductLabel($idProductLabel)
     {
         return $this
             ->queryContainer
-            ->queryLocalizedAttributesByProductLabel($idProductLabel)
+            ->queryLocalizedAttributesByIdProductLabel($idProductLabel)
             ->find();
     }
 

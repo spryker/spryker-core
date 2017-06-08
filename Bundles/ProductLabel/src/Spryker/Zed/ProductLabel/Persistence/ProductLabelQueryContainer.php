@@ -54,7 +54,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryProductLabelByAbstractProduct($idProductAbstract)
+    public function queryProductsLabelByIdProductAbstract($idProductAbstract)
     {
         return $this
             ->getFactory()
@@ -71,7 +71,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
-    public function queryLocalizedAttributesByProductLabel($idProductLabel)
+    public function queryLocalizedAttributesByIdProductLabel($idProductLabel)
     {
         return $this
             ->getFactory()
@@ -105,7 +105,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabel($idProductLabel)
+    public function queryProductAbstractRelationsByIdProductLabel($idProductLabel)
     {
         return $this
             ->getFactory()
@@ -121,12 +121,12 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabelAndAbstractProducts(
+    public function queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
         $idProductLabel,
         array $idsProductAbstract
     ) {
         return $this
-            ->queryAbstractProductRelationsByProductLabel($idProductLabel)
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
             ->filterByFkProductAbstract($idsProductAbstract, Criteria::IN);
     }
 
@@ -135,7 +135,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryUnpublishedProductLabelBecomingValid()
+    public function queryUnpublishedProductLabelsBecomingValid()
     {
         return $this
             ->getFactory()
@@ -154,7 +154,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryPublishedProductLabelBecomingInvalid()
+    public function queryPublishedProductLabelsBecomingInvalid()
     {
         return $this
             ->getFactory()

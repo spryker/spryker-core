@@ -25,12 +25,12 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    public function getLabelsForAbstractProduct($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
     {
         return $this
             ->getFactory()
-            ->createAbstractProductRelationReader()
-            ->getLabelsForAbstractProduct($idProductAbstract, $localeName);
+            ->createProductAbstractRelationReader()
+            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
     }
 
 }

@@ -7,8 +7,17 @@
     xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
 >
     <table name="spy_product_label_product_abstract" identifierQuoting="true">
-        <column name="fk_product_label" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="fk_product_abstract" type="INTEGER" required="true" primaryKey="true"/>
+        <column
+            name="id_product_label_product_abstract"
+            type="INTEGER"
+            required="true"
+            primaryKey="true"
+            autoIncrement="true"
+        />
+        <column name="fk_product_label" type="INTEGER" required="true"/>
+        <column name="fk_product_abstract" type="INTEGER" required="true"/>
+
+        <id-method-parameter value="spy_product_label_product_abstract_pk_seq"/>
 
         <foreign-key foreignTable="spy_product_label">
             <reference local="fk_product_label" foreign="id_product_label"/>
@@ -17,5 +26,10 @@
         <foreign-key foreignTable="spy_product_abstract">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
+
+        <unique>
+            <unique-column name="fk_product_label"/>
+            <unique-column name="fk_product_abstract"/>
+        </unique>
     </table>
 </database>

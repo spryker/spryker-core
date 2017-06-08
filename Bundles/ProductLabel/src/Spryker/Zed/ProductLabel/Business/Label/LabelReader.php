@@ -46,9 +46,9 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function read($idProductLabel)
+    public function getByIdProductLabel($idProductLabel)
     {
-        $productLabelEntity = $this->findEntity($idProductLabel);
+        $productLabelEntity = $this->findEntityByIdProductLabel($idProductLabel);
 
         if (!$productLabelEntity) {
             throw new MissingProductLabelException(
@@ -67,7 +67,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
      */
-    protected function findEntity($idProductLabel)
+    protected function findEntityByIdProductLabel($idProductLabel)
     {
         return $this
             ->queryContainer
@@ -78,7 +78,7 @@ class LabelReader implements LabelReaderInterface
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAll()
+    public function findAll()
     {
         $productLabelEntities = $this->findAllEntitiesSortedByPosition();
         $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
@@ -102,9 +102,9 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllForAbstractProduct($idProductAbstract)
+    public function findAllByIdProductAbstract($idProductAbstract)
     {
-        $productLabelEntities = $this->findEntitiesForAbstractProduct($idProductAbstract);
+        $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
         $productLabelTransferCollection = $this->createTransferCollectionForEntities($productLabelEntities);
 
         return $productLabelTransferCollection;
@@ -115,11 +115,11 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
      */
-    protected function findEntitiesForAbstractProduct($idProductAbstract)
+    protected function findEntitiesByIdProductAbstract($idProductAbstract)
     {
         return $this
             ->queryContainer
-            ->queryProductLabelByAbstractProduct($idProductAbstract)
+            ->queryProductsLabelByIdProductAbstract($idProductAbstract)
             ->find();
     }
 
@@ -166,7 +166,9 @@ class LabelReader implements LabelReaderInterface
     protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelTransfer->setLocalizedAttributesCollection(
-            $this->localizedAttributesCollectionReader->read($productLabelTransfer->getIdProductLabel())
+            $this
+                ->localizedAttributesCollectionReader
+                ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
         );
     }
 

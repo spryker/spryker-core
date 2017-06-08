@@ -33,7 +33,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryProductLabelByAbstractProduct($idProductAbstract);
+    public function queryProductsLabelByIdProductAbstract($idProductAbstract);
 
     /**
      * @api
@@ -42,7 +42,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
-    public function queryLocalizedAttributesByProductLabel($idProductLabel);
+    public function queryLocalizedAttributesByIdProductLabel($idProductLabel);
 
     /**
      * @api
@@ -58,7 +58,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabel($idProductLabel);
+    public function queryProductAbstractRelationsByIdProductLabel($idProductLabel);
 
     /**
      * @api
@@ -68,7 +68,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryAbstractProductRelationsByProductLabelAndAbstractProducts(
+    public function queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
         $idProductLabel,
         array $idsProductAbstract
     );
@@ -78,13 +78,13 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryUnpublishedProductLabelBecomingValid();
+    public function queryUnpublishedProductLabelsBecomingValid();
 
     /**
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryPublishedProductLabelBecomingInvalid();
+    public function queryPublishedProductLabelsBecomingInvalid();
 
 }

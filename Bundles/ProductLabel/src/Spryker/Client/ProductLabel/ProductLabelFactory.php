@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductLabel;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReader;
 use Spryker\Client\ProductLabel\Storage\LabelDictionaryReader;
-use Spryker\Shared\ProductLabel\KeyBuilder\AbstractProductRelationKeyBuilder;
+use Spryker\Shared\ProductLabel\KeyBuilder\ProductAbstractRelationKeyBuilder;
 use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
 
 /**
@@ -22,12 +22,12 @@ class ProductLabelFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReaderInterface
      */
-    public function createAbstractProductRelationReader()
+    public function createProductAbstractRelationReader()
     {
         return new ProductAbstractRelationReader(
             $this->getStorageClient(),
             $this->createLabelDictionaryReader(),
-            $this->createAbstractProductRelationKeyBuilder()
+            $this->createProductAbstractRelationKeyBuilder()
         );
     }
 
@@ -62,9 +62,9 @@ class ProductLabelFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    protected function createAbstractProductRelationKeyBuilder()
+    protected function createProductAbstractRelationKeyBuilder()
     {
-        return new AbstractProductRelationKeyBuilder();
+        return new ProductAbstractRelationKeyBuilder();
     }
 
 }

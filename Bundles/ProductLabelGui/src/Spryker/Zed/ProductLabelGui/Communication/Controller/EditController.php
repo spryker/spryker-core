@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -102,7 +102,7 @@ class EditController extends AbstractController
         $aggregateFormTransfer = $aggregateForm->getData();
 
         $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
-        $this->storeRelatedProduct($aggregateFormTransfer->getAbstractProductRelations());
+        $this->storeRelatedProduct($aggregateFormTransfer->getProductAbstractRelations());
 
         $this->addSuccessMessage(sprintf(
             'Product label #%d successfully updated.',
@@ -128,24 +128,24 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $relationsTransfer
      *
      * @return void
      */
-    protected function storeRelatedProduct(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    protected function storeRelatedProduct(ProductLabelProductAbstractRelationsTransfer $relationsTransfer)
     {
         $this->storeNewProductRelations($relationsTransfer);
         $this->storeRemovedProductRelations($relationsTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $relationsTransfer
      *
      * @return void
      */
-    protected function storeNewProductRelations(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    protected function storeNewProductRelations(ProductLabelProductAbstractRelationsTransfer $relationsTransfer)
     {
-        if (!count($relationsTransfer->getAbstractProductIdsToAssign())) {
+        if (!count($relationsTransfer->getIdsProductAbstractToAssign())) {
             return;
         }
 
@@ -154,18 +154,18 @@ class EditController extends AbstractController
             ->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel(
                 $relationsTransfer->getIdProductLabel(),
-                $relationsTransfer->getAbstractProductIdsToAssign()
+                $relationsTransfer->getIdsProductAbstractToAssign()
             );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelAbstractProductRelationsTransfer $relationsTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $relationsTransfer
      *
      * @return void
      */
-    protected function storeRemovedProductRelations(ProductLabelAbstractProductRelationsTransfer $relationsTransfer)
+    protected function storeRemovedProductRelations(ProductLabelProductAbstractRelationsTransfer $relationsTransfer)
     {
-        if (!count($relationsTransfer->getAbstractProductIdsToDeAssign())) {
+        if (!count($relationsTransfer->getIdsProductAbstractToDeAssign())) {
             return;
         }
 
@@ -174,7 +174,7 @@ class EditController extends AbstractController
             ->getProductLabelFacade()
             ->removeAbstractProductRelationsForLabel(
                 $relationsTransfer->getIdProductLabel(),
-                $relationsTransfer->getAbstractProductIdsToDeAssign()
+                $relationsTransfer->getIdsProductAbstractToDeAssign()
             );
     }
 

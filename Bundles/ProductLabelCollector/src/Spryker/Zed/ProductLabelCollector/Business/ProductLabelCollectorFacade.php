@@ -80,7 +80,7 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
      *
      * @return void
      */
-    public function runAbstractProductRelationStorageCollector(
+    public function runProductAbstractRelationStorageCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,

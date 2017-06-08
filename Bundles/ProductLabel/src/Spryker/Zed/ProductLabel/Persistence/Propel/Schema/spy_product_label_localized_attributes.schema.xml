@@ -6,10 +6,19 @@
     package="src.Orm.Zed.ProductLabel.Persistence"
     xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
 >
-    <table name="spy_product_label_localized_attributes" identifierQuoting="true">
-        <column name="fk_product_label" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="fk_locale" type="INTEGER" required="true" primaryKey="true"/>
+    <table name="spy_product_label_localized_attributes" idMethod="native" identifierQuoting="true">
+        <column
+            name="id_product_label_localized_attributes"
+            type="INTEGER"
+            required="true"
+            primaryKey="true"
+            autoIncrement="true"
+        />
+        <column name="fk_product_label" type="INTEGER" required="true"/>
+        <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="name" type="VARCHAR" required="false"/>
+
+        <id-method-parameter value="spy_product_label_localized_attributes_pk_seq"/>
 
         <foreign-key foreignTable="spy_product_label">
             <reference local="fk_product_label" foreign="id_product_label"/>
@@ -18,5 +27,10 @@
         <foreign-key foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
+
+        <unique>
+            <unique-column name="fk_product_label"/>
+            <unique-column name="fk_locale"/>
+        </unique>
     </table>
 </database>

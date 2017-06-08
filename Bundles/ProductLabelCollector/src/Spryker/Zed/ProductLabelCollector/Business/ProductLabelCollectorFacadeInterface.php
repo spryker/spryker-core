@@ -62,7 +62,7 @@ interface ProductLabelCollectorFacadeInterface
      *
      * @return void
      */
-    public function runAbstractProductRelationStorageCollector(
+    public function runProductAbstractRelationStorageCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,

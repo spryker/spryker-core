@@ -17,7 +17,7 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
-use Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManager;
+use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManager;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManager;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
@@ -97,7 +97,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface
      */
-    public function createAbstractProductRelationReader()
+    public function createProductAbstractRelationReader()
     {
         return new ProductAbstractRelationReader($this->getQueryContainer());
     }
@@ -105,31 +105,31 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriterInterface
      */
-    public function createAbstractProductRelationWriter()
+    public function createProductAbstractRelationWriter()
     {
         return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
-            $this->createAbstractProductRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleterInterface
      */
-    public function createAbstractProductRelationDeleter()
+    public function createProductAbstractRelationDeleter()
     {
         return new ProductAbstractRelationDeleter(
             $this->getQueryContainer(),
-            $this->createAbstractProductRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\Touch\AbstractProductRelationTouchManagerInterface
+     * @return \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface
      */
-    protected function createAbstractProductRelationTouchManager()
+    protected function createProductAbstractRelationTouchManager()
     {
-        return new AbstractProductRelationTouchManager($this->getTouchFacade());
+        return new ProductAbstractRelationTouchManager($this->getTouchFacade());
     }
 
     /**

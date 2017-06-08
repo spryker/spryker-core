@@ -16,6 +16,6 @@ interface ProductAbstractRelationReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
      */
-    public function getLabelsForAbstractProduct($idProductAbstract, $localeName);
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
 
 }
