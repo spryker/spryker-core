@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
