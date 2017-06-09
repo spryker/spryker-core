@@ -9,8 +9,8 @@
     <table name="spy_product_label" idMethod="native" identifierQuoting="true">
         <column name="id_product_label" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" required="true"/>
-        <column name="is_active" type="BOOLEAN" required="false" defaultValue="false"/>
-        <column name="is_exclusive" type="BOOLEAN" required="false" defaultValue="false"/>
+        <column name="is_active" type="BOOLEAN" required="true" defaultValue="false"/>
+        <column name="is_exclusive" type="BOOLEAN" required="true" defaultValue="false"/>
         <column name="is_published" type="BOOLEAN" required="false" defaultValue="false"/>
         <column name="front_end_reference" type="VARCHAR" required="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>

@@ -57,7 +57,6 @@ class ProductLabelFormDataProvider
     protected function createProductLabelTransfer()
     {
         $productLabelTransfer = new ProductLabelTransfer();
-        $productLabelTransfer->setIsActive(true);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $localizedAttributesTransfer = new ProductLabelLocalizedAttributesTransfer();
