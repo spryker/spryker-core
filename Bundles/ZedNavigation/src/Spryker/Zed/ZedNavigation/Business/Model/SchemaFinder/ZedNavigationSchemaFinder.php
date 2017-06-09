@@ -39,10 +39,23 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     {
         $finder = new Finder();
         $finder
-            ->in($this->pathPattern)
+            ->in($this->getPaths())
             ->name($this->fileNamePattern);
 
         return $finder;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPaths()
+    {
+        $paths = [];
+        foreach ($this->pathPattern as $pathPattern) {
+            $paths = array_merge($paths, glob($pathPattern));
+        }
+
+        return $paths;
     }
 
 }

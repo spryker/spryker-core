@@ -202,4 +202,25 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode)
+    {
+        return $this
+            ->getFactory()
+            ->createProductCategoryQuery()
+            ->useSpyCategoryQuery()
+                ->useNodeQuery()
+                    ->useDescendantQuery()
+                        ->filterByFkCategoryNode($idCategoryNode)
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+    }
+
 }

@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Session\Business;
 
 use Predis\Client;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
+use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
 
 /**
@@ -23,83 +22,53 @@ class SessionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @throws \Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException
-     *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function createYvesSessionLockReleaser()
     {
-        switch (Config::get(SessionConstants::YVES_SESSION_SAVE_HANDLER)) {
-            case SessionConstants::SESSION_HANDLER_REDIS_LOCKING:
-                $dsn = $this->buildYvesRedisDsn();
-
-                return $this->createRedisSessionLockReleaser($dsn);
-        }
-
-        throw new NotALockingSessionHandlerException(sprintf(
-            "The configured session handler '%s' doesn't seem to support locking",
-            Config::get(SessionConstants::YVES_SESSION_SAVE_HANDLER)
-        ));
+        return $this->createYvesSessionLockReleaserPool()
+            ->getLockReleaser($this->getConfig()->getConfiguredSessionHandlerNameYves());
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPoolInterface
      */
-    protected function buildYvesRedisDsn()
+    protected function createYvesSessionLockReleaserPool()
     {
-        $authFragment = '';
-        if (Config::hasKey(SessionConstants::YVES_SESSION_REDIS_PASSWORD)) {
-            $authFragment = sprintf('h:%s@', Config::get(SessionConstants::YVES_SESSION_REDIS_PASSWORD));
-        }
-
-        return sprintf(
-            '%s://%s%s:%s?database=%s',
-            Config::get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL),
-            $authFragment,
-            Config::get(SessionConstants::YVES_SESSION_REDIS_HOST),
-            Config::get(SessionConstants::YVES_SESSION_REDIS_PORT),
-            Config::get(SessionConstants::YVES_SESSION_REDIS_DATABASE, 0)
+        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool->addLockReleaser(
+            $this->createRedisSessionLockReleaser(
+                $this->getConfig()->getSessionHandlerRedisDataSourceNameYves()
+            ),
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING
         );
+
+        return $sessionLockReleaserPool;
     }
 
     /**
-     * @throws \Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException
-     *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function createZedSessionLockReleaser()
     {
-        switch (Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER)) {
-            case SessionConstants::SESSION_HANDLER_REDIS_LOCKING:
-                $dsn = $this->buildZedRedisDsn();
-
-                return $this->createRedisSessionLockReleaser($dsn);
-        }
-
-        throw new NotALockingSessionHandlerException(sprintf(
-            "The configured session handler '%s' doesn't seem to support locking",
-            Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER)
-        ));
+        return $this->createZedSessionLockReleaserPool()
+            ->getLockReleaser($this->getConfig()->getConfiguredSessionHandlerNameZed());
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPoolInterface
      */
-    protected function buildZedRedisDsn()
+    protected function createZedSessionLockReleaserPool()
     {
-        $authFragment = '';
-        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
-            $authFragment = sprintf('h:%s@', Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD));
-        }
-
-        return sprintf(
-            '%s://%s%s:%s?database=%s',
-            Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
-            $authFragment,
-            Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
-            Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-            Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, 0)
+        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool->addLockReleaser(
+            $this->createRedisSessionLockReleaser(
+                $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
+            ),
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING
         );
+
+        return $sessionLockReleaserPool;
     }
 
     /**
@@ -170,6 +139,26 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         return $this
             ->createSessionHandlerFactory()
             ->createRedisLockKeyGenerator();
+    }
+
+    /**
+     * @deprecated Use `$this->getConfig()->getSessionHandlerRedisDataSourceNameYves()` instead.
+     *
+     * @return string
+     */
+    protected function buildYvesRedisDsn()
+    {
+        return $this->getConfig()->getSessionHandlerRedisDataSourceNameYves();
+    }
+
+    /**
+     * @deprecated Use `$this->getConfig()->getSessionHandlerRedisDataSourceNameZed()` instead.
+     *
+     * @return string
+     */
+    protected function buildZedRedisDsn()
+    {
+        return $this->getConfig()->getSessionHandlerRedisDataSourceNameZed();
     }
 
 }

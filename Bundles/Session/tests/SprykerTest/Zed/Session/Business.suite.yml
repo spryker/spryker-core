@@ -1,0 +1,12 @@
+class_name: SessionBusinessTester
+modules:
+    enabled:
+        - Asserts
+        - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+            depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+
+        - \SprykerTest\Shared\Testify\Helper\Environment
+        - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+        - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+        - \SprykerTest\Shared\Propel\Helper\TransactionHelper

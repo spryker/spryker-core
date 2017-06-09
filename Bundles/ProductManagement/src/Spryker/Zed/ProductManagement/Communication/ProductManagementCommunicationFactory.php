@@ -54,7 +54,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->getCurrencyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -73,7 +74,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->getCurrencyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -92,7 +94,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->getCurrencyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -519,6 +522,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

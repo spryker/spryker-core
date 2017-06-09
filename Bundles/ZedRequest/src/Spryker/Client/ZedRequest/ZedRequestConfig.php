@@ -25,6 +25,14 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return int
+     */
+    public function getHashCost()
+    {
+        return 4;
+    }
+
+    /**
      * @return string
      */
     public function getZedRequestBaseUrl()

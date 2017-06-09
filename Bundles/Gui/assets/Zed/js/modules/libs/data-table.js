@@ -12,6 +12,10 @@ var noSearchConfiguration = {
     autoWidth: false
 };
 
+function setTableErrorMode(errorMode) {
+    $.fn.dataTable.ext.errMode = errorMode || 'none';
+}
+
 function onTabChange (tabId) {
     var $tab = $(tabId);
     var $dataTables = $tab.find('.gui-table-data, .gui-table-data-no-search');
@@ -21,8 +25,25 @@ function onTabChange (tabId) {
     }
 }
 
+function onError (e, settings, techNote, message) {
+    var debugMessage = '';
+
+    if (DEV) {
+        debugMessage = '<br/><br/><small><u>Debug message:</u><br/> ' + message + '</small>';
+    }
+
+    window.sweetAlert({
+        title: 'Error',
+        text: 'Something went wrong. Please <a href="javascript:window.location.reload()">refresh</a> the page or try again later.' + debugMessage,
+        html: true,
+        type: 'error'
+    });
+}
+
 module.exports = {
     defaultConfiguration: defaultConfiguration,
     noSearchConfiguration: noSearchConfiguration,
-    onTabChange: onTabChange
+    setTableErrorMode: setTableErrorMode,
+    onTabChange: onTabChange,
+    onError: onError
 };
