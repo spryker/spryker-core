@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -152,10 +153,13 @@ class OrdersTable extends AbstractTable
             $item[SpySalesOrderTableMap::COL_LAST_NAME]
         );
 
-        $isReferenceValid = $this->customerFacade->hasCustomerByReference($item[OrdersTableQueryBuilder::FIELD_CUSTOMER_REFERENCE]);
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]);
+        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $isReferenceValid) {
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $customerTransfer) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
             ]);
