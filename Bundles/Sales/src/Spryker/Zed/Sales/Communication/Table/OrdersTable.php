@@ -153,13 +153,9 @@ class OrdersTable extends AbstractTable
             $item[SpySalesOrderTableMap::COL_LAST_NAME]
         );
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]);
-        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
-
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER] && $customerTransfer) {
+        if ($this->hasRelatedCustomer($item[SpySalesOrderTableMap::COL_FK_CUSTOMER])) {
             $url = Url::generate('/customer/view', [
                 'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
             ]);
@@ -167,6 +163,24 @@ class OrdersTable extends AbstractTable
         }
 
         return $customer;
+    }
+
+    /**
+     * @param int|null $idCustomer
+     *
+     * @return bool
+     */
+    protected function hasRelatedCustomer($idCustomer)
+    {
+        if (empty($idCustomer)) {
+            return false;
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+
+        return !!$customerTransfer;
     }
 
     /**

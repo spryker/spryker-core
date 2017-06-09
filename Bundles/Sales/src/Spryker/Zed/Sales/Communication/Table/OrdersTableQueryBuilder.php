@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use DateTime;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
@@ -18,7 +17,6 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 
     const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
-    const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
     const DATE_FILTER_DAY = 'day';
     const DATE_FILTER_WEEK = 'week';
 
@@ -47,7 +45,6 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
         $query = $this->salesOrderQuery;
         $query = $this->addItemStates($query);
         $query = $this->addItemCount($query);
-        $query = $this->addCustomerFields($query);
         $query = $this->filter($query, $idOrderItemProcess, $idOrderItemState, $dateFilter);
 
         return $query;
@@ -71,19 +68,6 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     protected function addItemCount(SpySalesOrderQuery $query)
     {
         return $query->addItemCountToResult(static::FIELD_NUMBER_OF_ORDER_ITEMS);
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function addCustomerFields(SpySalesOrderQuery $query)
-    {
-        $query->leftJoinCustomer();
-        $query->withColumn(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, static::FIELD_CUSTOMER_REFERENCE);
-
-        return $query;
     }
 
     /**

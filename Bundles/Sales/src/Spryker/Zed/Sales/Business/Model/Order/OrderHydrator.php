@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -41,26 +40,18 @@ class OrderHydrator implements OrderHydratorInterface
     protected $salesAggregatorFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
-     */
-    protected $customerFacade;
-
-    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        SalesToSalesAggregatorInterface $salesAggregatorFacade,
-        SalesToCustomerInterface $customerFacade
+        SalesToSalesAggregatorInterface $salesAggregatorFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
-        $this->customerFacade = $customerFacade;
     }
 
     /**

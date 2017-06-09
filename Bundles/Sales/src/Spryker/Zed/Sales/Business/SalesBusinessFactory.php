@@ -93,8 +93,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getSalesAggregator(),
-            $this->getCustomerFacade()
+            $this->getSalesAggregator()
         );
     }
 
@@ -165,14 +164,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getStore()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
-     */
-    public function getCustomerFacade()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER);
     }
 
 }
