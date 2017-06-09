@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
 
 /**
@@ -53,8 +54,12 @@ class CombineProductSetImageSetTest extends Test
                 ProductImageSetTransfer::NAME => 'image-set-name-to-merge',
                 ProductImageSetTransfer::LOCALE => $localeTransfer,
             ])
-            ->withAnotherProductImage()
-            ->withAnotherProductImage()
+            ->withAnotherProductImage([
+                ProductImageTransfer::SORT_ORDER => 1,
+            ])
+            ->withAnotherProductImage([
+                ProductImageTransfer::SORT_ORDER => 2,
+            ])
             ->build();
 
         $productSetTransfer = $this->tester->generateProductSetTransfer([
@@ -79,7 +84,7 @@ class CombineProductSetImageSetTest extends Test
         $this->assertSame(
             $localizedProductImageSetTransfer1->getProductImages()[0]->getExternalUrlSmall(),
             $imageSetTransfers[1]->getProductImages()[0]->getExternalUrlSmall(),
-            'Product image 1/2 should have expected external small URL.'
+            'Product image 1/2 should have expected external small URL. ' . $imageSetTransfers[1]->getProductImages()[1]->getExternalUrlSmall()
         );
 
         $this->assertSame(

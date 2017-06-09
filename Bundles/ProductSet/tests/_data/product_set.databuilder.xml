@@ -5,6 +5,7 @@
 
     <transfer name="ProductSet">
         <property name="isActive" dataBuilderRule="=true" />
+        <property name="productSetKey" dataBuilderRule="unique()->text(50)" />
     </transfer>
 
     <transfer name="ProductSetData">
