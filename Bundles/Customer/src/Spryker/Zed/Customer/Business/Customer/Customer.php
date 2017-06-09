@@ -752,38 +752,4 @@ class Customer implements CustomerInterface
         return $customerTransfer;
     }
 
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function findByReference($customerReference)
-    {
-        $customerEntity = $this->queryContainer
-            ->queryCustomerByReference($customerReference)
-            ->findOne();
-
-        if ($customerEntity === null) {
-            return null;
-        }
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
-        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @return bool
-     */
-    public function hasByReference($customerReference)
-    {
-        return $this->queryContainer
-            ->queryCustomerByReference($customerReference)
-            ->exists();
-    }
-
 }
