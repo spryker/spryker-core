@@ -10,6 +10,7 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
@@ -50,7 +51,7 @@ class ZedRequestFactory extends AbstractFactory
     protected function createTokenOptions()
     {
         return [
-          'cost' => $this->getConfig()->getHashCost(),
+            ZedRequestConstants::AUTH_HASH_COST_OPTIONS_KEY => ZedRequestConstants::AUTH_HASH_COST,
         ];
     }
 
