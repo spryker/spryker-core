@@ -24,6 +24,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Form\Fixtures\FooType;
  * @group Zed
  * @group Kernel
  * @group Communication
+ * @group Form
  * @group AbstractTypeTest
  */
 class AbstractTypeTest extends PHPUnit_Framework_TestCase
