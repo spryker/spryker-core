@@ -24,8 +24,13 @@ class ProductLabelTable extends AbstractTable
 {
 
     const TABLE_IDENTIFIER = 'product-label-table';
+    const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
+    const COL_POSITION = SpyProductLabelTableMap::COL_POSITION;
+    const COL_NAME = SpyProductLabelTableMap::COL_NAME;
+    const COL_IS_EXCLUSIVE = SpyProductLabelTableMap::COL_IS_EXCLUSIVE;
     const COL_VALIDITY = 'validity';
     const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+    const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
     const COL_ACTIONS = 'actions';
 
     /**
@@ -66,13 +71,13 @@ class ProductLabelTable extends AbstractTable
     protected function configureHeader(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => '#',
-            SpyProductLabelTableMap::COL_POSITION => 'Priority',
-            SpyProductLabelTableMap::COL_NAME => 'Name',
-            SpyProductLabelTableMap::COL_IS_EXCLUSIVE => 'Is Exclusive',
+            static::COL_ID_PRODUCT_LABEL => '#',
+            static::COL_POSITION => 'Priority',
+            static::COL_NAME => 'Name',
+            static::COL_IS_EXCLUSIVE => 'Is Exclusive',
             static::COL_VALIDITY => 'Validity',
             static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => 'Products Applied to',
-            SpyProductLabelTableMap::COL_IS_ACTIVE => 'Status',
+            static::COL_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
     }
@@ -84,7 +89,7 @@ class ProductLabelTable extends AbstractTable
      */
     protected function configureRawColumns(TableConfiguration $config)
     {
-        $config->addRawColumn(SpyProductLabelTableMap::COL_IS_ACTIVE);
+        $config->addRawColumn(static::COL_STATUS);
         $config->addRawColumn(static::COL_ACTIONS);
     }
 
@@ -96,16 +101,16 @@ class ProductLabelTable extends AbstractTable
     protected function configureSorting(TableConfiguration $config)
     {
         $config->setDefaultSortField(
-            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
+            static::COL_ID_PRODUCT_LABEL,
             TableConfiguration::SORT_ASC
         );
 
         $config->setSortable([
-            SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
-            SpyProductLabelTableMap::COL_POSITION,
-            SpyProductLabelTableMap::COL_NAME,
-            SpyProductLabelTableMap::COL_IS_EXCLUSIVE,
-            SpyProductLabelTableMap::COL_IS_ACTIVE,
+            static::COL_ID_PRODUCT_LABEL,
+            static::COL_POSITION,
+            static::COL_NAME,
+            static::COL_IS_EXCLUSIVE,
+            static::COL_STATUS,
         ]);
     }
 
@@ -117,7 +122,7 @@ class ProductLabelTable extends AbstractTable
     protected function configureSearching(TableConfiguration $config)
     {
         $config->setSearchable([
-            SpyProductLabelTableMap::COL_NAME,
+            static::COL_NAME,
         ]);
     }
 
@@ -137,13 +142,13 @@ class ProductLabelTable extends AbstractTable
 
         foreach ($productLabelEntities as $productLabelEntity) {
             $tableRows[] = [
-                SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
-                SpyProductLabelTableMap::COL_POSITION => $productLabelEntity->getPosition(),
-                SpyProductLabelTableMap::COL_NAME => $productLabelEntity->getName(),
-                SpyProductLabelTableMap::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
+                static::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
+                static::COL_POSITION => $productLabelEntity->getPosition(),
+                static::COL_NAME => $productLabelEntity->getName(),
+                static::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
                 static::COL_VALIDITY => $this->getValidityDateRangeLabel($productLabelEntity),
                 static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
-                SpyProductLabelTableMap::COL_IS_ACTIVE => $this->createStatusMarker($productLabelEntity->getIsActive()),
+                static::COL_STATUS => $this->createStatusMarker($productLabelEntity->getIsActive()),
                 static::COL_ACTIONS => $this->createActionButtons($productLabelEntity),
             ];
         }

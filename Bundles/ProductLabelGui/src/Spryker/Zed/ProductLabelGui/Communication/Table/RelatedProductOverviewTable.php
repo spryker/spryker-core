@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -19,6 +18,9 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
 
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const TABLE_IDENTIFIER = 'related-products-table';
+    const COL_PRODUCT_ABSTRACT_SKU = SpyProductAbstractTableMap::COL_SKU;
+    const COL_PRODUCT_ABSTRACT_RELATION_COUNT = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT;
+
     const COL_ACTIONS = 'actions';
 
     /**
@@ -47,12 +49,12 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function configureHeader(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyProductAbstractTableMap::COL_SKU => 'SKU',
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV => 'Categories',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => 'Price',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT => '# of Other Labels',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV => 'Status',
+            static::COL_PRODUCT_ABSTRACT_SKU => 'SKU',
+            static::COL_PRODUCT_ABSTRACT_NAME => 'Name',
+            static::COL_PRODUCT_ABSTRACT_CATEGORIES => 'Categories',
+            static::COL_PRODUCT_ABSTRACT_PRICE => 'Price',
+            static::COL_PRODUCT_ABSTRACT_RELATION_COUNT => '# of Other Labels',
+            static::COL_PRODUCT_ABSTRACT_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
     }
@@ -65,7 +67,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function configureRawColumns(TableConfiguration $config)
     {
         $config->setRawColumns([
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV,
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV,
             static::COL_ACTIONS,
         ]);
     }
@@ -78,13 +80,13 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function configureSorting(TableConfiguration $config)
     {
         $config->setDefaultSortField(
-            SpyProductAbstractTableMap::COL_SKU,
+            static::COL_PRODUCT_ABSTRACT_SKU,
             TableConfiguration::SORT_ASC
         );
 
         $config->setSortable([
-            SpyProductAbstractTableMap::COL_SKU,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+            static::COL_PRODUCT_ABSTRACT_SKU,
+            static::COL_PRODUCT_ABSTRACT_NAME,
         ]);
     }
 
@@ -96,8 +98,8 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function configureSearching(TableConfiguration $config)
     {
         $config->setSearchable([
-            SpyProductAbstractTableMap::COL_SKU,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+            static::COL_PRODUCT_ABSTRACT_SKU,
+            static::COL_PRODUCT_ABSTRACT_NAME,
         ]);
     }
 
@@ -133,8 +135,8 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     {
         $row = parent::getRow($productAbstractEntity);
 
-        $row[SpyProductAbstractTableMap::COL_SKU] = $productAbstractEntity->getSku();
-        $row[RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT] = $this->getAdditionalRelationCountColumn($productAbstractEntity);
+        $row[static::COL_PRODUCT_ABSTRACT_SKU] = $productAbstractEntity->getSku();
+        $row[static::COL_PRODUCT_ABSTRACT_RELATION_COUNT] = $this->getAdditionalRelationCountColumn($productAbstractEntity);
         $row[static::COL_ACTIONS] = $this->getActionsColumn($productAbstractEntity);
 
         return $row;
@@ -148,7 +150,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function getAdditionalRelationCountColumn(SpyProductAbstract $productAbstractEntity)
     {
         $relationCount = (int)$productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
         );
 
         return ($relationCount - 1);

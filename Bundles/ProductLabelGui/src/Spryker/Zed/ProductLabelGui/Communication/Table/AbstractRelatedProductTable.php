@@ -17,6 +17,10 @@ abstract class AbstractRelatedProductTable extends AbstractTable
 {
 
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    const COL_PRODUCT_ABSTRACT_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
+    const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
+    const COL_PRODUCT_ABSTRACT_PRICE = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE;
+    const COL_PRODUCT_ABSTRACT_STATUS = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV;
     const COL_SELECT_CHECKBOX = 'select-checkbox';
 
     /**
@@ -82,10 +86,10 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getRow(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $this->getNameColumn($productAbstractEntity),
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV => $this->getCategoriesColumn($productAbstractEntity),
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => $this->getPriceColumn($productAbstractEntity),
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV => $this->getStatusColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_NAME => $this->getNameColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoriesColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_STATUS => $this->getStatusColumn($productAbstractEntity),
         ];
     }
 
@@ -97,7 +101,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getNameColumn(SpyProductAbstract $productAbstractEntity)
     {
         return $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_NAME
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
         );
     }
 
@@ -109,7 +113,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getCategoriesColumn(SpyProductAbstract $productAbstractEntity)
     {
         $categoriesCsv = $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV
         );
         $categories = explode(',', $categoriesCsv);
         $categories = array_unique($categories);
@@ -125,7 +129,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getPriceColumn(SpyProductAbstract $productAbstractEntity)
     {
         $price = (int)$productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE
         );
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
@@ -140,7 +144,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected function getStatusColumn(SpyProductAbstract $productAbstractEntity)
     {
         $statesCsv = $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
         );
         $states = explode(',', $statesCsv);
         $isActive = in_array('true', $states);

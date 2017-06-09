@@ -24,11 +24,11 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
 class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilderInterface
 {
 
-    const RESULT_FIELD_ABSTRACT_PRODUCT_NAME = 'abstract_product_name';
-    const RESULT_FIELD_ABSTRACT_PRODUCT_PRICE = 'abstract_product_price';
-    const RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
-    const RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
-    const RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV = 'concrete_product_states_csv';
+    const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
+    const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
+    const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
+    const RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
+    const RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV = 'concrete_product_states_csv';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
@@ -125,7 +125,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->withColumn(
                     SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-                    static::RESULT_FIELD_ABSTRACT_PRODUCT_NAME
+                    static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
                 )
                 ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse();
@@ -142,7 +142,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->usePriceProductQuery()
                 ->withColumn(
                     SpyPriceProductTableMap::COL_PRICE,
-                    static::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE
+                    static::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE
                 )
                 ->usePriceTypeQuery()
                     ->filterByName($this->bundleConfig->getDefaultPriceType())
@@ -164,7 +164,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     ->useAttributeQuery()
                         ->withColumn(
                             sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
-                            static::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV
+                            static::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV
                         )
                         ->filterByFkLocale($localeTransfer->getIdLocale())
                     ->endUse()
@@ -184,7 +184,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->useSpyProductQuery()
                 ->withColumn(
                     sprintf('GROUP_CONCAT(%s)', SpyProductTableMap::COL_IS_ACTIVE),
-                    static::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV
+                    static::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
                 )
             ->endUse()
             ->groupByIdProductAbstract();
@@ -218,7 +218,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $query
             ->withColumn(
                 sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
-                static::RESULT_FIELD_ABSTRACT_PRODUCT_RELATION_COUNT
+                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
             )
             ->groupByIdProductAbstract();
     }

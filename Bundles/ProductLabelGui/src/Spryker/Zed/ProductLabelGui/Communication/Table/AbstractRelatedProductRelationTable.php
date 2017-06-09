@@ -44,9 +44,9 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV => 'Categories',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => 'Price',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV => 'Status',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV => 'Categories',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE => 'Price',
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV => 'Status',
         ]);
     }
 
@@ -59,7 +59,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     {
         $config->setRawColumns([
             static::COL_SELECT_CHECKBOX,
-            RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV,
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV,
         ]);
     }
 
@@ -141,9 +141,9 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
                 SpyProductAbstractTableMap::COL_SKU => $productAbstractEntity->getSku(),
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $this->getNameColumn($productAbstractEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_CATEGORY_NAMES_CSV => $this->getCategoriesColumn($productAbstractEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_ABSTRACT_PRODUCT_PRICE => $this->getPriceColumn($productAbstractEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_CONCRETE_PRODUCT_STATES_CSV => $this->getStatusColumn($productAbstractEntity),
+                RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV => $this->getCategoriesColumn($productAbstractEntity),
+                RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
+                RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV => $this->getStatusColumn($productAbstractEntity),
             ];
         }
 
