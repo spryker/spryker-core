@@ -50,7 +50,7 @@ class ZedRequestFactory extends AbstractFactory
     protected function createTokenOptions()
     {
         return [
-          'cost' => $this->getConfig()->getHashCost(),
+            'cost' => $this->getConfig()->getHashCost(),
         ];
     }
 
