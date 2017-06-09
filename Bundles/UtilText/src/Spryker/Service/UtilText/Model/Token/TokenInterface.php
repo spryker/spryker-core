@@ -16,7 +16,7 @@ interface TokenInterface
      *
      * @return string
      */
-    public function generate($rawToken, $options = []);
+    public function generate($rawToken, array $options = []);
 
     /**
      * @param string $rawToken

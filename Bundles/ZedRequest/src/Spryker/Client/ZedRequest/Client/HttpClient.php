@@ -48,7 +48,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         $isAuthenticationEnabled,
         UtilTextServiceInterface $utilTextService,
         UtilNetworkServiceInterface $utilNetworkService,
-        $tokenGenerationOptions = []
+        array $tokenGenerationOptions = []
     ) {
         parent::__construct($baseUrl, $utilNetworkService);
 
