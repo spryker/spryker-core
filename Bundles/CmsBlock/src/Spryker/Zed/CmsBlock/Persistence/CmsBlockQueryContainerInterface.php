@@ -13,7 +13,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return SpyCmsBlockQuery
      */
-    public function queryCmsBlockById($idCmsBlock);
+    public function queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock);
 
     /**
      * @param string $name

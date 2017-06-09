@@ -27,17 +27,19 @@ class CmsBlockReader implements CmsBlockReaderInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
     public function findCmsBlockById($idCmsBlock)
     {
         $spyCmsBlock = $this->queryContainer
-            ->queryCmsBlockById($idCmsBlock)
+            ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
             ->findOne();
 
-        $cmsBlockTransfer = $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);
+        if ($spyCmsBlock) {
+            return $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);
+        }
 
-        return $cmsBlockTransfer;
+        return null;
     }
 
 

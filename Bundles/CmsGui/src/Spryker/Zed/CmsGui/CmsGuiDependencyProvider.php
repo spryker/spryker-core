@@ -22,6 +22,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_LOCALE = 'locale facade';
     const FACADE_CMS = 'locale cms';
+    const FACADE_CMS_BLOCK = 'FACADE_CMS_BLOCK';
     const FACADE_URL = 'url facade';
     const FACADE_GLOSSARY = 'glossary facade';
 
@@ -65,7 +66,22 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container = $this->addCmsBlockFacade($container);
+
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCmsBlockFacade(Container $container)
+    {
+        $container[static::FACADE_CMS_BLOCK] = function (Container $container) {
+            return new CmsGuiToCmsBlockBridge($container->getLocator()->cmsBlock()->facade());
+        };
+
+        return $container;
+    }
 }

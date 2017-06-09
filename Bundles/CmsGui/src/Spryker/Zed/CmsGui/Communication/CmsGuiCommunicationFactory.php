@@ -28,6 +28,7 @@ use Spryker\Zed\CmsGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBlockInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -294,6 +295,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsFacade()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_CMS);
+    }
+
+    /**
+     * @return CmsGuiToCmsBlockInterface
+     */
+    public function getCmsBlockFacade()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::FACADE_CMS_BLOCK);
     }
 
     /**
