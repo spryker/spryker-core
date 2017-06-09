@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface SalesToCustomerInterface
 {
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function findCustomerById($customerTransfer);
 
