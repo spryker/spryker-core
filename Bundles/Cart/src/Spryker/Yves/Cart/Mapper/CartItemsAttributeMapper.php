@@ -7,8 +7,17 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
-class CartItemsAttributeMapper
+use Generated\Shared\Transfer\StorageAttributeMapTransfer;
+use Generated\Shared\Transfer\StorageAvailabilityTransfer;
+use Generated\Shared\Transfer\StorageProductTransfer;
+
+class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
 {
+
+    const ATTRIBUTES = 'attributes';
+    const AVAILABILITY = 'availability';
+    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
@@ -24,6 +33,11 @@ class CartItemsAttributeMapper
      * @var array
      */
     protected $attributes = [];
+
+    /**
+     * @var \Spryker\Client\Product\ProductClientInterface
+     */
+    protected $productClient;
 
     /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
@@ -58,8 +72,8 @@ class CartItemsAttributeMapper
     protected function getAttributesAndAvailability($item)
     {
         return [
-            'attributes' => $this->getAttributesBySku($item),
-            'availability' => $this->getAvailability($item),
+            StorageProductTransfer::ATTRIBUTES => $this->getAttributesBySku($item),
+            self::AVAILABILITY => $this->getAvailability($item),
         ];
     }
 
@@ -74,7 +88,7 @@ class CartItemsAttributeMapper
 
         $attributes = $this->getAttributesMapByProductAbstract($item);
 
-        foreach ($attributes['attributeVariants'] as $variantName => $variant) {
+        foreach ($attributes[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS] as $variantName => $variant) {
             foreach ($variant as $options) {
                 foreach ((array)$options as $option) {
                     if ($option === $item->getId()) {
@@ -98,7 +112,7 @@ class CartItemsAttributeMapper
 
         $selectedAttributes = $this->getSelectedAttributes($item);
 
-        return $this->markAsSelected($attributes['superAttributes'], $selectedAttributes);
+        return $this->markAsSelected($attributes[StorageAttributeMapTransfer::SUPER_ATTRIBUTES], $selectedAttributes);
     }
 
     /**
@@ -149,16 +163,16 @@ class CartItemsAttributeMapper
 
         $availability = $this->productAvailabilityClient->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())->toArray();
 
-        foreach ($availability['concrete_product_available_items'] as $sku => $itemAvailable) {
+        foreach ($availability[self::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
             if ($sku === $item->getSku()) {
-                $mapped['concreteProductAvailableItems'] = $itemAvailable;
+                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
                 break;
             }
         }
 
-        foreach ($availability['concrete_products_availability'] as $sku => $itemsAvailable) {
+        foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
             if ($sku === $item->getSku()) {
-                $mapped['concreteProductsAvailability'] = $itemsAvailable;
+                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
                 break;
             }
         }
@@ -174,8 +188,6 @@ class CartItemsAttributeMapper
     protected function getAttributesMapByProductAbstract($item)
     {
         if (array_key_exists($item->getSku(), $this->attributes) === false) {
-            $data = $this->productClient->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
-            //$storageProductTransfer = $this->storageProductMapper->mapStorageProduct($data, $request); this need to go away but we need it
             $this->attributes[$item->getSku()] = $this->productClient->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
         }
         return $this->attributes[$item->getSku()];

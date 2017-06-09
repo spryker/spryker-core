@@ -38,7 +38,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper
+     * @return \Spryker\Yves\Cart\Mapper\CartItemsAttributeMapperInterface
      */
     public function createCartItemsAttributeMapper()
     {
