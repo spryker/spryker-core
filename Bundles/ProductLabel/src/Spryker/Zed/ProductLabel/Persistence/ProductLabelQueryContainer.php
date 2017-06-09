@@ -82,6 +82,21 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     /**
      * @api
      *
+     * @param int $idProductLabel
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryLocalizedAttributesByIdProductLabelAndIdLocale($idProductLabel, $idLocale)
+    {
+        return $this
+            ->queryLocalizedAttributesByIdProductLabel($idProductLabel)
+            ->filterByFkLocale($idLocale);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryMaxPosition()
@@ -144,7 +159,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->_or()
             ->filterByIsPublished(null, Criteria::ISNULL)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
-            ->filterByValidTo(null,Criteria::ISNULL)
+            ->filterByValidTo(null, Criteria::ISNULL)
             ->_or()
             ->filterByValidTo('now', Criteria::GREATER_EQUAL);
     }

@@ -47,6 +47,16 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idProductLabel
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryLocalizedAttributesByIdProductLabelAndIdLocale($idProductLabel, $idLocale);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryMaxPosition();

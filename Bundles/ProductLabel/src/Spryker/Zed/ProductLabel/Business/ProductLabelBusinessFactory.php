@@ -8,17 +8,17 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
-use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
-use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
-use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManager;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriter;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManager;
+use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManager;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
@@ -46,6 +46,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createLabelUpdater()
     {
         return new LabelUpdater(
+            $this->createLocalizedAttributesCollectionWriter(),
             $this->getQueryContainer(),
             $this->createLabelDictionaryTouchManager()
         );
@@ -67,7 +68,10 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocalizedAttributesCollectionWriter()
     {
-        return new LocalizedAttributesCollectionWriter();
+        return new LocalizedAttributesCollectionWriter(
+            $this->getQueryContainer(),
+            $this->createLabelDictionaryTouchManager()
+        );
     }
 
     /**

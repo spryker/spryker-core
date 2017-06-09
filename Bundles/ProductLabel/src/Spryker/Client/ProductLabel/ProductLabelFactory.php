@@ -8,10 +8,10 @@
 namespace Spryker\Client\ProductLabel;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReader;
 use Spryker\Client\ProductLabel\Storage\LabelDictionaryReader;
-use Spryker\Shared\ProductLabel\KeyBuilder\ProductAbstractRelationKeyBuilder;
+use Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReader;
 use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
+use Spryker\Shared\ProductLabel\KeyBuilder\ProductAbstractRelationKeyBuilder;
 
 /**
  * @method \Spryker\Client\ProductLabel\ProductLabelConfig getConfig()

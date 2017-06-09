@@ -10,12 +10,36 @@ namespace Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
+use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollectionWriterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
+     */
+    protected $dictionaryTouchManager;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+     */
+    public function __construct(
+        ProductLabelQueryContainerInterface $queryContainer,
+        LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->dictionaryTouchManager = $dictionaryTouchManager;
+    }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesTransferCollection
@@ -36,9 +60,15 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
      */
     protected function executeSetTransaction(ArrayObject $localizedAttributesTransferCollection)
     {
+        $hasModified = false;
+
         foreach ($localizedAttributesTransferCollection as $localizedAttributesTransfer) {
             $this->assertLocalizedAttributes($localizedAttributesTransfer);
-            $this->persistLocalizedAttributes($localizedAttributesTransfer);
+            $hasModified |= $this->persistLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        if ($hasModified) {
+            $this->touchDictionary();
         }
     }
 
@@ -57,14 +87,21 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
     /**
      * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function persistLocalizedAttributes(ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer)
     {
-        $localizedAttributesEntity = $this->createEntityFromTransfer($localizedAttributesTransfer);
-        $localizedAttributesEntity->save();
+        $localizedAttributesEntity = $this->findOrCreateEntity($localizedAttributesTransfer);
+        $this->updateEntityFromTransfer($localizedAttributesEntity, $localizedAttributesTransfer);
 
+        if (!$localizedAttributesEntity->isModified()) {
+            return false;
+        }
+
+        $localizedAttributesEntity->save();
         $this->updateTransferFromEntity($localizedAttributesTransfer, $localizedAttributesEntity);
+
+        return true;
     }
 
     /**
@@ -72,12 +109,38 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes
      */
-    protected function createEntityFromTransfer(ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer)
+    protected function findOrCreateEntity(ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer)
     {
-        $localizedAttributesEntity = new SpyProductLabelLocalizedAttributes();
-        $localizedAttributesEntity->fromArray($localizedAttributesTransfer->toArray());
+        $localizedAttributesEntity = $this
+            ->queryContainer
+            ->queryLocalizedAttributesByIdProductLabelAndIdLocale(
+                $localizedAttributesTransfer->getFkProductLabel(),
+                $localizedAttributesTransfer->getFkLocale()
+            )
+            ->findOneOrCreate();
 
         return $localizedAttributesEntity;
+    }
+
+    /**
+     * @return void
+     */
+    protected function touchDictionary()
+    {
+        $this->dictionaryTouchManager->touchActive();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $localizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return void
+     */
+    protected function updateEntityFromTransfer(
+        SpyProductLabelLocalizedAttributes $localizedAttributesEntity,
+        ProductLabelLocalizedAttributesTransfer $localizedAttributesTransfer
+    ) {
+        $localizedAttributesEntity->fromArray($localizedAttributesTransfer->toArray());
     }
 
     /**

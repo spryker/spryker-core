@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -18,6 +19,11 @@ class LabelUpdater implements LabelUpdaterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface
+     */
+    protected $localizedAttributesCollectionWriter;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
@@ -30,13 +36,16 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $dictionaryTouchManager;
 
     /**
+     * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      */
     public function __construct(
+        LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
         ProductLabelQueryContainerInterface $queryContainer,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager
     ) {
+        $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->queryContainer = $queryContainer;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
     }
@@ -77,16 +86,30 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
     {
-        $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
+        $isModified = $this->persistLabel($productLabelTransfer);
+        $this->persistLocalizedAttributesCollection($productLabelTransfer);
 
+        if ($isModified) {
+            $this->touchDictionary();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return bool
+     */
+    protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
+    {
+        $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
         if (!$productLabelEntity->isModified()) {
-            return;
+            return false;
         }
 
         $productLabelEntity->save();
         $this->updateTransferFromEntity($productLabelTransfer, $productLabelEntity);
 
-        $this->dictionaryTouchManager->touchActive();
+        return true;
     }
 
     /**
@@ -152,6 +175,24 @@ class LabelUpdater implements LabelUpdaterInterface
         SpyProductLabel $productLabelEntity
     ) {
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer)
+    {
+        $this->localizedAttributesCollectionWriter->set($productLabelTransfer->getLocalizedAttributesCollection());
+    }
+
+    /**
+     * @return void
+     */
+    protected function touchDictionary()
+    {
+        $this->dictionaryTouchManager->touchActive();
     }
 
 }

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductLabelCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\ProductAbstractRelationCollector;
 use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\LabelDictionaryCollector;
-use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
+use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\ProductAbstractRelationCollector;
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\LabelDictionaryCollectorQuery;
+use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 use Spryker\Zed\ProductLabelCollector\ProductLabelCollectorDependencyProvider;
 
 class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
