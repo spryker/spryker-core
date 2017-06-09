@@ -30,7 +30,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     public function getHashCost()
     {
         if (!$this->getConfig()->hasKey(ZedRequestConstants::AUTH_HASH_COST)) {
-           return ZedRequestConstants::DEFAULT_AUTH_HASH_COST;
+            return ZedRequestConstants::DEFAULT_AUTH_HASH_COST;
         }
 
         return $this->get(ZedRequestConstants::AUTH_HASH_COST);
