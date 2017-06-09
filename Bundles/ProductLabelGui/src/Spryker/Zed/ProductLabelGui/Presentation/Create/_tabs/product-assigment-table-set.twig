@@ -14,8 +14,8 @@
             <div class="panel-body">
                 {{ table | raw }}
 
-                <div class="js-toggle-selection-button">
-                    <a href="#" class="btn btn-primary ">Toggle selection</a>
+                <div class="{{ selectButtonClass }}">
+                    <a href="#" class="btn btn-primary ">{{ selectButtonLabel }}</a>
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ function initialize()
         onRemove
     );
 
-    $(sourceTabSelector + ' .js-toggle-selection-button a').on('click', tableHandler.toggleSelection);
+    $(sourceTabSelector + ' .js-select-all-button a').on('click', tableHandler.selectAll);
 }
 
 function onRemove()

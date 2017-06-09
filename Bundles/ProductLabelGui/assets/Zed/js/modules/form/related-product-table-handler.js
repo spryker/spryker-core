@@ -66,23 +66,23 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
     };
 
     tableHandler.selectAll = function() {
-        var nodes = sourceTable.dataTable().fnGetNodes();
-        tableHandler.checkCheckbox($('input[type="checkbox"]', nodes));
-
-        var sourceTableData = sourceTable.DataTable().rows().data();
-        sourceTableData.each(function(cellData, index) {
-            tableHandler.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
+        $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
+            var $checkbox = $(checkboxNode);
+            $checkbox.prop('checked', true);
+            $checkbox.trigger('change');
         });
+
+        return false;
     };
 
     tableHandler.deSelectAll = function() {
-        var nodes = sourceTable.dataTable().fnGetNodes();
-        tableHandler.unCheckCheckbox($('input[type="checkbox"]', nodes));
-
-        var sourceTableData = sourceTable.DataTable().rows().data();
-        sourceTableData.each(function(cellData, index) {
-            tableHandler.removeSelectedProduct(cellData[0]);
+        $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
+            var $checkbox = $(checkboxNode);
+            $checkbox.prop('checked', false);
+            $checkbox.trigger('change');
         });
+
+        return false;
     };
 
     tableHandler.addSelectedProduct = function(idProduct, sku, name) {

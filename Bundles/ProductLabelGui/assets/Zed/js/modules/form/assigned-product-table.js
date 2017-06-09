@@ -33,7 +33,7 @@ function initialize()
         return TableHandler.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
-    $(sourceTabSelector + ' .js-toggle-selection-button a').on('click', tableHandler.toggleSelection);
+    $(sourceTabSelector + ' .js-de-select-all-button a').on('click', tableHandler.deSelectAll);
 }
 
 function onRemove()
