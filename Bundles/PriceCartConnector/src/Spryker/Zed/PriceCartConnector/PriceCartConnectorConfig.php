@@ -27,7 +27,7 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
      */
     public function getPriceMode()
     {
-        return PriceMode::PRICE_MODE_GROSS;
+        return PriceMode::PRICE_MODE_NET;
     }
 
 }
