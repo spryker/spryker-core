@@ -79,7 +79,7 @@ interface UtilTextServiceInterface
      *
      * @return string
      */
-    public function generateToken($rawToken, $options);
+    public function generateToken($rawToken, $options = []);
 
     /**
      * Specification:

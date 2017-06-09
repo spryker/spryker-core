@@ -44,6 +44,9 @@ class ZedRequestFactory extends AbstractFactory
         return $httpClient;
     }
 
+    /**
+     * @return array
+     */
     protected function createTokenOptions()
     {
         return [
