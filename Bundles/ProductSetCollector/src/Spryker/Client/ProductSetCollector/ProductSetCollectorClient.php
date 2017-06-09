@@ -16,6 +16,8 @@ class ProductSetCollectorClient extends AbstractClient implements ProductSetColl
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int|null $limit

@@ -99,4 +99,21 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param string $productSetKey
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByKey($productSetKey)
+    {
+        $query = $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet()
+            ->filterByProductSetKey($productSetKey);
+
+        return $query;
+    }
+
 }

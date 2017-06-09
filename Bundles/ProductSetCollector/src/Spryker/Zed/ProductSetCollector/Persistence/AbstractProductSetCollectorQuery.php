@@ -21,6 +21,7 @@ abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQ
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_WEIGHT = 'weight';
+    const FIELD_PRODUCT_SET_KEY = 'product_set_key';
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_META_TITLE = 'meta_title';
@@ -63,6 +64,7 @@ abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQ
             ->withColumn(SpyProductSetTableMap::COL_ID_PRODUCT_SET, static::FIELD_ID_PRODUCT_SET)
             ->withColumn(SpyProductSetTableMap::COL_IS_ACTIVE, static::FIELD_IS_ACTIVE)
             ->withColumn(SpyProductSetTableMap::COL_WEIGHT, static::FIELD_WEIGHT)
+            ->withColumn(SpyProductSetTableMap::COL_PRODUCT_SET_KEY, static::FIELD_PRODUCT_SET_KEY)
             ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::FIELD_NAME)
             ->withColumn(SpyProductSetDataTableMap::COL_DESCRIPTION, static::FIELD_DESCRIPTION)
             ->withColumn(SpyProductSetDataTableMap::COL_META_TITLE, static::FIELD_META_TITLE)

@@ -15,7 +15,8 @@ interface ProductSetCollectorClientInterface
 
     /**
      * Specification:
-     * - Returns
+     * - Returns a list of Product Sets from Search.
+     * - The results are sorted by weight descending.
      *
      * @api
      *

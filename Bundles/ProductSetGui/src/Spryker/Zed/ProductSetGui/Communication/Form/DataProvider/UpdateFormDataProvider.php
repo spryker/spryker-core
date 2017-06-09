@@ -93,6 +93,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
             GeneralFormType::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION => $this->getLocalizedGeneralFormCollectionData($productSetTransfer),
             GeneralFormType::FIELD_IS_ACTIVE => $productSetTransfer->getIsActive(),
             GeneralFormType::FIELD_WEIGHT => $productSetTransfer->getWeight(),
+            GeneralFormType::FIELD_PRODUCT_SET_KEY => $productSetTransfer->getProductSetKey(),
         ];
     }
 

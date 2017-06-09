@@ -47,4 +47,13 @@ interface ProductSetGuiQueryContainerInterface
      */
     public function queryProductSetWeights();
 
+    /**
+     * @api
+     *
+     * @param string $productSetKey
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByKey($productSetKey);
+
 }

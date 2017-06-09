@@ -6,6 +6,7 @@
     <transfer name="ProductSet">
         <property name="idProductSet" type="int" />
         <property name="isActive" type="bool" />
+        <property name="productSetKey" type="string" />
         <property name="weight" type="int" />
         <property name="idProductAbstracts" type="array" singular="idProductAbstract" />
         <property name="localizedData" type="LocalizedProductSet[]" singular="localizedData" />

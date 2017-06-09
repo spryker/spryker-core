@@ -7,23 +7,56 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\General;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer();
+ */
 class GeneralFormType extends AbstractType
 {
 
     const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
+    const FIELD_PRODUCT_SET_KEY = 'product_set_key';
+    const FIELD_PRODUCT_SET_KEY_ORIGINAL = 'product_set_key_original';
     const FIELD_WEIGHT = 'weight';
+
+    const GROUP_UNIQUE_KEY_CHECK = 'unique_key_check';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $originalKey = $form->get(static::FIELD_PRODUCT_SET_KEY_ORIGINAL)->getData();
+                $updatedKey = $form->get(static::FIELD_PRODUCT_SET_KEY)->getData();
+
+                if ($originalKey !== $updatedKey) {
+                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_KEY_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -34,6 +67,8 @@ class GeneralFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addProductSetDataFieldCollection($builder)
+            ->addProductSetKeyField($builder)
+            ->addProductSetKeyOriginalField($builder)
             ->addWeightField($builder)
             ->addIsActiveField($builder)
             ->addIdProductSetField($builder);
@@ -48,7 +83,6 @@ class GeneralFormType extends AbstractType
     {
         $builder->add(static::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION, CollectionType::class, [
             'type' => LocalizedGeneralFormType::class,
-
             'constraints' => [
                 new Callback([
                     'methods' => [
@@ -67,6 +101,42 @@ class GeneralFormType extends AbstractType
                 ]),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductSetKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_PRODUCT_SET_KEY, TextType::class, [
+            'label' => 'Product Set Key *',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        [$this, 'validateUniqueKey'],
+                    ],
+                    'groups' => [static::GROUP_UNIQUE_KEY_CHECK],
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductSetKeyOriginalField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_PRODUCT_SET_KEY_ORIGINAL, HiddenType::class);
 
         return $this;
     }
@@ -122,6 +192,27 @@ class GeneralFormType extends AbstractType
         $builder->add(static::FIELD_ID_PRODUCT_SET, HiddenType::class);
 
         return $this;
+    }
+
+    /**
+     * @param string $productSetKey
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return void
+     */
+    public function validateUniqueKey($productSetKey, ExecutionContextInterface $context)
+    {
+        if (!$productSetKey) {
+            return;
+        }
+
+        $count = $this->getQueryContainer()
+            ->queryProductSetByKey($productSetKey)
+            ->count();
+
+        if ($count) {
+            $context->addViolation('Product Set Key already exists.');
+        }
     }
 
 }

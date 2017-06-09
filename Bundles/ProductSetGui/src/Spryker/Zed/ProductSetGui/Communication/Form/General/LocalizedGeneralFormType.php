@@ -31,6 +31,7 @@ class LocalizedGeneralFormType extends AbstractType
 
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
+    const FIELD_URL_PREFIX = 'url_prefix';
     const FIELD_ORIGINAL_URL = 'original_url';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_FK_LOCALE = 'fk_locale';
@@ -38,7 +39,6 @@ class LocalizedGeneralFormType extends AbstractType
     const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const FIELD_URL_PREFIX = 'url_prefix';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -55,6 +55,7 @@ class LocalizedGeneralFormType extends AbstractType
                 if ($originalUrl !== $updatedUrl) {
                     return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_URL_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
             'constraints' => [
