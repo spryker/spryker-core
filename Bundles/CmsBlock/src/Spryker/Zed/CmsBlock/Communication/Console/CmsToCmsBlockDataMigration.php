@@ -3,9 +3,12 @@
 namespace Spryker\Zed\CmsBlock\Communication\Console;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,9 +28,8 @@ class CmsToCmsBlockDataMigration extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $spyCmsBlocks = SpyCmsBlockQuery::create()
-            ->filterByFkPage(null, Criteria::NOT_EQUAL)
-            ->filterByFkTemplate(null, Criteria::EQUAL)
-            ->joinWith('SpyPage')
+            ->filterByFkPage(null, Criteria::ISNOTNULL)
+            ->filterByFkTemplate(null, Criteria::ISNULL)
             ->find();
 
         $spyCmsBlocksCount = count($spyCmsBlocks);
@@ -39,12 +41,11 @@ class CmsToCmsBlockDataMigration extends Console
                 ->filterByIdCmsPage($spyCmsBlock->getFkPage())
                 ->findOne();
 
-            //template
             $spyCmsTemplate = $spyCmsPage->getCmsTemplate();
-            $spyCmsBlockTemplate = new SpyCmsBlockTemplate();
-            $spyCmsBlockTemplate->setTemplateName($spyCmsTemplate->getTemplateName());
-            $spyCmsBlockTemplate->setTemplatePath($spyCmsTemplate->getTemplatePath());
-            $spyCmsBlockTemplate->save();
+
+            //template
+            $spyCmsBlockTemplate = $this->createCmsBlockTemplate($spyCmsTemplate);
+            $spyCmsBlock->setFkTemplate($spyCmsBlockTemplate->getIdCmsBlockTemplate());
 
             //validity
             $spyCmsBlock->setValidFrom($spyCmsPage->getValidFrom());
@@ -63,6 +64,27 @@ class CmsToCmsBlockDataMigration extends Console
         }
 
         $output->writeln('Successfully finished.');
+    }
+
+    /**
+     * @param SpyCmsTemplate $spyCmsTemplate
+     *
+     * @return SpyCmsBlockTemplate
+     */
+    protected function createCmsBlockTemplate(SpyCmsTemplate $spyCmsTemplate)
+    {
+        $spyCmsBlockTemplate = SpyCmsBlockTemplateQuery::create()
+            ->filterByTemplatePath($spyCmsTemplate->getTemplatePath())
+            ->findOne();
+
+        if (empty($spyCmsBlockTemplate)) {
+            $spyCmsBlockTemplate = new SpyCmsBlockTemplate();
+            $spyCmsBlockTemplate->setTemplateName($spyCmsTemplate->getTemplateName());
+            $spyCmsBlockTemplate->setTemplatePath($spyCmsTemplate->getTemplatePath());
+            $spyCmsBlockTemplate->save();
+        }
+
+        return $spyCmsBlockTemplate;
     }
 
     /**
