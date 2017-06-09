@@ -9,6 +9,13 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 interface CmsBlockQueryContainerInterface
 {
     /**
+     * @param $idCmsBlock
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryCmsBlockById($idCmsBlock);
+
+    /**
      * @param int $idCmsBlock
      *
      * @return SpyCmsBlockQuery

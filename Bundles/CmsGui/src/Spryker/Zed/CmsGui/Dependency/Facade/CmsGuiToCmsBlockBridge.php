@@ -20,7 +20,7 @@ class CmsGuiToCmsBlockBridge implements CmsGuiToCmsBlockInterface
     }
 
     /**
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return CmsBlockTransfer|null
      */
@@ -29,4 +29,24 @@ class CmsGuiToCmsBlockBridge implements CmsGuiToCmsBlockInterface
         return $this->cmsBlockFacade->findCmsBlockById($idCmsBlock);
     }
 
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function activateById($idCmsBlock)
+    {
+        $this->cmsBlockFacade->activateById($idCmsBlock);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     *
+     */
+    public function deactivateById($idCmsBlock)
+    {
+        $this->cmsBlockFacade->deactivateById($idCmsBlock);
+    }
 }

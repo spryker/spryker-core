@@ -16,4 +16,18 @@ interface CmsGuiToCmsBlockInterface
      */
     public function findCmsBlockId($idCmsBlock);
 
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function activateById($idCmsBlock);
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function deactivateById($idCmsBlock);
+
 }

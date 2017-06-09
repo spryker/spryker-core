@@ -26,13 +26,13 @@ class CmsBlockTable extends AbstractTable
     const COL_STATUS = 'Status';
     const COL_TEMPLATE_NAME = 'template_name';
 
-    const REQUEST_ID_BLOCK = 'id-block';
+    const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
 
-    const PARAM_CMS_BLOCK_GLOSSARY = '/cms-block/glossary';
-    const PARAM_CMS_BLOCK_EDIT = '/cms-block/edit';
-
-    const URL_CMS_BLOCK_DEACTIVATE = '/cms-block/deactivate';
-    const URL_CMS_BLOCK_ACTIVATE = '/cms-block/activate';
+    const URL_CMS_BLOCK_GLOSSARY = '/cms-gui/glossary';
+    const URL_CMS_BLOCK_VIEW = '/cms-gui/view-block';
+    const URL_CMS_BLOCK_EDIT = '/cms-gui/edit-block';
+    const URL_CMS_BLOCK_DEACTIVATE = '/cms-gui/edit-block/deactivate';
+    const URL_CMS_BLOCK_ACTIVATE = '/cms-gui/edit-block/activate';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
@@ -125,21 +125,29 @@ class CmsBlockTable extends AbstractTable
     protected function buildLinks(array $item)
     {
         $buttons = [];
+
+        $buttons[] = $this->generateViewButton(
+            Url::generate(static::URL_CMS_BLOCK_VIEW, [
+                static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+            ]),
+            'View Block'
+        );
+
         $buttons[] = $this->generateEditButton(
-            Url::generate(static::PARAM_CMS_BLOCK_GLOSSARY, [
-                static::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+            Url::generate(static::URL_CMS_BLOCK_GLOSSARY, [
+                static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
             'Edit Placeholder'
         );
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(static::PARAM_CMS_BLOCK_EDIT, [
-                static::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+            Url::generate(static::URL_CMS_BLOCK_EDIT, [
+                static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
             'Edit Block'
         );
 
-        $buttons[] = $this->generateStateChangeButton($item);
+        $buttons[] = $this->generateStatusChangeButton($item);
 
         return implode(' ', $buttons);
     }
@@ -162,22 +170,23 @@ class CmsBlockTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateStateChangeButton(array $item)
+    protected function generateStatusChangeButton(array $item)
     {
         if ($item[SpyCmsBlockTableMap::COL_IS_ACTIVE]) {
-            $name = 'Deactivate';
-            $url = static::URL_CMS_BLOCK_DEACTIVATE;
+            return $this->generateRemoveButton(
+                Url::generate(static::URL_CMS_BLOCK_DEACTIVATE, [
+                    self::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+                ]),
+                'Deactivate'
+            );
         } else {
-            $name = 'Activate';
-            $url = static::URL_CMS_BLOCK_ACTIVATE;
+            return $this->generateViewButton(
+                    Url::generate(static::URL_CMS_BLOCK_ACTIVATE, [
+                        static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]
+                    ]),
+                    'Activate'
+            );
         }
-
-        return $this->generateViewButton(
-            Url::generate($url, [
-                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
-            ]),
-            $name
-        );
     }
 
     /**

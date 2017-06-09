@@ -27,4 +27,36 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
             ->findCmsBlockById($idCmsBlock);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function activateById($idCmsBlock)
+    {
+        $this->getFactory()
+            ->createCmsBlockWrite()
+            ->activateById($idCmsBlock);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function deactivateById($idCmsBlock)
+    {
+        $this->getFactory()
+            ->createCmsBlockWrite()
+            ->deactivateById($idCmsBlock);
+    }
+
 }
