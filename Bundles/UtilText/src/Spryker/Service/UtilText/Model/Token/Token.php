@@ -12,12 +12,13 @@ class Token implements TokenInterface
 
     /**
      * @param string $rawToken
+     * @param array $options
      *
      * @return string
      */
-    public function generate($rawToken)
+    public function generate($rawToken, $options  = [])
     {
-        return base64_encode(password_hash($rawToken, PASSWORD_DEFAULT));
+        return base64_encode(password_hash($rawToken, PASSWORD_DEFAULT, $options));
     }
 
     /**

@@ -75,10 +75,11 @@ interface UtilTextServiceInterface
      * @api
      *
      * @param string $rawToken
+     * @param array $options
      *
      * @return string
      */
-    public function generateToken($rawToken);
+    public function generateToken($rawToken, $options);
 
     /**
      * Specification:
