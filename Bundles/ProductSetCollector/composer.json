@@ -7,15 +7,20 @@
     "spryker/kernel": "^3.0.0",
     "spryker/product-set": "^1.0.0",
     "spryker/propel-orm": "^1.1.0",
+    "spryker/search": "^6.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0",
-    "spryker/util-data-reader": "^1.0.0"
+    "spryker/util-data-reader": "^1.0.0",
+    "spryker/url": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/elastica": "If you want to use ProductSetCollectorClient with the provided search functionalities, you need to install spryker/silex."
   },
   "autoload": {
     "psr-4": {
