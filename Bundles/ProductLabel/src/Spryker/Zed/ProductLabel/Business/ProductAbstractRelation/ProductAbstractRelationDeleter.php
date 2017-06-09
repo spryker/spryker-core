@@ -106,10 +106,12 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function isEmptyRelationForAbstractProduct($idProductAbstract)
     {
-        return $this
+        $relationCount = $this
             ->queryContainer
             ->queryProductsLabelByIdProductAbstract($idProductAbstract)
-            ->exists();
+            ->count();
+
+        return ($relationCount === 0);
     }
 
 }

@@ -49,4 +49,12 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
         return ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
     }
 
+    /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
+
 }
