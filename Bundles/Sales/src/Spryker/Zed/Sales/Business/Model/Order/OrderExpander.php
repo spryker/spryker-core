@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -59,15 +60,16 @@ class OrderExpander implements OrderExpanderInterface
         foreach ($items as $itemTransfer) {
             $quantity = $itemTransfer->getQuantity();
             for ($i = 1; $quantity >= $i; $i++) {
-                $expandedItemTransfer = clone $itemTransfer;
+                $expandedItemTransfer = new ItemTransfer();
+                $expandedItemTransfer->fromArray($itemTransfer->toArray(), true);
                 $expandedItemTransfer->setQuantity(1);
 
                 $expandedProductOptions = new ArrayObject();
                 foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                    $expandedProductOptions->append($this->cloneOption($productOptionTransfer));
+                    $expandedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
                 }
 
-                $itemTransfer->setProductOptions($expandedProductOptions);
+                $expandedItemTransfer->setProductOptions($expandedProductOptions);
                 $expandedItems->append($expandedItemTransfer);
             }
         }
@@ -80,9 +82,10 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function cloneOption(ProductOptionTransfer $productOptionTransfer)
+    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer)
     {
-        $expandedProductOptionTransfer = clone $productOptionTransfer;
+        $expandedProductOptionTransfer = new ProductOptionTransfer();
+        $expandedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
         $expandedProductOptionTransfer->setQuantity(1);
         $expandedProductOptionTransfer->setIdProductOptionValue(null);
 
