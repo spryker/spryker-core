@@ -10,7 +10,6 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
