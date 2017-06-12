@@ -29,5 +29,7 @@ interface Messages
     const CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     const CUSTOMER_EMAIL_INVALID = 'customer.email.invalid';
     const CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
+    const CUSTOMER_ANONYMIZATION_SUCCESS = 'customer.anonymization.success';
+    const CUSTOMER_ANONYMIZATION_FAILED = 'customer.anonymization.failed';
 
 }

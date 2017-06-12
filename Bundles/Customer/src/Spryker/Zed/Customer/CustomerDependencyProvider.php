@@ -26,6 +26,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const STORE = 'store';
 
+    const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -57,6 +59,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return Store::getInstance();
         };
 
+        $container = $this->addCustomerAnonymizerPlugins($container);
+
         return $container;
     }
 
@@ -75,6 +79,28 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerAnonymizerPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CUSTOMER_ANONYMIZER] = function (Container $container) {
+            return $this->getCustomerAnonymizerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     */
+    protected function getCustomerAnonymizerPlugins()
+    {
+        return [];
     }
 
 }
