@@ -77,8 +77,8 @@ class CategoryNodeTest extends Test
             ->method('touchCategoryNodeActive')
             ->withConsecutive(
                 // New tree
-                [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],                // Root
                 [$this->equalTo(static::CATEGORY_NODE_ID_CAMERAS_CAMCORDERS)],  // Parent
+                [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],                // Root
                 [$this->equalTo(static::CATEGORY_NODE_ID_TABLETS)],             // Self
                 // Former tree
                 [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],                // Root
