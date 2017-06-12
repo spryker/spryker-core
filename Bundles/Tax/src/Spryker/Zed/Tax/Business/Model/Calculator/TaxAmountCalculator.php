@@ -9,12 +9,13 @@ namespace Spryker\Zed\Tax\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountCalculator implements CalculatorInterface
 {
+
+    const ROUNDING_ERROR_BUCKET_IDENTIFIER = 'calculable_object';
 
     /**
      * @var \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface
@@ -38,13 +39,15 @@ class TaxAmountCalculator implements CalculatorInterface
     {
         $priceMode = $calculableObjectTransfer->getPriceMode();
 
-        $this->calculateTaxSumAmountForItems($calculableObjectTransfer->getItems(), $priceMode);
+        $haveExpenses = count($calculableObjectTransfer->getExpenses()) > 0;
+
+        $this->calculateTaxSumAmountForItems($calculableObjectTransfer->getItems(), $priceMode, $haveExpenses);
         $this->calculateTaxSumAmountForProductOptions($calculableObjectTransfer->getItems(), $priceMode);
         $this->calculateTaxSumAmountForExpenses($calculableObjectTransfer->getExpenses(), $priceMode);
 
         $this->accruedTaxCalculator->resetRoundingErrorDelta();
 
-        $this->calculateTaxUnitAmountForItems($calculableObjectTransfer->getItems(), $priceMode);
+        $this->calculateTaxUnitAmountForItems($calculableObjectTransfer->getItems(), $priceMode, $haveExpenses);
         $this->calculateTaxUnitAmountForProductOptions($calculableObjectTransfer->getItems(), $priceMode);
         $this->calculateTaxUnitAmountForExpenses($calculableObjectTransfer->getExpenses(), $priceMode);
 
@@ -54,11 +57,13 @@ class TaxAmountCalculator implements CalculatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $priceMode
+     * @param bool $haveExpenses
      *
      * @return void
      */
-    protected function calculateTaxSumAmountForItems(ArrayObject $items, $priceMode)
+    protected function calculateTaxSumAmountForItems(ArrayObject $items, $priceMode, $haveExpenses)
     {
+        $lastItemTransfer = null;
         foreach ($items as $itemTransfer) {
             $itemTransfer->setSumTaxAmount(0);
 
@@ -75,10 +80,17 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $itemTransfer->getTaxRate(),
                 $priceMode,
-                $itemTransfer->getSku()
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
             );
 
             $itemTransfer->setSumTaxAmount($sumTaxAmount);
+            $lastItemTransfer = $itemTransfer;
+        }
+
+        if ($lastItemTransfer && !$haveExpenses) {
+            $lastItemTransfer->setSumTaxAmount(
+                (int)round($lastItemTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+            );
         }
     }
 
@@ -107,7 +119,7 @@ class TaxAmountCalculator implements CalculatorInterface
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
                     $priceMode,
-                    $itemTransfer->getSku() . ProductOptionTransfer::class
+                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER
                 );
 
                 $productOptionTransfer->setSumTaxAmount($sumTaxAmount);
@@ -123,6 +135,7 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxSumAmountForExpenses(ArrayObject $expenses, $priceMode)
     {
+        $lastExpenseTransfer = null;
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setSumTaxAmount(0);
 
@@ -139,21 +152,30 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
                 $priceMode,
-                $expenseTransfer->getType()
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
             );
 
             $expenseTransfer->setSumTaxAmount($sumTaxAmount);
+            $lastExpenseTransfer = $expenseTransfer;
+        }
+
+        if ($lastExpenseTransfer) {
+            $lastExpenseTransfer->setSumTaxAmount(
+                (int)round($lastExpenseTransfer->getSumTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+            );
         }
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $priceMode
+     * @param bool $haveExpenses
      *
      * @return void
      */
-    protected function calculateTaxUnitAmountForItems(ArrayObject $items, $priceMode)
+    protected function calculateTaxUnitAmountForItems(ArrayObject $items, $priceMode, $haveExpenses)
     {
+        $lastItemTransfer = null;
         foreach ($items as $itemTransfer) {
             $itemTransfer->setUnitTaxAmount(0);
 
@@ -170,10 +192,17 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $itemTransfer->getTaxRate(),
                 $priceMode,
-                $itemTransfer->getSku()
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
             );
 
             $itemTransfer->setUnitTaxAmount($sumTaxAmount);
+            $lastItemTransfer = $itemTransfer;
+        }
+
+        if ($lastItemTransfer && !$haveExpenses) {
+            $lastItemTransfer->setUnitTaxAmount(
+                (int)round($lastItemTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+            );
         }
     }
 
@@ -185,6 +214,7 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxUnitAmountForProductOptions(ArrayObject $items, $priceMode)
     {
+        $lastProductOptionTransfer = null;
         foreach ($items as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $productOptionTransfer->setUnitTaxAmount(0);
@@ -202,7 +232,7 @@ class TaxAmountCalculator implements CalculatorInterface
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
                     $priceMode,
-                    $itemTransfer->getSku() . ProductOptionTransfer::class
+                    static::ROUNDING_ERROR_BUCKET_IDENTIFIER
                 );
 
                 $productOptionTransfer->setUnitTaxAmount($sumTaxAmount);
@@ -218,6 +248,7 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxUnitAmountForExpenses(ArrayObject $expenses, $priceMode)
     {
+        $lastExpenseTransfer = null;
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setUnitTaxAmount(0);
 
@@ -234,10 +265,17 @@ class TaxAmountCalculator implements CalculatorInterface
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
                 $priceMode,
-                $expenseTransfer->getType()
+                static::ROUNDING_ERROR_BUCKET_IDENTIFIER
             );
 
             $expenseTransfer->setUnitTaxAmount($sumTaxAmount);
+            $lastExpenseTransfer = $expenseTransfer;
+        }
+
+        if ($lastExpenseTransfer) {
+            $lastExpenseTransfer->setUnitTaxAmount(
+                (int)round($lastExpenseTransfer->getUnitTaxAmount() + $this->accruedTaxCalculator->getRoundingErrorDelta(static::ROUNDING_ERROR_BUCKET_IDENTIFIER))
+            );
         }
     }
 

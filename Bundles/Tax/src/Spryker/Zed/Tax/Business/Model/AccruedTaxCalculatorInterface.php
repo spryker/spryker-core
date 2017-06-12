@@ -12,10 +12,20 @@ interface AccruedTaxCalculatorInterface
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param float $taxRate
      * @param bool $round
+     * @param string|null $identifier
      *
      * @return int
      */
-    public function getTaxValueFromPrice($price, $taxRate, $round = false);
+    public function getTaxValueFromPrice($price, $taxRate, $round = false, $identifier = null);
+
+    /**
+     * @param int $price Price as integer (e. g 15508 for 155.08)
+     * @param int $taxRate
+     * @param string|null $identifier
+     *
+     * @return int
+     */
+    public function getTaxValueFromNetPrice($price, $taxRate, $identifier = null);
 
     /**
      * @return void
@@ -23,11 +33,10 @@ interface AccruedTaxCalculatorInterface
     public function resetRoundingErrorDelta();
 
     /**
-     * @param int $price Price as integer (e. g 15508 for 155.08)
-     * @param int $taxRate
+     * @param string $identifier
      *
-     * @return int
+     * @return float
      */
-    public function getTaxValueFromNetPrice($price, $taxRate);
+    public function getRoundingErrorDelta($identifier);
 
 }
