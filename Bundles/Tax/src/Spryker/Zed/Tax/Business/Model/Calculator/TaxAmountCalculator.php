@@ -9,6 +9,7 @@ namespace Spryker\Zed\Tax\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
@@ -41,9 +42,44 @@ class TaxAmountCalculator implements CalculatorInterface
         $this->calculateTaxSumAmountForProductOptions($calculableObjectTransfer->getItems(), $priceMode);
         $this->calculateTaxSumAmountForExpenses($calculableObjectTransfer->getExpenses(), $priceMode);
 
+        $this->accruedTaxCalculator->resetRoundingErrorDelta();
+
         $this->calculateTaxUnitAmountForItems($calculableObjectTransfer->getItems(), $priceMode);
         $this->calculateTaxUnitAmountForProductOptions($calculableObjectTransfer->getItems(), $priceMode);
         $this->calculateTaxUnitAmountForExpenses($calculableObjectTransfer->getExpenses(), $priceMode);
+
+        $this->accruedTaxCalculator->resetRoundingErrorDelta();
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function calculateTaxSumAmountForItems(ArrayObject $items, $priceMode)
+    {
+        foreach ($items as $itemTransfer) {
+            $itemTransfer->setSumTaxAmount(0);
+
+            if (!$itemTransfer->getTaxRate()) {
+                continue;
+            }
+
+            $taxableAmount = $itemTransfer->getSumPrice() - $itemTransfer->getSumDiscountAmountAggregation();
+            if ($taxableAmount <= 0) {
+                continue;
+            }
+
+            $sumTaxAmount = $this->calculateTaxAmount(
+                $taxableAmount,
+                $itemTransfer->getTaxRate(),
+                $priceMode,
+                $itemTransfer->getSku()
+            );
+
+            $itemTransfer->setSumTaxAmount($sumTaxAmount);
+        }
     }
 
     /**
@@ -70,43 +106,12 @@ class TaxAmountCalculator implements CalculatorInterface
                 $sumTaxAmount = $this->calculateTaxAmount(
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
-                    $priceMode
+                    $priceMode,
+                    $itemTransfer->getSku() . ProductOptionTransfer::class
                 );
 
                 $productOptionTransfer->setSumTaxAmount($sumTaxAmount);
             }
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $priceMode
-     *
-     * @return void
-     */
-    protected function calculateTaxSumAmountForItems(ArrayObject $items, $priceMode)
-    {
-        $this->accruedTaxCalculator->resetRoundingErrorDelta();
-
-        foreach ($items as $itemTransfer) {
-            $itemTransfer->setSumTaxAmount(0);
-
-            if (!$itemTransfer->getTaxRate()) {
-                continue;
-            }
-
-            $taxableAmount = $itemTransfer->getSumPrice() - $itemTransfer->getSumDiscountAmountAggregation();
-            if ($taxableAmount <= 0) {
-                continue;
-            }
-
-            $sumTaxAmount = $this->calculateTaxAmount(
-                $taxableAmount,
-                $itemTransfer->getTaxRate(),
-                $priceMode
-            );
-
-            $itemTransfer->setSumTaxAmount($sumTaxAmount);
         }
     }
 
@@ -118,8 +123,6 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxSumAmountForExpenses(ArrayObject $expenses, $priceMode)
     {
-        $this->accruedTaxCalculator->resetRoundingErrorDelta();
-
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setSumTaxAmount(0);
 
@@ -135,10 +138,42 @@ class TaxAmountCalculator implements CalculatorInterface
             $sumTaxAmount = $this->calculateTaxAmount(
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
-                $priceMode
+                $priceMode,
+                $expenseTransfer->getType()
             );
 
             $expenseTransfer->setSumTaxAmount($sumTaxAmount);
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function calculateTaxUnitAmountForItems(ArrayObject $items, $priceMode)
+    {
+        foreach ($items as $itemTransfer) {
+            $itemTransfer->setUnitTaxAmount(0);
+
+            if (!$itemTransfer->getTaxRate()) {
+                continue;
+            }
+
+            $taxableAmount = $itemTransfer->getUnitPrice() - $itemTransfer->getUnitDiscountAmountAggregation();
+            if ($taxableAmount <= 0) {
+                continue;
+            }
+
+            $sumTaxAmount = $this->calculateTaxAmount(
+                $taxableAmount,
+                $itemTransfer->getTaxRate(),
+                $priceMode,
+                $itemTransfer->getSku()
+            );
+
+            $itemTransfer->setUnitTaxAmount($sumTaxAmount);
         }
     }
 
@@ -166,43 +201,12 @@ class TaxAmountCalculator implements CalculatorInterface
                 $sumTaxAmount = $this->calculateTaxAmount(
                     $taxableAmount,
                     $productOptionTransfer->getTaxRate(),
-                    $priceMode
+                    $priceMode,
+                    $itemTransfer->getSku() . ProductOptionTransfer::class
                 );
 
                 $productOptionTransfer->setUnitTaxAmount($sumTaxAmount);
             }
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $priceMode
-     *
-     * @return void
-     */
-    protected function calculateTaxUnitAmountForItems(ArrayObject $items, $priceMode)
-    {
-        $this->accruedTaxCalculator->resetRoundingErrorDelta();
-
-        foreach ($items as $itemTransfer) {
-            $itemTransfer->setUnitTaxAmount(0);
-
-            if (!$itemTransfer->getTaxRate()) {
-                continue;
-            }
-
-            $taxableAmount = $itemTransfer->getUnitPrice() - $itemTransfer->getUnitDiscountAmountAggregation();
-            if ($taxableAmount <= 0) {
-                continue;
-            }
-
-            $sumTaxAmount = $this->calculateTaxAmount(
-                $taxableAmount,
-                $itemTransfer->getTaxRate(),
-                $priceMode
-            );
-
-            $itemTransfer->setUnitTaxAmount($sumTaxAmount);
         }
     }
 
@@ -214,8 +218,6 @@ class TaxAmountCalculator implements CalculatorInterface
      */
     protected function calculateTaxUnitAmountForExpenses(ArrayObject $expenses, $priceMode)
     {
-        $this->accruedTaxCalculator->resetRoundingErrorDelta();
-
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setUnitTaxAmount(0);
 
@@ -231,7 +233,8 @@ class TaxAmountCalculator implements CalculatorInterface
             $sumTaxAmount = $this->calculateTaxAmount(
                 $taxableAmount,
                 $expenseTransfer->getTaxRate(),
-                $priceMode
+                $priceMode,
+                $expenseTransfer->getType()
             );
 
             $expenseTransfer->setUnitTaxAmount($sumTaxAmount);
@@ -242,16 +245,22 @@ class TaxAmountCalculator implements CalculatorInterface
      * @param int $price
      * @param float $taxRate
      * @param string $priceMode
+     * @param string $identifier
      *
      * @return int
      */
-    protected function calculateTaxAmount($price, $taxRate, $priceMode = CalculationPriceMode::PRICE_MODE_GROSS)
-    {
+    protected function calculateTaxAmount(
+        $price,
+        $taxRate,
+        $priceMode,
+        $identifier
+    ) {
+
         if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
-            return $this->accruedTaxCalculator->getTaxValueFromNetPrice($price, $taxRate);
-        } else {
-            return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);
+            return $this->accruedTaxCalculator->getTaxValueFromNetPrice($price, $taxRate, $identifier);
         }
+
+        return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true, $identifier);
     }
 
 }
