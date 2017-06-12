@@ -210,6 +210,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RelatedProductTableQueryBuilder(
             $this->getProductQueryContainer(),
+            $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getConfig()
         );

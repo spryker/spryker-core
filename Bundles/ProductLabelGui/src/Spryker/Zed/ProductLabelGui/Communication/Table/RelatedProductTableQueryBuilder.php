@@ -19,6 +19,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface;
+use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
 
 class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilderInterface
@@ -36,6 +37,11 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     protected $productQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface
+     */
+    protected $productLabelGuiQueryContainer;
+
+    /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
      */
     protected $localeFacade;
@@ -47,15 +53,18 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
     /**
      * @param \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface $productLabelGuiQueryContainer
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig $bundleConfig
      */
     public function __construct(
         ProductLabelGuiToProductQueryContainerInterface $productQueryContainer,
+        ProductLabelGuiQueryContainerInterface $productLabelGuiQueryContainer,
         ProductLabelGuiToLocaleInterface $localeFacade,
         ProductLabelGuiConfig $bundleConfig
     ) {
         $this->productQueryContainer = $productQueryContainer;
+        $this->productLabelGuiQueryContainer = $productLabelGuiQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->bundleConfig = $bundleConfig;
     }
@@ -109,6 +118,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $this->addProductCategories($query, $localeTransfer);
         $this->addConcreteProductStates($query);
         $this->addRelation($query, $idProductLabel);
+        $this->addRelationCount($query);
 
         return $query;
     }
@@ -214,13 +224,39 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                 $idProductLabel ?: 'NULL'
             )
         );
+    }
 
-        $query
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     *
+     * @return void
+     */
+    protected function addRelationCount(SpyProductAbstractQuery $query)
+    {
+        $subQuery = $this
+            ->productLabelGuiQueryContainer
+            ->queryProductAbstractRelations()
+            ->where(sprintf(
+                '%s = %s',
+                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+            ))
+            ->groupByFkProductAbstract()
+            ->addSelfSelectColumns()
+            ->clearSelectColumns()
             ->withColumn(
                 sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
                 static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
             )
-            ->groupByIdProductAbstract();
+            ->select([
+                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT => static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
+            ]);
+
+        $params = [];
+        $query->withColumn(
+            sprintf('(%s)', $subQuery->createSelectSql($params)),
+            static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
+        );
     }
 
 }

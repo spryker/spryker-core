@@ -35,4 +35,11 @@ interface ProductLabelGuiQueryContainerInterface
      */
     public function queryProductLabelById($idProductLabel);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductAbstractRelations();
+
 }
