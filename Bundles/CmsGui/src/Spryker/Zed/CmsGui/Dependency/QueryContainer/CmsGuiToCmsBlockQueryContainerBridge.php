@@ -38,4 +38,13 @@ class CmsGuiToCmsBlockQueryContainerBridge implements CmsGuiToCmsBlockQueryConta
     {
         return $this->cmsBlockQueryContainer->queryCmsBlockWithTemplate();
     }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplates()
+    {
+        return $this->cmsBlockQueryContainer->queryTemplates();
+    }
+
 }

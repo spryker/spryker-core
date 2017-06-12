@@ -5,6 +5,7 @@ namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 
 interface CmsGuiToCmsBlockQueryContainerInterface
 {
@@ -19,5 +20,10 @@ interface CmsGuiToCmsBlockQueryContainerInterface
      * @return SpyCmsBlockQuery
      */
     public function queryCmsBlockWithTemplate();
+
+    /**
+     * @return SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplates();
 
 }

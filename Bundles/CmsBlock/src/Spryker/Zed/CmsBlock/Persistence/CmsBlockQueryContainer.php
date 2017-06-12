@@ -4,6 +4,7 @@ namespace Spryker\Zed\CmsBlock\Persistence;
 
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -59,6 +60,26 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @param int $idCmsBlock
+     *
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
+    {
+        return $this->queryCmsBlockGlossaryKeyMapping()
+            ->filterByFkCmsBlock($idCmsBlock);
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplates()
+    {
+        return $this->getFactory()
+            ->createCmsBlockTemplateQuery();
+    }
+
+    /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     protected function queryCmsBlock()
@@ -66,4 +87,15 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
         return $this->getFactory()
             ->createCmsBlockQuery();
     }
+
+    /**
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    protected function queryCmsBlockGlossaryKeyMapping()
+    {
+        return $this->getFactory()
+            ->createCmsBlockGlossaryKeyMappingQuery();
+    }
+
+
 }

@@ -4,6 +4,8 @@
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
 interface CmsBlockWriterInterface
 {
     /**
@@ -19,4 +21,12 @@ interface CmsBlockWriterInterface
      * @return void
      */
     public function deactivateById($idCmsBlock);
+
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+
 }

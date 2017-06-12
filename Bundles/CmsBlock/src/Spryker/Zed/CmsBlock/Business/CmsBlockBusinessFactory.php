@@ -4,9 +4,14 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriter;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapper;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReader;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReaderInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriterInterface;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -19,7 +24,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsBlockReader
+     * @return CmsBlockReaderInterface
      */
     public function createCmsBlockReader()
     {
@@ -30,7 +35,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockMapper
+     * @return CmsBlockMapperInterface
      */
     public function createCmsBlockMapper()
     {
@@ -38,12 +43,14 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockWriter
+     * @return CmsBlockWriterInterface
      */
     public function createCmsBlockWrite()
     {
         return new CmsBlockWriter(
             $this->getQueryContainer(),
+            $this->createCmsBlockMapper(),
+            $this->createCmsBlockGlossaryWriter(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH)
         );
     }
@@ -55,4 +62,16 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH);
     }
+
+    /**
+     * @return CmsBlockGlossaryWriterInterface
+     */
+    protected function createCmsBlockGlossaryWriter()
+    {
+        return new CmsBlockGlossaryWriter(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY)
+        );
+    }
+
 }

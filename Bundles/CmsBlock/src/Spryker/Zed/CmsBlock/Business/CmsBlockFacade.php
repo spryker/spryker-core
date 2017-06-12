@@ -3,6 +3,7 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -59,4 +60,10 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
             ->deactivateById($idCmsBlock);
     }
 
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $this->getFactory()
+            ->createCmsBlockWrite()
+            ->updateCmsBlock($cmsBlockTransfer);
+    }
 }

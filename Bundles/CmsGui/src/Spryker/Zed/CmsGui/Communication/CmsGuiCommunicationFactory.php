@@ -112,6 +112,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             $cmsBlockForm,
+            $cmsBlockFormDataProvider->getData($idCmsBlock),
             $cmsBlockFormDataProvider->getOptions()
         );
     }
@@ -153,8 +154,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockFormDataProvider()
     {
         return new CmsBlockFormDataProvider(
-            $this->getCmsQueryContainer(),
-            $this->getCmsFacade(),
+            $this->getCmsBlockQueryContainer(),
+            $this->getCmsBlockFacade(),
             $this->getLocaleFacade()
         );
     }

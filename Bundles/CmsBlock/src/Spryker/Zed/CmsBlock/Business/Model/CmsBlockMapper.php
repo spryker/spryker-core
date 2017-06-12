@@ -31,6 +31,24 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         return $cmsBlockTransfer;
     }
 
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param SpyCmsBlock $spyCmsBlock
+     *
+     * @return SpyCmsBlock
+     */
+    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
+    {
+        $spyCmsBlock->fromArray($cmsBlockTransfer->toArray());
+
+        return $spyCmsBlock;
+    }
+
+    /**
+     * @param SpyCmsBlock $spyCmsBlock
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
     protected function createGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
     {
         $cmsBlockGlossary = new CmsBlockGlossaryTransfer();
@@ -43,11 +61,17 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         return $cmsBlockGlossary;
     }
 
+    /**
+     * @param SpyCmsBlock $spyCmsBlock
+     * @param SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping
+     *
+     * @return CmsBlockGlossaryPlaceholderTransfer
+     */
     protected function createGlossaryPlaceholderTransfer(SpyCmsBlock $spyCmsBlock, SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
     {
-        $spyGlossaryKey = $spyCmsGlossaryKeyMapping->getGlossaryKey();
         $placeholderTransfer = new CmsBlockGlossaryPlaceholderTransfer();
 
+        $spyGlossaryKey = $spyCmsGlossaryKeyMapping->getGlossaryKey();
         $placeholderTransfer->setPlaceholder($spyCmsGlossaryKeyMapping->getPlaceholder());
         $placeholderTransfer->setTranslationKey($spyGlossaryKey->getKey());
 //            $placeholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());

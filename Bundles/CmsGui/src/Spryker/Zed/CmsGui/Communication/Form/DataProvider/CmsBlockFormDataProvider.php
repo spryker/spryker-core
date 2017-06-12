@@ -7,22 +7,24 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Block\CmsBlockForm;
+use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBlockInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
+use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 
 class CmsBlockFormDataProvider
 {
 
     /**
-     * @var CmsGuiToCmsQueryContainerInterface
+     * @var CmsGuiToCmsBlockQueryContainerInterface
      */
-    protected $cmsQueryContainer;
+    protected $cmsBlockQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
+     * @var CmsGuiToCmsBlockInterface
      */
-    protected $cmsFacade;
+    protected $cmsBlockFacade;
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface
@@ -30,17 +32,17 @@ class CmsBlockFormDataProvider
     protected $localFacade;
 
     /**
-     * @param CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsGuiToCmsInterface $cmsFacade
+     * @param CmsGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param CmsGuiToCmsBlockInterface $cmsBlockFacade
      * @param CmsGuiToLocaleInterface $localFacade
      */
     public function __construct(
-        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
-        CmsGuiToCmsInterface $cmsFacade,
+        CmsGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
+        CmsGuiToCmsBlockInterface $cmsBlockFacade,
         CmsGuiToLocaleInterface $localFacade
     ) {
-        $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->cmsFacade = $cmsFacade;
+        $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
+        $this->cmsBlockFacade = $cmsBlockFacade;
         $this->localFacade = $localFacade;
     }
 
@@ -56,21 +58,19 @@ class CmsBlockFormDataProvider
     }
 
     /**
-     * @param int|null $idCmsPage
+     * @param int|null $idCmsBlock
      *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     * @return CmsBlockTransfer
      */
     public function getData($idCmsBlock = null)
     {
         if (!$idCmsBlock) {
             $cmsBlockTransfer = new CmsBlockTransfer();
         } else {
-            $cmsBlockTransfer = $this->cmsFacade->findCmsPageById($idCmsBlock);
+            $cmsBlockTransfer = $this->cmsBlockFacade->findCmsBlockId($idCmsBlock);
         }
 
-        $cmsPageTransfer->setIsSearchable(true);
-
-        return $cmsPageTransfer;
+        return $cmsBlockTransfer;
     }
 
     /**
@@ -78,13 +78,15 @@ class CmsBlockFormDataProvider
      */
     protected function getTemplateList()
     {
-        $templateCollection = $this->cmsQueryContainer->queryTemplates()->find();
+        $templateCollection = $this->cmsBlockQueryContainer
+            ->queryTemplates()
+            ->find();
 
         $templateList = [];
 
-        /** @var \Orm\Zed\Cms\Persistence\SpyCmsTemplate $template */
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $template */
         foreach ($templateCollection->getData() as $template) {
-            $templateList[$template->getIdCmsTemplate()] = $template->getTemplateName();
+            $templateList[$template->getIdCmsBlockTemplate()] = $template->getTemplateName();
         }
 
         return $templateList;

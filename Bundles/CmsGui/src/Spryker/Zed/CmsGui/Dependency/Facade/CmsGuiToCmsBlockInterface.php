@@ -30,4 +30,11 @@ interface CmsGuiToCmsBlockInterface
      */
     public function deactivateById($idCmsBlock);
 
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+
 }

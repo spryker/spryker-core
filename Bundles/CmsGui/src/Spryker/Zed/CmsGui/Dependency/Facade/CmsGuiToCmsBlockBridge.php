@@ -49,4 +49,14 @@ class CmsGuiToCmsBlockBridge implements CmsGuiToCmsBlockInterface
     {
         $this->cmsBlockFacade->deactivateById($idCmsBlock);
     }
+
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        return $this->cmsBlockFacade->updateCmsBlock($cmsBlockTransfer);
+    }
 }

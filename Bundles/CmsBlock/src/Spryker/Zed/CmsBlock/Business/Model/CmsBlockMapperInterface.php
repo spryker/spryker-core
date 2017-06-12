@@ -17,4 +17,12 @@ interface CmsBlockMapperInterface
      */
     public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock);
 
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param SpyCmsBlock $spyCmsBlock
+     *
+     * @return SpyCmsBlock
+     */
+    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock);
+
 }
