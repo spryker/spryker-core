@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,11 +31,6 @@ class DetailController extends AbstractController
         $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
-
-        $calc = new CalculationFacade();
-        $o = $calc->recalculateOrder($orderTransfer);
-
-
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
