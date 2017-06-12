@@ -180,7 +180,7 @@ class OrdersTable extends AbstractTable
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
 
-        return !!$customerTransfer;
+        return (bool)$customerTransfer;
     }
 
     /**
