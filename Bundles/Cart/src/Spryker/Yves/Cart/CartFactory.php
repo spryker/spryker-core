@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Cart;
 
 use Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper;
+use Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CartFactory extends AbstractFactory
@@ -38,14 +39,21 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Cart\Mapper\CartItemsAttributeMapperInterface
+     * @return \Spryker\Yves\Cart\Mapper\CartItemsMapperInterface
      */
     public function createCartItemsAttributeMapper()
     {
         return new CartItemsAttributeMapper(
-            $this->getProductClient(),
-            $this->getAvailabilityClient()
+            $this->getProductClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper
+     */
+    public function createCartItemsAvailabilityMapper()
+    {
+        return new CartItemsAvailabilityMapper($this->getAvailabilityClient());
     }
 
 }

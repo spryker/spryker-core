@@ -8,10 +8,9 @@
 namespace Spryker\Yves\Cart\Mapper;
 
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
-use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 
-class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
+class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
 
     const ATTRIBUTES = 'attributes';
@@ -41,12 +40,10 @@ class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
 
     /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
-     * @param \Spryker\Client\Availability\AvailabilityClientInterface $productAvailabilityClient
      */
-    public function __construct($productClient, $productAvailabilityClient)
+    public function __construct($productClient)
     {
         $this->productClient = $productClient;
-        $this->productAvailabilityClient = $productAvailabilityClient;
     }
 
     /**
@@ -58,7 +55,7 @@ class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
     {
         $attributes = [];
         foreach ($items as $item) {
-            $attributes[$item->getSku()] = $this->getAttributesAndAvailability($item);
+            $attributes[$item->getSku()] = $this->getAttributesBySku($item);
         }
 
         return $attributes;
@@ -69,12 +66,13 @@ class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
      *
      * @return array
      */
-    protected function getAttributesAndAvailability($item)
+    protected function getAttributesBySku($item)
     {
-        return [
-            StorageProductTransfer::ATTRIBUTES => $this->getAttributesBySku($item),
-            self::AVAILABILITY => $this->getAvailability($item),
-        ];
+        $attributes = $this->getAttributesMapByProductAbstract($item);
+
+        $selectedAttributes = $this->getSelectedAttributes($item);
+
+        return $this->markAsSelected($attributes[StorageAttributeMapTransfer::SUPER_ATTRIBUTES], $selectedAttributes);
     }
 
     /**
@@ -99,20 +97,6 @@ class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
         }
 
         return $selectedAttributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     *
-     * @return array
-     */
-    protected function getAttributesBySku($item)
-    {
-        $attributes = $this->getAttributesMapByProductAbstract($item);
-
-        $selectedAttributes = $this->getSelectedAttributes($item);
-
-        return $this->markAsSelected($attributes[StorageAttributeMapTransfer::SUPER_ATTRIBUTES], $selectedAttributes);
     }
 
     /**
@@ -150,34 +134,6 @@ class CartItemsAttributeMapper implements CartItemsAttributeMapperInterface
     {
         list($key, $value) = explode($delimiter, $strVal);
         $selectedAttributes[$key] = $value;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     *
-     * @return array
-     */
-    protected function getAvailability($item)
-    {
-        $mapped = [];
-
-        $availability = $this->productAvailabilityClient->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())->toArray();
-
-        foreach ($availability[self::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
-            if ($sku === $item->getSku()) {
-                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
-                break;
-            }
-        }
-
-        foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
-            if ($sku === $item->getSku()) {
-                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
-                break;
-            }
-        }
-
-        return $mapped;
     }
 
     /**
