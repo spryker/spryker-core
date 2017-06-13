@@ -1,8 +1,9 @@
 
-{% set attributeForm = '' %}
-{% for glossaryPlaceholders in glossaryForm.glossaryPlaceholders %}
-    {% if tab.name == glossaryPlaceholders.vars.data.placeholder %}
-        {% set placeholderForm = glossaryPlaceholders %}
+{% set placeholderForm = '' %}
+
+{% for glossaryPlaceholder in glossaryForm.glossaryPlaceholders %}
+    {% if tab.name == glossaryPlaceholder.vars.data.placeholder %}
+        {% set placeholderForm = glossaryPlaceholder %}
     {% endif %}
 {% endfor %}
 

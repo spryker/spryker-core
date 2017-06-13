@@ -14,14 +14,12 @@
 
 {% block content %}
 
-    {{ include ('@CmsGui/_template/edit-notes.twig') }}
-
     {% if placeholderTabs.tabs | length > 0 %}
 
         {{ form_start(glossaryForm) }}
 
         {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
-        {% do glossaryForm.glossaryAttributes.setRendered %}
+        {% do glossaryForm.glossaryPlaceholders.setRendered %}
 
         {{ form_end(glossaryForm) }}
 

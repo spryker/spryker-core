@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\CmsBlockConfig;
@@ -65,7 +66,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
             return null;
         }
 
-        $placeholders = $this->findPagePlaceholders($spyCmsBlock);
+        $placeholders = $this->findPagePlaceholders($spyCmsBlock->getCmsBlockTemplate());
 
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($idCmsBlock, $placeholders);
 
@@ -81,13 +82,13 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param SpyCmsBlockTemplate $spyCmsBlockTemplate
      *
      * @return array
      */
-    protected function findPagePlaceholders(SpyCmsBlock $spyCmsBlock)
+    protected function findPagePlaceholders(SpyCmsBlockTemplate $spyCmsBlockTemplate)
     {
-        $templateFiles = $this->config->getTemplateRealPaths($spyCmsBlock->getCmsBlockTemplate());
+        $templateFiles = $this->config->getTemplateRealPaths($spyCmsBlockTemplate->getTemplatePath());
 
         foreach ($templateFiles as $templateFile) {
             if (file_exists($templateFile)) {

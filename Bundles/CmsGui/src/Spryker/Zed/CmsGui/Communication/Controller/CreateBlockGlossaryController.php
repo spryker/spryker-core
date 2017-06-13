@@ -34,7 +34,6 @@ class CreateBlockGlossaryController extends AbstractController
             ->getCmsBlockFacade()
             ->findGlossaryPlaceholders($idCmsBlock);
 
-
         if ($glossaryTransfer === null) {
             throw new NotFoundHttpException(
                 sprintf('Cms block with id "%d" not found!', $idCmsBlock)
