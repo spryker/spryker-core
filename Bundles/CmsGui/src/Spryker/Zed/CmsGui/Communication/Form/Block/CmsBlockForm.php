@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Block;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsBlockQueryContainerInterface;
@@ -146,7 +148,10 @@ class CmsBlockForm extends AbstractType
                 new Callback([
                     'methods' => [
                         function ($name, ExecutionContextInterface $context) {
-                            if ($this->hasExistingBlock($name)) {
+                            /** @var CmsBlockTransfer $cmsBlockTransfer */
+                            $cmsBlockTransfer = $context->getRoot()->getViewData();
+
+                            if ($this->hasExistingBlock($name, $cmsBlockTransfer->getIdCmsBlock())) {
                                 $context->addViolation('Block with the same Name already exists.');
                             }
                         },
@@ -175,18 +180,20 @@ class CmsBlockForm extends AbstractType
 
     /**
      * @param string $name
+     * @param int|null $idCmsBlock
      *
      * @return bool
      */
-    protected function hasExistingBlock($name)
+    protected function hasExistingBlock($name, $idCmsBlock = null)
     {
-        $blockEntity = $this->cmsBlockQueryContainer
-            ->queryCmsBlockByName($name)
-            ->findOne();
+        $blockQuery = $this->cmsBlockQueryContainer
+            ->queryCmsBlockByName($name);
 
-        $hasBlock = ($blockEntity !== null);
+        if ($idCmsBlock) {
+            $blockQuery->filterByIdCmsBlock($idCmsBlock, Criteria::NOT_EQUAL);
+        }
 
-        return $hasBlock;
+        return $blockQuery->exists();
     }
 
 }
