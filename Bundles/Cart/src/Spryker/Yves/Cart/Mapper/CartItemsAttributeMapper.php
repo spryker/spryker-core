@@ -7,43 +7,36 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
-use Generated\Shared\Transfer\StorageProductTransfer;
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
 
-    const ATTRIBUTES = 'attributes';
-    const AVAILABILITY = 'availability';
     const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
-    protected $productOptionsClient;
-
+    protected $productClient;
     /**
-     * @var \Spryker\Client\Availability\AvailabilityClientInterface
+     * @var CartItemsAvailabilityMapper
      */
-    protected $productAvailabilityClient;
-
+    protected $cartItemsAvailabilityMapper;
     /**
      * @var array
      */
-    protected $attributes = [];
-
-    /**
-     * @var \Spryker\Client\Product\ProductClientInterface
-     */
-    protected $productClient;
+    protected $availableItemsSkus = [];
 
     /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
+     * @param CartItemsAvailabilityMapper $cartItemsAvailabilityMapper
      */
-    public function __construct($productClient)
+    public function __construct($productClient, $cartItemsAvailabilityMapper)
     {
         $this->productClient = $productClient;
+        $this->cartItemsAvailabilityMapper = $cartItemsAvailabilityMapper;
     }
 
     /**
@@ -53,75 +46,56 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     public function buildMap($items)
     {
+        $itemsAvailabilityMap = $this->cartItemsAvailabilityMapper->buildMap($items);
+        $availableItemsSkus = array_keys($itemsAvailabilityMap);
+
         $attributes = [];
+
         foreach ($items as $item) {
-            $attributes[$item->getSku()] = $this->getAttributesBySku($item);
+
+            $attributeMap = $this->getAttributesMapByProductAbstract($item);
+            $attributes[$item->getSku()] = $this->getAttributesWithAvailability($item, $attributeMap, $availableItemsSkus);
         }
 
         return $attributes;
     }
 
+
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param ItemTransfer $item
+     * @param array $attributeMap
+     * @param array $availableItemsSkus
      *
      * @return array
      */
-    protected function getAttributesBySku($item)
+    protected function getAttributesWithAvailability($item, array $attributeMap, array $availableItemsSkus)
     {
-        $attributes = $this->getAttributesMapByProductAbstract($item);
 
-        $selectedAttributes = $this->getSelectedAttributes($item);
+        $productConcreteIds = $attributeMap['productConcreteIds'];
+        $productConcreteSkus = array_flip($productConcreteIds);
 
-        return $this->markAsSelected($attributes[StorageAttributeMapTransfer::SUPER_ATTRIBUTES], $selectedAttributes);
-    }
+        $productVariants = [];
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     *
-     * @return array
-     */
-    protected function getSelectedAttributes($item)
-    {
-        $selectedAttributes = [];
-
-        $attributes = $this->getAttributesMapByProductAbstract($item);
-
-        foreach ($attributes[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS] as $variantName => $variant) {
+        foreach ($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS] as $variantNameValue => $variant) {
             foreach ($variant as $options) {
-                foreach ((array)$options as $option) {
-                    if ($option === $item->getId()) {
-                        $this->extractKeyValue($selectedAttributes, $variantName);
+                foreach ((array)$options as $productConcreteId) {
+                    list($variantName, $variantValue) = explode(':', $variantNameValue);
+                    $productVariants[$variantName][$variantValue]['available'] = false;
+                    $productVariants[$variantName][$variantValue]['selected'] = false;
+                    if (in_array ($productConcreteSkus[$productConcreteId], $availableItemsSkus) ) {
+                        $productVariants[$variantName][$variantValue]['available'] = true;
+                    }
+                    if ($productConcreteId === $item->getId()) {
+                        $productVariants[$variantName][$variantValue]['selected'] = true;
                     }
                 }
             }
         }
 
-        return $selectedAttributes;
+        return $productVariants;
     }
 
-    /**
-     * @param array $attributes
-     * @param array $selectedAttributes
-     *
-     * @return array
-     */
-    protected function markAsSelected($attributes, $selectedAttributes)
-    {
-        $result = [];
 
-        foreach ($attributes as $name => $attributeList) {
-            foreach ($attributeList as $attribute) {
-                if ($selectedAttributes[$name] === $attribute) {
-                    $result[$name][$attribute] = true;
-                    continue;
-                }
-
-                $result[$name][$attribute] = false;
-            }
-        }
-
-        return $result;
-    }
 
     /**
      * @param array $selectedAttributes
@@ -130,7 +104,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      *
      * @return void
      */
-    protected function extractKeyValue(array &$selectedAttributes, $strVal, $delimiter = ':')
+    protected function extractVariantNameAndValue(array &$selectedAttributes, $strVal, $delimiter = ':')
     {
         list($key, $value) = explode($delimiter, $strVal);
         $selectedAttributes[$key] = $value;
@@ -143,10 +117,8 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     protected function getAttributesMapByProductAbstract($item)
     {
-        if (array_key_exists($item->getSku(), $this->attributes) === false) {
-            $this->attributes[$item->getSku()] = $this->productClient->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
-        }
-        return $this->attributes[$item->getSku()];
+        return $this->productClient
+            ->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
     }
 
 }

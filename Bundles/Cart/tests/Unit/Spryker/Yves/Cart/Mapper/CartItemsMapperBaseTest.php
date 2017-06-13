@@ -74,7 +74,11 @@ class CartItemsMapperBaseTest extends Test
         $item->setSku('170_28516206');
         $item->setId(166);
 
-        return [$item];
+        $item2 = new ItemTransfer();
+        $item2->setSku('170_28549472');
+        $item2->setId(167);
+
+        return [$item, $item2];
     }
 
     /**
@@ -86,8 +90,8 @@ class CartItemsMapperBaseTest extends Test
     {
         $total = 0;
 
-        foreach ($attributes as $selected) {
-            if ($selected === true) {
+        foreach ($attributes as $attribute) {
+            if ($attribute['selected'] === true) {
                 $total++;
             }
         }

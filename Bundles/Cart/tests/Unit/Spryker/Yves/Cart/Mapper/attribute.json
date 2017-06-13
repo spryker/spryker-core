@@ -1,9 +1,9 @@
 {
-  "productConcreteIds":[
-    166,
-    167,
-    168
-  ],
+  "productConcreteIds": {
+    "170_28549472": 166,
+    "170_28516206": 167,
+    "170_28576206": 168
+  },
   "superAttributes":{
     "processor_frequency":[
       "3 GHz",

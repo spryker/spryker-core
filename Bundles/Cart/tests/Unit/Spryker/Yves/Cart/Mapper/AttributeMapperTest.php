@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\Cart\Mapper;
 
 use Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper;
+use Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper;
 
 /**
  * @group Unit
@@ -25,7 +26,10 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
      */
     public function testBuildMap()
     {
-        $subject = new CartItemsAttributeMapper($this->buildProductClientMock());
+        $subject = new CartItemsAttributeMapper(
+            $this->buildProductClientMock(),
+            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock())
+        );
         $result = $subject->buildMap($this->getItems());
 
         $this->assertArrayHasKey('170_28516206', $result);

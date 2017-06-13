@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
 
-    const AVAILABILITY = 'availability';
     const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
@@ -36,12 +35,11 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      */
     public function buildMap($items)
     {
-        $attributes = [];
+        $availabilityMap = [];
         foreach ($items as $item) {
-            $attributes[$item->getSku()] = $this->getAvailability($item);
+            $availabilityMap = array_merge($availabilityMap, $this->getAvailability($item));
         }
-
-        return $attributes;
+        return $availabilityMap;
     }
 
     /**
@@ -56,17 +54,11 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
         $availability = $this->productAvailabilityClient->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())->toArray();
 
         foreach ($availability[self::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
-            if ($sku === $item->getSku()) {
-                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
-                break;
-            }
+            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }
 
         foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
-            if ($sku === $item->getSku()) {
-                $mapped[StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
-                break;
-            }
+            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
         }
 
         return $mapped;
