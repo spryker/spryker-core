@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductLabelCollector\Business\Collector\Storage;
 
 use DateTime;
-use Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StorageProductLabelTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
@@ -51,11 +51,11 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
                 continue;
             }
 
-            $projectionTransfer = new ProductLabelStorageProjectionTransfer();
-            $projectionTransfer->fromArray($productLabelTransfer->toArray(), true);
-            $projectionTransfer->setName($this->getNameAttributeForCurrentLocale($productLabelTransfer));
+            $storageProductLabelTransfer = new StorageProductLabelTransfer();
+            $storageProductLabelTransfer->fromArray($productLabelTransfer->toArray(), true);
+            $storageProductLabelTransfer->setName($this->getNameAttributeForCurrentLocale($productLabelTransfer));
 
-            $dictionary[] = $projectionTransfer->toArray();
+            $dictionary[] = $storageProductLabelTransfer->toArray();
         }
 
         return $dictionary;

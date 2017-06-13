@@ -166,7 +166,7 @@ class LabelCreator implements LabelCreatorInterface
 
         $this
             ->localizedAttributesCollectionWriter
-            ->set($productLabelTransfer->getLocalizedAttributesCollection());
+            ->save($productLabelTransfer->getLocalizedAttributesCollection());
     }
 
 }

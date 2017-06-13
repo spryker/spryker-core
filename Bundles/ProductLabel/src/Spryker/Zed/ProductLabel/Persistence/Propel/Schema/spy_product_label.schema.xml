@@ -25,7 +25,7 @@
             <unique-column name="name"/>
         </unique>
 
-        <index name="spy_product_label-index_position">
+        <index name="idx-spy_product_label-position">
             <index-column name="position"/>
         </index>
     </table>

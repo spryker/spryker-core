@@ -184,7 +184,7 @@ class LabelUpdater implements LabelUpdaterInterface
      */
     protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer)
     {
-        $this->localizedAttributesCollectionWriter->set($productLabelTransfer->getLocalizedAttributesCollection());
+        $this->localizedAttributesCollectionWriter->save($productLabelTransfer->getLocalizedAttributesCollection());
     }
 
     /**

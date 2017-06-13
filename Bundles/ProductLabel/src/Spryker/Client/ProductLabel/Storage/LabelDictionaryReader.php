@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductLabel\Storage;
 
-use Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer;
+use Generated\Shared\Transfer\StorageProductLabelTransfer;
 use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\ProductLabel\ProductLabelConfig;
@@ -26,37 +26,28 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     protected $keyBuilder;
 
     /**
-     * @var int
-     */
-    protected $maxNumberOfLabels;
-
-    /**
      * @param \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface $storageClient
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
-     * @param int $maxNumberOfLabels
      */
     public function __construct(
         ProductLabelToStorageInterface $storageClient,
-        KeyBuilderInterface $keyBuilder,
-        $maxNumberOfLabels
+        KeyBuilderInterface $keyBuilder
     ) {
         $this->storageClient = $storageClient;
         $this->keyBuilder = $keyBuilder;
-        $this->maxNumberOfLabels = $maxNumberOfLabels;
     }
 
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName)
     {
         $productLabelCollection = $this->getProductLabelsFromDictionary($idsProductLabel, $localeName);
         $productLabelCollection = $this->sortCollection($productLabelCollection);
         $productLabelCollection = $this->extractExclusive($productLabelCollection);
-        $productLabelCollection = $this->truncateCollection($productLabelCollection);
 
         return $productLabelCollection;
     }
@@ -65,7 +56,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      * @param int[] $idsProductLabel
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
     {
@@ -86,7 +77,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     protected function getLabelDictionary($localeName)
     {
@@ -102,17 +93,17 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     /**
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     protected function initializeLabelDictionary($localeName)
     {
         $labelsByIds = [];
 
         foreach ($this->readLabelDictionary($localeName) as $productLabelData) {
-            $productLabelProjectionTransfer = new ProductLabelStorageProjectionTransfer();
-            $productLabelProjectionTransfer->fromArray($productLabelData);
+            $storageProductLabelTransfer = new StorageProductLabelTransfer();
+            $storageProductLabelTransfer->fromArray($productLabelData, true);
 
-            $labelsByIds[$productLabelProjectionTransfer->getIdProductLabel()] = $productLabelProjectionTransfer;
+            $labelsByIds[$storageProductLabelTransfer->getIdProductLabel()] = $storageProductLabelTransfer;
         }
 
         return $labelsByIds;
@@ -134,9 +125,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[] $productLabelCollection
+     * @param \Generated\Shared\Transfer\StorageProductLabelTransfer[] $productLabelCollection
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     protected function extractExclusive(array $productLabelCollection)
     {
@@ -144,9 +135,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
             return $productLabelCollection;
         }
 
-        foreach ($productLabelCollection as $productLabelProjectionTransfer) {
-            if ($productLabelProjectionTransfer->getIsExclusive()) {
-                return [$productLabelProjectionTransfer];
+        foreach ($productLabelCollection as $storageProductLabelTransfer) {
+            if ($storageProductLabelTransfer->getIsExclusive()) {
+                return [$storageProductLabelTransfer];
             }
         }
 
@@ -154,9 +145,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[] $productLabelCollection
+     * @param \Generated\Shared\Transfer\StorageProductLabelTransfer[] $productLabelCollection
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     protected function sortCollection(array $productLabelCollection)
     {
@@ -165,25 +156,13 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
         }
 
         usort($productLabelCollection, function (
-            ProductLabelStorageProjectionTransfer $productLabelTransferA,
-            ProductLabelStorageProjectionTransfer $productLabelTransferB
+            StorageProductLabelTransfer $productLabelTransferA,
+            StorageProductLabelTransfer $productLabelTransferB
         ) {
             return ($productLabelTransferA->getPosition() > $productLabelTransferB->getPosition()) ? 1 : -1;
         });
 
         return $productLabelCollection;
-    }
-
-    /**
-     * @param array $productLabelCollection
-     *
-     * @return array
-     */
-    protected function truncateCollection(array $productLabelCollection)
-    {
-        $truncatedLabelCollection = array_slice($productLabelCollection, 0, $this->maxNumberOfLabels);
-
-        return $truncatedLabelCollection;
     }
 
 }

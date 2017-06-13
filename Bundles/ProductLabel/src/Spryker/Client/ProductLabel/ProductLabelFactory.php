@@ -46,8 +46,7 @@ class ProductLabelFactory extends AbstractFactory
     {
         return new LabelDictionaryReader(
             $this->getStorageClient(),
-            $this->createLabelDictionaryKeyBuilder(),
-            $this->getConfig()->getMaxNumberOfLabels()
+            $this->createLabelDictionaryKeyBuilder()
         );
     }
 

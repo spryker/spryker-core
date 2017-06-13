@@ -15,7 +15,7 @@ use Twig_SimpleFunction;
 class ProductLabelTwigExtension extends TwigExtension
 {
 
-    const FUNCTION_NAME = 'spyProductLabelItems';
+    const FUNCTION_NAME = 'spyProductLabels';
 
     /**
      * @var \Spryker\Client\ProductLabel\ProductLabelClientInterface
@@ -45,7 +45,7 @@ class ProductLabelTwigExtension extends TwigExtension
         return [
             new Twig_SimpleFunction(
                 static::FUNCTION_NAME,
-                [$this, 'renderProductLabelItems'],
+                [$this, 'renderProductLabels'],
                 [
                     'is_safe' => ['html'],
                     'needs_environment' => true,
@@ -61,7 +61,7 @@ class ProductLabelTwigExtension extends TwigExtension
      *
      * @return string
      */
-    public function renderProductLabelItems(Twig_Environment $twig, $idProductAbstract, $templateName)
+    public function renderProductLabels(Twig_Environment $twig, $idProductAbstract, $templateName)
     {
         $productLabelTransferCollection = $this
             ->productLabelClient

@@ -14,7 +14,7 @@ interface LabelDictionaryReaderInterface
      * @param int[] $idsProductLabel
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelStorageProjectionTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName);
 

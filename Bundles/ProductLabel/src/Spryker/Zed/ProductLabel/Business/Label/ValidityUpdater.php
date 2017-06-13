@@ -10,9 +10,12 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ValidityUpdater implements ValidityUpdaterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
@@ -48,10 +51,9 @@ class ValidityUpdater implements ValidityUpdaterInterface
             return;
         }
 
-        $this->setPublished($productLabelsBecomingActive);
-        $this->setUnpublished($productLabelsBecomingInactive);
-
-        $this->dictionaryTouchManager->touchActive();
+        $this->handleDatabaseTransaction(function () use ($productLabelsBecomingActive, $productLabelsBecomingInactive) {
+            $this->executeTransaction($productLabelsBecomingActive, $productLabelsBecomingInactive);
+        });
     }
 
     /**
@@ -74,6 +76,20 @@ class ValidityUpdater implements ValidityUpdaterInterface
             ->queryContainer
             ->queryPublishedProductLabelsBecomingInvalid()
             ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelsBecomingActive
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelsBecomingInactive
+     *
+     * @return void
+     */
+    protected function executeTransaction($productLabelsBecomingActive, $productLabelsBecomingInactive)
+    {
+        $this->setPublished($productLabelsBecomingActive);
+        $this->setUnpublished($productLabelsBecomingInactive);
+
+        $this->dictionaryTouchManager->touchActive();
     }
 
     /**

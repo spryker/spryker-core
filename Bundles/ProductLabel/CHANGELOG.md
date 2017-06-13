@@ -1,3 +1,3 @@
 # ProductLabel Changelog
 
-[ProductyLabel Changelog](https://github.com/spryker/ProductLabel/releases)
+[ProductLabel Changelog](https://github.com/spryker/ProductLabel/releases)

@@ -46,7 +46,7 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
      *
      * @return void
      */
-    public function set(ArrayObject $localizedAttributesTransferCollection)
+    public function save(ArrayObject $localizedAttributesTransferCollection)
     {
         $this->handleDatabaseTransaction(function () use ($localizedAttributesTransferCollection) {
             $this->executeSetTransaction($localizedAttributesTransferCollection);

@@ -8,7 +8,6 @@
 var CHECKBOX_CHECKED_STATE_CHECKED = 'checked';
 var CHECKBOX_CHECKED_STATE_UN_CHECKED = 'un_checked';
 
-//TODO fix later, see here: https://spryker.atlassian.net/browse/CD-446
 function ProductSelector() {
     var productSelector = {};
     var selectedProducts = {};

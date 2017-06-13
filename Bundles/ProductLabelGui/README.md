@@ -1,12 +1,12 @@
-# NavigationGui Bundle
-[![Build Status](https://travis-ci.org/spryker/NavigationGui.svg)](https://travis-ci.org/spryker/NavigationGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/NavigationGui/badge.svg)](https://coveralls.io/github/spryker/NavigationGui)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/NavigationGui/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/NavigationGui/?branch=master)
+# ProductLabelGui Bundle
+[![Build Status](https://travis-ci.org/spryker/PrductLabelGui.svg)](https://travis-ci.org/spryker/ProductLabelGui)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductLabelGui/badge.svg)](https://coveralls.io/github/spryker/ProductLabelGui)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductLabelGui/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductLabelGui/?branch=master)
 
 ## Installation
 
 ```
-composer require spryker/navigation-gui
+composer require spryker/product-label-gui
 ```
 
 ## Documentation
