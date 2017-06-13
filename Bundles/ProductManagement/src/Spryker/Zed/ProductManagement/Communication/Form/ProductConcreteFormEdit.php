@@ -141,7 +141,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($this->moneyFacade), [
+            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($this->moneyFacade, $this->currencyFacade), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [

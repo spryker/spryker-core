@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerGroup\Business\Model;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerGroupInterface
 {
@@ -53,5 +54,12 @@ interface CustomerGroupInterface
      * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
      */
     public function findCustomerGroupByIdCustomer($idCustomer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function removeCustomerFromAllGroups(CustomerTransfer $customerTransfer);
 
 }

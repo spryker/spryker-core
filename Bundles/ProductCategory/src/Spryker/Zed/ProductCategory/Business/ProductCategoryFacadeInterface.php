@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryFacadeInterface
@@ -89,5 +90,17 @@ interface ProductCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Touches related abstract-products for the given category and all of its children
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
 
 }

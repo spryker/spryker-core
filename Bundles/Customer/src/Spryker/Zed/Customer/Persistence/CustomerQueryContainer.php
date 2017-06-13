@@ -23,7 +23,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByEmail($email)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers();
         $query->filterByEmail($email);
 
         return $query;
@@ -36,7 +36,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers();
         $query
             ->filterByEmail($email)
             ->filterByIdCustomer($exceptIdCustomer, Criteria::NOT_EQUAL);
@@ -51,8 +51,21 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerById($id)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers();
         $query->filterByIdCustomer($id);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @inheritdoc
+     */
+    public function queryCustomerByReference($customerReference)
+    {
+        $query = $this->queryCustomers();
+        $query->filterByCustomerReference($customerReference);
 
         return $query;
     }
@@ -64,7 +77,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByRegistrationKey($token)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers();
         $query->filterByRegistrationKey($token);
 
         return $query;
@@ -77,7 +90,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByRestorePasswordKey($token)
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
+        $query = $this->queryCustomers();
         $query->filterByRestorePasswordKey($token);
 
         return $query;
@@ -148,9 +161,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryAddresses()
     {
-        $query = $this->getFactory()->createSpyCustomerAddressQuery();
-
-        return $query;
+        return $this->getFactory()->createSpyCustomerAddressQuery();
     }
 
     /**
@@ -160,9 +171,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomers()
     {
-        $query = $this->getFactory()->createSpyCustomerQuery();
-
-        return $query;
+        return $this->getFactory()->createSpyCustomerQuery();
     }
 
 }

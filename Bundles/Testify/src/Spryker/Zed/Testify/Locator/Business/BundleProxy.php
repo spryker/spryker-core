@@ -10,7 +10,6 @@ namespace Spryker\Zed\Testify\Locator\Business;
 use Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock;
 use Spryker\Shared\Kernel\BundleProxy as KernelBundleProxy;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Testify\Config\TestifyConfig;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -35,45 +34,11 @@ class BundleProxy extends KernelBundleProxy
     private $bundle;
 
     /**
-     * @var array
-     */
-    private $projectNamespaces = [];
-
-    /**
-     * @var array
-     */
-    private $coreNamespaces = [];
-
-    /**
      * @param \Spryker\Zed\Testify\Locator\Business\BusinessLocator $locator
      */
     public function __construct(BusinessLocator $locator)
     {
         $this->locator = $locator;
-    }
-
-    /**
-     * @param array $coreNamespaces
-     *
-     * @return $this
-     */
-    public function setCoreNamespaces($coreNamespaces)
-    {
-        $this->coreNamespaces = $coreNamespaces;
-
-        return $this;
-    }
-
-    /**
-     * @param array $projectNamespaces
-     *
-     * @return $this
-     */
-    public function setProjectNamespaces($projectNamespaces)
-    {
-        $this->projectNamespaces = $projectNamespaces;
-
-        return $this;
     }
 
     /**
@@ -98,8 +63,6 @@ class BundleProxy extends KernelBundleProxy
      */
     public function __call($method, $arguments)
     {
-        $this->configureNamespacesForClassResolver();
-
         if ($method === 'facade') {
             return $this->createFacade($method, $arguments);
         }
@@ -144,16 +107,6 @@ class BundleProxy extends KernelBundleProxy
         $container->setLocator($this->locator);
 
         return new TestifyConfigurator($container, $config);
-    }
-
-    /**
-     * @return void
-     */
-    private function configureNamespacesForClassResolver()
-    {
-        $configurator = $this->getConfigurator();
-        $configurator->getConfig()->set(KernelConstants::PROJECT_NAMESPACES, $this->projectNamespaces);
-        $configurator->getConfig()->set(KernelConstants::CORE_NAMESPACES, $this->coreNamespaces);
     }
 
     /**

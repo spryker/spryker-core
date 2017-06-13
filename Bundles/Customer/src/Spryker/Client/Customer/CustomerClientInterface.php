@@ -140,6 +140,18 @@ interface CustomerClientInterface
     public function getCustomerById($idCustomer);
 
     /**
+     * Specification:
+     * - Returns fresh Customer transfer or NULL, if it does not exist
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -237,5 +249,14 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 
 }

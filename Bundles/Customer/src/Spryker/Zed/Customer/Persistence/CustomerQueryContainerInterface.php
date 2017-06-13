@@ -43,6 +43,15 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $customerReference
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function queryCustomerByReference($customerReference);
+
+    /**
+     * @api
+     *
      * @param string $token
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery

@@ -11,4 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StockConfig extends AbstractBundleConfig
 {
+
+    const TOUCH_STOCK_TYPE = 'stock-type';
+    const TOUCH_STOCK_PRODUCT = 'stock-product';
+
 }

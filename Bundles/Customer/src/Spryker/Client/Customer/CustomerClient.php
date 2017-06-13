@@ -160,6 +160,26 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer)
+    {
+        $customerTransfer = $this->getCustomerById($customerTransfer->getIdCustomer());
+
+        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
+            return $customerTransfer;
+        }
+
+        return null;
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -385,6 +405,20 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getFactory()
             ->createZedCustomerStub()
             ->setDefaultBillingAddress($addressTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->anonymizeCustomer($customerTransfer);
     }
 
 }

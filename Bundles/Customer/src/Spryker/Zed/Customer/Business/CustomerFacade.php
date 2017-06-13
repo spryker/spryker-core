@@ -401,4 +401,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->checkPreConditions($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        $this->getFactory()
+            ->createCustomerAnonymizer()
+            ->process($customerTransfer);
+    }
+
 }

@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -155,8 +154,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     *
-     * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
