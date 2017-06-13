@@ -13,7 +13,7 @@
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/edit-block', {'id-cms-block' : idCmsBlock}) %}
-    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-block': idCmsBlock}), 'Edit placeholders' | trans) }}
+    {{ editActionButton(url('/cms-gui/create-block-glossary', {'id-cms-block': idCmsBlock}), 'Edit placeholders' | trans) }}
     {{ include ('@CmsGui/_template/activate-block-button.twig', { 'id-cms-block': idCmsBlock, 'isActive': cmsBlockForm.vars.data.isActive}) }}
     {{ backActionButton('/cms-gui/list-block', 'Back to CMS' | trans) }}
 {% endblock %}

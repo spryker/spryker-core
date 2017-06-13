@@ -4,6 +4,7 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockFacadeInterface
@@ -49,10 +50,45 @@ interface CmsBlockFacadeInterface
      * Specification
      * - Updates related CmsBlock and its glossary
      *
+     * @api
+     *
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+
+
+    /**
+     * Specification
+     * - Loops by all template files in passed path
+     * - Creates records with templates in DB
+     *
+     * @api
+     *
+     * @param string $templatePath
+     *
+     * @return bool
+     */
+    public function syncTemplate($templatePath);
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function findGlossaryPlaceholders($idCmsBlock);
+
+    /**
+     * Specification
+     * - Creates new or updates nested placeholders
+     *
+     * @api
+     *
+     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 
 }

@@ -6,6 +6,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
+use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\Block\CmsBlockForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -25,6 +26,10 @@ class EditBlockController extends AbstractController
 
     public function indexAction(Request $request)
     {
+        $this->getFactory()
+            ->getCmsBlockFacade()
+            ->syncTemplate(CmsGuiConfig::CMS_BLOCK_TEMPLATE_PATH);
+
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
 
         $cmsBlockFormTypeDataProvider = $this->getFactory()

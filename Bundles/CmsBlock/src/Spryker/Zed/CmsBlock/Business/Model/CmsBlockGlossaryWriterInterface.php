@@ -4,6 +4,8 @@
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+
 interface CmsBlockGlossaryWriterInterface
 {
 
@@ -13,5 +15,12 @@ interface CmsBlockGlossaryWriterInterface
      * @return void
      */
     public function deleteByCmsBlockId($idCmsBlock);
+
+    /**
+     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 
 }

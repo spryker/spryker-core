@@ -21,4 +21,11 @@ interface CmsBlockToGlossaryFacadeInterface
      */
     public function deleteKeys(array $keys);
 
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasKey($keyName);
+
 }

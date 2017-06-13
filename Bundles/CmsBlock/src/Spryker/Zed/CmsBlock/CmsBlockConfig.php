@@ -35,7 +35,6 @@ class CmsBlockConfig extends AbstractBundleConfig
     public function getTemplateRealPaths($templateRelativePath)
     {
         return [
-            $this->getAbsolutePath($templateRelativePath, 'Yves'),
             $this->getAbsolutePath($templateRelativePath, 'Shared'),
         ];
     }

@@ -23,7 +23,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     {
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
-        $cmsBlockTransfer->setTemplateName($spyCmsBlock->getCmsTemplate()->getTemplateName());
+        $cmsBlockTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
 
         $cmsBlockGlossaryTransfer = $this->createGlossaryTransfer($spyCmsBlock);
         $cmsBlockTransfer->setGlossary($cmsBlockGlossaryTransfer);
@@ -74,9 +74,10 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         $spyGlossaryKey = $spyCmsGlossaryKeyMapping->getGlossaryKey();
         $placeholderTransfer->setPlaceholder($spyCmsGlossaryKeyMapping->getPlaceholder());
         $placeholderTransfer->setTranslationKey($spyGlossaryKey->getKey());
-//            $placeholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());
-//            $placeholderTransfer->setFkCmsGlossaryMapping($spyCmsGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
-//            $placeholderTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
+        $placeholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());
+        $placeholderTransfer->setIdCmsBlockGlossaryKeyMapping($spyCmsGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
+        $placeholderTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
+        $placeholderTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
 
         foreach ($spyGlossaryKey->getSpyGlossaryTranslations() as $spyGlossaryTranslation) {
             $translationTransfer = new CmsBlockGlossaryPlaceholderTranslationTransfer();

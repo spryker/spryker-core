@@ -42,4 +42,12 @@ class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterfac
         return $this->glossaryFacade->deleteKeys($keys);
     }
 
+    /**
+     * @param string $keyName
+     * @return bool
+     */
+    public function hasKey($keyName)
+    {
+        return $this->glossaryFacade->hasKey($keyName);
+    }
 }

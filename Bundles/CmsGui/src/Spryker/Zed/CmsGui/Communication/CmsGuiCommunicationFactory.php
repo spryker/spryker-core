@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication;
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
@@ -14,9 +15,12 @@ use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
@@ -26,6 +30,7 @@ use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
+use Spryker\Zed\CmsGui\Communication\Tabs\CmsBlockGlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBlockInterface;
@@ -67,6 +72,16 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createPlaceholderTabs(CmsGlossaryTransfer $cmsGlossaryTransfer)
     {
         return new GlossaryTabs($cmsGlossaryTransfer);
+    }
+
+    /**
+     * @param CmsBlockGlossaryTransfer $glossaryTransfer
+     *
+     * @return CmsBlockGlossaryTabs
+     */
+    public function createCmsBlockPlaceholderTabs(CmsBlockGlossaryTransfer $glossaryTransfer)
+    {
+        return new CmsBlockGlossaryTabs($glossaryTransfer);
     }
 
     /**
@@ -137,6 +152,26 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
+     * @param $idCmsBlock
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCmsBlockGlossaryForm(
+      CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider,
+      $idCmsBlock
+    ) {
+        $cmsBlockGlossaryForm = $this->createCmsBlockGlossaryFormType();
+
+        return $this->getFormFactory()
+            ->create(
+                $cmsBlockGlossaryForm,
+                $cmsBlockGlossaryFormDataProvider->getData($idCmsBlock),
+                $cmsBlockGlossaryFormDataProvider->getOptions()
+            );
+    }
+
+    /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider
      */
     public function createCmsPageFormTypeDataProvider()
@@ -198,6 +233,16 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return CmsBlockGlossaryFormDataProvider
+     */
+    public function createCmsBlockGlossaryFormDataProvider()
+    {
+        return new CmsBlockGlossaryFormDataProvider(
+            $this->getCmsBlockFacade()
+        );
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
     public function createCmsGlossaryFormType()
@@ -230,6 +275,27 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsPageMetaAttributesFormType()
     {
         return new CmsPageMetaAttributesFormType();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createCmsBlockGlossaryFormType()
+    {
+        return new CmsBlockGlossaryForm(
+            $this->createCmsBlockGlossaryPlaceholderFormType()
+        );
+    }
+
+    /**
+     * @return CmsBlockGlossaryPlaceholderForm
+     */
+    protected function createCmsBlockGlossaryPlaceholderFormType()
+    {
+        return new CmsBlockGlossaryPlaceholderForm(
+            $this->getCmsBlockFacade(),
+            $this->createUniqueGlossaryForSearchTypeConstraint()
+        );
     }
 
     /**

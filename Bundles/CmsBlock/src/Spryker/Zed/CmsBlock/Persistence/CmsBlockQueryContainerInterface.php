@@ -49,4 +49,25 @@ interface CmsBlockQueryContainerInterface
      */
     public function queryTemplates();
 
+    /**
+     * @param string $path
+     *
+     * @return SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplateByPath($path);
+
+    /**
+     * @param array $placeholders
+     * @param int $idCmsBlock
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(array $placeholders, $idCmsBlock);
+
+    /**
+     * @param int $idGlossaryKeyMapping
+     *
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingById($idGlossaryKeyMapping);
+
 }

@@ -137,11 +137,11 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      */
     protected function checkTemplateFileExists($idCmsBlockTemplate)
     {
-//        $templateTransfer = $this->templateManager
-//            ->getTemplateById($idCmsBlockTemplate);
+        $templateTransfer = $this->templateManager
+            ->getTemplateById($idCmsBlockTemplate);
 
-//        $this->templateManager
-//            ->checkTemplateFileExists($templateTransfer->getTemplatePath());
+        $this->templateManager
+            ->checkTemplateFileExists($templateTransfer->getTemplatePath());
     }
 
     /**

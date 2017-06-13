@@ -3,6 +3,7 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -60,10 +61,56 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
             ->deactivateById($idCmsBlock);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
+     */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->getFactory()
             ->createCmsBlockWrite()
             ->updateCmsBlock($cmsBlockTransfer);
     }
+
+    /**
+     * @param string $templatePath
+     *
+     * @return bool
+     */
+    public function syncTemplate($templatePath)
+    {
+        return $this->getFactory()
+            ->createCmsBlockTemplateManager()
+            ->syncTemplate($templatePath);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function findGlossaryPlaceholders($idCmsBlock)
+    {
+        return $this->getFactory()
+            ->createCmsBlockGlossaryManager()
+            ->findPlaceholders($idCmsBlock);
+    }
+
+    /**
+     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsBlockGlossaryWriter()
+            ->saveGlossary($cmsBlockGlossaryTransfer);
+    }
+
 }

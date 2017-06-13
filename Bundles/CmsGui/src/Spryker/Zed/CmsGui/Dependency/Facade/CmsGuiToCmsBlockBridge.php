@@ -4,6 +4,7 @@
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
 
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface;
 
@@ -58,5 +59,35 @@ class CmsGuiToCmsBlockBridge implements CmsGuiToCmsBlockInterface
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         return $this->cmsBlockFacade->updateCmsBlock($cmsBlockTransfer);
+    }
+
+    /**
+     * @param string $templatePath
+     *
+     * @return bool
+     */
+    public function syncTemplate($templatePath)
+    {
+        return $this->cmsBlockFacade->syncTemplate($templatePath);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function findGlossaryPlaceholders($idCmsBlock)
+    {
+        return $this->cmsBlockFacade->findGlossaryPlaceholders($idCmsBlock);
+    }
+
+    /**
+     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return CmsBlockGlossaryTransfer
+     */
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    {
+        return $this->cmsBlockFacade->saveGlossary($cmsBlockGlossaryTransfer);
     }
 }

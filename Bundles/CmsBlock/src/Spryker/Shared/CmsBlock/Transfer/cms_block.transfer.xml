@@ -20,10 +20,11 @@
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholder">
+        <property name="idCmsBlockGlossaryKeyMapping" type="int" />
         <property name="fkGlossaryKey" type="int" />
         <property name="fkCmsBlock" type="int" />
-        <property name="fkCmsGlossaryMapping" type="int" />
         <property name="placeholder" type="string" />
+        <property name="templateName" type="string" />
         <property name="translationKey" type="string" />
         <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation" />
     </transfer>
@@ -34,4 +35,9 @@
         <property name="translation" type="string" />
     </transfer>
 
+    <transfer name="CmsBlockTemplateTransfer">
+        <property name="idCmsBlockTemplate" type="int" />
+        <property name="templateName" type="string" />
+        <property name="templatePath" type="string" />
+    </transfer>
 </transfers>

@@ -5,6 +5,7 @@ namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
+use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -34,7 +35,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     {
         return $this->queryCmsBlock()
             ->filterByIdCmsBlock($idCmsBlock)
-            ->leftJoinCmsTemplate()
+            ->leftJoinCmsBlockTemplate()
             ->leftJoinSpyCmsBlockGlossaryKeyMapping();
     }
 
@@ -55,7 +56,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     public function queryCmsBlockWithTemplate()
     {
         return $this->queryCmsBlock()
-            ->joinCmsTemplate()
+            ->leftJoinCmsBlockTemplate()
                 ->withColumn(SpyCmsBlockTemplateTableMap::COL_TEMPLATE_NAME, static::COLUMN_TEMPLATE_NAME);
     }
 
@@ -80,6 +81,62 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @param string $path
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplateByPath($path)
+    {
+        return $this->queryTemplates()
+            ->filterByTemplatePath($path);
+    }
+
+    /**
+     * @param array $placeholders
+     * @param int $idCmsBlock
+     *
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(array $placeholders, $idCmsBlock)
+    {
+        return $this->queryCmsBlockGlossaryKeyMapping()
+            ->filterByFkCmsBlock($idCmsBlock)
+            ->filterByPlaceholder_In($placeholders);
+    }
+
+    /**
+     * @param int $idGlossaryKeyMapping
+     *
+     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingById($idGlossaryKeyMapping)
+    {
+        return $this->queryCmsBlockGlossaryKeyMapping()
+            ->filterByIdCmsBlockGlossaryKeyMapping($idGlossaryKeyMapping);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryKey($key)
+    {
+        return $this->getGlossaryQueryContainer()
+            ->queryKey($key);
+    }
+
+    /**
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
+     */
+    protected function getGlossaryQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsBlockDependencyProvider::QUERY_CONTAINER_GLOSSARY);
+    }
+
+    /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     protected function queryCmsBlock()
@@ -96,6 +153,5 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();
     }
-
 
 }
