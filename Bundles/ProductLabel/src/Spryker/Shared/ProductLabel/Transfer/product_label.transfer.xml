@@ -14,7 +14,7 @@
         <property name="frontEndReference" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
-        <property name="position" type="integer"/>
+        <property name="position" type="int"/>
         <property
             name="localizedAttributesCollection"
             singular="localizedAttributes"
