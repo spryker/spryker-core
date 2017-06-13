@@ -28,7 +28,7 @@ class CmsBlockTable extends AbstractTable
 
     const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
 
-    const URL_CMS_BLOCK_GLOSSARY = '/cms-gui/glossary';
+    const URL_CMS_BLOCK_GLOSSARY = '/cms-gui/create-block-glossary';
     const URL_CMS_BLOCK_VIEW = '/cms-gui/view-block';
     const URL_CMS_BLOCK_EDIT = '/cms-gui/edit-block';
     const URL_CMS_BLOCK_DEACTIVATE = '/cms-gui/edit-block/deactivate';

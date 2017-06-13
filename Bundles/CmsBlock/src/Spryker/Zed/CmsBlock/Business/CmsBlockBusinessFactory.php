@@ -60,7 +60,8 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCmsBlockMapper(),
             $this->createCmsBlockGlossaryWriter(),
-            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH)
+            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH),
+            $this->createCmsBlockTemplateManager()
         );
     }
 

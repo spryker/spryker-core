@@ -33,21 +33,29 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $cmsBlockGlossaryWriter;
 
     /**
+     * @var CmsBlockTemplateManagerInterface
+     */
+    protected $templateManager;
+
+    /**
      * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param CmsBlockMapperInterface $cmsBlockMapper
      * @param CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
      * @param CmsBlockToTouchFacadeInterface $touchFacade
+     * @param CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockMapperInterface $cmsBlockMapper,
         CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter,
-        CmsBlockToTouchFacadeInterface $touchFacade
+        CmsBlockToTouchFacadeInterface $touchFacade,
+        CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockMapper = $cmsBlockMapper;
         $this->cmsBlockGlossaryWriter = $cmsBlockGlossaryWriter;
         $this->touchFacade = $touchFacade;
+        $this->templateManager = $cmsBlockTemplateManager;
     }
 
     /**

@@ -32,7 +32,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var GlossaryFacadeInterface
+     * @var CmsBlockToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 

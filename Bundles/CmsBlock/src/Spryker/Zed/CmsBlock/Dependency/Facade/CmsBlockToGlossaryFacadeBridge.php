@@ -4,6 +4,7 @@
 namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterface
@@ -50,4 +51,15 @@ class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterfac
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
+
+    /**
+     * @param KeyTranslationTransfer $keyTranslationTransfer
+     *
+     * @return bool
+     */
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
+    {
+        return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+    }
+
 }

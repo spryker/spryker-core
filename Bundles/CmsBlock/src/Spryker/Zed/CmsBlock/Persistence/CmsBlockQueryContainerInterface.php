@@ -57,6 +57,13 @@ interface CmsBlockQueryContainerInterface
     public function queryTemplateByPath($path);
 
     /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplateById($idCmsBlockTemplate);
+
+    /**
      * @param array $placeholders
      * @param int $idCmsBlock
      * @return SpyCmsBlockGlossaryKeyMappingQuery

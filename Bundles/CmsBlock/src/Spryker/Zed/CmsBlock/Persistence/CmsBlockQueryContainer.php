@@ -92,6 +92,17 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
+     */
+    public function queryTemplateById($idCmsBlockTemplate)
+    {
+        return $this->queryTemplates()
+            ->filterByIdCmsBlockTemplate($idCmsBlockTemplate);
+    }
+
+    /**
      * @param array $placeholders
      * @param int $idCmsBlock
      *

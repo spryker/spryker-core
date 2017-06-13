@@ -9,7 +9,7 @@
     {% set redirectUrl = url('/cms-gui/create-block-glossary', {'id-cms-block' : idCmsBlock}) %}
     {{ editActionButton(url('/cms-gui/edit-block', {'id-cms-block': idCmsBlock}), 'Edit block' | trans) }}
     {{ include ('@CmsGui/_template/activate-block-button.twig', { 'id-cms-block': idCmsBlock, 'isActive': cmsBlock.isActive}) }}
-    {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
+    {{ backActionButton('/cms-gui/list-block', 'Back to CMS Block' | trans) }}
 {% endblock %}
 
 {% block content %}

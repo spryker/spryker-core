@@ -113,6 +113,18 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     }
 
     /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return SpyCmsBlockTemplate
+     */
+    public function getTemplateById($idCmsBlockTemplate)
+    {
+        return $this->cmsBlockQueryContainer
+            ->queryTemplateById($idCmsBlockTemplate)
+            ->findOne();
+    }
+
+    /**
      * @param string $path
      *
      * @throws CmsBlockTemplatePathExistsException
