@@ -28,7 +28,6 @@ class CmsBlockForm extends AbstractType
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
-    const FIELD_TYPE = 'type';
     const FIELD_IS_ACTIVE = 'is_active';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
@@ -99,7 +98,6 @@ class CmsBlockForm extends AbstractType
             ->addIdCmsBlockField($builder)
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
-            ->addTypeField($builder)
             ->addValueField($builder);
     }
 
@@ -155,25 +153,6 @@ class CmsBlockForm extends AbstractType
                     ],
                     'groups' => [static::GROUP_UNIQUE_BLOCK_CHECK],
                 ])
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addTypeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_TYPE, 'choice', [
-            'label' => 'Type',
-            'choices' => [
-                static::TYPE_STATIC => 'Static',
-                static::TYPE_CATEGORY => 'Category',
-                static::TYPE_PRODUCT => 'Product',
             ],
         ]);
 
