@@ -79,7 +79,9 @@ class OrderUpdater implements OrderUpdaterInterface
                     continue;
                 }
 
-                $salesOrderItemEntity->fromArray($itemTransfer->modifiedToArray());
+                $salesOrderItemEntity->setCanceledAmount($itemTransfer->getCanceledAmount());
+                $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
+
                 $salesOrderItemEntity->save();
             }
         }
@@ -121,7 +123,9 @@ class OrderUpdater implements OrderUpdaterInterface
                     continue;
                 }
 
-                $expenseEntity->fromArray($expenseTransfer->modifiedToArray());
+                $expenseEntity->setCanceledAmount($expenseTransfer->getCanceledAmount());
+                $expenseEntity->setRefundableAmount($expenseTransfer->getRefundableAmount());
+
                 $expenseEntity->save();
             }
         }

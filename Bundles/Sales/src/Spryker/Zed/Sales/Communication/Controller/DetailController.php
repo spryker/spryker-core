@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;

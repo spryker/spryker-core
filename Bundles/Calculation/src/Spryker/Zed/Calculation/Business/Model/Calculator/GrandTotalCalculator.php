@@ -39,8 +39,9 @@ class GrandTotalCalculator implements CalculatorInterface
     {
         $calculableObjectTransfer->requireTotals();
 
-        $grandTotal = $this->calculateGrandTotal($calculableObjectTransfer->getTotals());
-        $grandTotal = $this->getGrandTotalWithTax($calculableObjectTransfer, $grandTotal);
+        $grandTotal = 0;
+        $grandTotal = $this->calculateItemGrandTotal($calculableObjectTransfer, $grandTotal);
+        $grandTotal = $this->calculateExpenseGrandTotal($calculableObjectTransfer, $grandTotal);
 
         $totalsTransfer = $calculableObjectTransfer->getTotals();
         $totalsTransfer->setHash($this->generateTotalsHash($grandTotal));
@@ -49,23 +50,30 @@ class GrandTotalCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param int $grandTotal
      *
      * @return int
      */
-    protected function calculateGrandTotal(TotalsTransfer $totalsTransfer)
+    protected function calculateItemGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
     {
-        $subtotal = $totalsTransfer->getSubtotal();
-        $expenseTotal = $totalsTransfer->getExpenseTotal();
-        $discountTotal = $totalsTransfer->getDiscountTotal();
-        $canceledTotal = $totalsTransfer->getCanceledTotal();
-
-        $grandTotal = $subtotal + $expenseTotal - $discountTotal - $canceledTotal;
-
-        if ($grandTotal < 0) {
-            $grandTotal = 0;
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            $grandTotal += $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
         }
+        return $grandTotal;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param int $grandTotal
+     *
+     * @return int
+     */
+    protected function calculateExpenseGrandTotal(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
+    {
+        foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
+            $grandTotal += $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
+        }
         return $grandTotal;
     }
 
@@ -77,20 +85,6 @@ class GrandTotalCalculator implements CalculatorInterface
     protected function generateTotalsHash($grandTotal)
     {
         return $this->utilTextService->hashValue($grandTotal, Hash::SHA256);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     * @param int $grandTotal
-     *
-     * @return int
-     */
-    protected function getGrandTotalWithTax(CalculableObjectTransfer $calculableObjectTransfer, $grandTotal)
-    {
-        if ($calculableObjectTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
-            $grandTotal += $calculableObjectTransfer->getTotals()->getTaxTotal()->getAmount();
-        }
-        return $grandTotal;
     }
 
 }

@@ -54,13 +54,13 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             $canceledTaxableAmount = $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
 
             if (!$canceledTaxableAmount) {
-                $itemTransfer->setTaxAmountAfterCancellation(0);
+                $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getUnitTaxAmountFullAggregation());
             }
 
             $taxAmount = $this->calculateTaxAmount(
                 $canceledTaxableAmount,
                 $itemTransfer->getTaxRateAverageAggregation(),
-                $calculableObjectTransfer->getPriceMode()
+                CalculationPriceMode::PRICE_MODE_GROSS
             );
 
             $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getUnitTaxAmountFullAggregation() - $taxAmount);
@@ -83,7 +83,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             $canceledTaxableAmount = $expenseTransfer->getUnitPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
 
             if (!$canceledTaxableAmount) {
-                $expenseTransfer->setTaxAmountAfterCancellation(0);
+                $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getUnitTaxAmount());
             }
 
             $taxAmount = $this->calculateTaxAmount(

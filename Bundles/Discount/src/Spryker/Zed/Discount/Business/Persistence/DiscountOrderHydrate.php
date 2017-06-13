@@ -180,6 +180,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     protected function hydrateCalculatedDiscountTransfer(SpySalesDiscount $salesOrderDiscountEntity)
     {
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
         $calculatedDiscountTransfer->setQuantity(1);
