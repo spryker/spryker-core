@@ -64,7 +64,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      *
      * @return bool
      */
-    public function isModified($propertyName)
+    public function isPropertyModified($propertyName)
     {
         return in_array($propertyName, $this->modifiedProperties);
     }

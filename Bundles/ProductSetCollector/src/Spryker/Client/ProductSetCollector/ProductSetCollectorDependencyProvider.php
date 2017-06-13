@@ -40,7 +40,7 @@ class ProductSetCollectorDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideSearchClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
+        $container[static::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();
         };
     }
@@ -52,7 +52,7 @@ class ProductSetCollectorDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListResultFormatterPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS] = function (Container $container) {
             return $this->getProductSetListResultFormatterPlugins();
         };
     }
@@ -64,7 +64,7 @@ class ProductSetCollectorDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListQueryExpanderPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS] = function (Container $container) {
+        $container[static::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS] = function (Container $container) {
             return $this->getProductSetListQueryExpanderPlugins();
         };
     }

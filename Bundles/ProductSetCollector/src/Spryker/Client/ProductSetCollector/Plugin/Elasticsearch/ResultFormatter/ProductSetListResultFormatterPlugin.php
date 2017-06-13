@@ -24,7 +24,7 @@ class ProductSetListResultFormatterPlugin extends AbstractElasticsearchResultFor
      */
     public function getName()
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**

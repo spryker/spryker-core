@@ -10,7 +10,7 @@
             <reference local="fk_resource_product_set" foreign="id_product_set"/>
         </foreign-key>
 
-        <index name="spy_product_image_set-fi_resource_product_set">
+        <index name="spy_product_image_set-fk_resource_product_set">
             <index-column name="fk_resource_product_set"/>
         </index>
     </table>

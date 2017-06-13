@@ -53,7 +53,7 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function executeCreateProductSetDataTransaction(ProductSetTransfer $productSetTransfer)
+    protected function executeCreateProductSetDataTransaction(ProductSetTransfer $productSetTransfer)
     {
         foreach ($productSetTransfer->getLocalizedData() as $localizedProductSetTransfer) {
             $this->createLocalizedProductSet($localizedProductSetTransfer, $productSetTransfer->getIdProductSet());

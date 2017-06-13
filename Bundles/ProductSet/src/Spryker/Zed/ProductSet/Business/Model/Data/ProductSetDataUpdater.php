@@ -58,7 +58,7 @@ class ProductSetDataUpdater implements ProductSetDataUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\LocalizedProductSetTransfer
      */
-    public function executeUpdateProductSetDataTransaction(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet)
+    protected function executeUpdateProductSetDataTransaction(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet)
     {
         $this->assertLocalizedProductSetForUpdate($localizedProductSetTransfer);
 

@@ -46,7 +46,7 @@ class ProductSetDataDeleter implements ProductSetDataDeleterInterface
      *
      * @return void
      */
-    public function executeDeleteProductSetDataTransaction(SpyProductSet $productSetEntity)
+    protected function executeDeleteProductSetDataTransaction(SpyProductSet $productSetEntity)
     {
         $this->deleteProductSetDataEntities($productSetEntity);
         $this->productSetUrlDeleter->deleteUrl($productSetEntity->getIdProductSet());

@@ -24,135 +24,39 @@ use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface;
 use Symfony\Component\Form\FormInterface;
 
-class CreateFormDataToTransferMapper
+class CreateFormDataToTransferMapper extends AbstractProductSetFormDataToTransferMapper
 {
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface
+     * @return string
      */
-    protected $localeFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface $localeFacade
-     */
-    public function __construct(ProductSetGuiToLocaleInterface $localeFacade)
+    protected function getGeneralFormFieldName()
     {
-        $this->localeFacade = $localeFacade;
+        return CreateProductSetFormType::FIELD_GENERAL_FORM;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productSetForm
-     *
-     * @return \Generated\Shared\Transfer\ProductSetTransfer
+     * @return string
      */
-    public function mapData(FormInterface $productSetForm)
+    protected function getProductFormFieldName()
     {
-        $productSetTransfer = new ProductSetTransfer();
-
-        $generalData = $productSetForm->get(CreateProductSetFormType::FIELD_GENERAL_FORM)->getData();
-
-        // product set
-        $productSetTransfer->fromArray($generalData, true);
-
-        // general data
-        $localizedGeneralFormDataCollection = $productSetForm->get(CreateProductSetFormType::FIELD_GENERAL_FORM)
-            ->get(GeneralFormType::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION)
-            ->getData();
-
-        foreach ($localizedGeneralFormDataCollection as $localizedGeneralFormData) {
-            // localized product set
-            $localizedProductSetTransfer = new LocalizedProductSetTransfer();
-            $localizedProductSetTransfer->fromArray($localizedGeneralFormData, true);
-
-            // locale
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->setIdLocale($localizedGeneralFormData[LocalizedGeneralFormType::FIELD_FK_LOCALE]);
-            $localizedProductSetTransfer->setLocale($localeTransfer);
-
-            // product set data
-            $productSetDataTransfer = new ProductSetDataTransfer();
-            $productSetDataTransfer->fromArray($localizedGeneralFormData, true);
-            $localizedProductSetTransfer->setProductSetData($productSetDataTransfer);
-
-            $productSetTransfer->addLocalizedData($localizedProductSetTransfer);
-        }
-
-        // products
-        $idProductAbstracts = $productSetForm->get(CreateProductSetFormType::FIELD_PRODUCTS_FORM)
-            ->get(ProductsFormType::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
-            ->getData();
-        $productSetTransfer->setIdProductAbstracts($idProductAbstracts);
-
-        // seo
-        $localizedSeoFormDataCollection = $productSetForm->get(CreateProductSetFormType::FIELD_SEO_FORM)
-            ->get(SeoFormType::FIELD_LOCALIZED_SEO_FORM_COLLECTION)
-            ->getData();
-
-        foreach ($localizedSeoFormDataCollection as $i => $localizedSeoFormData) {
-            $productSetDataTransfer = $productSetTransfer->getLocalizedData()[$i]->getProductSetData();
-            $productSetDataTransfer->fromArray($localizedSeoFormData, true);
-        }
-
-        // images
-        $defaultImageSetFormCollection = $productSetForm->get(CreateProductSetFormType::FIELD_IMAGES_FORM)
-            ->get(ImagesFormType::getImageSetFormName());
-        $this->setProductImageSets($defaultImageSetFormCollection, $productSetTransfer);
-
-        $localeCollection = $this->localeFacade->getLocaleCollection();
-        foreach ($localeCollection as $localeTransfer) {
-            $localizedImageSetFormCollection = $productSetForm->get(CreateProductSetFormType::FIELD_IMAGES_FORM)
-                ->get(ImagesFormType::getImageSetFormName($localeTransfer->getLocaleName()));
-            $this->setProductImageSets($localizedImageSetFormCollection, $productSetTransfer, $localeTransfer);
-        }
-
-        return $productSetTransfer;
+        return CreateProductSetFormType::FIELD_PRODUCTS_FORM;
     }
 
     /**
-     * @param array $imageCollectionData
-     *
-     * @return array
+     * @return string
      */
-    public function mapProductImageCollection(array $imageCollectionData)
+    protected function getSeoFormFieldName()
     {
-        $result = [];
-
-        foreach ($imageCollectionData as $i => $imageData) {
-            $imageTransfer = new ProductImageTransfer();
-            $imageTransfer->fromArray($imageData, true);
-            $imageTransfer->setSortOrder($i);
-
-            $result[] = $imageTransfer;
-        }
-
-        return $result;
+        return CreateProductSetFormType::FIELD_SEO_FORM;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $imageSetFormCollection
-     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return void
+     * @return string
      */
-    protected function setProductImageSets(FormInterface $imageSetFormCollection, ProductSetTransfer $productSetTransfer, LocaleTransfer $localeTransfer = null)
+    protected function getImagesFormFieldName()
     {
-        foreach ($imageSetFormCollection as $imageSetForm) {
-            $imageSetFormData = $imageSetForm->getData();
-            $imageSetData = array_filter($imageSetFormData);
-
-            $imageSetTransfer = new ProductImageSetTransfer();
-            $imageSetTransfer->fromArray($imageSetData, true);
-            $imageSetTransfer->setLocale($localeTransfer);
-
-            $productImages = $this->mapProductImageCollection(
-                $imageSetForm->get(LocalizedProductImageSetFormType::FIELD_PRODUCT_IMAGE_COLLECTION)->getData()
-            );
-            if ($productImages) {
-                $imageSetTransfer->setProductImages(new ArrayObject($productImages));
-                $productSetTransfer->addImageSet($imageSetTransfer);
-            }
-        }
+        return CreateProductSetFormType::FIELD_IMAGES_FORM;
     }
 
 }

@@ -108,7 +108,7 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
      */
     protected function updateProductAbstractSetEntities(SpyProductSet $productSetEntity, ProductSetTransfer $productSetTransfer)
     {
-        if (!$productSetTransfer->isModified(ProductSetTransfer::ID_PRODUCT_ABSTRACTS)) {
+        if (!$productSetTransfer->isPropertyModified(ProductSetTransfer::ID_PRODUCT_ABSTRACTS)) {
             return;
         }
 
@@ -168,7 +168,7 @@ class ProductSetUpdater implements ProductSetUpdaterInterface
      */
     protected function updateImageSets(ProductSetTransfer $productSetTransfer)
     {
-        if (!$productSetTransfer->isModified(ProductSetTransfer::IMAGE_SETS)) {
+        if (!$productSetTransfer->isPropertyModified(ProductSetTransfer::IMAGE_SETS)) {
             return;
         }
 

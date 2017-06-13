@@ -23,14 +23,6 @@ class ProductSetToProductImageBridge implements ProductSetToProductImageInterfac
         $this->productImageQueryContainer = $productImageQueryContainer;
     }
 
-//    /**
-//     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
-//     */
-//    public function queryProductImage()
-//    {
-//        return $this->productImageQueryContainer->queryProductImage();
-//    }
-
     /**
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */

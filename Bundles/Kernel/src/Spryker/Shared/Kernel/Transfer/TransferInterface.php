@@ -37,6 +37,6 @@ interface TransferInterface
      *
      * @return bool
      */
-    public function isModified($propertyName);
+    public function isPropertyModified($propertyName);
 
 }

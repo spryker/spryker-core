@@ -5,7 +5,7 @@
 
     <table name="spy_product_set" idMethod="native" allowPkInsert="true">
         <column name="id_product_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
+        <column name="is_active" required="true" default="false" type="BOOLEAN"/>
         <column name="weight" required="true" type="INTEGER" default="0"/>
         <column name="product_set_key" required="true" type="VARCHAR" size="255"/>
 
@@ -29,11 +29,11 @@
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <index name="spy_product_abstract_set-fi_product_set">
+        <index name="spy_product_abstract_set-fk_product_set">
             <index-column name="fk_product_set"/>
         </index>
 
-        <index name="spy_product_abstract_set-fi_product_abstract">
+        <index name="spy_product_abstract_set-fk_product_abstract">
             <index-column name="fk_product_abstract"/>
         </index>
     </table>
@@ -62,11 +62,11 @@
             <unique-column name="fk_locale"/>
         </unique>
 
-        <index name="spy_product_set_data-fi_product_set">
+        <index name="spy_product_set_data-fk_product_set">
             <index-column name="fk_product_set"/>
         </index>
 
-        <index name="spy_product_set_data-fi_locale">
+        <index name="spy_product_set_data-fk_locale">
             <index-column name="fk_locale"/>
         </index>
 
