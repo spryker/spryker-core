@@ -75,7 +75,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             $spyCmsBlock->setIsActive(true);
             $spyCmsBlock->save();
 
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         });
     }
 
@@ -91,7 +91,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             $spyCmsBlock->setIsActive(false);
             $spyCmsBlock->save();
 
-            $this->touchFacade->touchDeleted(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchDeleted(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         });
     }
 
@@ -191,7 +191,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock->save();
 
         if ($spyCmsBlock->getIsActive()) {
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
 
     }
@@ -206,7 +206,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock->save();
 
         if ($spyCmsBlock->getIsActive()) {
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdCmsBlock($spyCmsBlock->getIdCmsBlock());
