@@ -32,4 +32,13 @@ $(document).ready(function() {
 
     toggleValueTranslations();
 
+    var isSuperCheckBox = $('#attributeForm_is_super');
+
+    isSuperCheckBox
+        .off('click')
+        .on('click', function() {
+            var checkboxIsChecked = isSuperCheckBox.prop('checked');
+            $('#attributeForm_allow_input').prop('disabled', checkboxIsChecked);
+        });
+
 });
