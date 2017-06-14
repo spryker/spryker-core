@@ -66,7 +66,7 @@ class CmsBlockGlossaryTabs extends AbstractTabs
      */
     protected function setFooter(TabsViewTransfer $tabsViewTransfer)
     {
-        $tabsViewTransfer->setFooterTemplate('@CmsGui/_template/_form-submit.twig')
+        $tabsViewTransfer->setFooterTemplate('@CmsBlockGui/_partial/_form-submit.twig')
             ->setIsNavigable(true);
 
         return $this;

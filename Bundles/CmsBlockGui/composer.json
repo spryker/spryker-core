@@ -1,5 +1,5 @@
 {
-  "name": "spryker/cms-blockgui",
+  "name": "spryker/cms-block-gui",
   "description": "CMS Block GUI Module",
   "license": "proprietary",
   "require": {
