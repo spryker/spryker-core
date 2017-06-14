@@ -64,6 +64,16 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     }
 
     /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        return $this->cmsBlockFacade->createCmsBlock($cmsBlockTransfer);
+    }
+
+    /**
      * @param string $templatePath
      *
      * @return bool

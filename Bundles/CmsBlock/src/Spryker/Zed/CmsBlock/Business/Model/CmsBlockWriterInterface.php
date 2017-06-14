@@ -29,4 +29,11 @@ interface CmsBlockWriterInterface
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+
 }

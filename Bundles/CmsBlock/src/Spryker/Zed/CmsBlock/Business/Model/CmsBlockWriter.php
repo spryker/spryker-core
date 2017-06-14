@@ -95,6 +95,13 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         });
     }
 
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @throws CmsBlockNotFoundException
+     *
+     * @return CmsBlockTransfer
+     */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $cmsBlockTransfer->requireIdCmsBlock();
@@ -112,7 +119,23 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {
-            $this->executeUpdateByTransfer($cmsBlockTransfer, $spyCmsBlock);
+            $this->updateCmsBlockTransaction($cmsBlockTransfer, $spyCmsBlock);
+        });
+
+        return $cmsBlockTransfer;
+    }
+
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $cmsBlockTransfer->requireFkTemplate();
+
+        $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
+            return $this->createCmsBlockTransaction($cmsBlockTransfer);
         });
 
         return $cmsBlockTransfer;
@@ -158,23 +181,35 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function executeUpdateByTransfer(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
+    protected function updateCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
     {
         if ($spyCmsBlock->getFkTemplate() !== $cmsBlockTransfer->getFkTemplate()) {
             $this->cmsBlockGlossaryWriter->deleteByCmsBlockId($spyCmsBlock->getIdCmsBlock());
         }
 
-        //save block
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
-
-        //save related fields (do we have them)?
-        //...
-
 
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
 
     }
+
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     */
+    protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $spyCmsBlock = new SpyCmsBlock();
+        $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
+        $spyCmsBlock->save();
+
+        if ($spyCmsBlock->getIsActive()) {
+            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_BLOCK, $spyCmsBlock->getIdCmsBlock());
+        }
+
+        $cmsBlockTransfer->setIdCmsBlock($spyCmsBlock->getIdCmsBlock());
+    }
+
 }

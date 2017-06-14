@@ -78,6 +78,22 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsBlockWrite()
+            ->createCmsBlock($cmsBlockTransfer);
+    }
+
+    /**
      * @param string $templatePath
      *
      * @return bool

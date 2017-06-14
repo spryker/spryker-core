@@ -48,7 +48,8 @@ interface CmsBlockFacadeInterface
 
     /**
      * Specification
-     * - Updates related CmsBlock and its glossary
+     * - Updates CMS Block
+     * - Asserts that chosen template still exists
      *
      * @api
      *
@@ -58,6 +59,17 @@ interface CmsBlockFacadeInterface
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
+    /**
+     * Specification
+     * - Creates a CMS Block record
+     * - Asserts that chosen template still exists
+     * - Sets CMS Block ID to transfer
+     *
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
      * Specification
