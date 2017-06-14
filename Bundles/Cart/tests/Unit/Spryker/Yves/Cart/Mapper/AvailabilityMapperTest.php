@@ -25,7 +25,7 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
      */
     public function testBuildMap()
     {
-        $subject = new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock());
+        $subject = new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock('availability.json'));
         $result = $subject->buildMap($this->getItems());
 
         $this->assertArrayHasKey('170_28516206', $result);

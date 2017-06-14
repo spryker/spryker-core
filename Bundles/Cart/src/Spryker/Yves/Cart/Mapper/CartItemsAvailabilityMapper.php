@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
@@ -33,7 +34,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap($items)
+    public function buildMap(array $items)
     {
         $availabilityMap = [];
         foreach ($items as $item) {
@@ -47,7 +48,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    protected function getAvailability($item)
+    protected function getAvailability(ItemTransfer $item)
     {
         $mapped = [];
 
@@ -57,6 +58,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
             $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }
 
+        //todo: remove this and also revert the collector changes
         foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
             $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
         }

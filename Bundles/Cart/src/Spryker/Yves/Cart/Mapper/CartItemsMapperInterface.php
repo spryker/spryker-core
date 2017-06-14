@@ -22,6 +22,6 @@ interface CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap($items);
+    public function buildMap(array $items);
 
 }

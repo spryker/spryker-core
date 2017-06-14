@@ -25,41 +25,47 @@ class CartItemsMapperBaseTest extends Test
 {
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | \Spryker\Client\Product\ProductClientInterface
+     * @param string $jsonFileToLoad
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Product\ProductClientInterface
      */
-    protected function buildProductClientMock()
+    protected function buildProductClientMock($jsonFileToLoad)
     {
         $mock = $this->getMockBuilder(ProductClient::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAttributeMapByIdProductAbstractForCurrentLocale'])->getMock();
 
         $mock->method('getAttributeMapByIdProductAbstractForCurrentLocale')
-            ->willReturn(\json_decode(file_get_contents(__DIR__ . '/attribute.json'), true));
+            ->willReturn(\json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true));
         return $mock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | \Spryker\Client\Availability\AvailabilityClientInterface
+     * @param string $jsonFileToLoad
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Availability\AvailabilityClientInterface
      */
-    protected function buildProductAvailabilityClientMock()
+    protected function buildProductAvailabilityClientMock($jsonFileToLoad)
     {
         $mock = $this->getMockBuilder(AvailabilityClient::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $mock->method('getProductAvailabilityByIdProductAbstract')
-            ->willReturn($this->getAvailabilityTransfer());
+            ->willReturn($this->getAvailabilityTransfer($jsonFileToLoad));
         return $mock;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @param string $jsonFileToLoad
+     *
+     * @return StorageAvailabilityTransfer
      */
-    protected function getAvailabilityTransfer()
+    protected function getAvailabilityTransfer($jsonFileToLoad)
     {
         $transfer = new StorageAvailabilityTransfer();
         $transfer->fromArray(
-            \json_decode(file_get_contents(__DIR__ . '/availability.json'), true),
+            \json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true),
             true
         );
         return $transfer;
@@ -77,6 +83,23 @@ class CartItemsMapperBaseTest extends Test
         $item2 = new ItemTransfer();
         $item2->setSku('170_28549472');
         $item2->setId(167);
+
+        return [$item, $item2];
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function getNestedItems()
+    {
+        $item = new ItemTransfer();
+        $item->setSku('112_312526171');
+        $item->setId(131);
+
+        $item2 = new ItemTransfer();
+        $item2->setSku('112_306918001');
+        $item2->setId(132);
 
         return [$item, $item2];
     }

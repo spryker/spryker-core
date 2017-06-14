@@ -27,8 +27,8 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     public function testBuildMap()
     {
         $subject = new CartItemsAttributeMapper(
-            $this->buildProductClientMock(),
-            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock())
+            $this->buildProductClientMock('attribute.json'),
+            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock('availability.json'))
         );
         $result = $subject->buildMap($this->getItems());
 
@@ -45,6 +45,33 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
         $this->assertSame(3, count($attributes['processor_frequency']));
 
         $this->assertSame(1, $this->countSelectedAttributes($attributes['processor_frequency']));
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testBuildNestedMap()
+    {
+        $subject = new CartItemsAttributeMapper(
+            $this->buildProductClientMock('attributeNested.json'),
+            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock('availabilityNested.json'))
+        );
+        $result = $subject->buildMap($this->getNestedItems());
+
+        $this->assertArrayHasKey('112_312526171', $result);
+
+        $attributes = $result['112_312526171'];
+
+        $this->assertArrayHasKey('chassis_type', $attributes);
+        $this->assertSame(1, count($attributes['chassis_type']));
+
+//        $this->assertSame(1, $this->countSelectedAttributes($attributes['color']));
+//
+//        $this->assertArrayHasKey('processor_frequency', $attributes);
+//        $this->assertSame(3, count($attributes['processor_frequency']));
+//
+//        $this->assertSame(1, $this->countSelectedAttributes($attributes['processor_frequency']));
     }
 
 }

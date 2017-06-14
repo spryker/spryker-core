@@ -7,7 +7,10 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Spryker\Shared\Cart\CartConstants;
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
@@ -41,7 +44,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap($items)
+    public function buildMap(array $items)
     {
         $itemsAvailabilityMap = $this->cartItemsAvailabilityMapper->buildMap($items);
         $availableItemsSkus = array_keys($itemsAvailabilityMap);
@@ -68,28 +71,32 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    protected function getAttributesWithAvailability($item, array $attributeMap, array $availableItemsSkus)
+    protected function getAttributesWithAvailability(ItemTransfer $item, array $attributeMap, array $availableItemsSkus)
     {
         $productConcreteIds = $attributeMap[StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS];
         $productConcreteSkus = array_flip($productConcreteIds);
 
-        $productVariants = [];
+        $productVariants= [];
 
-        foreach ($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS] as $variantNameValue => $variant) {
-            foreach ($variant as $options) {
-                foreach ((array)$options as $productConcreteId) {
-                    list($variantName, $variantValue) = explode(':', $variantNameValue);
-                    if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {
-                        $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = false;
-                        $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = false;
-                    }
+        $shit = $attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS];
 
-                    if (in_array($productConcreteSkus[$productConcreteId], $availableItemsSkus)) {
-                        $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = true;
-                    }
-                    if ($productConcreteId === $item->getId()) {
-                        $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = true;
-                    }
+        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($shit), RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($iterator as $attribute => $productConcreteId) {
+            if ($iterator->callHasChildren() === false) {
+
+                $variantNameValue = $iterator->getSubIterator($iterator->getDepth() -1)->key();
+                list($variantName, $variantValue) = explode(':', $variantNameValue);
+
+                if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {
+                    $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = false;
+                    $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = false;
+                }
+
+                if (in_array($productConcreteSkus[$productConcreteId], $availableItemsSkus)) {
+                    $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = true;
+                }
+                if ($productConcreteId === $item->getId()) {
+                    $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = true;
                 }
             }
         }
@@ -102,7 +109,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    protected function getAttributesMapByProductAbstract($item)
+    protected function getAttributesMapByProductAbstract(ItemTransfer $item)
     {
         return $this->productClient
             ->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
