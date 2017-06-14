@@ -19,9 +19,6 @@
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/elastica": "If you want to use ProductSetCollectorClient with the provided search functionalities, you need to install spryker/silex."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
