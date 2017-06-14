@@ -5,7 +5,6 @@
   "require": {
     "spryker/application": "^3.0.0",
     "spryker/cms": "^5.0.0",
-    "spryker/cms-block": "*",
     "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.3.3",
     "spryker/kernel": "^3.0.0",

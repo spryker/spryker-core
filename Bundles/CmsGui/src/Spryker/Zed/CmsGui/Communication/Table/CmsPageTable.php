@@ -361,7 +361,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function getActiveStatusLabel(array $item)
+    protected function getActiveStatusLabel($item)
     {
         if (!$item[SpyCmsPageTableMap::COL_IS_ACTIVE]) {
             return '<span class="label label-danger">Inactive</span>';
@@ -375,7 +375,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStatusLabel(array $item)
+    protected function getStatusLabel($item)
     {
         if ($item[static::COL_CMS_VERSION_COUNT] > 0) {
             return $this->getActiveStatusLabel($item);
