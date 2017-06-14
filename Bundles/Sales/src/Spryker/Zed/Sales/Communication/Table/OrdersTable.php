@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -16,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
-use Spryker\Zed\Sales\Persistence\Propel\AbstractSpySalesOrder;
 
 class OrdersTable extends AbstractTable
 {

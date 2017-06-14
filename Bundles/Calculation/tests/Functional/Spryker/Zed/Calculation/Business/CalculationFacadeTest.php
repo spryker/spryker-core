@@ -531,11 +531,15 @@ class CalculationFacadeTest extends Test
 
         $quoteTransfer = new QuoteTransfer();
 
-        $totalsTransfer = new TotalsTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumPriceToPayAggregation(100);
+        $quoteTransfer->addItem($itemTransfer);
 
-        $totalsTransfer->setSubtotal(200);
-        $totalsTransfer->setExpenseTotal(100);
-        $totalsTransfer->setDiscountTotal(50);
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPriceToPayAggregation(150);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
 
         $quoteTransfer->setTotals($totalsTransfer);
 

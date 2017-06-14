@@ -78,7 +78,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      */
     protected function setRoundingErrorDelta($roundingErrorDelta, $identifier = null)
     {
-        if ($identifier)  {
+        if ($identifier) {
             static::$roundingErrorBucket[$identifier] = $roundingErrorDelta;
         } else {
             static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME] = $roundingErrorDelta;

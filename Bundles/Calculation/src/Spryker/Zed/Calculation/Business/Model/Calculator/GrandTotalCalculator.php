@@ -8,9 +8,7 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface;
 
