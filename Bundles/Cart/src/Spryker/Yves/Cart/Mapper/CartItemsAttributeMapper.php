@@ -24,10 +24,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @var CartItemsAvailabilityMapper
      */
     protected $cartItemsAvailabilityMapper;
-    /**
-     * @var array
-     */
-    protected $availableItemsSkus = [];
 
     /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
@@ -54,7 +50,8 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         foreach ($items as $item) {
 
             $attributeMap = $this->getAttributesMapByProductAbstract($item);
-            $attributes[$item->getSku()] = $this->getAttributesWithAvailability($item, $attributeMap, $availableItemsSkus);
+            $attributes[$item->getSku()] = $this->getAttributesWithAvailability($item, $attributeMap,
+                $availableItemsSkus);
         }
 
         return $attributes;
@@ -80,8 +77,11 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             foreach ($variant as $options) {
                 foreach ((array)$options as $productConcreteId) {
                     list($variantName, $variantValue) = explode(':', $variantNameValue);
-                    $productVariants[$variantName][$variantValue]['available'] = false;
-                    $productVariants[$variantName][$variantValue]['selected'] = false;
+                    if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {
+                        $productVariants[$variantName][$variantValue]['available'] = false;
+                        $productVariants[$variantName][$variantValue]['selected'] = false;
+                    }
+
                     if (in_array ($productConcreteSkus[$productConcreteId], $availableItemsSkus) ) {
                         $productVariants[$variantName][$variantValue]['available'] = true;
                     }
@@ -93,21 +93,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         }
 
         return $productVariants;
-    }
-
-
-
-    /**
-     * @param array $selectedAttributes
-     * @param string $strVal
-     * @param string $delimiter
-     *
-     * @return void
-     */
-    protected function extractVariantNameAndValue(array &$selectedAttributes, $strVal, $delimiter = ':')
-    {
-        list($key, $value) = explode($delimiter, $strVal);
-        $selectedAttributes[$key] = $value;
     }
 
     /**
