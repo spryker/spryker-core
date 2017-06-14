@@ -417,4 +417,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
             ->process($customerTransfer);
     }
 
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference($customerReference)
+    {
+        return $this->getFactory()
+            ->createCustomer()
+            ->findByReference($customerReference);
+    }
+
 }
