@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms\Storage;
+namespace Spryker\Client\CmsBlock;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
-interface CmsBlockStorageInterface
+interface CmsBlockClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param string $localName
      *
      * @return array
      */
-    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer);
+    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localName);
 
 }

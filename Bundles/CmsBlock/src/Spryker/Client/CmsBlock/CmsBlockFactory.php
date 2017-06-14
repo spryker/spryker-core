@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms;
+namespace Spryker\Client\CmsBlock;
 
-use Spryker\Client\Cms\KeyBuilder\CmsBlockKeyBuilder;
-use Spryker\Client\Cms\Storage\CmsBlockStorage;
+use Spryker\Client\CmsBlock\KeyBuilder\CmsBlockKeyBuilder;
+use Spryker\Client\CmsBlock\Storage\CmsBlockStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 
-class CmsFactory extends AbstractFactory
+class CmsBlockFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
+     * @return \Spryker\Client\CmsBlock\Storage\CmsBlockStorageInterface
      */
     public function createCmsBlockFinder()
     {
@@ -30,7 +30,7 @@ class CmsFactory extends AbstractFactory
      */
     protected function getStorage()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::KV_STORAGE);
+        return $this->getProvidedDependency(CmsBlockDependencyProvider::KV_STORAGE);
     }
 
     /**

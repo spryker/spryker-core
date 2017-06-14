@@ -47,6 +47,18 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
     }
 
     /**
+     * @param mixed $data
+     * @param string $localeName
+     * @param array $collectedItemData
+     *
+     * @return string
+     */
+    protected function collectKey($data, $localeName, array $collectedItemData)
+    {
+        return $this->generateKey($collectedItemData[CmsBlockCollectorQuery::COL_NAME], $localeName);
+    }
+
+    /**
      * @return string
      */
     protected function collectResourceType()

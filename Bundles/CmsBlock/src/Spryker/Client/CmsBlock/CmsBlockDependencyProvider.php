@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms;
+namespace Spryker\Client\CmsBlock;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class CmsDependencyProvider extends AbstractDependencyProvider
+class CmsBlockDependencyProvider extends AbstractDependencyProvider
 {
 
     const KV_STORAGE = 'kv storage';
@@ -22,7 +22,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::KV_STORAGE] = function (Container $container) {
+        $container[static::KV_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 

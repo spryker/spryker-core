@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms\Storage;
+namespace Spryker\Client\CmsBlock\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
@@ -34,14 +34,13 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param string $localeName
      *
      * @return array
      */
-    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer)
+    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localeName)
     {
-        $blockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
-
-        $key = $this->keyBuilder->generateKey($blockName, $cmsBlockTransfer->getLocale()->getLocaleName());
+        $key = $this->keyBuilder->generateKey($cmsBlockTransfer->getName(), $localeName);
         $block = $this->storage->get($key);
 
         return $block;

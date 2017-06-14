@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms\KeyBuilder;
+namespace Spryker\Client\CmsBlock\KeyBuilder;
 
-use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
@@ -18,7 +18,7 @@ class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CmsConstants::RESOURCE_TYPE_BLOCK;
+        return CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK;
     }
 
 }
