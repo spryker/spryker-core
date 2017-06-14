@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector;
+namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\ProductSetCollector\ProductSetCollectorFactory getFactory()
+ * @method \Spryker\Client\ProductSet\ProductSetFactory getFactory()
  */
-class ProductSetCollectorClient extends AbstractClient implements ProductSetCollectorClientInterface
+class ProductSetClient extends AbstractClient implements ProductSetClientInterface
 {
 
     /**

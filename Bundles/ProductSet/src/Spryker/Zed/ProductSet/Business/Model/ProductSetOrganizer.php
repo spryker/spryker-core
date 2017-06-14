@@ -33,8 +33,8 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
      */
     public function __construct(ProductSetEntityReaderInterface $productSetEntityReader, ProductSetTouchInterface $productSetTouch)
     {
-        $this->productSetTouch = $productSetTouch;
         $this->productSetEntityReader = $productSetEntityReader;
+        $this->productSetTouch = $productSetTouch;
     }
 
     /**
@@ -59,6 +59,7 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
         foreach ($productSetTransfers as $productSetTransfer) {
             $this->assertProductSetTransferForReorder($productSetTransfer);
             $this->updateProductSet($productSetTransfer);
+            $this->productSetTouch->touchProductSetByStatus($productSetTransfer);
         }
     }
 

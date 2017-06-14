@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector;
+namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductSetCollector\Plugin\Elasticsearch\Query\ProductSetListQueryPlugin;
+use Spryker\Client\ProductSet\Plugin\Elasticsearch\Query\ProductSetListQueryPlugin;
 
-class ProductSetCollectorFactory extends AbstractFactory
+class ProductSetFactory extends AbstractFactory
 {
 
     /**
@@ -35,7 +35,7 @@ class ProductSetCollectorFactory extends AbstractFactory
      */
     public function getSearchClient()
     {
-        return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::CLIENT_SEARCH);
+        return $this->getProvidedDependency(ProductSetDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
@@ -43,7 +43,7 @@ class ProductSetCollectorFactory extends AbstractFactory
      */
     public function createProductSetListResultFormatters()
     {
-        return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS);
+        return $this->getProvidedDependency(ProductSetDependencyProvider::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS);
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductSetCollectorFactory extends AbstractFactory
      */
     protected function createProductSetListQueryExpanders()
     {
-        return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS);
+        return $this->getProvidedDependency(ProductSetDependencyProvider::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS);
     }
 
 }

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector;
+namespace Spryker\Client\ProductSet;
 
 /**
- * @method \Spryker\Client\ProductSetCollector\ProductSetCollectorFactory getFactory()
+ * @method \Spryker\Client\ProductSet\ProductSetFactory getFactory()
  */
-interface ProductSetCollectorClientInterface
+interface ProductSetClientInterface
 {
 
     /**

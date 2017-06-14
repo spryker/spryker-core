@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector;
+namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class ProductSetCollectorDependencyProvider extends AbstractDependencyProvider
+class ProductSetDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_SEARCH = 'CLIENT_SEARCH';

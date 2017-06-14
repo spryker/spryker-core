@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector\Plugin\Elasticsearch\Query;
+namespace Spryker\Client\ProductSet\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
@@ -14,7 +14,7 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\ProductSetCollector\ProductSetCollectorConfig;
+use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
 {
@@ -93,7 +93,7 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
     protected function setTypeFilter(BoolQuery $boolQuery)
     {
         $typeFilter = new Match();
-        $typeFilter->setField(PageIndexMap::TYPE, ProductSetCollectorConfig::SEARCH_TYPE_PRODUCT_SET);
+        $typeFilter->setField(PageIndexMap::TYPE, ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET);
 
         $boolQuery->addMust($typeFilter);
     }

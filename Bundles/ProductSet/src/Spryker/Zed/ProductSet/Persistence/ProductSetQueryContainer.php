@@ -160,13 +160,11 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
      */
     public function queryExcludedProductImageSet($idProductSet, array $excludedIdProductImageSets)
     {
-        $query = $this->getFactory()
+        return $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSet()
             ->filterByFkResourceProductSet($idProductSet)
             ->filterByIdProductImageSet($excludedIdProductImageSets, Criteria::NOT_IN);
-
-        return $query;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductImage\Business\Exception\MissingProductImageSetException;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
@@ -70,21 +69,16 @@ class Reader implements ReaderInterface
     /**
      * @param int $idProductImageSet
      *
-     * @throws \Spryker\Zed\ProductImage\Business\Exception\MissingProductImageSetException
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
      */
-    public function getProductImagesSetCollectionById($idProductImageSet)
+    public function findProductImagesSetCollectionById($idProductImageSet)
     {
         $productImageSetEntity = $this->productImageContainer
             ->queryImageSetById($idProductImageSet)
             ->findOne();
 
         if (!$productImageSetEntity) {
-            throw new MissingProductImageSetException(sprintf(
-                'Missing product image set #%d.',
-                $idProductImageSet
-            ));
+            return null;
         }
 
         return $this->transferMapper->mapProductImageSet($productImageSetEntity);

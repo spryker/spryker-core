@@ -49,7 +49,6 @@ class ProductSetImageSaver implements ProductSetImageSaverInterface
 
         foreach ($productSetTransfer->getImageSets() as $productImageSetTransfer) {
             $productImageSetTransfer->setFkResourceProductSet($productSetTransfer->getIdProductSet());
-
             $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
         }
 

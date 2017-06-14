@@ -109,7 +109,7 @@ class ProductSetImageSetCombiner implements ProductSetImageSetCombinerInterface
      */
     protected function getProductImageSet(SpyProductImageSet $productImageSetEntity)
     {
-        return $this->productImageFacade->getProductImageSetById($productImageSetEntity->getIdProductImageSet());
+        return $this->productImageFacade->findProductImageSetById($productImageSetEntity->getIdProductImageSet());
     }
 
 }

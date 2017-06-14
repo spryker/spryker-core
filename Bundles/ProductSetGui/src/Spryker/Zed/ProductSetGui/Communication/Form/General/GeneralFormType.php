@@ -86,17 +86,7 @@ class GeneralFormType extends AbstractType
             'constraints' => [
                 new Callback([
                     'methods' => [
-                        function ($localizedGeneralForms, ExecutionContextInterface $context) {
-                            $uniqueUrls = [];
-                            foreach ($localizedGeneralForms as $localizedGeneralForm) {
-                                $url = $localizedGeneralForm[LocalizedGeneralFormType::FIELD_URL];
-                                if (in_array($url, $uniqueUrls)) {
-                                    $context->addViolation('URLs must be different for each locale.');
-                                    break;
-                                }
-                                $uniqueUrls[] = $url;
-                            }
-                        },
+                        [$this, 'validateLocalizedUrls'],
                     ],
                 ]),
             ],
@@ -192,6 +182,25 @@ class GeneralFormType extends AbstractType
         $builder->add(static::FIELD_ID_PRODUCT_SET, HiddenType::class);
 
         return $this;
+    }
+
+    /**
+     * @param array $localizedGeneralForms
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return void
+     */
+    public function validateLocalizedUrls(array $localizedGeneralForms, ExecutionContextInterface $context)
+    {
+        $uniqueUrls = [];
+        foreach ($localizedGeneralForms as $localizedGeneralForm) {
+            $url = $localizedGeneralForm[LocalizedGeneralFormType::FIELD_URL];
+            if (in_array($url, $uniqueUrls)) {
+                $context->addViolation('URLs must be different for each locale.');
+                break;
+            }
+            $uniqueUrls[] = $url;
+        }
     }
 
     /**

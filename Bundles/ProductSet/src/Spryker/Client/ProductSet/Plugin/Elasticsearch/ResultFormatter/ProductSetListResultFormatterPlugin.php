@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductSetCollector\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\ProductSet\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;

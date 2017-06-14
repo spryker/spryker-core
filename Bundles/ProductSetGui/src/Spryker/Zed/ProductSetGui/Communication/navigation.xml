@@ -33,6 +33,14 @@
                         <action>index</action>
                         <visible>0</visible>
                     </view>
+                    <reorder>
+                        <label>Reorder Product Sets</label>
+                        <title>Reorder Product Sets</title>
+                        <bundle>product-set-gui</bundle>
+                        <controller>reorder</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </reorder>
                 </pages>
             </sets>
         </pages>

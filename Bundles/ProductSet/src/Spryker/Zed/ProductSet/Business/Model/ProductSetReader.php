@@ -103,7 +103,11 @@ class ProductSetReader implements ProductSetReaderInterface
      */
     protected function mapProductAbstractSets(ProductSetTransfer $productSetTransfer, SpyProductSet $productSetEntity)
     {
-        foreach ($productSetEntity->getSpyProductAbstractSets() as $productAbstractSetEntity) {
+        $productAbstractSetEntities = $this->productSetQueryContainer
+            ->queryProductAbstractSetsById($productSetEntity->getIdProductSet())
+            ->find();
+
+        foreach ($productAbstractSetEntities as $productAbstractSetEntity) {
             $productSetTransfer->addIdProductAbstract($productAbstractSetEntity->getFkProductAbstract());
         }
 

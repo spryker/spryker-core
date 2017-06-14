@@ -99,14 +99,13 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
     protected function createProductSetDataEntity(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet)
     {
         $productSetDataTransfer = $localizedProductSetTransfer->getProductSetData();
-        $productSetDataTransfer->requireName();
 
         $productSetDataTransfer
             ->setFkLocale($localizedProductSetTransfer->getLocale()->getIdLocale())
             ->setFkProductSet($idProductSet);
 
         $productSetDataEntity = new SpyProductSetData();
-        $productSetDataEntity->fromArray($productSetDataTransfer->toArray());
+        $productSetDataEntity->fromArray($productSetDataTransfer->modifiedToArray());
         $productSetDataEntity->save();
 
         $productSetDataTransfer->setIdProductSetData($productSetDataEntity->getIdProductSetData());

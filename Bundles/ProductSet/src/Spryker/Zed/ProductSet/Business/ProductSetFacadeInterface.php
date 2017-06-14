@@ -14,13 +14,13 @@ interface ProductSetFacadeInterface
 
     /**
      * Specification:
-     * - Persist new product set entity into database.
+     * - Persists new product set entity into database.
      * - The persisted position of the products are defined by the order they are listed in the transfer object.
-     * - Persist product set data entities into database for each provided locale.
-     * - Create URL entities for the product set for each provided locale.
-     * - Create product image set and product image entities for each provided locale.
+     * - Persists product set data entities into database for each provided locale.
+     * - Creates URL entities for the product set for each provided locale.
+     * - Creates product image set and product image entities for each provided locale.
      * - The returned transfer contains the ID of the created product set entity.
-     * - Touches "product_set" entity as active.
+     * - Touches "product_set" entity as "active" if product set status is active, "deleted" otherwise.
      *
      * @api
      *
@@ -50,7 +50,7 @@ interface ProductSetFacadeInterface
      * - Updates existing product set in database.
      * - The persisted position of the products are defined by the order they are listed in the transfer object.
      * - Updates localized product set data, URLs and product image sets
-     * - Touches "product_set" entity as active.
+     * - Touches "product_set" entity as "active" if product set status is active, "deleted" otherwise.
      *
      * @api
      *
@@ -62,9 +62,9 @@ interface ProductSetFacadeInterface
 
     /**
      * Specification:
-     * - Extends existing product set in database with the given product IDs.
+     * - Extends existing product set in database by abstract products with the given IDs.
      * - The persisted position of the new products will follow the existing ones and are defined by the order they are listed in the transfer object.
-     * - Touches "product_set" entity as active.
+     * - Touches "product_set" entity as "active" if product set status is active, "deleted" otherwise.
      *
      * @api
      *
@@ -77,8 +77,8 @@ interface ProductSetFacadeInterface
     /**
      * Specification:
      * - Removes the given product IDs from an existing product set.
-     * - The position of the remaining products will be recalculated to avoid holes.
-     * - Touches "product_set" entity as active.
+     * - The position of the remaining products will be recalculated to avoid gaps.
+     * - Touches "product_set" entity as "active" if product set status is active, "deleted" otherwise.
      *
      * @api
      *
@@ -90,8 +90,8 @@ interface ProductSetFacadeInterface
 
     /**
      * Specification:
-     * - Removes existing product set from database.
-     * - Removes related localized product set data, URLs and product image sets from database.
+     * - Deletes existing product set from database.
+     * - Deletes related localized product set data, URLs and product image sets from database.
      * - Touches "product_set" entity as deleted.
      *
      * @api
@@ -105,6 +105,7 @@ interface ProductSetFacadeInterface
     /**
      * Specification:
      * - Updates weights of existing product sets in database.
+     * - Touches updated "product_set" entities as "active" if product set status is active, "deleted" otherwise.
      *
      * @api
      *
@@ -116,7 +117,7 @@ interface ProductSetFacadeInterface
 
     /**
      * Specification:
-     * - Returns merged image sets for product set with the following inheritance: Default > Localized
+     * - Returns merged image sets for product set with the following inheritance: Default > Localized.
      *
      * @api
      *

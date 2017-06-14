@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSet\Business\Model\Data\Url;
 
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface;
 
 class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
@@ -43,13 +44,12 @@ class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
     public function updateUrl(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet)
     {
         $this->assertProductSetForCreateUrl($localizedProductSetTransfer);
+
         $idLocale = $localizedProductSetTransfer->getLocale()->getIdLocale();
 
         $urlEntity = $this->productSetUrlReader->getProductSetUrlEntity($idProductSet, $idLocale);
 
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->fromArray($urlEntity->toArray(), true);
-        $urlTransfer->setUrl($localizedProductSetTransfer->getUrl());
+        $urlTransfer = $this->createUrlTransfer($urlEntity, $localizedProductSetTransfer);
 
         $this->urlFacade->updateUrl($urlTransfer);
 
@@ -68,6 +68,21 @@ class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
             ->requireLocale();
 
         $localizedProductSetTransfer->getLocale()->requireIdLocale();
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\LocalizedProductSetTransfer $localizedProductSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function createUrlTransfer(SpyUrl $urlEntity, LocalizedProductSetTransfer $localizedProductSetTransfer)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->fromArray($urlEntity->toArray(), true);
+        $urlTransfer->setUrl($localizedProductSetTransfer->getUrl());
+
+        return $urlTransfer;
     }
 
 }

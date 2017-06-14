@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductSet\Business\Model\Image;
 
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Spryker\Zed\ProductSet\Business\Exception\MissingProductImageSetException;
 use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToProductImageInterface;
 use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
@@ -47,10 +49,31 @@ class ProductSetImageReader implements ProductSetImageReaderInterface
             ->find();
 
         foreach ($productImageSetCollection as $productImageSetEntity) {
-            $productImageSets[] = $this->productImageFacade->getProductImageSetById($productImageSetEntity->getIdProductImageSet());
+            $productImageSets[] = $this->getProductImageSetTransfer($productImageSetEntity);
         }
 
         return $productImageSets;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     *
+     * @throws \Spryker\Zed\ProductSet\Business\Exception\MissingProductImageSetException
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
+     */
+    protected function getProductImageSetTransfer(SpyProductImageSet $productImageSetEntity)
+    {
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById($productImageSetEntity->getIdProductImageSet());
+
+        if (!$productImageSetTransfer) {
+            throw new MissingProductImageSetException(sprintf(
+                'Missing product image set #%d.',
+                $productImageSetEntity->getIdProductImageSet()
+            ));
+        }
+
+        return $productImageSetTransfer;
     }
 
 }

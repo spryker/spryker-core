@@ -792,7 +792,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testGetProductImagesSetById()
     {
-        $productImageSetTransfer = $this->productImageFacade->getProductImageSetById(
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
             $this->imageSetAbstract->getIdProductImageSet()
         );
 
@@ -813,7 +813,7 @@ class ProductImageFacadeTest extends Test
             ->setFkLocale(null)
             ->save();
 
-        $productImageSetTransfer = $this->productImageFacade->getProductImageSetById(
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
             $imageSetEntity->getIdProductImageSet()
         );
 

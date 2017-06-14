@@ -30,9 +30,9 @@ interface ReaderInterface
     /**
      * @param int $idProductImageSet
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
      */
-    public function getProductImagesSetCollectionById($idProductImageSet);
+    public function findProductImagesSetCollectionById($idProductImageSet);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

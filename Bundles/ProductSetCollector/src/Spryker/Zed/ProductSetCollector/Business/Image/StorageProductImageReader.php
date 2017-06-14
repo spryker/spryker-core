@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSetCollector\Business\Image;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProductSetInterface;
 
@@ -38,16 +39,29 @@ class StorageProductImageReader implements StorageProductImageReaderInterface
 
         $imageSets = [];
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $result[$productImageSetTransfer->getName()] = [];
-            foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                $storageProductImageTransfer = new StorageProductImageTransfer();
-                $storageProductImageTransfer->fromArray($productImageTransfer->modifiedToArray(), true);
-
-                $imageSets[$productImageSetTransfer->getName()][] = $storageProductImageTransfer->modifiedToArray();
-            }
+            $imageSets[$productImageSetTransfer->getName()] = $this->getProductImageData($productImageSetTransfer);
         }
 
         return $imageSets;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return array
+     */
+    protected function getProductImageData(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        $result = [];
+
+        foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $storageProductImageTransfer = new StorageProductImageTransfer();
+            $storageProductImageTransfer->fromArray($productImageTransfer->modifiedToArray(), true);
+
+            $result[] = $storageProductImageTransfer->modifiedToArray();
+        }
+
+        return $result;
     }
 
 }

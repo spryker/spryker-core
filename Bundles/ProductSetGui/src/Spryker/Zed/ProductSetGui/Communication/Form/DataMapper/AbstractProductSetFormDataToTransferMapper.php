@@ -80,7 +80,7 @@ abstract class AbstractProductSetFormDataToTransferMapper
     protected function mapProductAbstractIds(ProductSetTransfer $productSetTransfer, FormInterface $productSetForm)
     {
         $idProductAbstracts = $productSetForm->get($this->getProductFormFieldName())
-            ->getData()[ProductsFormType::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS];
+            ->getData()[$this->getIdProductAbstractFieldName()];
 
         $productSetTransfer->setIdProductAbstracts($idProductAbstracts);
 
@@ -226,5 +226,10 @@ abstract class AbstractProductSetFormDataToTransferMapper
      * @return string
      */
     abstract protected function getImagesFormFieldName();
+
+    /**
+     * @return string
+     */
+    abstract protected function getIdProductAbstractFieldName();
 
 }

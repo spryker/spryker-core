@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\DataMapper;
 
+use Spryker\Zed\ProductSetGui\Communication\Form\Products\UpdateProductsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 
 class UpdateFormDataToTransferMapper extends AbstractProductSetFormDataToTransferMapper
@@ -42,6 +43,14 @@ class UpdateFormDataToTransferMapper extends AbstractProductSetFormDataToTransfe
     protected function getImagesFormFieldName()
     {
         return UpdateProductSetFormType::FIELD_IMAGES_FORM;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIdProductAbstractFieldName()
+    {
+        return UpdateProductsFormType::FIELD_ID_PRODUCT_ABSTRACTS;
     }
 
 }
