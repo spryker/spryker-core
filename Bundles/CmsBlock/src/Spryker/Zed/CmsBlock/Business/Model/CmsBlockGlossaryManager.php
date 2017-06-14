@@ -144,7 +144,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     protected function getCmsBlockEntity($idCmsBlock)
     {
         return $this->cmsBlockQueryContainer
-            ->queryCmsBlockById($idCmsBlock)
+            ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
             ->findOne();
     }
 
@@ -206,6 +206,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
         $glossaryPlaceholderTransfer = new CmsBlockGlossaryPlaceholderTransfer();
         $glossaryPlaceholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());
         $glossaryPlaceholderTransfer->setPlaceholder($placeholder);
+        $glossaryPlaceholderTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
 
         return $glossaryPlaceholderTransfer;
     }
