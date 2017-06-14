@@ -18,25 +18,34 @@
   },
   "attributeVariants":{
     "processor_frequency:3 GHz":{
-      "id_product_concrete":166
+      "color:red": {
+        "id_product_concrete":166
+      }
     },
     "processor_frequency:3.5 GHz":{
-      "id_product_concrete":167
+      "color:blue":{
+        "id_product_concrete":167
+      }
     },
     "processor_frequency:2.8 GHz":{
-      "id_product_concrete":168
+      "color:green":{
+        "id_product_concrete":168
+      }
     },
     "color:red":{
-      "id_product_concrete":[
-        167,
-        166
-      ]
+      "processor_frequency:3 GHz":{
+        "id_product_concrete":166
+      }
     },
     "color:blue":{
-      "id_product_concrete":167
+      "processor_frequency:3.5 GHz": {
+        "id_product_concrete": 167
+      }
     },
     "color:green":{
-      "id_product_concrete":168
+      "processor_frequency:2.8 GHz": {
+        "id_product_concrete": 168
+      }
     }
   }
 }
