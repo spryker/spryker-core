@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Cart\Mapper;
 
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
+use Spryker\Shared\Cart\CartConstants;
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
@@ -69,7 +70,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     protected function getAttributesWithAvailability($item, array $attributeMap, array $availableItemsSkus)
     {
-        $productConcreteIds = $attributeMap['productConcreteIds'];
+        $productConcreteIds = $attributeMap[StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS];
         $productConcreteSkus = array_flip($productConcreteIds);
 
         $productVariants = [];
@@ -79,15 +80,15 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
                 foreach ((array)$options as $productConcreteId) {
                     list($variantName, $variantValue) = explode(':', $variantNameValue);
                     if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {
-                        $productVariants[$variantName][$variantValue]['available'] = false;
-                        $productVariants[$variantName][$variantValue]['selected'] = false;
+                        $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = false;
+                        $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = false;
                     }
 
                     if (in_array($productConcreteSkus[$productConcreteId], $availableItemsSkus)) {
-                        $productVariants[$variantName][$variantValue]['available'] = true;
+                        $productVariants[$variantName][$variantValue][CartConstants::AVAILABLE] = true;
                     }
                     if ($productConcreteId === $item->getId()) {
-                        $productVariants[$variantName][$variantValue]['selected'] = true;
+                        $productVariants[$variantName][$variantValue][CartConstants::SELECTED] = true;
                     }
                 }
             }
