@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Cart;
 
-use Spryker\Yves\Cart\Mapper\CartItemsAttributeAndAvailabilityMapper;
 use Spryker\Yves\Cart\Mapper\CartItemsAttributeMapper;
 use Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper;
 use Spryker\Yves\Kernel\AbstractFactory;

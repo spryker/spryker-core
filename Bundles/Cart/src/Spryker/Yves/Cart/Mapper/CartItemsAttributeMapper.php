@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
@@ -20,14 +19,15 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @var \Spryker\Client\Product\ProductClientInterface
      */
     protected $productClient;
+
     /**
-     * @var CartItemsAvailabilityMapper
+     * @var \Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper
      */
     protected $cartItemsAvailabilityMapper;
 
     /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
-     * @param CartItemsAvailabilityMapper $cartItemsAvailabilityMapper
+     * @param \Spryker\Yves\Cart\Mapper\CartItemsAvailabilityMapper $cartItemsAvailabilityMapper
      */
     public function __construct($productClient, $cartItemsAvailabilityMapper)
     {
@@ -50,16 +50,18 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         foreach ($items as $item) {
 
             $attributeMap = $this->getAttributesMapByProductAbstract($item);
-            $attributes[$item->getSku()] = $this->getAttributesWithAvailability($item, $attributeMap,
-                $availableItemsSkus);
+            $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
+                $item,
+                $attributeMap,
+                $availableItemsSkus
+            );
         }
 
         return $attributes;
     }
 
-
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param array $attributeMap
      * @param array $availableItemsSkus
      *
@@ -67,7 +69,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     protected function getAttributesWithAvailability($item, array $attributeMap, array $availableItemsSkus)
     {
-
         $productConcreteIds = $attributeMap['productConcreteIds'];
         $productConcreteSkus = array_flip($productConcreteIds);
 
@@ -82,7 +83,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
                         $productVariants[$variantName][$variantValue]['selected'] = false;
                     }
 
-                    if (in_array ($productConcreteSkus[$productConcreteId], $availableItemsSkus) ) {
+                    if (in_array($productConcreteSkus[$productConcreteId], $availableItemsSkus)) {
                         $productVariants[$variantName][$variantValue]['available'] = true;
                     }
                     if ($productConcreteId === $item->getId()) {
