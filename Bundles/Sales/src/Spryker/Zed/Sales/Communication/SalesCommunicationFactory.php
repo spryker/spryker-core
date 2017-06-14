@@ -101,7 +101,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->createOrdersTableQueryBuilder(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER)
         );
     }
 

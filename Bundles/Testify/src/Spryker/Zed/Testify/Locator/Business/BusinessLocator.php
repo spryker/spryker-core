@@ -17,26 +17,6 @@ class BusinessLocator extends AbstractLocator
 {
 
     /**
-     * @var array
-     */
-    private $projectNamespaces = [];
-
-    /**
-     * @var array
-     */
-    private $coreNamespaces = [];
-
-    /**
-     * @param array $projectNamespaces
-     * @param array $coreNamespaces
-     */
-    public function __construct(array $projectNamespaces, array $coreNamespaces)
-    {
-        $this->projectNamespaces = $projectNamespaces;
-        $this->coreNamespaces = $coreNamespaces;
-    }
-
-    /**
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
     protected function getBundleProxy()
@@ -50,8 +30,6 @@ class BusinessLocator extends AbstractLocator
 
         $bundleProxy = new BundleProxy($this);
         $bundleProxy
-            ->setProjectNamespaces($this->projectNamespaces)
-            ->setCoreNamespaces($this->coreNamespaces)
             ->setLocator($locators);
 
         return $bundleProxy;

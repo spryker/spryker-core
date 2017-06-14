@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
@@ -27,6 +28,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_USER = 'FACADE_USER';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
+    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
@@ -53,6 +55,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addHydrateOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -70,6 +73,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -153,6 +157,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_USER] = function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container)
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new SalesToCustomerBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

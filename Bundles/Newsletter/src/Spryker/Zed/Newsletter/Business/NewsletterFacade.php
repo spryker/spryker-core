@@ -125,4 +125,18 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
             ->install();
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     *
+     * @return void
+     */
+    public function anonymizeSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
+    {
+        $this->getFactory()
+            ->createSubscriptionAnonymizer()
+            ->process($newsletterUnsubscriptionRequest);
+    }
+
 }

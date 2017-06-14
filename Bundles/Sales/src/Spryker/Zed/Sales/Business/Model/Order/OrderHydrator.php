@@ -140,6 +140,7 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateBillingAddressToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateMissingCustomer($orderEntity, $orderTransfer);
 
         $orderTransfer->setTotalOrderCount(
             $this->getTotalCustomerOrderCount(
@@ -375,6 +376,19 @@ class OrderHydrator implements OrderHydratorInterface
         $totalsTransfer->setCanceledTotal($salesOrderTotalsEntity->getCanceledTotal());
 
         $orderTransfer->setTotals($totalsTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    {
+        if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setFkCustomer(null);
+        }
     }
 
 }

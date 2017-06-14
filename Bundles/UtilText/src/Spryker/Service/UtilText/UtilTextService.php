@@ -101,9 +101,9 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     /**
      * {@inheritdoc}
      */
-    public function generateToken($rawToken)
+    public function generateToken($rawToken, array $options = [])
     {
-        return $this->getFactory()->createToken()->generate($rawToken);
+        return $this->getFactory()->createToken()->generate($rawToken, $options);
     }
 
     /**
