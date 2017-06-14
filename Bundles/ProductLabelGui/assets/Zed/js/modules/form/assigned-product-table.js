@@ -1,11 +1,11 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright (c) 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
-var TableHandler = require('./related-product-table-handler');
+var RelatedProductTable = require('./related-product-table/table');
 
 var sourceTabSelector = '#assigned-products-source-tab';
 var sourceTableSelector = sourceTabSelector + ' table.table';
@@ -17,9 +17,11 @@ var destinationTableSelector = destinationTabSelector + '-table';
 var checkboxSelector = '.js-abstract-product-checkbox';
 var tableHandler;
 
-function initialize()
-{
-    tableHandler = TableHandler.create(
+/**
+ * @return {void}
+ */
+function initialize() {
+    tableHandler = RelatedProductTable.create(
         sourceTableSelector,
         destinationTableSelector,
         checkboxSelector,
@@ -30,14 +32,16 @@ function initialize()
     );
 
     tableHandler.getInitialCheckboxCheckedState = function() {
-        return TableHandler.CHECKBOX_CHECKED_STATE_CHECKED;
+        return RelatedProductTable.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
     $(sourceTabSelector + ' .js-de-select-all-button a').on('click', tableHandler.deSelectAll);
 }
 
-function onRemove()
-{
+/**
+ * @returns {boolean}
+ */
+function onRemove() {
     var $link = $(this);
     var id = $link.data('id');
     var action = $link.data('action');

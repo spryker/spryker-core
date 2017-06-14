@@ -1,48 +1,25 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright (c) 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
+var ProductSelector = require('./product-selector');
+
 var CHECKBOX_CHECKED_STATE_CHECKED = 'checked';
 var CHECKBOX_CHECKED_STATE_UN_CHECKED = 'un_checked';
 
-function ProductSelector() {
-    var productSelector = {};
-    var selectedProducts = {};
-    var idKey = 'id';
-
-    productSelector.addProductToSelection = function(idProduct) {
-        selectedProducts[idProduct] = idProduct;
-    };
-
-    productSelector.removeProductFromSelection = function(idProduct) {
-        delete selectedProducts[idProduct];
-    };
-
-    productSelector.isProductSelected = function(idProduct) {
-        return selectedProducts.hasOwnProperty(idProduct);
-    };
-
-    productSelector.clearAllSelections = function() {
-        selectedProducts = {};
-    };
-
-    productSelector.addAllToSelection = function(data) {
-        for (var i = 0; i < data.length; i++) {
-            var id = data[i][idKey];
-            selectedProducts[id] = id;
-        }
-    };
-
-    productSelector.getSelected = function() {
-        return selectedProducts;
-    };
-
-    return productSelector;
-}
-
+/**
+ * @param {string} sourceTable
+ * @param {string} destinationTable
+ * @param {string} labelCaption
+ * @param {string} labelId
+ * @param {string} formFieldId
+ * @param {function} onRemoveCallback
+ *
+ * @return {object}
+ */
 function TableHandler(sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback) {
     var tableHandler = {
         labelId: labelId,
@@ -52,7 +29,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         destinationTable: destinationTable
     };
 
-    var destinationTableProductSelector = new ProductSelector();
+    var destinationTableProductSelector = ProductSelector.create();
 
     tableHandler.toggleSelection = function() {
         $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
@@ -202,49 +179,20 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
     return tableHandler;
 }
 
-function create(sourceTableSelector, destinationTableSelector, checkboxSelector, labelCaption, labelId, formFieldId, onRemoveCallback)
-{
-    $(destinationTableSelector).DataTable({destroy: true});
-
-    var tableHandler = new TableHandler(
-        $(sourceTableSelector),
-        $(destinationTableSelector),
-        labelCaption,
-        labelId,
-        formFieldId,
-        onRemoveCallback
-    );
-
-    $(sourceTableSelector).DataTable().on('draw', function(event, settings) {
-        $(checkboxSelector, $(sourceTableSelector)).off('change');
-        $(checkboxSelector, $(sourceTableSelector)).on('change', function() {
-            var $checkbox = $(this);
-            var info = $.parseJSON($checkbox.attr('data-info'));
-
-            if (tableHandler.isCheckboxActive($checkbox)) {
-                tableHandler.addSelectedProduct(info.id, info.sku, info.name);
-            } else {
-                tableHandler.removeSelectedProduct(info.id);
-            }
-        });
-
-        for (var i = 0; i < settings.json.data.length; i++) {
-            var product = settings.json.data[i];
-            var idProduct = parseInt(product[1], 10);
-
-            var selector = tableHandler.getSelector();
-            if (selector.isProductSelected(idProduct)) {
-                tableHandler.checkCheckbox($('input[value="' + idProduct + '"]', $(sourceTableSelector)));
-            }
-        }
-    });
-
-    return tableHandler;
-}
-
 module.exports = {
-    create: create,
-    TableHandler: TableHandler,
+    /**
+     * @param {string} sourceTable
+     * @param {string} destinationTable
+     * @param {string} labelCaption
+     * @param {string} labelId
+     * @param {string} formFieldId
+     * @param {function} onRemoveCallback
+     *
+     * @return {TableHandler}
+     */
+    create: function(sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback) {
+        return new TableHandler(sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback);
+    },
     CHECKBOX_CHECKED_STATE_CHECKED: CHECKBOX_CHECKED_STATE_CHECKED,
     CHECKBOX_CHECKED_STATE_UN_CHECKED: CHECKBOX_CHECKED_STATE_UN_CHECKED
 };

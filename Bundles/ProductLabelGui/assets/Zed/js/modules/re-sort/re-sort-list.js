@@ -59,9 +59,9 @@ function disableSaveButton(showLoader) {
     $button.attr('disabled', '');
 
     if (showLoader === true) {
-        $button.children('.js-loader').show();
+        showButtonLoader();
     } else {
-        $button.children('.js-loader').hide();
+        hideButtonLoader();
     }
 }
 
@@ -70,7 +70,21 @@ function disableSaveButton(showLoader) {
  */
 function enableSaveButton() {
     $button.removeAttr('disabled');
-    $button.children('.js-loader').hide();
+    hideButtonLoader();
+}
+
+/**
+ * @return {void}
+ */
+function showButtonLoader() {
+    $button.children('.js-loader').removeClass('wave-loader--hidden');
+}
+
+/**
+ * @return {void}
+ */
+function hideButtonLoader() {
+    $button.children('.js-loader').addClass('wave-loader--hidden');
 }
 
 /**

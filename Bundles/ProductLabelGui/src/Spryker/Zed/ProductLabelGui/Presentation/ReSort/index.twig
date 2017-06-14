@@ -24,9 +24,13 @@
             <hr />
 
             <button id="js-list-save-button" class="btn btn-primary" data-style="expand-left">
-                {% include '@ProductLabelGui/ReSort/_partials/wave-loader.twig' %}
+                {% include '@Gui/Partials/wave-loader.twig' with {
+                    cssClass: 'js-loader',
+                    modifiers: ['on-button', 'hidden']
+                } %}
                 {{ 'Save' | trans }}
             </button>
+
         {% endblock %}
 
     {% endembed %}
