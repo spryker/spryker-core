@@ -46,22 +46,10 @@ class AttributeSuperForm extends AttributeAbstractForm
 
         $config['attr']['data-value'] = null;
 
-        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
-        if ($this->localeTransfer instanceof LocaleTransfer) {
-            $idLocale = $this->localeTransfer->getIdLocale();
-        }
-
-        $existingValue = $this->productManagementQueryContainer
-            ->queryFindAttributeByValueOrTranslation(
-                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
-                $idLocale,
-                $value
-            )->findOne();
-
         $input = new Select2ComboBoxType();
         $config['multiple'] = true;
         $config['placeholder'] = '-';
-        $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+        $config['choices'] = $this->getChoiceList($name, $attributes[$name]);
         $config['attr']['tags'] = false;
 
         if ($allowInput) {
