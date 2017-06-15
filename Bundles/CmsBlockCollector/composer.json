@@ -1,13 +1,13 @@
 {
   "name": "spryker/cms-block-collector",
-  "description": "CMS Block Collector Module: prepares data for Yves",
+  "description": "CMS Block Collector module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
-    "spryker/cms-block": "*",
+    "spryker/cms-block": "^1.0.0",
+    "spryker/collector": "^5.1.1",
     "spryker/glossary": "^3.0.0",
-    "spryker/util-data-reader": "^1.0.0",
-    "spryker/collector": "^5.1.1"
+    "spryker/kernel": "^3.0.0",
+    "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
