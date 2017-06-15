@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CartVariant\Plugin;
+namespace Spryker\Yves\CartVariant\Dependency\Plugin;
 
 use ArrayObject;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -17,7 +17,7 @@ class CartVariantAttributeMapperPlugin extends AbstractPlugin implements CartVar
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|ArrayObject $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return array
      */

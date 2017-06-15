@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\CartVariant\Mapper;
 
+use \ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-use \ArrayObject;
 use Spryker\Client\Availability\AvailabilityClientInterface;
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface

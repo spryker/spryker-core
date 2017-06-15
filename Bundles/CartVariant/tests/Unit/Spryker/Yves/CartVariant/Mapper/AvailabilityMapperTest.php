@@ -13,7 +13,7 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
  * @group Unit
  * @group Spryker
  * @group Yves
- * @group Cart
+ * @group CartVariant
  * @group Mapper
  * @group AvailabilityMapperTest
  */

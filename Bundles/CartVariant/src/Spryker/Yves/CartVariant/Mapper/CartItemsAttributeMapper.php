@@ -35,7 +35,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
      * @param \Spryker\Yves\CartVariant\Mapper\CartItemsMapperInterface $cartItemsAvailabilityMapper
      */
-    public function __construct(ProductClientInterface $productClient,CartItemsMapperInterface $cartItemsAvailabilityMapper)
+    public function __construct(ProductClientInterface $productClient, CartItemsMapperInterface $cartItemsAvailabilityMapper)
     {
         $this->productClient = $productClient;
         $this->cartItemsAvailabilityMapper = $cartItemsAvailabilityMapper;
@@ -78,7 +78,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         $productConcreteIds = $attributeMap[StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS];
         $productConcreteSkus = array_flip($productConcreteIds);
 
-        $productVariants= [];
+        $productVariants = [];
 
         $iterator = new RecursiveIteratorIterator(
             new RecursiveArrayIterator($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS]),
@@ -87,7 +87,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         foreach ($iterator as $attribute => $productConcreteId) {
             if ($iterator->callHasChildren() === false) {
 
-                $variantNameValue = $iterator->getSubIterator($iterator->getDepth() -1)->key();
+                $variantNameValue = $iterator->getSubIterator($iterator->getDepth() - 1)->key();
                 list($variantName, $variantValue) = explode(':', $variantNameValue);
 
                 if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {

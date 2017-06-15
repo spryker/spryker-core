@@ -18,7 +18,7 @@ use Spryker\Client\Product\ProductClient;
  * @group Unit
  * @group Spryker
  * @group Yves
- * @group Cart
+ * @group CartVariant
  * @group Mapper
  * @group CartItemsMapperBaseTest
  */
@@ -60,7 +60,7 @@ class CartItemsMapperBaseTest extends Test
     /**
      * @param string $jsonFileToLoad
      *
-     * @return StorageAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     protected function getAvailabilityTransfer($jsonFileToLoad)
     {
@@ -73,7 +73,7 @@ class CartItemsMapperBaseTest extends Test
     }
 
     /**
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function getItems()
     {
@@ -88,9 +88,8 @@ class CartItemsMapperBaseTest extends Test
         return new ArrayObject([$item, $item2]);
     }
 
-
     /**
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function getNestedItems()
     {

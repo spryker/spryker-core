@@ -14,7 +14,7 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
  * @group Unit
  * @group Spryker
  * @group Yves
- * @group Cart
+ * @group CartVariant
  * @group Mapper
  * @group AttributeMapperTest
  */
@@ -46,7 +46,6 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
 
         $this->assertSame(1, $this->countSelectedAttributes($attributes['processor_frequency']));
     }
-
 
     /**
      * @return void

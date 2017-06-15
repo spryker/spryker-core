@@ -7,15 +7,13 @@
 
 namespace Spryker\Yves\CartVariant\Mapper;
 
-namespace Spryker\Yves\CartVariant\Mapper;
-
 use \ArrayObject;
 
 interface CartItemsMapperInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|ArrayObject $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return array
      */
