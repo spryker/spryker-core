@@ -88,4 +88,12 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
         return $placeholderCollection;
     }
 
+    /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
+
 }
