@@ -23,7 +23,7 @@ class UpdateProductsFormType extends AbstractType
     const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
     const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
     const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
-    const FIELD_PRODUCT_ORDER = 'product_order';
+    const FIELD_PRODUCT_POSITION = 'product_position';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -37,7 +37,7 @@ class UpdateProductsFormType extends AbstractType
             ->addAssignProductAbstractIdsField($builder)
             ->addDeassignProductAbstractIdsField($builder)
             ->addProductAbstractIdsField($builder)
-            ->addProductOrderField($builder);
+            ->addProductPositionField($builder);
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
@@ -103,15 +103,15 @@ class UpdateProductsFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductOrderField(FormBuilderInterface $builder)
+    protected function addProductPositionField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PRODUCT_ORDER, HiddenType::class, [
+        $builder->add(static::FIELD_PRODUCT_POSITION, HiddenType::class, [
             'attr' => [
-                'id' => 'product_order',
+                'id' => 'product_position',
             ],
         ]);
 
-        $builder->get(static::FIELD_PRODUCT_ORDER)
+        $builder->get(static::FIELD_PRODUCT_POSITION)
             ->addModelTransformer(new CallbackTransformer(
                 function ($productAbstractIds = null) {
                     return $this->getFactory()->getUtilEncodingService()->encodeJson((array)$productAbstractIds);
@@ -149,10 +149,10 @@ class UpdateProductsFormType extends AbstractType
      */
     protected function getSortedIdProductAbstracts(array $data)
     {
-        $productOrder = $data[static::FIELD_PRODUCT_ORDER];
-        asort($productOrder);
+        $productPosition = $data[static::FIELD_PRODUCT_POSITION];
+        asort($productPosition);
 
-        return array_keys($productOrder);
+        return array_keys($productPosition);
     }
 
     /**

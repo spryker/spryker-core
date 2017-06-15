@@ -7,9 +7,10 @@
 
 namespace Spryker\Shared\ProductSet;
 
-class ProductSetConfig
+interface ProductSetConfig
 {
 
     const RESOURCE_TYPE_PRODUCT_SET = 'product_set';
+    const DEFAULT_IMAGE_SET_NAME = 'default';
 
 }

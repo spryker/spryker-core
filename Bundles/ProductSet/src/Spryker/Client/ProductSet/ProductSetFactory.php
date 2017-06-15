@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductSet\Mapper\ProductSetStorageMapper;
 use Spryker\Client\ProductSet\Plugin\Elasticsearch\Query\ProductSetListQueryPlugin;
 
 class ProductSetFactory extends AbstractFactory
@@ -44,6 +45,14 @@ class ProductSetFactory extends AbstractFactory
     public function createProductSetListResultFormatters()
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSet\Mapper\ProductSetStorageMapperInterface
+     */
+    public function createProductSetStorageMapper()
+    {
+        return new ProductSetStorageMapper();
     }
 
     /**

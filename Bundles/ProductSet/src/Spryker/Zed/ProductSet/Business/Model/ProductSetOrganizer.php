@@ -58,7 +58,9 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
     {
         foreach ($productSetTransfers as $productSetTransfer) {
             $this->assertProductSetTransferForReorder($productSetTransfer);
-            $this->updateProductSet($productSetTransfer);
+
+            $productSetTransfer = $this->updateProductSet($productSetTransfer);
+
             $this->productSetTouch->touchProductSetByStatus($productSetTransfer);
         }
     }
@@ -78,13 +80,17 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
     protected function updateProductSet(ProductSetTransfer $productSetTransfer)
     {
         $productSetEntity = $this->productSetEntityReader->getProductSetEntity($productSetTransfer);
 
         $this->updateProductSetEntity($productSetEntity, $productSetTransfer);
+
+        $productSetTransfer->fromArray($productSetEntity->toArray(), true);
+
+        return $productSetTransfer;
     }
 
     /**

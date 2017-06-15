@@ -139,6 +139,8 @@ abstract class AbstractProductSetFormDataToTransferMapper
      */
     protected function setProductImageSets(FormInterface $imageSetFormCollection, ProductSetTransfer $productSetTransfer, LocaleTransfer $localeTransfer = null)
     {
+        $productImageSets = new ArrayObject();
+
         foreach ($imageSetFormCollection as $imageSetForm) {
             $imageSetFormData = $imageSetForm->getData();
             $imageSetData = array_filter($imageSetFormData);
@@ -153,9 +155,11 @@ abstract class AbstractProductSetFormDataToTransferMapper
 
             if ($productImages) {
                 $imageSetTransfer->setProductImages(new ArrayObject($productImages));
-                $productSetTransfer->addImageSet($imageSetTransfer);
+                $productImageSets->append($imageSetTransfer);
             }
         }
+
+        $productSetTransfer->setImageSets($productImageSets);
     }
 
     /**

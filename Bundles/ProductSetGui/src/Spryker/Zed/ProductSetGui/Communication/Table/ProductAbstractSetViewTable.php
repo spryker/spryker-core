@@ -26,7 +26,7 @@ class ProductAbstractSetViewTable extends AbstractTable
     const COL_IMAGE = 'image';
     const COL_DETAILS = 'details';
     const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-    const COL_ORDER = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
+    const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface
@@ -83,12 +83,12 @@ class ProductAbstractSetViewTable extends AbstractTable
             static::COL_ID_PRODUCT_ABSTRACT => 'ID',
             static::COL_IMAGE => 'Preview',
             static::COL_DETAILS => 'Product details',
-            static::COL_ORDER => 'Order',
+            static::COL_POSITION => 'Position',
         ]);
 
         $config->setSortable([
             static::COL_ID_PRODUCT_ABSTRACT,
-            static::COL_ORDER,
+            static::COL_POSITION,
         ]);
 
         $config->setRawColumns([
@@ -96,7 +96,7 @@ class ProductAbstractSetViewTable extends AbstractTable
             static::COL_DETAILS,
         ]);
 
-        $config->setDefaultSortField(static::COL_ORDER, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_POSITION, TableConfiguration::SORT_ASC);
         $config->setStateSave(false);
 
         return $config;
@@ -132,7 +132,7 @@ class ProductAbstractSetViewTable extends AbstractTable
             static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_IMAGE => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
             static::COL_DETAILS => $this->generateDetailsColumn($productAbstractEntity),
-            static::COL_ORDER => $productAbstractEntity->getVirtualColumn(static::COL_ORDER),
+            static::COL_POSITION => $productAbstractEntity->getVirtualColumn(static::COL_POSITION),
         ];
     }
 

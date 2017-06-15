@@ -16,6 +16,7 @@
         <property name="metaDescription" type="string" />
         <property name="metaKeywords" type="string" />
         <property name="imageSets" type="array" singular="imageSet" /> <!-- associative array of StorageProductImage[] where the key is the name of the image set -->
+        <property name="images" type="StorageProductImage[]" singular="image" />
     </transfer>
 
     <transfer name="StorageProductImage">

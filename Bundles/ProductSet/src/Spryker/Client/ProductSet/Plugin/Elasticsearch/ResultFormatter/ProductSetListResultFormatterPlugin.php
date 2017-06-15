@@ -12,6 +12,9 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
+/**
+ * @method \Spryker\Client\ProductSet\ProductSetFactory getFactory()
+ */
 class ProductSetListResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
@@ -53,10 +56,9 @@ class ProductSetListResultFormatterPlugin extends AbstractElasticsearchResultFor
      */
     protected function mapToTransfer(array $productSetStorageData)
     {
-        $productSetStorageTransfer = new ProductSetStorageTransfer();
-        $productSetStorageTransfer->fromArray($productSetStorageData, true);
-
-        return $productSetStorageTransfer;
+        return $this->getFactory()
+            ->createProductSetStorageMapper()
+            ->mapDataToTransfer($productSetStorageData);
     }
 
 }

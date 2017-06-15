@@ -141,7 +141,7 @@ class GeneralFormType extends AbstractType
         $builder->add(static::FIELD_WEIGHT, NumberType::class, [
             'label' => 'Weight',
             'attr' => [
-                'placeholder' => 'higher numbers listed first',
+                'placeholder' => 'Defines sorting order. Product Sets with higher numbers listed first.',
             ],
         ]);
 

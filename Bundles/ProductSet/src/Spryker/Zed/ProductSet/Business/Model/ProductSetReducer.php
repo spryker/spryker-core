@@ -99,7 +99,7 @@ class ProductSetReducer implements ProductSetReducerInterface
 
         $productSetTransfer = $this->cleanProductAbstractSets($productSetEntity, $productSetTransfer);
 
-        $position = 0;
+        $position = 1;
         foreach ($existingProductAbstractSets as $idProductAbstract) {
             if (in_array($idProductAbstract, $idProductAbstractsToRemove)) {
                 continue;

@@ -26,7 +26,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
     const COL_PRICE = 'price';
     const COL_STATUS = 'status';
-    const COL_ORDER = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
+    const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
     const COL_CHECKBOX = 'checkbox';
 
     /**
@@ -85,7 +85,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_NAME => 'Name',
             static::COL_PRICE => 'Price',
             static::COL_STATUS => 'Status',
-            static::COL_ORDER => 'Order',
+            static::COL_POSITION => 'Position',
             static::COL_CHECKBOX => 'Selected',
         ]);
 
@@ -93,7 +93,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_ID_PRODUCT_ABSTRACT,
             static::COL_SKU,
             static::COL_NAME,
-            static::COL_ORDER,
+            static::COL_POSITION,
         ]);
 
         $config->setSearchable([
@@ -106,10 +106,10 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_PREVIEW,
             static::COL_CHECKBOX,
             static::COL_STATUS,
-            static::COL_ORDER,
+            static::COL_POSITION,
         ]);
 
-        $config->setDefaultSortField(static::COL_ORDER, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_POSITION, TableConfiguration::SORT_ASC);
         $config->setStateSave(false);
 
         return $config;
@@ -148,7 +148,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             static::COL_PRICE => $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_ORDER => $this->getOrderField($productAbstractEntity),
+            static::COL_POSITION => $this->getPositionField($productAbstractEntity),
             static::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
         ];
     }
@@ -158,12 +158,12 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return string
      */
-    protected function getOrderField(SpyProductAbstract $productAbstractEntity)
+    protected function getPositionField(SpyProductAbstract $productAbstractEntity)
     {
         return sprintf(
-            '<input type="text" value="%2$d" id="product_order_%1$d" class="product_order" size="4" data-id="%1$s">',
+            '<input type="text" value="%2$d" id="product_position_%1$d" class="product_position" size="4" data-id="%1$s">',
             $productAbstractEntity->getIdProductAbstract(),
-            $productAbstractEntity->getVirtualColumn(static::COL_ORDER)
+            $productAbstractEntity->getVirtualColumn(static::COL_POSITION)
         );
     }
 

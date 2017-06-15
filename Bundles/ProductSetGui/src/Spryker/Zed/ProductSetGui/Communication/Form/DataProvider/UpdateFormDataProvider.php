@@ -107,7 +107,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
     {
         return [
             UpdateProductsFormType::FIELD_ID_PRODUCT_ABSTRACTS => $productSetTransfer->getIdProductAbstracts(),
-            UpdateProductsFormType::FIELD_PRODUCT_ORDER => array_flip($productSetTransfer->getIdProductAbstracts()),
+            UpdateProductsFormType::FIELD_PRODUCT_POSITION => array_flip($productSetTransfer->getIdProductAbstracts()),
         ];
     }
 

@@ -36,4 +36,21 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
             ->search($searchQuery, $resultFormatters);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productSetStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     */
+    public function mapProductSetStorageDataToTransfer(array $productSetStorageData)
+    {
+        return $this
+            ->getFactory()
+            ->createProductSetStorageMapper()
+            ->mapDataToTransfer($productSetStorageData);
+    }
+
 }

@@ -7,7 +7,7 @@
 
 require('./main');
 
-var productOrder;
+var productPosition;
 var allProductsTable;
 var productAbstractSetTable;
 
@@ -190,9 +190,10 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
 }
 
 $(document).ready(function() {
-    var rawProductOrder = $('#product_set_form_products_form_product_order').attr('value');
-    if (rawProductOrder) {
-        productOrder = $.parseJSON(rawProductOrder);
+    var rawProductPosition = $('#product_set_form_products_form_product_position').attr('value');
+    console.log(rawProductPosition);
+    if (rawProductPosition) {
+        productPosition = $.parseJSON(rawProductPosition);
     }
 
     $('#selectedProductsTable').DataTable({destroy: true});
@@ -286,12 +287,13 @@ $(document).ready(function() {
             }
         });
 
-        $('.product_order').off('change');
-        $('.product_order').on('change', function() {
+        $('.product_position').off('change');
+        $('.product_position').on('change', function() {
             var $input = $(this);
             var id = $.parseJSON($input.attr('data-id'));
-            productOrder[id] = $input.val();
-            $('#product_set_form_products_form_product_order').attr('value', JSON.stringify(productOrder));
+            productPosition[id] = $input.val();
+            console.log(productPosition);
+            $('#product_set_form_products_form_product_position').attr('value', JSON.stringify(productPosition));
         });
 
         for (var i = 0; i < settings.json.data.length; i++) {
@@ -303,8 +305,8 @@ $(document).ready(function() {
                 $('#' + productAbstractSetTable.getCheckBoxNamePrefix() + idProduct).prop('checked', false);
             }
 
-            if (productOrder.hasOwnProperty(idProduct)) {
-                $('#product_order_' + idProduct).val(parseInt(productOrder[idProduct]) || 0);
+            if (productPosition.hasOwnProperty(idProduct)) {
+                $('#product_position_' + idProduct).val(parseInt(productPosition[idProduct]) || 0);
             }
         }
     });

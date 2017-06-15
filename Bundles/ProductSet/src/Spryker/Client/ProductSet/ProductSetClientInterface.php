@@ -27,4 +27,18 @@ interface ProductSetClientInterface
      */
     public function getProductSetList($limit = null, $offset = null);
 
+    /**
+     * Specification:
+     * - Maps raw product set storage data to transfer object.
+     * - The "images" property will contain the images of the default image set if available, or the first available
+     * image set otherwise.
+     *
+     * @api
+     *
+     * @param array $productSetStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     */
+    public function mapProductSetStorageDataToTransfer(array $productSetStorageData);
+
 }

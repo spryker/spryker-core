@@ -92,7 +92,9 @@ class ProductSetCreator implements ProductSetCreatorInterface
         $productSetEntity = new SpyProductSet();
         $productSetEntity->fromArray($productSetTransfer->modifiedToArray());
 
-        foreach ($productSetTransfer->getIdProductAbstracts() as $position => $idProductAbstract) {
+        $idProductAbstracts = array_values($productSetTransfer->getIdProductAbstracts());
+        foreach ($idProductAbstracts as $index => $idProductAbstract) {
+            $position = $index + 1;
             $productAbstractSetEntity = $this->createProductAbstractSetEntity($idProductAbstract, $position);
             $productSetEntity->addSpyProductAbstractSet($productAbstractSetEntity);
         }

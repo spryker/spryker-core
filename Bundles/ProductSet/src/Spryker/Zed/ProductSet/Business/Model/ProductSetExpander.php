@@ -98,7 +98,7 @@ class ProductSetExpander implements ProductSetExpanderInterface
         $existingProductAbstractSets = $this->getExistingIdProductAbstracts($productSetEntity);
         $productSetTransfer->setIdProductAbstracts($existingProductAbstractSets);
 
-        $position = count($existingProductAbstractSets);
+        $position = count($existingProductAbstractSets) + 1;
         foreach ($idProductAbstracts as $idProductAbstract) {
             if (in_array($idProductAbstract, $existingProductAbstractSets)) {
                 continue;
