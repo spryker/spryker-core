@@ -39,6 +39,7 @@
     "spryker/cache": "*",
     "spryker/calculation": "*",
     "spryker/cart": "*",
+    "spryker/cart-variant": "*",
     "spryker/catalog": "*",
     "spryker/category": "*",
     "spryker/category-exporter": "*",
