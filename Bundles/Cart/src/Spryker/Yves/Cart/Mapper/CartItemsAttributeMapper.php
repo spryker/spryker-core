@@ -78,9 +78,10 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
         $productVariants= [];
 
-        $shit = $attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS];
-
-        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($shit), RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveArrayIterator($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS]),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
         foreach ($iterator as $attribute => $productConcreteId) {
             if ($iterator->callHasChildren() === false) {
 
