@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
-use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
-
 class ProductSetGuiToProductImageBridge implements ProductSetGuiToProductImageInterface
 {
 
@@ -20,7 +18,7 @@ class ProductSetGuiToProductImageBridge implements ProductSetGuiToProductImageIn
     /**
      * @param \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface $productImageFacade
      */
-    public function __construct(ProductImageFacadeInterface $productImageFacade)
+    public function __construct($productImageFacade)
     {
         $this->productImageFacade = $productImageFacade;
     }

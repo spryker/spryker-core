@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 
 class ProductSetGuiToMoneyBridge implements ProductSetGuiToMoneyInterface
 {
@@ -21,7 +20,7 @@ class ProductSetGuiToMoneyBridge implements ProductSetGuiToMoneyInterface
     /**
      * @param \Spryker\Zed\Money\Business\MoneyFacadeInterface $moneyFacade
      */
-    public function __construct(MoneyFacadeInterface $moneyFacade)
+    public function __construct($moneyFacade)
     {
         $this->moneyFacade = $moneyFacade;
     }

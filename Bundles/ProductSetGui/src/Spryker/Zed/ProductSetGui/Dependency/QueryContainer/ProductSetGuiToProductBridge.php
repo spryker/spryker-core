@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\QueryContainer;
 
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-
 class ProductSetGuiToProductBridge implements ProductSetGuiToProductInterface
 {
 
@@ -20,7 +18,7 @@ class ProductSetGuiToProductBridge implements ProductSetGuiToProductInterface
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
+    public function __construct($productQueryContainer)
     {
         $this->productQueryContainer = $productQueryContainer;
     }

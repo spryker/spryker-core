@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          name="zed" namespace="Orm\Zed\ProductSet\Persistence"
-          package="src.Orm.Zed.ProductSet.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\ProductSet\Persistence" package="src.Orm.Zed.ProductSet.Persistence">
 
     <table name="spy_product_set" idMethod="native" allowPkInsert="true">
         <column name="id_product_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -18,8 +16,9 @@
     </table>
 
     <table name="spy_product_abstract_set" idMethod="native" allowPkInsert="true">
-        <column name="fk_product_set" required="true" type="INTEGER" primaryKey="true"/>
-        <column name="fk_product_abstract" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="id_product_abstract_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_set" required="true" type="INTEGER"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="position" required="true" type="INTEGER" default="0"/>
 
         <foreign-key name="spy_product_abstract_set-fk_product_set" foreignTable="spy_product_set">
@@ -29,6 +28,11 @@
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
+        <unique name="spy_product_abstract_set-unique-fk_product_set">
+            <unique-column name="fk_product_set"/>
+            <unique-column name="fk_product_abstract"/>
+        </unique>
+
         <index name="spy_product_abstract_set-fk_product_set">
             <index-column name="fk_product_set"/>
         </index>
@@ -36,17 +40,17 @@
         <index name="spy_product_abstract_set-fk_product_abstract">
             <index-column name="fk_product_abstract"/>
         </index>
-    </table>
+    <id-method-parameter value="spy_product_abstract_set_pk_seq"/></table>
 
     <table name="spy_product_set_data" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_set_data" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_set" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
-        <column name="description" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
 
         <behavior name="timestampable"/>
 

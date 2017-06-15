@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductSetCollector\Dependency\Facade;
 
-use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
-
 class ProductSetCollectorToProductSetBridge implements ProductSetCollectorToProductSetInterface
 {
 
@@ -20,7 +18,7 @@ class ProductSetCollectorToProductSetBridge implements ProductSetCollectorToProd
     /**
      * @param \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface $productSetFacade
      */
-    public function __construct(ProductSetFacadeInterface $productSetFacade)
+    public function __construct($productSetFacade)
     {
         $this->productSetFacade = $productSetFacade;
     }

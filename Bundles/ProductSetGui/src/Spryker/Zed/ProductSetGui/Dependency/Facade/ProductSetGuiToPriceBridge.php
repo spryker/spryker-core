@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
-use Spryker\Zed\Price\Business\PriceFacadeInterface;
-
 class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
 {
 
@@ -20,7 +18,7 @@ class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
     /**
      * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
      */
-    public function __construct(PriceFacadeInterface $priceFacade)
+    public function __construct($priceFacade)
     {
         $this->priceFacade = $priceFacade;
     }

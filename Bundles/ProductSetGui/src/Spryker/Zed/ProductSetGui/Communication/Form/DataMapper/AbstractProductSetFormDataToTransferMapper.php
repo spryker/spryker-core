@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSetGui\Communication\Form\General\GeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\General\LocalizedGeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\ImagesFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\LocalizedProductImageSetFormType;
-use Spryker\Zed\ProductSetGui\Communication\Form\Products\ProductsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface;
 use Symfony\Component\Form\FormInterface;

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductSetCollector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Search\Business\SearchFacadeInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class ProductSetCollectorToSearchBridge implements ProductSetCollectorToSearchInterface
@@ -22,7 +21,7 @@ class ProductSetCollectorToSearchBridge implements ProductSetCollectorToSearchIn
     /**
      * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
-    public function __construct(SearchFacadeInterface $searchFacade)
+    public function __construct($searchFacade)
     {
         $this->searchFacade = $searchFacade;
     }
