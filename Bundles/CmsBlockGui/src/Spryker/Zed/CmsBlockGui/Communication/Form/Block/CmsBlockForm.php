@@ -12,6 +12,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,14 +32,12 @@ class CmsBlockForm extends AbstractType
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
     const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_VALID_FROM = 'validFrom';
+    const FIELD_VALID_TO = 'validTo';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
 
     const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
-
-    const TYPE_STATIC = 'static';
-    const TYPE_CATEGORY = 'category';
-    const TYPE_PRODUCT = 'product';
 
     /**
      * @var CmsBlockGuiToCmsBlockQueryContainerInterface
@@ -99,7 +99,8 @@ class CmsBlockForm extends AbstractType
             ->addIdCmsBlockField($builder)
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
-            ->addValueField($builder);
+            ->addValidFromField($builder)
+            ->addValidToField($builder);
     }
 
     /**
@@ -164,17 +165,123 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
-    protected function addValueField(FormBuilderInterface $builder)
+    protected function addValidFromField(FormBuilderInterface $builder)
     {
-//        $builder->add(static::FIELD_VALUE, 'text', [
-//            'label' => 'Value',
-//        ]);
+        $builder->add(static::FIELD_VALID_FROM, DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker',
+            ],
+            'constraints' => [
+                $this->createValidFromRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_VALID_TO, DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker',
+            ],
+            'constraints' => [
+                $this->createValidToFieldRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidFromRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($dateTimeFrom, ExecutionContextInterface $context) {
+                /** @var CmsBlockTransfer $cmsBlockTransfer */
+                $cmsBlockTransfer = $context->getRoot()->getData();
+                if (!$dateTimeFrom) {
+                    if ($cmsBlockTransfer->getValidTo()) {
+                        $context->addViolation('This field should be selected if "Valid to" is filled.');
+                    }
+
+                    return;
+                }
+
+                if ($dateTimeFrom > $cmsBlockTransfer->getValidTo()) {
+                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
+                }
+
+                if ($dateTimeFrom == $cmsBlockTransfer->getValidTo()) {
+                    $context->addViolation('Date "Valid from" is the same as "Valid to".');
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidToFieldRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
+
+                /** @var CmsBlockTransfer $cmsBlockTransfer */
+                $cmsBlockTransfer = $context->getRoot()->getData();
+
+                if (!$dateTimeTo) {
+                    if ($cmsBlockTransfer->getValidFrom()) {
+                        $context->addViolation('This field should be selected if "Valid from" is filled.');
+                    }
+
+                    return;
+                }
+
+                if ($dateTimeTo < $cmsBlockTransfer->getValidFrom()) {
+                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return new \DateTime($value);
+                }
+            },
+
+            function ($value) {
+                return $value;
+            }
+        );
     }
 
     /**
