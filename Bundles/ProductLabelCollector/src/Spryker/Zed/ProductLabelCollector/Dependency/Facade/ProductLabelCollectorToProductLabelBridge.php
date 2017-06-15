@@ -28,9 +28,9 @@ class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollector
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels()
+    public function findAllLabels()
     {
-        return $this->productLabelFacade->readAllLabels();
+        return $this->productLabelFacade->findAllLabels();
     }
 
 }

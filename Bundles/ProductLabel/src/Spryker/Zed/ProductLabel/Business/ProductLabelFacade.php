@@ -29,7 +29,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function readLabel($idProductLabel)
+    public function getLabelById($idProductLabel)
     {
         return $this
             ->getFactory()
@@ -44,7 +44,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels()
+    public function findAllLabels()
     {
         return $this
             ->getFactory()
@@ -61,7 +61,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readLabelsForProductAbstract($idProductAbstract)
+    public function findLabelsByIdProductAbstract($idProductAbstract)
     {
         return $this
             ->getFactory()
@@ -114,7 +114,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return int[]
      */
-    public function readProductAbstractRelationsForLabel($idProductLabel)
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel)
     {
         return $this
             ->getFactory()

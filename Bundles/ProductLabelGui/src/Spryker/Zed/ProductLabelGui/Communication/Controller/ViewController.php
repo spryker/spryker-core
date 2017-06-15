@@ -46,7 +46,7 @@ class ViewController extends AbstractController
         return $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->readLabel($idProductLabel);
+            ->getLabelById($idProductLabel);
     }
 
     /**

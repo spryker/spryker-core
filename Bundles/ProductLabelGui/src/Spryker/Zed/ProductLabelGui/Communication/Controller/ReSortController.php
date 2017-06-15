@@ -37,7 +37,7 @@ class ReSortController extends AbstractController
         return $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->readAllLabels();
+            ->findAllLabels();
     }
 
     /**

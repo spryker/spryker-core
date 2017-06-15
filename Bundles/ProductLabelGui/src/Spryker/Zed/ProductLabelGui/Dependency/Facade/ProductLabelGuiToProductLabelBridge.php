@@ -31,17 +31,17 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function readLabel($idProductLabel)
+    public function getLabelById($idProductLabel)
     {
-        return $this->productLabelFacade->readLabel($idProductLabel);
+        return $this->productLabelFacade->getLabelById($idProductLabel);
     }
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels()
+    public function findAllLabels()
     {
-        return $this->productLabelFacade->readAllLabels();
+        return $this->productLabelFacade->findAllLabels();
     }
 
     /**

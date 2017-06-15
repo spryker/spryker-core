@@ -25,7 +25,7 @@ interface ProductLabelFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function readLabel($idProductLabel);
+    public function getLabelById($idProductLabel);
 
     /**
      * Specification:
@@ -36,7 +36,7 @@ interface ProductLabelFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels();
+    public function findAllLabels();
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface ProductLabelFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readLabelsForProductAbstract($idProductAbstract);
+    public function findLabelsByIdProductAbstract($idProductAbstract);
 
     /**
      * Specification:
@@ -92,7 +92,7 @@ interface ProductLabelFacadeInterface
      *
      * @return int[]
      */
-    public function readProductAbstractRelationsForLabel($idProductLabel);
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel);
 
     /**
      * Specification:

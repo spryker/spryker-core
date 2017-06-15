@@ -17,12 +17,12 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function readLabel($idProductLabel);
+    public function getLabelById($idProductLabel);
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels();
+    public function findAllLabels();
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer

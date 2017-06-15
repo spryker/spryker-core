@@ -13,6 +13,6 @@ interface ProductLabelCollectorToProductLabelInterface
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function readAllLabels();
+    public function findAllLabels();
 
 }

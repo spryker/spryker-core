@@ -34,13 +34,12 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadLabelShouldReturnProductLabelTransfer()
+    public function testGetLabelByIdShouldReturnProductLabelTransfer()
     {
-        $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
-        $productLabelFacade->createLabel($productLabelTransfer);
+        $productLabelTransfer = $this->tester->haveProductLabel();
 
-        $productLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelTransfer = $productLabelFacade->getLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\ProductLabelTransfer', $productLabelTransfer);
     }
@@ -50,16 +49,16 @@ class ProductLabelFacadeTest extends Test
      *
      * @return void
      */
-    public function testReadLabelShouldThrowExceptionIfLabelDoesNotExist()
+    public function testGetLabelByIdShouldThrowExceptionIfLabelDoesNotExist()
     {
         $productLabelFacade = $this->createProductLabelFacade();
-        $productLabelFacade->readLabel(666);
+        $productLabelFacade->getLabelById(666);
     }
 
     /**
      * @return void
      */
-    public function testReadLabelShouldReturnCollectionOfLocalizedAttributes()
+    public function testGetLabelByIdShouldReturnCollectionOfLocalizedAttributes()
     {
         $localeTransfer = $this->tester->haveLocale();
 
@@ -70,7 +69,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->createLabel($productLabelTransfer);
 
-        $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+        $persistedProductLabelTransfer = $productLabelFacade->getLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertSame(1, $persistedProductLabelTransfer->getLocalizedAttributesCollection()->count());
     }
@@ -78,7 +77,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadAllLabelsShouldReturnCollectionSortedByPosition()
+    public function testFindAllLabelsShouldReturnCollectionSortedByPosition()
     {
         $this->tester->haveProductLabel();
         $this->tester->haveProductLabel();
@@ -87,7 +86,7 @@ class ProductLabelFacadeTest extends Test
 
         $productLabelFacade = $this->createProductLabelFacade();
         /** @var \ArrayObject $productLabelTransferCollection */
-        $productLabelTransferCollection = $productLabelFacade->readAllLabels();
+        $productLabelTransferCollection = $productLabelFacade->findAllLabels();
 
         $this->assertSame(1, $productLabelTransferCollection[0]->getPosition());
         $this->assertSame(2, $productLabelTransferCollection[1]->getPosition());
@@ -104,7 +103,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
         $productLabelFacade->createLabel($productLabelTransfer);
 
-        $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+        $persistedProductLabelTransfer = $productLabelFacade->getLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertNotNull($productLabelTransfer->getIdProductLabel());
         $this->assertSame($productLabelTransfer->getIdProductLabel(), $persistedProductLabelTransfer->getIdProductLabel());
@@ -127,7 +126,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->updateLabel($productLabelTransfer);
 
-        $updatedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+        $updatedProductLabelTransfer = $productLabelFacade->getLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertFalse($updatedProductLabelTransfer->getIsActive());
         $this->assertTrue($updatedProductLabelTransfer->getIsExclusive());
@@ -148,7 +147,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->createLabel($productLabelTransfer);
 
-        $persistedProductLabelTransfer = $productLabelFacade->readLabel($productLabelTransfer->getIdProductLabel());
+        $persistedProductLabelTransfer = $productLabelFacade->getLabelById($productLabelTransfer->getIdProductLabel());
 
         $this->assertSame(1, $persistedProductLabelTransfer->getLocalizedAttributesCollection()->count());
 
@@ -176,7 +175,7 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
-    public function testReadProductAbstractRelationsForLabelShouldReturnListOfIdsProductAbstract()
+    public function testFindProductAbstractRelationsByIdProductLabelShouldReturnListOfIdsProductAbstract()
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -186,7 +185,7 @@ class ProductLabelFacadeTest extends Test
         $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
 
         $productLabelFacade = $this->createProductLabelFacade();
-        $idsProductAbstract = $productLabelFacade->readProductAbstractRelationsForLabel($idProductLabel);
+        $idsProductAbstract = $productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
 
         $this->assertCount(1, $idsProductAbstract);
         $this->assertSame($idProductAbstract, $idsProductAbstract[0]);
@@ -205,7 +204,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
-        $productLabelTransferCollection = $productLabelFacade->readLabelsForProductAbstract($idProductAbstract);
+        $productLabelTransferCollection = $productLabelFacade->findLabelsByIdProductAbstract($idProductAbstract);
 
         $this->assertCount(1, $productLabelTransferCollection);
     }
@@ -224,7 +223,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade = $this->createProductLabelFacade();
         $productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
-        $idsProductAbstract = $productLabelFacade->readProductAbstractRelationsForLabel($idProductLabel);
+        $idsProductAbstract = $productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
 
         $this->assertCount(0, $idsProductAbstract);
     }

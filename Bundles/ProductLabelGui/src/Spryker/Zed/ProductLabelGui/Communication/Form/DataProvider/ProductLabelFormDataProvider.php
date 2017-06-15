@@ -76,7 +76,7 @@ class ProductLabelFormDataProvider
      */
     protected function readProductLabelTransfer($idProductLabel)
     {
-        $productLabelTransfer = $this->productLabelFacade->readLabel($idProductLabel);
+        $productLabelTransfer = $this->productLabelFacade->getLabelById($idProductLabel);
 
         foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer) {
             $localeTransfer = $this->localeFacade->getLocaleById($localizedAttributesTransfer->getFkLocale());

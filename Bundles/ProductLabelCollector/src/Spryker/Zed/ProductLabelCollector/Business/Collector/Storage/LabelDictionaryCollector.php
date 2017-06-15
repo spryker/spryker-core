@@ -46,7 +46,7 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
     {
         $dictionary = [];
 
-        foreach ($this->productLabelFacade->readAllLabels() as $productLabelTransfer) {
+        foreach ($this->productLabelFacade->findAllLabels() as $productLabelTransfer) {
             if (!$this->shouldExportProductLabel($productLabelTransfer)) {
                 continue;
             }
@@ -86,29 +86,27 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
      */
     protected function isValidByDate(ProductLabelTransfer $productLabelTransfer)
     {
-        $now = new DateTime();
-        $isValidFromDate = $this->isValidByDateFrom($productLabelTransfer, $now);
-        $isValidToDate = $this->isValidByDateTo($productLabelTransfer, $now);
+        $isValidFromDate = $this->isValidByDateFrom($productLabelTransfer);
+        $isValidToDate = $this->isValidByDateTo($productLabelTransfer);
 
         return ($isValidFromDate && $isValidToDate);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param \DateTime $now
      *
      * @return bool
      */
-    protected function isValidByDateFrom(ProductLabelTransfer $productLabelTransfer, DateTime $now)
+    protected function isValidByDateFrom(ProductLabelTransfer $productLabelTransfer)
     {
         if (!$productLabelTransfer->getValidFrom()) {
             return true;
         }
 
-        /** @var \DateTime $validFromDate */
-        $validFromDate = $productLabelTransfer->getValidFrom();
+        $validFromDate = new DateTime($productLabelTransfer->getValidFrom());
+        $now = new DateTime();
 
-        if ($now->getTimestamp() < $validFromDate->getTimestamp()) {
+        if ($now < $validFromDate) {
             return false;
         }
 
@@ -117,20 +115,19 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param \DateTime $now
      *
      * @return bool
      */
-    protected function isValidByDateTo(ProductLabelTransfer $productLabelTransfer, DateTime $now)
+    protected function isValidByDateTo(ProductLabelTransfer $productLabelTransfer)
     {
         if (!$productLabelTransfer->getValidTo()) {
             return true;
         }
 
-        /** @var \DateTime $validToDate */
-        $validToDate = $productLabelTransfer->getValidTo();
+        $validToDate = new DateTime($productLabelTransfer->getValidTo());
+        $now = new DateTime();
 
-        if ($validToDate->getTimestamp() < $now->getTimestamp()) {
+        if ($validToDate < $now) {
             return false;
         }
 

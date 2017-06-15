@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -175,6 +178,8 @@ class ProductLabelFormType extends AbstractType
             ]
         );
 
+        $this->addDateTimeTransformer(static::FIELD_VALID_FROM_DATE, $builder);
+
         return $this;
     }
 
@@ -198,7 +203,37 @@ class ProductLabelFormType extends AbstractType
             ]
         );
 
+        $this->addDateTimeTransformer(static::FIELD_VALID_TO_DATE, $builder);
+
         return $this;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder)
+    {
+        $builder
+            ->get($fieldName)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($dateAsString) {
+                    if (!$dateAsString) {
+                        return null;
+                    }
+
+                    return new DateTime($dateAsString);
+                },
+                function ($dateAsObject) {
+                    if (!$dateAsObject) {
+                        return null;
+                    }
+
+                    return $dateAsObject->format(ProductLabelConstants::VALIDITY_DATE_FORMAT);
+                }
+            ));
     }
 
     /**
