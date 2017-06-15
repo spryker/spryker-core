@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Cart\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
 use RecursiveArrayIterator;
@@ -44,7 +45,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap(array $items)
+    public function buildMap(ArrayObject $items)
     {
         $itemsAvailabilityMap = $this->cartItemsAvailabilityMapper->buildMap($items);
         $availableItemsSkus = array_keys($itemsAvailabilityMap);

@@ -9,6 +9,7 @@ namespace Spryker\Yves\Cart\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
+use \ArrayObject;
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
@@ -34,7 +35,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap(array $items)
+    public function buildMap(ArrayObject $items)
     {
         $availabilityMap = [];
         foreach ($items as $item) {

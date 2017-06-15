@@ -14,6 +14,8 @@ namespace Spryker\Yves\Cart\Mapper;
 
 namespace Spryker\Yves\Cart\Mapper;
 
+use \ArrayObject;
+
 interface CartItemsMapperInterface
 {
 
@@ -22,6 +24,6 @@ interface CartItemsMapperInterface
      *
      * @return array
      */
-    public function buildMap(array $items);
+    public function buildMap(ArrayObject $items);
 
 }
