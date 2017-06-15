@@ -6,7 +6,7 @@
     package="src.Orm.Zed.ProductLabel.Persistence"
     xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
 >
-    <table name="spy_product_label_product_abstract" identifierQuoting="true">
+    <table name="spy_product_label_product_abstract" identifierQuoting="true" phpName="SpyProductLabelProductAbstract">
         <column
             name="id_product_label_product_abstract"
             type="INTEGER"
@@ -19,17 +19,33 @@
 
         <id-method-parameter value="spy_product_label_product_abstract_pk_seq"/>
 
-        <foreign-key foreignTable="spy_product_label">
+        <foreign-key
+            foreignTable="spy_product_label"
+            phpName="SpyProductLabel"
+            refPhpName="SpyProductLabelProductAbstract"
+        >
             <reference local="fk_product_label" foreign="id_product_label"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_product_abstract">
+        <foreign-key
+            foreignTable="spy_product_abstract"
+            phpName="SpyProductAbstract"
+            refPhpName="SpyProductLabelProductAbstract"
+        >
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_product_label_product_abstract-fk_product_label-fk_product_abstract">
             <unique-column name="fk_product_label"/>
             <unique-column name="fk_product_abstract"/>
         </unique>
+
+        <index name="idx-spy_product_label_product_abstract-fk_product_label">
+            <index-column name="fk_product_label"/>
+        </index>
+
+        <index name="idx-spy_product_label_product_abstract-fk_product_abstract">
+            <index-column name="fk_product_abstract"/>
+        </index>
     </table>
 </database>
