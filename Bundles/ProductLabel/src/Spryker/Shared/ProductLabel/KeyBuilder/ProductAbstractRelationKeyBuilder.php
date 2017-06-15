@@ -8,7 +8,7 @@
 namespace Spryker\Shared\ProductLabel\KeyBuilder;
 
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class ProductAbstractRelationKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -18,7 +18,7 @@ class ProductAbstractRelationKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
+        return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
     }
 
 }

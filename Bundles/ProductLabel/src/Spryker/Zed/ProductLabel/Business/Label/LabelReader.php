@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
@@ -154,10 +154,10 @@ class LabelReader implements LabelReaderInterface
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
         $productLabelTransfer->setValidFrom(
-            $productLabelEntity->getValidFrom(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidFrom(ProductLabelConstants::VALIDITY_DATE_FORMAT)
         );
         $productLabelTransfer->setValidTo(
-            $productLabelEntity->getValidTo(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidTo(ProductLabelConstants::VALIDITY_DATE_FORMAT)
         );
 
         return $productLabelTransfer;

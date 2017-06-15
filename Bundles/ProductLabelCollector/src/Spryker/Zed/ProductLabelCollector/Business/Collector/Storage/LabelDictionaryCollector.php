@@ -11,7 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StorageProductLabelTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface;
 
@@ -155,7 +155,7 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
      */
     protected function collectResourceType()
     {
-        return ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY;
+        return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY;
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelCollector\Business\Collector\Storage;
 
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 
@@ -46,7 +46,7 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
      */
     protected function collectResourceType()
     {
-        return ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
+        return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
     }
 
     /**

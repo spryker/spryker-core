@@ -8,7 +8,7 @@
 namespace Spryker\Shared\ProductLabel\KeyBuilder;
 
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class LabelDictionaryKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -18,7 +18,7 @@ class LabelDictionaryKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY;
+        return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY;
     }
 
 }

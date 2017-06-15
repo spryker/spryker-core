@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductLabel\Storage;
 use Generated\Shared\Transfer\StorageProductLabelTransfer;
 use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class LabelDictionaryReader implements LabelDictionaryReaderInterface
 {
@@ -117,7 +117,7 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     protected function readLabelDictionary($localeName)
     {
         $storageKey = $this->keyBuilder->generateKey(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             $localeName
         );
 

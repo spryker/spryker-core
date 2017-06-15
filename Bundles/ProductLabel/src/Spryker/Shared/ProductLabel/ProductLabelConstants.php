@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ProductLabel;
 
-class ProductLabelConfig
+class ProductLabelConstants
 {
 
     const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER = 1;

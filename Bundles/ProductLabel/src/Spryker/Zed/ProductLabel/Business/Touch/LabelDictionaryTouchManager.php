@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Touch;
 
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 
 class LabelDictionaryTouchManager implements LabelDictionaryTouchManagerInterface
@@ -32,8 +32,8 @@ class LabelDictionaryTouchManager implements LabelDictionaryTouchManagerInterfac
     public function touchActive()
     {
         $this->touchFacade->touchActive(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
         );
     }
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Touch;
 
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 
 class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouchManagerInterface
@@ -34,7 +34,7 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
     public function touchActiveByIdProductAbstract($idProductAbstract)
     {
         $this->touchFacade->touchActive(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
     }
@@ -47,7 +47,7 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
     public function touchDeletedByIdProductAbstract($idProductAbstract)
     {
         $this->touchFacade->touchDeleted(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
     }

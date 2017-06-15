@@ -11,7 +11,7 @@ use Codeception\TestCase\Test;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
-use Spryker\Shared\ProductLabel\ProductLabelConfig;
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 /**
  * Auto-generated group annotations
@@ -167,8 +167,8 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->createLabel($productLabelTransfer);
 
         $this->tester->assertTouchActive(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
         );
     }
 
@@ -242,7 +242,7 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
         $this->tester->assertTouchActive(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
     }
@@ -265,8 +265,8 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
 
         $this->tester->assertTouchActiveAfter(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             $referenceTime
         );
     }
@@ -289,8 +289,8 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
 
         $this->tester->assertTouchActiveAfter(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             $referenceTime
         );
     }
@@ -313,8 +313,8 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
 
         $this->tester->assertNoTouchAfter(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             $referenceTime
         );
     }
@@ -337,8 +337,8 @@ class ProductLabelFacadeTest extends Test
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
 
         $this->tester->assertNoTouchAfter(
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-            ProductLabelConfig::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
             $referenceTime
         );
     }
