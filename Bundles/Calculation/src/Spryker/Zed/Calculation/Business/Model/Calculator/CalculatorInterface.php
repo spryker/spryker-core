@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 interface CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function recalculate(QuoteTransfer $quoteTransfer);
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer);
 
 }

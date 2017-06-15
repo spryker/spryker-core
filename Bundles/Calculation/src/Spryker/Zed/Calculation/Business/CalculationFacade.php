@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -19,9 +21,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
 {
 
     /**
-     * Specification:
-     * - Run all calculator plugins
-     * - Return the updated quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,112 +29,319 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculateQuote(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createStackExecutor()->recalculate($quoteTransfer);
+        return $this->getFactory()
+            ->createQuoteCalculatorExecutor()
+            ->recalculate($quoteTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function calculateExpenseGrossSumAmount(QuoteTransfer $quoteTransfer)
+    public function recalculateOrder(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createExpenseGrossSumAmount()->recalculate($quoteTransfer);
+        return $this->getFactory()
+            ->createOrderCalculatorExecutor()
+            ->recalculate($orderTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateExpenseTotals(QuoteTransfer $quoteTransfer)
+    public function calculateItemPrice(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createExpenseTotalsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createPriceCalculator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer)
+    public function calculateProductOptionPriceAggregation(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createGrandTotalsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createProductOptionPriceAggregator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateItemGrossAmounts(QuoteTransfer $quoteTransfer)
+    public function calculateDiscountAmountAggregation(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createItemGrossSumCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createDiscountAmountAggregator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
      *
      * @return void
      */
-    public function calculateOptionGrossSum(QuoteTransfer $quoteTransfer)
+    public function calculateItemDiscountAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createOptionGrossSumCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createItemDiscountAmountFullAggregator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
      *
      * @return void
      */
-    public function removeTotals(QuoteTransfer $quoteTransfer)
+    public function calculateItemTaxAmountFullAggregation(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createRemoveTotalsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createItemTaxAmountFullAggregator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Specific calculator
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer)
+    public function calculateSumAggregation(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createSubtotalTotalsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createSumAggregator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
-     * Checks if the calculated totals in the quote are still valid/consistent.
-     * If not: Adds an error code and message to the response
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculatePriceToPayAggregation(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createPriceToPayAggregator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateSubtotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createSubtotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateExpenseTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+           ->createExpenseTotalCalculator()
+           ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateDiscountTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createDiscountTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateRefundTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createRefundTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateRefundableAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createRefundableAmountCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createGrandTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createCanceledTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateOrderTaxTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createOrderTaxTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createRemoveTotalsCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createRemoveAllCalculatedDiscountsCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *

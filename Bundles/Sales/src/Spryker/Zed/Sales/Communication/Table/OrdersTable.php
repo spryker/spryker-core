@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -15,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
@@ -35,11 +33,6 @@ class OrdersTable extends AbstractTable
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
      */
     protected $queryBuilder;
-
-    /**
-     * @var \Spryker\Zed\Sales\Business\SalesFacade
-     */
-    protected $salesAggregatorFacade;
 
     /**
      * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
@@ -63,7 +56,6 @@ class OrdersTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
@@ -71,14 +63,12 @@ class OrdersTable extends AbstractTable
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
-        SalesToSalesAggregatorInterface $salesAggregatorFacade,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
         SalesToCustomerInterface $customerFacade
     ) {
         $this->queryBuilder = $queryBuilder;
-        $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
@@ -97,7 +87,7 @@ class OrdersTable extends AbstractTable
         $config->setSortable($this->getSortableFields());
 
         $config->addRawColumn(static::URL);
-        $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
+        $config->addRawColumn(SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE);
         $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
 
         $config->setDefaultSortColumnIndex(0);
@@ -124,10 +114,10 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
+                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
+                static::GRAND_TOTAL => $this->getGrandTotal($item),
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
@@ -135,6 +125,20 @@ class OrdersTable extends AbstractTable
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return int
+     */
+    protected function getGrandTotal(array $item)
+    {
+        if (!isset($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL])) {
+            return $this->formatPrice(0);
+        }
+
+        return $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
     }
 
     /**
@@ -155,32 +159,22 @@ class OrdersTable extends AbstractTable
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if ($this->hasRelatedCustomer($item[SpySalesOrderTableMap::COL_FK_CUSTOMER])) {
+        if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
+
+            $customerTransfer = $this->customerFacade->findCustomerByReference(
+                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+            );
+
+            if (!$customerTransfer) {
+                return $customer;
+            }
             $url = Url::generate('/customer/view', [
-                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+                'id-customer' => $customerTransfer->getIdCustomer(),
             ]);
             $customer = '<a href="' . $url . '">' . $customer . '</a>';
         }
 
         return $customer;
-    }
-
-    /**
-     * @param int|null $idCustomer
-     *
-     * @return bool
-     */
-    protected function hasRelatedCustomer($idCustomer)
-    {
-        if (empty($idCustomer)) {
-            return false;
-        }
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
-
-        return (bool)$customerTransfer;
     }
 
     /**
@@ -283,18 +277,6 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param int $idSalesOrder
-     *
-     * @return int
-     */
-    protected function getGrandTotalByIdSalesOrder($idSalesOrder)
-    {
-        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
-
-        return $orderTransfer->getTotals()->getGrandTotal();
-    }
-
-    /**
      * @return array
      */
     protected function getHeaderFields()
@@ -303,7 +285,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
             SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
             SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Full Name',
+            SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             static::ITEM_STATE_NAMES_CSV => 'Order State',
             static::GRAND_TOTAL => 'GrandTotal',

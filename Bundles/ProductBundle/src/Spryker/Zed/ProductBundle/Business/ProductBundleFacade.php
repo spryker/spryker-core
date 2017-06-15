@@ -124,22 +124,6 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function aggregateBundlePrice(OrderTransfer $orderTransfer)
-    {
-        return $this->getFactory()
-            ->createProductBundlePriceCalculator()
-            ->aggregate($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $concreteSku
      *
      * @return void
@@ -230,6 +214,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductBundleReader()
             ->assignBundledProductsToProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderProductBundles(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundlesSalesOrderHydrate()
+            ->hydrate($orderTransfer);
     }
 
 }

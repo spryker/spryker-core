@@ -58,16 +58,25 @@ class ExpenseTax implements OrderAmountAggregatorInterface
                 $expenseTransfer->getTaxRate()
             );
 
+            $expenseTransfer->setUnitTaxAmount((int)round($expenseUnitAmount));
+            $expenseTransfer->setUnitTaxTotal((int)round($expenseUnitAmount));
+
+        }
+
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+        foreach ($taxableItems as $expenseTransfer) {
+            if (!$expenseTransfer->getTaxRate()) {
+                continue;
+            }
+
             $expenseSumTaxAmount = $this->calculateTaxAmount(
                 $expenseTransfer->getSumGrossPriceWithDiscounts(),
                 $expenseTransfer->getTaxRate()
             );
 
-            $expenseTransfer->setUnitTaxAmount((int)round($expenseUnitAmount));
             $expenseTransfer->setSumTaxAmount((int)round($expenseSumTaxAmount));
-
-            $expenseTransfer->setUnitTaxTotal((int)round($expenseUnitAmount));
             $expenseTransfer->setSumTaxTotal((int)round($expenseSumTaxAmount));
+
         }
     }
 

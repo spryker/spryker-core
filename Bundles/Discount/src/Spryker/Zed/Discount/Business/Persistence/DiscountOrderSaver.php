@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -68,8 +67,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     {
         $orderItemCollection = $checkoutResponseTransfer->getSaveOrder()->getOrderItems();
         $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
-
-        $this->groupOrderDiscountsByGroupKey($orderItemCollection);
 
         foreach ($orderItemCollection as $orderItemTransfer) {
             $discountCollection = $orderItemTransfer->getCalculatedDiscounts();
@@ -240,58 +237,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
                 $this->saveDiscount($salesDiscountEntity, $calculatedDiscountTransfer);
             }
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemCollection
-     *
-     * @return void
-     */
-    protected function groupOrderDiscountsByGroupKey(ArrayObject $orderItemCollection)
-    {
-        $calculatedItemDiscountsByGroupKey = [];
-        $optionCalculatedDiscountsByGroupKey = [];
-        foreach ($orderItemCollection as $orderItemTransfer) {
-            if (!isset($calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                $calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$orderItemTransfer->getCalculatedDiscounts();
-            }
-            $orderItemTransfer->setCalculatedDiscounts(
-                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
-            );
-            foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
-                if (!isset($optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                    $optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
-                }
-                $productOptionTransfer->setCalculatedDiscounts(
-                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
-                );
-            }
-        }
-    }
-
-    /**
-     * @param array $calculatedDiscountsByGroupKey
-     * @param string $groupKey
-     *
-     * @return \ArrayObject
-     */
-    protected function getGroupedCalculatedDiscounts(array &$calculatedDiscountsByGroupKey, $groupKey)
-    {
-        $discountCollection = $calculatedDiscountsByGroupKey[$groupKey];
-
-        $appliedDiscounts = [];
-        foreach ($discountCollection as $key => $discountTransfer) {
-            $idDiscount = $discountTransfer->getIdDiscount();
-            if (isset($appliedDiscounts[$idDiscount])) {
-                continue;
-            }
-
-            $appliedDiscounts[$idDiscount] = $discountTransfer;
-            unset($discountCollection[$key]);
-        }
-        $calculatedDiscountsByGroupKey[$groupKey] = $discountCollection;
-
-        return new ArrayObject($appliedDiscounts);
     }
 
 }

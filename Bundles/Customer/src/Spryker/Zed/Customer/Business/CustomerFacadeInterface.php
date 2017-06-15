@@ -299,4 +299,17 @@ interface CustomerFacadeInterface
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 
+    /**
+     * @api
+     *
+     * Specification:
+     *  - Finds customer by reference
+     *  - Returns customer transfer
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference($customerReference);
+
 }

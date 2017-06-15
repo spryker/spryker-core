@@ -19,6 +19,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
     const DATE_FILTER_DAY = 'day';
     const DATE_FILTER_WEEK = 'week';
+    const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
 
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -43,6 +44,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     public function buildQuery($idOrderItemProcess = null, $idOrderItemState = null, $dateFilter = null)
     {
         $query = $this->salesOrderQuery;
+        $query->addLastOrderGrandTotalToResult(static::FIELD_ORDER_GRAND_TOTAL);
         $query = $this->addItemStates($query);
         $query = $this->addItemCount($query);
         $query = $this->filter($query, $idOrderItemProcess, $idOrderItemState, $dateFilter);

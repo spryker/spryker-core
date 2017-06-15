@@ -13,10 +13,10 @@ interface PriceManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $change);
+    public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer);
 
 }

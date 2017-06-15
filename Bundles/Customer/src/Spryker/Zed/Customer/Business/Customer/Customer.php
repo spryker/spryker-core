@@ -725,6 +725,42 @@ class Customer implements CustomerInterface
             return null;
         }
 
+        $customerTransfer = $this->hydrateCustomerTransferFromEntity($customerTransfer, $customerEntity);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     */
+    public function findByReference($customerReference)
+    {
+        $customerEntity = $this->queryContainer
+            ->queryCustomerByReference($customerReference)
+            ->findOne();
+
+        if ($customerEntity === null) {
+            return null;
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer = $this->hydrateCustomerTransferFromEntity($customerTransfer, $customerEntity);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function hydrateCustomerTransferFromEntity(
+        CustomerTransfer $customerTransfer,
+        SpyCustomer $customerEntity
+    ) {
         $customerTransfer->fromArray($customerEntity->toArray(), true);
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
         $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);

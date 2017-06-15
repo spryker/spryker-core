@@ -104,4 +104,18 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
             ->select([self::COL_MAX_TAX_RATE]);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function querySalesShipmentByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createSalesShipmentQuery()
+            ->filterByFkSalesOrder($idSalesOrder);
+    }
+
 }

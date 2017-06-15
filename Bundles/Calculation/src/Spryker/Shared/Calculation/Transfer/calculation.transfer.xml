@@ -20,10 +20,26 @@
         <property name="sumGrossPrice" type="int" />
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
-        <property name="unitItemTotal" type="int" />
-        <property name="sumItemTotal" type="int" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="quantity" type="int" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+
+        <property name="taxAmountAfterCancellation" type="int" />
+
     </transfer>
 
     <transfer name="TaxTotal">
@@ -37,6 +53,7 @@
         <property name="discountTotal" type="int" />
         <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotal" type="int" />
+        <property name="canceledTotal" type="int" />
         <property name="hash" type="string"/>
     </transfer>
 
@@ -44,15 +61,49 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string" />
     </transfer>
 
     <transfer name="Item">
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
-        <property name="unitItemTotal" type="int" />
-        <property name="sumItemTotal" type="int" />
+
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="unitTaxAmountFullAggregation" type="int" />
+        <property name="sumTaxAmountFullAggregation" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="sumSubtotalAggregation" type="int" />
+        <property name="unitSubtotalAggregation" type="int" />
+
+        <property name="unitProductOptionPriceAggregation" type="int" />
+        <property name="sumProductOptionPriceAggregation" type="int" />
+
+        <property name="unitExpensePriceAggregation" type="int" />
+        <property name="sumExpensePriceAggregation" type="int" />
+
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+
+        <property name="unitDiscountAmountFullAggregation" type="int" />
+        <property name="sumDiscountAmountFullAggregation" type="int" />
+
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+
+        <property name="taxRateAverageAggregation" type="float" />
+        <property name="taxAmountAfterCancellation" type="int" />
+
     </transfer>
 
     <transfer name="ProductOption">
@@ -60,6 +111,29 @@
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="canceledAmount" type="int" />
+
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string" />
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="originalOrder" type="Order" />
+        <property name="originalQuote" type="Quote" />
     </transfer>
 
 </transfers>

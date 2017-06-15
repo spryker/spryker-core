@@ -3,16 +3,16 @@
   "description": "Sales bundle",
   "license": "proprietary",
   "require": {
+    "spryker/calculation": "^4.0.0",
     "spryker/country": "^3.0.0",
-    "spryker/customer": "^4.0.0 || ^5.0.0",
+    "spryker/customer": "^6.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/oms": "^6.0.0",
+    "spryker/oms": "^7.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales-aggregator": "^4.0.0",
     "spryker/sales-split": "^3.0.0",
     "spryker/sequence-number": "^3.0.0",
     "spryker/symfony": "^3.0.0",
@@ -24,6 +24,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/price": "*",
     "spryker/shipment": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"

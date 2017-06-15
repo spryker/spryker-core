@@ -46,22 +46,24 @@ class ItemTax implements OrderAmountAggregatorInterface
     protected function addTaxAmountToTaxableItems(ArrayObject $taxableItems)
     {
         $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
-
         foreach ($taxableItems as $itemTransfer) {
             $unitTaxAmount = $this->calculateTaxAmount(
                 $itemTransfer->getUnitGrossPrice(),
                 $itemTransfer->getTaxRate()
             );
 
+            $itemTransfer->setUnitTaxAmount((int)round($unitTaxAmount));
+            $itemTransfer->setUnitTaxTotal((int)round($unitTaxAmount));
+        }
+
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+        foreach ($taxableItems as $itemTransfer) {
             $sumTaxAmount = $this->calculateTaxAmount(
                 $itemTransfer->getSumGrossPrice(),
                 $itemTransfer->getTaxRate()
             );
 
-            $itemTransfer->setUnitTaxAmount((int)round($unitTaxAmount));
             $itemTransfer->setSumTaxAmount((int)round($sumTaxAmount));
-
-            $itemTransfer->setUnitTaxTotal((int)round($unitTaxAmount));
             $itemTransfer->setSumTaxTotal((int)round($sumTaxAmount));
         }
     }

@@ -20,6 +20,8 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderI
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

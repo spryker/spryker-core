@@ -9,7 +9,7 @@
     "spryker/price": "^4.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^5.0.0",
+    "spryker/sales": "^6.0.0",
     "spryker/stock": "^4.0.0"
   },
   "require-dev": {

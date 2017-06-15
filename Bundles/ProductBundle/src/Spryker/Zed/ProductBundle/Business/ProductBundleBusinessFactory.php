@@ -18,6 +18,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
@@ -85,7 +86,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundlePriceCalculator()
     {
-        return new ProductBundlePriceCalculation($this->getSalesQueryContainer());
+        return new ProductBundlePriceCalculation();
     }
 
     /**
@@ -141,6 +142,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getStockQueryContainer(),
             $this->createProductBundleAvailabilityHandler()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrateInterface
+     */
+    public function createProductBundlesSalesOrderHydrate()
+    {
+        return new ProductBundlesSalesOrderHydrate($this->getSalesQueryContainer(), $this->createProductBundlePriceCalculator());
     }
 
     /**

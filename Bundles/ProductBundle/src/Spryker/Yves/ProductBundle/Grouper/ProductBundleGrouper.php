@@ -66,6 +66,8 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         }
 
+        $groupedBundleItems = $this->updateGroupedBundleItemsAggregatedSubtotal($groupedBundleItems, $bundleItems);
+
         return array_merge(
             $singleItems,
             $groupedBundleItems
@@ -174,6 +176,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         $bundleProduct = clone $bundleItemTransfer;
+
+        $bundleProduct->setSumSubtotalAggregation(0);
+        $bundleProduct->setUnitSubtotalAggregation(0);
         $bundleProduct->setQuantity($groupedBundleQuantity[$bundleGroupKey]);
 
         $bundleItems[$bundleGroupKey] = [
@@ -246,6 +251,35 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     *
+     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
+    {
+        foreach ($groupedBundleItems as $groupedBundle) {
+            $groupedBundleItemTransfer = $groupedBundle[static::BUNDLE_PRODUCT];
+
+            foreach ($bundleItems as $bundleItemTransfer) {
+                if ($groupedBundleItemTransfer->getGroupKey() !== $bundleItemTransfer->getGroupKey()) {
+                    continue;
+                }
+
+                $groupedBundleItemTransfer->setUnitSubtotalAggregation(
+                    $groupedBundleItemTransfer->getUnitSubtotalAggregation() + $bundleItemTransfer->getUnitSubtotalAggregation()
+                );
+
+                $groupedBundleItemTransfer->setSumSubtotalAggregation(
+                    $groupedBundleItemTransfer->getSumSubtotalAggregation() + $bundleItemTransfer->getSumSubtotalAggregation()
+                );
+            }
+        }
+
+        return $groupedBundleItems;
     }
 
 }

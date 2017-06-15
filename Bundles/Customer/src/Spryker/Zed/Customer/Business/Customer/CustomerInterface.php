@@ -98,4 +98,11 @@ interface CustomerInterface
      */
     public function findById($customerTransfer);
 
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     */
+    public function findByReference($customerReference);
+
 }

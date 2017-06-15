@@ -3,7 +3,7 @@
   "description": "Cart bundle",
   "license": "proprietary",
   "require": {
-    "spryker/calculation": "^3.0.0",
+    "spryker/calculation": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/quote": "^1.0.0",

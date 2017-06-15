@@ -136,4 +136,18 @@ interface SalesFacadeInterface
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
 
+    /**
+     *
+     * Specification:
+     *  - Expands order by quantity 1 recalculates order transfer with new values
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
 }

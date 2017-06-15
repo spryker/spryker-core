@@ -25,7 +25,8 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
         return new CheckoutWorkflow(
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS)
+            $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
+            $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS)
         );
     }
 

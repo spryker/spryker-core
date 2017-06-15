@@ -198,8 +198,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
          ->innerJoinWith('order.BillingAddress billingAddress')
          ->innerJoinWith('billingAddress.Country billingCountry')
          ->innerJoinWith('order.ShippingAddress shippingAddress')
-         ->innerJoinWith('shippingAddress.Country shippingCountry')
-         ->leftJoinShipmentMethod();
+         ->innerJoinWith('shippingAddress.Country shippingCountry');
 
         return $query;
     }

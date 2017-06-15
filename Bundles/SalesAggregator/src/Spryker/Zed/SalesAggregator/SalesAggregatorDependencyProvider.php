@@ -22,7 +22,9 @@ class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_TAX = 'FACADE_TAX';
     const QUERY_CONTAINER_SALES = 'SALES_QUERY_CONTAINER';
+    const QUERY_CONTAINER_DISCOUNTS = 'QUERY_CONTAINER_DISCOUNTS';
 
+    const QUERY_CONTAINER_PRODUCT_OPTIONS = 'PRODUCT_OPTION_QUERY_CONTAINER';
     const PLUGINS_ORDER_AMOUNT_AGGREGATION = 'PLUGINS_ORDER_AMOUNT_AGGREGATION';
     const PLUGINS_ITEM_AMOUNT_AGGREGATION = 'PLUGINS_ITEM_AMOUNT_AGGREGATION';
 
@@ -47,6 +49,14 @@ class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT_OPTIONS] = function (Container $container) {
+            return $container->getLocator()->productOption()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_DISCOUNTS] = function (Container $container) {
+            return $container->getLocator()->discount()->queryContainer();
         };
 
         return $container;

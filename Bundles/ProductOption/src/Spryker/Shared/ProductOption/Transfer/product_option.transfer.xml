@@ -28,8 +28,6 @@
         <property name="taxRate" type="float" />
         <property name="sku" type="string" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
-        <property name="unitGrossPriceWithProductOptions" type="int" />
-        <property name="sumGrossPriceWithProductOptions" type="int" />
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
     </transfer>

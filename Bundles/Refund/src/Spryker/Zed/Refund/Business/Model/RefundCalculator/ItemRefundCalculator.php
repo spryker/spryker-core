@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Refund\Business\Model\RefundCalculator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 
@@ -42,6 +43,8 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     protected function calculateRefundableItemAmount(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
+            $this->calculateProductOptionRefundAmount($refundTransfer, $itemTransfer);
+
             $refundTransfer->setAmount($refundTransfer->getAmount() + $itemTransfer->getRefundableAmount());
         }
     }
@@ -54,7 +57,34 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     protected function setCanceledItemAmount(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
+            $this->calculateProductOptionCanceledAmount($itemTransfer);
+
             $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculateProductOptionRefundAmount(RefundTransfer $refundTransfer, ItemTransfer $itemTransfer)
+    {
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $refundTransfer->setAmount($refundTransfer->getAmount() + $productOptionTransfer->getRefundableAmount());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculateProductOptionCanceledAmount(ItemTransfer $itemTransfer)
+    {
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionTransfer->setCanceledAmount($productOptionTransfer->getRefundableAmount());
         }
     }
 

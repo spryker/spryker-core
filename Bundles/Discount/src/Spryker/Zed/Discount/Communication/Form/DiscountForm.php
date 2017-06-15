@@ -12,34 +12,35 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class DiscountForm extends AbstractType
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Communication\Form\GeneralForm
+     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm
      */
     protected $generalForm;
 
     /**
-     * @var \Spryker\Zed\Discount\Communication\Form\CalculatorForm
+     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\CalculatorForm
      */
     protected $calculatorForm;
 
     /**
-     * @var \Spryker\Zed\Discount\Communication\Form\ConditionsForm
+     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\ConditionsForm
      */
     protected $conditionsForm;
 
     /**
-     * @param \Spryker\Zed\Discount\Communication\Form\GeneralForm $generalForm
-     * @param \Spryker\Zed\Discount\Communication\Form\CalculatorForm $calculatorForm
-     * @param \Spryker\Zed\Discount\Communication\Form\ConditionsForm $conditionsForm
+     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm $generalForm
+     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\CalculatorForm $calculatorForm
+     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\ConditionsForm $conditionsForm
      */
     public function __construct(
-        GeneralForm $generalForm,
-        CalculatorForm $calculatorForm,
-        ConditionsForm $conditionsForm
+        FormTypeInterface $generalForm,
+        FormTypeInterface $calculatorForm,
+        FormTypeInterface $conditionsForm
     ) {
         $this->generalForm = $generalForm;
         $this->calculatorForm = $calculatorForm;

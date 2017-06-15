@@ -106,3 +106,13 @@ $chat-box-background-color: #f0f0f0;
 .is-shown .show-more {
   display: none;
 }
+
+
+.addition-row {
+  td {
+    border-top: none !important;
+  }
+}
+.subtotal-row, .grandTotal-row {
+  background-color: #e7eaec;
+}

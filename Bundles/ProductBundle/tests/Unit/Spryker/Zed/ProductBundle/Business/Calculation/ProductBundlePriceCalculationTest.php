@@ -17,7 +17,6 @@ use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
 /**
  * @group Unit
@@ -30,32 +29,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQuer
  */
 class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @return void
-     */
-    public function testAggregateShouldSumAllBundledItemAmountsToProductBundle()
-    {
-        $productBundlePriceCalculationMock = $this->createProductPriceCalculationMock();
-
-        $this->setupFindOrderItemsByIdSalesOrder($productBundlePriceCalculationMock);
-
-        $orderTransfer = $this->createOrderTransfer();
-
-        $updatedOrderTransfer = $productBundlePriceCalculationMock->aggregate($orderTransfer);
-
-        $this->assertCount(1, $updatedOrderTransfer->getBundleItems());
-
-        $bundleItems = (array)$updatedOrderTransfer->getBundleItems();
-        $bundleItemTransfer = array_pop($bundleItems);
-
-        $this->assertSame(200, $bundleItemTransfer->getUnitGrossPrice());
-        $this->assertSame(400, $bundleItemTransfer->getSumGrossPrice());
-        $this->assertSame(180, $bundleItemTransfer->getUnitItemTotal());
-        $this->assertSame(360, $bundleItemTransfer->getSumItemTotal());
-        $this->assertSame(20, $bundleItemTransfer->getFinalUnitDiscountAmount());
-        $this->assertSame(40, $bundleItemTransfer->getFinalSumDiscountAmount());
-    }
 
     /**
      * @return void
@@ -78,10 +51,10 @@ class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(200, $bundleItemTransfer->getUnitGrossPrice());
         $this->assertSame(400, $bundleItemTransfer->getSumGrossPrice());
-        $this->assertSame(180, $bundleItemTransfer->getUnitItemTotal());
-        $this->assertSame(360, $bundleItemTransfer->getSumItemTotal());
-        $this->assertSame(20, $bundleItemTransfer->getFinalUnitDiscountAmount());
-        $this->assertSame(40, $bundleItemTransfer->getFinalSumDiscountAmount());
+        $this->assertSame(180, $bundleItemTransfer->getUnitPriceToPayAggregation());
+        $this->assertSame(360, $bundleItemTransfer->getSumPriceToPayAggregation());
+        $this->assertSame(20, $bundleItemTransfer->getUnitDiscountAmountAggregation());
+        $this->assertSame(40, $bundleItemTransfer->getSumDiscountAmountAggregation());
     }
 
     /**
@@ -89,20 +62,7 @@ class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
      */
     protected function createProductPriceCalculationMock()
     {
-        $queryContainerMock = $this->createSalesQueryContainerMock();
-
-        return $this->getMockBuilder(ProductBundlePriceCalculation::class)
-            ->setConstructorArgs([$queryContainerMock])
-            ->setMethods(['findOrderItemsByIdSalesOrder'])
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
-     */
-    protected function createSalesQueryContainerMock()
-    {
-        return $this->getMockBuilder(ProductBundleToSalesQueryContainerInterface::class)->getMock();
+        return new ProductBundlePriceCalculation();
     }
 
     /**
@@ -169,10 +129,12 @@ class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setUnitGrossPrice(100);
         $itemTransfer->setSumGrossPrice(200);
-        $itemTransfer->setUnitItemTotal(90);
-        $itemTransfer->setSumItemTotal(180);
-        $itemTransfer->setFinalUnitDiscountAmount(10);
-        $itemTransfer->setFinalSumDiscountAmount(20);
+        $itemTransfer->setUnitSubtotalAggregation(100);
+        $itemTransfer->setSumSubtotalAggregation(200);
+        $itemTransfer->setUnitPriceToPayAggregation(90);
+        $itemTransfer->setSumPriceToPayAggregation(180);
+        $itemTransfer->setUnitDiscountAmountAggregation(10);
+        $itemTransfer->setSumDiscountAmountAggregation(20);
         $itemTransfer->setIdSalesOrderItem(2);
         $itemTransfer->setRelatedBundleItemIdentifier('bundle-identifier');
         $bundledItems->append($itemTransfer);
@@ -180,10 +142,10 @@ class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setUnitGrossPrice(100);
         $itemTransfer->setSumGrossPrice(200);
-        $itemTransfer->setUnitItemTotal(90);
-        $itemTransfer->setSumItemTotal(180);
-        $itemTransfer->setFinalUnitDiscountAmount(10);
-        $itemTransfer->setFinalSumDiscountAmount(20);
+        $itemTransfer->setUnitPriceToPayAggregation(90);
+        $itemTransfer->setSumPriceToPayAggregation(180);
+        $itemTransfer->setUnitDiscountAmountAggregation(10);
+        $itemTransfer->setSumDiscountAmountAggregation(20);
         $itemTransfer->setIdSalesOrderItem(2);
         $itemTransfer->setRelatedBundleItemIdentifier('bundle-identifier');
 

@@ -24,7 +24,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     /**
      * Specification:
      *  - Returns persisted order information stored into OrderTransfer
-     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
      *
      * @api
      *
@@ -101,6 +101,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * Specification:
      * - Adds username to comment
      * - Saves comment to database
+     *
+     * @CR check why return wrong
      *
      * @api
      *
@@ -185,6 +187,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderAddressUpdater()
             ->update($addressesTransfer, $idAddress);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandSalesOrder($quoteTransfer);
     }
 
 }

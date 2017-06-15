@@ -15,6 +15,7 @@
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
+        <property name="fkSalesExpense" type="int" />
         <property name="fkShipmentCarrier" type="int" />
         <property name="fkTaxSet" type="int" />
         <property name="availabilityPlugin" type="string" />
@@ -30,10 +31,9 @@
 
     <transfer name="Order">
         <property name="idShipmentMethod" type="int" />
-        <property name="shipmentMethod" type="ShipmentMethod" />
         <property name="shipmentDeliveryTime" type="int" />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="shipmentMethod" type="ShipmentMethod" />
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" />
     </transfer>
 
     <transfer name="Address">
