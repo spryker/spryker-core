@@ -38,7 +38,9 @@ $(document).ready(function() {
         .off('click')
         .on('click', function() {
             var checkboxIsChecked = isSuperCheckBox.prop('checked');
-            $('#attributeForm_allow_input').prop('disabled', checkboxIsChecked);
+            var allowInputCheckbox = $('#attributeForm_allow_input');
+            allowInputCheckbox.prop('checked', false);
+            allowInputCheckbox.prop('disabled', checkboxIsChecked);
         });
 
 });
