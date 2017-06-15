@@ -56,7 +56,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->setFormatter(new PropelArraySetFormatter())
             ->where(
                 'LOWER(' . SpyCmsPageLocalizedAttributesTableMap::COL_NAME . ') LIKE ?',
-                '%'.mb_strtolower($searchText). '%'
+                '%' . mb_strtolower($searchText) . '%'
             );
 
         return $query;
@@ -92,7 +92,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->setFormatter(new PropelArraySetFormatter())
             ->where(
                 'LOWER(' . SpyCategoryAttributeTableMap::COL_NAME . ') LIKE ?',
-                '%'.mb_strtolower($searchText). '%'
+                '%' . mb_strtolower($searchText) . '%'
             );
 
         return $query;
