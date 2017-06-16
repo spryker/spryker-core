@@ -38,6 +38,20 @@
         <property name="attributes" type="array" singular="attribute" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="saveOrder" type="SaveOrder" />
+    </transfer>
+
     <transfer name="ProductAttributeKey">
         <property name="idProductAttributeKey" type="int" />
         <property name="key" type="string" />
@@ -70,6 +84,5 @@
     <transfer name="StorageProduct">
         <property name="sku" type="string" />
     </transfer>
-
 </transfers>
 

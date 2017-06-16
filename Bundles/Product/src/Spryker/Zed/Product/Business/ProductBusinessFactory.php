@@ -14,6 +14,7 @@ use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\MetadataManager;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
@@ -528,6 +529,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\MetadataManagerInterface
+     */
+    public function createMetadataManager()
+    {
+        return new MetadataManager(
+            $this->getProvidedDependency(ProductDependencyProvider::METADATA_SAVER_PLUGINS),
+            $this->getProvidedDependency(ProductDependencyProvider::METADATA_HYDRATOR_PLUGINS)
+        );
     }
 
 }

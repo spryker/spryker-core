@@ -41,6 +41,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const PRODUCT_CONCRETE_PLUGINS_READ = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_READ';
     const PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE';
     const PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE';
+    const METADATA_SAVER_PLUGINS = 'METADATA_SAVER_PLUGINS';
+    const METADATA_HYDRATOR_PLUGINS = 'METADATA_HYDRATOR_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -111,6 +113,14 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE] = function (Container $container) {
             return $this->getProductConcreteAfterUpdatePlugins($container);
+        };
+
+        $container[self::METADATA_SAVER_PLUGINS] = function (Container $container) {
+            return $this->getMetadataSaverPlugins($container);
+        };
+
+        $container[self::METADATA_HYDRATOR_PLUGINS] = function (Container $container) {
+            return $this->getMetadataHydratorPlugins($container);
         };
 
         return $container;
@@ -236,6 +246,26 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected function getProductConcreteAfterUpdatePlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductMetadataSaverInterface[]
+     */
+    protected function getMetadataSaverPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductMetadataHydratorInterface[]
+     */
+    protected function getMetadataHydratorPlugins(Container $container)
     {
         return [];
     }
