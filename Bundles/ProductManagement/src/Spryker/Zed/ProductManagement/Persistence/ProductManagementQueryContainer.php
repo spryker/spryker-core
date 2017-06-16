@@ -8,10 +8,12 @@
 namespace Spryker\Zed\ProductManagement\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -163,6 +165,66 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByIdProductManagementAttribute(null)
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryAllProductAttributes()
+    {
+        /*SELECT * FROM spy_product_attribute_key k
+        LEFT jOIN spy_product_management_attribute ma ON k.id_product_attribute_key = ma.fk_product_attribute_key AND k.is_super = FALSE
+        LEFT JOIN spy_product_management_attribute_value v ON ma.id_product_management_attribute = v.fk_product_management_attribute
+        LEFT JOIN spy_product_management_attribute_value_translation t ON t.fk_product_management_attribute_value = v.id_product_management_attribute_value*/
+
+        $keyJoin = new Join(
+            SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY,
+            SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
+            Criteria::LEFT_JOIN
+        );
+
+        $keyJoin
+            ->setRightTableAlias(SpyProductManagementAttributeTableMap::TABLE_NAME)
+            ->setLeftTableName(SpyProductManagementAttributeTableMap::TABLE_NAME)
+        ;
+
+        $query = $this->queryProductAttributeKey();
+        $query
+            ->addJoinObject($keyJoin, 'keyJoin')
+            ->addJoinCondition('keyJoin', SpyProductAttributeKeyTableMap::COL_IS_SUPER . ' = ?', true);
+/*
+        $query = $this
+            ->queryProductAttributeKey()
+            ->addJoin(
+                [
+                    SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY,
+                    SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
+                ],
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                [
+                    SpyProductManagementAttributeValueTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE,
+                    SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
+                ],
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                [
+                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                    SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                ],
+                Criteria::LEFT_JOIN
+            )->addAnd(
+                SpyProductAttributeKeyTableMap::COL_IS_SUPER,
+                true
+            );*/
+
+
+        return $query;
+
     }
 
 }

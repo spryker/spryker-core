@@ -84,4 +84,11 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      */
     public function queryUnusedProductAttributeKeys();
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryAllProductAttributes();
+
 }
