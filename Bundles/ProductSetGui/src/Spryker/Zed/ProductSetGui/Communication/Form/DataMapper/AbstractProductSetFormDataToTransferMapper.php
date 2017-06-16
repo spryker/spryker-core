@@ -117,7 +117,8 @@ abstract class AbstractProductSetFormDataToTransferMapper
         $defaultImageSetFormCollection = $productSetForm->get($this->getImagesFormFieldName())
             ->get(ImagesFormType::getImageSetFormName());
 
-        $this->setProductImageSets($defaultImageSetFormCollection, $productSetTransfer);
+        $productSetTransfer->setImageSets(new ArrayObject());
+        $productSetTransfer = $this->setProductImageSets($defaultImageSetFormCollection, $productSetTransfer);
 
         $localeCollection = $this->localeFacade->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
@@ -135,12 +136,10 @@ abstract class AbstractProductSetFormDataToTransferMapper
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
     protected function setProductImageSets(FormInterface $imageSetFormCollection, ProductSetTransfer $productSetTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $productImageSets = new ArrayObject();
-
         foreach ($imageSetFormCollection as $imageSetForm) {
             $imageSetFormData = $imageSetForm->getData();
             $imageSetData = array_filter($imageSetFormData);
@@ -155,11 +154,11 @@ abstract class AbstractProductSetFormDataToTransferMapper
 
             if ($productImages) {
                 $imageSetTransfer->setProductImages(new ArrayObject($productImages));
-                $productImageSets->append($imageSetTransfer);
+                $productSetTransfer->addImageSet($imageSetTransfer);
             }
         }
 
-        $productSetTransfer->setImageSets($productImageSets);
+        return $productSetTransfer;
     }
 
     /**
