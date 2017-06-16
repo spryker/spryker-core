@@ -23,7 +23,6 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_MONEY = 'money facade';
     const FACADE_SALES = 'sales facade';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

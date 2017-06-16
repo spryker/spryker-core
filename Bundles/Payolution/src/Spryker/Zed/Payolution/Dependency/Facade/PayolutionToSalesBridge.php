@@ -8,6 +8,7 @@ namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 class PayolutionToSalesBridge implements PayolutionToSalesInterface
 {
+
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
@@ -30,6 +31,5 @@ class PayolutionToSalesBridge implements PayolutionToSalesInterface
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
-
 
 }
