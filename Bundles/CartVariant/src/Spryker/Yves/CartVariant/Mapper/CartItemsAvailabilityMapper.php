@@ -60,11 +60,6 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
             $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }
 
-//        //todo: remove this and also revert the collector changes
-//        foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
-//            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
-//        }
-
         return $mapped;
     }
 
