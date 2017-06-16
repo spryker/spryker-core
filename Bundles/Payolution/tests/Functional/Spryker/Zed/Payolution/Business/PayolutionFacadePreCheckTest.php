@@ -74,7 +74,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
         $itemTransfer
             ->setSku('1234567890')
             ->setQuantity(1)
-            ->setUnitGrossPriceWithProductOptions(10000)
+            ->setUnitSubtotalAggregation(10000)
             ->setName('Socken');
 
         $billingAddressTransfer = new AddressTransfer();

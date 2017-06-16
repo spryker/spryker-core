@@ -12,15 +12,17 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryBridge;
 use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailBridge;
 use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesAggregatorBridge;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesBridge;
 
 class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
-    const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
+
     const FACADE_MONEY = 'money facade';
+    const FACADE_SALES = 'sales facade';
+
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,20 +31,20 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container[static::FACADE_MAIL] = function (Container $container) {
             return new PayolutionToMailBridge($container->getLocator()->mail()->facade());
         };
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new PayolutionToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
-        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new PayolutionToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new PayolutionToMoneyBridge($container->getLocator()->money()->facade());
         };
 
-        $container[self::FACADE_MONEY] = function (Container $container) {
-            return new PayolutionToMoneyBridge($container->getLocator()->money()->facade());
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new PayolutionToSalesBridge($container->getLocator()->sales()->facade());
         };
 
         return $container;
