@@ -55,6 +55,14 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[]
+     */
+    public function getCmsBlockFormPlugins()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_FORM);
+    }
+
+    /**
      * @param CmsBlockFormDataProvider $cmsBlockFormDataProvider
      * @param int|null $idCmsBlock
      *
@@ -63,7 +71,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
     {
         $cmsBlockForm = new CmsBlockForm(
-            $this->getProvidedDependency(CmsBlockGuiDependencyProvider::QUERY_CONTAINER_CMS_BLOCK)
+            $this->getCmsBlockQueryContainer(),
+            $this->getCmsBlockFormPlugins()
         );
 
         return $this->getFormFactory()->create(

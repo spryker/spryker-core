@@ -59,9 +59,8 @@
             <reference foreign="id_cms_block_template" local="fk_template"/>
         </foreign-key>
 
-        <unique name="spy_cms_block-name">
+        <unique name="spy_cms_block-name-uq">
             <unique-column name="name"/>
-            <unique-column name="value"/>
         </unique>
 
         <id-method-parameter value="spy_cms_block_pk_seq"/>

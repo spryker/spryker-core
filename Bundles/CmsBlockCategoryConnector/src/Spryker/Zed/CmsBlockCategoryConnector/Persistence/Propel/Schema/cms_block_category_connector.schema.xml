@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\CmsBlockCategoryConnector\Persistence"
+          package="src.Orm.Zed.CmsBlockCategoryConnector.Persistence"
+>
+    <table name="spy_cms_block_connector" phpName="SpyCmsBlockConnector">
+        <column name="id_cms_block_connector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_cms_block" type="INTEGER" required="true" />
+        <column name="fk_category" type="INTEGER" required="false" />
+
+        <foreign-key name="spy_cms_block_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
+            <reference foreign="id_cms_block" local="fk_cms_block"/>
+        </foreign-key>
+
+        <foreign-key name="spy_cms_block_connector-fk_category" foreignTable="spy_category" phpName="Category" onDelete="CASCADE">
+            <reference foreign="id_category" local="fk_category"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_cms_block_connector_pk_seq"/>
+    </table>
+</database>

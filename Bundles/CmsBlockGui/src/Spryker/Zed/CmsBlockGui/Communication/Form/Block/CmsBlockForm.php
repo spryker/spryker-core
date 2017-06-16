@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\Block;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
+use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -27,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CmsBlockForm extends AbstractType
 {
 
-    const FIELD_SELECT_VALUE = 'selectValue';
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
@@ -45,11 +45,20 @@ class CmsBlockForm extends AbstractType
     protected $cmsBlockQueryContainer;
 
     /**
-     * @param CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @var CmsBlockFormPluginInterface[]
      */
-    public function __construct(CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer)
-    {
+    protected $formPlugins;
+
+    /**
+     * @param CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param CmsBlockFormPluginInterface[] $formPlugins
+     */
+    public function __construct(
+        CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
+        array $formPlugins
+    ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
+        $this->formPlugins = $formPlugins;
     }
 
     /**
@@ -100,7 +109,8 @@ class CmsBlockForm extends AbstractType
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
             ->addValidFromField($builder)
-            ->addValidToField($builder);
+            ->addValidToField($builder)
+            ->addPluginForms($builder);
     }
 
     /**
@@ -300,6 +310,20 @@ class CmsBlockForm extends AbstractType
         }
 
         return $blockQuery->exists();
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPluginForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->formPlugins as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
+
+        return $this;
     }
 
 }
