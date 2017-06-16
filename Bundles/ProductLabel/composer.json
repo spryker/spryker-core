@@ -5,11 +5,11 @@
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
-    "spryker/locale": "^3.0.0",
+    "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/storage": "^3.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0",
+    "spryker/touch": "^3.1.0",
     "spryker/twig": "^3.0.0"
   },
   "require-dev": {
