@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSet\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
