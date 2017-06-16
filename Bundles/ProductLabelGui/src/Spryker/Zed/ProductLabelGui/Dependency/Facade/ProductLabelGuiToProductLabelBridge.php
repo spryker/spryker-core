@@ -29,11 +29,11 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     /**
      * @param int $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getLabelById($idProductLabel)
+    public function findLabelById($idProductLabel)
     {
-        return $this->productLabelFacade->getLabelById($idProductLabel);
+        return $this->productLabelFacade->findLabelById($idProductLabel);
     }
 
     /**

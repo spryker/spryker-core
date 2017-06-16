@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
@@ -43,18 +42,14 @@ class LabelReader implements LabelReaderInterface
     /**
      * @param int $idProductLabel
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getByIdProductLabel($idProductLabel)
+    public function findByIdProductLabel($idProductLabel)
     {
         $productLabelEntity = $this->findEntityByIdProductLabel($idProductLabel);
 
         if (!$productLabelEntity) {
-            throw new MissingProductLabelException(
-                sprintf('Could not find product label for id "%s"', $idProductLabel)
-            );
+            return null;
         }
 
         $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);

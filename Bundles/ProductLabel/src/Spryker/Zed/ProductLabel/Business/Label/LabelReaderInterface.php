@@ -13,11 +13,9 @@ interface LabelReaderInterface
     /**
      * @param int $idProductLabel
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getByIdProductLabel($idProductLabel);
+    public function findByIdProductLabel($idProductLabel);
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

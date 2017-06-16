@@ -25,16 +25,14 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param int $idProductLabel
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getLabelById($idProductLabel)
+    public function findLabelById($idProductLabel)
     {
         return $this
             ->getFactory()
             ->createLabelReader()
-            ->getByIdProductLabel($idProductLabel);
+            ->findByIdProductLabel($idProductLabel);
     }
 
     /**

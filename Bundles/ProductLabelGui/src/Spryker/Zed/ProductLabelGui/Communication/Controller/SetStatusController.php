@@ -29,7 +29,7 @@ class SetStatusController extends AbstractController
     {
         $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
 
-        $productLabelTransfer = $this->getProductLabelById($idProductLabel);
+        $productLabelTransfer = $this->findProductLabelById($idProductLabel);
         $productLabelTransfer->setIsActive(true);
 
         $this->updateProductLabel($productLabelTransfer);
@@ -65,7 +65,7 @@ class SetStatusController extends AbstractController
     {
         $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
 
-        $productLabelTransfer = $this->getProductLabelById($idProductLabel);
+        $productLabelTransfer = $this->findProductLabelById($idProductLabel);
         $productLabelTransfer->setIsActive(false);
 
         $this->updateProductLabel($productLabelTransfer);
@@ -81,14 +81,14 @@ class SetStatusController extends AbstractController
     /**
      * @param int $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    protected function getProductLabelById($idProductLabel)
+    protected function findProductLabelById($idProductLabel)
     {
         return $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->getLabelById($idProductLabel);
+            ->findLabelById($idProductLabel);
     }
 
     /**

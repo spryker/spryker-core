@@ -15,9 +15,9 @@ interface ProductLabelGuiToProductLabelInterface
     /**
      * @param int $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getLabelById($idProductLabel);
+    public function findLabelById($idProductLabel);
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

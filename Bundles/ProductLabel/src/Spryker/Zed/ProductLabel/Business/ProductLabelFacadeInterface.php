@@ -15,17 +15,15 @@ interface ProductLabelFacadeInterface
     /**
      * Specification:
      * - Finds a product label for the given ID in the database
-     * - Returns a product-label transfer
+     * - Returns a product-label transfer or null in case it does not exist
      *
      * @api
      *
      * @param int $idProductLabel
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function getLabelById($idProductLabel);
+    public function findLabelById($idProductLabel);
 
     /**
      * Specification:

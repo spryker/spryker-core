@@ -48,7 +48,7 @@ class ProductLabelFormDataProvider
             return $this->createProductLabelTransfer();
         }
 
-        return $this->readProductLabelTransfer($idProductLabel);
+        return $this->findProductLabelTransfer($idProductLabel);
     }
 
     /**
@@ -72,11 +72,11 @@ class ProductLabelFormDataProvider
     /**
      * @param int $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    protected function readProductLabelTransfer($idProductLabel)
+    protected function findProductLabelTransfer($idProductLabel)
     {
-        $productLabelTransfer = $this->productLabelFacade->getLabelById($idProductLabel);
+        $productLabelTransfer = $this->productLabelFacade->findLabelById($idProductLabel);
 
         foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer) {
             $localeTransfer = $this->localeFacade->getLocaleById($localizedAttributesTransfer->getFkLocale());

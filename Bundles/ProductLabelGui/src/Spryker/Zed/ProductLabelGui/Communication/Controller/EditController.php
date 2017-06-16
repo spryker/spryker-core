@@ -29,7 +29,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductLabel = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_LABEL));
-        $productLabelTransfer = $this->getProductLabelById($idProductLabel);
+        $productLabelTransfer = $this->findProductLabelById($idProductLabel);
 
         $productLabelAggregateForm = $this->createProductLabelAggregateForm($productLabelTransfer);
         $isFormSuccessfullyHandled = $this->handleProductLabelAggregateForm(
@@ -53,14 +53,14 @@ class EditController extends AbstractController
     /**
      * @param int $idProductLabel
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    protected function getProductLabelById($idProductLabel)
+    protected function findProductLabelById($idProductLabel)
     {
         return $this
             ->getFactory()
             ->getProductLabelFacade()
-            ->getLabelById($idProductLabel);
+            ->findLabelById($idProductLabel);
     }
 
     /**
