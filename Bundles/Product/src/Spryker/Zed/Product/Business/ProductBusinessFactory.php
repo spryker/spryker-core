@@ -33,6 +33,7 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
+use Spryker\Zed\Product\Business\Product\SuperAttributeManager;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -540,6 +541,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(ProductDependencyProvider::METADATA_SAVER_PLUGINS),
             $this->getProvidedDependency(ProductDependencyProvider::METADATA_HYDRATOR_PLUGINS)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\SuperAttributeManager
+     */
+    public function createSuperAttributeManager()
+    {
+        return new SuperAttributeManager();
     }
 
 }
