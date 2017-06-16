@@ -5,7 +5,7 @@
   "require": {
     "spryker/kernel": "^3.4.0",
     "spryker/key-builder": "^1.0.0",
-    "spryker/locale": "^3.0.0",
+    "spryker/locale": "^3.1.0",
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/search": "^6.0.0",
