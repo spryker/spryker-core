@@ -4,10 +4,18 @@
         <td>&nbsp; + <span class="label">{{ 'Option' | trans }}</span></td>
         <td>{{ productOption.sku }}</td>
         <td>{{ productOption.value }}</td>
-        <td>{{ productOption.unitPrice | money }}</td>
-        <td>{{ productOption.unitTaxAmount | money }}</td>
-        <td>{{ productOption.taxRate }}%</td>
-        <td>-{{ productOption.unitDiscountAmountAggregation | money }}</td>
+        <td></td>
+        <td>
+
+            <div>
+            <span {% if (productOption.unitDiscountAmountFullAggregation | default(0) > 0) %} class="discounted" {% endif %}>
+              {{ productOption.unitPrice | default(0) | money }}</span>
+              {% if (productOption.unitDiscountAmountFullAggregation | default(0) > 0) %}
+                  <span>({{ (productOption.unitPrice - productOption.unitDiscountAmountFullAggregation) | money }})</span>
+              {% endif %}
+            </div>
+            <div style="clear: both">incl. {{ orderItem.taxRate|default(0) }} % tax </div>
+        </td>
         <td colspan="4"></td>
     </tr>
 {% endfor %}

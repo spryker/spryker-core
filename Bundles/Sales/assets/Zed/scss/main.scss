@@ -116,3 +116,8 @@ $chat-box-background-color: #f0f0f0;
 .subtotal-row, .grandTotal-row {
   background-color: #e7eaec;
 }
+
+span.discounted {
+  text-decoration: line-through;
+  color: #AAAAAA;
+}
