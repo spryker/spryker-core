@@ -25,7 +25,6 @@
     "spryker/country": "*",
     "spryker/customer": "*",
     "spryker/propel": "*",
-    "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
