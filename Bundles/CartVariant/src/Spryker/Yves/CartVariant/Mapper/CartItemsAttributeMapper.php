@@ -10,6 +10,7 @@ namespace Spryker\Yves\CartVariant\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
+use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Client\Product\ProductClientInterface;
@@ -49,7 +50,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     public function buildMap(ArrayObject $items)
     {
         $itemsAvailabilityMap = $this->cartItemsAvailabilityMapper->buildMap($items);
-        $availableItemsSkus = array_keys($itemsAvailabilityMap);
+        $availableItemsSkus = $this->getAvailableItemsSku($itemsAvailabilityMap);
 
         $attributes = [];
 
@@ -116,6 +117,22 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     {
         return $this->productClient
             ->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());
+    }
+
+    /**
+     * @param array $itemsAvailabilityMap
+     *
+     * @return array
+     */
+    protected function getAvailableItemsSku(array $itemsAvailabilityMap)
+    {
+        $availableItemsSku = [];
+        foreach ($itemsAvailabilityMap as $sku => $availability) {
+            if ($availability[StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS]) {
+                $availableItemsSku[] = $sku;
+            }
+        }
+        return $availableItemsSku;
     }
 
 }

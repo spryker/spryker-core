@@ -12,7 +12,6 @@
     <transfer name="StorageAvailability">
         <property name="isAbstractProductAvailable" type="bool" />
         <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
-        <property name="concreteProductsAvailability" type="array" singular="concreteProductAvailability"/>
     </transfer>
 
     <transfer name="ProductAbstractAvailability">

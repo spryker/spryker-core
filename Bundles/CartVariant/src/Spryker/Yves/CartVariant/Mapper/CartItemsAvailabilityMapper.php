@@ -15,7 +15,7 @@ use Spryker\Client\Availability\AvailabilityClientInterface;
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
 
-    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+//    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
@@ -60,10 +60,10 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
             $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }
 
-        //todo: remove this and also revert the collector changes
-        foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
-            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
-        }
+//        //todo: remove this and also revert the collector changes
+//        foreach ($availability[self::CONCRETE_PRODUCTS_AVAILABILITY] as $sku => $itemsAvailable) {
+//            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCTS_AVAILABILITY] = $itemsAvailable;
+//        }
 
         return $mapped;
     }

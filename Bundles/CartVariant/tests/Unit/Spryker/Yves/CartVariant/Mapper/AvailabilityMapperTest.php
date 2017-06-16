@@ -34,8 +34,6 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
 
         $this->assertArrayHasKey('concreteProductAvailableItems', $availability);
         $this->assertSame(true, (bool)$availability['concreteProductAvailableItems']);
-        $this->assertArrayHasKey('concreteProductsAvailability', $availability);
-        $this->assertSame(20, $availability['concreteProductsAvailability']);
     }
 
     /**
