@@ -45,29 +45,15 @@ class AttributeController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function manageitAction(Request $request)
+    public function manageAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
             static::PARAM_ID_PRODUCT_ABSTRACT
         ));
 
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->findProductAbstractById($idProductAbstract);
-
-        if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] does not exist.', $idProductAbstract));
-
-            return new RedirectResponse('/product-management');
-        }
-
-        $productAttributeValues = $this->getAttributesForProductAbstract($productAbstractTransfer);
-
-        $attributes = $this->getQueryContainer()
-            ->queryProductAttributeValues()
-            ->setFormatter(new SimpleArrayFormatter())
-            ->find()
-            ->toArray();
+        $attributes = $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProductAbstractAttributes($idProductAbstract);
 
         $locales = $this->getFactory()
             ->getLocaleFacade()

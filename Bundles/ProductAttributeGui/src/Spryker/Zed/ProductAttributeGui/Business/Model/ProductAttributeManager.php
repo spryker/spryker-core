@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -44,11 +49,11 @@ class ProductAttributeManager
         $abstractAttributes = $this->productQueryContainer
             ->queryProductAbstract()
             ->filterByIdProductAbstract($idProductAbstract)
-            ->useSpyProductAbstractLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
-            ->endUse()
+            ->joinWithSpyProductAbstractLocalizedAttributes(Criteria::LEFT_JOIN)
+            ->setFormatter(new SimpleArrayFormatter())
             ->find();
 
-        print_r($abstractAttributes->toArray());
+        print_r($abstractAttributes->toArray());die;
     }
 
     /**
@@ -60,17 +65,17 @@ class ProductAttributeManager
      */
     public function queryProductAttributeValues($isSuper = false)
     {
-        return $this
+        return $this->productManagementQueryContainer
             ->queryProductManagementAttributeValueTranslation()
             ->joinWithSpyProductManagementAttributeValue()
-            ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
-            ->joinWithSpyProductManagementAttribute()
-            ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
-            ->joinWithSpyProductAttributeKey()
-            ->useSpyProductAttributeKeyQuery()
-            ->filterByIsSuper($isSuper)
-            ->endUse()
-            ->endUse()
+                ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
+                    ->joinWithSpyProductManagementAttribute()
+                    ->useSpyProductManagementAttributeQuery()
+                        ->joinWithSpyProductAttributeKey()
+                        ->useSpyProductAttributeKeyQuery()
+                        ->filterByIsSuper($isSuper)
+                    ->endUse()
+                ->endUse()
             ->endUse()
             ->clearSelectColumns()
             ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
