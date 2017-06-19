@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -58,7 +59,8 @@ class CmsDataPageMapBuilder implements PageMapInterface
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
-            ->setType(static::TYPE_CMS_PAGE);
+            ->setType(static::TYPE_CMS_PAGE)
+            ->setIsActive($cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE]);
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())
