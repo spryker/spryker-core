@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
-class CmsBlockCategoryWriter
+class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 {
     /**
      * @var CmsBlockCategoryConnectorQueryContainerInterface

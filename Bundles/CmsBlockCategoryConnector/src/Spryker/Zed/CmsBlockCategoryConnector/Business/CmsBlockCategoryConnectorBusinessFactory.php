@@ -4,6 +4,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
@@ -14,7 +15,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsBlockCategoryWriter
+     * @return CmsBlockCategoryWriterInterface
      */
     public function createCmsBlockCategoryWrite()
     {

@@ -13,7 +13,7 @@ class CmsBlockCategoryType extends AbstractType
     const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     const FIELD_CATEGORIES = 'categories';
 
-    const OPTION_CATEGORIES = 'option-category';
+    const OPTION_CATEGORY_ARRAY = 'option-category-array';
 
     /**
      * @return string
@@ -31,7 +31,7 @@ class CmsBlockCategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCategoriesField($builder, $options[static::OPTION_CATEGORIES]);
+        $this->addCategoriesField($builder, $options[static::OPTION_CATEGORY_ARRAY]);
     }
 
     /**
@@ -41,7 +41,7 @@ class CmsBlockCategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_CATEGORIES);
+        $resolver->setRequired(static::OPTION_CATEGORY_ARRAY);
     }
 
     /**

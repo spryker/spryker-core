@@ -9,11 +9,11 @@
         <column name="fk_cms_block" type="INTEGER" required="true" />
         <column name="fk_category" type="INTEGER" required="false" />
 
-        <foreign-key name="spy_cms_block_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
+        <foreign-key name="spy_cms_block_category_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
             <reference foreign="id_cms_block" local="fk_cms_block"/>
         </foreign-key>
 
-        <foreign-key name="spy_cms_block_connector-fk_category" foreignTable="spy_category" phpName="Category" onDelete="CASCADE">
+        <foreign-key name="spy_cms_block_category_connector-fk_category" foreignTable="spy_category" phpName="Category" onDelete="CASCADE">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
 

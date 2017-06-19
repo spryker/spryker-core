@@ -52,7 +52,7 @@ class CmsBlockCategoryDataProvider
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockCategoryType::OPTION_CATEGORIES => $this->getCategoryList(),
+            CmsBlockCategoryType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
         ];
     }
 
@@ -99,7 +99,7 @@ class CmsBlockCategoryDataProvider
         $categoryList = [];
 
         /** @var SpyCategory $spyCategory */
-        foreach ($categoryCollection->getData() as $spyCategory) {
+        foreach ($categoryCollection as $spyCategory) {
             $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categoryList[$spyCategory->getIdCategory()] = $categoryName;
         }
