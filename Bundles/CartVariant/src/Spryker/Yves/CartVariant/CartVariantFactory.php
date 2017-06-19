@@ -15,7 +15,7 @@ class CartVariantFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Availability\AvailabilityClientInterface
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
      */
     public function getAvailabilityClient()
     {
@@ -23,15 +23,7 @@ class CartVariantFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductOption\ProductOptionClientInterface
-     */
-    public function getProductOptionClient()
-    {
-        return $this->getProvidedDependency(CartVariantDependencyProvider::CLIENT_PRODUCT_OPTION);
-    }
-
-    /**
-     * @return \Spryker\Client\Product\ProductClientInterface
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeInterface
      */
     public function getProductClient()
     {

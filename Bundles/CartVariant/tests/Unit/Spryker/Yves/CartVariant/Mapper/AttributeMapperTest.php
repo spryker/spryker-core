@@ -27,8 +27,8 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     public function testBuildMap()
     {
         $subject = new CartItemsAttributeMapper(
-            $this->buildProductClientMock('attribute.json'),
-            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock('availability.json'))
+            $this->createProductClientBridge('attribute.json'),
+            new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availability.json'))
         );
         $result = $subject->buildMap($this->getItems());
 
@@ -53,8 +53,8 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     public function testBuildNestedMap()
     {
         $subject = new CartItemsAttributeMapper(
-            $this->buildProductClientMock('attributeNested.json'),
-            new CartItemsAvailabilityMapper($this->buildProductAvailabilityClientMock('availabilityNested.json'))
+            $this->createProductClientBridge('attributeNested.json'),
+            new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availabilityNested.json'))
         );
         $result = $subject->buildMap($this->getNestedItems());
 

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\AvailabilityClient;
 use Spryker\Client\Product\ProductClient;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridge;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**
  * @group Unit
@@ -44,6 +46,16 @@ class CartItemsMapperBaseTest extends Test
     /**
      * @param string $jsonFileToLoad
      *
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge
+     */
+    protected function createProductClientBridge($jsonFileToLoad)
+    {
+        return new CartVariantToProductClientBridge($this->buildProductClientMock($jsonFileToLoad));
+    }
+
+    /**
+     * @param string $jsonFileToLoad
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Availability\AvailabilityClientInterface
      */
     protected function buildProductAvailabilityClientMock($jsonFileToLoad)
@@ -55,6 +67,16 @@ class CartItemsMapperBaseTest extends Test
         $mock->method('getProductAvailabilityByIdProductAbstract')
             ->willReturn($this->getAvailabilityTransfer($jsonFileToLoad));
         return $mock;
+    }
+
+    /**
+     * @param string $jsonFileToLoad
+     *
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
+     */
+    protected function createAvailabilityClientBridge($jsonFileToLoad)
+    {
+        return new CartVariantToAvailabilityClientBridge($this->buildProductAvailabilityClientMock($jsonFileToLoad));
     }
 
     /**

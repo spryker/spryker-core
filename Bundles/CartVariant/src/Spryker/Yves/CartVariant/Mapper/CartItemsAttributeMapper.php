@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\StorageAttributeMapTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Shared\CartVariant\CartVariantConstants;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeInterface;
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
@@ -23,7 +23,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
-     * @var \Spryker\Client\Product\ProductClientInterface
+     * @var \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeInterface
      */
     protected $productClient;
 
@@ -33,10 +33,10 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     protected $cartItemsAvailabilityMapper;
 
     /**
-     * @param \Spryker\Client\Product\ProductClientInterface $productClient
+     * @param \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeInterface $productClient
      * @param \Spryker\Yves\CartVariant\Mapper\CartItemsMapperInterface $cartItemsAvailabilityMapper
      */
-    public function __construct(ProductClientInterface $productClient, CartItemsMapperInterface $cartItemsAvailabilityMapper)
+    public function __construct(CartVariantToProductClientBridgeInterface $productClient, CartItemsMapperInterface $cartItemsAvailabilityMapper)
     {
         $this->productClient = $productClient;
         $this->cartItemsAvailabilityMapper = $cartItemsAvailabilityMapper;

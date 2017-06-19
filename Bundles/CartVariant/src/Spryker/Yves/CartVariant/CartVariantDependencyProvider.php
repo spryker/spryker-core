@@ -7,13 +7,13 @@
 
 namespace Spryker\Yves\CartVariant;
 
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridge;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_PRODUCT_OPTION = 'CLIENT_PRODUCT_OPTION';
     const CLIENT_AVAILABILITY = 'CLIENT_PRODUCT_OPTION';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
@@ -36,16 +36,13 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideClients(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_OPTION] = function (Container $container) {
-            return $container->getLocator()->productOption()->client();
-        };
 
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new CartVariantToProductClientBridge($container->getLocator()->product()->client());
         };
 
         $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
-            return $container->getLocator()->availability()->client();
+            return new CartVariantToAvailabilityClientBridge($container->getLocator()->availability()->client());
         };
 
         return $container;

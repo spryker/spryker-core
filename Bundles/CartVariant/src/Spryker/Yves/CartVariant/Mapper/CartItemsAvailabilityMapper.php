@@ -10,7 +10,7 @@ namespace Spryker\Yves\CartVariant\Mapper;
 use \ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-use Spryker\Client\Availability\AvailabilityClientInterface;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface;
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
@@ -18,14 +18,14 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
-     * @var \Spryker\Client\Availability\AvailabilityClientInterface
+     * @var \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
      */
     protected $productAvailabilityClient;
 
     /**
-     * @param \Spryker\Client\Availability\AvailabilityClientInterface $productAvailabilityClient
+     * @param \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface $productAvailabilityClient
      */
-    public function __construct(AvailabilityClientInterface $productAvailabilityClient)
+    public function __construct(CartVariantToAvailabilityClientBridgeInterface $productAvailabilityClient)
     {
         $this->productAvailabilityClient = $productAvailabilityClient;
     }
