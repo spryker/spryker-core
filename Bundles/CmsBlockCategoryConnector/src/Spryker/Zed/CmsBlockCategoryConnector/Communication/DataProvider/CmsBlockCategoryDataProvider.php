@@ -5,12 +5,20 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
 class CmsBlockCategoryDataProvider
 {
+
+    /**
+     * @var CmsBlockCategoryConnectorQueryContainerInterface
+     */
+    protected $cmsBlockCategoryConnectorQueryContainer;
 
     /**
      * @var CategoryQueryContainerInterface
@@ -23,16 +31,18 @@ class CmsBlockCategoryDataProvider
     protected $localeFacade;
 
     /**
+     * @param CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
      * @param CategoryQueryContainerInterface $categoryQueryContainer
      * @param LocaleFacadeInterface $localeFacade
      */
     public function __construct(
+        CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer,
         CategoryQueryContainerInterface $categoryQueryContainer,
         LocaleFacadeInterface $localeFacade
-
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->cmsBlockCategoryConnectorQueryContainer = $cmsBlockCategoryConnectorQueryContainer;
     }
 
     /**
@@ -47,20 +57,33 @@ class CmsBlockCategoryDataProvider
     }
 
     /**
-     * @param int|null $idCmsBlock
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function getData($idCmsBlock = null)
+    public function getData(CmsBlockTransfer $cmsBlockTransfer)
     {
-        if (!$idCmsBlock) {
-            $cmsBlockTransfer = new CmsBlockTransfer();
-        } else {
-//            $cmsBlockTransfer = $this->cmsBlockFacade->findCmsBlockId($idCmsBlock);
+        $categoryIds = [];
+
+        if ($cmsBlockTransfer->getIdCmsBlock()) {
+            $categoryIds = $this->getAssignedCategoryIds($cmsBlockTransfer->getIdCmsBlock());
         }
 
-        $cmsBlockTransfer = new CmsBlockTransfer();
+        $cmsBlockTransfer->setCategories($categoryIds);
+
         return $cmsBlockTransfer;
+    }
+
+    /**
+     * @param int $idCmsBlock
+     * @return array
+     */
+    protected function getAssignedCategoryIds($idCmsBlock)
+    {
+        return $this->cmsBlockCategoryConnectorQueryContainer
+            ->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
+            ->find()
+            ->getColumnValues('fkCategory');
     }
 
     /**

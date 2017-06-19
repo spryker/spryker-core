@@ -11,6 +11,7 @@ use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
+use Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockWriter implements CmsBlockWriterInterface
@@ -38,24 +39,32 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $templateManager;
 
     /**
+     * @var CmsBlockUpdatePluginInterface[]
+     */
+    protected $cmsBlockUpdatePlugins;
+
+    /**
      * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param CmsBlockMapperInterface $cmsBlockMapper
      * @param CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
      * @param CmsBlockToTouchFacadeInterface $touchFacade
      * @param CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
+     * @param CmsBlockUpdatePluginInterface[] $updatePlugins
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockMapperInterface $cmsBlockMapper,
         CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter,
         CmsBlockToTouchFacadeInterface $touchFacade,
-        CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
+        CmsBlockTemplateManagerInterface $cmsBlockTemplateManager,
+        array $updatePlugins
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockMapper = $cmsBlockMapper;
         $this->cmsBlockGlossaryWriter = $cmsBlockGlossaryWriter;
         $this->touchFacade = $touchFacade;
         $this->templateManager = $cmsBlockTemplateManager;
+        $this->cmsBlockUpdatePlugins = $updatePlugins;
     }
 
     /**
@@ -120,6 +129,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {
             $this->updateCmsBlockTransaction($cmsBlockTransfer, $spyCmsBlock);
+            $this->updateCmsBlockPluginsTransaction($cmsBlockTransfer);
         });
 
         return $cmsBlockTransfer;
@@ -194,6 +204,18 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
 
+    }
+
+    /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
+     */
+    protected function updateCmsBlockPluginsTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        foreach ($this->cmsBlockUpdatePlugins as $updatePlugin) {
+            $updatePlugin->handleUpdate($cmsBlockTransfer);
+        }
     }
 
     /**

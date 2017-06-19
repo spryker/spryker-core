@@ -20,6 +20,8 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
 
+    const PLUGIN_CMS_BLOCK_UPDATE = 'CMS_BLOCK:PLUGIN_CMS_BLOCK_UPDATE';
+
     /**
      * @param Container $container
      *
@@ -32,6 +34,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryQueryContainer($container);
+        $container = $this->addCmsBlockUpdatePlugins($container);
 
         return $container;
     }
@@ -91,4 +94,27 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCmsBlockUpdatePlugins(Container $container)
+    {
+        $container[static::PLUGIN_CMS_BLOCK_UPDATE] = function (Container $container) {
+            return $this->getCmsBlockUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCmsBlockUpdatePlugins()
+    {
+        return [];
+    }
+
 }

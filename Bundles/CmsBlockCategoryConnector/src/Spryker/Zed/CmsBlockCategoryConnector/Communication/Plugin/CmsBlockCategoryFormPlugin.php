@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,15 +22,18 @@ class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormP
      */
     public function buildForm(FormBuilderInterface $builder)
     {
-        $pluginType = $this->getFactory()
+        $formType = $this->getFactory()
             ->createCmsBlockCategoryType();
 
-        $provider = $this->getFactory()
+        $dataProvider = $this->getFactory()
             ->createCmsBlockCategoryDataProvider();
 
-        $pluginType->buildForm(
+        $cmsBlockTransfer = $builder->getData();
+        $dataProvider->getData($cmsBlockTransfer);
+
+        $formType->buildForm(
             $builder,
-            $provider->getOptions()
+            $dataProvider->getOptions()
         );
     }
 

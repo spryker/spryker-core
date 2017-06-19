@@ -9,6 +9,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyPro
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/** @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer() */
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -22,6 +23,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     public function createCmsBlockCategoryDataProvider()
     {
         return new CmsBlockCategoryDataProvider(
+            $this->getQueryContainer(),
             $this->getCategoryQueryContainer(),
             $this->getLocaleFacade()
         );
@@ -33,19 +35,6 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     public function createCmsBlockCategoryType()
     {
         return new CmsBlockCategoryType();
-    }
-
-    public function createCmsBlockCategoryFormBuilder()
-    {
-        $form = $this->createCmsBlockCategoryType();
-        $dataProvider = $this->createCmsBlockCategoryDataProvider();
-
-        return $this->getFormFactory()
-            ->createBuilder(
-                $form,
-                $dataProvider->getData(),
-                $dataProvider->getOptions()
-            );
     }
 
     /**
