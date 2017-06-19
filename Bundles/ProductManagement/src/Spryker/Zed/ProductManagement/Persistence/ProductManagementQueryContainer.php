@@ -13,7 +13,6 @@ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValue
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -170,61 +169,38 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     * @param bool $isSuper
+     *
+     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryAllProductAttributes()
+    public function queryProductAttributeValues($isSuper = false)
     {
-        /*SELECT * FROM spy_product_attribute_key k
-        LEFT jOIN spy_product_management_attribute ma ON k.id_product_attribute_key = ma.fk_product_attribute_key AND k.is_super = FALSE
-        LEFT JOIN spy_product_management_attribute_value v ON ma.id_product_management_attribute = v.fk_product_management_attribute
-        LEFT JOIN spy_product_management_attribute_value_translation t ON t.fk_product_management_attribute_value = v.id_product_management_attribute_value*/
-
-        $keyJoin = new Join(
-            SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY,
-            SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
-            Criteria::LEFT_JOIN
-        );
-
-        $keyJoin
-            ->setRightTableAlias(SpyProductManagementAttributeTableMap::TABLE_NAME)
-            ->setLeftTableName(SpyProductManagementAttributeTableMap::TABLE_NAME)
-        ;
-
-        $query = $this->queryProductAttributeKey();
-        $query
-            ->addJoinObject($keyJoin, 'keyJoin')
-            ->addJoinCondition('keyJoin', SpyProductAttributeKeyTableMap::COL_IS_SUPER . ' = ?', true);
-/*
-        $query = $this
-            ->queryProductAttributeKey()
-            ->addJoin(
-                [
-                    SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY,
-                    SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
-                ],
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                [
-                    SpyProductManagementAttributeValueTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE,
-                    SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
-                ],
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                [
-                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                    SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                ],
-                Criteria::LEFT_JOIN
-            )->addAnd(
-                SpyProductAttributeKeyTableMap::COL_IS_SUPER,
-                true
-            );*/
-
-
-        return $query;
-
+        return $this
+            ->queryProductManagementAttributeValueTranslation()
+            ->joinWithSpyProductManagementAttributeValue()
+            ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
+                ->joinWithSpyProductManagementAttribute()
+                ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->joinWithSpyProductAttributeKey()
+                    ->useSpyProductAttributeKeyQuery()
+                        ->filterByIsSuper($isSuper)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->clearSelectColumns()
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY, 'fk_product_attribute_key')
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE, 'fk_product_management_attribute')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'fk_product_management_attribute_value')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_product_management_attribute_fk_locale')
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
+            ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY);
     }
 
 }

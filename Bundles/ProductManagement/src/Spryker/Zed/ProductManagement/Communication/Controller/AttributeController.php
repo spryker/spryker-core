@@ -7,8 +7,14 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\ProductManagement\Business\Attribute\Manage\Read;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -227,6 +233,61 @@ class AttributeController extends AbstractController
             'values' => $values,
             'total' => $total,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function manageitAction(Request $request)
+    {
+        $idProductAbstract = $this->castId($request->get(
+            EditController::PARAM_ID_PRODUCT_ABSTRACT
+        ));
+
+        $productAbstractTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductAbstractById($idProductAbstract);
+
+        if (!$productAbstractTransfer) {
+            $this->addErrorMessage(sprintf('The product [%s] does not exist.', $idProductAbstract));
+
+            return new RedirectResponse('/product-management');
+        }
+
+        $productAttributeValues = $this->getAttributesForProductAbstract($productAbstractTransfer);
+
+        $attributes = $this->getQueryContainer()
+            ->queryProductAttributeValues()
+            ->setFormatter(new SimpleArrayFormatter())
+            ->find()
+            ->toArray();
+
+        $locales = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
+
+        print_r($attributes);die;
+
+        return $this->viewResponse([
+            'attributes' => $attributes,
+            'productAttributeValues' => $productAttributeValues,
+            'locales' => $locales,
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAttributesForProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $localizedAttributes = [];
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            $localizedAttributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
+        }
+
+        return ['default' => $productAbstractTransfer->getAttributes()] + $localizedAttributes;
     }
 
 }

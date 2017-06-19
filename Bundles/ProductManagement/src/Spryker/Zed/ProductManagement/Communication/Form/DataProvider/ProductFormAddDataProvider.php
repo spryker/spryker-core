@@ -15,15 +15,6 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
      */
     public function getData()
     {
-
-        $query = $this->productManagementQueryContainer->queryAllProductAttributes();
-
-        $results = $query->find()->toArray();
-
-        print_r($results);
-
-        die();
-
         $formData = [];
         $defaults = $this->getDefaultFormFields();
 

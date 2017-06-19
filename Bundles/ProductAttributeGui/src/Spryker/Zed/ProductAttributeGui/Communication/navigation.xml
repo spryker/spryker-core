@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <products>
+                <label>Product Attributes Management</label>
+                <title>Product Attributes Management</title>
+                <bundle>product-attribute-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </products>
+        </pages>
+    </product>
+</config>
