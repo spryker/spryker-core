@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerFacadeInterface
@@ -311,5 +312,18 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
+
+    /**
+     * @api
+     *
+     * Specification
+     *  - finds customer by reference
+     *  - stores customer information on an order
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
 
 }

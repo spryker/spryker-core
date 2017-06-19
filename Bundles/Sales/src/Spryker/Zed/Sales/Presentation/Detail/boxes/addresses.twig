@@ -11,7 +11,7 @@
                 <a href="{{ url('/sales/edit/address', {'id-sales-order': order.idSalesOrder, 'id-address': addr.idSalesOrderAddress}) }}" class="btn btn-sm btn-warning">
                     Edit
                 </a>
-                <p>{{ addr.firstName }} {{ addr.middleName }} {{ addr.lastName }}</p>
+                <p>{{ addr.salutation }} {{ addr.firstName }} {{ addr.middleName }} {{ addr.lastName }}</p>
                 {% if addr.address1 is not empty %}<p>{{ addr.address1 }}</p>{% endif %}
                 {% if addr.address2 is not empty %}<p>{{ addr.address2 }}</p>{% endif %}
                 {% if addr.address3 is not empty %}<p>{{ addr.address3 }}</p>{% endif %}

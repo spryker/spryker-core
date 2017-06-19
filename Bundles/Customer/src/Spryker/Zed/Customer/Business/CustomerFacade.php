@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -431,6 +432,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
         return $this->getFactory()
             ->createCustomer()
             ->findByReference($customerReference);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($orderTransfer);
     }
 
 }

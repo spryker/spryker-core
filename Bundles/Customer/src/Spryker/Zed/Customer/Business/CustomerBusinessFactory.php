@@ -13,6 +13,7 @@ use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -144,6 +145,16 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator
+     */
+    public function createCustomerOrderHydrator()
+    {
+        return new CustomerOrderHydrator(
+            $this->createCustomer()
+        );
     }
 
 }
