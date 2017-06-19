@@ -145,7 +145,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $cmsBlockTransfer->requireFkTemplate();
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
-            return $this->createCmsBlockTransaction($cmsBlockTransfer);
+            $this->createCmsBlockTransaction($cmsBlockTransfer);
+            $this->updateCmsBlockPluginsTransaction($cmsBlockTransfer);
         });
 
         return $cmsBlockTransfer;
