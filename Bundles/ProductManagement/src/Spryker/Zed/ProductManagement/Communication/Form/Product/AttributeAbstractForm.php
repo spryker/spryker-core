@@ -222,10 +222,22 @@ class AttributeAbstractForm extends AbstractSubForm
             $input = $inputManager->getSymfonyInputType(null, $value);
         } else {
             if (strtolower($input) === 'select2') {
+                $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+                if ($this->localeTransfer instanceof LocaleTransfer) {
+                    $idLocale = $this->localeTransfer->getIdLocale();
+                }
+
+                $existingValue = $this->productManagementQueryContainer
+                    ->queryFindAttributeByValueOrTranslation(
+                        $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
+                        $idLocale,
+                        $value
+                    )->findOne();
+
                 $input = new Select2ComboBoxType();
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
-                $config['choices'] = $this->getChoiceList($name, $attributes[$name]);
+                $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;
@@ -245,86 +257,37 @@ class AttributeAbstractForm extends AbstractSubForm
     /**
      * @param string $name
      * @param array $attributes
+     * @param mixed $existingValue
+     * @param int $idLocale
      *
      * @return array
      */
-    protected function getChoiceList($name, array $attributes)
+    protected function getChoiceList($name, array $attributes, $existingValue, $idLocale)
     {
         $result = [];
-        $idLocale = $this->getCurrentLocaleId();
-        $idAttribute = $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID];
         $attributeValue = $attributes[AbstractProductFormDataProvider::FORM_FIELD_VALUE];
 
-        $result = $this->updateChoicesWithExistingValue($attributeValue, $idAttribute, $idLocale, $result);
-        $result = $this->updateTranslations($idAttribute, $idLocale, $result);
-
-        return $result;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentLocaleId()
-    {
-        if (!($this->localeTransfer instanceof LocaleTransfer)) {
-            $this->localeTransfer = $this->localeProvider->getCurrentLocale();
-        }
-
-        return $this->localeTransfer->getIdLocale();
-    }
-
-    /**
-     * @param mixed $attributeValue
-     * @param int $idAttribute
-     * @param int $idLocale
-     * @param array $choices
-     *
-     * @return array
-     */
-    protected function updateChoicesWithExistingValue($attributeValue, $idAttribute, $idLocale, array $choices)
-    {
-        $existingValue = null;
-        if ($attributeValue !== null) {
-            $existingValue = $this->productManagementQueryContainer
-                ->queryFindAttributeByValueOrTranslation($idAttribute, $idLocale, $attributeValue)
-                ->findOne();
-        }
+        $valueCollection = $this->productManagementQueryContainer
+            ->queryFindAttributeByValueOrTranslation(
+                $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
+                $idLocale
+            )->find();
 
         if (!$existingValue && isset($attributeValue)) {
-            $choices[$attributeValue] = $attributeValue;
+            $result[$attributeValue] = $attributeValue;
         }
-
-        return $choices;
-    }
-
-    /**
-     * @param int $idAttribute
-     * @param int $idLocale
-     * @param array $choices
-     *
-     * @return array
-     */
-    protected function updateTranslations($idAttribute, $idLocale, array $choices)
-    {
-        /**
-         * @var \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue[] $valueCollection
-         */
-        $valueCollection = $this->productManagementQueryContainer
-            ->queryFindAttributeByValueOrTranslation($idAttribute, $idLocale)
-            ->find();
 
         foreach ($valueCollection as $entity) {
             $data = $entity->toArray();
             $value = $data['value'];
-
             if (isset($data['translation'])) {
                 $value = $data['translation'];
             }
 
-            $choices[$value] = $value;
+            $result[$value] = $value;
         }
 
-        return $choices;
+        return $result;
     }
 
 }

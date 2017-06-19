@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductManagement\Business\Attribute\Manage\Read;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -62,22 +60,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->createProductAttributeTransferGenerator()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
-     */
-    public function createAttributeProcessor()
-    {
-        return new AttributeProcessor();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\Manage\Read
-     */
-    public function createReadAttributeManager()
-    {
-        return new Read($this->createAttributeProcessor());
     }
 
     /**

@@ -84,13 +84,4 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      */
     public function queryUnusedProductAttributeKeys();
 
-    /**
-     * @api
-     *
-     * @param bool $isSuper
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryProductAttributeValues($isSuper = false);
-
 }
