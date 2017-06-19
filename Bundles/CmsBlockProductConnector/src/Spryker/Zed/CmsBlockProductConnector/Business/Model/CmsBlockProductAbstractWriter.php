@@ -27,12 +27,12 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return void;
+     * @return void
      */
     public function updateCmsBlockProductAbstractRelations(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer){
-            $this->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);
+        $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
+            $this->updateCmsBlockProductAbstractRelationsTransaction($cmsBlockTransfer);
         });
     }
 
