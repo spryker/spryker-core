@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductImageCartConnector\Dependency\Facade;
 
-use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
-
 class ProductImageCartConnectorToProductImageBridge implements ProductImageCartConnectorToProductImageInterface
 {
 
@@ -20,7 +18,7 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     /**
      * @param \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface $productImageFacade
      */
-    public function __construct(ProductImageFacadeInterface $productImageFacade)
+    public function __construct($productImageFacade)
     {
         $this->productImageFacade = $productImageFacade;
     }

@@ -39,7 +39,7 @@ class CartVariantFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\CartVariant\Mapper\CartItemsAttributeMapper
+     * @return \Spryker\Yves\CartVariant\Mapper\CartItemsMapperInterface
      */
     public function createCartItemsAttributeMapper()
     {
@@ -50,7 +50,7 @@ class CartVariantFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper
+     * @return \Spryker\Yves\CartVariant\Mapper\CartItemsMapperInterface
      */
     public function createCartItemsAvailabilityMapper()
     {

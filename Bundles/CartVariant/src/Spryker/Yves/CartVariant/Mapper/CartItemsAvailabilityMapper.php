@@ -15,7 +15,6 @@ use Spryker\Client\Availability\AvailabilityClientInterface;
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
 
-//    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
@@ -32,7 +31,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return array
      */
@@ -52,15 +51,15 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      */
     protected function getAvailability(ItemTransfer $item)
     {
-        $mapped = [];
+        $availabilityBySku = [];
 
         $availability = $this->productAvailabilityClient->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())->toArray();
 
-        foreach ($availability[self::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
-            $mapped[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
+        foreach ($availability[static::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
+            $availabilityBySku[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }
 
-        return $mapped;
+        return $availabilityBySku;
     }
 
 }

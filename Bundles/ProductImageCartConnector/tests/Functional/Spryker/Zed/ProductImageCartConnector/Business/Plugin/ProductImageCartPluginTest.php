@@ -59,13 +59,22 @@ class ProductImageCartPluginTest extends Test
 
         $itemTransfer = $changeTransfer->getItems()[0];
 
-        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer */
         $imageSetTransfer = $itemTransfer->getImageSets()->offsetGet(0);
         $this->assertInstanceOf(ProductImageSetTransfer::class, $imageSetTransfer);
 
         /** @var \Generated\Shared\Transfer\ProductImageTransfer $imageTransfer */
-        $imageTransfer = $imageSetTransfer->getProductImages()->offsetGet(0);
+        $imageTransfer = $this->getFirstImage($imageSetTransfer);
         $this->assertInstanceOf(ProductImageTransfer::class, $imageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer
+     *
+     * @return mixed
+     */
+    protected function getFirstImage($imageSetTransfer)
+    {
+        return $imageSetTransfer->getProductImages()->offsetGet(0);
     }
 
 }

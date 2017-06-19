@@ -76,32 +76,30 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     protected function getAttributesWithAvailability(ItemTransfer $item, array $attributeMap, array $availableItemsSkus)
     {
-        $productConcreteIds = $attributeMap[StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS];
-        $productConcreteSkus = array_flip($productConcreteIds);
+        $availableConcreteProductsSku = $this->getAvailableConcreteProductsSku($attributeMap);
 
         $productVariants = [];
 
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS]),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-        foreach ($iterator as $attribute => $productConcreteId) {
-            if ($iterator->callHasChildren() === false) {
+        $attributeMapIterator = $this->createAttributeIterator($attributeMap);
 
-                $variantNameValue = $iterator->getSubIterator($iterator->getDepth() - 1)->key();
-                list($variantName, $variantValue) = explode(':', $variantNameValue);
+        foreach ($attributeMapIterator as $attribute => $productConcreteId) {
+            if ($attributeMapIterator->callHasChildren() === true) {
+                continue;
+            }
 
-                if (array_key_exists($variantName, $productVariants) === false || array_key_exists($variantValue, $productVariants[$variantName]) === false) {
-                    $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;
-                    $productVariants[$variantName][$variantValue][CartVariantConstants::SELECTED] = false;
-                }
+            $variantNameValue = $this->getParentNode($attributeMapIterator);
+            list($variantName, $variantValue) = explode(':', $variantNameValue);
 
-                if (in_array($productConcreteSkus[$productConcreteId], $availableItemsSkus)) {
-                    $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = true;
-                }
-                if ($productConcreteId === $item->getId()) {
-                    $productVariants[$variantName][$variantValue][CartVariantConstants::SELECTED] = true;
-                }
+            if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
+                $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;
+                $productVariants[$variantName][$variantValue][CartVariantConstants::SELECTED] = false;
+            }
+
+            if ($this->isItemSkuAvailable($availableItemsSkus, $availableConcreteProductsSku, $productConcreteId)) {
+                $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = true;
+            }
+            if ($productConcreteId === $item->getId()) {
+                $productVariants[$variantName][$variantValue][CartVariantConstants::SELECTED] = true;
             }
         }
 
@@ -133,6 +131,73 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
         }
         return $availableItemsSku;
+    }
+
+    /**
+     * @param array $attributeMap
+     *
+     * @return array
+     */
+    protected function getAvailableConcreteProductsSku(array $attributeMap)
+    {
+        $productConcreteSkus = [];
+        if (array_key_exists(StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS, $attributeMap)) {
+            $productConcreteIds = $attributeMap[StorageAttributeMapTransfer::PRODUCT_CONCRETE_IDS];
+            $productConcreteSkus = array_flip($productConcreteIds);
+        }
+
+        return $productConcreteSkus;
+    }
+
+    /**
+     * @param array $attributeMap
+     *
+     * @return \RecursiveIteratorIterator
+     */
+    protected function createAttributeIterator(array $attributeMap)
+    {
+        $attributeMapIterator = new RecursiveIteratorIterator(
+            new RecursiveArrayIterator($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS]),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        return $attributeMapIterator;
+    }
+
+    /**
+     * @param string $variantName
+     * @param array $productVariants
+     * @param string $variantValue
+     *
+     * @return bool
+     */
+    protected function isVariantNotSet($variantName, array $productVariants, $variantValue)
+    {
+        return array_key_exists($variantName, $productVariants) === false || array_key_exists(
+            $variantValue,
+            $productVariants[$variantName]
+        ) === false;
+    }
+
+    /**
+     * @param array $availableItemsSkus
+     * @param array $availableConcreteProductsSku
+     * @param int $productConcreteId
+     *
+     * @return bool
+     */
+    protected function isItemSkuAvailable(array $availableItemsSkus, array $availableConcreteProductsSku, $productConcreteId)
+    {
+        return in_array($availableConcreteProductsSku[$productConcreteId], $availableItemsSkus, true);
+    }
+
+    /**
+     * @param \RecursiveIteratorIterator $attributeMapIterator
+     *
+     * @return \RecursiveIterator
+     */
+    protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
+    {
+        return $attributeMapIterator->getSubIterator($attributeMapIterator->getDepth() - 1)->key();
     }
 
 }

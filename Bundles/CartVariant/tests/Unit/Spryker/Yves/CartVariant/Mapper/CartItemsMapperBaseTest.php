@@ -37,7 +37,7 @@ class CartItemsMapperBaseTest extends Test
             ->setMethods(['getAttributeMapByIdProductAbstractForCurrentLocale'])->getMock();
 
         $mock->method('getAttributeMapByIdProductAbstractForCurrentLocale')
-            ->willReturn(\json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true));
+            ->willReturn(json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true));
         return $mock;
     }
 
@@ -66,7 +66,7 @@ class CartItemsMapperBaseTest extends Test
     {
         $transfer = new StorageAvailabilityTransfer();
         $transfer->fromArray(
-            \json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true),
+            json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true),
             true
         );
         return $transfer;

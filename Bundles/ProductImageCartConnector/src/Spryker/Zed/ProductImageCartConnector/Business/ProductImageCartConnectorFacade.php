@@ -17,10 +17,7 @@ class ProductImageCartConnectorFacade extends AbstractFacade implements ProductI
 {
 
     /**
-     * Specification:
-     * - Reads a persisted concrete product from database.
-     * - Expands the items of the CartChangeTransfer with the concrete product's data.
-     * - Returns the expanded CartChangeTransfer.
+     * {@inheritdoc}
      *
      * @api
      *

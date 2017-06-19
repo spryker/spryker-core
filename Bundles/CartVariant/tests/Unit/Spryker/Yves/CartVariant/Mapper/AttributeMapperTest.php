@@ -64,13 +64,6 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
 
         $this->assertArrayHasKey('chassis_type', $attributes);
         $this->assertSame(1, count($attributes['chassis_type']));
-
-//        $this->assertSame(1, $this->countSelectedAttributes($attributes['color']));
-//
-//        $this->assertArrayHasKey('processor_frequency', $attributes);
-//        $this->assertSame(3, count($attributes['processor_frequency']));
-//
-//        $this->assertSame(1, $this->countSelectedAttributes($attributes['processor_frequency']));
     }
 
 }
