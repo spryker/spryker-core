@@ -18,6 +18,9 @@ use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
 class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
 
+    /**
+     * @return \Spryker\Zed\ProductAttributeGui\Communication\Table\ProductAbstractTable
+     */
     public function createProductAbstractTable()
     {
         return new ProductAbstractTable(

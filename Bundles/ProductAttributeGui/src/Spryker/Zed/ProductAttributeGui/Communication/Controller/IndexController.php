@@ -8,16 +8,14 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Business\ProductAttributeGuiFacade getFacade()
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
  */
-class AttributeController extends AbstractController
+class IndexController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
@@ -45,7 +43,7 @@ class AttributeController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function manageAction(Request $request)
+    public function editAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
             static::PARAM_ID_PRODUCT_ABSTRACT

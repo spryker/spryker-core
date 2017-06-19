@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -42,18 +42,27 @@ class ProductAttributeManager
     }
 
     /**
-     * @return void
+     * @param int $idProductAbstract
+     *
+     * @return array
      */
     public function getProductAbstractAttributes($idProductAbstract)
     {
-        $abstractAttributes = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->joinWithSpyProductAbstractLocalizedAttributes(Criteria::LEFT_JOIN)
-            ->setFormatter(new SimpleArrayFormatter())
-            ->find();
+        $result = [];
+        $productAttributeCollection = $this->getProductAttributeEntities($idProductAbstract);
 
-        print_r($abstractAttributes->toArray());die;
+        foreach ($productAttributeCollection as $productAttributeEntity) {
+            $localizedAttributes = [];
+            foreach ($productAttributeEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
+                $attributesDecoded = $this->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
+                $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
+            }
+
+            $item = $this->generateAttributes($productAttributeEntity, $localizedAttributes);
+            $result[$productAttributeEntity->getIdProductAbstract()] = $item;
+        }
+
+        return $result;
     }
 
     /**
@@ -91,6 +100,47 @@ class ProductAttributeManager
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
             ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY);
+    }
+
+    /**
+     * @param string $localizedAttributesJson
+     *
+     * @return array
+     */
+    protected function decodeJsonAttributes($localizedAttributesJson)
+    {
+        $attributesDecoded = (array)json_decode($localizedAttributesJson, true);  //TODO util
+
+        return $attributesDecoded;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array|mixed|\Orm\Zed\Product\Persistence\SpyProductAbstract[]\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getProductAttributeEntities($idProductAbstract)
+    {
+        $productAttributeCollection = $this->productQueryContainer->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->joinWithSpyProductAbstractLocalizedAttributes()
+            ->find();
+
+        return $productAttributeCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAttributeEntity
+     * @param array \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $localizedAttributes
+     *
+     * @return array
+     */
+    protected function generateAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
+    {
+        $attributes = $this->decodeJsonAttributes($productAttributeEntity->getAttributes());
+        $attributes = ['default' => $attributes] + $localizedAttributes;
+
+        return $attributes;
     }
 
 }
