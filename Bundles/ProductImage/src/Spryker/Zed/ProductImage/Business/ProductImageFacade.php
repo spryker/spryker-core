@@ -247,4 +247,20 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
+     */
+    public function findProductImageSetById($idProductImageSet)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->findProductImagesSetCollectionById($idProductImageSet);
+    }
+
 }

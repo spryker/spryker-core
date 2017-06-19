@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          name="zed" namespace="Orm\Zed\ProductImage\Persistence"
+          package="src.Orm.Zed.ProductImage.Persistence">
+
+    <table name="spy_product_image_set" idMethod="native" allowPkInsert="true">
+        <column name="fk_resource_product_set" type="INTEGER" required="false"/>
+
+        <foreign-key name="spy_product_image_set-fk_resource_product_set" foreignTable="spy_product_set">
+            <reference local="fk_resource_product_set" foreign="id_product_set"/>
+        </foreign-key>
+
+        <index name="spy_product_image_set-fk_resource_product_set">
+            <index-column name="fk_resource_product_set"/>
+        </index>
+    </table>
+
+</database>

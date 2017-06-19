@@ -1,0 +1,30 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Sets' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/product-set-gui/create', 'Create Product Set' | trans) }}
+    {{ viewActionButton('/product-set-gui/reorder', 'Reorder Product Sets' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Sets' } %}
+
+        {% block widget_content %}
+            {{ productSetTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productset-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

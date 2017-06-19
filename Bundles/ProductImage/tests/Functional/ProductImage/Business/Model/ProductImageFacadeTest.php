@@ -787,4 +787,38 @@ class ProductImageFacadeTest extends Test
         return $productConcreteTransfer;
     }
 
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetById()
+    {
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
+            $this->imageSetAbstract->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(1, $productImageSetTransfer->getProductImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetByIdWithoutImages()
+    {
+        $imageSetEntity = new SpyProductImageSet();
+        $imageSetEntity
+            ->setName(self::SET_NAME)
+            ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->setFkProduct(null)
+            ->setFkLocale(null)
+            ->save();
+
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
+            $imageSetEntity->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(0, $productImageSetTransfer->getProductImages());
+    }
+
 }

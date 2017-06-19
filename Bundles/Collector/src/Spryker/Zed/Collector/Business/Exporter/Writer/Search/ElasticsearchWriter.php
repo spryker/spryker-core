@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Document;
+use Elastica\Exception\NotFoundException;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
@@ -77,19 +78,23 @@ class ElasticsearchWriter implements WriterInterface
             throw new InvalidDataSetException();
         }
 
-        try {
-            $documents = [];
-            foreach ($dataSet as $key => $value) {
+        $documents = [];
+        foreach ($dataSet as $key => $value) {
+            try {
                 $documents[] = $this->index->getType($this->type)->getDocument($key);
+            } catch (NotFoundException $e) {
+                continue;
             }
+        }
 
-            $response = $this->index->deleteDocuments($documents);
-            $this->index->flush(true);
-
-            return $response->isOk();
-        } catch (\Exception $exception) {
+        if (!$documents) {
             return true;
         }
+
+        $response = $this->index->deleteDocuments($documents);
+        $this->index->flush(true);
+
+        return $response->isOk();
     }
 
     /**

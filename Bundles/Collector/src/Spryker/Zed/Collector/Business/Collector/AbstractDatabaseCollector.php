@@ -171,4 +171,14 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         return $deletedCount;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function setLocale(LocaleTransfer $localeTransfer)
+    {
+        $this->locale = $localeTransfer;
+    }
+
 }

@@ -1,0 +1,15 @@
+<div class="image-set-container" data-image-collection-prototype="{{ form_widget(imageSetCollectionForm.vars.prototype.children.product_image_collection.vars.prototype) | e }}"
+    data-image-set-prototype="{{ form_widget(imageSetCollectionForm.vars.prototype) | e }}"
+>
+    {% for imageSetForm in imageSetCollectionForm %}
+        {% if not imageSetForm.id_product_image_set.vars.data and rootForm.vars.valid %}
+            {% do imageSetForm.setRendered %}
+        {% endif %}
+
+        {{ form_widget(imageSetForm) }}
+    {% endfor %}
+
+    <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">
+        <i class="fa fa-files-o"></i> {{ 'Add image set' | trans }}
+    </a>
+</div>

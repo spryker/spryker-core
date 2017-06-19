@@ -212,4 +212,21 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
             ->filterByFkLocale($idLocale);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetById($idProductImageSet)
+    {
+        return $this->getFactory()
+            ->createProductImageSetQuery()
+            ->filterByIdProductImageSet($idProductImageSet)
+            ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
+                ->orderBySortOrder(Criteria::DESC)
+            ->endUse();
+    }
+
 }
