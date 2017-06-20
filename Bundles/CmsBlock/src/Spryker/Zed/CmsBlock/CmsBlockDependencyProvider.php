@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CmsBlock;
 
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeBridge;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleFacadeBridge;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeBridge;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryBridge;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleBridge;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchBridge;
 use Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -50,7 +50,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new CmsBlockToTouchFacadeBridge($container->getLocator()->touch()->facade());
+            return new CmsBlockToTouchBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;
@@ -64,7 +64,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlossaryFacade(Container $container)
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new CmsBlockToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+            return new CmsBlockToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;
@@ -78,7 +78,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new CmsBlockToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+            return new CmsBlockToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

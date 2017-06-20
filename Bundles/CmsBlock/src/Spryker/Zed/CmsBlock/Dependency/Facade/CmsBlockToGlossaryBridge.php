@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
-class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterface
+class CmsBlockToGlossaryBridge implements CmsBlockToGlossaryInterface
 {
 
     /**

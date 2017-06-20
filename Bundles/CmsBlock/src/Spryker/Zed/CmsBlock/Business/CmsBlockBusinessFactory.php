@@ -61,7 +61,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface
+     * @return \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface
      */
     public function getTouchFacade()
     {

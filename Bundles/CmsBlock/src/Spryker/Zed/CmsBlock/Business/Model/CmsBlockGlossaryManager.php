@@ -16,7 +16,7 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\CmsBlockConfig;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleFacadeInterface;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
@@ -43,12 +43,12 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\CmsBlockConfig $cmsBlockConfig
-     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface $cmsBlockToLocaleFacade
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockConfig $cmsBlockConfig,
-        CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
+        CmsBlockToLocaleInterface $cmsBlockToLocaleFacade
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->config = $cmsBlockConfig;

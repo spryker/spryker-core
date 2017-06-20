@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 
 class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterface
 {
@@ -17,14 +17,14 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
     const UNIQUE_ID = 'uniqueId';
 
     /**
-     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface $glossaryFacade
      */
-    public function __construct(CmsBlockToGlossaryFacadeInterface $glossaryFacade)
+    public function __construct(CmsBlockToGlossaryInterface $glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

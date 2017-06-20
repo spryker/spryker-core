@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -49,7 +49,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface $cmsBlockMapper
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
-     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
      * @param \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
      */
@@ -57,7 +57,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockMapperInterface $cmsBlockMapper,
         CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter,
-        CmsBlockToTouchFacadeInterface $touchFacade,
+        CmsBlockToTouchInterface $touchFacade,
         CmsBlockTemplateManagerInterface $cmsBlockTemplateManager,
         array $updatePlugins
     ) {
@@ -70,7 +70,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface
      */
     protected $touchFacade;
 

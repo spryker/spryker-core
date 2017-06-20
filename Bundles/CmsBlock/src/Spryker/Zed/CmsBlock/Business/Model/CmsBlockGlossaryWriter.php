@@ -15,7 +15,7 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException;
 use Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 use Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -33,7 +33,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface
      */
     protected $glossaryFacade;
 
@@ -49,13 +49,13 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 
     /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator
      * @param \Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
-        CmsBlockToGlossaryFacadeInterface $glossaryFacade,
+        CmsBlockToGlossaryInterface $glossaryFacade,
         CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator,
         CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer
     ) {
