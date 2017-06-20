@@ -147,12 +147,16 @@ class StateUpdater implements StateUpdaterInterface
      */
     protected function isAlreadyTransitioned(StateMachineItemTransfer $stateMachineItemTransfer)
     {
-        $numberOfItems = $this->stateMachineQueryContainer->queryLastHistoryItem(
+        $stateMachineItemStateHistoryItem = $this->stateMachineQueryContainer->queryLastHistoryItem(
             $stateMachineItemTransfer,
             $stateMachineItemTransfer->getIdItemState()
-        )->count();
+        )->findOne();
 
-        return $numberOfItems > 0;
+        if (!$stateMachineItemStateHistoryItem) {
+            return false;
+        }
+
+        return $stateMachineItemStateHistoryItem->getFkStateMachineItemState() == $stateMachineItemTransfer->getIdItemState();
     }
 
     /**
