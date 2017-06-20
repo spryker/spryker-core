@@ -54,6 +54,8 @@ class ProductAttributeManager
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
 
         $valuesQuery = $this->queryProductAttributeValues($values);
+        $valuesQuery->setPrimaryTableName(SpyProductManagementAttributeValueTableMap::TABLE_NAME);
+
         $values = $valuesQuery
             ->setFormatter(new ArrayFormatter())
             ->find()
@@ -93,7 +95,7 @@ class ProductAttributeManager
         $query = $this->productManagementQueryContainer
             ->queryProductManagementAttributeValueTranslation()
                 ->joinSpyProductManagementAttributeValue()
-                ->useSpyProductManagementAttributeValueQuery('attributeValueJoin')
+                ->useSpyProductManagementAttributeValueQuery(null, Criteria::RIGHT_JOIN)
                     ->joinSpyProductManagementAttribute()
                     ->useSpyProductManagementAttributeQuery()
                         ->joinSpyProductAttributeKey()
@@ -139,7 +141,20 @@ class ProductAttributeManager
         $defaultCriterion = null;
         $defaultLocalizedCriterion = null;
 
+        print_r($productAttributes);
+
+        $criterionNullLocale = $criteria->getNewCriterion(
+            SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
+            null,
+            Criteria::ISNULL
+        );
+
         foreach ($productAttributes as $idLocale => $localizedAttributes) {
+            $criterionIdLocale = $criteria->getNewCriterion(
+                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
+                $idLocale
+            );
+
             foreach ($localizedAttributes as $key => $value) {
                 if ($idLocale === 'default') {
                     $criterionValue = $criteria->getNewCriterion(
@@ -149,6 +164,7 @@ class ProductAttributeManager
                     );
 
                     $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
+                    //$defaultCriterion->addAnd($criterionNullLocale);
                 } else {
                     $criterionTranslation = $criteria->getNewCriterion(
                         SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
@@ -156,13 +172,7 @@ class ProductAttributeManager
                         Criteria::LIKE
                     );
 
-                    $criterionLocale = $criteria->getNewCriterion(
-                        SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-                        $idLocale
-                    );
-
-                    $criterionTranslation->addAnd($criterionLocale);
-
+                    $criterionTranslation->addAnd($criterionIdLocale);
                     $defaultLocalizedCriterion = $this->appendOrCriterion($criterionTranslation, $defaultLocalizedCriterion);
                 }
             }
