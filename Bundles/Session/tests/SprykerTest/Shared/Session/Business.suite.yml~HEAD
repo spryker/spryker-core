@@ -1,0 +1,4 @@
+class_name: SessionSharedBusinessTester
+modules:
+    enabled:
+        - Asserts

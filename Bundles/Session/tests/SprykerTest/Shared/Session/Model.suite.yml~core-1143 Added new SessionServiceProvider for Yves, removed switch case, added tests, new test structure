@@ -1,0 +1,4 @@
+class_name: SessionSharedModelTester
+modules:
+    enabled:
+        - Asserts

@@ -566,6 +566,59 @@ class ProductImageFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetCombinedConcreteImageSets()
+    {
+        $imageSetTransfers = $this->productImageFacade->getCombinedConcreteImageSets(
+            $this->productConcreteEntity->getIdProduct(),
+            $this->productConcreteEntity->getFkProductAbstract(),
+            static::ID_LOCALE_DE
+        );
+
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME]);
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME_DE]);
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $defaultImageSetTransfer */
+        $defaultImageSetTransfer = $imageSetTransfers[static::SET_NAME];
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $localizedImageSetTransfer */
+        $localizedImageSetTransfer = $imageSetTransfers[static::SET_NAME_DE];
+
+        $defaultProductImages = $defaultImageSetTransfer->getProductImages();
+        $localizedProductImages = $localizedImageSetTransfer->getProductImages();
+
+        $this->assertEquals(1, count($defaultProductImages));
+        $this->assertEquals(1, count($localizedProductImages));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCombinedAbstractImageSets()
+    {
+        $imageSetTransfers = $this->productImageFacade->getCombinedAbstractImageSets(
+            $this->productConcreteEntity->getFkProductAbstract(),
+            static::ID_LOCALE_DE
+        );
+
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME]);
+        $this->assertNotEmpty($imageSetTransfers[static::SET_NAME_DE]);
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $defaultImageSetTransfer */
+        $defaultImageSetTransfer = $imageSetTransfers[static::SET_NAME];
+
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $localizedImageSetTransfer */
+        $localizedImageSetTransfer = $imageSetTransfers[static::SET_NAME_DE];
+
+        $defaultProductImages = $defaultImageSetTransfer->getProductImages();
+        $localizedProductImages = $localizedImageSetTransfer->getProductImages();
+
+        $this->assertEquals(1, count($defaultProductImages));
+        $this->assertEquals(1, count($localizedProductImages));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return void
@@ -732,6 +785,40 @@ class ProductImageFacadeTest extends Test
             ->fromArray($productData, true);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetById()
+    {
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
+            $this->imageSetAbstract->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(1, $productImageSetTransfer->getProductImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetByIdWithoutImages()
+    {
+        $imageSetEntity = new SpyProductImageSet();
+        $imageSetEntity
+            ->setName(self::SET_NAME)
+            ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->setFkProduct(null)
+            ->setFkLocale(null)
+            ->save();
+
+        $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
+            $imageSetEntity->getIdProductImageSet()
+        );
+
+        $this->assertNotEmpty($productImageSetTransfer);
+        $this->assertCount(0, $productImageSetTransfer->getProductImages());
     }
 
 }

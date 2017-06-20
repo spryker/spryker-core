@@ -9,6 +9,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="unitNetPrice" type="int" />
     </transfer>
 
     <transfer name="ProductOption">
@@ -25,6 +26,10 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="priceMode" type="string" />
     </transfer>
 
 </transfers>

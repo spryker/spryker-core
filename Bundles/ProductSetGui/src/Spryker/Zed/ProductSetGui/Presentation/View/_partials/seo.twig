@@ -1,0 +1,34 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO' } %}
+    {% block widget_content %}
+
+        <div class="m-t">
+            {% for localeTransfer in localeCollection %}
+                {% for localizedData in productSetTransfer.localizedData %}
+                    {% if (localizedData.locale.localeName == localeTransfer.localeName ) %}
+
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first), 'localeName': localeTransfer.localeName} %}
+                            {% block content %}
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'Title' | trans }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.productSetData.metaTitle }}</div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'Keywords' | trans }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.productSetData.metaKeywords }}</div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'Description' }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.productSetData.metaDescription }}</div>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+{% endembed %}

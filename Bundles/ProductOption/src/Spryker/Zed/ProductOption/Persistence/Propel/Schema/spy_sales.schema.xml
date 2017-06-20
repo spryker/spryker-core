@@ -11,6 +11,11 @@
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
 
+        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/" />
+        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/" />
+        <column name="discount_amount_aggregation" type="INTEGER" default="0" required="false" description="/Total discount amount for item/" />
+        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/" />
+
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_sales_order_item_option-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="Option">

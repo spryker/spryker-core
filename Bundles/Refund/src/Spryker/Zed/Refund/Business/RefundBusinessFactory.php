@@ -27,8 +27,8 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     public function createRefundCalculator()
     {
         return new RefundCalculator(
-            $this->getSalesAggregatorFacade(),
-            $this->getRefundCalculatorPlugins()
+            $this->getRefundCalculatorPlugins(),
+            $this->getSalesFacade()
         );
     }
 
@@ -54,16 +54,26 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     public function createRefundSaver()
     {
         return new RefundSaver(
-            $this->getSalesQueryContainer()
+            $this->getSalesQueryContainer(),
+            $this->getSalesFacade(),
+            $this->getCalculationFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
-    protected function getSalesAggregatorFacade()
+    protected function getSalesFacade()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_AGGREGATOR);
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface
+     */
+    protected function getCalculationFacade()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_CALCULATION);
     }
 
     /**

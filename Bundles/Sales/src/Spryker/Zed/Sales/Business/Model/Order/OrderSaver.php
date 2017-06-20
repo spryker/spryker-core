@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -17,6 +16,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
@@ -94,11 +94,33 @@ class OrderSaver implements OrderSaverInterface
         Propel::getConnection()->beginTransaction();
 
         $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
+        $this->saveOrderTotals($quoteTransfer, $salesOrderEntity->getIdSalesOrder());
         $this->saveOrderItems($quoteTransfer, $salesOrderEntity);
 
         Propel::getConnection()->commit();
 
         $this->hydrateCheckoutResponseTransfer($checkoutResponseTransfer, $quoteTransfer, $salesOrderEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    protected function saveOrderTotals(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    {
+        $taxTotal = 0;
+        if ($quoteTransfer->getTotals()->getTaxTotal()) {
+            $taxTotal = $quoteTransfer->getTotals()->getTaxTotal()->getAmount();
+        }
+
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setFkSalesOrder($idSalesOrder);
+        $salesOrderTotalsEntity->fromArray($quoteTransfer->getTotals()->toArray());
+        $salesOrderTotalsEntity->setTaxTotal($taxTotal);
+        $salesOrderTotalsEntity->setOrderExpenseTotal($quoteTransfer->getTotals()->getExpenseTotal());
+        $salesOrderTotalsEntity->save();
     }
 
     /**
@@ -185,8 +207,9 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        $salesOrderEntity->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
+        $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
+        $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
     }
@@ -200,8 +223,6 @@ class OrderSaver implements OrderSaverInterface
     protected function hydrateSalesOrderCustomer(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $customerTransfer = $quoteTransfer->getCustomer();
-
-        $salesOrderEntity->setFkCustomer($customerTransfer->getIdCustomer());
         $customerData = $customerTransfer->modifiedToArray();
 
         if (isset($customerData['created_at'])) {
@@ -219,10 +240,7 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function saveOrderItems(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        $items = $this->expandItems($quoteTransfer->getItems());
-        $quoteTransfer->setItems($items);
-
-        foreach ($items as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
@@ -230,26 +248,6 @@ class OrderSaver implements OrderSaverInterface
             $salesOrderItemEntity->save();
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function expandItems(ArrayObject $items)
-    {
-        $expandedItems = new ArrayObject();
-        foreach ($items as $itemTransfer) {
-            $quantity = $itemTransfer->getQuantity();
-            for ($i = 1; $quantity >= $i; $i++) {
-                $expandedItemTransfer = clone $itemTransfer;
-                $expandedItemTransfer->setQuantity(1);
-                $expandedItems->append($expandedItemTransfer);
-            }
-        }
-
-        return $expandedItems;
     }
 
     /**
@@ -273,6 +271,19 @@ class OrderSaver implements OrderSaverInterface
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
         $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
+        $salesOrderItemEntity->setNetPrice($itemTransfer->getUnitNetPrice());
+
+        $salesOrderItemEntity->setPrice($itemTransfer->getUnitPrice());
+        $salesOrderItemEntity->setPriceToPayAggregation($itemTransfer->getUnitPriceToPayAggregation());
+        $salesOrderItemEntity->setSubtotalAggregation($itemTransfer->getUnitSubtotalAggregation());
+        $salesOrderItemEntity->setProductOptionPriceAggregation($itemTransfer->getUnitProductOptionPriceAggregation());
+        $salesOrderItemEntity->setExpensePriceAggregation($itemTransfer->getUnitExpensePriceAggregation());
+        $salesOrderItemEntity->setTaxAmount($itemTransfer->getUnitTaxAmount());
+        $salesOrderItemEntity->setTaxAmountFullAggregation($itemTransfer->getUnitTaxAmountFullAggregation());
+        $salesOrderItemEntity->setDiscountAmountAggregation($itemTransfer->getUnitDiscountAmountAggregation());
+        $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getUnitDiscountAmountFullAggregation());
+        $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
+
         $salesOrderItemEntity->setProcess($processEntity);
     }
 
@@ -392,7 +403,7 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
-        $itemTransfer->requireUnitGrossPrice()
+        $itemTransfer->requireUnitPrice()
             ->requireQuantity()
             ->requireName()
             ->requireSku();

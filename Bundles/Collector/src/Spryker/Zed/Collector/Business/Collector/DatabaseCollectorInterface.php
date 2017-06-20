@@ -64,4 +64,11 @@ interface DatabaseCollectorInterface
         $itemType
     );
 
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function setLocale(LocaleTransfer $localeTransfer);
+
 }

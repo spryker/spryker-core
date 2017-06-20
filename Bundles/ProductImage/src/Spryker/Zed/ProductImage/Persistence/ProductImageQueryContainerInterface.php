@@ -90,4 +90,51 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductImageSetToProductImageByProductImageSetId($idProductImageSet, array $excludeIdProductImage = []);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryDefaultAbstractProductImageSets($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryLocalizedAbstractProductImageSets($idProductAbstract, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryDefaultConcreteProductImageSets($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetById($idProductImageSet);
+
 }

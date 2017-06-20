@@ -139,4 +139,11 @@ interface CustomerStubInterface
      */
     public function setDefaultShippingAddress(AddressTransfer $AddressTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
 }

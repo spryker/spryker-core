@@ -9,10 +9,10 @@ namespace Spryker\Zed\Tax\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator;
-use Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator;
-use Spryker\Zed\Tax\Business\Model\ItemTaxCalculator;
+use Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountAfterCancellationCalculator;
+use Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountCalculator;
+use Spryker\Zed\Tax\Business\Model\Calculator\TaxRateAverageAggregator;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
@@ -47,35 +47,19 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Tax\Business\Model\Calculator\TaxRateAverageAggregator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createTaxRateAverageAggregationCalculator()
+    {
+        return new TaxRateAverageAggregator($this->createPriceCalculationHelper());
+    }
+
+    /**
      * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
      */
     public function getTaxChangePlugins()
     {
         return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
-     */
-    public function createTaxCalculator()
-    {
-        return new TaxCalculation();
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\ItemTaxCalculator
-     */
-    public function createTaxItemAmountCalculator()
-    {
-        return new ItemTaxCalculator($this->createAccruedTaxCalculator());
-    }
-
-    /**
-     * @return \Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator
-     */
-    public function createExpenseTaxCalculator()
-    {
-        return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
     }
 
     /**
@@ -108,6 +92,22 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createAccruedTaxCalculator()
     {
         return new AccruedTaxCalculator($this->createPriceCalculationHelper());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountAfterCancellationCalculator
+     */
+    public function createTaxAmountAfterCancellationCalculator()
+    {
+        return new TaxAmountAfterCancellationCalculator($this->createAccruedTaxCalculator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\Calculator\TaxAmountCalculator
+     */
+    public function createTaxAmountCalculator()
+    {
+        return new TaxAmountCalculator($this->createAccruedTaxCalculator());
     }
 
 }

@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CustomerOrderReader implements CustomerOrderReaderInterface
@@ -23,27 +22,19 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
-     */
-    protected $salesAggregatorFacade;
-
-    /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
     protected $orderHydrator;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        SalesToSalesAggregatorInterface $salesAggregatorFacade,
         OrderHydratorInterface $orderHydrator
     ) {
         $this->queryContainer = $queryContainer;
-        $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->orderHydrator = $orderHydrator;
     }
 

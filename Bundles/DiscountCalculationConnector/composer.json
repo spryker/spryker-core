@@ -4,8 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/discount": "^4.0.0",
-    "spryker/kernel": "^3.0.0",
-    "spryker/tax": "^4.0.0"
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

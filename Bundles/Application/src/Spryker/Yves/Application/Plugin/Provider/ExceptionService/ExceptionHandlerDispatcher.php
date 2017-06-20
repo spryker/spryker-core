@@ -7,11 +7,14 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException;
 use Symfony\Component\Debug\Exception\FlattenException;
 
 class ExceptionHandlerDispatcher
 {
+
+    use LoggerTrait;
 
     /**
      * @var \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
@@ -38,6 +41,13 @@ class ExceptionHandlerDispatcher
         $statusCode = $exception->getStatusCode();
 
         if (isset($this->exceptionHandlers[$statusCode])) {
+            $this->getLogger()->error(
+                $exception->getMessage(),
+                [
+                    'exception' => $exception,
+                ]
+            );
+
             return $this->exceptionHandlers[$statusCode]->handleException($exception);
         }
 

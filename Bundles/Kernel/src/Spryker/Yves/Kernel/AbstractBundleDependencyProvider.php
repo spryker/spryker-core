@@ -10,6 +10,8 @@ namespace Spryker\Yves\Kernel;
 abstract class AbstractBundleDependencyProvider implements BundleDependencyProviderInterface
 {
 
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *

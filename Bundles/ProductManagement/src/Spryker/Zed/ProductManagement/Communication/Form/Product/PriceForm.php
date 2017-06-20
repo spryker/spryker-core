@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -23,6 +24,7 @@ class PriceForm extends AbstractType
 
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    const DEFAULT_SCALE = 2;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -30,11 +32,18 @@ class PriceForm extends AbstractType
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
      */
-    public function __construct(ProductManagementToMoneyInterface $moneyFacade)
+    protected $currencyFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
+     */
+    public function __construct(ProductManagementToMoneyInterface $moneyFacade, ProductManagementToCurrencyInterface $currencyFacade)
     {
         $this->moneyFacade = $moneyFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -86,27 +95,55 @@ class PriceForm extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options)
     {
+        $currencyTransfer = $this->currencyFacade->getCurrent();
+
         $fieldOptions = [
             'label' => 'Price',
             'required' => true,
+            'divisor' => $this->getDivisor($currencyTransfer),
+            'scale' => $this->getFractionDigits($currencyTransfer),
         ];
 
         if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
             $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
         }
 
-        $builder->add(self::FIELD_PRICE, 'money', $fieldOptions);
-
-        $builder->get(self::FIELD_PRICE)->addModelTransformer(new CallbackTransformer(
-            function ($originalPrice) {
-                return $this->moneyFacade->convertIntegerToDecimal((int)$originalPrice);
-            },
-            function ($submittedPrice) {
-                return $this->moneyFacade->convertDecimalToInteger((float)$submittedPrice);
-            }
-        ));
+        $builder->add(static::FIELD_PRICE, 'money', $fieldOptions);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getDivisor(CurrencyTransfer $currencyTransfer)
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        $divisor = 1;
+        if ($fractionDigits) {
+            $divisor = pow(10, $fractionDigits);
+        }
+
+        return $divisor;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function getFractionDigits(CurrencyTransfer $currencyTransfer)
+    {
+        $fractionDigits = $currencyTransfer->getFractionDigits();
+
+        if ($fractionDigits !== null) {
+            return $fractionDigits;
+        }
+
+        return static::DEFAULT_SCALE;
     }
 
     /**

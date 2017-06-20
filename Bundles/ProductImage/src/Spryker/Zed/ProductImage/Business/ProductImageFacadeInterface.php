@@ -155,4 +155,44 @@ interface ProductImageFacadeInterface
      */
     public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
+    /**
+     * Specification:
+     * - Returns merged image sets for abstract product with the following inheritance: Abstract Default > Abstract Localized
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+
+    /**
+     * Specification:
+     * - Returns merged image sets for concrete product with the following inheritance:
+     *  Abstract Default > Abstract Localized > Concrete Default > Concrete Localized
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+
+    /**
+     * Specification:
+     * - Returns a product image set from database for the given ID.
+     *
+     * @api
+     *
+     * @param int $idProductImageSet
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
+     */
+    public function findProductImageSetById($idProductImageSet);
+
 }

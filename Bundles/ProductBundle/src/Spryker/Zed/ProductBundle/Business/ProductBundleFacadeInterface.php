@@ -111,20 +111,6 @@ interface ProductBundleFacadeInterface
     public function calculateBundlePrice(QuoteTransfer $quoteTransfer);
 
     /**
-     *
-     * Specification:
-     *
-     *  - Aggregates OrderTransfer::bundleItems prices
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function aggregateBundlePrice(OrderTransfer $orderTransfer);
-
-    /**
      * Specification:
      *
      * - Gets all items which belong to bundle
@@ -213,5 +199,17 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     *  - Hydrates OrderTransfer with product bundle data
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSalesOrderProductBundles(OrderTransfer $orderTransfer);
 
 }

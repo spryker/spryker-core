@@ -285,4 +285,31 @@ interface CustomerFacadeInterface
         CheckoutResponseTransfer  $checkoutResponseTransfer
     );
 
+    /**
+     * Specification:
+     * - Executes anonymization plugins
+     * - Executes customer addresses anonymization
+     * - Executes customer anonymization
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @api
+     *
+     * Specification:
+     *  - Finds customer by reference
+     *  - Returns customer transfer
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference($customerReference);
+
 }

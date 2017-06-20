@@ -100,7 +100,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function isPathCacheEnabled()
     {
-        return $this->get(TwigConstants::ZED_PATH_CACHE_ENABLED, false);
+        return $this->get(TwigConstants::ZED_PATH_CACHE_ENABLED, true);
     }
 
     /**

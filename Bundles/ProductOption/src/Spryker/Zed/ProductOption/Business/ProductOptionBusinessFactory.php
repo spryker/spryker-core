@@ -12,12 +12,11 @@ use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
-use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
-use Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -88,14 +87,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
-     */
-    public function createItemProductOptionGrossPriceAggregator()
-    {
-        return new ItemProductOptionGrossPrice($this->getQueryContainer());
-    }
-
-    /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaverInterface
      */
     public function createProductOptionOrderSaver()
@@ -112,19 +103,19 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
-     */
-    public function createSubtotalWithProductOption()
-    {
-        return new SubtotalWithProductOptions();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
     public function createProductOptionTaxRateCalculator()
     {
         return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrateInterface
+     */
+    public function createProductOptionOrderHydrate()
+    {
+        return new ProductOptionOrderHydrate($this->getQueryContainer());
     }
 
     /**

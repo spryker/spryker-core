@@ -9,16 +9,10 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
 interface ProductBundlePriceCalculationInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function aggregate(OrderTransfer $orderTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -26,5 +20,18 @@ interface ProductBundlePriceCalculationInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculate(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
+     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     *
+     * @return array
+     */
+    public function calculateForBundleItems(
+        OrderTransfer $orderTransfer,
+        SpySalesOrderItem $salesOrderItemEntity,
+        array $bundledProducts
+    );
 
 }

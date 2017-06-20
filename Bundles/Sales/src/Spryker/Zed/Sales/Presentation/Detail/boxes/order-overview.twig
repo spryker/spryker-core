@@ -11,7 +11,7 @@
             </div>
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Customer name' | trans }}:</b>
-                    {% if order.fkCustomer %}
+                    {% if order.customerReference %}
                         <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.salutation }} {{ order.firstName }} {{ order.lastName }}</a>
                     {% else %}
                         {{ order.salutation }} {{ order.firstName }} {{ order.lastName }}

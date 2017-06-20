@@ -26,6 +26,8 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true"/>
+        <column name="net_price" type="INTEGER" required="false" default="0"/>
+        <column name="price" type="INTEGER" required="false" default="0"/>
 
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/>

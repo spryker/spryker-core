@@ -15,6 +15,11 @@ class Percentage implements CalculatorInterface
 {
 
     /**
+     * @var float
+     */
+    protected static $roundingError = 0.0;
+
+    /**
      * @deprecated use calculateDiscount instead
      *
      * @param array $discountableItems
@@ -63,18 +68,22 @@ class Percentage implements CalculatorInterface
             return 0;
         }
 
-        return (int)round($discountAmount);
+        return $discountAmount;
     }
 
     /**
      * @param int $grossPrice
-     * @param int $number
+     * @param int $discountPercentage
      *
-     * @return float
+     * @return int
      */
-    protected function calculateDiscountAmount($grossPrice, $number)
+    protected function calculateDiscountAmount($grossPrice, $discountPercentage)
     {
-        return round(($grossPrice * $number / 100), 2);
+        $itemDiscountAmount = ($grossPrice * $discountPercentage / 100) + static::$roundingError;
+        $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+        static::$roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+
+        return $itemDiscountAmountRounded;
     }
 
     /**
