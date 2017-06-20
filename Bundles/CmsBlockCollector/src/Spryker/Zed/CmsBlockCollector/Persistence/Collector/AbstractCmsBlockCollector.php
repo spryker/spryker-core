@@ -12,7 +12,6 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -60,11 +59,11 @@ abstract class AbstractCmsBlockCollector extends AbstractPropelCollectorQuery
         );
         $this->touchQuery->withColumn(
             'GROUP_CONCAT(' . SpyGlossaryKeyTableMap::COL_KEY . ')',
-                static::COL_GLOSSARY_KEYS)
-        ;
+            static::COL_GLOSSARY_KEYS
+        );
         $this->touchQuery->withColumn(
             SpyCmsBlockTemplateTableMap::COL_TEMPLATE_PATH,
-                static::COL_TEMPLATE_PATH
+            static::COL_TEMPLATE_PATH
         );
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_VALID_FROM, static::COL_VALID_FROM);

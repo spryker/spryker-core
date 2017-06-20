@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCollector\Business\Collector\Storage;
 
-
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
@@ -17,7 +16,7 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @param UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      */
     public function __construct(UtilDataReaderServiceInterface $utilDataReaderService)
     {

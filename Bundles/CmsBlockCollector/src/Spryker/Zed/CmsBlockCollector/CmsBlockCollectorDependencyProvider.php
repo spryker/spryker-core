@@ -15,12 +15,12 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    const FACADE_COLLECTOR = 'CMS_BLOCL_COLLECTOR:FACADE_COLLECTOR';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCL_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+    const SERVICE_DATA_READER = 'CMS_BLOCL_COLLECTOR:SERVICE_DATA_READER';
+    const SERVICE_UTIL_ENCODING = 'CMS_BLOCL_COLLECTOR:UTIL_ENCODING_SERVICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,20 +29,66 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
-            return $container->getLocator()->utilDataReader()->service();
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addUtilDataReaderService($container);
+        $container = $this->addCollectorFacade($container);
+        $container = $this->addTouchQueryContainer($container);
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsBlockCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new CmsBlockCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        return $container;
+    }
 
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTouchQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsBlockCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorFacade(Container $container)
+    {
+        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+            return new CmsBlockCollectorToCollectorBridge($container->getLocator()->collector()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDataReaderService(Container $container)
+    {
+        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+            return $container->getLocator()->utilDataReader()->service();
         };
 
         return $container;

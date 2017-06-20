@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel;
 
-
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\AbstractCmsBlockCollector;
 
 class CmsBlockCollectorQuery extends AbstractCmsBlockCollector

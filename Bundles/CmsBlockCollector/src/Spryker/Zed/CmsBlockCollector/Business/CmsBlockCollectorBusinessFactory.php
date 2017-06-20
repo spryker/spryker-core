@@ -12,7 +12,6 @@ use Spryker\Zed\CmsBlockCollector\CmsBlockCollectorDependencyProvider;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
-
 /**
  * @method \Spryker\Zed\CmsBlockCollector\CmsBlockCollectorConfig getConfig()
  */
