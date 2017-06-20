@@ -23,7 +23,8 @@
     "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart.",
     "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
     "spryker/oms": "If you want to use Oms plugins you need to install spryker/oms.",
-    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator."
+    "spryker/sales-aggregator": "If you want to use SalesAggregator plugins you need to install spryker/sales-aggregator.",
+    "spryker/product-image": "If you want to use ProductBundleImageCartExpander plugins you need to install spryker/product-image."
   },
   "autoload": {
     "psr-0": {
