@@ -15,6 +15,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePr
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
@@ -63,6 +64,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpanderInterface
+     */
+    public function createProductBundleImageCartExpander()
+    {
+        return new ProductBundleImageCartExpander($this->getProductImageFacade());
     }
 
     /**
@@ -158,6 +167,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface
+     */
+    protected function getProductImageFacade()
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**
