@@ -193,4 +193,16 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
 
+    /**
+     * @api
+     *
+     * @param int $fkSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
+     */
+    public function queryProductMetadata($fkSalesOrderItem)
+    {
+        return $this->getFactory()->createProductMetadataQuery()->filterByFkSalesOrderItem($fkSalesOrderItem);
+    }
+
 }

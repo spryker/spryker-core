@@ -42,6 +42,16 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="ProductMetadata">
+        <property name="superAttributes" type="array" />
+        <property name="image" type="string" />
+        <property name="fkSalesOrderItem" type="int" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="metadata" type="ProductMetadata" />
+    </transfer>
+
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>

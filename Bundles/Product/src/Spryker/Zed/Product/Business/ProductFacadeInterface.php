@@ -728,4 +728,13 @@ interface ProductFacadeInterface
      */
     public function saveSuperAttributeMetadata(QuoteTransfer $quoteTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer);
+
 }

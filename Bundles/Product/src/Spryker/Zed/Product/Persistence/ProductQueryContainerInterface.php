@@ -118,4 +118,13 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductAbstractWithName($idLocale);
 
+    /**
+     * @api
+     *
+     * @param int $fkSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
+     */
+    public function queryProductMetadata($fkSalesOrderItem);
+
 }

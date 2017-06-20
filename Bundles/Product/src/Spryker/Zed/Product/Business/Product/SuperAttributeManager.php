@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMetadataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class SuperAttributeManager
 {
@@ -36,6 +37,135 @@ class SuperAttributeManager
      */
     public function saveSuperAttributeMetadata(QuoteTransfer $quoteTransfer)
     {
+        foreach ($quoteTransfer->getItems() as $item) {
+            $this->saveItemMetadata($item);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function saveItemMetadata(ItemTransfer $itemTransfer)
+    {
+        $metadataTransfer = $this->createMetadataTransfer($itemTransfer);
+        $this->saveMetadataTransfer($metadataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMetadataTransfer
+     */
+    protected function createMetadataTransfer(ItemTransfer $itemTransfer)
+    {
+        $image = $this->determineImage($itemTransfer);
+        $superAttributes = $this->determineSuperAttributes($itemTransfer);
+
+        $metadataTransfer = new ProductMetadataTransfer();
+        $metadataTransfer->setImage($image);
+        $metadataTransfer->setSuperAttributes($superAttributes);
+        $metadataTransfer->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+
+        return $metadataTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function determineImage(ItemTransfer $itemTransfer)
+    {
+        return 'https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return array
+     */
+    protected function determineSuperAttributes(ItemTransfer $itemTransfer)
+    {
+        return [
+            'attribute1' => 'hey!',
+            'attribute2' => 'hi!',
+            'attribute3' => 'ho!',
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMetadataTransfer $productMetadataTransfer
+     *
+     * @return void
+     */
+    protected function saveMetadataTransfer(ProductMetadataTransfer $productMetadataTransfer)
+    {
+        $productMetadataEntity = $this->mapMetadataTransfer($productMetadataTransfer);
+        $productMetadataEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMetadataTransfer $productMetadataTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
+     */
+    protected function mapMetadataTransfer(ProductMetadataTransfer $productMetadataTransfer)
+    {
+        $entity = new SpySalesOrderItemMetadata();
+        $entity->setSuperAttributes(json_encode($productMetadataTransfer->getSuperAttributes()));
+        $entity->setImage($productMetadataTransfer->getImage());
+        $entity->setFkSalesOrderItem($productMetadataTransfer->getFkSalesOrderItem());
+
+        return $entity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer)
+    {
+        foreach ($orderTransfer->getItems() as $item) {
+            $metadata = $this->findMetadata($item->getIdSalesOrderItem());
+            if (!$metadata) {
+                continue;
+            }
+
+            $metadataTransfer = $this->convertMetadata($metadata);
+            $item->setMetadata($metadataTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
+     */
+    protected function findMetadata($idSalesOrderItem)
+    {
+        $metadataEntity = $this->productQueryContainer->queryProductMetadata($idSalesOrderItem)->findOne();
+
+        return $metadataEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata $metadata
+     *
+     * @return \Generated\Shared\Transfer\ProductMetadataTransfer
+     */
+    protected function convertMetadata(SpySalesOrderItemMetadata $metadata)
+    {
+        $metadataTransfer = new ProductMetadataTransfer();
+        $metadataTransfer->setFkSalesOrderItem($metadata->getFkSalesOrderItem());
+        $metadataTransfer->setSuperAttributes(json_decode($metadata->getSuperAttributes(), true));
+        $metadataTransfer->setImage($metadata->getImage());
+
+        return $metadataTransfer;
     }
 
 }

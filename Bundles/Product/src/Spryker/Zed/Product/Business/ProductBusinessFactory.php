@@ -548,7 +548,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createSuperAttributeManager()
     {
-        return new SuperAttributeManager();
+        return new SuperAttributeManager(
+            $this->getQueryContainer()
+        );
     }
 
 }
