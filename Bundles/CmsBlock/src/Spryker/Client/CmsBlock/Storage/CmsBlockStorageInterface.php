@@ -20,4 +20,12 @@ interface CmsBlockStorageInterface
      */
     public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localeName);
 
+    /**
+     * @param array $options
+     * @param $localName
+     *
+     * @return array
+     */
+    public function getBlocksByOptions(array $options, $localName);
+
 }

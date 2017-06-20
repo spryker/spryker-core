@@ -22,4 +22,12 @@ interface CmsBlockClientInterface
      */
     public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localName);
 
+    /**
+     * @param array $options
+     * @param string $localName
+     *
+     * @return array
+     */
+    public function findBlocksByOptions(array $options, $localName);
+
 }

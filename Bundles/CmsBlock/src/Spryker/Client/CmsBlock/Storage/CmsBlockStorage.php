@@ -46,4 +46,29 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         return $block;
     }
 
+    /**
+     * @param array $options
+     * @param string $localName
+     *
+     * @return array
+     */
+    public function getBlocksByOptions(array $options, $localName)
+    {
+        foreach ($options as $optionKey => $resources) {
+            $searchKeys = [];
+            $resources = (array)$resources;
+
+            foreach ($resources as $id) {
+                $searchKeys[] = $this->keyBuilder->generateKey($optionKey . $id, $localName);
+            }
+
+            $blockNameArray = $this->storage->getMulti($searchKeys);
+
+            if ($blockNameArray) {
+                return $this->storage->getMulti($blockNameArray);
+            }
+        }
+
+        return [];
+    }
 }

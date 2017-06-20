@@ -31,4 +31,16 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
             ->getBlockByName($cmsBlockTransfer, $localeName);
     }
 
+    /**
+     * @param array $options
+     * @param string $localName
+     *
+     * @return array
+     */
+    public function findBlocksByOptions(array $options, $localName)
+    {
+        return $this->getFactory()
+            ->createCmsBlockFinder()
+            ->getBlocksByOptions($options, $localName);
+    }
 }

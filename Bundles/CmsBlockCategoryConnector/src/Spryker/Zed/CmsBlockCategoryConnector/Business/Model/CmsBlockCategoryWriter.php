@@ -5,21 +5,35 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
+use Spryker\Shared\CmsBlock\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @var CmsBlockCategoryConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
      */
-    public function __construct(CmsBlockCategoryConnectorQueryContainerInterface $queryContainer)
-    {
+    protected $touchFacade;
+
+    /**
+     * @param CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
+     * @param TouchFacadeInterface $touchFacade
+     */
+    public function __construct(
+        CmsBlockCategoryConnectorQueryContainerInterface $queryContainer,
+        TouchFacadeInterface $touchFacade
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -28,6 +42,13 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      * @return void
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
+            $this->updateCmsBlockCategoryRelationsTransaction($cmsBlockTransfer);
+        });
+    }
+
+    protected function updateCmsBlockCategoryRelationsTransaction(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->deleteCmsBlockConnectorRelations($cmsBlockTransfer);
         $this->createCmsBlockConnectorRelations($cmsBlockTransfer);
@@ -47,6 +68,11 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 
         foreach ($query->find() as $relation) {
             $relation->delete();
+
+            $this->touchFacade->touchActive(
+            CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                $relation->getFkCategory()
+            );
         }
     }
 
@@ -64,6 +90,11 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
             $spyCmsBlockConnector->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
             $spyCmsBlockConnector->setFkCategory($idCategory);
             $spyCmsBlockConnector->save();
+
+            $this->touchFacade->touchActive(
+                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                $idCategory
+            );
         }
     }
 
