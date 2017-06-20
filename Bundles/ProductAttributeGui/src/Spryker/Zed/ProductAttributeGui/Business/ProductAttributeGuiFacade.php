@@ -30,4 +30,18 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
             ->getAttributes($idProductAbstract);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAbstractAttributeValues($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProductAbstractAttributeValues($idProductAbstract);
+    }
+
 }

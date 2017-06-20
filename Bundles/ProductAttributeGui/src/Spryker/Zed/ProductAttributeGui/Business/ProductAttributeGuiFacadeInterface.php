@@ -19,4 +19,13 @@ interface ProductAttributeGuiFacadeInterface
      */
     public function getAttributes($idProductAbstract);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAbstractAttributeValues($idProductAbstract);
+
 }

@@ -38,10 +38,11 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getAttributes($idProductAbstract);
 
-        //$attributes = $this->format($attributes);
+        $values = $this
+            ->getFacade()
+            ->getProductAbstractAttributeValues($idProductAbstract);
 
-        print_r($attributes);
-        die;
+        $values = $this->formatValues($attributes, $values);
 
         $locales = $this->getFactory()
             ->getLocaleFacade()
@@ -50,19 +51,71 @@ class ViewController extends AbstractController
         return $this->viewResponse([
             'attributes' => $attributes,
             'locales' => $locales,
+            'productAttributeValues' => $values,
         ]);
     }
 
-    protected function format(array $attributes)
+    /**
+     * @param array $attributeCollection
+     * @param array $values
+     *
+     * @return array
+     */
+    protected function formatValues(array $attributeCollection, array $values)
     {
         $result = [];
-        foreach ($attributes as $attribute) {
-            $key = $attribute['key'];
+        foreach ($values as $idLocale => $localizedData) {
+            foreach ($localizedData as $key => $value) {
+                $result[$idLocale][$key] = $value;
 
-            $result[$key][] = $attribute;
+                $currentAttribute = $this->findAttributeByKey($attributeCollection, $key, $idLocale);
+                if (!$currentAttribute) {
+                    continue;
+                }
+
+                $translation = trim($currentAttribute['translation']);
+                if ($translation) {
+                    $result[$idLocale][$key] = $translation;
+                }
+            }
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $attributeCollection
+     * @param $key
+     * @param $idLocale
+     *
+     * @return null
+     */
+    protected function findAttributeByKey(array $attributeCollection, $key, $idLocale)
+    {
+        foreach ($attributeCollection as $attribute) {
+            $attributeKey = $attribute['attribute_key'];
+            $fkLocale = $attribute['fk_locale'];
+
+            if ($attributeKey !== $key) {
+                continue;
+            }
+
+            if ($idLocale === 'default') {
+                $idLocale = null;
+            }
+
+            if ($idLocale !== null) {
+                if ($fkLocale !== $idLocale) {
+                    continue;
+                }
+
+                return $attribute;
+            }
+
+            return $attribute;
+        }
+
+        return null;
     }
 
 }

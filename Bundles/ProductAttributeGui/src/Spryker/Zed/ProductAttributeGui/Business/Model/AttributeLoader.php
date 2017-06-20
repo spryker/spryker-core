@@ -57,7 +57,7 @@ class AttributeLoader implements AttributeLoaderInterface
      * @param array $productAttributes
      * @param bool|null $isSuper
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductAttributeValues(array $productAttributes = [], $isSuper = null)
     {
@@ -82,7 +82,7 @@ class AttributeLoader implements AttributeLoaderInterface
             ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE)
             ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION);
 
-        $query = $this->createCriteria($query, $productAttributes);
+        $query = $this->updateQueryWithAttributeCriteria($query, $productAttributes);
 
         if ($isSuper !== null) {
             $query->filterByIsSuper($isSuper);
@@ -92,12 +92,19 @@ class AttributeLoader implements AttributeLoaderInterface
     }
 
     /**
+     * ProductAttributes format
+     * [
+     *   [default] => [key=>value, key2=>value2]
+     *   [46] => [key=>value]
+     *   [66] => [key3=>value3, key5=value5]
+     * ]
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $productAttributes
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    protected function createCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
+    protected function updateQueryWithAttributeCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
     {
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion */
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultLocalizedCriterion */
@@ -105,43 +112,31 @@ class AttributeLoader implements AttributeLoaderInterface
         $defaultLocalizedCriterion = null;
         $criteria = new Criteria();
 
-        $keys = $this->extractKeys($productAttributes);
-        $productAttributeKeyCriterion = $criteria->getNewCriterion(
-            SpyProductAttributeKeyTableMap::COL_KEY,
-            $keys,
-            Criteria::IN
-        );
-
         foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $criterionIdLocale = $criteria->getNewCriterion(
-                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-                $idLocale
-            );
-
             foreach ($localizedAttributes as $key => $value) {
-                if ($idLocale === static::DEFAULT_LOCALE) {
-                    $criterionValue = $criteria->getNewCriterion(
-                        SpyProductManagementAttributeValueTableMap::COL_VALUE,
-                        '%' . mb_strtolower($value) . '%',
-                        Criteria::LIKE
-                    );
+                $criterionValue = $criteria->getNewCriterion(
+                    SpyProductManagementAttributeValueTableMap::COL_VALUE,
+                    '%' . mb_strtolower($value) . '%',
+                    Criteria::LIKE
+                );
 
-                    $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
-                } else {
-                    $criterionTranslation = $criteria->getNewCriterion(
-                        SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
-                        '%' . mb_strtolower($value) . '%',
-                        Criteria::LIKE
-                    );
+                $criterionTranslation = $criteria->getNewCriterion(
+                    SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
+                    '%' . mb_strtolower($value) . '%',
+                    Criteria::LIKE
+                );
 
-                    $criterionTranslation->addAnd($criterionIdLocale);
-                    $defaultLocalizedCriterion = $this->appendOrCriterion($criterionTranslation, $defaultLocalizedCriterion);
-                }
+                $criterionValue->addOr($criterionTranslation);
+
+                $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
             }
         }
 
-        $defaultCriterion->addOr($defaultLocalizedCriterion);
-        $productAttributeKeyCriterion->addAnd($defaultCriterion);
+        $productAttributeKeyCriterion = $this->createAttributeKeysInCriterion(
+            $productAttributes,
+            $criteria,
+            $defaultCriterion
+        );
 
         $criteria->addAnd($productAttributeKeyCriterion);
         $criteria->setIgnoreCase(true);
@@ -150,6 +145,27 @@ class AttributeLoader implements AttributeLoaderInterface
         $query->mergeWith($criteria, Criteria::LOGICAL_AND);
 
         return $query;
+    }
+
+    /**
+     * @param array $productAttributes
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion
+     *
+     * @return mixed
+     */
+    protected function createAttributeKeysInCriterion(array $productAttributes, Criteria $criteria, AbstractCriterion $defaultCriterion)
+    {
+        $keys = $this->extractKeys($productAttributes);
+
+        $productAttributeKeyCriterion = $criteria->getNewCriterion(
+            SpyProductAttributeKeyTableMap::COL_KEY,
+            $keys,
+            Criteria::IN
+        );
+        $productAttributeKeyCriterion->addAnd($defaultCriterion);
+
+        return $productAttributeKeyCriterion;
     }
 
     /**

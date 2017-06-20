@@ -66,7 +66,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
             $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
         }
 
-        return $this->generateAttributes($productAbstractEntity, $localizedAttributes);
+        return $this->generateProductAbstractAttributes($productAbstractEntity, $localizedAttributes);
     }
 
     /**
@@ -84,7 +84,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return array|mixed|\Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function getProductAbstractEntity($idProductAbstract)
     {
@@ -96,11 +96,11 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAttributeEntity
-     * @param array \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $localizedAttributes
+     * @param array $localizedAttributes
      *
      * @return array
      */
-    protected function generateAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
+    protected function generateProductAbstractAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
     {
         $attributes = $this->decodeJsonAttributes($productAttributeEntity->getAttributes());
         $attributes = [static::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
