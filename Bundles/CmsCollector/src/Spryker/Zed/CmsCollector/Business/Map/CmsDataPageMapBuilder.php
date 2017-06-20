@@ -56,11 +56,13 @@ class CmsDataPageMapBuilder implements PageMapInterface
         $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
         $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
+        $isActive = $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
+
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CMS_PAGE)
-            ->setIsActive($cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE]);
+            ->setIsActive($isActive);
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())

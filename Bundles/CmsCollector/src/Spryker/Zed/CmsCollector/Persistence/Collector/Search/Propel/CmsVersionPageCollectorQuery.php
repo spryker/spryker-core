@@ -14,18 +14,4 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CmsVersionPageCollectorQuery extends AbstractCmsVersionPageCollector
 {
 
-    /**
-     * @return void
-     */
-    protected function prepareQuery()
-    {
-        parent::prepareQuery();
-
-        $this->touchQuery->addAnd(
-            SpyCmsPageTableMap::COL_IS_SEARCHABLE,
-            true,
-            Criteria::EQUAL
-        );
-    }
-
 }
