@@ -1,14 +1,18 @@
 <?php
 
-namespace Spryker\Zed\CmsBlock\Business;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlock\Business;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CmsBlockBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsBlock\Business\CmsBlockBusinessFactory getFactory()
  */
 class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
 {
@@ -66,7 +70,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @api
      *
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -82,9 +86,9 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @api
      *
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -94,6 +98,8 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $templatePath
      *
      * @return bool
@@ -106,9 +112,11 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function findGlossaryPlaceholders($idCmsBlock)
     {
@@ -118,9 +126,11 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @api
      *
-     * @return CmsBlockGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
     {

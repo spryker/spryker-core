@@ -22,6 +22,19 @@ class CmsBlockDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addKvStorage($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addKvStorage(Container $container)
+    {
         $container[static::KV_STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };

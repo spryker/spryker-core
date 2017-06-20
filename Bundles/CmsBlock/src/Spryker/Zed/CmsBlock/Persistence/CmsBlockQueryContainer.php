@@ -1,15 +1,18 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlock\Persistence;
 
-
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method CmsBlockPersistenceFactory getFactory()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockPersistenceFactory getFactory()
  */
 class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQueryContainerInterface
 {
@@ -17,6 +20,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     const COLUMN_TEMPLATE_NAME = 'template_name';
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -28,7 +33,10 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     public function queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
@@ -40,6 +48,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -51,6 +61,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     public function queryCmsBlockWithTemplate()
@@ -61,9 +73,11 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      *
-     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
     {
@@ -72,6 +86,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
     public function queryTemplates()
@@ -81,6 +97,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
@@ -92,6 +110,8 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlockTemplate
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
@@ -103,10 +123,12 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param array $placeholders
      * @param int $idCmsBlock
      *
-     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(array $placeholders, $idCmsBlock)
     {
@@ -116,9 +138,11 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
      * @param int $idGlossaryKeyMapping
      *
-     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idGlossaryKeyMapping)
     {
@@ -157,7 +181,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
-     * @return SpyCmsBlockGlossaryKeyMappingQuery
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     protected function queryCmsBlockGlossaryKeyMapping()
     {

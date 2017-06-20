@@ -1,55 +1,57 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
-use Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockWriter implements CmsBlockWriterInterface
 {
+
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockMapperInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface
      */
     protected $cmsBlockMapper;
 
     /**
-     * @var CmsBlockGlossaryWriterInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface
      */
     protected $cmsBlockGlossaryWriter;
 
     /**
-     * @var CmsBlockTemplateManagerInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var CmsBlockUpdatePluginInterface[]
+     * @var \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[]
      */
     protected $cmsBlockUpdatePlugins;
 
     /**
-     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockMapperInterface $cmsBlockMapper
-     * @param CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
-     * @param CmsBlockToTouchFacadeInterface $touchFacade
-     * @param CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
-     * @param CmsBlockUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface $cmsBlockMapper
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
+     * @param \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -68,7 +70,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @var CmsBlockToTouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -105,11 +107,11 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @throws CmsBlockNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -136,9 +138,9 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -155,7 +157,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     /**
      * @param int $idCmsBlock
      *
-     * @throws CmsBlockNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
@@ -187,8 +189,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
      * @return void
      */
@@ -204,11 +206,10 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
-
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -220,7 +221,9 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer)
     {

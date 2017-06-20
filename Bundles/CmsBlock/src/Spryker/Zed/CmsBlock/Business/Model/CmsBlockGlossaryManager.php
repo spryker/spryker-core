@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
@@ -15,7 +18,6 @@ use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleFacadeInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 {
@@ -24,29 +26,29 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**
-     * @var CmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockConfig
+     * @var \Spryker\Zed\CmsBlock\CmsBlockConfig
      */
     protected $config;
 
     /**
-     * @var LocaleFacadeInterface
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockConfig $cmsBlockConfig
-     * @param CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\CmsBlockConfig $cmsBlockConfig
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
      */
     public function __construct(
-      CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
-      CmsBlockConfig $cmsBlockConfig,
-      CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
+        CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
+        CmsBlockConfig $cmsBlockConfig,
+        CmsBlockToLocaleFacadeInterface $cmsBlockToLocaleFacade
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->config = $cmsBlockConfig;
@@ -56,7 +58,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function findPlaceholders($idCmsBlock)
     {
@@ -82,7 +84,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     }
 
     /**
-     * @param SpyCmsBlockTemplate $spyCmsBlockTemplate
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $spyCmsBlockTemplate
      *
      * @return array
      */
@@ -102,7 +104,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @param string $templateFile
      *
-     * @throws CmsBlockTemplateNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException
      *
      * @return array
      */
@@ -170,7 +172,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return SpyCmsBlockGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getGlossaryMappingCollection($idCmsBlock, array $placeholders)
     {
@@ -181,11 +183,10 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
         return $glossaryKeyMappingCollection;
     }
 
-
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     protected function mapGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
     {
@@ -196,10 +197,10 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      * @param string $placeholder
      *
-     * @return CmsBlockGlossaryPlaceholderTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
     protected function mapGlossaryPlaceholderTransfer(SpyCmsBlock $spyCmsBlock, $placeholder)
     {
@@ -214,7 +215,9 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @param array $glossaryKeyEntityMap
      * @param string $placeholder
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     *
+     * @return void
      */
     protected function addGlossaryAttributeTranslations(
         array $glossaryKeyEntityMap,
@@ -234,7 +237,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
                 continue;
             }
 
-            /** @var SpyCmsBlockGlossaryKeyMapping $spyCmsBlockGlossaryKeyMapping */
+            /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping $spyCmsBlockGlossaryKeyMapping */
             $spyCmsBlockGlossaryKeyMapping = $glossaryKeyEntityMap[$placeholder];
             $glossaryPlaceholderTransfer->setIdCmsBlockGlossaryKeyMapping($spyCmsBlockGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
 
@@ -248,8 +251,8 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     }
 
     /**
-     * @param SpyCmsBlockGlossaryKeyMapping $glossaryKeyMappingEntity
-     * @param CmsBlockGlossaryPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping $glossaryKeyMappingEntity
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
      *
      * @return void
      */

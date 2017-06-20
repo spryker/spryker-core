@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
@@ -10,14 +13,14 @@ use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 class CmsBlockMapper implements CmsBlockMapperInterface
 {
+
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock)
     {
@@ -32,10 +35,10 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return SpyCmsBlock
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
     public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
     {
@@ -45,9 +48,9 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     protected function createGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
     {
@@ -62,10 +65,10 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
-     * @param SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping
      *
-     * @return CmsBlockGlossaryPlaceholderTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
     protected function createGlossaryPlaceholderTransfer(SpyCmsBlock $spyCmsBlock, SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
     {
@@ -88,4 +91,5 @@ class CmsBlockMapper implements CmsBlockMapperInterface
 
         return $placeholderTransfer;
     }
+
 }

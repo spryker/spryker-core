@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
@@ -15,8 +18,6 @@ use Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
 use Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
@@ -27,30 +28,30 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockToGlossaryFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var CmsBlockGlossaryKeyGeneratorInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface
      */
     protected $cmsBlockGlossaryKeyGenerator;
 
     /**
-     * @var CmsBlockToGlossaryQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
 
     /**
-     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockToGlossaryFacadeInterface $glossaryFacade
-     * @param CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator
-     * @param CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface $cmsBlockGlossaryKeyGenerator
+     * @param \Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerInterface $glossaryQueryContainer
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -86,9 +87,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
     {
@@ -100,7 +101,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @return void
      */
     protected function saveCmsGlossaryTransaction(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
     {
@@ -115,9 +118,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
      *
-     * @return CmsBlockGlossaryPlaceholderTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
     protected function resolveTranslationKey(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
     {
@@ -135,7 +138,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
      *
      * @return void
      */
@@ -159,7 +162,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer
+     *
+     * @return void
      */
     protected function setDefaultTranslation(CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer)
     {
@@ -169,10 +174,10 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer
      * @param string $translationKey
      *
-     * @return KeyTranslationTransfer
+     * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
     protected function createTranslationTransfer(CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer, $translationKey)
     {
@@ -199,7 +204,8 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     *
      * @return int
      */
     protected function saveCmsGlossaryKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
@@ -212,7 +218,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
      *
      * @return int
      */
@@ -231,7 +237,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
      *
      * @return int
      */
@@ -263,7 +269,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      * @param int $idCmsBlock
      * @param string $placeholder
      *
-     * @throws CmsBlockMappingAmbiguousException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException
+     *
+     * @return void
      */
     protected function assertPlaceholderNotAmbiguous($idCmsBlock, $placeholder)
     {
@@ -279,9 +287,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     /**
      * @param $idGlossaryKeyMapping
      *
-     * @throws MissingCmsBlockGlossaryKeyMapping
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping
      *
-     * @return SpyCmsBlockGlossaryKeyMapping
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping
      */
     protected function getGlossaryKeyMappingById($idGlossaryKeyMapping)
     {
@@ -299,7 +307,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     /**
      * @param $idGlossaryKeyMapping
      *
-     * @return SpyCmsBlockGlossaryKeyMapping
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping
      */
     protected function findGlossaryKeyMappingEntityById($idGlossaryKeyMapping)
     {
@@ -307,4 +315,5 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             ->queryGlossaryKeyMappingById($idGlossaryKeyMapping)
             ->findOne();
     }
+
 }

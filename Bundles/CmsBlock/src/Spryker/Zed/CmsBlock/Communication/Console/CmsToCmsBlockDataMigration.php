@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlock\Communication\Console;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
@@ -8,7 +13,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,11 +24,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsToCmsBlockDataMigration extends Console
 {
+
     const COMMAND_NAME = 'cms-cms-block:migrate';
     const COMMAND_DESCRIPTION = 'Migrates CMS Block data from CMS module';
 
     const COMMAND_ARGUMENT_DRY_RUN = 'dry-run';
 
+    /**
+     * @return void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $spyCmsBlocks = SpyCmsBlockQuery::create()
@@ -67,9 +75,9 @@ class CmsToCmsBlockDataMigration extends Console
     }
 
     /**
-     * @param SpyCmsTemplate $spyCmsTemplate
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplate $spyCmsTemplate
      *
-     * @return SpyCmsBlockTemplate
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
      */
     protected function createCmsBlockTemplate(SpyCmsTemplate $spyCmsTemplate)
     {

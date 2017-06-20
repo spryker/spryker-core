@@ -1,10 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
-
-use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException;
@@ -18,12 +20,12 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     const TEMPLATE_FILE_SUFFIX = '.twig';
 
     /**
-     * @var CmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockTemplateMapperInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface
      */
     protected $cmsBlockTemplateMapper;
 
@@ -39,10 +41,11 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
 
     /**
      * CmsBlockTemplateManager constructor.
-     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockTemplateMapperInterface $cmsBlockTemplateMapper
-     * @param CmsBlockConfig $cmsBlockConfig
-     * @param Finder $finder
+     *
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface $cmsBlockTemplateMapper
+     * @param \Spryker\Zed\CmsBlock\CmsBlockConfig $cmsBlockConfig
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -60,7 +63,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @return CmsBlockTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
     public function createTemplate($name, $path)
     {
@@ -99,7 +102,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws CmsBlockTemplateNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException
      *
      * @return void
      */
@@ -115,7 +118,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
-     * @return SpyCmsBlockTemplate
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
      */
     public function getTemplateById($idCmsBlockTemplate)
     {
@@ -127,7 +130,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws CmsBlockTemplatePathExistsException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException
      *
      * @return void
      */

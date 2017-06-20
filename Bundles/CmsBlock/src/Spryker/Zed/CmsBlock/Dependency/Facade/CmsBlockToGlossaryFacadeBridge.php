@@ -1,22 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\KeyTranslationTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterface
 {
 
     /**
-     * @var GlossaryFacadeInterface
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -45,6 +47,7 @@ class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterfac
 
     /**
      * @param string $keyName
+     *
      * @return bool
      */
     public function hasKey($keyName)
@@ -53,7 +56,7 @@ class CmsBlockToGlossaryFacadeBridge implements CmsBlockToGlossaryFacadeInterfac
     }
 
     /**
-     * @param KeyTranslationTransfer $keyTranslationTransfer
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */

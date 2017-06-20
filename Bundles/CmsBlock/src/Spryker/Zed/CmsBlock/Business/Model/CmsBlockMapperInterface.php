@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
@@ -11,17 +14,17 @@ interface CmsBlockMapperInterface
 {
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock);
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
-     * @return SpyCmsBlock
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
     public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock);
 

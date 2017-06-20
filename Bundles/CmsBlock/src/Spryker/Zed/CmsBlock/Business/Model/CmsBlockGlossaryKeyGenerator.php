@@ -1,24 +1,28 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
-
 
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface;
 
 class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterface
 {
+
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms.cms-block';
     const ID_CMS_BLOCK = 'idCmsBlock';
     const UNIQUE_ID = 'uniqueId';
 
     /**
-     * @var CmsBlockToGlossaryFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param CmsBlockToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(CmsBlockToGlossaryFacadeInterface $glossaryFacade)
     {
@@ -47,4 +51,5 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
 
         return $candidate;
     }
+
 }

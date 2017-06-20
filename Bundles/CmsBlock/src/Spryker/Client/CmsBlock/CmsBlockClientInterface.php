@@ -7,27 +7,27 @@
 
 namespace Spryker\Client\CmsBlock;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
-
 interface CmsBlockClientInterface
 {
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param string $localName
+     * @param string[] $blockNames
+     * @param string $localeName
      *
      * @return array
      */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localName);
+    public function findBlocksByNames($blockNames, $localeName);
 
     /**
+     * @api
+     *
      * @param array $options
      * @param string $localName
      *
      * @return array
      */
-    public function findBlocksByOptions(array $options, $localName);
+    public function findBlockNamesByOptions(array $options, $localName);
 
 }

@@ -7,7 +7,8 @@
 
 namespace Spryker\Client\CmsBlock\Storage;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
@@ -15,35 +16,48 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface KeyBuilderInterface $keyBuilder
      */
-    public function __construct($storage, $keyBuilder)
-    {
+    public function __construct(
+        StorageClientInterface $storage,
+        KeyBuilderInterface $keyBuilder
+    ) {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param string[] $blockNames
      * @param string $localeName
      *
      * @return array
      */
-    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localeName)
+    public function getBlocksByNames(array $blockNames, $localeName)
     {
-        $key = $this->keyBuilder->generateKey($cmsBlockTransfer->getName(), $localeName);
-        $block = $this->storage->get($key);
+        $searchKeys = [];
 
-        return $block;
+        foreach ($blockNames as $blockName) {
+            $searchKeys[] = $this->keyBuilder->generateKey($blockName, $localeName);
+        }
+
+        $resultArray = $this->storage->getMulti($searchKeys) ?: [];
+        $resultArray = array_filter($resultArray);
+
+        $blocks = [];
+        foreach ($resultArray as $key => $result) {
+            $blocks[] = json_decode($result, true);
+        }
+
+        return $blocks;
     }
 
     /**
@@ -52,23 +66,53 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return array
      */
-    public function getBlocksByOptions(array $options, $localName)
+    public function getBlockNamesByOptions(array $options, $localName)
     {
+        $availableBlockNames = [];
+
         foreach ($options as $optionKey => $resources) {
             $searchKeys = [];
             $resources = (array)$resources;
 
             foreach ($resources as $id) {
-                $searchKeys[] = $this->keyBuilder->generateKey($optionKey . $id, $localName);
+                $searchKeys[] = $this->keyBuilder->generateKey($optionKey . '.' . $id, $localName);
             }
 
-            $blockNameArray = $this->storage->getMulti($searchKeys);
+            $resultArray = $this->storage->getMulti($searchKeys);
+            $resultArray = $this->decodeMulti($resultArray);
 
-            if ($blockNameArray) {
-                return $this->storage->getMulti($blockNameArray);
+            if ($availableBlockNames) {
+                $availableBlockNames = array_intersect($availableBlockNames, $resultArray);
+            } else {
+                $availableBlockNames = $resultArray;
             }
         }
 
-        return [];
+        return $availableBlockNames;
     }
+
+    /**
+     * @param array|null $array
+     *
+     * @return array
+     */
+    protected function decodeMulti($array)
+    {
+        if (!is_array($array)) {
+            return [];
+        }
+
+        $array = array_filter($array);
+
+        $resultArray = [];
+        foreach ($array as $key => $result) {
+            $resultArray = array_merge(
+                $resultArray,
+                json_decode($result, true)
+            );
+        }
+
+        return $resultArray;
+    }
+
 }

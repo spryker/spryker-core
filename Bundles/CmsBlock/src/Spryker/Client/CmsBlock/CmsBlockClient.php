@@ -7,11 +7,10 @@
 
 namespace Spryker\Client\CmsBlock;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CmsBlockFactory getFactory()
+ * @method \Spryker\Client\CmsBlock\CmsBlockFactory getFactory()
  */
 class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
 {
@@ -24,23 +23,26 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
      *
      * @return array
      */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer, $localeName)
+    public function findBlocksByNames($blockNames, $localeName)
     {
         return $this->getFactory()
             ->createCmsBlockFinder()
-            ->getBlockByName($cmsBlockTransfer, $localeName);
+            ->getBlocksByNames($blockNames, $localeName);
     }
 
     /**
+     * @api
+     *
      * @param array $options
      * @param string $localName
      *
      * @return array
      */
-    public function findBlocksByOptions(array $options, $localName)
+    public function findBlockNamesByOptions(array $options, $localName)
     {
         return $this->getFactory()
             ->createCmsBlockFinder()
-            ->getBlocksByOptions($options, $localName);
+            ->getBlockNamesByOptions($options, $localName);
     }
+
 }

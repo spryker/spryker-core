@@ -1,20 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
-
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class CmsBlockToLocaleFacadeBridge implements CmsBlockToLocaleFacadeInterface
 {
+
     /**
-     * @var LocaleFacadeInterface
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
     public function __construct($localeFacade)
     {

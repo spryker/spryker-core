@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
@@ -53,9 +56,9 @@ interface CmsBlockFacadeInterface
      *
      * @api
      *
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
@@ -65,9 +68,11 @@ interface CmsBlockFacadeInterface
      * - Asserts that chosen template still exists
      * - Sets CMS Block ID to transfer
      *
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @api
      *
-     * @return CmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
@@ -85,9 +90,11 @@ interface CmsBlockFacadeInterface
     public function syncTemplate($templatePath);
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function findGlossaryPlaceholders($idCmsBlock);
 
@@ -97,9 +104,9 @@ interface CmsBlockFacadeInterface
      *
      * @api
      *
-     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 

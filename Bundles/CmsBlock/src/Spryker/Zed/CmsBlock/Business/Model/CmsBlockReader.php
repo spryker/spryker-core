@@ -1,18 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockReader implements CmsBlockReaderInterface
 {
+
     /**
-     * @var CmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CmsBlockMapperInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface
      */
     protected $mapper;
 
@@ -41,6 +47,5 @@ class CmsBlockReader implements CmsBlockReaderInterface
 
         return null;
     }
-
 
 }

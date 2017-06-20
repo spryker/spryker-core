@@ -50,14 +50,6 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Service\CmsBlockCollectorToUtilEncodingInterface
-     */
-    protected function getUtilEncodingService()
-    {
-        return $this->getProvidedDependency(CmsBlockCollectorDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected function getTouchQueryContainer()

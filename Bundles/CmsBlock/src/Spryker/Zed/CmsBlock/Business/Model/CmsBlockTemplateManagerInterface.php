@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
-
-use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
-use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
-
 interface CmsBlockTemplateManagerInterface
 {
+
     /**
      * @param string $templatePath
      *
@@ -21,14 +21,14 @@ interface CmsBlockTemplateManagerInterface
      * @param $name
      * @param $path
      *
-     * @return CmsBlockTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
     public function createTemplate($name, $path);
 
     /**
      * @param string $path
      *
-     * @throws CmsBlockTemplateNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException
      *
      * @return void
      */
@@ -37,7 +37,7 @@ interface CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
-     * @return SpyCmsBlockTemplate
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
      */
     public function getTemplateById($idCmsBlockTemplate);
 

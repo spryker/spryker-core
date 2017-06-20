@@ -1,27 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlock\Business;
 
-
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGenerator;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManager;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManagerInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriter;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapper;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReader;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReaderInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManager;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapper;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriterInterface;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
-use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
 
@@ -33,7 +27,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsBlockReaderInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockReaderInterface
      */
     public function createCmsBlockReader()
     {
@@ -44,7 +38,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockMapperInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface
      */
     public function createCmsBlockMapper()
     {
@@ -52,7 +46,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockWriterInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriterInterface
      */
     public function createCmsBlockWrite()
     {
@@ -67,7 +61,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockToTouchFacadeInterface
+     * @return \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchFacadeInterface
      */
     public function getTouchFacade()
     {
@@ -75,7 +69,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockTemplateManagerInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface
      */
     public function createCmsBlockTemplateManager()
     {
@@ -88,7 +82,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockGlossaryManagerInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManagerInterface
      */
     public function createCmsBlockGlossaryManager()
     {
@@ -100,7 +94,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockGlossaryWriterInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface
      */
     public function createCmsBlockGlossaryWriter()
     {
@@ -113,7 +107,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Finder
+     * @return \Symfony\Component\Finder\Finder
      */
     protected function createFinder()
     {
@@ -121,7 +115,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockTemplateMapperInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface
      */
     protected function createCmsBlockTemplateMapper()
     {
@@ -129,7 +123,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockGlossaryKeyGeneratorInterface
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGeneratorInterface
      */
     protected function createCmsBlockGlossaryKeyGenerator()
     {

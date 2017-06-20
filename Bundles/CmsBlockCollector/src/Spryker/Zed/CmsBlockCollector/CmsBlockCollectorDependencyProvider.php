@@ -20,7 +20,6 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCL_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'CMS_BLOCL_COLLECTOR:SERVICE_DATA_READER';
-    const SERVICE_UTIL_ENCODING = 'CMS_BLOCL_COLLECTOR:UTIL_ENCODING_SERVICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,21 +32,6 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
         $container = $this->addTouchQueryContainer($container);
-        $container = $this->addUtilEncodingService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilEncodingService(Container $container)
-    {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsBlockCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
 
         return $container;
     }
