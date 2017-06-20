@@ -154,7 +154,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return array|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
+     * @return array|\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
      */
     protected function createKeyMappingByPlaceholder($idCmsBlock, array $placeholders)
     {

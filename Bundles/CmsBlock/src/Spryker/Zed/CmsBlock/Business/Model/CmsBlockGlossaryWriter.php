@@ -285,7 +285,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param $idGlossaryKeyMapping
+     * @param int $idGlossaryKeyMapping
      *
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping
      *
@@ -305,7 +305,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param $idGlossaryKeyMapping
+     * @param int $idGlossaryKeyMapping
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping
      */

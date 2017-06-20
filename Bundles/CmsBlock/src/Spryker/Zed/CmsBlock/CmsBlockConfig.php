@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock;
 
-use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockConfig extends AbstractBundleConfig
@@ -52,9 +52,9 @@ class CmsBlockConfig extends AbstractBundleConfig
         return sprintf(
             '%s/%s/%s/Cms/Theme/%s%s',
             APPLICATION_SOURCE_DIR,
-            $this->get(CmsConstants::PROJECT_NAMESPACE),
+            $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
             $twigLayer,
-            $this->get(CmsConstants::YVES_THEME),
+            $this->get(CmsBlockConstants::YVES_THEME),
             $templateRelativePath
         );
     }

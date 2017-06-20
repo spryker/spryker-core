@@ -7,9 +7,13 @@
 
 namespace Spryker\Shared\CmsBlock;
 
+use Spryker\Shared\Kernel\KernelConstants;
+
 interface CmsBlockConstants
 {
 
     const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
+    const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
+    const YVES_THEME = 'YVES_THEME';
 
 }
