@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector;
 
-use function foo\func;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorFacadeBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeBridge;
@@ -42,9 +41,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -100,9 +99,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCollectorFacade(Container $container)
     {
@@ -114,9 +113,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addDataReaderService(Container $container)
     {

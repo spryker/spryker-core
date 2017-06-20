@@ -40,13 +40,17 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $localeTransfer
-     * @param BatchResultInterface $result
-     * @param ReaderInterface $dataReader
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param OutputInterface $output
+     * @api
+     *
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
      */
     public function runStorageCmsBlockProductCollector(
         SpyTouchQuery $baseQuery,
@@ -56,8 +60,8 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    )
-    {
+    ) {
+
         $collector = $this->getFactory()
             ->createStorageCmsBlockProductConnectorCollector();
 
@@ -72,4 +76,5 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
             $output
         );
     }
+
 }

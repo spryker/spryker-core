@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
@@ -11,6 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractCmsBlockProductConnectorCollector extends AbstractPropelCollectorQuery
 {
+
     const COL_CMS_BLOCK_NAMES = 'cms_block_names';
 
     /**
@@ -36,4 +41,5 @@ abstract class AbstractCmsBlockProductConnectorCollector extends AbstractPropelC
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
+
 }

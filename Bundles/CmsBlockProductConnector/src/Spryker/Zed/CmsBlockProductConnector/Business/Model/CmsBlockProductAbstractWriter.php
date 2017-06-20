@@ -25,13 +25,13 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     protected $cmsBlockProductConnectorQueryContainer;
 
     /**
-     * @var CmsBlockProductConnectorToTouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
-     * @param CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
      */
     public function __construct(
         CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer,

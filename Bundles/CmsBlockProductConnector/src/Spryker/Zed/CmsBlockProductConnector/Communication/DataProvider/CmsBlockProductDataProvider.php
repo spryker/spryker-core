@@ -36,7 +36,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer
-     * @param CmsBlockProductConnectorToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer,

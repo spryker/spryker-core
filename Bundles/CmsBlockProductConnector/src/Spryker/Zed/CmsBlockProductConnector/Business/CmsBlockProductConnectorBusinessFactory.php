@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Business;
 
-use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\CmsBlockProductConnector\Business\Collector\CmsBlockProductCollector;
 use Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractWriter;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorFacadeInterface;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\AbstractCmsBlockProductConnectorCollector;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\Propel\CmsBlockProductConnectorCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
@@ -37,7 +32,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockProductCollector
+     * @return \Spryker\Zed\CmsBlockProductConnector\Business\Collector\CmsBlockProductCollector
      */
     public function createStorageCmsBlockProductConnectorCollector()
     {
@@ -52,7 +47,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockProductConnectorToCollectorFacadeInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorFacadeInterface
      */
     public function getCollectorFacade()
     {
@@ -60,7 +55,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockProductConnectorToTouchFacadeInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface
      */
     public function getTouchFacade()
     {
@@ -68,7 +63,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return UtilDataReaderServiceInterface
+     * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
     protected function getDataReaderService()
     {
@@ -76,7 +71,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchQueryContainerInterface
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected function getTouchQueryContainer()
     {
@@ -84,7 +79,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AbstractCmsBlockProductConnectorCollector
+     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\AbstractCmsBlockProductConnectorCollector
      */
     protected function createCmsBlockProductStorageQueryContainer()
     {
