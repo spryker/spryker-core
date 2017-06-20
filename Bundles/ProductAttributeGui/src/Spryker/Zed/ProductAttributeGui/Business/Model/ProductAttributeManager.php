@@ -45,6 +45,8 @@ class ProductAttributeManager
     }
 
     /**
+     * @param int $idProductAbstract
+     *
      * @return array
      */
     public function getAttributes($idProductAbstract)
@@ -147,8 +149,7 @@ class ProductAttributeManager
                     );
 
                     $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
-                }
-                else {
+                } else {
                     $criterionTranslation = $criteria->getNewCriterion(
                         SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
                         '%' . mb_strtolower($value) . '%',
@@ -258,8 +259,7 @@ class ProductAttributeManager
     {
         if ($defaultCriterion === null) {
             $defaultCriterion = $criterionToAppend;
-        }
-        else {
+        } else {
             $defaultCriterion->addOr($criterionToAppend);
         }
 
