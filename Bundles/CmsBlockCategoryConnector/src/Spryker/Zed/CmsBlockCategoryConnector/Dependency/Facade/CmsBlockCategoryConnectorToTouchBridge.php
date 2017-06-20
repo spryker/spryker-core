@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
-class TouchFacadeBridge implements TouchFacadeInterface
+class CmsBlockCategoryConnectorToTouchBridge implements CmsBlockCategoryConnectorToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface
      */
     protected $touchFacade;
 

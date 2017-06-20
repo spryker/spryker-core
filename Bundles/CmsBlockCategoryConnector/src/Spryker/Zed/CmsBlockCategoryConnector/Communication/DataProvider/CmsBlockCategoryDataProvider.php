@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryType;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
 class CmsBlockCategoryDataProvider
@@ -22,24 +22,24 @@ class CmsBlockCategoryDataProvider
     protected $cmsBlockCategoryConnectorQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
-     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface $categoryQueryContainer
-     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface $localeFacade
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer,
-        CategoryQueryContainerInterface $categoryQueryContainer,
-        LocaleFacadeInterface $localeFacade
+        CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer,
+        CmsBlockCategoryConnectorToLocaleInterface $localeFacade
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->localeFacade = $localeFacade;

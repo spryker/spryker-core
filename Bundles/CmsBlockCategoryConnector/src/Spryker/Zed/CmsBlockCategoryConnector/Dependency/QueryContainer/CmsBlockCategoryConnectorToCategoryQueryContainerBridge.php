@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer;
 
-class CategoryQueryContainerBridge implements CategoryQueryContainerInterface
+class CmsBlockCategoryConnectorToCategoryQueryContainerBridge implements CmsBlockCategoryConnectorToCategoryQueryContainerInterface
 {
 
     /**

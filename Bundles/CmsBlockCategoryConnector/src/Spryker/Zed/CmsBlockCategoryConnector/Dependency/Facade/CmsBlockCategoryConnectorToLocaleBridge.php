@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
-class LocaleFacadeBridge implements LocaleFacadeInterface
+class CmsBlockCategoryConnectorToLocaleBridge implements CmsBlockCategoryConnectorToLocaleInterface
 {
 
     /**

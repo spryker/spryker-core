@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector;
 
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CollectorFacadeBridge;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeBridge;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeBridge;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerBridge;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToCollectorBridge;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleBridge;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchBridge;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -64,7 +64,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new LocaleFacadeBridge($container->getLocator()->locale()->facade());
+            return new CmsBlockCategoryConnectorToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;
@@ -78,7 +78,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new TouchFacadeBridge($container->getLocator()->touch()->facade());
+            return new CmsBlockCategoryConnectorToTouchBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;
@@ -92,7 +92,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     protected function addCategoryQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return new CategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
+            return new CmsBlockCategoryConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
         return $container;
@@ -106,7 +106,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     protected function addCollectorFacade(Container $container)
     {
         $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new CollectorFacadeBridge($container->getLocator()->collector()->facade());
+            return new CmsBlockCategoryConnectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
 
         return $container;

@@ -62,7 +62,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface
      */
     protected function getTouchFacade()
     {

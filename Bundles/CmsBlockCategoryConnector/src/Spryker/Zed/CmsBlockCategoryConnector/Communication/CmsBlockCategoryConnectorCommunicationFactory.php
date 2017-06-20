@@ -56,7 +56,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -64,7 +64,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {

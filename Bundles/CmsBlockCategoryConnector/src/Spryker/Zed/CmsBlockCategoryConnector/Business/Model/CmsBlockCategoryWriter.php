@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -25,17 +25,17 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface
      */
     protected $touchFacade;
 
     /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface $touchFacade
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $queryContainer,
-        TouchFacadeInterface $touchFacade
+        CmsBlockCategoryConnectorToTouchInterface $touchFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->touchFacade = $touchFacade;
