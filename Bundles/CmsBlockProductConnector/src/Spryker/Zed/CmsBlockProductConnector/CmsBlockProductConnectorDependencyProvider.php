@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector;
 
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorFacadeBridge;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeBridge;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeBridge;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToCollectorBridge;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleBridge;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchBridge;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -64,7 +64,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new CmsBlockProductConnectorToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+            return new CmsBlockProductConnectorToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;
@@ -92,7 +92,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new CmsBlockProductConnectorToTouchFacadeBridge($container->getLocator()->touch()->facade());
+            return new CmsBlockProductConnectorToTouchBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;
@@ -106,7 +106,7 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
     protected function addCollectorFacade(Container $container)
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
-            return new CmsBlockProductConnectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
+            return new CmsBlockProductConnectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
 
         return $container;

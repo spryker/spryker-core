@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnector;
 use Spryker\Shared\CmsBlockProductConnector\CmsBlockProductConnectorConstants;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -25,17 +25,17 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     protected $cmsBlockProductConnectorQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchInterface
      */
     protected $touchFacade;
 
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
-     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchInterface $touchFacade
      */
     public function __construct(
         CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer,
-        CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
+        CmsBlockProductConnectorToTouchInterface $touchFacade
     ) {
         $this->cmsBlockProductConnectorQueryContainer = $cmsBlockProductConnectorQueryContainer;
         $this->touchFacade = $touchFacade;

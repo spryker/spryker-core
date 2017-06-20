@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
-interface CmsBlockProductConnectorToTouchFacadeInterface
+interface CmsBlockProductConnectorToTouchInterface
 {
 
     /**

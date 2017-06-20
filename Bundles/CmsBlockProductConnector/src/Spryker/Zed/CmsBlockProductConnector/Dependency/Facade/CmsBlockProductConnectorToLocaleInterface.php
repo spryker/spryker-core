@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
-interface CmsBlockProductConnectorToLocaleFacadeInterface
+interface CmsBlockProductConnectorToLocaleInterface
 {
 
     /**

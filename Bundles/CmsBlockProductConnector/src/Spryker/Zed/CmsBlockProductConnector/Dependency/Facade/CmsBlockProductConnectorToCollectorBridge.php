@@ -16,8 +16,21 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-interface CmsBlockProductConnectorToCollectorFacadeInterface
+class CmsBlockProductConnectorToCollectorBridge implements CmsBlockProductConnectorToCollectorInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     */
+    protected $collectorFacade;
+
+    /**
+     * @param \Spryker\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
+     */
+    public function __construct($collectorFacade)
+    {
+        $this->collectorFacade = $collectorFacade;
+    }
 
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
@@ -40,6 +53,17 @@ interface CmsBlockProductConnectorToCollectorFacadeInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ) {
+        $this->collectorFacade->runCollector(
+            $collector,
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
+    }
 
 }

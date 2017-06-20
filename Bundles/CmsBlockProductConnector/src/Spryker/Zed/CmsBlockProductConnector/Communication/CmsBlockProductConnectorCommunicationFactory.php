@@ -48,7 +48,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface
      */
     protected function getLocaleFacade()
     {
