@@ -9,13 +9,12 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
-use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
@@ -57,11 +56,71 @@ class ProductAttributeManager
         $valuesQuery->setPrimaryTableName(SpyProductManagementAttributeValueTableMap::TABLE_NAME);
 
         $values = $valuesQuery
-            ->setFormatter(new ArrayFormatter())
+            //->setFormatter(new ArrayFormatter())
             ->find()
             ->toArray();
 
+        print_r($values);
+        die;
+
         return $values;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAttributes
+     * @param bool $isSuper
+     *
+     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductAttributeValues(array $productAttributes = [], $isSuper = false)
+    {
+        /*        $query = $this->productManagementQueryContainer
+                    ->queryProductManagementAttributeValueTranslation()
+                        ->joinSpyProductManagementAttributeValue()
+                        ->useSpyProductManagementAttributeValueQuery(null, Criteria::RIGHT_JOIN)
+                            ->joinSpyProductManagementAttribute()
+                            ->useSpyProductManagementAttributeQuery()
+                                ->joinSpyProductAttributeKey()
+                                ->useSpyProductAttributeKeyQuery()
+                                    ->filterByIsSuper($isSuper)
+                                ->endUse()
+                            ->endUse()
+                        ->endUse()
+                    ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
+                    ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
+                    ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
+                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
+                    ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
+                    ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
+                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
+                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
+                    ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY);
+
+                $query = $this->createCriteria($query, $productAttributes);*/
+
+        $query = $this->productManagementQueryContainer
+            ->queryProductAttributeKey()
+                ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
+                        ->useSpyProductManagementAttributeValueTranslationQuery(null, Criteria::LEFT_JOIN)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->select([
+                SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
+                SpyProductAttributeKeyTableMap::COL_KEY,
+                SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
+                SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                SpyProductManagementAttributeValueTableMap::COL_VALUE,
+                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
+                SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
+            ]);
+
+        $query = $this->createCriteria($query, $productAttributes);
+
+        return $query;
     }
 
     /**
@@ -83,49 +142,12 @@ class ProductAttributeManager
     }
 
     /**
-     * @api
-     *
-     * @param array $productAttributes
-     * @param bool $isSuper
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryProductAttributeValues(array $productAttributes = [], $isSuper = false)
-    {
-        $query = $this->productManagementQueryContainer
-            ->queryProductManagementAttributeValueTranslation()
-                ->joinSpyProductManagementAttributeValue()
-                ->useSpyProductManagementAttributeValueQuery(null, Criteria::RIGHT_JOIN)
-                    ->joinSpyProductManagementAttribute()
-                    ->useSpyProductManagementAttributeQuery()
-                        ->joinSpyProductAttributeKey()
-                        ->useSpyProductAttributeKeyQuery()
-                            ->filterByIsSuper($isSuper)
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
-            ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY);
-
-        $query = $this->createCriteria($query, $productAttributes);
-
-        return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $productAttributes
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    protected function createCriteria(SpyProductManagementAttributeValueTranslationQuery $query, array $productAttributes)
+    protected function createCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
     {
         $keys = $this->extractKeys($productAttributes);
         $criteria = new Criteria();
@@ -172,7 +194,7 @@ class ProductAttributeManager
                         Criteria::LIKE
                     );
 
-                    $criterionTranslation->addAnd($criterionIdLocale);
+                    //$criterionTranslation->addAnd($criterionIdLocale);
                     $defaultLocalizedCriterion = $this->appendOrCriterion($criterionTranslation, $defaultLocalizedCriterion);
                 }
             }
