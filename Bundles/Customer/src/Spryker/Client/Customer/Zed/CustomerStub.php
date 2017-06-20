@@ -207,4 +207,14 @@ class CustomerStub implements CustomerStubInterface
         return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
+    }
+
 }

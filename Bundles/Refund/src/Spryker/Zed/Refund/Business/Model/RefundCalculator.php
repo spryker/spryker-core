@@ -9,15 +9,10 @@ namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 
 class RefundCalculator implements RefundCalculatorInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface
-     */
-    protected $salesAggregatorFacade;
 
     /**
      * @var \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[]
@@ -25,13 +20,21 @@ class RefundCalculator implements RefundCalculatorInterface
     protected $refundCalculatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
-    public function __construct(RefundToSalesAggregatorInterface $salesAggregatorFacade, array $refundCalculatorPlugins)
-    {
-        $this->salesAggregatorFacade = $salesAggregatorFacade;
+    protected $salesFacade;
+
+    /**
+     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacade
+     */
+    public function __construct(
+        array $refundCalculatorPlugins,
+        RefundToSalesInterface $salesFacade
+    ) {
+
         $this->refundCalculatorPlugins = $refundCalculatorPlugins;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -62,10 +65,7 @@ class RefundCalculator implements RefundCalculatorInterface
      */
     protected function getOrderTransfer(SpySalesOrder $salesOrderEntity)
     {
-        $orderTransfer = $this->salesAggregatorFacade
-            ->getOrderTotalsByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
-
-        return $orderTransfer;
+        return $this->salesFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
     }
 
 }

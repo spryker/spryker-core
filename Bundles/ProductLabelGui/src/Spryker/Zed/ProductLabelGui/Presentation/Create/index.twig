@@ -1,0 +1,34 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create a Product Label' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(aggregateForm) }}
+
+    {{ tabs(
+        productLabelFormTabs,
+        {
+            'productLabelForm': aggregateForm.productLabel,
+            'relatedProductForm': aggregateForm.productAbstractRelations,
+            'availableProductTable': availableProductTable,
+            'assignedProductTable': assignedProductTable
+        }
+    ) }}
+
+    {{ form_end(aggregateForm) }}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-label-form.js"></script>
+{% endblock %}
+

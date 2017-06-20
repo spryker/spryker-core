@@ -6,7 +6,8 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/customer/view?id-customer=' ~ idCustomer, 'Back to Customer View' | trans) }}
+    {{ removeActionButton(url('/customer/delete', {'id-customer': idCustomer}), 'Delete' | trans) }}
+    {{ backActionButton(url('/customer/view', {'id-customer': idCustomer}), 'Back to Customer View' | trans) }}
 {% endblock %}
 
 {% block content %}

@@ -19,6 +19,7 @@
         <column name="registration_key" size="150" type="VARCHAR" default="NULL"/>
         <column name="default_billing_address" type="INTEGER"/>
         <column name="default_shipping_address" type="INTEGER"/>
+        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
         <behavior name="timestampable"/>
         <unique name="spy_customer-email">
             <unique-column name="email"/>
@@ -56,6 +57,7 @@
         <column name="phone" size="255" type="VARCHAR"/>
         <column name="comment" size="255" type="VARCHAR"/>
         <column name="deleted_at" required="false" type="TIMESTAMP"/>
+        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
 
         <foreign-key name="spy_customer_address-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="Address" onDelete="CASCADE">
             <reference foreign="id_customer" local="fk_customer"/>

@@ -16,6 +16,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
     const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
+    const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +35,10 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::CHECKOUT_POST_HOOKS] = function (Container $container) {
             return $this->getCheckoutPostHooks($container);
+        };
+
+        $container[static::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
+            return $this->getCheckoutPreSaveHooks($container);
         };
 
         return $container;
@@ -65,6 +70,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
      */
     protected function getCheckoutPostHooks(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]
+     */
+    protected function getCheckoutPreSaveHooks(Container $container)
     {
         return [];
     }

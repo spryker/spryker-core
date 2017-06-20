@@ -285,4 +285,17 @@ class GatewayController extends AbstractGatewayController
         return $addressTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomerAction(CustomerTransfer $customerTransfer)
+    {
+        $this->getFacade()
+            ->anonymizeCustomer($customerTransfer);
+
+        return $customerTransfer;
+    }
+
 }

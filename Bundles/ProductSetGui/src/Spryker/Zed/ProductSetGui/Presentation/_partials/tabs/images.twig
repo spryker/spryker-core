@@ -1,0 +1,32 @@
+{% for imageSetCollectionForm in productSetForm.images_form %}
+    {% if not imageSetCollectionForm.vars.attr.localeName %}
+
+        {% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+            {% block title %}
+                {{ 'Default' | trans }}
+            {% endblock %}
+            {% block content %}
+
+                {% include '@ProductSetGui/_partials/form/image-set-collection-form.twig' with {
+                    imageSetCollectionForm: imageSetCollectionForm,
+                    rootForm: productSetForm
+                } %}
+            {% endblock %}
+        {% endembed %}
+    {% else %}
+
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': imageSetCollectionForm.vars.attr.localeName} %}
+            {% block content %}
+
+                {% include '@ProductSetGui/_partials/form/image-set-collection-form.twig' with {
+                    imageSetCollectionForm: imageSetCollectionForm,
+                    rootForm: productSetForm
+                } %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+{% endfor %}
+
+{{ form_rest(productSetForm.images_form) }}
+

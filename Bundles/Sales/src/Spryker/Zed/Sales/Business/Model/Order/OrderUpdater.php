@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderUpdater implements OrderUpdaterInterface
@@ -44,8 +45,11 @@ class OrderUpdater implements OrderUpdaterInterface
         }
 
         $this->hydrateEntityFromOrderTransfer($orderTransfer, $orderEntity);
-
         $orderEntity->save();
+
+        $this->createOrderTotals($orderTransfer, $orderEntity);
+        $this->updateOrderItems($orderTransfer, $orderEntity);
+        $this->updateOrderExpenses($orderTransfer, $orderEntity);
 
         return true;
     }
@@ -59,6 +63,72 @@ class OrderUpdater implements OrderUpdaterInterface
     protected function hydrateEntityFromOrderTransfer(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
     {
         $orderEntity->fromArray($orderTransfer->modifiedToArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return void
+     */
+    protected function updateOrderItems(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    {
+        foreach ($orderEntity->getItems() as $salesOrderItemEntity) {
+            foreach ($orderTransfer->getItems() as $itemTransfer) {
+                if ($salesOrderItemEntity->getIdSalesOrderItem() !== $itemTransfer->getIdSalesOrderItem()) {
+                    continue;
+                }
+
+                $salesOrderItemEntity->setCanceledAmount($itemTransfer->getCanceledAmount());
+                $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
+
+                $salesOrderItemEntity->save();
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return void
+     */
+    protected function createOrderTotals(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    {
+        $taxTotal = 0;
+        if ($orderTransfer->getTotals()->getTaxTotal()) {
+            $taxTotal = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
+        }
+
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());
+        $salesOrderTotalsEntity->fromArray($orderTransfer->getTotals()->toArray());
+        $salesOrderTotalsEntity->setTaxTotal($taxTotal);
+        $salesOrderTotalsEntity->setCanceledTotal($orderTransfer->getTotals()->getCanceledTotal());
+        $salesOrderTotalsEntity->setOrderExpenseTotal($orderTransfer->getTotals()->getExpenseTotal());
+        $salesOrderTotalsEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return void
+     */
+    protected function updateOrderExpenses(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    {
+        foreach ($orderEntity->getExpenses() as $expenseEntity) {
+            foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+                if ($expenseTransfer->getIdSalesExpense() !== $expenseEntity->getIdSalesExpense()) {
+                    continue;
+                }
+
+                $expenseEntity->setCanceledAmount($expenseTransfer->getCanceledAmount());
+                $expenseEntity->setRefundableAmount($expenseTransfer->getRefundableAmount());
+
+                $expenseEntity->save();
+            }
+        }
     }
 
 }

@@ -24,4 +24,11 @@ interface CurrencyToInternationalizationInterface
      */
     public function getNameByIsoCode($isoCode);
 
+    /**
+     * @param string $isoCode
+     *
+     * @return int|null
+     */
+    public function getFractionDigits($isoCode);
+
 }

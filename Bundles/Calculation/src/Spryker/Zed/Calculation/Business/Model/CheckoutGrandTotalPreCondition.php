@@ -10,20 +10,21 @@ namespace Spryker\Zed\Calculation\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface;
 use Spryker\Zed\Calculation\CalculationConfig;
 
 class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface
      */
     protected $stackExecutor;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface $stackExecutor
+     * @param \Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface $stackExecutor
      */
-    public function __construct(StackExecutorInterface $stackExecutor)
+    public function __construct(QuoteCalculatorExecutorInterface $stackExecutor)
     {
         $this->stackExecutor = $stackExecutor;
     }

@@ -45,6 +45,7 @@ class CurrencyBuilder implements CurrencyBuilderInterface
         $currencyTransfer->setName($this->currencyRepository->getNameByIsoCode($isoCode));
         $currencyTransfer->setSymbol($this->currencyRepository->getSymbolByIsoCode($isoCode));
         $currencyTransfer->setIsDefault($isoCode === $this->defaultIsoCode);
+        $currencyTransfer->setFractionDigits($this->currencyRepository->getFractionDigits($isoCode));
 
         return $currencyTransfer;
     }

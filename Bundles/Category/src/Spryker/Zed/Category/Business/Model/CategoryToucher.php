@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
-use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -41,7 +41,13 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeActiveRecursively($idCategoryNode)
     {
         foreach ($this->getRelatedNodes($idCategoryNode) as $relatedNodeEntity) {
-            $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNodeDescendant());
+            if ($relatedNodeEntity->getFkCategoryNode() !== $idCategoryNode) {
+                $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNode());
+            }
+
+            if ($relatedNodeEntity->getFkCategoryNodeDescendant() !== $idCategoryNode) {
+                $this->touchCategoryNodeActive($relatedNodeEntity->getFkCategoryNodeDescendant());
+            }
         }
 
         $this->touchCategoryNodeActive($idCategoryNode);
@@ -69,7 +75,7 @@ class CategoryToucher implements CategoryToucherInterface
      */
     public function touchCategoryNodeActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
         $this->touchNavigationActive($idCategoryNode);
     }
 
@@ -94,7 +100,7 @@ class CategoryToucher implements CategoryToucherInterface
      */
     public function touchCategoryNodeDeleted($idCategoryNode)
     {
-        $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
         $this->touchNavigationActive($idCategoryNode);
     }
 
@@ -109,7 +115,7 @@ class CategoryToucher implements CategoryToucherInterface
 
         if ($rootNodeEntity) {
             $this->touchFacade->touchActive(
-                CategoryConstants::RESOURCE_TYPE_NAVIGATION,
+                CategoryConfig::RESOURCE_TYPE_NAVIGATION,
                 $rootNodeEntity->getIdCategoryNode()
             );
         }
@@ -148,6 +154,35 @@ class CategoryToucher implements CategoryToucherInterface
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $this->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
         }
+    }
+
+    /**
+     * @param int $idFormerParentCategoryNode
+     *
+     * @return void
+     */
+    public function touchFormerParentCategoryNodeActiveRecursively($idFormerParentCategoryNode)
+    {
+        foreach ($this->findParentCategoryNodes($idFormerParentCategoryNode) as $parentNodeEntity) {
+            if ($parentNodeEntity->getFkCategoryNode() !== $idFormerParentCategoryNode) {
+                $this->touchCategoryNodeActive($parentNodeEntity->getFkCategoryNode());
+            }
+        }
+
+        $this->touchCategoryNodeActive($idFormerParentCategoryNode);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]
+     */
+    protected function findParentCategoryNodes($idCategoryNode)
+    {
+        return $this
+            ->queryContainer
+            ->queryClosureTableFilterByIdNodeDescendant($idCategoryNode)
+            ->find();
     }
 
 }

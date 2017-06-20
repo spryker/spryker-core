@@ -9,15 +9,19 @@ namespace Spryker\Zed\Tax\Business\Model;
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
 
+    const DEFAULT_BUCKET_NAME = 'default';
+
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @var float
+     * @var array|float[]
      */
-    protected static $roundingErrorDelta = 0.0;
+    protected static $roundingErrorBucket = [
+         self::DEFAULT_BUCKET_NAME => 0,
+    ];
 
     /**
      * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
@@ -30,27 +34,86 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param int $taxRate
+     * @param bool $round
+     * @param string|null $identifier
      *
      * @return float
      */
-    public function getTaxValueFromPrice($price, $taxRate)
+    public function getTaxValueFromPrice($price, $taxRate, $round = false, $identifier = null)
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
 
-        $taxAmount += static::$roundingErrorDelta;
+        $taxAmount += $this->getRoundingErrorDelta($identifier);
 
-        $taxAmountRounded = round($taxAmount, 2);
-        static::$roundingErrorDelta = $taxAmount - $taxAmountRounded;
+        $taxAmountRounded = (int)round($taxAmount);
+        $this->setRoundingErrorDelta($taxAmount - $taxAmountRounded, $identifier);
 
         return $taxAmountRounded;
     }
 
     /**
+     * @param int $price Price as integer (e. g 15508 for 155.08)
+     * @param int $taxRate
+     * @param string|null $identifier
+     *
+     * @return int
+     */
+    public function getTaxValueFromNetPrice($price, $taxRate, $identifier = null)
+    {
+        $taxAmount = $this->priceCalculationHelper->getTaxValueFromNetPrice($price, $taxRate);
+
+        $taxAmount += $this->getRoundingErrorDelta($identifier);
+
+        $taxAmountRounded = (int)round($taxAmount);
+        $this->setRoundingErrorDelta($taxAmount - $taxAmountRounded, $identifier);
+
+        return $taxAmountRounded;
+    }
+
+    /**
+     * @param float $roundingErrorDelta
+     * @param string|null $identifier
+     *
      * @return void
      */
-    public function resetRoundingErrorDelta()
+    protected function setRoundingErrorDelta($roundingErrorDelta, $identifier = null)
     {
-        static::$roundingErrorDelta = 0.0;
+        if ($identifier) {
+            static::$roundingErrorBucket[$identifier] = $roundingErrorDelta;
+        } else {
+            static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME] = $roundingErrorDelta;
+        }
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return float
+     */
+    public function getRoundingErrorDelta($identifier)
+    {
+        if (isset(static::$roundingErrorBucket[$identifier])) {
+            $roundingError = static::$roundingErrorBucket[$identifier];
+            static::$roundingErrorBucket[$identifier] = 0;
+            return $roundingError;
+        }
+
+        return static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME];
+    }
+
+    /**
+     * @param string|null $identifier
+     *
+     * @return void
+     */
+    public function resetRoundingErrorDelta($identifier = null)
+    {
+        $br = static::$roundingErrorBucket;
+
+        $br = 11;
+
+        static::$roundingErrorBucket = [];
+        static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME] = 0;
     }
 
 }

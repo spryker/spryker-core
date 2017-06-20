@@ -48,8 +48,8 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     {
         return $this
             ->getFactory()
-            ->getSalesAggregator()
-            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
+            ->getSalesFacade()
+            ->getOrderByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerGroup\Business;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerGroupFacadeInterface
 {
@@ -101,5 +102,18 @@ interface CustomerGroupFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
      */
     public function findCustomerGroupByIdCustomer($idCustomer);
+
+    /**
+     * Specification:
+     *  - Finds all groups which a customer participates
+     *  - Removes each customer group in the found batch
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function removeCustomerFromAllGroups(CustomerTransfer $customerTransfer);
 
 }

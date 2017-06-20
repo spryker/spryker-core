@@ -201,7 +201,7 @@ abstract class AbstractCollector
      */
     protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->locale->getIdLocale());
         $deleteQuery
             ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
             ->withColumn('search.key', CollectorConfig::COLLECTOR_SEARCH_KEY)

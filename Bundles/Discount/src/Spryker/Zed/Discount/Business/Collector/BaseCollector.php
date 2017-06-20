@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Business\Collector;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class BaseCollector
 {
@@ -27,6 +28,21 @@ class BaseCollector
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($originalItemCalculatedDiscounts);
 
         return $discountableItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
+     *
+     * @return int
+     */
+    protected function getPrice(ItemTransfer $itemTransfer, $priceMode)
+    {
+        if ($priceMode === 'NET_MODE') {
+            return $itemTransfer->getUnitNetPrice() + (int)round($itemTransfer->getUnitNetPrice() * $itemTransfer->getTaxRate() / 100);
+        } else {
+            return $itemTransfer->getUnitGrossPrice();
+        }
     }
 
 }

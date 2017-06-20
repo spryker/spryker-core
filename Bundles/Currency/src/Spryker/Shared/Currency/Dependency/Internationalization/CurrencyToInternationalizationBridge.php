@@ -43,4 +43,14 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
         return $this->currencyBundle->getCurrencyName($isoCode);
     }
 
+    /**
+     * @param string $isoCode
+     *
+     * @return int|null
+     */
+    public function getFractionDigits($isoCode)
+    {
+        return $this->currencyBundle->getFractionDigits($isoCode);
+    }
+
 }

@@ -25,6 +25,19 @@
         <property name="bundleItemIdentifier" type="string" />
         <property name="relatedBundleItemIdentifier" type="string" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+
+        <property name="unitDiscountAmountFullAggregation" type="int" />
+        <property name="sumDiscountAmountFullAggregation" type="int" />
+
     </transfer>
 
     <transfer name="Quote">

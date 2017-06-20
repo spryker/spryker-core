@@ -48,8 +48,8 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     {
         return $this
             ->getFactory()
-            ->getSalesAggregator()
-            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
+            ->getSalesFacade()
+            ->getOrderByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
     /**

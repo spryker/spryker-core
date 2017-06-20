@@ -1,0 +1,23 @@
+{% set counter = 0 %}
+{% for imageSet in productSetTransfer.imageSets %}
+    {% if imageSet.locale == localeTransfer %}
+        {% if counter > 0 %}
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Image Set Name' | trans }}</b></div>
+            <div class="col-xs-10">{{ imageSet.name }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            {% for image in imageSet.productImages %}
+                <div class="col-lg-3">
+                    <img src="{{ image.externalUrlSmall }}" style="max-width: 100px; max-height: 100px">
+                </div>
+            {% endfor %}
+        </div>
+
+        {% set counter = counter + 1 %}
+    {% endif %}
+{% endfor %}

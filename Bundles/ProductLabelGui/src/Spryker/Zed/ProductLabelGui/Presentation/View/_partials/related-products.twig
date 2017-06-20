@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products to which this label applies' } %}
+    {% block widget_content %}
+        {{ relatedProductTable | raw }}
+    {% endblock %}
+{% endembed %}

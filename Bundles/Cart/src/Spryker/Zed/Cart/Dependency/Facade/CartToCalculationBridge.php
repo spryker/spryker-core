@@ -32,7 +32,7 @@ class CartToCalculationBridge implements CartToCalculationInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
 }

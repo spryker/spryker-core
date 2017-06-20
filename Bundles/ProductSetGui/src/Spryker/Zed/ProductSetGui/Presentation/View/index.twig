@@ -1,0 +1,32 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Sets' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ editActionButton(url('/product-set-gui/edit', {'id': productSetTransfer.idProductSet}), 'Edit' | trans) }}
+    {% if productSetTransfer.isActive %}
+        {{ removeActionButton(url('/product-set-gui/edit/deactivate', {'id': productSetTransfer.idProductSet}), 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton(url('/product-set-gui/edit/activate', {'id': productSetTransfer.idProductSet}), 'Activate' | trans) }}
+    {% endif %}
+    {{ backActionButton(url('/product-set-gui'), 'List of Sets' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% include '@ProductSetGui/View/_partials/general.twig' %}
+    {% include '@ProductSetGui/View/_partials/products.twig' %}
+    {% include '@ProductSetGui/View/_partials/seo.twig' %}
+    {% include '@ProductSetGui/View/_partials/images.twig' %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productset-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

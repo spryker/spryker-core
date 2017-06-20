@@ -69,6 +69,10 @@ class Method
             if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
                 $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
                 $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
+                $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier());
+
+                $shipmentCarrierName = $this->findShipmentCarrierName($shipmentMethodEntity);
+                $shipmentMethodTransfer->setCarrierName($shipmentCarrierName);
 
                 $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
             }
@@ -251,6 +255,20 @@ class Method
         }
 
         return $effectiveTaxRate;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return string|null
+     */
+    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
+    {
+        if (!$shipmentMethodEntity->getShipmentCarrier()) {
+            return null;
+        }
+
+        return $shipmentMethodEntity->getShipmentCarrier()->getName();
     }
 
 }

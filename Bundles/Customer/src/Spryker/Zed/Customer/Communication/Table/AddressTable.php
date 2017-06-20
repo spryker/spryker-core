@@ -98,7 +98,8 @@ class AddressTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->customerQueryContainer->queryAddresses()->filterByFkCustomer($this->idCustomer)
+        $query = $this->customerQueryContainer->queryAddresses()
+            ->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
             ->withColumn('country.name', self::COL_COMPANY);
         $lines = $this->runQuery($query, $config);

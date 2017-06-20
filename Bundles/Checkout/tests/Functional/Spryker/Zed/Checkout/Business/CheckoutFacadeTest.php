@@ -93,7 +93,7 @@ class CheckoutFacadeTest extends Test
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
@@ -140,8 +140,8 @@ class CheckoutFacadeTest extends Test
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product2->getSku()]);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $product1->getSku()])
-            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku()])
+            ->withItem([ItemTransfer::SKU => $product1->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
@@ -231,6 +231,7 @@ class CheckoutFacadeTest extends Test
         $item
             ->setSku('OSB1339')
             ->setQuantity(2)
+            ->setUnitPrice(3000)
             ->setUnitGrossPrice(3000)
             ->setSumGrossPrice(6000);
 
@@ -322,6 +323,7 @@ class CheckoutFacadeTest extends Test
 
         $item1 = new ItemTransfer();
         $item1
+            ->setUnitPrice(4000)
             ->setSku('OSB1337')
             ->setQuantity(1)
             ->setUnitGrossPrice(3000)
@@ -329,6 +331,7 @@ class CheckoutFacadeTest extends Test
 
         $item2 = new ItemTransfer();
         $item2
+            ->setUnitPrice(4000)
             ->setSku('OSB1338')
             ->setQuantity(1)
             ->setUnitGrossPrice(4000)
@@ -417,6 +420,10 @@ class CheckoutFacadeTest extends Test
             return [
                 new OmsPostSaveHookPlugin()
             ];
+        };
+
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
+            return [];
         };
 
         $container[CustomerDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();

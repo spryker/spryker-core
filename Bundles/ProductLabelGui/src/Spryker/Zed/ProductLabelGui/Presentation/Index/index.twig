@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Product Labels' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/product-label-gui/create', 'Create Product Label' | trans) }}
+    {{ editActionButton('/product-label-gui/re-sort', 'Prioritize Product Labels') }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of Product Labels' } %}
+
+        {% block widget_content %}
+            {{ productLabelTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-label-index.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}
+

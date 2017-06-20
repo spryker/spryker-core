@@ -60,6 +60,16 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     }
 
     /**
+     * @param string $propertyName
+     *
+     * @return bool
+     */
+    public function isPropertyModified($propertyName)
+    {
+        return in_array($propertyName, $this->modifiedProperties);
+    }
+
+    /**
      * @return void
      */
     protected function initCollectionProperties()

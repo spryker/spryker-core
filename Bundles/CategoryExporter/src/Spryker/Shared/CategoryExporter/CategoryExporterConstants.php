@@ -7,11 +7,11 @@
 
 namespace Spryker\Shared\CategoryExporter;
 
-use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Zed\Category\CategoryConfig;
 
 interface CategoryExporterConstants
 {
 
-    const RESOURCE_TYPE_CATEGORY_NODE = CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE;
+    const RESOURCE_TYPE_CATEGORY_NODE = CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
 
 }

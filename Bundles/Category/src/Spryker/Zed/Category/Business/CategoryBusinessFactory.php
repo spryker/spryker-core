@@ -117,6 +117,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryExtraParents(),
             $this->getQueryContainer(),
             $this->getRelationDeletePluginStack(),
+            $this->getRelationUpdatePluginStack(),
             $this->getEventFacade()
         );
     }
@@ -204,6 +205,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     protected function getRelationDeletePluginStack()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     */
+    protected function getRelationUpdatePluginStack()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_UPDATE);
     }
 
     /**

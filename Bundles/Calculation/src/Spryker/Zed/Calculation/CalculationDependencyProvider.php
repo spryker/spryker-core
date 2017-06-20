@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\Calculation;
 
-use Spryker\Zed\Calculation\Communication\Plugin\ExpensesGrossSumAmountCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ItemGrossAmountsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionGrossSumCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const CALCULATOR_STACK = 'calculator stack';
+    const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
+    const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
+
+    const SERVICE_UTIL_TEXT = 'util text service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,8 +26,16 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::CALCULATOR_STACK] = function (Container $container) {
-            return $this->getCalculatorStack($container);
+        $container[static::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) {
+            return $this->getQuoteCalculatorPluginStack($container);
+        };
+
+        $container[static::ORDER_CALCULATOR_PLUGIN_STACK] = function (Container $container) {
+            return $this->getOrderCalculatorPluginStack($container);
+        };
+
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
         return $container;
@@ -39,28 +44,21 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
-    protected function getCalculatorStack(Container $container)
+    protected function getQuoteCalculatorPluginStack(Container $container)
     {
-        return [
-            //Remove calculated values, start with clean state.
-            new RemoveTotalsCalculatorPlugin(),
+        return [];
+    }
 
-            //Item calculators
-            new ProductOptionGrossSumCalculatorPlugin(),
-            new ItemGrossAmountsCalculatorPlugin(),
-
-            //SubTotal
-            new SubtotalTotalsCalculatorPlugin(),
-
-            //Expenses (e.g. shipping)
-            new ExpensesGrossSumAmountCalculatorPlugin(),
-            new ExpenseTotalsCalculatorPlugin(),
-
-            //GrandTotal
-            new GrandTotalTotalsCalculatorPlugin(),
-        ];
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     */
+    protected function getOrderCalculatorPluginStack(Container $container)
+    {
+        return [];
     }
 
 }

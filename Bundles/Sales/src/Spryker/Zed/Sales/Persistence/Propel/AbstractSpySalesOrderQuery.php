@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery as BaseSpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\PropelException;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_sales_order' table.
@@ -94,6 +98,40 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     }
 
     /**
+     * @param string $resultFieldName
+     *
+     * @return $this
+     */
+    public function addLastOrderGrandTotalToResult($resultFieldName)
+    {
+        $subQuery = clone $this;
+        $subQuery->clear();
+
+        $subQuery
+            ->setModelAlias('sso', true)
+            ->useOrderTotalQuery()
+            ->withColumn(
+                SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL,
+                $resultFieldName
+            )
+            ->filterByFkSalesOrder(
+                sprintf(
+                    '%s = %s',
+                    SpySalesOrderTotalsTableMap::COL_FK_SALES_ORDER,
+                    SpySalesOrderTableMap::COL_ID_SALES_ORDER
+                ),
+                Criteria::CUSTOM
+            )
+            ->limit(1)
+            ->orderByCreatedAt(Criteria::DESC)
+            ->endUse();
+
+        $this->addSubQueryResultField($subQuery, $resultFieldName);
+
+        return $this;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $subQuery
      * @param string $resultFieldName
      *
@@ -154,6 +192,40 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
                 ->filterByLastStateChange($lastStateChange, $comparison)
             ->endUse()
             ->groupByIdSalesOrder();
+    }
+
+    /**
+     * @internal param int $idCustomer
+     *
+     * @deprecated
+     *
+     * This is for bc reasons, because we don't have database foreign key from fk_customer.
+     * Will be removed in the future.
+     *
+     * @param int|null $fkCustomer
+     * @param string $comparison
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
+     */
+    public function filterByFkCustomer($fkCustomer = null, $comparison = Criteria::EQUAL)
+    {
+        if (property_exists($this, 'fk_customer')) {
+            return parent::filterByFkCustomer($fkCustomer, $comparison);
+        }
+
+        $customerReference = SpyCustomerQuery::create()
+            ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
+            ->filterByIdCustomer($fkCustomer)
+            ->findOne();
+
+        if (!$customerReference) {
+            throw new PropelException('Customer not found');
+        }
+        $this->filterByCustomerReference($customerReference);
+
+        return $this;
     }
 
 } // SpySalesOrderQuery
