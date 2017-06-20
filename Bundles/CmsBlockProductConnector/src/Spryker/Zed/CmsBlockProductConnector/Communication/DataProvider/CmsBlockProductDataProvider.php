@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\LocaleFacadeInterface;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeInterface;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 
 class CmsBlockProductDataProvider
@@ -24,23 +24,24 @@ class CmsBlockProductDataProvider
     protected $cmsBlockProductQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface
      */
     protected $productAbstractQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\LocaleFacadeInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer
-     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface $productAbstractQueryContainer
+     * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer
+     * @param CmsBlockProductConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductQueryContainer,
-        ProductAbstractQueryContainerInterface $productAbstractQueryContainer,
-        LocaleFacadeInterface $localeFacade
+        CmsBlockProductConnectorToProductAbstractQueryContainerInterface $productAbstractQueryContainer,
+        CmsBlockProductConnectorToLocaleFacadeInterface $localeFacade
     ) {
         $this->cmsBlockProductQueryContainer = $cmsBlockProductQueryContainer;
         $this->productAbstractQueryContainer = $productAbstractQueryContainer;

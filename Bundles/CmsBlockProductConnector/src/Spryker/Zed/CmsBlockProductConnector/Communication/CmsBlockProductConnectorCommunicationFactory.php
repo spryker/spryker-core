@@ -40,7 +40,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface
      */
     protected function getProductAbstractQueryContainer()
     {
@@ -48,7 +48,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\LocaleFacadeInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleFacadeInterface
      */
     protected function getLocaleFacade()
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer;
 
-interface ProductAbstractQueryContainerInterface
+interface CmsBlockProductConnectorToProductAbstractQueryContainerInterface
 {
 
     /**
