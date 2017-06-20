@@ -30,7 +30,7 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     /**
      * @api
      *
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */

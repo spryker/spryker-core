@@ -121,7 +121,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Symfony\Component\Form\FormInterface
      */

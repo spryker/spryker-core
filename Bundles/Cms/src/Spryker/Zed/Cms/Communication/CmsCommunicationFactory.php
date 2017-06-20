@@ -18,7 +18,6 @@ use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
-use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;

@@ -29,7 +29,7 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     /**
      * @api
      *
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */

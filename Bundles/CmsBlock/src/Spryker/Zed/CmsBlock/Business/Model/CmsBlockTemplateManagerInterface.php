@@ -18,8 +18,8 @@ interface CmsBlockTemplateManagerInterface
     public function syncTemplate($templatePath);
 
     /**
-     * @param $name
-     * @param $path
+     * @param string $name
+     * @param string $path
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */

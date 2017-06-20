@@ -18,7 +18,7 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param string[] $blockNames
      * @param string $localeName
      *
      * @return array

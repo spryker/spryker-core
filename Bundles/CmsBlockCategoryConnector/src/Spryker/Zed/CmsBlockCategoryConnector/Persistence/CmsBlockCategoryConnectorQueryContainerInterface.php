@@ -20,7 +20,7 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     /**
      * @api
      *
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */

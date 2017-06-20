@@ -22,6 +22,10 @@ class CmsBlockReader implements CmsBlockReaderInterface
      */
     protected $mapper;
 
+    /**
+     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param CmsBlockMapperInterface $cmsBlockMapper
+     */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockMapperInterface $cmsBlockMapper

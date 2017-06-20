@@ -15,6 +15,9 @@ class CmsBlockToTouchBridge implements CmsBlockToTouchInterface
      */
     protected $touchFacade;
 
+    /**
+     * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
+     */
     public function __construct($touchFacade)
     {
         $this->touchFacade = $touchFacade;

@@ -20,7 +20,7 @@ interface CmsBlockProductConnectorQueryContainerInterface
     /**
      * @api
      *
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */

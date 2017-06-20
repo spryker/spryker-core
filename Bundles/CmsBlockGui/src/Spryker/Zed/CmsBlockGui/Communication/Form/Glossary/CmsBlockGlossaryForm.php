@@ -26,6 +26,9 @@ class CmsBlockGlossaryForm extends AbstractType
      */
     protected $cmsBlockGlossaryPlaceholderForm;
 
+    /**
+     * @param CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm
+     */
     public function __construct(CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm)
     {
         $this->cmsBlockGlossaryPlaceholderForm = $cmsBlockGlossaryPlaceholderForm;
