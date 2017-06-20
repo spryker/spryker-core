@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnector;
+use Spryker\Shared\CmsBlockProductConnector\CmsBlockProductConnectorConstants;
+use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToTouchFacadeInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -23,11 +25,20 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     protected $cmsBlockProductConnectorQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
+     * @var CmsBlockProductConnectorToTouchFacadeInterface
      */
-    public function __construct(CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer)
-    {
+    protected $touchFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
+     * @param CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
+     */
+    public function __construct(
+        CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer,
+        CmsBlockProductConnectorToTouchFacadeInterface $touchFacade
+    ) {
         $this->cmsBlockProductConnectorQueryContainer = $cmsBlockProductConnectorQueryContainer;
+        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -66,6 +77,11 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
 
         foreach ($relations as $relation) {
             $relation->delete();
+
+            $this->touchFacade->touchActive(
+                CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR,
+                $relation->getFkProductAbstract()
+            );
         }
     }
 
@@ -81,6 +97,11 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
             $spyCmsBlockProductConnector->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
             $spyCmsBlockProductConnector->setFkProductAbstract($idProductAbstract);
             $spyCmsBlockProductConnector->save();
+
+            $this->touchFacade->touchActive(
+                CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR,
+                $idProductAbstract
+            );
         }
     }
 

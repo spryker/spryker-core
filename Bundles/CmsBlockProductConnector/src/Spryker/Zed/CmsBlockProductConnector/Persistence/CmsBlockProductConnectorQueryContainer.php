@@ -20,7 +20,7 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
-    public function queryCmsBlockCategoryConnector()
+    public function queryCmsBlockProductConnector()
     {
         return $this->getFactory()
             ->createCmsBlockProductConnectorQuery();
@@ -35,7 +35,7 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
      */
     public function queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
     {
-        return $this->queryCmsBlockCategoryConnector()
+        return $this->queryCmsBlockProductConnector()
             ->filterByFkCmsBlock($idCmsBlock);
     }
 

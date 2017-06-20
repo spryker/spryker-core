@@ -5,42 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockProductConnector\Business;
+namespace Spryker\Zed\CmsBlockProductConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
-interface CmsBlockProductConnectorFacadeInterface
+/**
+ * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
+ */
+class CmsBlockProductConnectorCollectorPlugin extends AbstractCollectorPlugin
 {
 
     /**
-     * Specification
-     * - delete all relations of cms block to product abstracts
-     * - create relations by transfer object
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
-    public function updateCmsBlockProductAbstractRelations(CmsBlockTransfer $cmsBlockTransfer);
-
-    /**
-     * Specification
-     * - hydrate CMS Block to Product relation with block names
-     * - collect relation to Storage
-     *
-     * @api
-     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
@@ -49,14 +33,26 @@ interface CmsBlockProductConnectorFacadeInterface
      *
      * @return void
      */
-    public function runStorageCmsBlockProductCollector(
+    public function run(
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
+        LocaleTransfer $locale,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ) {
+
+        $this->getFacade()
+            ->runStorageCmsBlockProductCollector(
+                $baseQuery,
+                $locale,
+                $result,
+                $dataReader,
+                $dataWriter,
+                $touchUpdater,
+                $output
+            );
+    }
 
 }

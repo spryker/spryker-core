@@ -15,7 +15,7 @@ interface CmsBlockProductConnectorQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
-    public function queryCmsBlockCategoryConnector();
+    public function queryCmsBlockProductConnector();
 
     /**
      * @api

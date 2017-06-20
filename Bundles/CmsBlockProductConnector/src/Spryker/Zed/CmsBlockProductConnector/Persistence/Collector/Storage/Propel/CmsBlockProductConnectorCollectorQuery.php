@@ -4,7 +4,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\Pro
 
 use Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\AbstractCmsBlockProductConnectorCollector;
 
-class CmsBlockProductConnectorCollector extends AbstractCmsBlockProductConnectorCollector
+class CmsBlockProductConnectorCollectorQuery extends AbstractCmsBlockProductConnectorCollector
 {
 
 }
