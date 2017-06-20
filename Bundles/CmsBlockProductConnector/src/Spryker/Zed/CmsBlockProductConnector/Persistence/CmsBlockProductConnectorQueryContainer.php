@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 
-
-use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method CmsBlockProductConnectorPersistenceFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorPersistenceFactory getFactory()
  */
 class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer implements CmsBlockProductConnectorQueryContainerInterface
 {
+
     /**
-     * @return SpyCmsBlockProductConnectorQuery
+     * @api
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockCategoryConnector()
     {
@@ -22,15 +27,16 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     }
 
     /**
+     * @api
+     *
      * @param $idCmsBlock
      *
-     * @return SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
     {
         return $this->queryCmsBlockCategoryConnector()
             ->filterByFkCmsBlock($idCmsBlock);
     }
-
 
 }

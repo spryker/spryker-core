@@ -8,10 +8,8 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Table;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
-use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapper;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -181,10 +179,10 @@ class CmsBlockTable extends AbstractTable
             );
         } else {
             return $this->generateViewButton(
-                    Url::generate(static::URL_CMS_BLOCK_ACTIVATE, [
-                        static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]
+                Url::generate(static::URL_CMS_BLOCK_ACTIVATE, [
+                        static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                     ]),
-                    'Activate'
+                'Activate'
             );
         }
     }
@@ -202,4 +200,5 @@ class CmsBlockTable extends AbstractTable
 
         return '<span class="label label-danger">Inactive</span>';
     }
+
 }

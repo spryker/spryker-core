@@ -1,14 +1,18 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
 class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
 {
+
     /**
      * @var \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
      */
@@ -25,7 +29,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return CmsBlockTransfer|null
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
     public function findCmsBlockId($idCmsBlock)
     {
@@ -46,7 +50,6 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      * @param int $idCmsBlock
      *
      * @return void
-     *
      */
     public function deactivateById($idCmsBlock)
     {
@@ -54,9 +57,9 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -64,9 +67,9 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -86,7 +89,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function findGlossaryPlaceholders($idCmsBlock)
     {
@@ -94,12 +97,13 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     }
 
     /**
-     * @param CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
     {
         return $this->cmsBlockFacade->saveGlossary($cmsBlockGlossaryTransfer);
     }
+
 }

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
-
 
 use Spryker\Zed\CmsBlockGui\Communication\Form\ArrayObjectTransformerTrait;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
@@ -17,6 +20,7 @@ use Symfony\Component\Validator\Constraint;
 
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
+
     const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
@@ -29,14 +33,15 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     use ArrayObjectTransformerTrait;
 
     /**
-     * @var CmsBlockGuiToCmsBlockInterface
+     * @var \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
      */
     protected $cmsBlockFacade;
 
     /**
-     * @param CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
      */
-    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade) {
+    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade)
+    {
         $this->cmsBlockFacade = $cmsBlockFacade;
     }
 

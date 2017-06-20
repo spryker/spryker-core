@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
@@ -9,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsBlockProductAbstractType extends AbstractType
 {
+
     const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
@@ -44,7 +50,7 @@ class CmsBlockProductAbstractType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -60,4 +66,5 @@ class CmsBlockProductAbstractType extends AbstractType
 
         return $this;
     }
+
 }

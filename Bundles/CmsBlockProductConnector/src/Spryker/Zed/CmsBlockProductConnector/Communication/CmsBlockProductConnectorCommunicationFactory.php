@@ -1,23 +1,26 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockProductConnector\Communication;
 
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider\CmsBlockProductDataProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\LocaleFacadeInterface;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 
 /**
- * @method CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorConfig getConfig()
  */
 class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return CmsBlockProductAbstractType
+     * @return \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType
      */
     public function createCmsBlockProductAbstractType()
     {
@@ -25,7 +28,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return CmsBlockProductDataProvider
+     * @return \Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider\CmsBlockProductDataProvider
      */
     public function createCmsBlockProductDataProvider()
     {
@@ -37,7 +40,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return ProductAbstractQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\ProductAbstractQueryContainerInterface
      */
     protected function getProductAbstractQueryContainer()
     {
@@ -45,7 +48,7 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return LocaleFacadeInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\LocaleFacadeInterface
      */
     protected function getLocaleFacade()
     {

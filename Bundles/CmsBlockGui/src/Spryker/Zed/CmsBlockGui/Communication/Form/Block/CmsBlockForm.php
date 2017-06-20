@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Block;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use DateTime;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
-use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -40,18 +38,18 @@ class CmsBlockForm extends AbstractType
     const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
 
     /**
-     * @var CmsBlockGuiToCmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockFormPluginInterface[]
+     * @var \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[]
      */
     protected $formPlugins;
 
     /**
-     * @param CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockFormPluginInterface[] $formPlugins
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[] $formPlugins
      */
     public function __construct(
         CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -114,7 +112,7 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -126,7 +124,7 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -138,12 +136,11 @@ class CmsBlockForm extends AbstractType
             'choices' => $choices[static::OPTION_TEMPLATE_CHOICES],
         ]);
 
-
         return $this;
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -158,7 +155,7 @@ class CmsBlockForm extends AbstractType
                 new Callback([
                     'methods' => [
                         function ($name, ExecutionContextInterface $context) {
-                            /** @var CmsBlockTransfer $cmsBlockTransfer */
+                            /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
                             $cmsBlockTransfer = $context->getRoot()->getViewData();
 
                             if ($this->hasExistingBlock($name, $cmsBlockTransfer->getIdCmsBlock())) {
@@ -167,7 +164,7 @@ class CmsBlockForm extends AbstractType
                         },
                     ],
                     'groups' => [static::GROUP_UNIQUE_BLOCK_CHECK],
-                ])
+                ]),
             ],
         ]);
 
@@ -229,7 +226,7 @@ class CmsBlockForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($dateTimeFrom, ExecutionContextInterface $context) {
-                /** @var CmsBlockTransfer $cmsBlockTransfer */
+                /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
                 $cmsBlockTransfer = $context->getRoot()->getData();
                 if (!$dateTimeFrom) {
                     if ($cmsBlockTransfer->getValidTo()) {
@@ -258,7 +255,7 @@ class CmsBlockForm extends AbstractType
         return new Callback([
             'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
 
-                /** @var CmsBlockTransfer $cmsBlockTransfer */
+                /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
                 $cmsBlockTransfer = $context->getRoot()->getData();
 
                 if (!$dateTimeTo) {
@@ -284,10 +281,9 @@ class CmsBlockForm extends AbstractType
         return new CallbackTransformer(
             function ($value) {
                 if ($value !== null) {
-                    return new \DateTime($value);
+                    return new DateTime($value);
                 }
             },
-
             function ($value) {
                 return $value;
             }
@@ -313,7 +309,7 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */

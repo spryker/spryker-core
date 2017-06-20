@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
-
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Symfony\Component\Form\AbstractType;
@@ -13,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 {
+
     const FIELD_FK_LOCALE = 'fkLocale';
     const FIELD_TRANSLATION = 'translation';
     const FIELD_LOCALE_NAME = 'localeName';

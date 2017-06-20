@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Tabs;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
@@ -21,7 +20,7 @@ class CmsBlockGlossaryTabs extends AbstractTabs
     protected $glossaryTransfer;
 
     /**
-     * @param CmsBlockGlossaryTransfer $glossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $glossaryTransfer
      */
     public function __construct(CmsBlockGlossaryTransfer $glossaryTransfer)
     {

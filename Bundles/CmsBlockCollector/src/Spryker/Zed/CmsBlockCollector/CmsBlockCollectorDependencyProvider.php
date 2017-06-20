@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockCollector;
 
 use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorBridge;
-use Spryker\Zed\CmsBlockCollector\Dependency\Service\CmsBlockCollectorToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

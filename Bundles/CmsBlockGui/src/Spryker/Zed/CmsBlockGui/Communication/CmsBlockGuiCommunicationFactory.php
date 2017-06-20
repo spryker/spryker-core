@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockGui\Communication;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
@@ -11,15 +16,16 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleInterface;
-use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
+ */
 class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
-     * @return CmsBlockFormDataProvider
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider
      */
     public function createCmsBlockFormDataProvider()
     {
@@ -31,7 +37,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockGuiToCmsBlockQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
      */
     public function getCmsBlockQueryContainer()
     {
@@ -39,7 +45,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockGuiToCmsBlockInterface
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
      */
     public function getCmsBlockFacade()
     {
@@ -47,7 +53,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockGuiToLocaleInterface
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleInterface
      */
     public function getLocaleFacade()
     {
@@ -63,7 +69,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param CmsBlockFormDataProvider $cmsBlockFormDataProvider
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
      * @param int|null $idCmsBlock
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -94,9 +100,9 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param CmsBlockGlossaryTransfer $glossaryTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $glossaryTransfer
      *
-     * @return CmsBlockGlossaryTabs
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs
      */
     public function createCmsBlockPlaceholderTabs(CmsBlockGlossaryTransfer $glossaryTransfer)
     {
@@ -104,7 +110,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockGlossaryFormDataProvider
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider
      */
     public function createCmsBlockGlossaryFormDataProvider()
     {
@@ -114,7 +120,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
      * @param $idCmsBlock
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -144,7 +150,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockGlossaryPlaceholderForm
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm
      */
     protected function createCmsBlockGlossaryPlaceholderFormType()
     {
@@ -152,4 +158,5 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsBlockFacade()
         );
     }
+
 }

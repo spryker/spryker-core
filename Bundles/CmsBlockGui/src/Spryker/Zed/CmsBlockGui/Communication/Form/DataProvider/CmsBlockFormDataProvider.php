@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
@@ -14,12 +17,12 @@ class CmsBlockFormDataProvider
 {
 
     /**
-     * @var CmsBlockGuiToCmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockGuiToCmsBlockInterface
+     * @var \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
      */
     protected $cmsBlockFacade;
 
@@ -29,9 +32,9 @@ class CmsBlockFormDataProvider
     protected $localFacade;
 
     /**
-     * @param CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
-     * @param CmsBlockGuiToLocaleInterface $localFacade
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleInterface $localFacade
      */
     public function __construct(
         CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -57,7 +60,7 @@ class CmsBlockFormDataProvider
     /**
      * @param int|null $idCmsBlock
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function getData($idCmsBlock = null)
     {
@@ -88,4 +91,5 @@ class CmsBlockFormDataProvider
 
         return $templateList;
     }
+
 }

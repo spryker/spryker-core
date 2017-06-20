@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
@@ -9,15 +14,16 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInterface
 {
+
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CmsBlockProductConnectorQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
      */
     protected $cmsBlockProductConnectorQueryContainer;
 
     /**
-     * @param CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
+     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer
      */
     public function __construct(CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainer)
     {
@@ -25,7 +31,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -37,7 +43,9 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     protected function updateCmsBlockProductAbstractRelationsTransaction(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -46,7 +54,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -62,7 +70,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */

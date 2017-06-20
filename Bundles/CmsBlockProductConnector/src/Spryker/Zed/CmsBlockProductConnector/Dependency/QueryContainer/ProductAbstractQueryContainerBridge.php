@@ -1,19 +1,22 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+namespace Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer;
 
 class ProductAbstractQueryContainerBridge implements ProductAbstractQueryContainerInterface
 {
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productAbstractQueryContainer;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct($productQueryContainer)
     {

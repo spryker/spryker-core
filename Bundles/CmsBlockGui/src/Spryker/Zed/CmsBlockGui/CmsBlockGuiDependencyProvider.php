@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui;
-
 
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryFormPlugin;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
@@ -13,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
     const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
 
@@ -37,9 +41,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCmsBlockQueryContainer(Container $container)
     {
@@ -51,9 +55,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCmsBlockFacade(Container $container)
     {
@@ -65,9 +69,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addLocaleFacade(Container $container)
     {
@@ -79,9 +83,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCmsBlockFormPlugins(Container $container)
     {
@@ -103,4 +107,5 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
             new CmsBlockCategoryFormPlugin()
         ];
     }
+
 }

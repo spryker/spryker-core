@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -19,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateBlockController extends AbstractController
 {
+
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
@@ -63,9 +67,9 @@ class CreateBlockController extends AbstractController
     }
 
     /**
-     * @param FormInterface $cmsBlockForm
+     * @param \Symfony\Component\Form\FormInterface $cmsBlockForm
      *
-     * @return CmsBlockTransfer|null
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
     protected function createBlock(FormInterface $cmsBlockForm)
     {
@@ -89,7 +93,7 @@ class CreateBlockController extends AbstractController
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return string
      */
@@ -101,4 +105,5 @@ class CreateBlockController extends AbstractController
         )
             ->build();
     }
+
 }
