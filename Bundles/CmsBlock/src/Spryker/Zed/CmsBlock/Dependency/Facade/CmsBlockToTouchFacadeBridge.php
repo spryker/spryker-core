@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
-use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\Touch\Business\TouchFacadeInterface;
 
 class CmsBlockToTouchFacadeBridge implements CmsBlockToTouchFacadeInterface

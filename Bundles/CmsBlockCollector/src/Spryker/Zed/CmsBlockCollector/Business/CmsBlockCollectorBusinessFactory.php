@@ -24,14 +24,14 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createStorageCmsBlockCollector()
     {
-        $cmsVersionPageCollector = new CmsBlockCollector(
+        $cmsBlockCollector = new CmsBlockCollector(
             $this->getUtilDataReaderService()
         );
 
-        $cmsVersionPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
-        $cmsVersionPageCollector->setQueryBuilder($this->createCmsBlockCollectorStorageQuery());
+        $cmsBlockCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $cmsBlockCollector->setQueryBuilder($this->createCmsBlockCollectorStorageQuery());
 
-        return $cmsVersionPageCollector;
+        return $cmsBlockCollector;
     }
 
     /**
