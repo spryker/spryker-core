@@ -5,18 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttributeGui\Business;
+namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
-interface ProductAttributeGuiFacadeInterface
+interface ProductAttributeManagerInterface
 {
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      *
      * @return array
      */
     public function getAttributes($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAbstractAttributeValues($idProductAbstract);
 
 }

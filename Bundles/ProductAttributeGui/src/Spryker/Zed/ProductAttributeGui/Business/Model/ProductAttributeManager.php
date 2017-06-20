@@ -7,19 +7,13 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
-class ProductAttributeManager
+class ProductAttributeManager implements ProductAttributeManagerInterface
 {
+
+    const DEFAULT_LOCALE = 'default';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -27,20 +21,20 @@ class ProductAttributeManager
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoaderInterface
      */
-    protected $productManagementQueryContainer;
+    protected $attributeLoader;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoaderInterface $attributeFetcher
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
-        ProductManagementQueryContainerInterface $productManagementQueryContainer
+        AttributeLoaderInterface $attributeFetcher
     ) {
         $this->productQueryContainer = $productQueryContainer;
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->attributeLoader = $attributeFetcher;
     }
 
     /**
@@ -51,76 +45,10 @@ class ProductAttributeManager
     public function getAttributes($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
+        $query = $this->attributeLoader->queryProductAttributeValues($values);
+        $results = $this->attributeLoader->load($query);
 
-        $valuesQuery = $this->queryProductAttributeValues($values);
-        $valuesQuery->setPrimaryTableName(SpyProductManagementAttributeValueTableMap::TABLE_NAME);
-
-        $values = $valuesQuery
-            //->setFormatter(new ArrayFormatter())
-            ->find()
-            ->toArray();
-
-        print_r($values);
-        die;
-
-        return $values;
-    }
-
-    /**
-     * @api
-     *
-     * @param array $productAttributes
-     * @param bool $isSuper
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryProductAttributeValues(array $productAttributes = [], $isSuper = false)
-    {
-        /*        $query = $this->productManagementQueryContainer
-                    ->queryProductManagementAttributeValueTranslation()
-                        ->joinSpyProductManagementAttributeValue()
-                        ->useSpyProductManagementAttributeValueQuery(null, Criteria::RIGHT_JOIN)
-                            ->joinSpyProductManagementAttribute()
-                            ->useSpyProductManagementAttributeQuery()
-                                ->joinSpyProductAttributeKey()
-                                ->useSpyProductAttributeKeyQuery()
-                                    ->filterByIsSuper($isSuper)
-                                ->endUse()
-                            ->endUse()
-                        ->endUse()
-                    ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
-                    ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
-                    ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
-                    ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
-                    ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
-                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
-                    ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
-                    ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY);
-
-                $query = $this->createCriteria($query, $productAttributes);*/
-
-        $query = $this->productManagementQueryContainer
-            ->queryProductAttributeKey()
-                ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
-                    ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
-                        ->useSpyProductManagementAttributeValueTranslationQuery(null, Criteria::LEFT_JOIN)
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->select([
-                SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
-                SpyProductAttributeKeyTableMap::COL_KEY,
-                SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
-                SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                SpyProductManagementAttributeValueTableMap::COL_VALUE,
-                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-                SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
-            ]);
-
-        $query = $this->createCriteria($query, $productAttributes);
-
-        return $query;
+        return $results;
     }
 
     /**
@@ -128,7 +56,7 @@ class ProductAttributeManager
      *
      * @return array
      */
-    protected function getProductAbstractAttributeValues($idProductAbstract)
+    public function getProductAbstractAttributeValues($idProductAbstract)
     {
         $productAbstractEntity = $this->getProductAbstractEntity($idProductAbstract);
 
@@ -139,77 +67,6 @@ class ProductAttributeManager
         }
 
         return $this->generateAttributes($productAbstractEntity, $localizedAttributes);
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param array $productAttributes
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
-    protected function createCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
-    {
-        $keys = $this->extractKeys($productAttributes);
-        $criteria = new Criteria();
-
-        $productAttributeKeyCriterion = $criteria->getNewCriterion(
-            SpyProductAttributeKeyTableMap::COL_KEY,
-            $keys,
-            Criteria::IN
-        );
-
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion */
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultLocalizedCriterion */
-        $defaultCriterion = null;
-        $defaultLocalizedCriterion = null;
-
-        print_r($productAttributes);
-
-        $criterionNullLocale = $criteria->getNewCriterion(
-            SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-            null,
-            Criteria::ISNULL
-        );
-
-        foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $criterionIdLocale = $criteria->getNewCriterion(
-                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-                $idLocale
-            );
-
-            foreach ($localizedAttributes as $key => $value) {
-                if ($idLocale === 'default') {
-                    $criterionValue = $criteria->getNewCriterion(
-                        SpyProductManagementAttributeValueTableMap::COL_VALUE,
-                        '%' . mb_strtolower($value) . '%',
-                        Criteria::LIKE
-                    );
-
-                    $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
-                    //$defaultCriterion->addAnd($criterionNullLocale);
-                } else {
-                    $criterionTranslation = $criteria->getNewCriterion(
-                        SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
-                        '%' . mb_strtolower($value) . '%',
-                        Criteria::LIKE
-                    );
-
-                    //$criterionTranslation->addAnd($criterionIdLocale);
-                    $defaultLocalizedCriterion = $this->appendOrCriterion($criterionTranslation, $defaultLocalizedCriterion);
-                }
-            }
-        }
-
-        $defaultCriterion->addOr($defaultLocalizedCriterion);
-        $productAttributeKeyCriterion->addAnd($defaultCriterion);
-
-        $criteria->addAnd($productAttributeKeyCriterion);
-        $criteria->setIgnoreCase(true);
-
-        $query->setIgnoreCase(true);
-        $query->mergeWith($criteria, Criteria::LOGICAL_AND);
-
-        return $query;
     }
 
     /**
@@ -246,56 +103,9 @@ class ProductAttributeManager
     protected function generateAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
     {
         $attributes = $this->decodeJsonAttributes($productAttributeEntity->getAttributes());
-        $attributes = ['default' => $attributes] + $localizedAttributes;
+        $attributes = [static::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
 
         return $attributes;
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function extractKeys(array $productAttributes)
-    {
-        $keys = [];
-        foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $keys = array_merge($keys, array_keys($localizedAttributes));
-        }
-
-        return array_unique($keys);
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function extractValues($productAttributes)
-    {
-        $values = [];
-        foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $values = array_merge($values, array_values($localizedAttributes));
-        }
-
-        return array_unique($values);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $criterionToAppend
-     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $defaultCriterion
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
-     */
-    protected function appendOrCriterion($criterionToAppend, AbstractCriterion $defaultCriterion = null)
-    {
-        if ($defaultCriterion === null) {
-            $defaultCriterion = $criterionToAppend;
-        } else {
-            $defaultCriterion->addOr($criterionToAppend);
-        }
-
-        return $defaultCriterion;
     }
 
 }

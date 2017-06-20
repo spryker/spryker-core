@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductAttributeGui\Business\Model\ProductAttributeManager;
 use Spryker\Zed\ProductAttributeGui\Communication\Table\ProductAbstractTable;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
 
@@ -26,17 +25,6 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
         return new ProductAbstractTable(
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAttributeGui\Business\Model\ProductAttributeManager
-     */
-    public function createProductAttributeManager()
-    {
-        return new ProductAttributeManager(
-            $this->getProductQueryContainer(),
-            $this->getProductManagementQueryContainer()
         );
     }
 

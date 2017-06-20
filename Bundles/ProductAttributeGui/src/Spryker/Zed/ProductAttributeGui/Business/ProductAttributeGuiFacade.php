@@ -19,49 +19,15 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     /**
      * @api
      *
-     * @deprecated Use emptyCache() instead
+     * @param int $idProductAbstract
      *
      * @return array
      */
-    public function deleteAllFiles()
+    public function getAttributes($idProductAbstract)
     {
-        return $this->getFactory()->createCacheDelete()->deleteAllFiles();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function emptyCache()
-    {
-        return $this->getFactory()->createCacheClearer()->clearCache();
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Use emptyAutoLoaderCache() instead
-     *
-     * @return array
-     */
-    public function deleteAllAutoloaderFiles()
-    {
-        return $this->getFactory()->createAutoloaderCacheDelete()->deleteAllFiles();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function emptyAutoLoaderCache()
-    {
-        return $this->getFactory()->createCacheClearer()->clearAutoLoaderCache();
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getAttributes($idProductAbstract);
     }
 
 }
