@@ -971,4 +971,16 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         $this->getFactory()->createSuperAttributeManager()->saveSuperAttributeMetadata($quoteTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createSuperAttributeManager()->hydrateSuperAttributeMetadata($orderTransfer);
+    }
+
 }
