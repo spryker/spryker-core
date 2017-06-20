@@ -2,10 +2,13 @@
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
 
 <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
-    <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">IMAGE HERE</td>
-    <td>{{ orderItem.Sku }}</td>
-    <td>{{ orderItem.name }}</td>
-    <td>super-attribute:value</td>
+    <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
+    <td><img class="product-image" src="{{ orderItem.metadata.image }}"/></td>
+    <td><div>{{ orderItem.name }}</div><div class="sku">{{ 'Sku' | trans }}: {{ orderItem.Sku }}</div>
+        {% for attributeName, attributeValue in orderItem.metadata.superAttributes %}
+            <div>{{ attributeName }}: {{ attributeValue }}</div>
+        {% endfor %}
+    </td>
     <td>
         <div>
             <span {% if (orderItem.unitDiscountAmountFullAggregation | default(0) > 0) %} class="discounted" {% endif %}>

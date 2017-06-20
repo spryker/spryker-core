@@ -1,10 +1,9 @@
 
 {% for productOption in orderItem.productOptions %}
     <tr class="addition-row">
-        <td>&nbsp; + <span class="label">{{ 'Option' | trans }}</span></td>
-        <td>{{ productOption.sku }}</td>
-        <td>{{ productOption.value }}</td>
         <td></td>
+        <td>+ <span class="label">{{ 'Option' | trans }}</span></td>
+        <td><div> {{ productOption.value }}</div> <div class="sku">{{ 'Sku' | trans }}: {{ productOption.sku }}</div></td>
         <td>
 
             <div>
