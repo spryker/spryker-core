@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
@@ -29,14 +34,12 @@ abstract class AbstractCmsBlockCategoryConnectorCollector extends AbstractPropel
             Criteria::INNER_JOIN
         );
 
-
         $this->touchQuery->withColumn(
             'GROUP_CONCAT(' . SpyCmsBlockTableMap::COL_NAME . ')',
-            static::COL_CMS_BLOCK_NAMES)
-        ;
+            static::COL_CMS_BLOCK_NAMES
+        );
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);
     }
-
 
 }

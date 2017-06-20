@@ -1,22 +1,25 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacade getFacade()
  */
 class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormPluginInterface
 {
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
      */

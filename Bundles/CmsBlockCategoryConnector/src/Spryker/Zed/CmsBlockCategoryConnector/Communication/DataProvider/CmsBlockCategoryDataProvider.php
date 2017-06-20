@@ -1,12 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
-
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Orm\Zed\Category\Persistence\SpyCategory;
-use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
-use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface;
@@ -16,24 +17,24 @@ class CmsBlockCategoryDataProvider
 {
 
     /**
-     * @var CmsBlockCategoryConnectorQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
     protected $cmsBlockCategoryConnectorQueryContainer;
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @var LocaleFacadeInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeInterface $localeFacade
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer,
@@ -57,9 +58,9 @@ class CmsBlockCategoryDataProvider
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function getData(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -76,6 +77,7 @@ class CmsBlockCategoryDataProvider
 
     /**
      * @param int $idCmsBlock
+     *
      * @return array
      */
     protected function getAssignedCategoryIds($idCmsBlock)
@@ -98,7 +100,7 @@ class CmsBlockCategoryDataProvider
 
         $categoryList = [];
 
-        /** @var SpyCategory $spyCategory */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $spyCategory */
         foreach ($categoryCollection as $spyCategory) {
             $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categoryList[$spyCategory->getIdCategory()] = $categoryName;
@@ -106,4 +108,5 @@ class CmsBlockCategoryDataProvider
 
         return $categoryList;
     }
+
 }

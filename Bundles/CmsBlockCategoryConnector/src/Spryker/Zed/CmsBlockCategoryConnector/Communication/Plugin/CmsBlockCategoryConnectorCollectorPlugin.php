@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
-
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -14,13 +17,14 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  */
-class CmsBlockCategoryCollectorPlugin extends AbstractCollectorPlugin
+class CmsBlockCategoryConnectorCollectorPlugin extends AbstractCollectorPlugin
 {
+
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
@@ -31,14 +35,24 @@ class CmsBlockCategoryCollectorPlugin extends AbstractCollectorPlugin
      */
     public function run(
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $localeTransfer,
+        LocaleTransfer $locale,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
+
         $this->getFacade()
-            ->runStorageCmsBlockCollector($baseQuery, $localeTransfer, $result, $dataReader, $dataWriter, $touchUpdater, $output);
+            ->runStorageCmsBlockCategoryCollector(
+                $baseQuery,
+                $locale,
+                $result,
+                $dataReader,
+                $dataWriter,
+                $touchUpdater,
+                $output
+            );
     }
+
 }

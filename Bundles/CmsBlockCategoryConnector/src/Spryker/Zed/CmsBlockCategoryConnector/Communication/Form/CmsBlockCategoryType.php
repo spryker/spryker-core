@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
@@ -10,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsBlockCategoryType extends AbstractType
 {
+
     const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     const FIELD_CATEGORIES = 'categories';
 
@@ -45,7 +50,7 @@ class CmsBlockCategoryType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this

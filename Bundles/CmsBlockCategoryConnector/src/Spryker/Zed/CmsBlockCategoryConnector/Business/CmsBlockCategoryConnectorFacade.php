@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -19,12 +22,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlockCategoryConnectorFacadeInterface
 {
+
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -40,17 +44,17 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @api
      *
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $localeTransfer
-     * @param BatchResultInterface $result
-     * @param ReaderInterface $dataReader
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param OutputInterface $output
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
-    public function runStorageCmsBlockCollector(
+    public function runStorageCmsBlockCategoryCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
@@ -60,7 +64,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
         OutputInterface $output
     ) {
         $collector = $this->getFactory()
-            ->createStorageCmsBlockCategoryCollector();
+            ->createStorageCmsBlockCategoryConnectorCollector();
 
         $this->getFactory()->getCollectorFacade()->runCollector(
             $collector,
@@ -73,4 +77,5 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
             $output
         );
     }
+
 }

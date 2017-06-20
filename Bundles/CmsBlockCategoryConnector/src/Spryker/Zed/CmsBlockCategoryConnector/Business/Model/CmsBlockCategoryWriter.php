@@ -1,21 +1,26 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
-use Spryker\Shared\CmsBlock\CmsBlockCategoryConnectorConstants;
-use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
+use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface;
+use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 {
+
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CmsBlockCategoryConnectorQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -25,8 +30,8 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     protected $touchFacade;
 
     /**
-     * @param CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
-     * @param TouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface $touchFacade
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $queryContainer,
@@ -37,7 +42,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -48,6 +53,11 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         });
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
+     */
     protected function updateCmsBlockCategoryRelationsTransaction(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->deleteCmsBlockConnectorRelations($cmsBlockTransfer);
@@ -55,7 +65,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -70,14 +80,14 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
             $relation->delete();
 
             $this->touchFacade->touchActive(
-            CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $relation->getFkCategory()
             );
         }
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */

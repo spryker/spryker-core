@@ -1,13 +1,17 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
 class TouchFacadeBridge implements TouchFacadeInterface
 {
 
     /**
-     * @var TouchFacadeInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
      */
     protected $touchFacade;
 

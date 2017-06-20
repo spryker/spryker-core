@@ -1,25 +1,26 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
-use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriterInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
 /**
- * @method CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsBlockCategoryWriterInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriterInterface
      */
     public function createCmsBlockCategoryWrite()
     {
@@ -30,9 +31,9 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryCollector
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector
      */
-    public function createStorageCmsBlockCategoryCollector()
+    public function createStorageCmsBlockCategoryConnectorCollector()
     {
         $cmsBlockCategoryCollector = new CmsBlockCategoryCollector(
             $this->getUtilDataReaderService()
@@ -61,7 +62,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchFacadeInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeInterface
      */
     protected function getTouchFacade()
     {
@@ -77,7 +78,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryConnectorCollector
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector
      */
     protected function createCmsBlockCategoryStorageQueryContainer()
     {

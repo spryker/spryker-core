@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryConnector;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CollectorFacadeBridge;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\LocaleFacadeBridge;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\TouchFacadeBridge;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CategoryQueryContainerBridge;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\TouchQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -23,24 +27,23 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     const SERVICE_DATA_READER = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_DATA_READER';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addTouchFacade($container);
         $container = $this->addCategoryQueryContainer($container);
 
         return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -48,14 +51,15 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
         $container = $this->addCollectorFacade($container);
         $container = $this->addDataReaderService($container);
         $container = $this->addTouchQueryContainer($container);
+        $container = $this->addTouchFacade($container);
 
         return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addLocaleFacade(Container $container)
     {
@@ -67,19 +71,23 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new TouchFacadeBridge($container->getLocator()->touch()->facade());
         };
+
+        return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCategoryQueryContainer(Container $container)
     {
@@ -91,9 +99,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCollectorFacade(Container $container)
     {
@@ -105,9 +113,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addDataReaderService(Container $container)
     {
@@ -119,14 +127,14 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addTouchQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
-            return new TouchQueryContainerBridge($container->getLocator()->touch()->queryContainer());
+            return $container->getLocator()->touch()->queryContainer();
         };
 
         return $container;

@@ -1,10 +1,15 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
 class LocaleFacadeBridge implements LocaleFacadeInterface
 {
+
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -25,4 +30,5 @@ class LocaleFacadeBridge implements LocaleFacadeInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
 }
