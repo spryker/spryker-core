@@ -44,4 +44,12 @@ interface PriceCalculationHelperInterface
      */
     public function getTaxRateFromPrice($price, $taxAmount);
 
+    /**
+     * @param int $netPrice
+     * @param float $taxPercentage
+     *
+     * @return float|int
+     */
+    public function getTaxValueFromNetPrice($netPrice, $taxPercentage);
+
 }

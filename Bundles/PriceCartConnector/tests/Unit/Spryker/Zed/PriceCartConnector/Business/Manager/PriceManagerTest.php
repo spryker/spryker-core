@@ -9,7 +9,9 @@ namespace Unit\Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
@@ -36,13 +38,14 @@ class PriceManagerTest extends PHPUnit_Framework_TestCase
         $priceFacadeStub->addValidityStub('123', true);
 
         $itemCollection = new CartChangeTransfer();
+        $itemCollection->setQuote(new QuoteTransfer());
         $item = new ItemTransfer();
         $item->setSku(123);
         $item->setId(123);
         $itemCollection->addItem($item);
 
         $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
-        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
+        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
 
         $modifiedItemCollection = $priceManager->addGrossPriceToItems($itemCollection);
 
@@ -66,13 +69,14 @@ class PriceManagerTest extends PHPUnit_Framework_TestCase
         $priceFacadeStub->addValidityStub('123', false);
 
         $itemCollection = new CartChangeTransfer();
+        $itemCollection->setQuote(new QuoteTransfer());
         $item = new ItemTransfer();
         $item->setId(123);
         $item->setSku(123);
         $itemCollection->addItem($item);
 
         $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
-        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
+        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
         $priceManager->addGrossPriceToItems($itemCollection);
     }
 

@@ -41,7 +41,7 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
             }
 
             $discountableItems[] = $this->createDiscountableItemTransfer(
-                $itemTransfer->getUnitGrossPrice(),
+                $this->getPrice($itemTransfer, $quoteTransfer->getPriceMode()),
                 $itemTransfer->getQuantity(),
                 $itemTransfer->getCalculatedDiscounts()
             );

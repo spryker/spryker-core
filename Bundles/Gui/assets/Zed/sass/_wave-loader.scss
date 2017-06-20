@@ -1,0 +1,37 @@
+$wave-loader-default-width: 70px;
+$wave-loader-on-button-width: 33px;
+
+.sk-spinner-three-bounce.wave-loader {
+    display: inline-block;
+    width: $wave-loader-default-width;
+    height: round($wave-loader-default-width * .3);
+
+    > .sk-bounce1,
+    > .sk-bounce2,
+    > .sk-bounce3 {
+        display: inline-block;
+        width: 30%;
+        height: 100%;
+        margin-right: 5%;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &--hidden {
+        display: none;
+    }
+
+    &--on-button {
+        margin-right: 5px;
+        width: $wave-loader-on-button-width;
+        height: round($wave-loader-on-button-width * .3);
+
+        > .sk-bounce1,
+        > .sk-bounce2,
+        > .sk-bounce3 {
+            background-color: #fff;
+        }
+    }
+}

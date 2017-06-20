@@ -70,6 +70,11 @@ class TableConfiguration
     protected $rawColumns = [];
 
     /**
+     * @var bool
+     */
+    protected $stateSave = true;
+
+    /**
      * @return array
      */
     public function getRawColumns()
@@ -298,6 +303,24 @@ class TableConfiguration
     protected function isAssoc(array $arr)
     {
         return (array_values($arr) !== $arr);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStateSave()
+    {
+        return $this->stateSave;
+    }
+
+    /**
+     * @param bool $stateSave
+     *
+     * @return void
+     */
+    public function setStateSave($stateSave)
+    {
+        $this->stateSave = $stateSave;
     }
 
 }

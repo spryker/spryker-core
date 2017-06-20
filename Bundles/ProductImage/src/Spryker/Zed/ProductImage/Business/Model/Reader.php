@@ -67,6 +67,24 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param int $idProductImageSet
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
+     */
+    public function findProductImagesSetCollectionById($idProductImageSet)
+    {
+        $productImageSetEntity = $this->productImageContainer
+            ->queryImageSetById($idProductImageSet)
+            ->findOne();
+
+        if (!$productImageSetEntity) {
+            return null;
+        }
+
+        return $this->transferMapper->mapProductImageSet($productImageSetEntity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

@@ -83,6 +83,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
 
             $bundleItemsSaved[$itemTransfer->getBundleItemIdentifier()] = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
         }
+
         return $bundleItemsSaved;
     }
 
@@ -96,6 +97,8 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
         $salesOrderItemBundleEntity = $this->createSalesOrderItemBundleEntity();
         $salesOrderItemBundleEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
+        $salesOrderItemBundleEntity->setNetPrice($itemTransfer->getUnitNetPrice());
+        $salesOrderItemBundleEntity->setPrice($itemTransfer->getUnitPrice());
 
         return $salesOrderItemBundleEntity;
     }

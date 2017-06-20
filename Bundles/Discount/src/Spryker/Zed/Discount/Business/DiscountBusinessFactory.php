@@ -26,6 +26,7 @@ use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
@@ -408,6 +409,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createTimeDecisionRule()
     {
         return new TimeDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrateInterface
+     */
+    public function createDiscountOrderHydrate()
+    {
+        return new DiscountOrderHydrate($this->getQueryContainer());
     }
 
     /**

@@ -1,0 +1,45 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
+    {% block widget_content %}
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+            <div class="col-xs-10">
+                {% if productSetTransfer.isActive %}
+                    <span class="label label-info">{{ 'Active' | trans }}</span>
+                {% else %}
+                    <span class="label label-danger">{{ 'Inactive' | trans }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="m-t">
+            {% for localeTransfer in localeCollection %}
+                {% for localizedData in productSetTransfer.localizedData %}
+                    {% if (localizedData.locale.localeName == localeTransfer.localeName ) %}
+
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first), 'localeName': localeTransfer.localeName} %}
+                            {% block content %}
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'Name' | trans }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.productSetData.name }}</div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'URL' | trans }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.url }}</div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-2"><b>{{ 'Description' }}</b></div>
+                                    <div class="col-xs-10">{{ localizedData.productSetData.description }}</div>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+{% endembed %}

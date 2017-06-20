@@ -10,11 +10,11 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
@@ -26,7 +26,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
-    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
     const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -34,10 +33,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
 
+    const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
+
     /**
      * @deprecated Will be removed in the next major version.
      */
     const FACADE_LOCALE = 'LOCALE_FACADE';
+    const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,9 +51,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addHydrateOrderPlugins($container);
+        $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
 
         return $container;
@@ -66,12 +69,25 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addOmsFacade($container);
         $container = $this->addUserFacade($container);
-        $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addDateTimeFormatter($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addHydrateOrderPlugins(Container $container)
+    {
+        $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
+            return $this->getOrderHydrationPlugins();
+        };
 
         return $container;
     }
@@ -127,20 +143,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesAggregatorFacade(Container $container)
-    {
-        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;
@@ -228,6 +230,28 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCalculationFacade(Container $container)
+    {
+        $container[static::FACADE_CALCULATION] = function (Container $container) {
+            return new SalesToCalculationBridge($container->getLocator()->calculation()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     */
+    protected function getOrderHydrationPlugins()
+    {
+         return [];
     }
 
 }

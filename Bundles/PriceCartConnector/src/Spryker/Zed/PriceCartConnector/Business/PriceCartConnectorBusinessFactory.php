@@ -30,7 +30,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $grossPriceType = $bundleConfig->getGrossPriceType();
         }
 
-        return new PriceManager($this->getPriceFacade(), $grossPriceType);
+        return new PriceManager($this->getPriceFacade(), $grossPriceType, $this->getConfig()->getPriceMode());
     }
 
     /**

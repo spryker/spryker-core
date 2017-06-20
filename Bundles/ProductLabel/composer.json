@@ -1,0 +1,50 @@
+{
+  "name": "spryker/product-label",
+  "description": "ProductLabel bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
+    "spryker/locale": "^3.1.0",
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/touch": "^3.1.0",
+    "spryker/twig": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider you need to install spryker/silex."
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductLabel\\": "tests/SprykerTest/Zed/ProductLabel/_support/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
+}

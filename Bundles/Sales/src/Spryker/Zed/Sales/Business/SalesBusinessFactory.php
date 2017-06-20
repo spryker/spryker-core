@@ -12,6 +12,7 @@ use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
@@ -33,7 +34,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerOrderReader(
             $this->getQueryContainer(),
-            $this->getSalesAggregator(),
             $this->createOrderHydrator()
         );
     }
@@ -66,7 +66,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReader()
     {
-        return new OrderReader($this->getQueryContainer(), $this->getSalesAggregator());
+        return new OrderReader($this->getQueryContainer());
     }
 
     /**
@@ -93,7 +93,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getSalesAggregator()
+            $this->getHydrateOrderPlugins()
         );
     }
 
@@ -116,6 +116,22 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderAddressUpdater()
     {
         return new OrderAddressUpdater($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderExpanderInterface
+     */
+    public function createOrderExpander()
+    {
+        return new OrderExpander($this->getCalculationFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
+     */
+    protected function getCalculationFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CALCULATION);
     }
 
     /**
@@ -143,14 +159,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
-     */
-    public function getSalesAggregator()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
-    }
-
-    /**
      * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
     public function getLocaleQueryContainer()
@@ -164,6 +172,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getStore()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     */
+    public function getHydrateOrderPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
     }
 
 }

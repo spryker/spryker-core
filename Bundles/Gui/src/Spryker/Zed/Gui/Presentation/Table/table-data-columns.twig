@@ -1,10 +1,9 @@
 data-columns='[
 {% for id, value in config.header %}
-    {% if id in config.sortable %}
-        { "orderable": true }
-    {% else %}
-        null
-    {%  endif %}
+    {
+        "className": "column-{{ id }}"
+        {% if id in config.sortable %}, "orderable": true{%  endif %}
+    }
     {% if not loop.last %},{% endif %}
 {% endfor %}]'
 data-column-defs='[{"targets": "_all", "orderable": false }]'

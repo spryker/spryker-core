@@ -1,0 +1,24 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Image Sets' } %}
+    {% block widget_content %}
+
+        {% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+            {% block title %}
+                {{ 'Default' | trans }}
+            {% endblock %}
+            {% block content %}
+
+                {% include '@ProductSetGui/View/_partials/localized-images.twig' with {localeTransfer: null} %}
+            {% endblock %}
+        {% endembed %}
+
+        {% for localeTransfer in localeCollection %}
+            {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
+                {% block content %}
+
+                    {% include '@ProductSetGui/View/_partials/localized-images.twig' %}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+
+    {% endblock %}
+{% endembed %}

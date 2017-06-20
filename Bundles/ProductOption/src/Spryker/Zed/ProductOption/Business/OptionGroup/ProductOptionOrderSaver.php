@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -59,6 +58,11 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     ) {
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
         $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getUnitGrossPrice());
+        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getUnitNetPrice());
+        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getUnitTaxAmount());
+        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getUnitDiscountAmountAggregation());
+        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getUnitPrice());
+
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }
 
@@ -83,29 +87,24 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      */
     protected function saveOptions(ItemTransfer $itemTransfer)
     {
-        $expandedProductOptions = new ArrayObject();
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
 
-            $expandedProductOptionTransfer = $this->cloneOption($productOptionTransfer);
-
-            $this->translateOption($expandedProductOptionTransfer);
+            $this->translateOption($productOptionTransfer);
 
             $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
 
             $this->hydrateSalesOrderItemOptionEntity(
                 $salesOrderItemOptionEntity,
-                $expandedProductOptionTransfer,
+                $productOptionTransfer,
                 $itemTransfer
             );
 
             $salesOrderItemOptionEntity->save();
 
-            $expandedProductOptionTransfer->setIdSalesOrderItemOption(
+            $productOptionTransfer->setIdSalesOrderItemOption(
                 $salesOrderItemOptionEntity->getIdSalesOrderItemOption()
             );
-            $expandedProductOptions->append($expandedProductOptionTransfer);
         }
-        $itemTransfer->setProductOptions($expandedProductOptions);
     }
 
     /**

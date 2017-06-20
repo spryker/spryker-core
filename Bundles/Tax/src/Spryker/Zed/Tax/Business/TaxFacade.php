@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -256,57 +256,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 
     /**
      * Specification:
-     *  - Loops over calculable items and sum all item taxes, including expenses
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function calculateTaxTotals(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createTaxCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specification:
-     *  - Calculate tax amount for each item
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculateTaxItemAmount(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createTaxItemAmountCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specification:
-     *  - Calculate tax amount for each expense item
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function recalculateExpenseTaxAmount(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()
-            ->createExpenseTaxCalculator()
-            ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * Specification:
      *  - Calculate tax amount from given price and rate
      *  - Value is not rounded
      *
@@ -365,14 +314,32 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @param int $grossPrice
      * @param float $taxRate
+     * @param bool $round
      *
-     * @return float
+     * @return int
      */
-    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = false)
     {
         return $this->getFactory()
             ->createAccruedTaxCalculator()
-            ->getTaxValueFromPrice($grossPrice, $taxRate);
+            ->getTaxValueFromPrice($grossPrice, $taxRate, $round);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $netPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromNetPrice($netPrice, $taxRate)
+    {
+        return $this->getFactory()
+            ->createAccruedTaxCalculator()
+            ->getTaxValueFromNetPrice($netPrice, $taxRate);
     }
 
     /**
@@ -388,6 +355,55 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
          $this->getFactory()
             ->createAccruedTaxCalculator()
             ->resetRoundingErrorDelta();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxAmountCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxAmountAfterCancellationCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createTaxRateAverageAggregationCalculator()
+            ->recalculate($calculableObjectTransfer);
     }
 
 }

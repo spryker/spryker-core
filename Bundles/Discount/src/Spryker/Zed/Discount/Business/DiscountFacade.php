@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -623,6 +624,22 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         $this->getFactory()
             ->createDiscountOrderSaver()
             ->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createDiscountOrderHydrate()
+            ->hydrate($orderTransfer);
     }
 
 }
