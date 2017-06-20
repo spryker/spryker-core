@@ -14,6 +14,7 @@ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValue
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -101,11 +102,8 @@ class ProductAttributeManager
                 ->endUse()
             ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
             ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY, 'fk_product_attribute_key')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE, 'fk_product_management_attribute')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'fk_product_management_attribute_value')
             ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
@@ -135,9 +133,9 @@ class ProductAttributeManager
         );
 
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion */
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $localizedCriterion */
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultLocalizedCriterion */
         $defaultCriterion = null;
-        $localizedCriterion = null;
+        $defaultLocalizedCriterion = null;
 
         foreach ($productAttributes as $idLocale => $localizedAttributes) {
             foreach ($localizedAttributes as $key => $value) {
@@ -148,12 +146,7 @@ class ProductAttributeManager
                         Criteria::LIKE
                     );
 
-                    if ($defaultCriterion === null) {
-                        $defaultCriterion = $criterionValue;
-                    }
-                    else {
-                        $defaultCriterion->addOr($criterionValue);
-                    }
+                    $defaultCriterion = $this->appendOrCriterion($criterionValue, $defaultCriterion);
                 }
                 else {
                     $criterionTranslation = $criteria->getNewCriterion(
@@ -169,17 +162,12 @@ class ProductAttributeManager
 
                     $criterionTranslation->addAnd($criterionLocale);
 
-                    if ($localizedCriterion === null) {
-                        $localizedCriterion = $criterionTranslation;
-                    }
-                    else {
-                        $localizedCriterion->addOr($criterionTranslation);
-                    }
+                    $defaultLocalizedCriterion = $this->appendOrCriterion($criterionTranslation, $defaultLocalizedCriterion);
                 }
             }
         }
 
-        $defaultCriterion->addOr($localizedCriterion);
+        $defaultCriterion->addOr($defaultLocalizedCriterion);
         $productAttributeKeyCriterion->addAnd($defaultCriterion);
 
         $criteria->addAnd($productAttributeKeyCriterion);
@@ -258,6 +246,24 @@ class ProductAttributeManager
         }
 
         return array_unique($values);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $criterionToAppend
+     * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $defaultCriterion
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     */
+    protected function appendOrCriterion($criterionToAppend, AbstractCriterion $defaultCriterion = null)
+    {
+        if ($defaultCriterion === null) {
+            $defaultCriterion = $criterionToAppend;
+        }
+        else {
+            $defaultCriterion->addOr($criterionToAppend);
+        }
+
+        return $defaultCriterion;
     }
 
 }
