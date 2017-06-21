@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/cart
+composer require spryker/cart-variant
 ```
 
 ## Documentation

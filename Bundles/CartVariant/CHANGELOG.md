@@ -1,3 +1,3 @@
-# Cart Changelog
+# CartVariant Changelog
 
-[Cart Changelog](https://github.com/spryker/Cart/releases)
+[CartVariant Changelog](https://github.com/spryker/CartVariant/releases)
