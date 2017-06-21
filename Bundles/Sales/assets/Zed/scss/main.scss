@@ -126,3 +126,7 @@ span.discounted {
   text-decoration: line-through;
   color: #AAAAAA;
 }
+
+tbody.product-bundle {
+  border-bottom: 2px solid red;
+}
