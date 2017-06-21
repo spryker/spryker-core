@@ -95,7 +95,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
-        foreach ($cmsBlockTransfer->getCategories() as $idCategory) {
+        foreach ($cmsBlockTransfer->getIdCategories() as $idCategory) {
             $spyCmsBlockConnector = new SpyCmsBlockCategoryConnector();
             $spyCmsBlockConnector->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
             $spyCmsBlockConnector->setFkCategory($idCategory);
