@@ -88,11 +88,13 @@ class SuperAttributeManager
      */
     protected function determineSuperAttributes(ItemTransfer $itemTransfer)
     {
-        return [
-            'attribute1' => 'hey!',
-            'attribute2' => 'hi!',
-            'attribute3' => 'ho!',
-        ];
+        $concreteAttributes = $itemTransfer->getConcreteAttributes();
+        $attributeKeys = array_keys($concreteAttributes);
+
+        $matchingAttributes = $this->productQueryContainer->queryMatchingSuperAttributes($attributeKeys)->find();
+        $superAttributes = $this->filterMatchingSuperAttributes($concreteAttributes, iterator_to_array($matchingAttributes));
+
+        return $superAttributes;
     }
 
     /**
@@ -166,6 +168,31 @@ class SuperAttributeManager
         $metadataTransfer->setImage($metadata->getImage());
 
         return $metadataTransfer;
+    }
+
+    /**
+     * @param array $concreteAttributes
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[] $matchingAttributes
+     *
+     * @return array
+     */
+    protected function filterMatchingSuperAttributes(array $concreteAttributes, array $matchingAttributes)
+    {
+        if (count($matchingAttributes) === 0) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($concreteAttributes as $key => $value) {
+            foreach ($matchingAttributes as $matchingAttribute) {
+                if ($matchingAttribute->getKey() === $key) {
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 
 }

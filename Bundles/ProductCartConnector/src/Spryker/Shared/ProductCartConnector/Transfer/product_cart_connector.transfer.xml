@@ -11,6 +11,7 @@
         <property name="taxRate" type="float" />
         <property name="sku" type="string" />
         <property name="productConcrete" type="ProductConcrete" />
+        <property name="concreteAttributes" type="array" singular="concreteAttribute" />
     </transfer>
 
     <transfer name="ProductConcrete">

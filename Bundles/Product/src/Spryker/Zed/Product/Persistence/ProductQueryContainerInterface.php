@@ -127,4 +127,13 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductMetadata($fkSalesOrderItem);
 
+    /**
+     * @api
+     *
+     * @param array $attributeKeys
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryMatchingSuperAttributes(array $attributeKeys);
+
 }
