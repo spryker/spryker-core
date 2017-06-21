@@ -590,7 +590,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $triggerResult = $stateMachineFacade->triggerEvent('enter loop action', $stateMachineItemTransfer);
+        $stateMachineFacade->triggerEvent('enter loop action', $stateMachineItemTransfer);
         $triggerResult = $stateMachineFacade->triggerEvent('loop exit action', $stateMachineItemTransfer);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
