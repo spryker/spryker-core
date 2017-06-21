@@ -22,7 +22,10 @@ class Yves extends Module
      */
     public function amYves()
     {
-        $url = Config::get(ApplicationConstants::HOST_YVES);
+        $url = Config::hasKey(ApplicationConstants::BASE_URL_YVES)
+            ? Config::get(ApplicationConstants::BASE_URL_YVES)
+            // @deprecated This is just for backward compatibility
+            : Config::get(ApplicationConstants::HOST_YVES);
 
         $this->getModule('WebDriver')->_reconfigure(['url' => $url]);
 

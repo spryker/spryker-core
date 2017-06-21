@@ -91,7 +91,10 @@ class PayoneConfig extends AbstractBundleConfig
      */
     protected function getYvesBaseUrl()
     {
-        return $this->get(PayoneConstants::HOST_YVES);
+        return $this->getConfig()->hasKey(PayoneConstants::BASE_URL_YVES)
+            ? $this->get(PayoneConstants::BASE_URL_YVES)
+            // @deprecated this is just for backward compatibility
+            : $this->get(PayoneConstants::HOST_YVES);
     }
 
 }
