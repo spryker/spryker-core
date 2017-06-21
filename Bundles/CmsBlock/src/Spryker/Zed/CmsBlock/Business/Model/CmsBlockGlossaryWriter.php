@@ -76,7 +76,8 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             ->queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
             ->select([SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY])
             ->find()
-            ->getColumnValues(SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY);
+            ->toArray();
+        $glossaryKeys = array_column($glossaryKeys, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY);
 
         if (empty($glossaryKeys)) {
             return;

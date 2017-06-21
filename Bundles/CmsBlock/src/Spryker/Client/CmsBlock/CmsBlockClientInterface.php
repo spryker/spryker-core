@@ -30,4 +30,14 @@ interface CmsBlockClientInterface
      */
     public function findBlockNamesByOptions(array $options, $localName);
 
+    /**
+     * @api
+     *
+     * @param string $name
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name, $localeName);
+
 }

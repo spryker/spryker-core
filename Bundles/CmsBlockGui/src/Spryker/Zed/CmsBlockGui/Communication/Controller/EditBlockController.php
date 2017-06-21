@@ -48,7 +48,7 @@ class EditBlockController extends AbstractController
             ->handleRequest($request);
 
         if ($cmsBlockForm->isSubmitted()) {
-            $isUpdated = $this->updateCmsPage($cmsBlockForm);
+            $isUpdated = $this->updateCmsBlock($cmsBlockForm);
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditCmsBlockUrl($idCmsBlock);
@@ -115,7 +115,7 @@ class EditBlockController extends AbstractController
      *
      * @return bool
      */
-    protected function updateCmsPage(FormInterface $cmsBlockForm)
+    protected function updateCmsBlock(FormInterface $cmsBlockForm)
     {
         if ($cmsBlockForm->isValid()) {
             try {

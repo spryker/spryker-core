@@ -61,6 +61,19 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
+     * @param string $name
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name, $localeName)
+    {
+        $charsToReplace = ['"', "'", ' ', "\0", "\n", "\r"];
+
+        return str_replace($charsToReplace, '-', mb_strtolower(trim($name)));
+    }
+
+    /**
      * @param array $options
      * @param string $localName
      *

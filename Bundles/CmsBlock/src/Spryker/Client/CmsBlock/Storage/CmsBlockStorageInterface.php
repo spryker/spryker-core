@@ -26,4 +26,12 @@ interface CmsBlockStorageInterface
      */
     public function getBlockNamesByOptions(array $options, $localName);
 
+    /**
+     * @param string $name
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name, $localeName);
+
 }

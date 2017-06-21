@@ -16,6 +16,8 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string[] $blockNames
@@ -31,6 +33,8 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $options
@@ -43,6 +47,23 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
         return $this->getFactory()
             ->createCmsBlockFinder()
             ->getBlockNamesByOptions($options, $localName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name, $localeName)
+    {
+        return $this->getFactory()
+            ->createCmsBlockFinder()
+            ->generateBlockNameKey($name, $localeName);
     }
 
 }

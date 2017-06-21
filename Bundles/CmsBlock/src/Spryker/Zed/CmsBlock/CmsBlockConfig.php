@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsBlockConfig extends AbstractBundleConfig
 {
 
-    const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+    const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
 
     /**
      * @deprecated use getTemplateRealPaths() instead
@@ -50,7 +50,7 @@ class CmsBlockConfig extends AbstractBundleConfig
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
         return sprintf(
-            '%s/%s/%s/Cms/Theme/%s%s',
+            '%s/%s/%s/CmsBlock/Theme/%s%s',
             APPLICATION_SOURCE_DIR,
             $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
             $twigLayer,
