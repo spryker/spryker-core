@@ -33,13 +33,11 @@
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
-            <tbody>
-            {% for orderItem in order.items %}
-                {% include '@Sales/Detail/boxes/order-item.twig' %}
-                {% include '@Sales/Detail/boxes/order-item-option.twig' %}
-            {% endfor %}
-            </tbody>
-
+            {% if order.itemGroups %}
+              {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
+            {% else %}
+              {% embed '@Sales/Detail/boxes/row-widget.twig' with {items: order.items, render_body: true} %}{% endembed %}
+            {% endif %}
         </table>
 
     {% endblock %}

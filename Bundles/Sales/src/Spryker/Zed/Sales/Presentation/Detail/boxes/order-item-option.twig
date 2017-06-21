@@ -3,17 +3,20 @@
     <tr class="addition-row">
         <td></td>
         <td>+ <span class="label">{{ 'Option' | trans }}</span></td>
-        <td><div> {{ productOption.value }}</div> <div class="sku">{{ 'Sku' | trans }}: {{ productOption.sku }}</div></td>
+        <td>
+            <div>
+                <a target="_blank" href="{{ url('/product-option/view/index', {'id-product-option-group': productOption.idGroup}) }}">{{ productOption.value }}</a>
+            </div>
+            <div class="sku">
+              {{ 'Sku' | trans }}: {{ productOption.sku }}
+            </div>
+        </td>
         <td>
 
             <div>
-            <span {% if (productOption.unitDiscountAmountFullAggregation | default(0) > 0) %} class="discounted" {% endif %}>
-              {{ productOption.unitPrice | default(0) | money }}</span>
-              {% if (productOption.unitDiscountAmountFullAggregation | default(0) > 0) %}
-                  <span>({{ (productOption.unitPrice - productOption.unitDiscountAmountFullAggregation) | money }})</span>
-              {% endif %}
+                {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: productOption.unitPrice, priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
             </div>
-            <div style="clear: both">incl. {{ orderItem.taxRate|default(0) }} % tax </div>
+            <div class="tax-info">incl. {{ productOption.taxRate|default(0) }} % tax </div>
         </td>
         <td colspan="4"></td>
     </tr>
