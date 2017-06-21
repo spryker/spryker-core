@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage;
 
-use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;

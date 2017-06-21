@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockGui;
 
-use Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryFormPlugin;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerBridge;
@@ -97,15 +96,11 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * ??? Remove all in the end ???
-     *
      * @return array
      */
     protected function getCmsBlockFormPlugins()
     {
-        return [
-            new CmsBlockCategoryFormPlugin()
-        ];
+        return [];
     }
 
 }
