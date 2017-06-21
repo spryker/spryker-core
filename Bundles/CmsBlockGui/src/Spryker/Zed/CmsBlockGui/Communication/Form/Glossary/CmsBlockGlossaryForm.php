@@ -27,7 +27,7 @@ class CmsBlockGlossaryForm extends AbstractType
     protected $cmsBlockGlossaryPlaceholderForm;
 
     /**
-     * @param CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm
      */
     public function __construct(CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm)
     {

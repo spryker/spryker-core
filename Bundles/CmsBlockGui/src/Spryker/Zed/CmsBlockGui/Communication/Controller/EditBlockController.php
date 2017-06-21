@@ -28,7 +28,7 @@ class EditBlockController extends AbstractController
     const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */

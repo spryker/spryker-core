@@ -23,8 +23,8 @@ class CmsBlockReader implements CmsBlockReaderInterface
     protected $mapper;
 
     /**
-     * @param CmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param CmsBlockMapperInterface $cmsBlockMapper
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface $cmsBlockMapper
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
