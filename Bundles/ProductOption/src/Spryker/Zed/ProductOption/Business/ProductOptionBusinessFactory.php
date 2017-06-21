@@ -12,6 +12,7 @@ use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorter;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
@@ -148,6 +149,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorterInterface
+     */
+    public function createProductOptionItemSorter()
+    {
+        return new ProductOptionItemSorter();
     }
 
 }
