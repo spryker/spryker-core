@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductMetadataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
@@ -62,7 +63,13 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         $bundleItemTransfer = new ItemTransfer();
         $bundleItemTransfer->setBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
         $bundleItemTransfer->setQuantity($orderItemEntity->getQuantity());
-        $bundleItemTransfer->fromArray($orderItemEntity->getSalesOrderItemBundle()->toArray(), true);
+        $salesOrderItemBundle = $orderItemEntity->getSalesOrderItemBundle();
+        $bundleItemTransfer->fromArray($salesOrderItemBundle->toArray(), true);
+
+        $productMetadataTransfer = new ProductMetadataTransfer();
+        $productMetadataTransfer->setImage($salesOrderItemBundle->getImage());
+
+        $bundleItemTransfer->setMetadata($productMetadataTransfer);
 
         return $bundleItemTransfer;
     }
