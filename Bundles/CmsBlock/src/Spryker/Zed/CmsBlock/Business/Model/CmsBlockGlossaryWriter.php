@@ -94,7 +94,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
     {
         $this->handleDatabaseTransaction(function () use ($cmsBlockGlossaryTransfer) {
-            return $this->saveCmsGlossaryTransaction($cmsBlockGlossaryTransfer);
+            $this->saveCmsGlossaryTransaction($cmsBlockGlossaryTransfer);
         });
 
         return $cmsBlockGlossaryTransfer;
