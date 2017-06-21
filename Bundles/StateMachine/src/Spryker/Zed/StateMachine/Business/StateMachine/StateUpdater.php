@@ -156,7 +156,7 @@ class StateUpdater implements StateUpdaterInterface
             return false;
         }
 
-        return $stateMachineItemStateHistoryItem->getFkStateMachineItemState() == $stateMachineItemTransfer->getIdItemState();
+        return $stateMachineItemStateHistoryItem->getFkStateMachineItemState() === $stateMachineItemTransfer->getIdItemState();
     }
 
     /**
