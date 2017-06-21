@@ -35,7 +35,7 @@
         <property name="translation" type="string" />
     </transfer>
 
-    <transfer name="CmsBlockTemplateTransfer">
+    <transfer name="CmsBlockTemplate">
         <property name="idCmsBlockTemplate" type="int" />
         <property name="templateName" type="string" />
         <property name="templatePath" type="string" />
