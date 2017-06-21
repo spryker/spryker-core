@@ -98,6 +98,8 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $templatePath
@@ -112,6 +114,8 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -126,6 +130,8 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
@@ -137,6 +143,39 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
         return $this->getFactory()
             ->createCmsBlockGlossaryWriter()
             ->saveGlossary($cmsBlockGlossaryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
+     */
+    public function createTemplate($name, $path)
+    {
+        return $this->getFactory()
+            ->createCmsBlockTemplateManager()
+            ->createTemplate($name, $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $path
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
+     */
+    public function findTemplate($path)
+    {
+        return $this->getFactory()
+            ->createCmsBlockTemplateManager()
+            ->findTemplateByPath($path);
     }
 
 }

@@ -130,6 +130,24 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param string $path
      *
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
+     */
+    public function findTemplateByPath($path)
+    {
+        $spyCmsBlockTemplate = $this->cmsBlockQueryContainer
+            ->queryTemplateByPath($path)
+            ->findOne();
+
+        if ($spyCmsBlockTemplate) {
+            return $this->cmsBlockTemplateMapper->convertTemplateEntityToTransfer($spyCmsBlockTemplate);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $path
+     *
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException
      *
      * @return void

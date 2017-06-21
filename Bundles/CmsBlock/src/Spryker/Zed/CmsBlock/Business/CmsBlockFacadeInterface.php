@@ -110,4 +110,33 @@ interface CmsBlockFacadeInterface
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 
+    /**
+     * Specification
+     * - Validate path on existing template file
+     * - Create a new template record
+     *
+     * @api
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException
+     *
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
+     */
+    public function createTemplate($name, $path);
+
+    /**
+     * Specification
+     * - Returns template transfer if it exists
+     * - Return NULL if no record in DB for template with this path
+     *
+     * @api
+     *
+     * @param string $path
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
+     */
+    public function findTemplate($path);
+
 }
