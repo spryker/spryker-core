@@ -84,9 +84,12 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     {
         $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
 
-        $priceTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
-        if ($priceTransfer) {
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
+        $priceTypes = $this->priceFacade->getPriceTypeValues();
+
+        foreach ($priceTypes as $priceType) {
+            $priceTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract(), $priceType);
+
+            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICE][$priceType] = $priceTransfer ? $priceTransfer->getPrice() : null;
         }
 
         return $formData;

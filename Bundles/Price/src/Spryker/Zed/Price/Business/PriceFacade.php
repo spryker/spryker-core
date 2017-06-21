@@ -227,6 +227,23 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * TODO: add test
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createWriterModel()
+            ->persistProductAbstractPriceCollection($productAbstractTransfer);
+    }
+
+    /**
      * Specification:
      * - Create a new product price entity if it doesn't exists by concrete product id and price type.
      * - Updates the price of a product price entity if it exists by concrete product id and price type.
@@ -241,6 +258,21 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()->createWriterModel()->persistProductConcretePrice($productConcreteTransfer);
+    }
+
+    /**
+     * TODO: add test
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()->createWriterModel()->persistProductConcretePriceCollection($productConcreteTransfer);
     }
 
 }

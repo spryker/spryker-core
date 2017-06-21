@@ -34,4 +34,9 @@ interface ProductManagementToPriceInterface
      */
     public function getPriceBySku($sku, $priceTypeName = null);
 
+    /**
+     * @return array
+     */
+    public function getPriceTypeValues();
+
 }

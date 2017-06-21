@@ -30,14 +30,17 @@
 
     <transfer name="ProductAbstract">
         <property name="price" type="PriceProduct" />
+        <property name="prices" type="PriceProduct[]" />
     </transfer>
 
     <transfer name="ProductConcrete">
         <property name="price" type="PriceProduct" />
+        <property name="prices" type="PriceProduct[]" />
     </transfer>
 
     <transfer name="StorageProduct">
         <property name="price" type="int" />
+        <property name="prices" type="array" singular="price" />
     </transfer>
 
 </transfers>

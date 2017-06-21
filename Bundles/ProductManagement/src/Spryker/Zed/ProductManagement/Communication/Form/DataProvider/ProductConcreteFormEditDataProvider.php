@@ -47,7 +47,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         unset($formData[ProductFormAdd::FORM_PRICE_AND_TAX]);
         $formData[ProductFormAdd::FORM_PRICE_AND_TAX] = [
-            ConcretePriceForm::FIELD_PRICE => 0,
+            ConcretePriceForm::FIELD_PRICE => $this->getDefaultPriceData(),
         ];
 
         $formData[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
@@ -145,9 +145,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
-        $priceTransfer = $this->priceFacade->findProductConcretePrice($productTransfer->getIdProductConcrete());
-        if ($priceTransfer) {
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
+        $priceTypes = $this->priceFacade->getPriceTypeValues();
+
+        foreach ($priceTypes as $priceType) {
+            $priceTransfer = $this->priceFacade->findProductConcretePrice($productTransfer->getIdProductConcrete(), $priceType);
+
+            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE][$priceType] = $priceTransfer ? $priceTransfer->getPrice() : null;
         }
 
         $stockCollection = $productTransfer->getStocks();

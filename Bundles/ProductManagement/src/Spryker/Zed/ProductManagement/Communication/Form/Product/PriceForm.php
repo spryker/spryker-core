@@ -9,13 +9,18 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class PriceForm extends AbstractType
 {
 
@@ -83,7 +88,7 @@ class PriceForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addPriceField($builder, $options)
+            ->addPriceFieldCollection($builder, $options)
             ->addTaxRateField($builder, $options);
     }
 
@@ -93,13 +98,12 @@ class PriceForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceField(FormBuilderInterface $builder, array $options)
+    protected function addPriceFieldCollection(FormBuilderInterface $builder, array $options)
     {
         $currencyTransfer = $this->currencyFacade->getCurrent();
 
         $fieldOptions = [
-            'label' => 'Price',
-            'required' => true,
+            'label_format' => 'Price (%name%)',
             'divisor' => $this->getDivisor($currencyTransfer),
             'scale' => $this->getFractionDigits($currencyTransfer),
         ];
@@ -108,7 +112,11 @@ class PriceForm extends AbstractType
             $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
         }
 
-        $builder->add(static::FIELD_PRICE, 'money', $fieldOptions);
+        $builder->add(static::FIELD_PRICE, CollectionType::class, [
+            'entry_type' => MoneyType::class,
+            'entry_options' => $fieldOptions,
+            'label' => false,
+        ]);
 
         return $this;
     }

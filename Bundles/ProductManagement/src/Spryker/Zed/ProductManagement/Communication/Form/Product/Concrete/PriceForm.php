@@ -30,7 +30,7 @@ class PriceForm extends AbstractPriceForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addPriceField($builder, $options);
+            ->addPriceFieldCollection($builder, $options);
     }
 
 }

@@ -3,15 +3,17 @@
 
         <div class="row">
             <div class="col-xs-6">
-                <div class="row">
-                    <div class="col-xs-2"><b>{{ 'Price' | trans }}</b></div>
-                    <div class="col-xs-10">{{ currentProduct.price.price | money }}</div>
-                </div>
+                {% for price in currentProduct.prices %}
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.price | money }}</div>
+                    </div>
+                {% endfor %}
             </div>
             <div class="col-xs-6">
                 <div class="row">
-                    <div class="col-xs-2"><b>{{ 'Tax Set' | trans }}</b></div>
-                    <div class="col-xs-10">{{ taxSet.name }}</div>
+                    <div class="col-xs-4"><b>{{ 'Tax Set' | trans }}:</b></div>
+                    <div class="col-xs-8">{{ taxSet.name }}</div>
                 </div>
             </div>
         </div>
