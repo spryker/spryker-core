@@ -16,7 +16,7 @@ class CmsBlockCategoryType extends AbstractType
 {
 
     const FIELD_ID_CMS_BLOCK = 'id_cms_block';
-    const FIELD_CATEGORIES = 'categories';
+    const FIELD_CATEGORIES = 'id_categories';
 
     const OPTION_CATEGORY_ARRAY = 'option-category-array';
 

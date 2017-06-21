@@ -70,7 +70,7 @@ class CmsBlockCategoryDataProvider
             $categoryIds = $this->getAssignedCategoryIds($cmsBlockTransfer->getIdCmsBlock());
         }
 
-        $cmsBlockTransfer->setCategories($categoryIds);
+        $cmsBlockTransfer->setIdCategories($categoryIds);
 
         return $cmsBlockTransfer;
     }
