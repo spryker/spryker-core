@@ -37,7 +37,6 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     public function queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
     {
         return $this->queryCmsBlockCategoryConnector()
-            ->filterByFkCategory(null, Criteria::NOT_EQUAL)
             ->filterByFkCmsBlock($idCmsBlock);
     }
 

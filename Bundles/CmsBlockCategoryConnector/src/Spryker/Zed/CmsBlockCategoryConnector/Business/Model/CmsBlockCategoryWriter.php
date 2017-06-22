@@ -96,7 +96,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $cmsBlockTransfer->requireIdCmsBlock();
 
         foreach ($cmsBlockTransfer->getIdCategories() as $idCategory) {
-            $spyCmsBlockConnector = new SpyCmsBlockCategoryConnector();
+            $spyCmsBlockConnector = $this->createaBlockCategoryConnectorEntity();
             $spyCmsBlockConnector->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
             $spyCmsBlockConnector->setFkCategory($idCategory);
             $spyCmsBlockConnector->save();
@@ -106,6 +106,14 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                 $idCategory
             );
         }
+    }
+
+    /**
+     * @return SpyCmsBlockCategoryConnector
+     */
+    protected function createaBlockCategoryConnectorEntity()
+    {
+        return new SpyCmsBlockCategoryConnector();
     }
 
 }
