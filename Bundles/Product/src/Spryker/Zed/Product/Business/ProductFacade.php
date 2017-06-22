@@ -983,4 +983,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()->createSuperAttributeManager()->hydrateSuperAttributeMetadata($orderTransfer);
     }
 
+    /**
+     * Specification:
+     * - Hydrates product ids (abstract / concrete) into an order based on their sku
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateProductIds(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createProductIdHydrator()->hydrateProductIds($orderTransfer);
+    }
+
 }

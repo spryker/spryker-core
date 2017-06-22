@@ -30,6 +30,7 @@ use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteReadObserverPlugi
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
+use Spryker\Zed\Product\Business\Product\ProductIdHydrator;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
@@ -549,6 +550,16 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createSuperAttributeManager()
     {
         return new SuperAttributeManager(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductIdHydrator
+     */
+    public function createProductIdHydrator()
+    {
+        return new ProductIdHydrator(
             $this->getQueryContainer()
         );
     }

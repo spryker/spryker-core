@@ -49,6 +49,9 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="sku" type="string" />
+        <property name="id" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="metadata" type="ProductMetadata" />
     </transfer>
 
