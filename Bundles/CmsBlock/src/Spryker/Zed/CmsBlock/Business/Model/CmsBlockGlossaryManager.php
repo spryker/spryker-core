@@ -65,7 +65,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
         $spyCmsBlock = $this->getCmsBlockEntity($idCmsBlock);
 
         if ($spyCmsBlock === null) {
-            return null;
+            return $this->createGlossaryTransfer();
         }
 
         $placeholders = $this->findPagePlaceholders($spyCmsBlock->getCmsBlockTemplate());
@@ -190,10 +190,18 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      */
     protected function mapGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
     {
-        $glossaryTransfer = new CmsBlockGlossaryTransfer();
+        $glossaryTransfer = $this->createGlossaryTransfer();
         $glossaryTransfer->fromArray($spyCmsBlock->toArray(), true);
 
         return $glossaryTransfer;
+    }
+
+    /**
+     * @return CmsBlockGlossaryTransfer
+     */
+    protected function createGlossaryTransfer()
+    {
+        return new CmsBlockGlossaryTransfer();
     }
 
     /**
