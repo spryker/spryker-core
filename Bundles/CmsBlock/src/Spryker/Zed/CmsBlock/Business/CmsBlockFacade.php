@@ -72,6 +72,9 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException
+     *
      * @return void
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
@@ -104,11 +107,11 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @param string $templatePath
      *
-     * @return bool
+     * @return void
      */
     public function syncTemplate($templatePath)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createCmsBlockTemplateManager()
             ->syncTemplate($templatePath);
     }
@@ -135,6 +138,9 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */

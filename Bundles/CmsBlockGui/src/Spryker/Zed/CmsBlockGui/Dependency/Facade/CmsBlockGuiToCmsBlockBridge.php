@@ -79,11 +79,11 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     /**
      * @param string $templatePath
      *
-     * @return bool
+     * @return void
      */
     public function syncTemplate($templatePath)
     {
-        return $this->cmsBlockFacade->syncTemplate($templatePath);
+        $this->cmsBlockFacade->syncTemplate($templatePath);
     }
 
     /**

@@ -81,22 +81,20 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param string $templatePath
      *
-     * @return bool
+     * @return void
      */
     public function syncTemplate($templatePath)
     {
         $templateFolders = $this->config->getTemplateRealPaths($templatePath);
-        $isSynced = false;
 
         foreach ($templateFolders as $folder) {
             if (!file_exists($folder)) {
                 continue;
             }
 
-            $isSynced = $this->findTwigFileAndCreateTemplate($templatePath, $folder);
+            $templatePaths = $this->createTemplateForTwigTemplates($templatePath, $folder);
+            $this->createTemplates($templatePaths);
         }
-
-        return $isSynced;
     }
 
     /**
@@ -198,11 +196,11 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
      * @param string $cmsTemplateFolderPath
      * @param string $folder
      *
-     * @return bool
+     * @return array
      */
-    protected function findTwigFileAndCreateTemplate($cmsTemplateFolderPath, $folder)
+    protected function createTemplateForTwigTemplates($cmsTemplateFolderPath, $folder)
     {
-        $isTemplateCreated = false;
+        $templatePaths = [];
         $this->finder->in($folder)
             ->name('*' . static::TEMPLATE_FILE_SUFFIX)
             ->depth('0');
@@ -214,12 +212,25 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
 
             if (!$exists) {
                 $fileName = basename($folder . $fullFileName, static::TEMPLATE_FILE_SUFFIX);
-                $this->createTemplate($fileName, $cmsTemplateFolderPath . $fullFileName);
-                $isTemplateCreated = true;
+                $absoluteFileName = $cmsTemplateFolderPath . $fullFileName;
+
+                $templatePaths[$absoluteFileName] = $fileName;
             }
         }
 
-        return $isTemplateCreated;
+        return $templatePaths;
+    }
+
+    /**
+     * @param array $paths
+     *
+     * @return void
+     */
+    protected function createTemplates(array $paths)
+    {
+        foreach ($paths as $path => $filename) {
+            $this->createTemplate($filename, $path);
+        }
     }
 
 }

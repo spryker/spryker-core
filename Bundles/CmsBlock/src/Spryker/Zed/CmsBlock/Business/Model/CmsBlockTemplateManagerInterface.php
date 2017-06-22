@@ -13,7 +13,7 @@ interface CmsBlockTemplateManagerInterface
     /**
      * @param string $templatePath
      *
-     * @return bool
+     * @return void
      */
     public function syncTemplate($templatePath);
 

@@ -195,7 +195,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     }
 
     /**
-     * @return CmsBlockGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     protected function createGlossaryTransfer()
     {
