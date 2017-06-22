@@ -76,7 +76,7 @@ class EditGlossaryController extends AbstractController
 
         $cmsBlockTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findCmsBlockId($idCmsBlock);
+            ->findCmsBlockById($idCmsBlock);
 
         return [
             'placeholderTabs' => $placeholderTabs->createView(),

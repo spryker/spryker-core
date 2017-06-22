@@ -31,7 +31,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockId($idCmsBlock)
+    public function findCmsBlockById($idCmsBlock)
     {
         return $this->cmsBlockFacade->findCmsBlockById($idCmsBlock);
     }

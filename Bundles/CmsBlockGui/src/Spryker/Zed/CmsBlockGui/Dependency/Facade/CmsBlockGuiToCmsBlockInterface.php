@@ -18,7 +18,7 @@ interface CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockId($idCmsBlock);
+    public function findCmsBlockById($idCmsBlock);
 
     /**
      * @param int $idCmsBlock

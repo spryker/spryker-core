@@ -67,7 +67,7 @@ class CmsBlockFormDataProvider
         if (!$idCmsBlock) {
             $cmsBlockTransfer = new CmsBlockTransfer();
         } else {
-            $cmsBlockTransfer = $this->cmsBlockFacade->findCmsBlockId($idCmsBlock);
+            $cmsBlockTransfer = $this->cmsBlockFacade->findCmsBlockById($idCmsBlock);
         }
 
         return $cmsBlockTransfer;

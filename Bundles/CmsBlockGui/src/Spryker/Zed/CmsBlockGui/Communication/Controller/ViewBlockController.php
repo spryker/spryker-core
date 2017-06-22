@@ -32,7 +32,7 @@ class ViewBlockController extends AbstractController
 
         $cmsBlockTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findCmsBlockId($idCmsBlock);
+            ->findCmsBlockById($idCmsBlock);
 
         if ($cmsBlockTransfer === null) {
             throw new NotFoundHttpException(

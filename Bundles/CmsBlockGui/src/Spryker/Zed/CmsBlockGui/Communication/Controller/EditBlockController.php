@@ -62,7 +62,7 @@ class EditBlockController extends AbstractController
 
         $cmsBlockTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findCmsBlockId($idCmsBlock);
+            ->findCmsBlockById($idCmsBlock);
 
         return [
             'idCmsBlock' => $idCmsBlock,
