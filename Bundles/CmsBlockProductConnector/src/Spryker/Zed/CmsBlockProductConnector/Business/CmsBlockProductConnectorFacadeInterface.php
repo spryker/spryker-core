@@ -34,6 +34,18 @@ interface CmsBlockProductConnectorFacadeInterface
 
     /**
      * Specification
+     * - hydrate Cms Block with an array of related product abstract IDs
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    public function hydrateCmsBlockProductRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification
      * - hydrate CMS Block to Product relation with block names
      * - collect relation to Storage
      *

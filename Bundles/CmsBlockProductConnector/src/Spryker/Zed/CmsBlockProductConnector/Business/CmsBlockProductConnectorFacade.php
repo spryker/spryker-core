@@ -40,6 +40,22 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    public function hydrateCmsBlockProductRelations(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsBlockProductReader()
+            ->hydrateProductRelations($cmsBlockTransfer);
+    }
+
+    /**
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
