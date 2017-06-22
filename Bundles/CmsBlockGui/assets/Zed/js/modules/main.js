@@ -6,14 +6,11 @@
 'use strict';
 
 require('ZedGui');
-var CmsGlossaryAutocomplete = require('./cms-glossary-autocomplete');
-require('../../sass/main.scss');
-require('../../img/cms-loader.gif');
 
 $(document).ready( function () {
 
-    var validFrom = $('#cms_page_validFrom');
-    var validTo = $('#cms_page_validTo');
+    var validFrom = $('#cms_block_validFrom');
+    var validTo = $('#cms_block_validTo');
 
     validFrom.datepicker({
         dateFormat: 'yy-mm-dd',
@@ -35,36 +32,5 @@ $(document).ready( function () {
         onClose: function(selectedDate) {
             validFrom.datepicker('option', 'maxDate', selectedDate);
         }
-    });
-
-    $("input[id$='translationKey']").each(function(index, element){
-        new CmsGlossaryAutocomplete({
-            autocompleteElement: $(element)
-        });
-    });
-
-    var originalText = $('#version-diff .has-original .original');
-    originalText.each(function(index, element){
-        var targets = $('#version-diff .has-diff .original');
-        if (typeof targets[index] !== 'undefined') {
-            var targetsDiff = $('#version-diff .has-diff .diff');
-            targets[index].innerText = element.innerText;
-
-            if (element.innerText !== targetsDiff[index].innerText) {
-                $(targetsDiff[index]).css('background-color', '#fbd6c4')
-            }
-        }
-    });
-
-    $('[name=cms_glossary]').on('submit', function() {
-        var self = $(this);
-
-        self.find('.html-editor').each(function (index, element) {
-            var editor = $(element);
-
-            if (editor.summernote('isEmpty')) {
-                editor.val(null);
-            }
-        });
-    });
+    }); 
 });
