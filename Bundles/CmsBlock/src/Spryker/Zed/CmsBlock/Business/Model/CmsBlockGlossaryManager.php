@@ -68,10 +68,8 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
             return $this->createGlossaryTransfer();
         }
 
-        $placeholders = $this->findPagePlaceholders($spyCmsBlock->getCmsBlockTemplate());
-
+        $placeholders = $this->findCmsBlockPlaceholders($spyCmsBlock->getCmsBlockTemplate());
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($idCmsBlock, $placeholders);
-
         $glossaryTransfer = $this->mapGlossaryTransfer($spyCmsBlock);
 
         foreach ($placeholders as $placeholder) {
@@ -88,12 +86,12 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return array
      */
-    protected function findPagePlaceholders(SpyCmsBlockTemplate $spyCmsBlockTemplate)
+    protected function findCmsBlockPlaceholders(SpyCmsBlockTemplate $spyCmsBlockTemplate)
     {
         $templateFiles = $this->config->getTemplateRealPaths($spyCmsBlockTemplate->getTemplatePath());
 
         foreach ($templateFiles as $templateFile) {
-            if (file_exists($templateFile)) {
+            if (is_readable($templateFile)) {
                 return $this->getTemplatePlaceholders($templateFile);
             }
         }
@@ -110,7 +108,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      */
     protected function getTemplatePlaceholders($templateFile)
     {
-        if (!file_exists($templateFile)) {
+        if (!is_readable($templateFile)) {
             throw new CmsBlockTemplateNotFoundException(
                 sprintf('Template file not found in "%s"', $templateFile)
             );
@@ -240,20 +238,18 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
             $translationTransfer->setFkLocale($idLocale);
             $translationTransfer->setLocaleName($localeName);
 
-            if (!isset($glossaryKeyEntityMap[$placeholder])) {
-                $glossaryPlaceholderTransfer->addTranslation($translationTransfer);
-                continue;
+            if (isset($glossaryKeyEntityMap[$placeholder])) {
+                /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping $spyCmsBlockGlossaryKeyMapping */
+                $spyCmsBlockGlossaryKeyMapping = $glossaryKeyEntityMap[$placeholder];
+                $glossaryPlaceholderTransfer->setIdCmsBlockGlossaryKeyMapping($spyCmsBlockGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
+
+                $this->setTranslationValue($spyCmsBlockGlossaryKeyMapping, $translationTransfer);
+
+                $glossaryKeyEntity = $spyCmsBlockGlossaryKeyMapping->getGlossaryKey();
+                $glossaryPlaceholderTransfer->setFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey());
+                $glossaryPlaceholderTransfer->setTranslationKey($glossaryKeyEntity->getKey());
             }
 
-            /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping $spyCmsBlockGlossaryKeyMapping */
-            $spyCmsBlockGlossaryKeyMapping = $glossaryKeyEntityMap[$placeholder];
-            $glossaryPlaceholderTransfer->setIdCmsBlockGlossaryKeyMapping($spyCmsBlockGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
-
-            $this->setTranslationValue($spyCmsBlockGlossaryKeyMapping, $translationTransfer);
-
-            $glossaryKeyEntity = $spyCmsBlockGlossaryKeyMapping->getGlossaryKey();
-            $glossaryPlaceholderTransfer->setFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey());
-            $glossaryPlaceholderTransfer->setTranslationKey($glossaryKeyEntity->getKey());
             $glossaryPlaceholderTransfer->addTranslation($translationTransfer);
         }
     }
@@ -284,12 +280,9 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     protected function findTranslation(SpyGlossaryKey $spyGlossaryKey, $idLocale)
     {
         foreach ($spyGlossaryKey->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
-            if ($glossaryTranslationEntity->getFkLocale() !== $idLocale) {
-                continue;
+            if ($glossaryTranslationEntity->getFkLocale() === $idLocale) {
+                return $glossaryTranslationEntity->getValue();
             }
-
-            return $glossaryTranslationEntity->getValue();
-
         }
 
         return null;

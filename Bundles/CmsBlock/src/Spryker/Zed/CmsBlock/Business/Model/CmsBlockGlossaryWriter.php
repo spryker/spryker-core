@@ -111,7 +111,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
         foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $glossaryPlaceholder) {
             $glossaryPlaceholder = $this->resolveTranslationKey($glossaryPlaceholder);
 
-            $this->translatePlaceholder($glossaryPlaceholder);
+            $this->savePlaceholderTranslations($glossaryPlaceholder);
 
             $idCmsBlockGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryPlaceholder);
             $glossaryPlaceholder->setIdCmsBlockGlossaryKeyMapping($idCmsBlockGlossaryMapping);
@@ -143,7 +143,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function translatePlaceholder(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
+    protected function savePlaceholderTranslations(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
     {
         $translationKey = $glossaryPlaceholderTransfer->getTranslationKey();
 

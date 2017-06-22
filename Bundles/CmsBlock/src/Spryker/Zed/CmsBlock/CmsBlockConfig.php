@@ -16,18 +16,6 @@ class CmsBlockConfig extends AbstractBundleConfig
     const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
 
     /**
-     * @deprecated use getTemplateRealPaths() instead
-     *
-     * @param string $templateRelativePath
-     *
-     * @return string
-     */
-    public function getTemplateRealPath($templateRelativePath)
-    {
-        return $this->getAbsolutePath($templateRelativePath, 'Yves');
-    }
-
-    /**
      * @param string $templateRelativePath
      *
      * @return array
