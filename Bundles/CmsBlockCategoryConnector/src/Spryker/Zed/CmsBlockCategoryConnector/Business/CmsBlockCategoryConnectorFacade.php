@@ -44,6 +44,22 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    public function hydrateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryReader()
+            ->hydrateCategoryRelations($cmsBlockTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

@@ -13,7 +13,8 @@ use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryTyp
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-/** @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer() */
+/** @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer() * @method CmsBlockCategoryConnectorConfig getConfig()
+ */
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 

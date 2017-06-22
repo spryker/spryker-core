@@ -34,6 +34,18 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification
+     * - hydrate Cms Block with an array of related category IDs
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    public function hydrateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification
      * - hydrate CMS Block to Category relation with block names
      * - collect relation to Storage
      *

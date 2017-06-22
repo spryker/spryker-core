@@ -2,13 +2,22 @@
 
 namespace SprykerTest\Zed\CmsBlock\Business;
 
-
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CmsBlock
+ * @group Business
+ * @group Facade
+ * @group CmsBlockFacadeTest
+ * Add your own group annotations below this line
+ */
 class CmsBlockFacadeTest extends Test
 {
 
@@ -24,7 +33,7 @@ class CmsBlockFacadeTest extends Test
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
-        $cmsBlockTransfer = $this->createProductLabelFacade()
+        $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertInstanceOf(CmsBlockTransfer::class, $cmsBlockTransfer);
@@ -39,10 +48,10 @@ class CmsBlockFacadeTest extends Test
 
         $this->assertFalse($cmsBlockTransfer->getIsActive());
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->activateById($cmsBlockTransfer->getIdCmsBlock());
 
-        $cmsBlockTransfer = $this->createProductLabelFacade()
+        $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertTrue($cmsBlockTransfer->getIsActive());
@@ -57,10 +66,10 @@ class CmsBlockFacadeTest extends Test
 
         $this->assertTrue($cmsBlockTransfer->getIsActive());
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->deactivateById($cmsBlockTransfer->getIdCmsBlock());
 
-        $cmsBlockTransfer = $this->createProductLabelFacade()
+        $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertFalse($cmsBlockTransfer->getIsActive());
@@ -74,14 +83,13 @@ class CmsBlockFacadeTest extends Test
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
         $cmsBlockTransfer->setName('Test name');
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->updateCmsBlock($cmsBlockTransfer);
 
-        $cmsBlockTransfer = $this->createProductLabelFacade()
+        $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertEquals('Test name', $cmsBlockTransfer->getName());
-
     }
 
     /**
@@ -92,7 +100,7 @@ class CmsBlockFacadeTest extends Test
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->setName('Test name');
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->createCmsBlock($cmsBlockTransfer);
 
         $this->assertNotEmpty($cmsBlockTransfer->getIdCmsBlock());
@@ -103,7 +111,6 @@ class CmsBlockFacadeTest extends Test
      */
     public function findGlossaryPlaceholders()
     {
-
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
         $translation = new CmsBlockGlossaryPlaceholderTranslationTransfer();
@@ -118,10 +125,10 @@ class CmsBlockFacadeTest extends Test
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->saveGlossary($glossary);
 
-        $glossary = $this->createProductLabelFacade()
+        $glossary = $this->createCmsBlockFacade()
             ->findGlossaryPlaceholders($cmsBlockTransfer->getIdCmsBlock());
 
         foreach ($glossary->getGlossaryPlaceholders() as $placeholder) {
@@ -148,10 +155,10 @@ class CmsBlockFacadeTest extends Test
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);
 
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->saveGlossary($glossary);
 
-        $glossary = $this->createProductLabelFacade()
+        $glossary = $this->createCmsBlockFacade()
             ->findGlossaryPlaceholders($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertNotEmpty($glossary);
@@ -162,10 +169,10 @@ class CmsBlockFacadeTest extends Test
      */
     public function testCreateTemplate()
     {
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->createTemplate('test name', 'test path');
 
-        $cmsBlockTemplateTransfer = $this->createProductLabelFacade()
+        $cmsBlockTemplateTransfer = $this->createCmsBlockFacade()
             ->findTemplate('test path');
 
         $this->assertNotEmpty($cmsBlockTemplateTransfer);
@@ -176,20 +183,19 @@ class CmsBlockFacadeTest extends Test
      */
     public function testFindTemplate()
     {
-        $this->createProductLabelFacade()
+        $this->createCmsBlockFacade()
             ->createTemplate('test name', 'test path');
 
-        $cmsBlockTemplateTransfer = $this->createProductLabelFacade()
+        $cmsBlockTemplateTransfer = $this->createCmsBlockFacade()
             ->findTemplate('test path');
 
-        $this->assertEquals('test name',$cmsBlockTemplateTransfer->getTemplateName());
+        $this->assertEquals('test name', $cmsBlockTemplateTransfer->getTemplateName());
     }
-
 
     /**
      * @return \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
      */
-    protected function createProductLabelFacade()
+    protected function createCmsBlockFacade()
     {
         return $this->tester->getLocator()->cmsBlock()->facade();
     }
