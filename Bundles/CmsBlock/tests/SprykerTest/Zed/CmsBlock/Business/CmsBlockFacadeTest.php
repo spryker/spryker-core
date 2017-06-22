@@ -78,7 +78,7 @@ class CmsBlockFacadeTest extends Test
     /**
      * @return void
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function testUpdateCmsBlock()
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
         $cmsBlockTransfer->setName('Test name');
@@ -95,10 +95,13 @@ class CmsBlockFacadeTest extends Test
     /**
      * @return void
      */
-    public function createCmsBlock()
+    public function testCreateCmsBlock()
     {
+        $cmsBlockTemplateTransfer = $this->tester->haveCmsBlockTemplate();
+
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->setName('Test name');
+        $cmsBlockTransfer->setFkTemplate($cmsBlockTemplateTransfer->getIdCmsBlockTemplate());
 
         $this->createCmsBlockFacade()
             ->createCmsBlock($cmsBlockTransfer);
@@ -109,7 +112,7 @@ class CmsBlockFacadeTest extends Test
     /**
      * @return void
      */
-    public function findGlossaryPlaceholders()
+    public function testFindGlossaryPlaceholders()
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 

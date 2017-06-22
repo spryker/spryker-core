@@ -16,7 +16,7 @@ class CmsBlockCategoryConnectorToTouchBridge implements CmsBlockCategoryConnecto
     protected $touchFacade;
 
     /**
-     * @param $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
      */
     public function __construct($touchFacade)
     {

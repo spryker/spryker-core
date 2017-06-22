@@ -118,7 +118,10 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $cmsBlockTransfer->requireIdCmsBlock();
 
         $spyCmsBlock = $this->getCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
-        $this->checkTemplateFileExists($cmsBlockTransfer->getFkTemplate());
+
+        if ($spyCmsBlock->getFkTemplate() != $cmsBlockTransfer->getFkTemplate()) {
+            $this->checkTemplateFileExists($cmsBlockTransfer->getFkTemplate());
+        }
 
         if ($spyCmsBlock === null) {
             throw new CmsBlockNotFoundException(

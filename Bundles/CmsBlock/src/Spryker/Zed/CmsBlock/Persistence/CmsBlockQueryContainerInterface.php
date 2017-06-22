@@ -13,7 +13,7 @@ interface CmsBlockQueryContainerInterface
     /**
      * @api
      *
-     * @param $idCmsBlock
+     * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */

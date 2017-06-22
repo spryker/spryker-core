@@ -10,10 +10,11 @@ use Codeception\TestCase\Test;
  * @group Zed
  * @group CmsBlockProductConnector
  * @group Business
- * @group CmsBlockProductConnectorTest
+ * @group Facade
+ * @group CmsBlockProductConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CmsBlockProductConnectorTest extends Test
+class CmsBlockProductConnectorFacadeTest extends Test
 {
 
     /**
