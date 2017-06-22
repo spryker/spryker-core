@@ -226,4 +226,15 @@ interface ProductBundleFacadeInterface
      */
     public function hydrateSalesOrderProductBundles(OrderTransfer $orderTransfer);
 
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateProductBundleIds(OrderTransfer $orderTransfer);
+
 }
