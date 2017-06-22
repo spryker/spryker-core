@@ -38,6 +38,8 @@
         <property name="unitDiscountAmountFullAggregation" type="int" />
         <property name="sumDiscountAmountFullAggregation" type="int" />
 
+        <property name="images" type="ProductImage[]" singular="image" />
+
     </transfer>
 
     <transfer name="Quote">

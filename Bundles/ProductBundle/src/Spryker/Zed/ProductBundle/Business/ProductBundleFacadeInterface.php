@@ -40,6 +40,20 @@ interface ProductBundleFacadeInterface
      *
      * Specification:
      *
+     * - It will add images to product bundle
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandBundleItemsWithImages(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     *
+     * Specification:
+     *
      * - The group key is build to uniquely identify bundled items.
      *
      * @api
