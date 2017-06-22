@@ -10,12 +10,10 @@
     "spryker/kernel": "^3.0.0",
     "spryker/util-data-reader": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0",
+    "spryker/touch": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
