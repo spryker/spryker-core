@@ -74,57 +74,64 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * //TODO Fix me
      * @param array $options
-     * @param string $localName
+     * @param string $localeName
      *
      * @return array
      */
-    public function getBlockNamesByOptions(array $options, $localName)
+    public function getBlockNamesByOptions(array $options, $localeName)
     {
         $availableBlockNames = [];
 
         foreach ($options as $optionKey => $resources) {
-            $searchKeys = [];
+
             $resources = (array)$resources;
+            $blockNames = $this->getBlockNamesForOption($optionKey, $resources, $localeName);
 
-            foreach ($resources as $id) {
-                $searchKeys[] = $this->keyBuilder->generateKey($optionKey . '.' . $id, $localName);
-            }
-
-            $resultArray = $this->storage->getMulti($searchKeys);
-            $resultArray = $this->decodeMulti($resultArray);
-
-            if ($availableBlockNames) {
-                $availableBlockNames = array_intersect($availableBlockNames, $resultArray);
-            } else {
-                $availableBlockNames = $resultArray;
-            }
+            $availableBlockNames = $availableBlockNames ?
+                array_intersect($availableBlockNames, $blockNames) :
+                $blockNames;
         }
 
         return $availableBlockNames;
     }
 
     /**
-     * //TODO Fix me
+     * @param $optionKey
+     * @param $idResources
+     * @param $localeName
+     *
+     * @return string[]
+     */
+    protected function getBlockNamesForOption($optionKey, $idResources, $localeName)
+    {
+        $searchKeys = [];
+
+        foreach ($idResources as $id) {
+            $searchKeys[] = $this->keyBuilder->generateKey($optionKey . '.' . $id, $localeName);
+        }
+
+        $blockNames = $this->storage->getMulti($searchKeys);
+        $blockNames = $this->decodeMultiResultToArrays($blockNames);
+
+        return $blockNames;
+    }
+
+
+    /**
      * @param array|null $array
      *
      * @return array
      */
-    protected function decodeStringToArray($array)
+    protected function decodeMultiResultToArrays($array)
     {
         if (!is_array($array)) {
             return [];
         }
 
-        $array = array_filter($array);
-
         $resultArray = [];
         foreach ($array as $key => $result) {
-            $resultArray = array_merge(
-                $resultArray,
-                json_decode($result, true)
-            );
+            $resultArray = array_merge($resultArray, json_decode($result, true));
         }
 
         return $resultArray;
