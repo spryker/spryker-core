@@ -14,9 +14,9 @@ class CmsClient extends AbstractClient implements CmsClientInterface
 {
 
     /**
-     * @deprecated Use CMS Block module instead
-     *
      * @api
+     *
+     * @deprecated Use CMS Block module instead
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
