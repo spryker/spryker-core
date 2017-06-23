@@ -58,7 +58,7 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCollector\Persistence\Collector\AbstractCmsBlockCollector
+     * @return \Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery
      */
     protected function createCmsBlockCollectorStorageQuery()
     {

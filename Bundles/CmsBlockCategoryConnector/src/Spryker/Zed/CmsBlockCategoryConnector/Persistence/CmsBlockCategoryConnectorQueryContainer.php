@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**

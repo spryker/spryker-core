@@ -109,7 +109,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @return SpyCmsBlockCategoryConnector
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector
      */
     protected function createaBlockCategoryConnectorEntity()
     {

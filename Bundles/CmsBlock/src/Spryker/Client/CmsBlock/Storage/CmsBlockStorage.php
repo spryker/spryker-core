@@ -117,7 +117,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         return $blockNames;
     }
 
-
     /**
      * @param array|null $array
      *

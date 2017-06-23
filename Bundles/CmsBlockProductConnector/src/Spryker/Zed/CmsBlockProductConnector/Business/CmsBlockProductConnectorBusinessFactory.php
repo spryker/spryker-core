@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Business;
 
 use Spryker\Zed\CmsBlockProductConnector\Business\Collector\CmsBlockProductCollector;
-use Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractWriter;
 use Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractReader;
+use Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractWriter;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\Propel\CmsBlockProductConnectorCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -90,7 +90,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\AbstractCmsBlockProductConnectorCollector
+     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Collector\Storage\Propel\CmsBlockProductConnectorCollectorQuery
      */
     protected function createCmsBlockProductStorageQueryContainer()
     {

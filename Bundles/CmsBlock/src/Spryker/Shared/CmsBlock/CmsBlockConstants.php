@@ -20,7 +20,6 @@ interface CmsBlockConstants
      */
     const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
 
-
     /**
      * Specification
      * - Defines project name for absolute path to template folder

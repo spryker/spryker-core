@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\CmsBlockGui;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockGuiConfig extends AbstractBundleConfig
