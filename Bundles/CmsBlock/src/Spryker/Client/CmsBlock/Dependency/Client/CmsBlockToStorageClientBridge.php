@@ -1,20 +1,24 @@
 <?php
 
-namespace Spryker\Client\CmsBlock;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-
-use Spryker\Client\Storage\StorageClientInterface;
+namespace Spryker\Client\CmsBlock\Dependency\Client;
 
 class CmsBlockToStorageClientBridge implements CmsBlockToStorageClientInterface
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storage;
 
     /**
-     * @param StorageClientInterface $storage
+     * @api
+     *
+     * @param \Spryker\Client\Storage\StorageClientInterface $storage
      */
     public function __construct($storage)
     {
@@ -22,6 +26,8 @@ class CmsBlockToStorageClientBridge implements CmsBlockToStorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return array

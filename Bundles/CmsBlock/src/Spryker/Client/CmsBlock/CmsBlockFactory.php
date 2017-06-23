@@ -26,7 +26,7 @@ class CmsBlockFactory extends AbstractFactory
     }
 
     /**
-     * @return CmsBlockToStorageClientInterface
+     * @return \Spryker\Client\CmsBlock\Dependency\Client\CmsBlockToStorageClientInterface
      */
     protected function getStorage()
     {
