@@ -17,6 +17,6 @@ interface CmsBlockTemplateMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function convertTemplateEntityToTransfer(SpyCmsBlockTemplate $spyCmsBlockTemplate);
+    public function mapTemplateEntityToTransfer(SpyCmsBlockTemplate $spyCmsBlockTemplate);
 
 }

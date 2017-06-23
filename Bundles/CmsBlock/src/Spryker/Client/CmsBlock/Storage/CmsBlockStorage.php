@@ -74,6 +74,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
+     * //TODO Fix me
      * @param array $options
      * @param string $localName
      *
@@ -105,11 +106,12 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
+     * //TODO Fix me
      * @param array|null $array
      *
      * @return array
      */
-    protected function decodeMulti($array)
+    protected function decodeStringToArray($array)
     {
         if (!is_array($array)) {
             return [];

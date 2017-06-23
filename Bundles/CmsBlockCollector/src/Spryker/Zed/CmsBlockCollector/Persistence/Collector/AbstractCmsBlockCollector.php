@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockCollector\Persistence\Collector;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
@@ -65,6 +66,9 @@ abstract class AbstractCmsBlockCollector extends AbstractPropelCollectorQuery
             SpyCmsBlockTemplateTableMap::COL_TEMPLATE_PATH,
             static::COL_TEMPLATE_PATH
         );
+
+        $this->touchQuery->addAnd(SpyCmsBlockTableMap::COL_IS_ACTIVE, true);
+
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_VALID_FROM, static::COL_VALID_FROM);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_VALID_TO, static::COL_VALID_TO);

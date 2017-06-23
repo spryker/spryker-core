@@ -23,9 +23,9 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 {
 
-    const DEFAULT_TRANSLATION = '';
-
     use DatabaseTransactionHandlerTrait;
+
+    const DEFAULT_TRANSLATION = '';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
@@ -76,15 +76,15 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             ->queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
             ->select([SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY])
             ->find()
-            ->toArray();
-        $glossaryKeys = array_column($glossaryKeys, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY);
+            ->getColumnValues('FkGlossaryKey');
 
         if (empty($glossaryKeys)) {
             return;
         }
 
-        $this->glossaryFacade->deleteTranslationsByFkKeys($glossaryKeys);
-        $this->glossaryFacade->deleteKeys($glossaryKeys);
+        $this->handleDatabaseTransaction(function () use ($glossaryKeys) {
+            $this->deleteGlossaryKeysTransaction($glossaryKeys);
+        });
     }
 
     /**
@@ -315,6 +315,17 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
         return $this->cmsBlockQueryContainer
             ->queryGlossaryKeyMappingById($idGlossaryKeyMapping)
             ->findOne();
+    }
+
+    /**
+     * @param array $glossaryKeys
+     *
+     * @return void
+     */
+    protected function deleteGlossaryKeysTransaction(array $glossaryKeys)
+    {
+        $this->glossaryFacade->deleteTranslationsByFkKeys($glossaryKeys);
+        $this->glossaryFacade->deleteKeys($glossaryKeys);
     }
 
 }

@@ -75,7 +75,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
             ->setTemplatePath($path)
             ->save();
 
-        return $this->cmsBlockTemplateMapper->convertTemplateEntityToTransfer($template);
+        return $this->cmsBlockTemplateMapper->mapTemplateEntityToTransfer($template);
     }
 
     /**
@@ -137,7 +137,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
             ->findOne();
 
         if ($spyCmsBlockTemplate) {
-            return $this->cmsBlockTemplateMapper->convertTemplateEntityToTransfer($spyCmsBlockTemplate);
+            return $this->cmsBlockTemplateMapper->mapTemplateEntityToTransfer($spyCmsBlockTemplate);
         }
 
         return null;

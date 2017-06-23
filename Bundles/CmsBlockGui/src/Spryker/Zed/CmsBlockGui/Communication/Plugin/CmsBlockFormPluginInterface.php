@@ -13,6 +13,11 @@ interface CmsBlockFormPluginInterface
 {
 
     /**
+     * Specification
+     * - Add form parts to the main form builder
+     *
+     * @api
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

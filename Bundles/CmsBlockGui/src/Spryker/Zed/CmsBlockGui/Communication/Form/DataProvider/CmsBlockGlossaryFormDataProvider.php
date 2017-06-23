@@ -46,7 +46,7 @@ class CmsBlockGlossaryFormDataProvider
      */
     public function getData($idCmsBlock)
     {
-        return $this->cmsBlockFacade->findGlossaryPlaceholders($idCmsBlock);
+        return $this->cmsBlockFacade->findGlossary($idCmsBlock);
     }
 
 }

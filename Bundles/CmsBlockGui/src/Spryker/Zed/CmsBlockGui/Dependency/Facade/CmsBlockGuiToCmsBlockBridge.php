@@ -91,9 +91,9 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossaryPlaceholders($idCmsBlock)
+    public function findGlossary($idCmsBlock)
     {
-        return $this->cmsBlockFacade->findGlossaryPlaceholders($idCmsBlock);
+        return $this->cmsBlockFacade->findGlossary($idCmsBlock);
     }
 
     /**

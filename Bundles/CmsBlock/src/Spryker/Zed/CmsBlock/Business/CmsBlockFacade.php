@@ -125,7 +125,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossaryPlaceholders($idCmsBlock)
+    public function findGlossary($idCmsBlock)
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryManager()

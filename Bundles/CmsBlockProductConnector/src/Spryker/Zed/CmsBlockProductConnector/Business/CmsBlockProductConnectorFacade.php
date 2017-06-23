@@ -51,7 +51,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     public function hydrateCmsBlockProductRelations(CmsBlockTransfer $cmsBlockTransfer)
     {
         return $this->getFactory()
-            ->createCmsBlockProductReader()
+            ->createCmsBlockProductAbstractReader()
             ->hydrateProductRelations($cmsBlockTransfer);
     }
 

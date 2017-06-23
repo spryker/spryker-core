@@ -14,6 +14,24 @@ class CmsBlockConfig extends AbstractBundleConfig
 {
 
     const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
+    const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/';
+    const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+
+    /**
+     * @return string
+     */
+    public function getPlaceholderPattern()
+    {
+        return static::CMS_BLOCK_PLACEHOLDER_PATTERN;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceholderValuePattern()
+    {
+        return static::CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN;
+    }
 
     /**
      * @param string $templateRelativePath

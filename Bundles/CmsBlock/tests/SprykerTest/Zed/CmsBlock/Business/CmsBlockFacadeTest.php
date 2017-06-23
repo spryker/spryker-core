@@ -132,7 +132,7 @@ class CmsBlockFacadeTest extends Test
             ->saveGlossary($glossary);
 
         $glossary = $this->createCmsBlockFacade()
-            ->findGlossaryPlaceholders($cmsBlockTransfer->getIdCmsBlock());
+            ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         foreach ($glossary->getGlossaryPlaceholders() as $placeholder) {
             $this->assertEquals('placeholder', $placeholder->getPlaceholder());
@@ -162,7 +162,7 @@ class CmsBlockFacadeTest extends Test
             ->saveGlossary($glossary);
 
         $glossary = $this->createCmsBlockFacade()
-            ->findGlossaryPlaceholders($cmsBlockTransfer->getIdCmsBlock());
+            ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         $this->assertNotEmpty($glossary);
     }

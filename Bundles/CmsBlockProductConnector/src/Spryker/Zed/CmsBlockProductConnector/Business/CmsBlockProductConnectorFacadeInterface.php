@@ -21,8 +21,8 @@ interface CmsBlockProductConnectorFacadeInterface
 
     /**
      * Specification
-     * - delete all relations of cms block to product abstracts
-     * - create relations by transfer object
+     * - Delete all relations of cms block to product abstracts
+     * - Create relations by transfer object
      *
      * @api
      *

@@ -75,18 +75,20 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         $placeholderTransfer = new CmsBlockGlossaryPlaceholderTransfer();
 
         $spyGlossaryKey = $spyCmsGlossaryKeyMapping->getGlossaryKey();
-        $placeholderTransfer->setPlaceholder($spyCmsGlossaryKeyMapping->getPlaceholder());
-        $placeholderTransfer->setTranslationKey($spyGlossaryKey->getKey());
-        $placeholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());
-        $placeholderTransfer->setIdCmsBlockGlossaryKeyMapping($spyCmsGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping());
-        $placeholderTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
-        $placeholderTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
+        $placeholderTransfer
+            ->setPlaceholder($spyCmsGlossaryKeyMapping->getPlaceholder())
+            ->setTranslationKey($spyGlossaryKey->getKey())
+            ->setFkCmsBlock($spyCmsBlock->getIdCmsBlock())
+            ->setIdCmsBlockGlossaryKeyMapping($spyCmsGlossaryKeyMapping->getIdCmsBlockGlossaryKeyMapping())
+            ->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey())
+            ->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
 
         foreach ($spyGlossaryKey->getSpyGlossaryTranslations() as $spyGlossaryTranslation) {
             $translationTransfer = new CmsBlockGlossaryPlaceholderTranslationTransfer();
-            $translationTransfer->setFkLocale($spyGlossaryTranslation->getFkLocale());
-            $translationTransfer->setLocaleName($spyGlossaryTranslation->getLocale()->getLocaleName());
-            $translationTransfer->setTranslation($spyGlossaryTranslation->getValue());
+            $translationTransfer
+                ->setFkLocale($spyGlossaryTranslation->getFkLocale())
+                ->setLocaleName($spyGlossaryTranslation->getLocale()->getLocaleName())
+                ->setTranslation($spyGlossaryTranslation->getValue());
         }
 
         return $placeholderTransfer;

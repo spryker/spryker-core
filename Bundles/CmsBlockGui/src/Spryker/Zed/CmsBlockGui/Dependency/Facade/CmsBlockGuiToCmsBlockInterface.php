@@ -60,7 +60,7 @@ interface CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossaryPlaceholders($idCmsBlock);
+    public function findGlossary($idCmsBlock);
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer

@@ -32,7 +32,7 @@ class EditGlossaryController extends AbstractController
 
         $glossaryTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findGlossaryPlaceholders($idCmsBlock);
+            ->findGlossary($idCmsBlock);
 
         if ($glossaryTransfer === null) {
             throw new NotFoundHttpException(

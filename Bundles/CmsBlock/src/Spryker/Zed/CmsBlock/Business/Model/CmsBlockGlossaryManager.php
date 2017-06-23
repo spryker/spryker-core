@@ -22,9 +22,6 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 {
 
-    const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/';
-    const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -116,12 +113,12 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 
         $templateContent = $this->readTemplateContents($templateFile);
 
-        preg_match_all(static::CMS_BLOCK_PLACEHOLDER_PATTERN, $templateContent, $cmsPlaceholderLine);
+        preg_match_all($this->config->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
         if (count($cmsPlaceholderLine) == 0) {
             return [];
         }
 
-        preg_match_all(static::CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN, implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
+        preg_match_all($this->config->getPlaceholderValuePattern(), implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
 
         return $placeholderMap[1];
     }

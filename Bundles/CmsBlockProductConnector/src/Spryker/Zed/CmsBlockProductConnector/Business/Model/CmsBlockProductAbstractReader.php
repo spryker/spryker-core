@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 
-class CmsBlockProductReader implements CmsBlockProductReaderInterface
+class CmsBlockProductAbstractReader implements CmsBlockProductReaderInterface
 {
 
     /**

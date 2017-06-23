@@ -93,13 +93,18 @@ interface CmsBlockFacadeInterface
     public function syncTemplate($templatePath);
 
     /**
+     * Specification
+     * - Find CMS Block glossary
+     * - Hydrate glossary placeholders
+     * - Hydrate placeholder translations
+     *
      * @api
      *
      * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossaryPlaceholders($idCmsBlock);
+    public function findGlossary($idCmsBlock);
 
     /**
      * Specification
