@@ -21,6 +21,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/checkout": "If you want to save product specific information during checkout"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
