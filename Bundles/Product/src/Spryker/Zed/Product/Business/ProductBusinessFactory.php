@@ -14,7 +14,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
-use Spryker\Zed\Product\Business\Product\MetadataManager;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
@@ -32,9 +31,10 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductIdHydrator;
 use Spryker\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Product\Business\Product\ProductMetadataHydrator;
+use Spryker\Zed\Product\Business\Product\ProductMetadataSaver;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
-use Spryker\Zed\Product\Business\Product\SuperAttributeManager;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -534,22 +534,21 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\MetadataManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductMetadataSaverInterface
      */
-    public function createMetadataManager()
+    public function createProductMetadataSaver()
     {
-        return new MetadataManager(
-            $this->getProvidedDependency(ProductDependencyProvider::METADATA_SAVER_PLUGINS),
-            $this->getProvidedDependency(ProductDependencyProvider::METADATA_HYDRATOR_PLUGINS)
+        return new ProductMetadataSaver(
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\SuperAttributeManager
+     * @return \Spryker\Zed\Product\Business\Product\ProductMetadataHydratorInterface
      */
-    public function createSuperAttributeManager()
+    public function createProductMetadataHydrator()
     {
-        return new SuperAttributeManager(
+        return new ProductMetadataHydrator(
             $this->getQueryContainer()
         );
     }

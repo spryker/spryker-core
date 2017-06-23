@@ -9,13 +9,13 @@ namespace Spryker\Zed\Product\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductMetadataHydratorInterface;
+use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  */
-class ProductIdHydratorPlugin extends AbstractPlugin implements ProductMetadataHydratorInterface
+class ProductIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
 
     /**
@@ -29,7 +29,7 @@ class ProductIdHydratorPlugin extends AbstractPlugin implements ProductMetadataH
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer)
+    public function hydrate(OrderTransfer $orderTransfer)
     {
         return $this->getFacade()->hydrateProductIds($orderTransfer);
     }

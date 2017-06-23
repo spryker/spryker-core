@@ -8,13 +8,12 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMetadataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class SuperAttributeManager
+class ProductMetadataSaver implements ProductMetadataSaverInterface
 {
 
     /**
@@ -35,7 +34,7 @@ class SuperAttributeManager
      *
      * @return void
      */
-    public function saveSuperAttributeMetadata(QuoteTransfer $quoteTransfer)
+    public function saveProductMetadata(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getItems() as $item) {
             $this->saveItemMetadata($item);
@@ -130,53 +129,6 @@ class SuperAttributeManager
         $entity->setFkSalesOrderItem($productMetadataTransfer->getFkSalesOrderItem());
 
         return $entity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer)
-    {
-        foreach ($orderTransfer->getItems() as $item) {
-            $metadata = $this->findMetadata($item->getIdSalesOrderItem());
-            if (!$metadata) {
-                continue;
-            }
-
-            $metadataTransfer = $this->convertMetadata($metadata);
-            $item->setMetadata($metadataTransfer);
-        }
-
-        return $orderTransfer;
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
-     */
-    protected function findMetadata($idSalesOrderItem)
-    {
-        $metadataEntity = $this->productQueryContainer->queryProductMetadata($idSalesOrderItem)->findOne();
-
-        return $metadataEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata $metadata
-     *
-     * @return \Generated\Shared\Transfer\ProductMetadataTransfer
-     */
-    protected function convertMetadata(SpySalesOrderItemMetadata $metadata)
-    {
-        $metadataTransfer = new ProductMetadataTransfer();
-        $metadataTransfer->setFkSalesOrderItem($metadata->getFkSalesOrderItem());
-        $metadataTransfer->setSuperAttributes(json_decode($metadata->getSuperAttributes(), true));
-        $metadataTransfer->setImage($metadata->getImage());
-
-        return $metadataTransfer;
     }
 
     /**

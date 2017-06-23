@@ -13,13 +13,17 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  */
-class ProductOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
+class ProductMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**
+     * This plugin retrieves (its) data from the quote object and saves it to the database.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -27,7 +31,7 @@ class ProductOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrde
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->saveSalesOrderProductInformation($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->saveProductMetadata($quoteTransfer, $checkoutResponse);
     }
 
 }

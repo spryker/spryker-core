@@ -696,7 +696,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves additional product information like images and super attributes to sales order item tables
+     * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
      *
      * @api
      *
@@ -705,37 +705,19 @@ interface ProductFacadeInterface
      *
      * @return void
      */
-    public function saveSalesOrderProductInformation(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function saveProductMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
-     * Specification
-     * - Hydrates an OrderTransfer with information about the product from the sales order item tables
+     * Specification:
+     * - Hydrates product meta information (image, super attributes) into an order transfer
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function hydrateSalesOrderProductInformation(OrderTransfer $orderTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function saveSuperAttributeMetadata(QuoteTransfer $quoteTransfer);
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer);
+    public function hydrateProductMetadata(OrderTransfer $orderTransfer);
 
     /**
      * Specification:

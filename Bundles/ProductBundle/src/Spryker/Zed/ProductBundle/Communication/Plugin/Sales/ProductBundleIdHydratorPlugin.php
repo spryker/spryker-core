@@ -9,17 +9,19 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductMetadataHydratorInterface;
+use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
  */
-class ProductBundleIdHydratorPlugin extends AbstractPlugin implements ProductMetadataHydratorInterface
+class ProductBundleIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
 
     /**
      * Specification:
+     *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
+     *   - Can be used to add additional data to OrderTransfer
      *
      * @api
      *
@@ -27,7 +29,7 @@ class ProductBundleIdHydratorPlugin extends AbstractPlugin implements ProductMet
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer)
+    public function hydrate(OrderTransfer $orderTransfer)
     {
         return $this->getFacade()->hydrateProductBundleIds($orderTransfer);
     }

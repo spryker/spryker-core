@@ -930,7 +930,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves additional product information like images and super attributes to sales order item tables
+     * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
      *
      * @api
      *
@@ -939,14 +939,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return void
      */
-    public function saveSalesOrderProductInformation(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveProductMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createMetadataManager()->saveOrderInformation($quoteTransfer, $checkoutResponse);
+        $this->getFactory()->createProductMetadataSaver()->saveProductMetadata($quoteTransfer);
     }
 
     /**
-     * Specification
-     * - Hydrates an OrderTransfer with information about the product from the sales order item tables
+     * Specification:
+     * - Hydrates product meta information (image, super attributes) into an order transfer
      *
      * @api
      *
@@ -954,33 +954,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateSalesOrderProductInformation(OrderTransfer $orderTransfer)
+    public function hydrateProductMetadata(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createMetadataManager()->hydrateOrderInformation($orderTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function saveSuperAttributeMetadata(QuoteTransfer $quoteTransfer)
-    {
-        $this->getFactory()->createSuperAttributeManager()->saveSuperAttributeMetadata($quoteTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateSuperAttributeMetadata(OrderTransfer $orderTransfer)
-    {
-        return $this->getFactory()->createSuperAttributeManager()->hydrateSuperAttributeMetadata($orderTransfer);
+        return $this->getFactory()->createProductMetadataHydrator()->hydrateProductMetadata($orderTransfer);
     }
 
     /**
