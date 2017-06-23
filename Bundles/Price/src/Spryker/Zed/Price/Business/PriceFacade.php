@@ -227,7 +227,6 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
-     * TODO: add test
      * {@inheritdoc}
      *
      * @api
@@ -261,7 +260,6 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
-     * TODO: add test
      * {@inheritdoc}
      *
      * @api
@@ -273,6 +271,22 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()->createWriterModel()->persistProductConcretePriceCollection($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findPricesBySku($sku);
     }
 
 }

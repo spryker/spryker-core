@@ -24,6 +24,13 @@ interface ReaderInterface
     public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku);
+
+    /**
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *

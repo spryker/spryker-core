@@ -15,6 +15,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Price\Business\Exception\MissingPriceException;
 use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
@@ -31,6 +32,8 @@ class ReaderTest extends Test
 
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
+    const DUMMY_PRICE_TYPE_3 = 'TYPE3';
+    const DUMMY_PRICE_TYPE_4 = 'TYPE4';
     const DUMMY_SKU_PRODUCT_ABSTRACT = 'ABSTRACT';
     const DUMMY_SKU_PRODUCT_CONCRETE = 'CONCRETE';
     const DUMMY_PRICE_1 = 99;
@@ -99,6 +102,15 @@ class ReaderTest extends Test
     /**
      * @return void
      */
+    public function testHasValidNonExistentPriceForAbstractProductReturnsFalse()
+    {
+        $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_4);
+        $this->assertFalse($hasValidPrice);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetPriceForProductAbstract()
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
@@ -108,10 +120,11 @@ class ReaderTest extends Test
     /**
      * @return void
      */
-    public function testGetPrice()
+    public function testGetNonExistentPriceForAbstractProduct()
     {
-        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
-        $this->assertEquals(100, $price);
+        $this->expectException(MissingPriceException::class);
+
+        $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_4);
     }
 
     /**
@@ -121,6 +134,41 @@ class ReaderTest extends Test
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_CONCRETE, self::DUMMY_PRICE_TYPE_2);
         $this->assertEquals(999, $price);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPricesBySkuForAbstractProductReturnsOnlyAbstractPrices()
+    {
+        $priceProductTransfers = $this->priceFacade->findPricesBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT);
+
+        $this->assertCount(2, $priceProductTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPricesBySkuForConcreteProductReturnsMergedPrices()
+    {
+        $priceProductTransfers = $this->priceFacade->findPricesBySku(self::DUMMY_SKU_PRODUCT_CONCRETE);
+
+        $this->assertCount(3, $priceProductTransfers);
+
+        $expectedPrices = [
+            self::DUMMY_PRICE_TYPE_1 => 100,
+            self::DUMMY_PRICE_TYPE_2 => 999,
+            self::DUMMY_PRICE_TYPE_3 => 120,
+        ];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $expectedPrice = $expectedPrices[$priceProductTransfer->getPriceTypeName()];
+            $this->assertSame(
+                $expectedPrice,
+                $priceProductTransfer->getPrice(),
+                sprintf('Price is not the same as expected in "%s" price type.', $priceProductTransfer->getPriceTypeName())
+            );
+        }
     }
 
     /**
@@ -169,6 +217,12 @@ class ReaderTest extends Test
         $priceTypeEntity2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
         $priceTypeEntity2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
+        $priceTypeEntity3 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_3)->findOneOrCreate();
+        $priceTypeEntity3->setName(self::DUMMY_PRICE_TYPE_3)->save();
+
+        $priceTypeEntity4 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_4)->findOneOrCreate();
+        $priceTypeEntity4->setName(self::DUMMY_PRICE_TYPE_4)->save();
+
         $productAbstractEntity = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->findOne();
@@ -210,7 +264,18 @@ class ReaderTest extends Test
             ->setProduct($productConcreteEntity)
             ->setPriceType($priceTypeEntity2)
             ->setPrice(999)
+            ->save();
 
+        (new SpyPriceProduct())
+            ->setSpyProductAbstract($productAbstractEntity)
+            ->setPriceType($priceTypeEntity3)
+            ->setPrice(100)
+            ->save();
+
+        (new SpyPriceProduct())
+            ->setProduct($productConcreteEntity)
+            ->setPriceType($priceTypeEntity3)
+            ->setPrice(120)
             ->save();
     }
 

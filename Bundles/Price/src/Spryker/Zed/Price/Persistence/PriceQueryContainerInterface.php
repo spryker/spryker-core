@@ -43,6 +43,15 @@ interface PriceQueryContainerInterface
 
     /**
      * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductAbstract($sku);
+
+    /**
+     * @api
 
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
@@ -59,6 +68,15 @@ interface PriceQueryContainerInterface
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductConcrete($sku);
 
     /**
      * @api

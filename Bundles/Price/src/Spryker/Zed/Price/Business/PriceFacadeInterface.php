@@ -225,4 +225,18 @@ interface PriceFacadeInterface
      */
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
 
+    /**
+     * Specification:
+     * - Reads abstract and concrete product prices from database.
+     * - Concrete prices overwrites abstracts for matching price types.
+     * - The provided SKU can represent both abstract or concrete product.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku);
+
 }
