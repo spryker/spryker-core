@@ -41,6 +41,14 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array|\Spryker\Shared\Cms\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface[]
+     */
+    public function getCmsContentWidgetConfigurationProviders()
+    {
+        return [];
+    }
+
+    /**
      * @return bool
      */
     public function appendPrefixToCmsPageUrl()

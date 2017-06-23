@@ -113,5 +113,16 @@
         <property name="cmsTemplate" type="CmsTemplate" />
         <property name="cmsGlossary" type="CmsGlossary" />
     </transfer>
+
+    <transfer name="CmsContentWidgetConfigurationList">
+        <property name="cmsContentWidgetConfigurations" type="CmsContentWidgetConfiguration[]" singular="cmsContentWidgetConfiguration"/>
+    </transfer>
+
+    <transfer name="CmsContentWidgetConfiguration">
+        <property name="templates" type="array" singular="template"/>
+        <property name="usageInformation" type="string" />
+        <property name="functionName" type="string" />
+    </transfer>
+
 </transfers>
 

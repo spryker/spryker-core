@@ -82,9 +82,14 @@ class CreateGlossaryController extends AbstractController
             ->getCmsFacade()
             ->findCmsPageById($idCmsPage);
 
+        $cmsContentWidgetTemplateList = $this->getFactory()
+            ->getCmsFacade()
+            ->getContentWidgetTemplateList();
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
+            'cmsContentWidgetTemplateList' => $cmsContentWidgetTemplateList,
             'availableLocales' => $availableLocales,
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,

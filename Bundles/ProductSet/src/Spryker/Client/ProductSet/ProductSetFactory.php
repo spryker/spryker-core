@@ -8,8 +8,10 @@
 namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductSet\KeyBuilder\ProductSetResourceKeyBuilder;
 use Spryker\Client\ProductSet\Mapper\ProductSetStorageMapper;
 use Spryker\Client\ProductSet\Plugin\Elasticsearch\Query\ProductSetListQueryPlugin;
+use Spryker\Client\ProductSet\Storage\ProductSetStorage;
 
 class ProductSetFactory extends AbstractFactory
 {
@@ -29,6 +31,28 @@ class ProductSetFactory extends AbstractFactory
             ->expandQuery($searchQuery, $this->createProductSetListQueryExpanders());
 
         return $searchQuery;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSet\Storage\ProductSetStorage
+     */
+    public function createProductSetStorage()
+    {
+        return new ProductSetStorage(
+            $this->getStorageClient(),
+            $this->createProductSetResourceBuilder(),
+            $this->getUtilEncodingService(),
+            $this->getLocaleClient()->getCurrentLocale(),
+            $this->createProductSetStorageMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createProductSetResourceBuilder()
+    {
+        return new ProductSetResourceKeyBuilder();
     }
 
     /**
@@ -61,6 +85,30 @@ class ProductSetFactory extends AbstractFactory
     protected function createProductSetListQueryExpanders()
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSet\Dependency\Service\ProductSetToUtilEncodingInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductSetDependencyProvider::UTIL_ENCODING_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(ProductSetDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Product\Dependency\Client\ProductToLocaleInterface
+     */
+    public function getLocaleClient()
+    {
+        return $this->getProvidedDependency(ProductSetDependencyProvider::CLIENT_LOCALE);
     }
 
 }

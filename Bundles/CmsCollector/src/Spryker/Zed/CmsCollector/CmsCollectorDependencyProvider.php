@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsCollector;
 
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
@@ -18,6 +19,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
+    const FACADE_CMS = 'FACADE_CMS';
 
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
@@ -45,6 +47,10 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        };
+
+        $container[static::FACADE_CMS] = function (Container $container) {
+            return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
         };
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {

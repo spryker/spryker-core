@@ -31,11 +31,10 @@
 
         {{ form_start(glossaryForm) }}
 
-        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
+        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm, 'cmsContentWidgetTemplateList' : cmsContentWidgetTemplateList}) }}
         {% do glossaryForm.glossaryAttributes.setRendered %}
 
         {{ form_end(glossaryForm) }}
-
     {% else %}
         <div class="alert alert-danger">
             {{ "Missing placeholders for selected template." | trans }}

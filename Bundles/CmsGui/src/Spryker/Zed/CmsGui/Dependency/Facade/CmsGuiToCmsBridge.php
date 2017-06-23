@@ -200,4 +200,12 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
         return $this->cmsFacade->syncTemplate($cmsTemplateFolderPath);
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
+     */
+    public function getContentWidgetTemplateList()
+    {
+        return $this->cmsFacade->getContentWidgetTemplateList();
+    }
+
 }

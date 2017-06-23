@@ -31,6 +31,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
+    const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'cms_content_widget_parameter_mappers';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -95,6 +96,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container[static::PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS] = function (Container $container) {
+            return $this->getCmsContentWidgetParameterMapperPlugins($container);
+        };
+
         return $container;
     }
 
@@ -138,6 +143,16 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected function getTransferExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return array|\Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
+     */
+    protected function getCmsContentWidgetParameterMapperPlugins(Container $container)
     {
         return [];
     }

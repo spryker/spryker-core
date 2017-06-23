@@ -41,4 +41,17 @@ interface ProductSetClientInterface
      */
     public function mapProductSetStorageDataToTransfer(array $productSetStorageData);
 
+    /**
+     * Specification:
+     *  - Reads product set data from yves storage
+     *  - Maps data to transfer
+     *
+     * @api
+     *
+     * @param int $idProductSet
+     *
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     */
+    public function getProductSetByIdProductSet($idProductSet);
+
 }

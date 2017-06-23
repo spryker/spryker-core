@@ -9,6 +9,8 @@ namespace Spryker\Zed\Cms\Business;
 
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Block\BlockRemover;
+use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetParameterMapper;
+use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetTemplateListProvider;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGenerator;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
@@ -352,6 +354,30 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     protected function createCmsGlossaryKeyGenerator()
     {
         return new CmsGlossaryKeyGenerator($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetParameterMapperInterface
+     */
+    public function createCmsContentWidgetParameterMapper()
+    {
+        return new ContentWidgetParameterMapper($this->getCmsContentWidgetParameterMapperPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetTemplateListProviderInterface
+     */
+    public function createCmsContentWidgetTemplateListProvider()
+    {
+        return new ContentWidgetTemplateListProvider($this->getConfig()->getCmsContentWidgetConfigurationProviders());
+    }
+
+    /**
+     * @return \Spryker\Yves\Cms\Dependency\CmsContentWidgetPluginInterface[]
+     */
+    protected function getCmsContentWidgetParameterMapperPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS);
     }
 
 }
