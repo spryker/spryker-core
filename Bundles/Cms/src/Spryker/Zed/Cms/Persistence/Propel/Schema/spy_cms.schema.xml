@@ -71,6 +71,29 @@
         <id-method-parameter value="spy_cms_glossary_key_mapping_pk_seq"/>
     </table>
 
+    <table name="spy_cms_block" phpName="SpyCmsBlock">
+        <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_page" type="INTEGER" required="true"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="type" type="VARCHAR" size="255"/>
+        <column name="value" type="INTEGER" />
+        <foreign-key name="spy_cms_block-foreign-fk_page" foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
+            <reference foreign="id_cms_page" local="fk_page"/>
+        </foreign-key>
+        <unique name="spy_cms_block-unique-fk_page">
+            <unique-column name="fk_page"/>
+        </unique>
+        <unique name="spy_cms_block-name">
+            <unique-column name="name"/>
+            <unique-column name="type"/>
+            <unique-column name="value"/>
+        </unique>
+        <index name="spy_cms_block-index-fk_page">
+            <index-column name="fk_page"/>
+        </index>
+        <id-method-parameter value="spy_cms_block_pk_seq"/>
+    </table>
+
     <table name="spy_cms_version">
         <column name="id_cms_version" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" type="INTEGER" required="true"/>

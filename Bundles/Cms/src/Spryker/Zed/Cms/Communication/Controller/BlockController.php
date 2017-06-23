@@ -28,6 +28,30 @@ class BlockController extends AbstractController
     const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $blockTable = $this->getFactory()
+            ->createCmsBlockTable($this->getCurrentIdLocale());
+
+        return [
+            'blocks' => $blockTable->render(),
+        ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getFactory()
+            ->createCmsBlockTable($this->getCurrentIdLocale());
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
