@@ -173,7 +173,7 @@ class CmsBlockTable extends AbstractTable
         if ($item[SpyCmsBlockTableMap::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
                 Url::generate(static::URL_CMS_BLOCK_DEACTIVATE, [
-                    self::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+                    static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                 ]),
                 'Deactivate'
             );

@@ -105,7 +105,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new CmsBlockCategoryConnectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
 
@@ -119,7 +119,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
+        $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
         };
 

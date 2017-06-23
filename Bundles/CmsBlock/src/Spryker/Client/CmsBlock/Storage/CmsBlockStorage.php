@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlock\Storage;
 
+use Spryker\Client\CmsBlock\CmsBlockToStorageClientInterface;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -14,7 +15,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 {
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var CmsBlockToStorageClientInterface
      */
     protected $storage;
 
@@ -24,11 +25,11 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $keyBuilder;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $storage
+     * @param CmsBlockToStorageClientInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface KeyBuilderInterface $keyBuilder
      */
     public function __construct(
-        StorageClientInterface $storage,
+        CmsBlockToStorageClientInterface $storage,
         KeyBuilderInterface $keyBuilder
     ) {
         $this->storage = $storage;

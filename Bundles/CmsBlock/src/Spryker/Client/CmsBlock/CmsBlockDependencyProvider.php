@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Container;
 class CmsBlockDependencyProvider extends AbstractDependencyProvider
 {
 
-    const KV_STORAGE = 'kv storage';
+    const KV_STORAGE = 'CLIENT:CMS_BLOCK:KV_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -36,7 +36,7 @@ class CmsBlockDependencyProvider extends AbstractDependencyProvider
     protected function addKvStorage(Container $container)
     {
         $container[static::KV_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
+            return new CmsBlockToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;
