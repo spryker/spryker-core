@@ -15,6 +15,9 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
+/**
+ * @deprecated Use CMS Block module instead
+ */
 class CmsBlockTable extends AbstractTable
 {
 

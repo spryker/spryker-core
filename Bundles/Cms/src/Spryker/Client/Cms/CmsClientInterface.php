@@ -13,6 +13,8 @@ interface CmsClientInterface
 {
 
     /**
+     * @deprecated Use CMS Block module instead
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer

@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use CMS Block module instead
+ *
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()

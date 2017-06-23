@@ -14,6 +14,8 @@ class CmsClient extends AbstractClient implements CmsClientInterface
 {
 
     /**
+     * @deprecated Use CMS Block module instead
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
@@ -26,6 +28,8 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     }
 
     /**
+     * @deprecated Use CMS Block module instead
+     *
      * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
     private function createCmsBlockFinder()
