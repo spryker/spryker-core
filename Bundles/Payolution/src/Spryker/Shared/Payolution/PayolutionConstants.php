@@ -50,6 +50,14 @@ interface PayolutionConstants
     const STATUS_REASON_CODE_SUCCESS = self::STATUS_CODE_SUCCESS . '.' . self::REASON_CODE_SUCCESS;
     const SUCCESSFUL_PRE_AUTHORIZATION_PROCESSING_CODE = 'VA.PA.90.00';
 
+    /** @deprecated Please use PayolutionConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    /**
+     * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     */
+    const BASE_URL_YVES = 'PAYOLUTION:BASE_URL_YVES';
 
 }

@@ -52,7 +52,7 @@ class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
      */
     protected function getAbstractRequestMock()
     {
-        $baseUrl = 'http://' . Config::get(ZedRequestConstants::HOST_ZED_API);
+        $baseUrl = Config::get(ZedRequestConstants::BASE_URL_ZED_API);
         $url = $baseUrl . '/';
 
         $utilNetworkService = new UtilNetworkService();

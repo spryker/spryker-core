@@ -206,7 +206,10 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getWebshopUrl()
     {
-        return $this->get(PayolutionConstants::HOST_YVES);
+        return $this->getConfig()->hasKey(PayolutionConstants::BASE_URL_YVES)
+            ? $this->get(PayolutionConstants::BASE_URL_YVES)
+            // @deprecated this is just for backward compatibility
+            : $this->get(PayolutionConstants::HOST_YVES);
     }
 
 }
