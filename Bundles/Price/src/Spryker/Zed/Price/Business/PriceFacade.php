@@ -289,4 +289,37 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
             ->findPricesBySku($sku);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findProductAbstractPrices($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+    }
+
 }

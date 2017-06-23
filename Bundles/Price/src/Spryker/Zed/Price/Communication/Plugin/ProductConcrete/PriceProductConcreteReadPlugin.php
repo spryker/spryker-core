@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Price\Communication\Plugin\ProductConcrete;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
@@ -24,24 +25,17 @@ class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductCo
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $defaultPriceType = $this->getFacade()->getDefaultPriceTypeName();
-        $priceTypes = $this->getFacade()->getPriceTypeValues();
+        $priceProductTransfer = $this->getFacade()->findProductConcretePrice($productConcreteTransfer->getIdProductConcrete());
+        if ($priceProductTransfer) {
+            $productConcreteTransfer->setPrice($priceProductTransfer);
+        }
 
-        foreach ($priceTypes as $priceType) {
-            $priceProductTransfer = $this->getFacade()->findProductConcretePrice(
-                $productConcreteTransfer->getIdProductConcrete(),
-                $priceType
-            );
-
-            if (!$priceProductTransfer) {
-                continue;
-            }
-
-            if ($priceProductTransfer->getPriceTypeName() === $defaultPriceType) {
-                $productConcreteTransfer->setPrice($priceProductTransfer);
-            }
-
-            $productConcreteTransfer->addPrices($priceProductTransfer);
+        $priceProductTransfers = $this->getFacade()->findProductConcretePrices(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+        if ($priceProductTransfers) {
+            $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
         }
 
         return $productConcreteTransfer;

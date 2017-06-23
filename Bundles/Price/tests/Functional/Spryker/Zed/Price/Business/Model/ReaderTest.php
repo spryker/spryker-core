@@ -42,7 +42,17 @@ class ReaderTest extends Test
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacade
      */
-    private $priceFacade;
+    protected $priceFacade;
+
+    /**
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    protected $productAbstractEntity;
+
+    /**
+     * @var \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected $productConcreteEntity;
 
     /**
      * @return void
@@ -172,6 +182,60 @@ class ReaderTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testFindPricesByIdForAbstractProductReturnsAbstractPrices()
+    {
+        $priceProductTransfers = $this->priceFacade->findProductAbstractPrices(
+            $this->productAbstractEntity->getIdProductAbstract()
+        );
+
+        $this->assertCount(2, $priceProductTransfers);
+
+        $expectedPrices = [
+            self::DUMMY_PRICE_TYPE_1 => 100,
+            self::DUMMY_PRICE_TYPE_3 => 100,
+        ];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $expectedPrice = $expectedPrices[$priceProductTransfer->getPriceTypeName()];
+            $this->assertSame(
+                $expectedPrice,
+                $priceProductTransfer->getPrice(),
+                sprintf('Price is not the same as expected in "%s" price type.', $priceProductTransfer->getPriceTypeName())
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPricesByIdForConcreteProductReturnsMergedPrices()
+    {
+        $priceProductTransfers = $this->priceFacade->findProductConcretePrices(
+            $this->productConcreteEntity->getIdProduct(),
+            $this->productConcreteEntity->getFkProductAbstract()
+        );
+
+        $this->assertCount(3, $priceProductTransfers);
+
+        $expectedPrices = [
+            self::DUMMY_PRICE_TYPE_1 => 100,
+            self::DUMMY_PRICE_TYPE_2 => 999,
+            self::DUMMY_PRICE_TYPE_3 => 120,
+        ];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $expectedPrice = $expectedPrices[$priceProductTransfer->getPriceTypeName()];
+            $this->assertSame(
+                $expectedPrice,
+                $priceProductTransfer->getPrice(),
+                sprintf('Price is not the same as expected in "%s" price type.', $priceProductTransfer->getPriceTypeName())
+            );
+        }
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $spyProductAbstractEntity
      *
      * @return void
@@ -277,6 +341,9 @@ class ReaderTest extends Test
             ->setPriceType($priceTypeEntity3)
             ->setPrice(120)
             ->save();
+
+        $this->productAbstractEntity = $productAbstractEntity;
+        $this->productConcreteEntity = $productConcreteEntity;
     }
 
 }

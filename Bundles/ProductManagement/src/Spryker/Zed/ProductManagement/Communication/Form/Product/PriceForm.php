@@ -9,18 +9,15 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
- */
 class PriceForm extends AbstractType
 {
 

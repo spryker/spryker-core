@@ -239,4 +239,30 @@ interface PriceFacadeInterface
      */
     public function findPricesBySku($sku);
 
+    /**
+     * Specification:
+     * - Reads abstract product prices from database.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Reads abstract and concrete product prices from database.
+     * - Concrete prices overwrites abstracts for matching price types.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+
 }
