@@ -87,28 +87,4 @@ class EditGlossaryController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function searchAction(Request $request)
-    {
-//        $value = $request->query->get('value');
-//        $key = $request->query->get('key');
-//
-//        $result = [];
-//        if ($key !== null) {
-//            $result = $this->getFactory()
-//                ->createAutocompleteDataProvider()
-//                ->getAutocompleteDataForTranslationKey($key);
-//        } elseif ($value != null) {
-//            $result = $this->getFactory()
-//                ->createAutocompleteDataProvider()
-//                ->getAutocompleteDataForTranslationValue($value);
-//        }
-//
-//        return $this->jsonResponse($result);
-    }
-
 }
