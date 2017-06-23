@@ -21,6 +21,8 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
