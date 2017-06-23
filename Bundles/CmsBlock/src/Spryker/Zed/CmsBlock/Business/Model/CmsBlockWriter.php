@@ -82,11 +82,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     public function activateById($idCmsBlock)
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
-            $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
-            $spyCmsBlock->setIsActive(true);
-            $spyCmsBlock->save();
-
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->updateIsActiveByIdTransaction($idCmsBlock, true);
         });
     }
 
@@ -98,11 +94,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     public function deactivateById($idCmsBlock)
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
-            $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
-            $spyCmsBlock->setIsActive(false);
-            $spyCmsBlock->save();
-
-            $this->touchFacade->touchDeleted(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->updateIsActiveByIdTransaction($idCmsBlock, false);
         });
     }
 
@@ -239,6 +231,21 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         }
 
         $cmsBlockTransfer->setIdCmsBlock($spyCmsBlock->getIdCmsBlock());
+    }
+
+    /**
+     * @param int $idCmsBlock
+     * @param bool $isActive
+     *
+     * @return void
+     */
+    protected function updateIsActiveByIdTransaction($idCmsBlock, $isActive)
+    {
+        $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
+        $spyCmsBlock->setIsActive($isActive);
+        $spyCmsBlock->save();
+
+        $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
     }
 
 }
