@@ -97,9 +97,9 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param $optionKey
-     * @param $idResources
-     * @param $localeName
+     * @param string $optionKey
+     * @param int[] $idResources
+     * @param string $localeName
      *
      * @return string[]
      */
