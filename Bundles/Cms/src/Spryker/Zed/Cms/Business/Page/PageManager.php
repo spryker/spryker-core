@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
@@ -40,7 +39,9 @@ class PageManager implements PageManagerInterface
     protected $templateManager;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Block\BlockManagerInterface
+     * @deprecated
+     *
+     * @var mixed
      */
     protected $blockManager;
 
@@ -62,12 +63,13 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
-     * @param \Spryker\Zed\Cms\Business\Block\BlockManagerInterface $blockManager
+     * @param @deprecated mixed $blockManager
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
+     *
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, BlockManagerInterface $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
@@ -325,22 +327,6 @@ class PageManager implements PageManagerInterface
         $this->cmsQueryContainer->getConnection()->commit();
 
         return $urlTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
-     *
-     * @return \Generated\Shared\Transfer\PageTransfer
-     */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
-    {
-        $savedPageTransfer = $this->savePage($pageTransfer);
-        $blockTransfer->setFkPage($savedPageTransfer->getIdCmsPage());
-
-        $this->blockManager->saveBlockAndTouch($blockTransfer);
-
-        return $savedPageTransfer;
     }
 
     /**

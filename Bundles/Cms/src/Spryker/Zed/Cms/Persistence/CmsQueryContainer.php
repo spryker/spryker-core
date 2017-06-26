@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
@@ -21,7 +20,6 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -102,18 +100,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPages()
     {
         $query = $this->getFactory()->createCmsPageQuery();
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlocks()
-    {
-        $query = $this->getFactory()->createCmsBlockQuery();
 
         return $query;
     }
@@ -216,74 +202,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn("GROUP_CONCAT(" . SpyUrlTableMap::COL_URL . ")", self::URL)
             ->withColumn(self::IS_ACTIVE)
             ->groupByIdCmsPage();
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryPageWithTemplatesAndBlocks($idLocale)
-    {
-        return $this->queryBlocks()
-            ->leftJoinSpyCmsPage()
-            ->useSpyCmsPageQuery()
-                ->joinCmsTemplate()
-                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-                ->endUse()
-            ->addJoin(
-                SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                [SpyCategoryNodeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
-                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, $idLocale],
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                [SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, SpyUrlTableMap::COL_FK_LOCALE],
-                [SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, $idLocale],
-                Criteria::LEFT_JOIN
-            )
-            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
-            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
-            ->withColumn(self::IS_ACTIVE);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCmsBlock
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryPageWithTemplatesAndBlocksById($idCmsBlock)
-    {
-        return $this->queryBlocks()
-            ->filterByIdCmsBlock($idCmsBlock)
-            ->leftJoinSpyCmsPage()
-            ->useSpyCmsPageQuery()
-                ->joinCmsTemplate()
-                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-                ->endUse()
-            ->addJoin(
-                SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                Criteria::LEFT_JOIN
-            )
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
-            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
-            ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FIELD_FK_TEMPLATE)
-            ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive');
     }
 
     /**
@@ -542,36 +460,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
-     * @param int $idCmsPage
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByIdPage($idCmsPage)
-    {
-        return $this->queryBlocks()
-            ->filterByFkPage($idCmsPage);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $blockName
-     * @param string $blockType
-     * @param string $blockValue
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue)
-    {
-        return $this->queryBlocks()
-            ->filterByName($blockName)
-            ->filterByType($blockType)
-            ->filterByValue($blockValue);
-    }
-
-    /**
-     * @api
-     *
      * @param string $categoryName
      * @param int $idLocale
      *
@@ -600,34 +488,6 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     protected function getCategoryQueryContainer()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_CATEGORY);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByIdCategoryNode($idCategoryNode)
-    {
-        return $this->queryBlocks()
-            ->filterByType(CmsConstants::RESOURCE_TYPE_CATEGORY_NODE)
-            ->filterByValue($idCategoryNode);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCmsBlock
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockById($idCmsBlock)
-    {
-        return $this
-            ->queryBlocks()
-            ->filterByIdCmsBlock($idCmsBlock);
     }
 
     /**

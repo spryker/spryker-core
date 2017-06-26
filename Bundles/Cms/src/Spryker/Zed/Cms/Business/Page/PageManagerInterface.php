@@ -87,12 +87,4 @@ interface PageManagerInterface
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
-     *
-     * @return \Generated\Shared\Transfer\PageTransfer
-     */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer);
-
 }
