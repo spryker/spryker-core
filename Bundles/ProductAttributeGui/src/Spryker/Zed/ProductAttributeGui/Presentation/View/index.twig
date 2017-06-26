@@ -1,0 +1,69 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Manage Attributes' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/product-management'), 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
+        {% block widget_content %}
+        <table class="table table-striped table-bordered table-hover gui-table-data" id="selectedProductsTable" data-paging="false">
+            <thead>
+            <tr>
+                <th>key</th>
+                {% for localeCode,localeData in locales %}
+                    {% if localeCode == '_' %}
+                        <th>{{ 'value' }}</th>
+                    {% else %}
+                        <th>{{ 'value [' ~ localeCode }}]</th>
+                    {% endif %}
+                {% endfor %}
+                <th>action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for localeCode,localeData in locales %}
+                {% if productAttributeValues[localeCode] is defined %}
+                    {% for key,value in productAttributeValues[localeCode] %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            {% for localeCode,localeData in productAttributeValues %}
+                                {% if localeData[key] is defined %}
+                                    <td>{{ localeData[key]  }}</td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>remove</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
+        {% block widget_content %}
+            <div>
+
+                {{ form_start(attributeKeyForm) }}
+                {{ form_widget(attributeKeyForm) }}
+                <button class="btn btn-primary">Add</button>
+                {{ form_end(attributeKeyForm) }}
+
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productattributegui-main.js"></script>
+{% endblock %}

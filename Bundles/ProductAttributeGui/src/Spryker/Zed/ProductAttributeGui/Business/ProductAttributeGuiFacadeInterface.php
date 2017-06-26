@@ -28,4 +28,14 @@ interface ProductAttributeGuiFacadeInterface
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
 
+    /**
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestProductAttributeKeys($searchText = '', $limit = 10);
+
 }

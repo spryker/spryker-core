@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,88 +35,37 @@ class ViewController extends AbstractController
             static::PARAM_ID_PRODUCT_ABSTRACT
         ));
 
-        $attributes = $this
-            ->getFacade()
-            ->getAttributes($idProductAbstract);
+        $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createAttributeKeyForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         $values = $this
             ->getFacade()
             ->getProductAbstractAttributeValues($idProductAbstract);
 
-        $values = $this->formatValues($attributes, $values);
-
         $locales = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
 
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setIdLocale(null);
+        $localeTransfer->setLocaleName('_');
+
+        $locales['_'] = $localeTransfer;
+
+        ksort($locales);
+        ksort($values);
+
         return $this->viewResponse([
-            'attributes' => $attributes,
+            'attributeKeyForm' => $form->createView(),
             'locales' => $locales,
             'productAttributeValues' => $values,
         ]);
-    }
-
-    /**
-     * @param array $attributeCollection
-     * @param array $values
-     *
-     * @return array
-     */
-    protected function formatValues(array $attributeCollection, array $values)
-    {
-        $result = [];
-        foreach ($values as $idLocale => $localizedData) {
-            foreach ($localizedData as $key => $value) {
-                $result[$idLocale][$key] = $value;
-
-                $currentAttribute = $this->findAttributeByKey($attributeCollection, $key, $idLocale);
-                if (!$currentAttribute) {
-                    continue;
-                }
-
-                $translation = trim($currentAttribute['translation']);
-                if ($translation) {
-                    $result[$idLocale][$key] = $translation;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param array $attributeCollection
-     * @param $key
-     * @param $idLocale
-     *
-     * @return null
-     */
-    protected function findAttributeByKey(array $attributeCollection, $key, $idLocale)
-    {
-        foreach ($attributeCollection as $attribute) {
-            $attributeKey = $attribute['attribute_key'];
-            $fkLocale = $attribute['fk_locale'];
-
-            if ($attributeKey !== $key) {
-                continue;
-            }
-
-            if ($idLocale === 'default') {
-                $idLocale = null;
-            }
-
-            if ($idLocale !== null) {
-                if ($fkLocale !== $idLocale) {
-                    continue;
-                }
-
-                return $attribute;
-            }
-
-            return $attribute;
-        }
-
-        return null;
     }
 
 }

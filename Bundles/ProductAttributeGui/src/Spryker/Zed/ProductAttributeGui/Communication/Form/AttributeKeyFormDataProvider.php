@@ -5,15 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-class AttributeFormDataProvider
+class AttributeKeyFormDataProvider
 {
 
-    /**
-     * @return array
-     */
     public function getData()
+    {
+        return [];
+    }
+
+    public function getOptions()
     {
         return [];
     }

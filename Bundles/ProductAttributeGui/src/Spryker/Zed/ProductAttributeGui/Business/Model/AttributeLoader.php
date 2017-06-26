@@ -19,7 +19,7 @@ use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInt
 class AttributeLoader implements AttributeLoaderInterface
 {
 
-    const DEFAULT_LOCALE = 'default';
+    const DEFAULT_LOCALE = '_';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface

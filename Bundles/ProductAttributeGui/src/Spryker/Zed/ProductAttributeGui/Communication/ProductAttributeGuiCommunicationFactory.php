@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider;
 use Spryker\Zed\ProductAttributeGui\Communication\Table\ProductAbstractTable;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
 
@@ -42,6 +44,27 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     protected function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider
+     */
+    public function createAttributeKeyFormDataProvider()
+    {
+        return new AttributeKeyFormDataProvider();
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAttributeKeyForm(array $formData, array $formOptions = [])
+    {
+        $formType = new AttributeKeyForm();
+
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
 
     /**

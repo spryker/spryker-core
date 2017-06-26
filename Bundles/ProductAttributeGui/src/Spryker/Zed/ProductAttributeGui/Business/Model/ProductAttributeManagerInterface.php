@@ -24,4 +24,12 @@ interface ProductAttributeManagerInterface
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
 
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestKeys($searchText, $limit);
+
 }
