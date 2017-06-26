@@ -23,9 +23,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -199,6 +202,42 @@ class DiscountFacadeTest extends Test
     {
         $discountFacade = $this->createDiscountFacade();
         $fields = $discountFacade->getQueryStringFieldsByType(MetaProviderFactory::TYPE_DECISION_RULE);
+
+        $this->assertNotEmpty($fields);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQueryStringValueOptionsByTypeForCollectorShouldReturnListOfValueOptionsForGivenType()
+    {
+        $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
+        $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
+
+        $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
+            DiscountDependencyProvider::COLLECTOR_PLUGINS,
+            $discountRulePluginMock
+        );
+
+        $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_COLLECTOR);
+
+        $this->assertNotEmpty($fields);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQueryStringValueOptionsByTypeForDecisionRuleShouldReturnListOfValueOptionsForGivenType()
+    {
+        $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
+        $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
+
+        $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
+            DiscountDependencyProvider::DECISION_RULE_PLUGINS,
+            $discountRulePluginMock
+        );
+
+        $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_DECISION_RULE);
 
         $this->assertNotEmpty($fields);
     }
@@ -668,7 +707,7 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function createDiscountFacade()
     {
@@ -703,6 +742,40 @@ class DiscountFacadeTest extends Test
         $discountConfiguratorTransfer->setDiscountCondition($discountConditionTransfer);
 
         return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param string $dependencyType
+     * @param \PHPUnit_Framework_MockObject_MockObject $discountRulePluginMock
+     *
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function createDiscountFacadeForDiscountRuleWithValueOptionsPlugin($dependencyType, $discountRulePluginMock)
+    {
+        $discountFacade = $this->createDiscountFacade();
+        $factory = new DiscountBusinessFactory();
+        $container = new Container();
+        $container[$dependencyType] = function () use ($discountRulePluginMock) {
+            return [
+                $discountRulePluginMock,
+            ];
+        };
+        $factory->setContainer($container);
+        $discountFacade->setFactory($factory);
+
+        return $discountFacade;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createDiscountRuleWithValueOptionsPluginMock()
+    {
+        $discountRulePluginMock = $this->getMockBuilder(DiscountRuleWithValueOptionsPluginInterface::class)
+            ->setMethods(['getQueryStringValueOptions'])
+            ->getMock();
+
+        return $discountRulePluginMock;
     }
 
 }
