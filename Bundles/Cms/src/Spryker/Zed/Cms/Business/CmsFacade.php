@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;

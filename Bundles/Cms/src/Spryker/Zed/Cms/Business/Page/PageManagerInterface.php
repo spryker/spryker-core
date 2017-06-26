@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;

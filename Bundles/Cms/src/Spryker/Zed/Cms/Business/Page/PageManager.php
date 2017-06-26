@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
@@ -63,11 +62,10 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
-     * @param @deprecated mixed $blockManager
+     * @param mixed $blockManager @deprecated
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
-     *
      */
     public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
     {

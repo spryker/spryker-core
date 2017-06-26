@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;

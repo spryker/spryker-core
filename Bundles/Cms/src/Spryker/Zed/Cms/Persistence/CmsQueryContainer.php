@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Cms\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
@@ -18,7 +17,6 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
