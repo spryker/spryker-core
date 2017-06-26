@@ -33,7 +33,7 @@ class CmsBlockTable extends AbstractTable
     const URL_CMS_BLOCK_ACTIVATE = '/cms-block-gui/edit-block/activate';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
 
