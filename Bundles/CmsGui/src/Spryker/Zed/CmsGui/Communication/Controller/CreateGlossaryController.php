@@ -84,7 +84,7 @@ class CreateGlossaryController extends AbstractController
 
         $cmsContentWidgetTemplateList = $this->getFactory()
             ->getCmsFacade()
-            ->getContentWidgetTemplateList();
+            ->getContentWidgetConfigurationList();
 
         return [
             'glossaryForm' => $glossaryForm->createView(),

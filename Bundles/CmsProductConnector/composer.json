@@ -1,14 +1,14 @@
 {
   "name": "spryker/cms-product-connector",
-  "description": "CmsProductConnector bundle",
+  "description": "CmsProductConnector module",
   "license": "proprietary",
   "require": {
     "spryker/cms": "^5.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/product": "^5.0.0"
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
-    "spryker/PropelOrm": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",

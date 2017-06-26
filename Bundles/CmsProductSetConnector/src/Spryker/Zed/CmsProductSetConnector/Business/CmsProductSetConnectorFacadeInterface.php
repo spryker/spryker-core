@@ -19,10 +19,10 @@ interface CmsProductSetConnectorFacadeInterface
      *
      * @api
      *
-     * @param array $skuList
+     * @param array $keyList
      *
      * @return array
      */
-    public function mapProductKeyList(array $skuList);
+    public function mapProductKeyList(array $keyList);
 
 }

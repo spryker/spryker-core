@@ -54,6 +54,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+
         return $container;
     }
 
@@ -148,6 +152,12 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * Cms content widget parameter plugins is used when collecting data to yves data store,
+     * this mapping is needed because parameters provider to functions is not the same as we use to read from yves data store.
+     * For example 'sku1' => 'primary key in redis', this will map sku to primary key and store together with cms content.
+     *
+     * Should be configured as key value pair where key is function name and value is concrete parameter mapper plugin.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return array|\Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]

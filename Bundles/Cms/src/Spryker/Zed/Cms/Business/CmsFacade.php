@@ -670,18 +670,17 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
      */
-    public function getContentWidgetTemplateList()
+    public function getContentWidgetConfigurationList()
     {
         return $this->getFactory()
             ->createCmsContentWidgetTemplateListProvider()
-            ->getAllTemplates();
+            ->getContentWidgetConfigurationList();
     }
 
 }

@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Cms\Business\ContentWidget;
 
-interface ContentWidgetTemplateListProviderInterface
+interface ContentWidgetFunctionMatcherInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
+     * @param string $content
+     *
+     * @return \Generated\Shared\Transfer\CmsContentWidgetFunctionsTransfer
      */
-    public function getAllTemplates();
+    public function extractTwigFunctions($content);
 
 }

@@ -229,4 +229,12 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
 }

@@ -54,19 +54,23 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array|\Spryker\Yves\Cms\Dependency\CmsContentWidgetPluginInterface[]
-     */
-    public function getCmsContentWidgetPlugins()
-    {
-        return [];
-    }
-
-    /**
      * @return \Spryker\Shared\Config\Environment
      */
     protected function getApplicationEnvironment()
     {
         return Environment::getInstance();
+    }
+
+    /**
+     *
+     * Returns list of cms content widget plugins which are twig functions used in cms content pages/blocks.
+     * Should return key value pair where key is function name and value is concrete content widget plugin.
+     *
+     * @return array|\Spryker\Yves\Cms\Dependency\CmsContentWidgetPluginInterface[]
+     */
+    public function getCmsContentWidgetPlugins()
+    {
+        return [];
     }
 
 }

@@ -20,15 +20,15 @@ class CmsProductSetConnectorFacade extends AbstractFacade implements CmsProductS
      *
      * @api
      *
-     * @param array $skuList
+     * @param array $keyList
      *
      * @return array
      */
-    public function mapProductKeyList(array $skuList)
+    public function mapProductKeyList(array $keyList)
     {
         return $this->getFactory()
             ->createCmsProductSkuMapper()
-            ->mapProductSetKeyList($skuList);
+            ->mapProductSetKeyList($keyList);
     }
 
 }

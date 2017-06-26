@@ -7,16 +7,21 @@
 
 namespace Spryker\Zed\Cms\Business\ContentWidget;
 
+use Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer;
+use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetFunctionMatcherInterface;
+
 class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterface
 {
-
-    const TWIG_FUNCTION_WITH_PARAMETER_REGEXP = '/{{(?:\s)?(?:&nbsp;)?([a-z_-]+)\(\[?(.*?)\]?\)(?:\s)?(?:&nbsp;)?}}/i';
-    const TRIM_WHITELIST = "'\" \t\n\r\v";
 
     /**
      * @var array|\Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
     protected $contentWidgetParameterMapperPlugins = [];
+
+    /**
+     * @var \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetFunctionMatcherInterface
+     */
+    protected $contentWidgetFunctionMatcher;
 
     /**
      * @var array
@@ -25,10 +30,14 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
     /**
      * @param array|\Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
+     * @param \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetFunctionMatcherInterface $contentWidgetFunctionMatcher
      */
-    public function __construct(array $contentWidgetParameterMapperPlugins)
-    {
+    public function __construct(
+        array $contentWidgetParameterMapperPlugins,
+        ContentWidgetFunctionMatcherInterface $contentWidgetFunctionMatcher
+    ) {
         $this->contentWidgetParameterMapperPlugins = $contentWidgetParameterMapperPlugins;
+        $this->contentWidgetFunctionMatcher = $contentWidgetFunctionMatcher;
     }
 
     /**
@@ -42,31 +51,21 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             return [];
         }
 
-        $twigFunctionMatches = $this->extractTwigFunctions($content);
-
-        if (count($twigFunctionMatches) === 0) {
+        $cmsContentWidgetFunctions = $this->contentWidgetFunctionMatcher->extractTwigFunctions($content);
+        if (count($cmsContentWidgetFunctions->getCmsContentWidgetFunctionList()) === 0) {
             return [];
         }
 
         $contentWidgetParameterMap = [];
-        foreach ($twigFunctionMatches as $functionMatch) {
-            if (!$this->assertRequiredProperties($functionMatch)) {
-                continue;
-            }
+        foreach ($cmsContentWidgetFunctions->getCmsContentWidgetFunctionList() as $cmsContentWidgetFunctionTransfer) {
 
-            $functionName = $this->extractFunctionName($functionMatch);
-            $functionParameters = $this->extractFunctionParameters($functionMatch);
+            $this->updateMapCacheWithUnprocessedItems($cmsContentWidgetFunctionTransfer);
+            $mappedParameters = $this->getMappedParameters($cmsContentWidgetFunctionTransfer);
 
-            $unProcessedFunctionParameters = $this->collectFunctionParameters($functionParameters, $functionName);
-            if (count($unProcessedFunctionParameters) > 0) {
-                $this->buildParameterMap($functionName, $unProcessedFunctionParameters);
-            }
-
+            $functionName = $cmsContentWidgetFunctionTransfer->getFunctionName();
             if (!isset($contentWidgetParameterMap[$functionName])) {
                 $contentWidgetParameterMap[$functionName] = [];
             }
-
-            $mappedParameters = $this->getMappedParameters($functionName, $functionParameters);
 
             $contentWidgetParameterMap[$functionName] = array_merge(
                 $contentWidgetParameterMap[$functionName],
@@ -92,65 +91,32 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     }
 
     /**
-     * @param array $functionMatch
-     *
-     * @return bool
-     */
-    protected function assertRequiredProperties(array $functionMatch)
-    {
-        if (!isset($functionMatch[1]) && !isset($functionMatch[2])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param string $functionName
-     * @param array $functionParameters
+     * @param array $unProcessedFunctionParameters
      *
      * @return void
      */
-    protected function buildParameterMap($functionName, array $functionParameters)
+    protected function buildParameterMap($functionName, array $unProcessedFunctionParameters)
     {
         if (!isset($this->contentWidgetParameterMapperPlugins[$functionName])) {
             return null;
         }
 
-        $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($functionParameters);
+        $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($unProcessedFunctionParameters);
 
         static::$mapCache[$functionName] = array_merge($mappedParameters, $mappedParameters);
     }
 
     /**
-     * @param string $content
+     * @param \Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer
      *
      * @return array
      */
-    protected function extractTwigFunctions($content)
-    {
-        $functionMatches = [];
-        preg_match_all(
-            static::TWIG_FUNCTION_WITH_PARAMETER_REGEXP,
-            $content,
-            $functionMatches,
-            PREG_SET_ORDER,
-            0
-        );
-
-        return $functionMatches;
-    }
-
-    /**
-     * @param array $providedParameters
-     * @param string $functionName
-     *
-     * @return array
-     */
-    protected function collectFunctionParameters(array $providedParameters, $functionName)
+    protected function collectFunctionParameters(CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer)
     {
         $functionParameters = [];
-        foreach ($providedParameters as $parameter) {
+        $functionName = $cmsContentWidgetFunctionTransfer->getFunctionName();
+        foreach ($cmsContentWidgetFunctionTransfer->getParameters() as $parameter) {
             if (isset(static::$mapCache[$functionName]) && isset(static::$mapCache[$functionName][$parameter])) {
                 continue;
             }
@@ -161,49 +127,15 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     }
 
     /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function sanitizeParameter($value)
-    {
-        return trim($value, static::TRIM_WHITELIST);
-    }
-
-    /**
-     * @param array $functionMatch
-     *
-     * @return string
-     */
-    protected function extractFunctionName(array $functionMatch)
-    {
-        return $functionMatch[1];
-    }
-
-    /**
-     * @param array $functionMatch
+     * @param \Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer
      *
      * @return array
      */
-    protected function extractFunctionParameters(array $functionMatch)
-    {
-        $parameters = [];
-        foreach (explode(',', $functionMatch[2]) as $parameter) {
-            $parameters[] = $this->sanitizeParameter($parameter);
-        }
-        return $parameters;
-    }
-
-    /**
-     * @param string $functionName
-     * @param array $functionParameters
-     *
-     * @return array
-     */
-    protected function getMappedParameters($functionName, array $functionParameters)
+    protected function getMappedParameters(CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer)
     {
         $mappedParameters = [];
-        foreach ($functionParameters as $parameter) {
+        $functionName = $cmsContentWidgetFunctionTransfer->getFunctionName();
+        foreach ($cmsContentWidgetFunctionTransfer->getParameters() as $parameter) {
             if (!isset(static::$mapCache[$functionName]) || !isset(static::$mapCache[$functionName][$parameter])) {
                 continue;
             }
@@ -211,6 +143,19 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
         }
 
         return $mappedParameters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer
+     *
+     * @return void
+     */
+    protected function updateMapCacheWithUnprocessedItems(CmsContentWidgetFunctionTransfer $cmsContentWidgetFunctionTransfer)
+    {
+        $unProcessedFunctionParameters = $this->collectFunctionParameters($cmsContentWidgetFunctionTransfer);
+        if (count($unProcessedFunctionParameters) > 0) {
+            $this->buildParameterMap($cmsContentWidgetFunctionTransfer->getFunctionName(), $unProcessedFunctionParameters);
+        }
     }
 
 }

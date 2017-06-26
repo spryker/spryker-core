@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cms\Business\ContentWidget;
 use Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer;
 use Generated\Shared\Transfer\CmsContentWidgetConfigurationTransfer;
 
-class ContentWidgetTemplateListProvider implements ContentWidgetTemplateListProviderInterface
+class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurationListProviderInterface
 {
 
     /**
@@ -29,12 +29,15 @@ class ContentWidgetTemplateListProvider implements ContentWidgetTemplateListProv
     /**
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
      */
-    public function getAllTemplates()
+    public function getContentWidgetConfigurationList()
     {
         $cmsContentConfigurationList = new CmsContentWidgetConfigurationListTransfer();
-        foreach ($this->contentWidgetConfigurationProviders as $functionName => $contentWidgetConfigurationProvider) {
+        foreach ($this->contentWidgetConfigurationProviders as $contentWidgetConfigurationProvider) {
 
-            $cmsContentWidgetConfigurationTransfer = $this->mapCmsContentWidgetConfigurationTransfer($functionName, $contentWidgetConfigurationProvider);
+            $cmsContentWidgetConfigurationTransfer = $this->mapCmsContentWidgetConfigurationTransfer(
+                $contentWidgetConfigurationProvider->getFunctionName(),
+                $contentWidgetConfigurationProvider
+            );
             $cmsContentConfigurationList->addCmsContentWidgetConfiguration($cmsContentWidgetConfigurationTransfer);
         }
 

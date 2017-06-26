@@ -490,7 +490,7 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     *  - Extracts twig functions arguments and maps to values which can be used querying yves store.
+     *  - Extracts twig functions arguments and maps to values which can be used when reading from yves store.
      *
      * @api
      *
@@ -502,13 +502,12 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads all registered content widget plugins
-     *  - Returns key value pairs with template name and path.
+     *  - Reads all registered content widget plugin CmsConfig::getCmsContentWidgetConfigurationProviders
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
      */
-    public function getContentWidgetTemplateList();
+    public function getContentWidgetConfigurationList();
 
 }

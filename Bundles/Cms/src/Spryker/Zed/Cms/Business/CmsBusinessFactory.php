@@ -9,8 +9,9 @@ namespace Spryker\Zed\Cms\Business;
 
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Block\BlockRemover;
+use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetConfigurationListProvider;
+use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetFunctionMatcher;
 use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetParameterMapper;
-use Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetTemplateListProvider;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGenerator;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
@@ -361,15 +362,26 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsContentWidgetParameterMapper()
     {
-        return new ContentWidgetParameterMapper($this->getCmsContentWidgetParameterMapperPlugins());
+        return new ContentWidgetParameterMapper(
+            $this->getCmsContentWidgetParameterMapperPlugins(),
+            $this->createCmsContentWidgetFunctionMatcher()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetTemplateListProviderInterface
+     * @return \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetFunctionMatcherInterface
+     */
+    protected function createCmsContentWidgetFunctionMatcher()
+    {
+        return new ContentWidgetFunctionMatcher();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\ContentWidget\ContentWidgetConfigurationListProviderInterface
      */
     public function createCmsContentWidgetTemplateListProvider()
     {
-        return new ContentWidgetTemplateListProvider($this->getConfig()->getCmsContentWidgetConfigurationProviders());
+        return new ContentWidgetConfigurationListProvider($this->getConfig()->getCmsContentWidgetConfigurationProviders());
     }
 
     /**

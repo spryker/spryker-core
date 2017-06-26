@@ -27,29 +27,7 @@
                             {{ form_row(translationForm.fkLocale) }}
                             {{ form_row(translationForm.localeName) }}
 
-                            {% if cmsContentWidgetTemplateList.cmsContentWidgetConfigurations|length > 0 %}
-                              <div class="col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <strong>Cms content functions</strong>
-                                    </div>
-                                    <div class="panel-body">
-                                        {% for cmsWidgetConfiguration in cmsContentWidgetTemplateList.cmsContentWidgetConfigurations %}
-                                            <strong>{{ cmsWidgetConfiguration.functionName }}</strong> <br />
-                                            {{ 'Usage information:' | trans }}
-                                            {{ cmsWidgetConfiguration.usageInformation }} <br />
-                                            {{ 'Templates:' | trans }} <br />
-                                            <ul>
-                                                {% for templateName, templatePath in cmsWidgetConfiguration.templates %}
-                                                    <li> {{ templateName }} ({{ templatePath }}) </li>
-                                                {% endfor %}
-                                            </ul>
-                                            <hr />
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                              </div>
-                            {% endif %}
+                            {{ include ('@CmsGui/_partial/glossary/content-widget-usage-information.twig') }}
                         </div>
                     {% endif %}
                 {% endfor %}

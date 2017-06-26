@@ -140,6 +140,6 @@ interface CmsGuiToCmsInterface
     /**
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
      */
-    public function getContentWidgetTemplateList();
+    public function getContentWidgetConfigurationList();
 
 }

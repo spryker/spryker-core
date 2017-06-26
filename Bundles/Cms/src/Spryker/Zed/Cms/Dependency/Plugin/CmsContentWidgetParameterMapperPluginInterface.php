@@ -11,6 +11,11 @@ interface CmsContentWidgetParameterMapperPluginInterface
 {
 
     /**
+     * Specification:
+     *  Cms content widget parameter plugins is used when collecting data to yves data store,
+     *  this mapping is needed because parameters provider to functions is not the same as we use to read from yves data store.
+     *  For example 'sku1' => 'primary key in redis', this will map sku to primary key and store together with cms content.
+     *
      * @api
      *
      * @param array $parameters

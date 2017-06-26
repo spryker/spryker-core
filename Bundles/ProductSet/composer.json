@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-set",
-  "description": "ProductSet bundle",
+  "description": "ProductSet module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.4.0",
@@ -9,8 +9,10 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/search": "^6.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0",
-    "spryker/url": "^3.0.0"
+    "spryker/url": "^3.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

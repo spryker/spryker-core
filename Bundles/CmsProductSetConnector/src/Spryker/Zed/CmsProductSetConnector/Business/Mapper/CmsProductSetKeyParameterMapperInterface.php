@@ -11,10 +11,10 @@ interface CmsProductSetKeyParameterMapperInterface
 {
 
     /**
-     * @param array $skuList
+     * @param array $keyList
      *
      * @return array
      */
-    public function mapProductSetKeyList(array $skuList);
+    public function mapProductSetKeyList(array $keyList);
 
 }

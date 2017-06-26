@@ -9,6 +9,7 @@ namespace Spryker\Yves\Cms\Plugin;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Yves\Cms\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 use Twig_SimpleFunction;
@@ -28,25 +29,47 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
-                foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
-                    $twig->addFunction(
-                        $functionName,
-                        new Twig_SimpleFunction(
-                            $functionName,
-                            $cmsContentWidgetPlugin->getContentWidgetFunction(),
-                            $this->getWidgetFunctionOptions()
-                        )
-                    );
-                }
-                return $twig;
+                return $this->registerCmsContentWidgets($twig);
             })
+        );
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     *
+     * @return \Twig_Environment
+     */
+    protected function registerCmsContentWidgets(Twig_Environment $twig)
+    {
+        foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
+            $twig->addFunction(
+                $functionName,
+                $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin)
+            );
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @param string $functionName
+     * @param \Spryker\Yves\Cms\Dependency\CmsContentWidgetPluginInterface $cmsContentWidgetPlugin
+     *
+     * @return \Twig_SimpleFunction
+     */
+    function createTwigSimpleFunction($functionName, CmsContentWidgetPluginInterface $cmsContentWidgetPlugin)
+    {
+        return new Twig_SimpleFunction(
+            $functionName,
+            $cmsContentWidgetPlugin->getContentWidgetFunction(),
+            $this->getTwigSimpleFunctionOptions()
         );
     }
 
     /**
      * @return array
      */
-    protected function getWidgetFunctionOptions()
+    protected function getTwigSimpleFunctionOptions()
     {
         return ['needs_context' => true, 'needs_environment' => true, 'is_safe' => ['html']];
     }

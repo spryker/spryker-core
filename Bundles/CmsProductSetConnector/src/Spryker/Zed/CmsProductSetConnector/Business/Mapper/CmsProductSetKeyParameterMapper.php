@@ -26,14 +26,14 @@ class CmsProductSetKeyParameterMapper implements CmsProductSetKeyParameterMapper
     }
 
     /**
-     * @param array $skuList
+     * @param array $keyList
      *
      * @return array
      */
-    public function mapProductSetKeyList(array $skuList)
+    public function mapProductSetKeyList(array $keyList)
     {
         $productSetIds = $this->cmsProductSetConnectorQueryContainer
-            ->queryProductSetIdsByKeyList($skuList)
+            ->queryProductSetIdsByKeyList($keyList)
             ->find()
             ->toArray();
 
