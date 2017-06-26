@@ -1,15 +1,15 @@
 {
   "name": "spryker/cms-product-group-connector",
-  "description": "CmsProductGroupConnector module",
+  "description": "CmsProductGroupConnector bundle",
   "license": "proprietary",
   "require": {
     "spryker/cms": "^5.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/propel-orm": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

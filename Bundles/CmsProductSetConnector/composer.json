@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms-product-set-connector",
-  "description": "CmsProductSetConnector module",
+  "description": "CmsProductSetConnector bundle",
   "license": "proprietary",
   "require": {
     "spryker/cms": "^5.0.0",
@@ -9,7 +9,6 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
-
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",

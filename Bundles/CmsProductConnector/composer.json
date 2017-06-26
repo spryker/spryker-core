@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms-product-connector",
-  "description": "CmsProductConnector module",
+  "description": "CmsProductConnector bundle",
   "license": "proprietary",
   "require": {
     "spryker/cms": "^5.0.0",
