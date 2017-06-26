@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlock;
 
+use Spryker\Client\CmsBlock\Dependency\Client\CmsBlockToStorageClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
