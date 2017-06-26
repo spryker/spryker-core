@@ -109,6 +109,7 @@
     "spryker/product-image-cart-connector": "*",
     "spryker/product-label": "*",
     "spryker/product-label-collector": "*",
+    "spryker/product-label-discount-connector": "*",
     "spryker/product-label-gui": "*",
     "spryker/product-management": "*",
     "spryker/product-option": "*",
