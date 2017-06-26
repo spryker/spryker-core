@@ -128,6 +128,8 @@ class CmsBlockStorage implements CmsBlockStorageInterface
             return [];
         }
 
+        $array = array_filter($array);
+
         $resultArray = [];
         foreach ($array as $key => $result) {
             $resultArray = array_merge($resultArray, json_decode($result, true));

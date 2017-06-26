@@ -34,6 +34,11 @@ class ViewBlockController extends AbstractController
             ->getCmsBlockFacade()
             ->findCmsBlockById($idCmsBlock);
 
+        $cmsBlockGlossary = $this
+            ->getFactory()
+            ->getCmsBlockFacade()
+            ->findGlossary($idCmsBlock);
+
         if ($cmsBlockTransfer === null) {
             throw new NotFoundHttpException(
                 sprintf('Cms block with id "%d" is not found.', $idCmsBlock)
@@ -42,7 +47,7 @@ class ViewBlockController extends AbstractController
 
         return [
             'cmsBlock' => $cmsBlockTransfer,
-            'cmsBlockGlossary' => $cmsBlockTransfer->getGlossary(),
+            'cmsBlockGlossary' => $cmsBlockGlossary,
         ];
     }
 

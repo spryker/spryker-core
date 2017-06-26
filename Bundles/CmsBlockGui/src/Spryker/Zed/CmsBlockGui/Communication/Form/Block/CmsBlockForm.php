@@ -229,20 +229,19 @@ class CmsBlockForm extends AbstractType
                 /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
                 $cmsBlockTransfer = $context->getRoot()->getData();
                 if (!$dateTimeFrom) {
-                    if ($cmsBlockTransfer->getValidTo()) {
-                        $context->addViolation('This field should be selected if "Valid to" is filled.');
-                    }
-
                     return;
                 }
 
-                if ($dateTimeFrom > $cmsBlockTransfer->getValidTo()) {
-                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
+                if ($cmsBlockTransfer->getValidTo()) {
+                    if ($dateTimeFrom > $cmsBlockTransfer->getValidTo()) {
+                        $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
+                    }
+
+                    if ($dateTimeFrom == $cmsBlockTransfer->getValidTo()) {
+                        $context->addViolation('Date "Valid from" is the same as "Valid to".');
+                    }
                 }
 
-                if ($dateTimeFrom == $cmsBlockTransfer->getValidTo()) {
-                    $context->addViolation('Date "Valid from" is the same as "Valid to".');
-                }
             },
         ]);
     }
@@ -259,15 +258,13 @@ class CmsBlockForm extends AbstractType
                 $cmsBlockTransfer = $context->getRoot()->getData();
 
                 if (!$dateTimeTo) {
-                    if ($cmsBlockTransfer->getValidFrom()) {
-                        $context->addViolation('This field should be selected if "Valid from" is filled.');
-                    }
-
                     return;
                 }
 
-                if ($dateTimeTo < $cmsBlockTransfer->getValidFrom()) {
-                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                if ($cmsBlockTransfer->getValidFrom()) {
+                    if ($dateTimeTo < $cmsBlockTransfer->getValidFrom()) {
+                        $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                    }
                 }
             },
         ]);
