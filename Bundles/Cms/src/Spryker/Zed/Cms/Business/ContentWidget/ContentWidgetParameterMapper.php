@@ -67,10 +67,8 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
                 $contentWidgetParameterMap[$functionName] = [];
             }
 
-            $contentWidgetParameterMap[$functionName] = array_merge(
-                $contentWidgetParameterMap[$functionName],
-                $mappedParameters
-            );
+            $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;
+
         }
 
         return $contentWidgetParameterMap;
@@ -104,7 +102,11 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
         $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($unProcessedFunctionParameters);
 
-        static::$mapCache[$functionName] = array_merge($mappedParameters, $mappedParameters);
+        if (!isset(static::$mapCache[$functionName])){
+            static::$mapCache[$functionName] = [];
+        }
+
+        static::$mapCache[$functionName] = static::$mapCache[$functionName] + $mappedParameters;
     }
 
     /**

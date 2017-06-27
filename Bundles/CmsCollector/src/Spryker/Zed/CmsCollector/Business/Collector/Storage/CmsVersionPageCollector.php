@@ -24,19 +24,19 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     protected $dataExtractor;
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface|null
      */
     protected $cmsFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
-     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface|null $cmsFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         DataExtractorInterface $dataExtractorDataPage,
-        CmsCollectorToCmsInterface $cmsFacade
+        CmsCollectorToCmsInterface $cmsFacade = null
     ) {
         parent::__construct($utilDataReaderService);
 
@@ -84,6 +84,10 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
      */
     protected function extractContentWidgetFunctionParameterMap(array $contentPlaceholders)
     {
+        if (!$this->cmsFacade) {
+            return [];
+        }
+
         $contentWidgetParameterMap = [];
         foreach ($contentPlaceholders as $content) {
             $contentWidgetParameterMap = $this->cmsFacade->mapContentWidgetParameters($content);
