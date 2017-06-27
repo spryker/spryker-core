@@ -92,10 +92,14 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_VALIDATION_ERRORS);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
+
             } else {
                 $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
+                $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
+                $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
+
                 if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
-                    return $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
+                    return $apiResponseTransfer;
                 }
 
                 $data = (array)$apiPluginCallResponseTransfer->getData();
@@ -106,6 +110,7 @@ class Dispatcher implements DispatcherInterface
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
+
                 } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());

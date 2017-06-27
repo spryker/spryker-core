@@ -50,10 +50,15 @@ class ResourceHandler implements ResourceHandlerInterface
         foreach ($this->pluginCollection as $plugin) {
             if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resource)) {
                 if ($method === ApiConfig::ACTION_OPTIONS) {
-                    return $this->options($plugin, $id, $params);
+                    return $this->getOptions($plugin, $id, $params);
                 }
 
-                return call_user_func_array([$plugin, $method], $params);
+                /** @var \Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer $responseTransfer */
+                $responseTransfer = call_user_func_array([$plugin, $method], $params);
+                $apiOptionsTransfer = $this->getOptions($plugin, $id, $params);
+                $responseTransfer->setOptions($apiOptionsTransfer->getOptions());
+
+                return $responseTransfer;
             }
         }
 
@@ -71,7 +76,7 @@ class ResourceHandler implements ResourceHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer
      */
-    protected function options(ApiResourcePluginInterface $plugin, $resourceId, array $params)
+    protected function getOptions(ApiResourcePluginInterface $plugin, $resourceId, array $params)
     {
         if ($resourceId) {
             $options = $this->getOptionsForItem($plugin, $params);
@@ -79,10 +84,10 @@ class ResourceHandler implements ResourceHandlerInterface
             $options = $this->getOptionsForCollection($plugin, $params);
         }
 
-        $apiCollectionTransfer = new ApiOptionsTransfer();
-        $apiCollectionTransfer->setOptions($options);
+        $apiOptionsTransfer = new ApiOptionsTransfer();
+        $apiOptionsTransfer->setOptions($options);
 
-        return $apiCollectionTransfer;
+        return $apiOptionsTransfer;
     }
 
     /**

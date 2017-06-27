@@ -14,6 +14,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\OptionsActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\CorsFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
@@ -136,6 +137,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getPostProcessorStack()
     {
         return [
+            $this->createCorsFilterPostProcessor(),
             $this->createOptionsActionPostProcessor(),
             $this->createAddActionPostProcessor(),
             $this->createRemoveActionPostProcessor(),
@@ -316,6 +318,16 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createPaginationByHeaderFilterPostProcessor()
     {
         return new PaginationByHeaderFilterPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
+     */
+    protected function createCorsFilterPostProcessor()
+    {
+        return new CorsFilterPostProcessor(
+            $this->getConfig()
+        );
     }
 
     /**

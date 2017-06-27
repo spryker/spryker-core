@@ -58,7 +58,7 @@ class ApiConfig extends AbstractBundleConfig
      *
      * Modify if you want to include host and schema/protocol.
      *
-     * @return int
+     * @return string
      */
     public function getBaseUri()
     {
@@ -66,6 +66,8 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * Defines HTTP methods for an item request. OPTIONS are added automatically.
+     *
      * @return array
      */
     public function getHttpMethodsForItem()
@@ -78,6 +80,8 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * Defines HTTP methods for a collection request. OPTIONS are added automatically.
+     *
      * @return array
      */
     public function getHttpMethodsForCollection()
@@ -86,6 +90,45 @@ class ApiConfig extends AbstractBundleConfig
             static::HTTP_METHOD_GET,
             static::HTTP_METHOD_POST,
         ];
+    }
+
+    /**
+     * Defines the CORS Access-Control-Allowed-Origin header.
+     *
+     * Use null to always set to current "Origin" given, or "*" for all.
+     * You can also specify concrete URLs, e.g. "http://example.org".
+     *
+     * @return string|null
+     */
+    public function getAllowedOrigin()
+    {
+        return null;
+    }
+
+    /**
+     * Defines the CORS Access-Control-Request-Headers header.
+     *
+     * You can also set to custom ones, e.g. "X-PINGOTHER, Content-Type"
+     *
+     * @return string
+     */
+    public function getAllowedRequestHeaders()
+    {
+        return 'origin, x-requested-with, accept';
+    }
+
+    /**
+     * Defines the CORS Access-Control-Request-Methods types.
+     *
+     * @return array
+     */
+    public function getAllowedRequestMethods()
+    {
+        $methodsForItem = $this->getHttpMethodsForItem();
+        $methodsForCollection = $this->getHttpMethodsForCollection();
+        $methods = array_merge($methodsForItem, $methodsForCollection);
+
+        return array_unique($methods);
     }
 
 }

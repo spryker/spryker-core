@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Communication\Transformer;
 
+use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Shared\Config\Environment;
@@ -61,7 +62,7 @@ class Transformer implements TransformerInterface
      */
     protected function addResponseContent(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getOptions()) {
+        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() instanceof ApiOptionsTransfer) {
             return $response;
         }
 
