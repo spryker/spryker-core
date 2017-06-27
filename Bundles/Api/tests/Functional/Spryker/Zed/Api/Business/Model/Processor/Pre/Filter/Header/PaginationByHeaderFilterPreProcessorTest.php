@@ -95,4 +95,21 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
         $this->assertSame(20, $apiRequestTransferAfter->getFilter()->getOffset());
     }
 
+    /**
+     * @expectedException \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
+     * @return void
+     */
+    public function testProcessWithInvalidOffsetPagination()
+    {
+        $config = new ApiConfig();
+        $processor = new PaginationByHeaderFilterPreProcessor($config);
+
+        $apiRequestTransfer = new ApiRequestTransfer();
+        $apiRequestTransfer->setFilter(new ApiFilterTransfer());
+        $apiRequestTransfer->setHeaderData([
+            PaginationByHeaderFilterPreProcessor::RANGE => ['users=1-20'],
+        ]);
+
+        $processor->process($apiRequestTransfer);
+    }
 }
