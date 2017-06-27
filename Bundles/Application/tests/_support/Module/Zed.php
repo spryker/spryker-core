@@ -59,7 +59,10 @@ class Zed extends Infrastructure
      */
     public function amZed()
     {
-        $url = Config::get(ApplicationConstants::HOST_ZED_GUI);
+        $url = Config::hasKey(ApplicationConstants::BASE_URL_ZED)
+            ? Config::get(ApplicationConstants::BASE_URL_ZED)
+            // @deprecated This is just for backward compatibility
+            : Config::get(ApplicationConstants::HOST_ZED_GUI);
 
         $this->getWebDriver()->_reconfigure(['url' => $url]);
 

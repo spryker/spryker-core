@@ -29,12 +29,24 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
     protected function createZedClient()
     {
         $httpClient = new HttpClient(
-            'http://' . Config::get(ZedRequestConstants::HOST_ZED_API),
+            $this->getBaseUrl(),
             Config::get(ZedRequestConstants::TRANSFER_USERNAME),
             Config::get(ZedRequestConstants::TRANSFER_PASSWORD)
         );
 
         return new ZedClient($httpClient);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBaseUrl()
+    {
+        if (!Config::hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
+            return 'http://' . Config::get(ZedRequestConstants::HOST_ZED_API);
+        }
+
+        return Config::get(ZedRequestConstants::BASE_URL_ZED_API);
     }
 
 }
