@@ -8,9 +8,9 @@
 namespace Functional\Spryker\Zed\Cms\Business;
 
 use Codeception\TestCase\Test;
-use Pyz\Zed\Cms\Business\CmsFacade;
 use Spryker\Shared\Cms\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Zed\Cms\Business\CmsBusinessFactory;
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface;

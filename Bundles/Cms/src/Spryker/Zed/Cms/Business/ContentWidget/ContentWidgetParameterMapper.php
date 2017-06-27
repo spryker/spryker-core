@@ -102,7 +102,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
         $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($unProcessedFunctionParameters);
 
-        if (!isset(static::$mapCache[$functionName])){
+        if (!isset(static::$mapCache[$functionName])) {
             static::$mapCache[$functionName] = [];
         }
 

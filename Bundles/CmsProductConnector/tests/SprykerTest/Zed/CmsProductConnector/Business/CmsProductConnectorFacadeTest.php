@@ -13,7 +13,7 @@ use Spryker\Zed\CmsProductConnector\Business\CmsProductConnectorFacade;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group CmsProductGroupConnector
+ * @group CmsProductConnector
  * @group Business
  * @group Facade
  * @group CmsProductConnectorFacadeTest

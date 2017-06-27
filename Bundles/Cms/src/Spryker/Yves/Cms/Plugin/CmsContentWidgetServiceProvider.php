@@ -57,7 +57,7 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
      *
      * @return \Twig_SimpleFunction
      */
-    function createTwigSimpleFunction($functionName, CmsContentWidgetPluginInterface $cmsContentWidgetPlugin)
+    protected function createTwigSimpleFunction($functionName, CmsContentWidgetPluginInterface $cmsContentWidgetPlugin)
     {
         return new Twig_SimpleFunction(
             $functionName,
