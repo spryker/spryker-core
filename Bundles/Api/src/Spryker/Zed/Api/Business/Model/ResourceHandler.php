@@ -50,18 +50,20 @@ class ResourceHandler implements ResourceHandlerInterface
     public function execute($resource, $method, $id, array $params)
     {
         foreach ($this->pluginCollection as $plugin) {
-            if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resource)) {
-                if ($method === ApiConfig::ACTION_OPTIONS) {
-                    return $this->getOptions($plugin, $id, $params);
-                }
-
-                /** @var \Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer $responseTransfer */
-                $responseTransfer = call_user_func_array([$plugin, $method], $params);
-                $apiOptionsTransfer = $this->getOptions($plugin, $id, $params);
-                $responseTransfer->setOptions($apiOptionsTransfer->getOptions());
-
-                return $responseTransfer;
+            if (mb_strtolower($plugin->getResourceName()) !== mb_strtolower($resource)) {
+                continue;
             }
+
+            if ($method === ApiConfig::ACTION_OPTIONS) {
+                return $this->getOptions($plugin, $id, $params);
+            }
+
+            /** @var \Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer $responseTransfer */
+            $responseTransfer = call_user_func_array([$plugin, $method], $params);
+            $apiOptionsTransfer = $this->getOptions($plugin, $id, $params);
+            $responseTransfer->setOptions($apiOptionsTransfer->getOptions());
+
+            return $responseTransfer;
         }
 
         throw new ApiDispatchingException(sprintf(
