@@ -100,19 +100,6 @@ class DataImporterTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testImportTriggersDataSetImporterFailedEventAndDataSetImportFailedEventIfThereWasAnException()
-    {
-        $dataImporter = $this->getDataImporter();
-        $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
-        $dataSetImporter->addStep($this->tester->getFailingDataImportStepMock());
-        $dataImporter->addDataSetStepBroker($dataSetImporter);
-
-        $dataImporter->import();
-    }
-
-    /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     private function getDataImporter()

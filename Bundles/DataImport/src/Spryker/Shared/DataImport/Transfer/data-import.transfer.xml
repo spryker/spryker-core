@@ -29,40 +29,5 @@
         <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport" />
     </transfer>
 
-    <transfer name="BeforeImportEvent">
-        <property name="importType" type="string" />
-        <property name="importableDataSetCount" type="int" />
-        <property name="isReaderCountable" type="bool" />
-    </transfer>
-
-    <transfer name="AfterImportEvent">
-        <property name="importType" type="string" />
-        <property name="importedDataSetCount" type="int" />
-    </transfer>
-
-    <transfer name="BeforeDataSetImportEvent">
-        <property name="importType" type="string" />
-        <property name="dataSetKey" type="int" />
-    </transfer>
-
-    <transfer name="AfterDataSetImportEvent">
-        <property name="importType" type="string" />
-        <property name="isSuccess" type="bool" />
-        <property name="message" type="string" />
-        <property name="dataSetKey" type="int" />
-    </transfer>
-
-    <transfer name="BeforeDataSetImporterEvent">
-        <property name="importType" type="string" />
-        <property name="dataSetImporterClassName" type="string" />
-    </transfer>
-
-    <transfer name="AfterDataSetImporterEvent">
-        <property name="importType" type="string" />
-        <property name="isSuccess" type="bool" />
-        <property name="message" type="string" />
-        <property name="dataSetImporterClassName" type="string" />
-    </transfer>
-
 </transfers>
 
