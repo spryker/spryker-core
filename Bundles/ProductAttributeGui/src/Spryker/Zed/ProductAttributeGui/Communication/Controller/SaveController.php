@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
 use Exception;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,17 +41,17 @@ class SaveController extends AbstractController
             $this->getFacade()->updateProductAbstractAttributes($idProductAbstract, $data);
             $result = true;
             $errorMessage = '';
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             $result = false;
             $errorMessage = $exception->getMessage();
-        } catch(Throwable $exception) {
+        } catch (Throwable $exception) {
             $result = false;
             $errorMessage = $exception->getMessage();
         }
 
         return new JsonResponse([
             'success' => $result,
-            'errorMessage' => $errorMessage
+            'errorMessage' => $errorMessage,
         ]);
     }
 

@@ -10,10 +10,7 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use PDO;
-use Propel\Runtime\Formatter\ArrayFormatter;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class ProductAttributeManager implements ProductAttributeManagerInterface
 {
@@ -132,7 +129,8 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
      */
     public function updateProductAbstractAttributes($idProductAbstract, array $data)
     {
-        print_r($data);die;
+        print_r($data);
+        die;
     }
 
     /**

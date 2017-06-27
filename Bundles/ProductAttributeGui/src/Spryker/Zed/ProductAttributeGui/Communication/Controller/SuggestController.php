@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
