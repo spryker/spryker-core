@@ -22,6 +22,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
     const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
+    const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +36,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCmsBlockFormPlugins($container);
+        $container = $this->addCmsBlockViewPlugins($container);
 
         return $container;
     }
@@ -99,6 +101,28 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getCmsBlockFormPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCmsBlockViewPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CMS_BLOCK_VIEW] = function (Container $container) {
+            return $this->getCmsBlockViewPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCmsBlockViewPlugins()
     {
         return [];
     }

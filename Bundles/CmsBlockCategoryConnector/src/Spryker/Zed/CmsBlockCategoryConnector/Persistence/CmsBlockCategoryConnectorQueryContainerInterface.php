@@ -26,4 +26,14 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      */
     public function queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock);
 
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale);
+
 }

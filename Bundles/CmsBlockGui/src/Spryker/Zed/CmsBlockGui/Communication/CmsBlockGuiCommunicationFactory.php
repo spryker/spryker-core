@@ -14,6 +14,7 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProv
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
+use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockViewPluginInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -66,6 +67,14 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsBlockFormPlugins()
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_FORM);
+    }
+
+    /**
+     * @return CmsBlockViewPluginInterface[]
+     */
+    public function getCmsBlockViewPlugins()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_VIEW);
     }
 
     /**

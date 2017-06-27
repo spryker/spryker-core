@@ -48,7 +48,33 @@ class ViewBlockController extends AbstractController
         return [
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
+            'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock)
         ];
     }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return string[]
+     */
+    protected function getRenderedViewPlugins($idCmsBlock)
+    {
+        $viewPlugins = $this->getFactory()
+            ->getCmsBlockViewPlugins();
+
+        $currentLocale = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+
+        $viewRenderedPlugins = [];
+
+        foreach ($viewPlugins as $viewPlugin) {
+            $viewRenderedPlugins[$viewPlugin->getName()] =
+                $viewPlugin->getRenderedList($idCmsBlock, $currentLocale->getIdLocale());
+        }
+
+        return $viewRenderedPlugins;
+    }
+
 
 }

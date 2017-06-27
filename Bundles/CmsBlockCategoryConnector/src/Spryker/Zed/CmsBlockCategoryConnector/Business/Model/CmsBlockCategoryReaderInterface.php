@@ -19,4 +19,12 @@ interface CmsBlockCategoryReaderInterface
      */
     public function hydrateCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
 
+    /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getRenderedCategoryList($idCmsBlock, $idLocale);
+
 }

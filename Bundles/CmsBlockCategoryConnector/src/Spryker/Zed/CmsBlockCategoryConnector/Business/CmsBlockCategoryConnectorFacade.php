@@ -56,6 +56,19 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getRenderedCategoryList($idCmsBlock, $idLocale)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryReader()
+            ->getRenderedCategoryList($idCmsBlock, $idLocale);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

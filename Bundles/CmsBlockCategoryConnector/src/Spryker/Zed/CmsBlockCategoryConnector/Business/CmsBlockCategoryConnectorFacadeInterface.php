@@ -45,6 +45,14 @@ interface CmsBlockCategoryConnectorFacadeInterface
     public function hydrateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getRenderedCategoryList($idCmsBlock, $idLocale);
+
+    /**
      * Specification
      * - hydrate CMS Block to Category relation with block names
      * - collect relation to Storage

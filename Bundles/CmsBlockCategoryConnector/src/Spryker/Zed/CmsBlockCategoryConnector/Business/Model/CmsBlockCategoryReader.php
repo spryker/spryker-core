@@ -46,4 +46,27 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
         return $cmsBlockTransfer;
     }
 
+    /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getRenderedCategoryList($idCmsBlock, $idLocale)
+    {
+        $categoryConnections = $this->queryContainer
+            ->queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale)
+            ->find();
+
+        $categoryList = [];
+        foreach ($categoryConnections as $categoryConnection) {
+            $categoryList[] = $categoryConnection->getCategory()
+                ->getLocalisedAttributes($idLocale)
+                ->getFirst()
+                ->getName();
+        }
+
+        return $categoryList;
+    }
+
 }
