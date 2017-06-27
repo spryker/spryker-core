@@ -8,6 +8,35 @@
 require('ZedGui');
 require('../../sass/main.scss');
 
+function AttributeManager() {
+    var _attributeManager = {
+        attributesValues: {},
+        metaAttributes: {},
+        locales: {}
+    };
+
+    var jsonLoader = {};
+
+    jsonLoader.load = function(input) {
+        var json = $(input).html();
+        return JSON.parse(json);
+    };
+
+    _attributeManager.init = function() {
+        _attributeManager.attributesValues = jsonLoader.load($('#productAttributeValuesJson'));
+        _attributeManager.metaAttributes = jsonLoader.load($('#metaAttributesJson'));
+        _attributeManager.locales = jsonLoader.load($('#localesJson'));
+    };
+
+    _attributeManager.getLocaleCollection = function() {
+        return _attributeManager.locales;
+    };
+
+    _attributeManager.init();
+
+    return _attributeManager;
+}
+
 /**
  * @param data
  * @param params
@@ -40,7 +69,7 @@ function removeActionHandler() {
     return false;
 }
 
-function updateKV() {
+function updateInputsWithAutoComplete() {
     $('.kv_attribute_autocomplete').each(function(key, value) {
         var input = $(value);
         var id = input.attr('id_attribute') || null;
@@ -86,38 +115,9 @@ function updateKV() {
 }
 
 
-function loadMetaAttributes() {
-    var json = $('#metaAttributesJson').html();
-    var data = JSON.parse(json);
-
-    return data;
-}
-
-function loadAttributeValues() {
-    var json = $('#productAttributeValuesJson').html();
-    var data = JSON.parse(json);
-
-    return data;
-}
-
-function loadLocales() {
-    var json = $('#localesJson').html();
-    var data = JSON.parse(json);
-
-    return data;
-}
-
 $(document).ready(function() {
 
-    var attributesValues = loadAttributeValues();
-    var metaAttributes = loadMetaAttributes();
-    var localeCollection = loadLocales();
-
-    console.log(
-        'locales', localeCollection,
-        'meta', metaAttributes,
-        'attributeValues', attributesValues
-    );
+    var attributeManager = new AttributeManager();
 
     $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
 
@@ -190,37 +190,45 @@ $(document).ready(function() {
             return false;
         }
 
-        var dataToAdd = [];
-        dataToAdd.push(key);
-        for (var i=0; i<localeCollection.length; i++) {
-            var localeCode = localeCollection[i];
-            if (localeCode === '_') {
-                localeCode = null;
-            }
+        function generateDataToAdd() {
+            var dataToAdd = [];
+            var locales = attributeManager.getLocaleCollection();
 
-            dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" value="" id_attribute="'+idAttribute+'" locale_code="'+localeCode+'">');
+            dataToAdd.push(key);
+
+            for (var i = 0; i < locales.length; i++) {
+                var localeCode = locales[i];
+                if (localeCode === '_') {
+                    localeCode = null;
+                }
+
+                dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" value="" id_attribute="' + idAttribute + '" locale_code="' + localeCode + '">');
+            }
+            dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs remove-item">Remove</a>');
+            return dataToAdd;
         }
-        dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs remove-item">Remove</a>');
+
+        var dataToAdd = generateDataToAdd();
 
         dataTable.DataTable().
             row.
             add(dataToAdd)
             .draw();
 
-        $('.remove-item').off('click');
-        $('.remove-item').on('click', removeActionHandler);
+        $('.remove-item')
+            .off('click')
+            .on('click', removeActionHandler);
 
-        updateKV();
+        updateInputsWithAutoComplete();
 
         return false;
     });
 
-    $('.remove-item').off('click');
-    $('.remove-item').on('click', removeActionHandler);
+    $('.remove-item')
+        .off('click')
+        .on('click', removeActionHandler);
 
-    updateKV();
-
-    loadAttributeValues();
+    updateInputsWithAutoComplete();
 
     $('#attribute_form_key').autocomplete({
         minLength: 0,

@@ -76,7 +76,7 @@ class AttributeKeyForm extends AbstractType
             ],
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
-                'class' => 'attribute_metadata_value',
+                'class' => 'kv_attribute_autocomplete',
             ],
         ]);
 
