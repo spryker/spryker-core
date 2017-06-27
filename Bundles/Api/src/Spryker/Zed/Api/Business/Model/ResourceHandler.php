@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
 use Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface;
+use Spryker\Zed\Api\Dependency\Plugin\OptionsForCollectionInterface;
+use Spryker\Zed\Api\Dependency\Plugin\OptionsForItemInterface;
 
 class ResourceHandler implements ResourceHandlerInterface
 {
@@ -98,7 +100,7 @@ class ResourceHandler implements ResourceHandlerInterface
      */
     protected function getOptionsForItem(ApiResourcePluginInterface $plugin, array $params)
     {
-        if (method_exists($plugin, 'getHttpMethodsForItem')) {
+        if ($plugin instanceof OptionsForItemInterface) {
             $options = $plugin->getHttpMethodsForItem($params);
         } else {
             $options = $this->config->getHttpMethodsForItem();
@@ -119,7 +121,7 @@ class ResourceHandler implements ResourceHandlerInterface
      */
     protected function getOptionsForCollection(ApiResourcePluginInterface $plugin, array $params)
     {
-        if (method_exists($plugin, 'getHttpMethodsForCollection')) {
+        if ($plugin instanceof OptionsForCollectionInterface) {
             $options = $plugin->getHttpMethodsForCollection($params);
         } else {
             $options = $this->config->getHttpMethodsForCollection();
