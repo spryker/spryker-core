@@ -97,6 +97,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
 
     /**
      * @expectedException \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
+     *
      * @return void
      */
     public function testProcessWithInvalidOffsetPagination()
@@ -112,4 +113,5 @@ class PaginationByHeaderFilterPreProcessorTest extends Test
 
         $processor->process($apiRequestTransfer);
     }
+
 }
