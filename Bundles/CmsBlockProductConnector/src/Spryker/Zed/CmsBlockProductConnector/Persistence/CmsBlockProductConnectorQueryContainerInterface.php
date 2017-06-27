@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 
 interface CmsBlockProductConnectorQueryContainerInterface
 {
+    const COL_PRODUCT_ABSTRACT_NAME = 'name';
+    const COL_PRODUCT_ABSTRACT_SKU = 'sku';
 
     /**
      * @api
@@ -25,5 +27,15 @@ interface CmsBlockProductConnectorQueryContainerInterface
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductConnectorWithNameByIdCmsBlock($idCmsBlock, $idLocale);
 
 }

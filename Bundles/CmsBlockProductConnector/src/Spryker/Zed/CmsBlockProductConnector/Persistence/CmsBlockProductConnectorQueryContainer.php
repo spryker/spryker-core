@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -37,6 +39,25 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     {
         return $this->queryCmsBlockProductConnector()
             ->filterByFkCmsBlock($idCmsBlock);
+    }
+
+    /**
+     * @param int $idCmsBlock
+     * @param int  $idLocale
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductConnectorWithNameByIdCmsBlock($idCmsBlock, $idLocale)
+    {
+        return $this->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
+            ->joinProductAbstract()
+            ->useProductAbstractQuery()
+                ->useSpyProductAbstractLocalizedAttributesQuery()
+                    ->filterByFkLocale($idLocale)
+                    ->endUse()
+                ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_ABSTRACT_NAME)
+                ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_PRODUCT_ABSTRACT_SKU)
+                ->endUse();
     }
 
 }

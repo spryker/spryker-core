@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
-interface CmsBlockProductReaderInterface
+interface CmsBlockProductAbstractReaderInterface
 {
 
     /**
@@ -18,5 +18,13 @@ interface CmsBlockProductReaderInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function hydrateProductRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getProductAbstractRenderedList($idCmsBlock, $idLocale);
 
 }

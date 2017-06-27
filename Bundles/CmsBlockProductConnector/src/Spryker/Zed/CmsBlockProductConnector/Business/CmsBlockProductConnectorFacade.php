@@ -56,6 +56,23 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getProductAbstractRenderedList($idCmsBlock, $idLocale)
+    {
+        return $this->getFactory()
+            ->createCmsBlockProductAbstractReader()
+            ->getProductAbstractRenderedList($idCmsBlock, $idLocale);
+    }
+
+    /**
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

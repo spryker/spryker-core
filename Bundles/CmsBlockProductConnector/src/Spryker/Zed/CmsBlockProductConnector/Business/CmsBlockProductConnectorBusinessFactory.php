@@ -33,7 +33,7 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductReaderInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractReaderInterface
      */
     public function createCmsBlockProductAbstractReader()
     {

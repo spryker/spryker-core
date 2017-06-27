@@ -21,8 +21,8 @@ interface CmsBlockProductConnectorFacadeInterface
 
     /**
      * Specification
-     * - Delete all relations of cms block to product abstracts
-     * - Create relations by transfer object
+     * - delete all relations of cms block to product abstracts
+     * - create relations by transfer object
      *
      * @api
      *
@@ -43,6 +43,19 @@ interface CmsBlockProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function hydrateCmsBlockProductRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification
+     * - get a list of product names for injection in another module views
+     *
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getProductAbstractRenderedList($idCmsBlock, $idLocale);
 
     /**
      * Specification

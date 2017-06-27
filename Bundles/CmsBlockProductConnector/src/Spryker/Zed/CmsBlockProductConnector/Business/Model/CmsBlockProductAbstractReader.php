@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Business\Model;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface;
 
-class CmsBlockProductAbstractReader implements CmsBlockProductReaderInterface
+class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInterface
 {
 
     /**
@@ -44,6 +44,30 @@ class CmsBlockProductAbstractReader implements CmsBlockProductReaderInterface
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
 
         return $cmsBlockTransfer;
+    }
+
+
+    /**
+     * @param int $idCmsBlock
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getProductAbstractRenderedList($idCmsBlock, $idLocale)
+    {
+        $productAbstracts = $this->queryContainer
+            ->queryCmsBlockProductConnectorWithNameByIdCmsBlock($idCmsBlock, $idLocale)
+            ->find();
+
+        $productAbstractList = [];
+
+        foreach ($productAbstracts as $spyProductAbstract) {
+            $productAbstractList[$spyProductAbstract->getFkProductAbstract()] =
+                $spyProductAbstract->getVirtualColumn(CmsBlockProductConnectorQueryContainerInterface::COL_PRODUCT_ABSTRACT_NAME) .
+                ' (' . $spyProductAbstract->getVirtualColumn(CmsBlockProductConnectorQueryContainerInterface::COL_PRODUCT_ABSTRACT_SKU) . ')';
+        }
+
+        return $productAbstractList;
     }
 
 }
