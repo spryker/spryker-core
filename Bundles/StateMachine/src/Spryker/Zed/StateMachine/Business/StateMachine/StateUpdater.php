@@ -114,48 +114,6 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     * @param string $sourceState
-     * @param string $targetState
-     *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
-     *
-     * @return void
-     */
-    protected function assertTransitionAlreadyProcessed(
-        StateMachineItemTransfer $stateMachineItemTransfer,
-        $sourceState,
-        $targetState
-    ) {
-        $isAlreadyTransitioned = $this->isAlreadyTransitioned($stateMachineItemTransfer);
-
-        if ($isAlreadyTransitioned) {
-            throw new StateMachineException(
-                sprintf(
-                    'Transition between "%s" -> "%s" already processed.',
-                    $sourceState,
-                    $targetState
-                )
-            );
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return bool
-     */
-    protected function isAlreadyTransitioned(StateMachineItemTransfer $stateMachineItemTransfer)
-    {
-        $numberOfItems = $this->stateMachineQueryContainer->queryLastHistoryItem(
-            $stateMachineItemTransfer,
-            $stateMachineItemTransfer->getIdItemState()
-        )->count();
-
-        return $numberOfItems > 0;
-    }
-
-    /**
      * @param array $sourceStateBuffer
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
@@ -232,7 +190,6 @@ class StateUpdater implements StateUpdaterInterface
         if ($sourceState === $targetState) {
             return;
         }
-        $this->assertTransitionAlreadyProcessed($stateMachineItemTransfer, $sourceState, $targetState);
         $this->updateTimeouts($process, $sourceState, $stateMachineItemTransfer);
         $this->notifyHandlerStateChanged($stateMachineItemTransfer);
         $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
