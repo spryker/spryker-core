@@ -17,7 +17,6 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
-use Spryker\Zed\DataImport\DataImportConfig;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
