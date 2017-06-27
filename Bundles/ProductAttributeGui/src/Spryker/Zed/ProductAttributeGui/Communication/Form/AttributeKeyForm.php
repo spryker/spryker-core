@@ -11,16 +11,14 @@ use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AttributeKeyForm extends AbstractType
 {
-    const FIELD_KEY = 'key';
 
-    const GROUP_UNIQUE_KEY = 'unique_key_group';
+    const FIELD_KEY = 'key';
+    const FIELD_KEY_HIDDEN_ID = 'key_hidden_id';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -55,7 +53,8 @@ class AttributeKeyForm extends AbstractType
         parent::buildForm($builder, $options);
 
         $this
-            ->addAttributeKeyField($builder);
+            ->addAttributeKeyField($builder)
+            ->addAttributeKeyHiddenField($builder);
     }
 
     /**
@@ -65,12 +64,19 @@ class AttributeKeyForm extends AbstractType
      */
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+        $builder->add(self::FIELD_KEY, 'text', [
             'label' => 'Attribute key *',
-            'url' => '/product-attribute-gui/suggest/keys',
-            'constraints' => $this->createAttributeKeyFieldConstraints(),
+            'constraints' => [
+                new NotBlank(),
+                new Regex([
+                    'pattern' => '/^[a-z\-0-9_:]+$/',
+                    'message' => 'This field contains illegal characters. It should contain only lower case letters, ' .
+                        'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
+                ]),
+            ],
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
+                'class' => 'attribute_metadata_value',
             ],
         ]);
 
@@ -78,28 +84,44 @@ class AttributeKeyForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
      */
-    protected function createAttributeKeyFieldConstraints()
+    protected function addAttributeKeyField2(FormBuilderInterface $builder)
     {
-        return [
-            new NotBlank(),
-            new Regex([
-                'pattern' => '/^[a-z\-0-9_:]+$/',
-                'message' => 'This field contains illegal characters. It should contain only lower case letters, ' .
-                    'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
-            ]),
-            new Callback([
-                'methods' => [
-                    function ($key, ExecutionContextInterface $context) {
-                        /*if (!$this->isUniqueKey($key)) {
-                            $context->addViolation('Attribute key is already used');
-                        }*/
-                    },
-                ],
-                'groups' => [self::GROUP_UNIQUE_KEY],
-            ]),
-        ];
+        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+            'label' => 'Attribute key *',
+            'url' => '/product-attribute-gui/suggest/keys',
+            'constraints' => [
+                new NotBlank(),
+                new Regex([
+                    'pattern' => '/^[a-z\-0-9_:]+$/',
+                    'message' => 'This field contains illegal characters. It should contain only lower case letters, ' .
+                        'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
+                ]),
+            ],
+            'attr' => [
+                'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
+                'class' => 'attribute_metadata_value',
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addAttributeKeyHiddenField(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::FIELD_KEY_HIDDEN_ID, 'hidden', []);
+
+        return $this;
     }
 
 }

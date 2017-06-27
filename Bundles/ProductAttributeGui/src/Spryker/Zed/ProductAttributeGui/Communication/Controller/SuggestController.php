@@ -18,11 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SuggestController extends AbstractController
 {
 
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID = 'id';
     const PARAM_SEARCH_TEXT = 'q';
-    const PARAM_TERM = 'term';
-    const PARAM_LOCALE_CODE = 'locale_code';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,7 +27,7 @@ class SuggestController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
+        $searchTerm = $request->query->get(self::PARAM_SEARCH_TEXT);
         $keys = $this->getFacade()->suggestProductAttributeKeys($searchTerm);
 
         return $this->jsonResponse($keys);

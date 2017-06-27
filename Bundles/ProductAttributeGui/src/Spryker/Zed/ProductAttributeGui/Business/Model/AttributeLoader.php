@@ -55,6 +55,23 @@ class AttributeLoader implements AttributeLoaderInterface
 
     /**
      * @param array $productAttributes
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryMetaAttributes(array $productAttributes)
+    {
+        $keys = $this->extractKeys($productAttributes);
+        $query = $this->productManagementQueryContainer
+            ->queryProductAttributeKey()
+            ->leftJoinSpyProductManagementAttribute()
+            ->filterByKey_In($keys)
+            ->setIgnoreCase(true);
+
+        return $query;
+    }
+
+    /**
+     * @param array $productAttributes
      * @param bool|null $isSuper
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria

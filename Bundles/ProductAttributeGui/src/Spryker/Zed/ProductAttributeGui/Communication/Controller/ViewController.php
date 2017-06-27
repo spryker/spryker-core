@@ -48,6 +48,10 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getProductAbstractAttributeValues($idProductAbstract);
 
+        $metaAttributes = $this
+            ->getFacade()
+            ->getMetaAttributes($idProductAbstract);
+
         $locales = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
@@ -64,7 +68,12 @@ class ViewController extends AbstractController
         return $this->viewResponse([
             'attributeKeyForm' => $form->createView(),
             'locales' => $locales,
+            'metaAttributes' => $metaAttributes,
             'productAttributeValues' => $values,
+            'localesJson' => json_encode(array_keys($locales)),
+            'productAttributeValuesJson' => json_encode($values),
+            'metaAttributesJson' => json_encode($metaAttributes),
+
         ]);
     }
 

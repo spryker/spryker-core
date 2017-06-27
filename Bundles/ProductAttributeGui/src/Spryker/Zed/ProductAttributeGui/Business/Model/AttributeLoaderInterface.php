@@ -21,6 +21,13 @@ interface AttributeLoaderInterface
 
     /**
      * @param array $productAttributes
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryMetaAttributes(array $productAttributes);
+
+    /**
+     * @param array $productAttributes
      * @param bool $isSuper
      *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria

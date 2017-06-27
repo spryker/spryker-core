@@ -22,6 +22,13 @@ interface ProductAttributeManagerInterface
      *
      * @return array
      */
+    public function getMetaAttributes($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
     public function getProductAbstractAttributeValues($idProductAbstract);
 
     /**

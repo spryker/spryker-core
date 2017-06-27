@@ -8,45 +8,116 @@
 require('ZedGui');
 require('../../sass/main.scss');
 
+/**
+ * @param data
+ * @param params
+ * @returns {{results: *, pagination: {more: (boolean|number)}}}
+ */
+function processAjaxResult(data, params) {
+    //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
+    // parse the results into the format expected by Select2
+    // since we are using custom formatting functions we do not need to
+    // alter the remote JSON data, except to indicate that infinite
+    // scrolling can be used
+    params.page = params.page || 1;
+
+    return {
+        results: data.values,
+        pagination: {
+            more: (params.page * 30) < data.total || 0
+        }
+    };
+}
+
+function removeActionHandler() {
+    var $link = $(this);
+    var id = $link.data('id');
+    var action = $link.data('action');
+    var dataTable = $('#productAttributesTable').DataTable();
+
+    dataTable.row($link.parents('tr')).remove().draw();
+
+    return false;
+}
+
+function updateKV() {
+    $('.kv_attribute_autocomplete').each(function(key, value) {
+        var input = $(value);
+        var id = input.attr('id_attribute') || null;
+        var locale_code = input.attr('locale_code') || null;
+
+        input.autocomplete({
+            minLength: 0,
+            source: function(request, response) {
+                $.ajax({
+                    url: '/product-management/attribute/suggest/',
+                    dataType: "json",
+                    data: {
+                        q: request.term,
+                        id: id,
+                        locale_code: locale_code
+                    },
+                    success: function(data) {
+                        response($.map(data.values, function (item) {
+                            return {
+                                label: item.text,
+                                value: item.id
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function(event, ui) {
+                var input = $(this);
+                input.val(ui.item.label);
+                input.attr('data-value', ui.item.value);
+
+                return false;
+            },
+            focus: function(event, ui) {
+                var input = $(this);
+                input.val(ui.item.label);
+                input.attr('data-value', ui.item.value);
+
+                return false;
+            }
+        });
+    });
+}
+
+
+function loadMetaAttributes() {
+    var json = $('#metaAttributesJson').html();
+    var data = JSON.parse(json);
+
+    return data;
+}
+
+function loadAttributeValues() {
+    var json = $('#productAttributeValuesJson').html();
+    var data = JSON.parse(json);
+
+    return data;
+}
+
+function loadLocales() {
+    var json = $('#localesJson').html();
+    var data = JSON.parse(json);
+
+    return data;
+}
+
 $(document).ready(function() {
 
-    /**
-     * @param data
-     * @param params
-     * @returns {{results: *, pagination: {more: (boolean|number)}}}
-     */
-    function processAjaxResult(data, params) {
-        //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
-        // parse the results into the format expected by Select2
-        // since we are using custom formatting functions we do not need to
-        // alter the remote JSON data, except to indicate that infinite
-        // scrolling can be used
-        params.page = params.page || 1;
+    var attributesValues = loadAttributeValues();
+    var metaAttributes = loadMetaAttributes();
+    var localeCollection = loadLocales();
 
-        return {
-            results: data.values,
-            pagination: {
-                more: (params.page * 30) < data.total || 0
-            }
-        };
-    }
-
-    /**
-     * @param $select
-     * @param term
-     */
-    function select2_search ($select, term) {
-        $select.select2('open');
-
-        // Get the search box within the dropdown or the selection
-        // Dropdown = single, Selection = multiple
-        var $search = $select.data('select2').dropdown.$search || $select.data('select2').selection.$search;
-        // This is undocumented and may change in the future
-
-        $search.val(term);
-        $search.trigger('keyup');
-    }
-
+    console.log(
+        'locales', localeCollection,
+        'meta', metaAttributes,
+        'attributeValues', attributesValues
+    );
 
     $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
 
@@ -102,58 +173,88 @@ $(document).ready(function() {
         minimumInputLength: 1
     });
 
-    $('.kv_attribute_autocomplete').each(function(key, value) {
-        var input = $(value);
-        var id = input.attr('id_attribute') || null;
-        var locale_code = input.attr('locale_code') || null;
-
-        input.autocomplete({
-            minLength: 0,
-            source: function(request, response) {
-                $.ajax({
-                    url: '/product-management/attribute/suggest/',
-                    dataType: "json",
-                    data: {
-                        q: request.term,
-                        id: id,
-                        locale_code: locale_code
-                    },
-                    success: function(data) {
-                        response($.map(data.values, function (item) {
-                            return {
-                                label: item.text,
-                                value: item.id
-                            };
-                        }));
-                    }
-                });
-            },
-            select: function(event, ui) {
-                var input = $(this);
-                input.val(ui.item.label);
-                input.attr('data-value', ui.item.value);
-
-                return false;
-            },
-            focus: function(event, ui) {
-                var input = $(this);
-                input.val(ui.item.label);
-                input.attr('data-value', ui.item.value);
-
-                return false;
-            }
-        });
+    $('.spryker-form-select2combobox').select2({
+        tags: true
     });
 
-    $(".kv_autocomplete_form").submit(function(e) {
-        var form = $(this);
-        $('.kv_attribute_autocomplete').each(function(key, value) {
-            var $input = $(this);
-            var hidden = $input.next();
-            var inputValue = $input.attr('data-value');
-            var name = hidden.attr('name');
-                hidden.val(inputValue);
-        });
+    $('#addButton').on('click', function() {
+        var input = $('#attribute_form_key');
+        var dataTable = $('#productAttributesTable');
+        var idAttribute = input.attr('data-value');
+        var key = input.val().trim();
+
+        key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
+
+        if (key === '' || !idAttribute) {
+            alert('Please select attribute key first');
+            return false;
+        }
+
+        var dataToAdd = [];
+        dataToAdd.push(key);
+        for (var i=0; i<localeCollection.length; i++) {
+            var localeCode = localeCollection[i];
+            if (localeCode === '_') {
+                localeCode = null;
+            }
+
+            dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" value="" id_attribute="'+idAttribute+'" locale_code="'+localeCode+'">');
+        }
+        dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs remove-item">Remove</a>');
+
+        dataTable.DataTable().
+            row.
+            add(dataToAdd)
+            .draw();
+
+        $('.remove-item').off('click');
+        $('.remove-item').on('click', removeActionHandler);
+
+        updateKV();
+
+        return false;
+    });
+
+    $('.remove-item').off('click');
+    $('.remove-item').on('click', removeActionHandler);
+
+    updateKV();
+
+    loadAttributeValues();
+
+    $('#attribute_form_key').autocomplete({
+        minLength: 0,
+        source: function(request, response) {
+            $.ajax({
+                url: '/product-attribute-gui/suggest/keys',
+                dataType: "json",
+                data: {
+                    q: request.term,
+                },
+                success: function(data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.value,
+                            value: item.id
+                        };
+                    }));
+                }
+            });
+        },
+        select: function(event, ui) {
+            var input = $(this);
+            input.val(ui.item.label);
+            input.attr('data-value', ui.item.value);
+
+            return false;
+        },
+        focus: function(event, ui) {
+            var input = $(this);
+            input.val(ui.item.label);
+            input.attr('data-value', ui.item.value);
+
+            return false;
+        }
     });
 
 });

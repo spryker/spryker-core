@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use PDO;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
@@ -60,6 +61,26 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
      *
      * @return array
      */
+    public function getMetaAttributes($idProductAbstract)
+    {
+        $values = $this->getProductAbstractAttributeValues($idProductAbstract);
+        $query = $this->attributeLoader->queryMetaAttributes($values);
+
+        $data = $query->find();
+
+        $results = [];
+        foreach ($data as $entity) {
+            $results[$entity->getKey()] = $entity->getIdProductAttributeKey();
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
     public function getProductAbstractAttributeValues($idProductAbstract)
     {
         $productAbstractEntity = $this->getProductAbstractEntity($idProductAbstract);
@@ -94,7 +115,10 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
         }
 
         foreach ($query->find() as $entity) {
-            $results[$entity->getIdProductAttributeKey()] = $entity->getKey();
+            $results[$entity->getIdProductAttributeKey()] = [
+                'id' => $entity->getIdProductAttributeKey(),
+                'value' => $entity->getKey(),
+            ];
         }
 
         return $results;
