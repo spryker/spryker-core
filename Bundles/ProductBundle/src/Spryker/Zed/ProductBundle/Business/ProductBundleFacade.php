@@ -45,6 +45,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
+    public function expandBundleItemsWithImages(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundleImageCartExpander()
+            ->expandBundleItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
     public function expandBundleCartItemGroupKey(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()
