@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -39,7 +38,6 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
         return $this->queryCmsBlockCategoryConnector()
             ->filterByFkCmsBlock($idCmsBlock);
     }
-
 
     /**
      * @api

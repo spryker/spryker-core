@@ -27,4 +27,11 @@ interface CmsBlockProductAbstractReaderInterface
      */
     public function getProductAbstractRenderedList($idCmsBlock, $idLocale);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getCmsBlockRenderedList($idProductAbstract);
+
 }

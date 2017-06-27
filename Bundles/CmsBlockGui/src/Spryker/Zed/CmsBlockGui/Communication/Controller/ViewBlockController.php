@@ -48,7 +48,7 @@ class ViewBlockController extends AbstractController
         return [
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
-            'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock)
+            'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock),
         ];
     }
 
@@ -75,6 +75,5 @@ class ViewBlockController extends AbstractController
 
         return $viewRenderedPlugins;
     }
-
 
 }

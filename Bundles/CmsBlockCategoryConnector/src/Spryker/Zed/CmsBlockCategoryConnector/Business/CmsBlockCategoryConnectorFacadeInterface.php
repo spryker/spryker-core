@@ -45,6 +45,8 @@ interface CmsBlockCategoryConnectorFacadeInterface
     public function hydrateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *

@@ -56,6 +56,8 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *

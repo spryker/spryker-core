@@ -59,6 +59,18 @@ interface CmsBlockProductConnectorFacadeInterface
 
     /**
      * Specification
+     * - get a rendered list of CMS blocks assigned to the product abstract
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getCmsBlockRenderedList($idProductAbstract);
+
+    /**
+     * Specification
      * - hydrate CMS Block to Product relation with block names
      * - collect relation to Storage
      *

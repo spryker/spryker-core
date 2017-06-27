@@ -42,8 +42,10 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsBlock
-     * @param int  $idLocale
+     * @param int $idLocale
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
@@ -58,6 +60,19 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
                 ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_ABSTRACT_NAME)
                 ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_PRODUCT_ABSTRACT_SKU)
                 ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductConnectorByIdProductAbstract($idProductAbstract)
+    {
+        return $this->queryCmsBlockProductConnector()
+            ->filterByFkProductAbstract($idProductAbstract);
     }
 
 }

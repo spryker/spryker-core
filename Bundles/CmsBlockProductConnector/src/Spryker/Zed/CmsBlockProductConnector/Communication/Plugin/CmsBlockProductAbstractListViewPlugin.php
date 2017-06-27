@@ -1,17 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Plugin;
-
 
 use Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockViewPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Communication\CmsBlockProductConnectorCommunicationFactory getFactory()
  */
-class CmsBlockProductListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
+class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
 {
+
     /**
      * @return string
      */

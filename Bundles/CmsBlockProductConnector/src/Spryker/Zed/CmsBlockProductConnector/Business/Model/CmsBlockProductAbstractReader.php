@@ -46,7 +46,6 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
         return $cmsBlockTransfer;
     }
 
-
     /**
      * @param int $idCmsBlock
      * @param int $idLocale
@@ -68,6 +67,25 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
         }
 
         return $productAbstractList;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getCmsBlockRenderedList($idProductAbstract)
+    {
+        $relations = $this->queryContainer
+            ->queryCmsBlockProductConnectorByIdProductAbstract($idProductAbstract)
+            ->find();
+
+        $cmsBlockList = [];
+        foreach ($relations as $relation) {
+                $cmsBlockList[] = $relation->getCmsBlock()->getName();
+        }
+
+        return $cmsBlockList;
     }
 
 }
