@@ -45,12 +45,12 @@ class CorsFilterPostProcessor implements PostProcessorInterface
 
         if (!$apiResponseTransfer->getOptions()) {
             $options = $apiRequestTransfer->getResourceId() ? $this->apiConfig->getHttpMethodsForItem() : $this->apiConfig->getHttpMethodsForCollection();
-            $options[] = 'OPTIONS';
+            $options[] = ApiConfig::HTTP_METHOD_OPTIONS;
             $apiResponseTransfer->setOptions($options);
         }
 
         $headers[static::HEADER_ACCESS_CONTROL_REQUEST_HEADERS] = $this->apiConfig->getAllowedRequestHeaders();
-        $defaultOptions = array_merge($this->apiConfig->getAllowedRequestMethods(), ['OPTIONS']);
+        $defaultOptions = array_merge($this->apiConfig->getAllowedRequestMethods(), [ApiConfig::HTTP_METHOD_OPTIONS]);
         $options = $apiResponseTransfer->getOptions() ?: $defaultOptions;
         $headers[static::HEADER_ACCESS_CONTROL_REQUEST_METHODS] = implode(', ', $options);
 

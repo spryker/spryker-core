@@ -18,6 +18,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 class OptionsActionPostProcessor implements PostProcessorInterface
 {
 
+    const HEADER_ALLOW = 'Allow';
+
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
@@ -41,7 +43,7 @@ class OptionsActionPostProcessor implements PostProcessorInterface
             $options[$key] = strtoupper($value);
         }
 
-        $apiResponseTransfer->setHeaders(['Allow' => implode(', ', $options)]);
+        $apiResponseTransfer->setHeaders([static::HEADER_ALLOW => implode(', ', $options)]);
 
         return $apiResponseTransfer;
     }
