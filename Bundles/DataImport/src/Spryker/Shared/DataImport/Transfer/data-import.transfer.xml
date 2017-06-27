@@ -6,6 +6,7 @@
     <transfer name="DataImporterConfiguration">
         <property name="importType" type="string" />
         <property name="readerConfiguration" type="DataImporterReaderConfiguration" />
+        <property name="throwException" type="bool" />
     </transfer>
 
     <transfer name="DataImporterReaderConfiguration">
