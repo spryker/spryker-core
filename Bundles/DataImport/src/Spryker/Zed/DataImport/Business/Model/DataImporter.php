@@ -9,12 +9,6 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 use Countable;
 use Exception;
-use Generated\Shared\Transfer\AfterDataSetImporterEventTransfer;
-use Generated\Shared\Transfer\AfterDataSetImportEventTransfer;
-use Generated\Shared\Transfer\AfterImportEventTransfer;
-use Generated\Shared\Transfer\BeforeDataSetImporterEventTransfer;
-use Generated\Shared\Transfer\BeforeDataSetImportEventTransfer;
-use Generated\Shared\Transfer\BeforeImportEventTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
@@ -23,8 +17,6 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
-use Spryker\Zed\DataImport\Dependency\DataImportEvents;
-use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
@@ -59,20 +51,13 @@ class DataImporter implements
     protected $dataSetStepBroker = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface
-     */
-    protected $eventFacade;
-
-    /**
      * @param string $importType
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface $eventFacade
      */
-    public function __construct($importType, DataReaderInterface $dataReader, DataImportToEventInterface $eventFacade)
+    public function __construct($importType, DataReaderInterface $dataReader)
     {
         $this->importType = $importType;
         $this->dataReader = $dataReader;
-        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -133,28 +118,19 @@ class DataImporter implements
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
 
-        $this->triggerBeforeImportEvent($dataReader);
-
         $this->beforeImport();
 
         foreach ($dataReader as $dataSet) {
             try {
-                $this->triggerBeforeDataSetImportEvent($dataReader);
-
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
-
-                $this->triggerAfterDataSetImportEvent($dataReader);
             } catch (Exception $dataImportException) {
                 ErrorLogger::getInstance()->log($dataImportException);
                 $dataImporterReportTransfer->setIsSuccess(false);
-                $this->triggerDataSetImportFailedEvent($dataImportException, $dataReader);
             }
 
             unset($dataSet);
         }
-
-        $this->triggerAfterImportEvent($dataImporterReportTransfer);
 
         $this->afterImport();
 
@@ -181,13 +157,9 @@ class DataImporter implements
     protected function importDataSet(DataSetInterface $dataSet)
     {
         foreach ($this->dataSetStepBroker as $dataSetImporter) {
-            $this->triggerBeforeDataSetImporterEvent($dataSetImporter);
             try {
                 $dataSetImporter->execute($dataSet);
-                $this->triggerAfterDataSetImporterEvent();
             } catch (Exception $exception) {
-                $this->triggerDataSetImporterFailedEvent($exception);
-
                 throw $exception;
             }
         }
@@ -239,130 +211,6 @@ class DataImporter implements
         }
 
         return $this->dataReader;
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     *
-     * @return void
-     */
-    protected function triggerBeforeImportEvent(DataReaderInterface $dataReader)
-    {
-        $beforeImportEventTransfer = new BeforeImportEventTransfer();
-        $beforeImportEventTransfer
-            ->setImportType($this->getImportType())
-            ->setIsReaderCountable(($dataReader instanceof Countable))
-            ->setImportableDataSetCount(($dataReader instanceof Countable) ? $dataReader->count() : 0);
-
-        $this->eventFacade->trigger(DataImportEvents::BEFORE_IMPORT, $beforeImportEventTransfer);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     *
-     * @return void
-     */
-    protected function triggerBeforeDataSetImportEvent(DataReaderInterface $dataReader)
-    {
-        $beforeDataSetImportEventTransfer = new BeforeDataSetImportEventTransfer();
-        $beforeDataSetImportEventTransfer
-            ->setImportType($this->getImportType())
-            ->setDataSetKey($dataReader->key());
-
-        $this->eventFacade->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORT, $beforeDataSetImportEventTransfer);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetImporter
-     *
-     * @return void
-     */
-    protected function triggerBeforeDataSetImporterEvent(DataSetStepBrokerInterface $dataSetImporter)
-    {
-        $beforeDataSetImporterEventTransfer = new BeforeDataSetImporterEventTransfer();
-        $beforeDataSetImporterEventTransfer
-            ->setImportType($this->getImportType())
-            ->setDataSetImporterClassName(get_class($dataSetImporter));
-
-        $this->eventFacade->trigger(DataImportEvents::BEFORE_DATA_SET_IMPORTER, $beforeDataSetImporterEventTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    protected function triggerAfterDataSetImporterEvent()
-    {
-        $afterDataSetImporterEventTransfer = new AfterDataSetImporterEventTransfer();
-        $afterDataSetImporterEventTransfer
-            ->setImportType($this->getImportType())
-            ->setIsSuccess(true);
-
-        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
-    }
-
-    /**
-     * @param \Exception $exception
-     *
-     * @return void
-     */
-    protected function triggerDataSetImporterFailedEvent(Exception $exception)
-    {
-        $afterDataSetImporterEventTransfer = new AfterDataSetImporterEventTransfer();
-        $afterDataSetImporterEventTransfer
-            ->setImportType($this->getImportType())
-            ->setMessage($this->buildExceptionMessage($exception))
-            ->setIsSuccess(false);
-
-        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORTER, $afterDataSetImporterEventTransfer);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     *
-     * @return void
-     */
-    protected function triggerAfterDataSetImportEvent(DataReaderInterface $dataReader)
-    {
-        $afterDataSetImportEventTransfer = new AfterDataSetImportEventTransfer();
-        $afterDataSetImportEventTransfer
-            ->setImportType($this->getImportType())
-            ->setDataSetKey($dataReader->key())
-            ->setIsSuccess(true);
-
-        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
-    }
-
-    /**
-     * @param \Exception $exception
-     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
-     *
-     * @return void
-     */
-    protected function triggerDataSetImportFailedEvent(Exception $exception, DataReaderInterface $dataReader)
-    {
-        $afterDataSetImportEventTransfer = new AfterDataSetImportEventTransfer();
-        $afterDataSetImportEventTransfer
-            ->setImportType($this->getImportType())
-            ->setDataSetKey($dataReader->key())
-            ->setMessage($this->buildExceptionMessage($exception))
-            ->setIsSuccess(false);
-
-        $this->eventFacade->trigger(DataImportEvents::AFTER_DATA_SET_IMPORT, $afterDataSetImportEventTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
-     *
-     * @return void
-     */
-    protected function triggerAfterImportEvent(DataImporterReportTransfer $dataImporterReportTransfer)
-    {
-        $afterImportEventTransfer = new AfterImportEventTransfer();
-        $afterImportEventTransfer
-            ->setImportType($this->getImportType())
-            ->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount());
-
-        $this->eventFacade->trigger(DataImportEvents::AFTER_IMPORT, $afterImportEventTransfer);
     }
 
     /**
