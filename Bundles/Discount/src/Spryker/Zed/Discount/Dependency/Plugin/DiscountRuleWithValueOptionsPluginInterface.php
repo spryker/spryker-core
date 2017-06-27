@@ -13,6 +13,8 @@ interface DiscountRuleWithValueOptionsPluginInterface
     /**
      * List of key-value pairs of available select options.
      *
+     * @api
+     *
      * @return array
      */
     public function getQueryStringValueOptions();
