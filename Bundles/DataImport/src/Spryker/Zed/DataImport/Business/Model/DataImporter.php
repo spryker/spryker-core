@@ -17,6 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\DataImportConfig;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
@@ -111,6 +112,8 @@ class DataImporter implements
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
@@ -125,6 +128,10 @@ class DataImporter implements
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
+                if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
+                    throw new Exception($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1));
+                }
+
                 ErrorLogger::getInstance()->log($dataImportException);
                 $dataImporterReportTransfer->setIsSuccess(false);
             }
@@ -215,12 +222,21 @@ class DataImporter implements
 
     /**
      * @param \Exception $exception
+     * @param null|int $dataSetPosition
      *
      * @return string
      */
-    protected function buildExceptionMessage(Exception $exception)
+    protected function buildExceptionMessage(Exception $exception, $dataSetPosition = null)
     {
-        return sprintf('%s:%s %s %s', $exception->getFile(), $exception->getLine(), $exception->getMessage(), PHP_EOL . PHP_EOL . $exception->getTraceAsString());
+        $message = $exception->getMessage() . PHP_EOL . PHP_EOL;
+        if ($dataSetPosition && $this->getImportType() !== 'full') {
+            $message .= sprintf('DataImport for "%s" at data set position "%s" has an error.', $this->getImportType(), $dataSetPosition) . PHP_EOL . PHP_EOL;
+            $message .= sprintf('For debugging execute "vendor/bin/console data:import:%s -o %s -l 1 -t 1"', $this->getImportType(), $dataSetPosition) . PHP_EOL . PHP_EOL;
+        }
+
+        $message .= sprintf('%s:%s %s', $exception->getFile(), $exception->getLine(), PHP_EOL . PHP_EOL . $exception->getTraceAsString());
+
+        return $message;
     }
 
 }
