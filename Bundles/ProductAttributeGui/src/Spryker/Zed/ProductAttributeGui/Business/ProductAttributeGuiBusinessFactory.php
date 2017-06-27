@@ -8,7 +8,8 @@
 namespace Spryker\Zed\ProductAttributeGui\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoader;
+use Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReader;
+use Spryker\Zed\ProductAttributeGui\Business\Model\AttributeWriter;
 use Spryker\Zed\ProductAttributeGui\Business\Model\ProductAttributeManager;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
 
@@ -25,17 +26,28 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeManager(
             $this->getProductQueryContainer(),
-            $this->createAttributeLoader()
+            $this->createAttributeReader(),
+            $this->createAttributeWriter()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoaderInterface
+     * @return \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReaderInterface
      */
-    public function createAttributeLoader()
+    public function createAttributeReader()
     {
-        return new AttributeLoader(
+        return new AttributeReader(
             $this->getProductManagementQueryContainer()
+        );
+    }
+
+
+    /**
+     * @return \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeWriterInterface
+     */
+    public function createAttributeWriter()
+    {
+        return new AttributeWriter(
         );
     }
 

@@ -16,10 +16,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
-class AttributeLoader implements AttributeLoaderInterface
+class AttributeReader implements AttributeReaderInterface
 {
-
-    const DEFAULT_LOCALE = '_';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface

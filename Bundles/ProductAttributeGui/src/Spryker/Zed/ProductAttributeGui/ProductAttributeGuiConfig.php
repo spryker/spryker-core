@@ -13,7 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductAttributeGuiConfig extends AbstractBundleConfig
 {
 
+    const DEFAULT_LOCALE = '_';
     const STORE_PATTERN_MARKER = '{STORE}';
+
 
     /**
      * @return string

@@ -11,11 +11,10 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use PDO;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
 class ProductAttributeManager implements ProductAttributeManagerInterface
 {
-
-    const DEFAULT_LOCALE = '_';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -23,20 +22,28 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoaderInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReaderInterface
      */
-    protected $attributeLoader;
+    protected $attributeReader;
+
+    /**
+     * @var \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeWriterInterface
+     */
+    protected $attributeWriter;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeLoaderInterface $attributeFetcher
+     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReaderInterface $attributeReader
+     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeWriterInterface $attributeWriter
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
-        AttributeLoaderInterface $attributeFetcher
+        AttributeReaderInterface $attributeReader,
+        AttributeWriterInterface $attributeWriter
     ) {
         $this->productQueryContainer = $productQueryContainer;
-        $this->attributeLoader = $attributeFetcher;
+        $this->attributeReader = $attributeReader;
+        $this->attributeWriter = $attributeWriter;
     }
 
     /**
@@ -47,8 +54,8 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     public function getAttributes($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
-        $query = $this->attributeLoader->queryProductAttributeValues($values);
-        $results = $this->attributeLoader->load($query);
+        $query = $this->attributeReader->queryProductAttributeValues($values);
+        $results = $this->attributeReader->load($query);
 
         return $results;
     }
@@ -61,7 +68,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     public function getMetaAttributes($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
-        $query = $this->attributeLoader->queryMetaAttributes($values);
+        $query = $this->attributeReader->queryMetaAttributes($values);
 
         $data = $query->find();
 
@@ -129,7 +136,64 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
      */
     public function updateProductAbstractAttributes($idProductAbstract, array $data)
     {
-        print_r($data);
+        $attributes = [];
+        $keysToRemove = [];
+
+        foreach ($data as $attribute) {
+            $localeCode = $attribute['locale_code'];
+            $key = $attribute['key'];
+            $value = trim($attribute['value']);
+
+            if ($value !== '') {
+                $attributes[$localeCode][$key] = $value;
+            } else {
+                $keysToRemove[$localeCode][] = $key;
+            }
+        }
+
+        $attributesToSave= [];
+        $productAbstractAttributes = $this->getProductAbstractAttributeValues($idProductAbstract);
+
+        foreach ($attributes as $localeCode => $attributeData) {
+            $currentAttributes = [];
+            if (array_key_exists($localeCode, $productAbstractAttributes)) {
+                $currentAttributes = $productAbstractAttributes[$localeCode];
+            }
+
+            $attributesToSave[$localeCode] = array_merge($currentAttributes, $attributeData);
+
+            if (array_key_exists($localeCode, $keysToRemove)) {
+                $attributesToSave[$localeCode] = array_filter($attributeData, function($key) use ($keysToRemove, $localeCode) {
+                    return in_array($key, $keysToRemove[$localeCode]) === false;
+                }, ARRAY_FILTER_USE_KEY);
+            }
+        }
+
+        $attributes = $attributesToSave[ProductAttributeGuiConfig::DEFAULT_LOCALE];
+        unset($attributesToSave[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
+
+        $attributesJson = json_encode($attributes);
+
+        $productAbstractEntity = $this->getProductAbstractEntity($idProductAbstract);
+        $productAbstractEntity->setAttributes($attributesJson);
+        $productAbstractEntity->save();
+
+        foreach ($productAbstractEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
+            foreach ($attributesToSave as $localeCode => $attributeData) {
+                if ($localizedAttributeEntity->getFkLocale() !== (int)$localeCode) {
+                    continue;
+                }
+
+                $attributesJson = json_encode($attributeData);
+                $localizedAttributeEntity->setAttributes($attributesJson);
+                $localizedAttributeEntity->save();
+            }
+        }
+
+        print_r($attributes);
+        print_r($attributesToSave);
+        echo "\n\n";
+
         die;
     }
 
@@ -167,7 +231,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     protected function generateProductAbstractAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
     {
         $attributes = $this->decodeJsonAttributes($productAttributeEntity->getAttributes());
-        $attributes = [static::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
+        $attributes = [ProductAttributeGuiConfig::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
 
         return $attributes;
     }

@@ -100,18 +100,18 @@ function removeActionHandler() {
     return false;
 }
 
-function updateInputsWithAutoComplete() {
-    $('.kv_attribute_autocomplete').each(function(key, value) {
+function updateAttributeInputsWithAutoComplete() {
+    $('[data-is_attribute_input]').each(function(key, value) {
         var input = $(value);
-        var id = input.attr('id_attribute') || null;
-        var locale_code = input.attr('locale_code') || null;
+        var id = input.attr('data-id_attribute') || null;
+        var locale_code = input.attr('data-locale_code') || null;
 
         input.autocomplete({
             minLength: 0,
             source: function(request, response) {
                 $.ajax({
                     url: '/product-management/attribute/suggest/',
-                    dataType: "json",
+                    dataType: 'json',
                     data: {
                         q: request.term,
                         id: id,
@@ -170,8 +170,8 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    id: this.attr('id_attribute'),
-                    locale_code: this.attr('locale_code')
+                    id: this.attr('data-id_attribute'),
+                    locale_code: this.attr('data-locale_code')
                 };
 
                 return p;
@@ -193,8 +193,8 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    id: this.attr('id_attribute'),
-                    locale_code: this.attr('locale_code')
+                    id: this.attr('data-id_attribute'),
+                    locale_code: this.attr('data-locale_code')
                 };
 
                 return p;
@@ -213,11 +213,22 @@ $(document).ready(function() {
         var dataTable = $('#productAttributesTable');
         var idAttribute = input.attr('data-value');
         var key = input.val().trim();
-
         key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
 
         if (key === '' || !idAttribute) {
             alert('Please select attribute key first');
+            return false;
+        }
+
+        var currentKeys = [];
+        $('#productAttributesTable tr').each(function(){
+            currentKeys.push($(this).find("td:first").text()); //put elements into array
+        });
+
+        console.log('currentKeys', currentKeys);
+
+        if ($.inArray(key, currentKeys) > -1) {
+            alert('Attribute "'+ key +'" already defined');
             return false;
         }
 
@@ -229,13 +240,9 @@ $(document).ready(function() {
 
             for (var i = 0; i < locales.length; i++) {
                 var localeCode = locales[i];
-                if (localeCode === '_') {
-                    localeCode = null;
-                }
-
-                dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" value="" id_attribute="' + idAttribute + '" locale_code="' + localeCode + '">');
+                dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" data-is_attribute_input data-attribute_key="' + key + '" value="" data-id_attribute="' + idAttribute + '" data-locale_code="' + localeCode + '">');
             }
-            dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs remove-item">Remove</a>');
+            dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
             return dataToAdd;
         }
 
@@ -250,7 +257,7 @@ $(document).ready(function() {
             .off('click')
             .on('click', removeActionHandler);
 
-        updateInputsWithAutoComplete();
+        updateAttributeInputsWithAutoComplete();
 
         return false;
     });
@@ -259,14 +266,14 @@ $(document).ready(function() {
         .off('click')
         .on('click', removeActionHandler);
 
-    updateInputsWithAutoComplete();
+    updateAttributeInputsWithAutoComplete();
 
     $('#attribute_form_key').autocomplete({
         minLength: 0,
         source: function(request, response) {
             $.ajax({
                 url: '/product-attribute-gui/suggest/keys',
-                dataType: "json",
+                dataType: 'json',
                 data: {
                     q: request.term,
                 },

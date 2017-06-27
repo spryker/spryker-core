@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 
-interface AttributeLoaderInterface
+interface AttributeReaderInterface
 {
 
     /**
