@@ -32,6 +32,37 @@ function AttributeManager() {
         return _attributeManager.locales;
     };
 
+    _attributeManager.save = function() {
+        var form = $('form#attribute_values_form');
+        var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
+        var formData = [];
+
+        $('[data-is_attribute_input]').each(function(index, value) {
+            var input = $(value);
+            var attributeValue = input.val();
+            var idAttribute = input.attr('data-id_attribute') || null;
+            var locale_code = input.attr('data-locale_code') || null;
+            var key = input.attr('data-attribute_key') || null;
+
+            formData.push({
+                'key': key,
+                'id': idAttribute,
+                'locale_code': locale_code,
+                'value': attributeValue
+            });
+        });
+
+        $.ajax({
+            url: '/product-attribute-gui/save',
+            type: 'POST',
+            dataType: 'application/json',
+            data: 'json=' + JSON.stringify(formData) + '&id-product-abstract=' + idProductAbstract,
+            success: function(data) {
+                console.log('save', data);
+            }
+        });
+    };
+
     _attributeManager.init();
 
     return _attributeManager;
@@ -264,5 +295,15 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('#saveButton').on('click', function(event, ui) {
+        attributeManager.save();
+    });
+
+    $("#attribute_values_form").submit(function(e) {
+        e.preventDefault();
+        return false;
+    });
+
 
 });

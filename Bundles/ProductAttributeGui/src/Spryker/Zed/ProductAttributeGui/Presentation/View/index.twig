@@ -21,7 +21,8 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
         {% block widget_content %}
         <table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
-        <form id="attributeValuesForm" name="attributeValuesForm">
+        <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="/product-attribute-gui/save">
+            <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
             <thead>
             <tr>
                 <th>key</th>
@@ -43,34 +44,43 @@
                             <td>{{ key }}</td>
                             {% for valueLocaleCode,localeData in productAttributeValues %}
                                 {% set name = '[' ~ key ~ ']' %}
+                                {% set id = key %}
 
                                 {% if valueLocaleCode != '_' %}
                                     {% set name = name ~ '[' ~ valueLocaleCode ~ ']' %}
+                                    {% set id = id ~ '_' ~ valueLocaleCode %}
                                 {% endif %}
 
-                                {% set inputName = 'attributeValuesForm' ~ name  %}
+                                {% set inputName = 'attribute_values_form' ~ name  %}
+                                {% set inputId = 'attribute_values_form_' ~ id  %}
 
                                 {% if localeData[key] is defined %}
                                     <td>
                                         <input
+                                                id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete"
                                                 value="{{ localeData[key] }}"
-                                                id_attribute="{{ metaAttributes[key] }}"
-                                                locale_code="{{ valueLocaleCode }}"
-                                        ><span style="font-size: 1px; opacity: 0.0;">{{ localeData[key] }}</span>
+                                                data-attribute_key="{{ key }}"
+                                                data-is_attribute_input
+                                                data-id_attribute="{{ metaAttributes[key] }}"
+                                                data-locale_code="{{ valueLocaleCode }}"
+                                        /><span style="font-size: 1px; opacity: 0.0;">{{ localeData[key] }}</span>
                                     </td>
                                 {% else %}
                                     <td>
                                         <input
+                                                id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete"
                                                 value=""
-                                                id_attribute="{{ metaAttributes[key] }}"
-                                                locale_code="{{ valueLocaleCode }}"
-                                        >
+                                                data-attribute_key="{{ key }}"
+                                                data-is_attribute_input
+                                                data-id_attribute="{{ metaAttributes[key] }}"
+                                                data-locale_code="{{ valueLocaleCode }}"
+                                        />
                                     </td>
                                 {% endif %}
                             {% endfor %}
@@ -97,7 +107,7 @@
         {% endblock %}
     {% endembed %}
 
-    <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"  id="saveButton" />
+    <input type="button" class="btn btn-primary" value="{{ 'Save' | trans }}" id="saveButton" />
 
 {% endblock %}
 

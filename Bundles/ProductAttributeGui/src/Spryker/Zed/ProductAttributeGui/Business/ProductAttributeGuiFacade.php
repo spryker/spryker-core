@@ -73,4 +73,11 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
             ->suggestKeys($searchText, $limit);
     }
 
+    public function updateProductAbstractAttributes($idProductAbstract, array $data)
+    {
+        $this->getFactory()
+            ->createProductAttributeManager()
+            ->updateProductAbstractAttributes($idProductAbstract, $data);
+    }
+
 }

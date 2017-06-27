@@ -125,6 +125,17 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param array $data
+     *
+     * @return void
+     */
+    public function updateProductAbstractAttributes($idProductAbstract, array $data)
+    {
+        print_r($data);die;
+    }
+
+    /**
      * @param string $localizedAttributesJson
      *
      * @return array

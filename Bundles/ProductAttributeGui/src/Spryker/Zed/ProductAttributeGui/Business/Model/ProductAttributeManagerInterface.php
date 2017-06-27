@@ -39,4 +39,12 @@ interface ProductAttributeManagerInterface
      */
     public function suggestKeys($searchText, $limit);
 
+    /**
+     * @param int $idProductAbstract
+     * @param array $data
+     *
+     * @return void
+     */
+    public function updateProductAbstractAttributes($idProductAbstract, array $data);
+
 }

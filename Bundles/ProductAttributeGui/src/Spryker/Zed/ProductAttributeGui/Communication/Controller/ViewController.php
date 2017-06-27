@@ -19,10 +19,6 @@ class ViewController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID = 'id';
-    const PARAM_SEARCH_TEXT = 'q';
-    const PARAM_TERM = 'term';
-    const PARAM_LOCALE_CODE = 'locale_code';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -66,6 +62,7 @@ class ViewController extends AbstractController
         ksort($values);
 
         return $this->viewResponse([
+            'idProductAbstract' => $idProductAbstract,
             'attributeKeyForm' => $form->createView(),
             'locales' => $locales,
             'metaAttributes' => $metaAttributes,
@@ -73,7 +70,6 @@ class ViewController extends AbstractController
             'localesJson' => json_encode(array_keys($locales)),
             'productAttributeValuesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),
-
         ]);
     }
 
