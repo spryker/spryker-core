@@ -7,6 +7,7 @@
 
 require('ZedGui');
 var CmsGlossaryAutocomplete = require('./cms-glossary-autocomplete');
+var CmsContentEditor = require('./cms-content-editor');
 require('../../sass/main.scss');
 require('../../img/cms-loader.gif');
 
@@ -56,10 +57,12 @@ $(document).ready( function () {
         }
     });
 
+    new CmsContentEditor();
+
     $('[name=cms_glossary]').on('submit', function() {
         var self = $(this);
 
-        self.find('.html-editor').each(function (index, element) {
+        self.find('.cms-html-editor').each(function (index, element) {
             var editor = $(element);
 
             if (editor.summernote('isEmpty')) {

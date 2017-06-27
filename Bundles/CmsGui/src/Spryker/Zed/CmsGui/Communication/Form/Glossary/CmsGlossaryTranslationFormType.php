@@ -80,7 +80,7 @@ class CmsGlossaryTranslationFormType extends AbstractType
         $builder->add(static::FIELD_TRANSLATION, TextareaType::class, [
             'label' => 'Content',
             'attr' => [
-                'class' => 'html-editor',
+                'class' => 'cms-html-editor',
             ],
             'required' => false,
         ]);
