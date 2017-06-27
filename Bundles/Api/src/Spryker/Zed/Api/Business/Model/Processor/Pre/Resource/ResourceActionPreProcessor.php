@@ -44,7 +44,7 @@ class ResourceActionPreProcessor implements PreProcessorInterface
             $resourceAction = ApiConfig::ACTION_DELETE;
         }
         if ($resourceAction === null) {
-            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, 400);
+            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, ApiConfig::HTTP_CODE_NOT_ALLOWED);
         }
 
         $apiRequestTransfer->setResourceAction($resourceAction);

@@ -34,6 +34,7 @@ class ApiConfig extends AbstractBundleConfig
     const HTTP_CODE_NO_CONTENT = 204;
     const HTTP_CODE_PARTIAL_CONTENT = 206;
     const HTTP_CODE_NOT_FOUND = 404;
+    const HTTP_CODE_NOT_ALLOWED = 405;
     const HTTP_CODE_VALIDATION_ERRORS = 422;
     const HTTP_CODE_INTERNAL_ERROR = 500;
 
