@@ -23,7 +23,10 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(CustomerConstants::HOST_YVES);
+        return $this->getConfig()->hasKey(CustomerConstants::BASE_URL_YVES)
+            ? $this->get(CustomerConstants::BASE_URL_YVES)
+            // @deprecated this is just for backward compatibility
+            : $this->get(CustomerConstants::HOST_YVES);
     }
 
     /**
