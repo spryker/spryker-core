@@ -21,7 +21,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
         {% block widget_content %}
             <div>
-                {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+                {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form', 'id': 'attribute_form'} }) }}
                 {{ form_errors(attributeKeyForm) }}
                 {{ form_widget(attributeKeyForm) }}
                 <input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" />
@@ -40,12 +40,12 @@
                 <th>key</th>
                 {% for localeCode,localeData in locales %}
                     {% if localeCode == '_' %}
-                        <th>{{ 'value[default]' }}</th>
+                        <th>{{ 'default' }}</th>
                     {% else %}
-                        <th>{{ 'value [' ~ localeCode }}]</th>
+                        <th>{{ localeCode }}</th>
                     {% endif %}
                 {% endfor %}
-                <th>action</th>
+                <th class="column-actions sorting_disabled" >action</th>
             </tr>
             </thead>
             <tbody>

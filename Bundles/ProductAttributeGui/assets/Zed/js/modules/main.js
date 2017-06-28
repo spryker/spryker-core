@@ -41,8 +41,9 @@ function AttributeManager() {
         return keys;
     };
 
-    _attributeManager.validateKeys = function() {
+    _attributeManager.validateKey = function(key) {
         var currentKeys = _attributeManager.extractKeysFromTable();
+
         if ($.inArray(key, currentKeys) > -1) {
             alert('Attribute "'+ key +'" already defined');
             return false;
@@ -66,9 +67,9 @@ function AttributeManager() {
                 ' value="" ' +
                 ' data-id_attribute="' + idAttribute + '" ' +
                 ' data-locale_code="' + localeCode + '"' +
-                '>';
-            //<span id="{{ inputId ~ '_value_cell' }}" style="display: none"></span>
-            dataToAdd.push();
+                '>' +
+                '<span style="display: none"></span>';
+            dataToAdd.push(item);
         }
 
         dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
@@ -76,7 +77,7 @@ function AttributeManager() {
         return dataToAdd;
     };
 
-    _attributeManager.addKey = function(key, idAttribute) {
+    _attributeManager.addKey = function(key, idAttribute, dataTable) {
         key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
 
         if (key === '' || !idAttribute) {
@@ -84,7 +85,7 @@ function AttributeManager() {
             return false;
         }
 
-        if (!_attributeManager.validateKeys()) {
+        if (!_attributeManager.validateKey(key)) {
             return false;
         }
 
@@ -132,11 +133,14 @@ function AttributeManager() {
                     if (responseData.hasOwnProperty('message')) {
                         message = responseData.message;
                     }
+
                     window.sweetAlert({
                         title: jqXHR.status === 200 ? 'Success' : 'Error',
                         text: message,
                         type: jqXHR.status === 200 ? 'success' : 'error'
                     });
+
+                    location.reload();
                 }
             },
             beforeSend: function() {
@@ -298,7 +302,7 @@ $(document).ready(function() {
         var idAttribute = input.attr('data-value');
         var key = input.val().trim();
 
-        attributeManager.addKey(key, idAttribute);
+        attributeManager.addKey(key, idAttribute, dataTable);
 
         $('.remove-item')
             .off('click')
@@ -360,4 +364,20 @@ $(document).ready(function() {
     });
 
 
+    $('#productAttributesTable').DataTable({
+        'columnDefs': [{
+            'targets': -1,
+            'orderable': false
+        }],
+        destroy: true
+    });
+
+    $('#attribute_form').on('keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            $('#addButton').trigger('click');
+            return false;
+        }
+    });
 });

@@ -30,7 +30,7 @@ class AttributeKeyForm extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'required' => true,
+            'required' => false,
         ]);
     }
 
