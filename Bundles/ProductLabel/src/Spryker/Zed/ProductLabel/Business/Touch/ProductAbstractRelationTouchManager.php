@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\Touch;
 
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 
 class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouchManagerInterface
@@ -19,11 +20,17 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface $touchFacade
      */
-    public function __construct(ProductLabelToTouchInterface $touchFacade)
+    public function __construct(ProductLabelToTouchInterface $touchFacade, ProductLabelToProductInterface $productFacade)
     {
         $this->touchFacade = $touchFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -37,6 +44,8 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
+
+        $this->productFacade->touchProductAbstract($idProductAbstract);
     }
 
     /**
@@ -50,6 +59,8 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $idProductAbstract
         );
+
+        $this->productFacade->touchProductAbstract($idProductAbstract);
     }
 
 }

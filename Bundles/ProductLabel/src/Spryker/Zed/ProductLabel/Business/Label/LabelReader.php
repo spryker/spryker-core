@@ -109,6 +109,23 @@ class LabelReader implements LabelReaderInterface
     /**
      * @param int $idProductAbstract
      *
+     * @return int[]
+     */
+    public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
+    {
+        $productLabelIds = [];
+
+        $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelIds[] = $productLabelEntity->getIdProductLabel();
+        }
+
+        return $productLabelIds;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
      */
     protected function findEntitiesByIdProductAbstract($idProductAbstract)
