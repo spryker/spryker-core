@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Communication;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
@@ -17,6 +18,7 @@ use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvid
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
@@ -182,7 +184,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsGlossaryAttributesFormType(
             $this->getCmsFacade(),
-            $this->createUniqueGlossaryForSearchTypeConstraint()
+            $this->createUniqueGlossaryForSearchTypeConstraint(),
+            $this->createCmsGlossaryTranslationFormType()
         );
     }
 
@@ -250,6 +253,34 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType|\Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createCmsGlossaryTranslationFormType()
+    {
+        return new CmsGlossaryTranslationFormType(
+            $this->createTwigContentConstraint()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent|\Symfony\Component\Validator\Constraint
+     */
+    protected function createTwigContentConstraint()
+    {
+        return new TwigContent([
+            TwigContent::OPTION_TWIG_ENVIRONMENT => $this->getTwigEnvironment(),
+        ]);
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::TWIG_ENVIRONMENT);
     }
 
     /**

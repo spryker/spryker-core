@@ -60,13 +60,13 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
      *
      * @param int $idProductSet
      *
-     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
-    public function getProductSetByIdProductSet($idProductSet)
+    public function findProductSetByIdProductSet($idProductSet)
     {
         return $this->getFactory()
             ->createProductSetStorage()
-            ->getProductSetByIdProductSet($idProductSet);
+            ->findProductSetByIdProductSet($idProductSet);
     }
 
 }

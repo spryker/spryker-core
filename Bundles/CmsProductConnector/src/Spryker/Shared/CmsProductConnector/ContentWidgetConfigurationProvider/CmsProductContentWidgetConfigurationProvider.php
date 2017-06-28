@@ -37,7 +37,7 @@ class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetCo
      */
     public function getUsageInformation()
     {
-        return "{{ product(['sku1', 'sku2']) }}, to use different template {{ product(['sku1', 'sku2', 'template_identifier']) }}";
+        return "{{ product(['sku1', 'sku2']) }}, to use different template {{ product(['sku1', 'sku2', 'default']) }}";
     }
 
 }

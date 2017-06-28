@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Cms\Twig;
 
 use Exception;
-use Spryker\Shared\Config\Environment;
 use Twig_Environment;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
@@ -20,20 +19,11 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
     protected $twigEnvironment;
 
     /**
-     * @var \Spryker\Shared\Config\Environment
-     */
-    protected $applicationEnvironment;
-
-    /**
      * @param \Twig_Environment $twigEnvironment
-     * @param \Spryker\Shared\Config\Environment $applicationEnvironment
      */
-    public function __construct(
-        Twig_Environment $twigEnvironment,
-        Environment $applicationEnvironment
-    ) {
+    public function __construct(Twig_Environment $twigEnvironment)
+    {
         $this->twigEnvironment = $twigEnvironment;
-        $this->applicationEnvironment = $applicationEnvironment;
     }
 
     /**
@@ -60,8 +50,6 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
      * @param array $context
      * @param string $content
      *
-     * @throws \Exception
-     *
      * @return string
      */
     protected function renderTwigContent(array $context, $content)
@@ -69,9 +57,6 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
         try {
             return $this->twigEnvironment->createTemplate($content)->render($context);
         } catch (Exception $exception) {
-            if (!$this->applicationEnvironment->isProduction()) {
-                throw $exception;
-            }
             return $content;
         }
     }

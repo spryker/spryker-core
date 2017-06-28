@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 
 class CmsGlossaryTranslationFormType extends AbstractType
 {
@@ -19,6 +20,19 @@ class CmsGlossaryTranslationFormType extends AbstractType
     const FIELD_FK_LOCALE = 'fkLocale';
     const FIELD_TRANSLATION = 'translation';
     const FIELD_LOCALE_NAME = 'localeName';
+
+    /**
+     * @var \Symfony\Component\Validator\Constraint
+     */
+    protected $cmsContentConstraint;
+
+    /**
+     * @param \Symfony\Component\Validator\Constraint $cmsContentConstraint
+     */
+    public function __construct(Constraint $cmsContentConstraint)
+    {
+        $this->cmsContentConstraint = $cmsContentConstraint;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -83,6 +97,9 @@ class CmsGlossaryTranslationFormType extends AbstractType
                 'class' => 'cms-html-editor',
             ],
             'required' => false,
+            'constraints' => [
+                $this->cmsContentConstraint
+            ],
         ]);
 
         return $this;

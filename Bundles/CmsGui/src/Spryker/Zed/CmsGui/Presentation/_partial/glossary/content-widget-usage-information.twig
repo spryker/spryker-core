@@ -9,10 +9,10 @@
                     <strong>{{ cmsWidgetConfiguration.functionName }}</strong> <br />
                     {{ 'Usage information:' | trans }}
                     {{ cmsWidgetConfiguration.usageInformation }} <br />
-                    {{ 'Templates:' | trans }} <br />
+                    {{ 'Available templates:' | trans }} <br />
                     <ul>
                         {% for templateName, templatePath in cmsWidgetConfiguration.templates %}
-                            <li> {{ templateName }} ({{ templatePath }}) </li>
+                            <li> <strong>{{ templateName }}</strong> ({{ templatePath }}) </li>
                         {% endfor %}
                     </ul>
                     <hr />

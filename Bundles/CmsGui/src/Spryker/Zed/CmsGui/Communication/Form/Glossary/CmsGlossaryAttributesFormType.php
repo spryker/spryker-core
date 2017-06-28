@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -52,15 +53,23 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected $uniqueGlossaryForSearchTypeConstraint;
 
     /**
+     * @var \Symfony\Component\Form\FormTypeInterface
+     */
+    protected $cmsGlossaryTranslationFormType;
+
+    /**
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
      * @param \Symfony\Component\Validator\Constraint $uniqueGlossaryForSearchTypeConstraint
+     * @param \Symfony\Component\Form\FormTypeInterface $cmsGlossaryTranslationFormType
      */
     public function __construct(
         CmsGuiToCmsInterface $cmsFacade,
-        Constraint $uniqueGlossaryForSearchTypeConstraint
+        Constraint $uniqueGlossaryForSearchTypeConstraint,
+        FormTypeInterface $cmsGlossaryTranslationFormType
     ) {
         $this->cmsFacade = $cmsFacade;
         $this->uniqueGlossaryForSearchTypeConstraint = $uniqueGlossaryForSearchTypeConstraint;
+        $this->cmsGlossaryTranslationFormType = $cmsGlossaryTranslationFormType;
     }
 
     /**
@@ -198,7 +207,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => new CmsGlossaryTranslationFormType(),
+            'type' => $this->cmsGlossaryTranslationFormType,
             'allow_add' => true,
         ]);
 

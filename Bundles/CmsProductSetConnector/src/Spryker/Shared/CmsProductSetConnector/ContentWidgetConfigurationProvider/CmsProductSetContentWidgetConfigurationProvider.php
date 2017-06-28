@@ -37,7 +37,7 @@ class CmsProductSetContentWidgetConfigurationProvider implements CmsContentWidge
      */
     public function getUsageInformation()
     {
-        return "{{ product_set(['set_key1', 'set_key2']) }}, to use different template {{ product_set(['set_key1', 'set_key2', 'template_identifier']) }}";
+        return "{{ product_set(['set_key1', 'set_key2']) }}, to use different template {{ product_set(['set_key1', 'set_key2', 'default']) }}";
     }
 
 }

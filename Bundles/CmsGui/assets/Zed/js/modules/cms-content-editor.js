@@ -5,7 +5,6 @@
 
 'use strict';
 
-
 /**
  * @param {string} options
  *

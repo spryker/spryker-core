@@ -13,6 +13,7 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBridge;
 use Spryker\Zed\CmsGui\Dependency\Service\CmsGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -26,6 +27,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_CMS = 'cms query container';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
+
+    const TWIG_ENVIRONMENT = 'twig environment';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,7 +61,20 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container[self::TWIG_ENVIRONMENT] = function (Container $container) {
+            return $this->getTwigEnvironment();
+        };
+
         return $container;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        $pimplePlugin = new Pimple();
+        return $pimplePlugin->getApplication()['twig'];
     }
 
 }

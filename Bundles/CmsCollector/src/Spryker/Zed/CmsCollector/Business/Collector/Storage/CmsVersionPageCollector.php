@@ -90,7 +90,10 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
 
         $contentWidgetParameterMap = [];
         foreach ($contentPlaceholders as $content) {
-            $contentWidgetParameterMap = $this->cmsFacade->mapContentWidgetParameters($content);
+            $contentWidgetParameterMap = array_merge_recursive(
+                $contentWidgetParameterMap,
+                $this->cmsFacade->mapContentWidgetParameters($content)
+            );
         }
 
         return $contentWidgetParameterMap;

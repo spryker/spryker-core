@@ -18,7 +18,7 @@ class CmsFactory extends AbstractFactory
      */
     public function createTwigContentRenderer()
     {
-        return new TwigCmsContentRenderer($this->getTwigEnvironment(), $this->getApplicationEnvironment());
+        return new TwigCmsContentRenderer($this->getTwigEnvironment());
     }
 
     /**
@@ -35,14 +35,6 @@ class CmsFactory extends AbstractFactory
     protected function getTwigEnvironment()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::TWIG_ENVIRONMENT);
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    protected function getApplicationEnvironment()
-    {
-        return $this->getProvidedDependency(CmsDependencyProvider::APPLICATION_ENVIRONMENT);
     }
 
 }

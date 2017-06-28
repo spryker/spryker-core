@@ -64,12 +64,16 @@ class ProductSetStorage implements ProductSetStorageInterface
     /**
      * @param int $idProductSet
      *
-     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
-    public function getProductSetByIdProductSet($idProductSet)
+    public function findProductSetByIdProductSet($idProductSet)
     {
         $key = $this->keyBuilder->generateKey($idProductSet, $this->localeName);
         $productSet = $this->storage->get($key);
+
+        if (!$productSet) {
+            return null;
+        }
 
         return $this->productSetStorageMapper->mapDataToTransfer($productSet);
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Cms;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -18,7 +17,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const CMS_CONTENT_WIDGET_PLUGINS = 'cms_content_widget_plugins';
 
     const TWIG_ENVIRONMENT = 'twig_environment';
-    const APPLICATION_ENVIRONMENT = 'application_environment';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -35,10 +33,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getTwigEnvironment();
         };
 
-        $container[static::APPLICATION_ENVIRONMENT] = function (Container $container) {
-            return $this->getApplicationEnvironment();
-        };
-
         return $container;
     }
 
@@ -51,14 +45,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         $twig = $pimplePlugin->getApplication()['twig'];
 
         return $twig;
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    protected function getApplicationEnvironment()
-    {
-        return Environment::getInstance();
     }
 
     /**

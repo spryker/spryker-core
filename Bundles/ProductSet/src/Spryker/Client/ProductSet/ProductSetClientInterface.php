@@ -50,8 +50,8 @@ interface ProductSetClientInterface
      *
      * @param int $idProductSet
      *
-     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
-    public function getProductSetByIdProductSet($idProductSet);
+    public function findProductSetByIdProductSet($idProductSet);
 
 }
