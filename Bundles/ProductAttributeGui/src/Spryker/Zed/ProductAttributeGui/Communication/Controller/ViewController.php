@@ -25,7 +25,7 @@ class ViewController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function productAbstractAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
             static::PARAM_ID_PRODUCT_ABSTRACT
@@ -44,6 +44,8 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getProductAbstractAttributeValues($idProductAbstract);
 
+        $productAbstractTransfer = $this->getFacade()->getProductAbstract($idProductAbstract);
+
         $metaAttributes = $this
             ->getFacade()
             ->getMetaAttributes($idProductAbstract);
@@ -58,7 +60,13 @@ class ViewController extends AbstractController
 
         $locales['_'] = $localeTransfer;
 
+        $localesData = [];
+        foreach ($locales as $localeCode => $localeTransfer) {
+            $localesData[$localeCode] = $localeTransfer->toArray();
+        }
+
         ksort($locales);
+        ksort($localesData);
         ksort($values);
 
         return $this->viewResponse([
@@ -67,9 +75,10 @@ class ViewController extends AbstractController
             'locales' => $locales,
             'metaAttributes' => $metaAttributes,
             'productAttributeValues' => $values,
-            'localesJson' => json_encode(array_keys($locales)),
+            'localesJson' => json_encode($localesData),
             'productAttributeValuesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),
+            'productAbstract' => $productAbstractTransfer
         ]);
     }
 

@@ -85,33 +85,6 @@ class AttributeKeyForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addAttributeKeyField2(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
-            'label' => 'Attribute key *',
-            'url' => '/product-attribute-gui/suggest/keys',
-            'constraints' => [
-                new NotBlank(),
-                new Regex([
-                    'pattern' => '/^[a-z\-0-9_:]+$/',
-                    'message' => 'This field contains illegal characters. It should contain only lower case letters, ' .
-                        'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
-                ]),
-            ],
-            'attr' => [
-                'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
-                'class' => 'attribute_metadata_value',
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this

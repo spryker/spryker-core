@@ -27,6 +27,13 @@ interface ProductAttributeManagerInterface
     /**
      * @param int $idProductAbstract
      *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstract($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
      * @return array
      */
     public function getProductAbstractAttributeValues($idProductAbstract);

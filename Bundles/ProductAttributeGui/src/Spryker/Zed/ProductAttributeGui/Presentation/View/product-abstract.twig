@@ -1,9 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Manage Attributes' %}
+{% set widget_title = 'Manage Attributes for Product Abstract [' ~ productAbstract.sku  ~ ']' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
+    {{ viewActionButton(url('/product-management/view?id-product-abstract=' ~ productAbstract.idProductAbstract), 'View Product Abstract' | trans) }}
     {{ backActionButton(url('/product-management'), 'Back to List' | trans) }}
 {% endblock %}
 
@@ -18,7 +19,7 @@
         {{ localesJson | raw }}
     </div>
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute Key' } %}
         {% block widget_content %}
             <div>
                 {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form', 'id': 'attribute_form'} }) }}
@@ -30,7 +31,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
         {% block widget_content %}
         <table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
         <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="/product-attribute-gui/save">
@@ -45,7 +46,7 @@
                         <th>{{ localeCode }}</th>
                     {% endif %}
                 {% endfor %}
-                <th class="column-actions sorting_disabled" >action</th>
+                <th>action</th>
             </tr>
             </thead>
             <tbody>
@@ -90,7 +91,8 @@
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value="{{ localeData[key] }}"
-                                                data-allow-input="{{ allowInput }}"
+                                                data-allow_input="{{ allowInput }}"
+                                                data-is_super="{{ isSuper }}"
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
                                                 data-id_attribute="{{ idAttribute }}"
@@ -106,7 +108,8 @@
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value=""
-                                                data-allow-input="{{ allowInput }}"
+                                                data-allow_input="{{ allowInput }}"
+                                                data-is_super="{{ isSuper }}"
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
                                                 data-id_attribute="{{ idAttribute }}"
@@ -116,7 +119,11 @@
                                     </td>
                                 {% endif %}
                             {% endfor %}
-                            <td><a data-id="{{ key }}" href="#" onclick="return false" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a></td>
+                            <td>
+                                {% if isSuper == false %}
+                                    <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 {% endif %}

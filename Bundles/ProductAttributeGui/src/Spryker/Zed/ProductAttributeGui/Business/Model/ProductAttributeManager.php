@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
@@ -17,6 +18,13 @@ use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
 class ProductAttributeManager implements ProductAttributeManagerInterface
 {
+
+    const KEY = 'key';
+    const IS_SUPER = 'is_super';
+    const ATTRIBUTE_ID = 'attribute_id';
+    const ALLOW_INPUT = 'allow_input';
+    const INPUT_TYPE = 'input_type';
+    const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -74,22 +82,42 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
 
         $query
             ->clearSelectColumns()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, 'is_super')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'attribute_id')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, 'allow_input')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, 'input_type')
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, static::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, static::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, static::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, static::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, static::INPUT_TYPE)
             ->setFormatter(new ArrayFormatter());
 
         $data = $query->find();
 
         $results = [];
         foreach ($data as $entity) {
-            unset($entity['id_product_attribute_key']);
-            $results[$entity['key']] = $entity;
+            unset($entity[static::ID_PRODUCT_ATTRIBUTE_KEY]);
+            $results[$entity[static::KEY]] = $entity;
         }
 
         return $results;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstract($idProductAbstract)
+    {
+        $entity = $this->getProductAbstractEntity($idProductAbstract);
+        $productAbstractTransfer = new ProductAbstractTransfer();
+
+        if (!$entity) {
+            return $productAbstractTransfer;
+        }
+
+        $productAbstractTransfer->setIdProductAbstract($entity->getIdProductAbstract());
+        $productAbstractTransfer->setSku($entity->getSku());
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -125,11 +153,11 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
             ->useSpyProductManagementAttributeQuery()
             ->endUse()
             ->clearSelectColumns()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, 'is_super')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'attribute_id')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, 'allow_input')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, 'input_type')
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, static::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, static::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, static::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, static::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, static::INPUT_TYPE)
             ->setFormatter(new ArrayFormatter())
             ->limit($limit);
 
@@ -141,8 +169,8 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
         }
 
         foreach ($query->find() as $entity) {
-            unset($entity['id_product_attribute_key']);
-            $results[$entity['attribute_id']] = $entity;
+            unset($entity[static::ID_PRODUCT_ATTRIBUTE_KEY]);
+            $results[$entity[static::ATTRIBUTE_ID]] = $entity;
         }
 
         return $results;
@@ -161,7 +189,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
 
         foreach ($data as $attribute) {
             $localeCode = $attribute['locale_code'];
-            $key = $attribute['key'];
+            $key = $attribute[static::KEY];
             $value = trim($attribute['value']);
 
             if ($value !== '') {

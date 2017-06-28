@@ -33,6 +33,15 @@ interface ProductAttributeGuiFacadeInterface
      *
      * @param int $idProductAbstract
      *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
      * @return array
      */
     public function getProductAbstractAttributeValues($idProductAbstract);

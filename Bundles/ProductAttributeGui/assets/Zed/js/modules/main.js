@@ -12,7 +12,8 @@ function AttributeManager() {
     var _attributeManager = {
         attributesValues: {},
         metaAttributes: {},
-        locales: {}
+        locales: {},
+        removedKeys: []
     };
 
     var jsonLoader = {};
@@ -52,24 +53,29 @@ function AttributeManager() {
         return true;
     };
 
+    _attributeManager.hasKeyBeenUsed = function(key) {
+        var currentKeys = _attributeManager.extractKeysFromTable();
+
+        return ($.inArray(key, currentKeys) > 0);
+    };
+
     _attributeManager.generateDataToAdd = function(key, idAttribute, attributeMetadata) {
         var dataToAdd = [];
         var locales = _attributeManager.getLocaleCollection();
 
-
         dataToAdd.push(key);
 
-        for (var i = 0; i < locales.length; i++) {
-            var localeCode = locales[i];
+        for (var localeCode in locales) {
             var readOnly = 'readonly="true"';
 
-            if (attributeMetadata.is_super === true) {
+            if (attributeMetadata.is_super) {
                 readOnly = '';
             }
 
             var item = '<input type="text"' +
-                ' class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" ' +
-                ' data-allow-input="' + attributeMetadata.allow_input + '"' +
+                ' class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" ' +
+                ' data-allow_input="' + attributeMetadata.allow_input + '"' +
+                ' data-is_super="' + attributeMetadata.is_super + '"' +
                 ' data-is_attribute_input ' +
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
@@ -78,10 +84,11 @@ function AttributeManager() {
                 readOnly +
                 '>' +
                 '<span style="display: none"></span>';
+
             dataToAdd.push(item);
         }
 
-        dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
+        dataToAdd.push('<a data-key="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
 
         return dataToAdd;
     };
@@ -107,7 +114,7 @@ function AttributeManager() {
             'input_type': keyInput.attr('data-input_type')
         };
 
-        console.log('attributeMetadata',attributeMetadata);
+        _attributeManager.resetRemovedKey(key);
 
         var dataToAdd = _attributeManager.generateDataToAdd(key, idAttribute, attributeMetadata);
 
@@ -117,7 +124,20 @@ function AttributeManager() {
             .draw();
     };
 
+    _attributeManager.addRemovedKey = function(key) {
+        _attributeManager.removedKeys.push(key)
+    };
+
+    _attributeManager.resetRemovedKey = function(key) {
+        delete _attributeManager.removedKeys[key];
+    };
+
+    _attributeManager.resetRemovedKeysCache = function () {
+        _attributeManager.removedKeys = [];
+    };
+
     _attributeManager.save = function() {
+        var locales = _attributeManager.getLocaleCollection();
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
         var formData = [];
@@ -137,13 +157,35 @@ function AttributeManager() {
             });
         });
 
+
+        $(_attributeManager.removedKeys).each(function(index, removedKey) {
+            for (var localeCode in locales) {
+                var locale = locales[localeCode];
+                var idLocale = locale['id_locale'];
+                if (!idLocale) {
+                    idLocale = '_';
+                }
+
+                formData.push({
+                    'key': removedKey,
+                    'id': null,
+                    'locale_code': idLocale,
+                    'value': ''
+                });
+            }
+        });
+
+        var formDataJson = JSON.stringify(formData);
+
         $.ajax({
             url: '/product-attribute-gui/save',
             type: 'POST',
             dataType: 'application/json',
-            data: 'json=' + JSON.stringify(formData) + '&id-product-abstract=' + idProductAbstract,
+            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract,
             complete: function(jqXHR) {
                 if(jqXHR.readyState === 4) {
+                    _attributeManager.resetRemovedKeysCache();
+
                     $("#saveButton")
                         .prop('disabled', false)
                         .val('Save');
@@ -199,9 +241,12 @@ function processAjaxResult(data, params) {
 
 function removeActionHandler() {
     var $link = $(this);
-    var id = $link.data('id');
-    var action = $link.data('action');
     var dataTable = $('#productAttributesTable').DataTable();
+
+    /*$link.parents('tr').find("td input").each(function(index, input) {
+        $(input).val('');
+    });
+    $link.parents('tr').hide();*/
 
     dataTable.row($link.parents('tr')).remove().draw();
 
@@ -268,7 +313,11 @@ $(document).ready(function() {
 
         $('.remove-item')
             .off('click')
-            .on('click', removeActionHandler);
+            .on('click', function(event, element) {
+                var key = $(this).attr('data-key');
+                attributeManager.addRemovedKey(key);
+                removeActionHandler.call($(this))
+            });
 
         updateAttributeInputsWithAutoComplete();
 
@@ -277,7 +326,11 @@ $(document).ready(function() {
 
     $('.remove-item')
         .off('click')
-        .on('click', removeActionHandler);
+        .on('click', function(event, element) {
+            var key = $(this).attr('data-key');
+            attributeManager.addRemovedKey(key);
+            removeActionHandler.call($(this))
+        });
 
     updateAttributeInputsWithAutoComplete();
 
