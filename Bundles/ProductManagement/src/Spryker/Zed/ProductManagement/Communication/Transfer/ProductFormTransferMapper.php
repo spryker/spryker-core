@@ -109,7 +109,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
-        $priceTransfers = $this->buildProductAbstractPriceTransfers($form);
+        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
+        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+        $priceTransfers = $this->buildProductPriceTransfers($prices, $idProductAbstract);
         $productAbstractTransfer->setPrices(new ArrayObject($priceTransfers));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
@@ -183,7 +185,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
-        $priceTransfers = $this->buildProductConcretePriceTransfers($form, $productConcreteTransfer->getIdProductConcrete());
+        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
+        $priceTransfers = $this->buildProductPriceTransfers($prices, null, $productConcreteTransfer->getIdProductConcrete());
         $productConcreteTransfer->setPrices(new ArrayObject($priceTransfers));
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
@@ -333,30 +336,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function buildProductAbstractPriceTransfers(FormInterface $form)
-    {
-        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-        $priceTransfers = [];
-
-        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
-
-        foreach ($prices as $priceType => $price) {
-            $priceTransfer = (new PriceProductTransfer())
-                ->setIdProductAbstract($idProductAbstract)
-                ->setPrice($price)
-                ->setPriceTypeName($priceType);
-
-            $priceTransfers[] = $priceTransfer;
-        }
-
-        return $priceTransfers;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function buildProductImageSetCollection(FormInterface $form)
@@ -412,18 +391,18 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idProduct
+     * @param array $prices
+     * @param int|null $idProductAbstract
+     * @param int|null $idProduct
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function buildProductConcretePriceTransfers(FormInterface $form, $idProduct)
+    public function buildProductPriceTransfers(array $prices, $idProductAbstract = null, $idProduct = null)
     {
         $priceTransfers = [];
-        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
-
         foreach ($prices as $priceType => $price) {
             $priceTransfer = (new PriceProductTransfer())
+                ->setIdProductAbstract($idProductAbstract)
                 ->setIdProduct($idProduct)
                 ->setPrice($price)
                 ->setPriceTypeName($priceType);
