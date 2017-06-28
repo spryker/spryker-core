@@ -38,7 +38,7 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
      */
     public function getFieldName()
     {
-        return 'label';
+        return 'product-label';
     }
 
     /**

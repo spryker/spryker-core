@@ -41,7 +41,7 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
      */
     public function getFieldName()
     {
-        return 'label';
+        return 'product-label';
     }
 
     /**

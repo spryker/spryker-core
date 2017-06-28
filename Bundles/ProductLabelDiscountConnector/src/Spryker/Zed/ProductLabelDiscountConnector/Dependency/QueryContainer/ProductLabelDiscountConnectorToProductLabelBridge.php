@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer;
 
-use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
-
 class ProductLabelDiscountConnectorToProductLabelBridge implements ProductLabelDiscountConnectorToProductLabelInterface
 {
 
@@ -20,7 +18,7 @@ class ProductLabelDiscountConnectorToProductLabelBridge implements ProductLabelD
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $productLabelQueryContainer
      */
-    public function __construct(ProductLabelQueryContainerInterface $productLabelQueryContainer)
+    public function __construct($productLabelQueryContainer)
     {
         $this->productLabelQueryContainer = $productLabelQueryContainer;
     }
