@@ -34,7 +34,7 @@ class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockV
      */
     public function getName()
     {
-        return 'Category';
+        return 'Category list';
     }
 
 }

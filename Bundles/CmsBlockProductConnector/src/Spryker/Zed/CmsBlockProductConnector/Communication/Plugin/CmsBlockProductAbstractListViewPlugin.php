@@ -22,7 +22,7 @@ class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements Cm
      */
     public function getName()
     {
-        return 'Product';
+        return 'Product list';
     }
 
     /**
