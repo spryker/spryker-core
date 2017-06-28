@@ -62,7 +62,7 @@ class CreateBlockController extends AbstractController
 
         return $this->viewResponse([
             'cmsBlockForm' => $cmsBlockForm->createView(),
-            'availableLocales' => $availableLocales
+            'availableLocales' => $availableLocales,
         ]);
     }
 

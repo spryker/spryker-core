@@ -24,7 +24,7 @@ class ListBlockController extends AbstractController
             ->createCmsBlockTable();
 
         return $this->viewResponse([
-            'blocks' => $cmsBlockTable->render()
+            'blocks' => $cmsBlockTable->render(),
         ]);
     }
 
