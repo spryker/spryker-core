@@ -147,7 +147,7 @@ class CmsBlockForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, 'text', [
-            'label' => 'Name',
+            'label' => 'Name *',
             'constraints' => [
                 new Required(),
                 new NotBlank(),

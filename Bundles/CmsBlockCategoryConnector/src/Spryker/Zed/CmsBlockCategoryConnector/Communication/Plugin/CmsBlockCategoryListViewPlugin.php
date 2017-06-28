@@ -19,7 +19,7 @@ class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockV
 
     /**
      * @param int $idCmsBlock
-     * @param $idLocale
+     * @param int $idLocale
      *
      * @return string[]
      */
