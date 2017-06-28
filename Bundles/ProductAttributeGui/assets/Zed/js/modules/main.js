@@ -32,6 +32,70 @@ function AttributeManager() {
         return _attributeManager.locales;
     };
 
+    _attributeManager.extractKeysFromTable = function() {
+        var keys = [];
+        $('#productAttributesTable tr').each(function(){
+            keys.push($(this).find("td:first").text()); //put elements into array
+        });
+
+        return keys;
+    };
+
+    _attributeManager.validateKeys = function() {
+        var currentKeys = _attributeManager.extractKeysFromTable();
+        if ($.inArray(key, currentKeys) > -1) {
+            alert('Attribute "'+ key +'" already defined');
+            return false;
+        }
+
+        return true;
+    };
+
+    _attributeManager.generateDataToAdd = function(key, idAttribute) {
+        var dataToAdd = [];
+        var locales = _attributeManager.getLocaleCollection();
+
+        dataToAdd.push(key);
+
+        for (var i = 0; i < locales.length; i++) {
+            var localeCode = locales[i];
+            var item = '<input type="text"' +
+                ' class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" ' +
+                ' data-is_attribute_input ' +
+                ' data-attribute_key="' + key + '" ' +
+                ' value="" ' +
+                ' data-id_attribute="' + idAttribute + '" ' +
+                ' data-locale_code="' + localeCode + '"' +
+                '>';
+            //<span id="{{ inputId ~ '_value_cell' }}" style="display: none"></span>
+            dataToAdd.push();
+        }
+
+        dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
+
+        return dataToAdd;
+    };
+
+    _attributeManager.addKey = function(key, idAttribute) {
+        key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
+
+        if (key === '' || !idAttribute) {
+            alert('Please select attribute key first');
+            return false;
+        }
+
+        if (!_attributeManager.validateKeys()) {
+            return false;
+        }
+
+        var dataToAdd = _attributeManager.generateDataToAdd(key, idAttribute);
+
+        dataTable.DataTable().
+            row.
+            add(dataToAdd)
+            .draw();
+    };
+
     _attributeManager.save = function() {
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
@@ -57,8 +121,28 @@ function AttributeManager() {
             type: 'POST',
             dataType: 'application/json',
             data: 'json=' + JSON.stringify(formData) + '&id-product-abstract=' + idProductAbstract,
-            success: function(data) {
-                console.log('save', data);
+            complete: function(jqXHR) {
+                if(jqXHR.readyState === 4) {
+                    $("#saveButton")
+                        .prop('disabled', false)
+                        .val('Save');
+
+                    var message = 'An error has occurred';
+                    var responseData = JSON.parse(jqXHR.responseText);
+                    if (responseData.hasOwnProperty('message')) {
+                        message = responseData.message;
+                    }
+                    window.sweetAlert({
+                        title: jqXHR.status === 200 ? 'Success' : 'Error',
+                        text: message,
+                        type: jqXHR.status === 200 ? 'success' : 'error'
+                    });
+                }
+            },
+            beforeSend: function() {
+                $("#saveButton")
+                    .prop('disabled', true)
+                    .val('Saving');
             }
         });
     };
@@ -213,45 +297,8 @@ $(document).ready(function() {
         var dataTable = $('#productAttributesTable');
         var idAttribute = input.attr('data-value');
         var key = input.val().trim();
-        key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
 
-        if (key === '' || !idAttribute) {
-            alert('Please select attribute key first');
-            return false;
-        }
-
-        var currentKeys = [];
-        $('#productAttributesTable tr').each(function(){
-            currentKeys.push($(this).find("td:first").text()); //put elements into array
-        });
-
-        console.log('currentKeys', currentKeys);
-
-        if ($.inArray(key, currentKeys) > -1) {
-            alert('Attribute "'+ key +'" already defined');
-            return false;
-        }
-
-        function generateDataToAdd() {
-            var dataToAdd = [];
-            var locales = attributeManager.getLocaleCollection();
-
-            dataToAdd.push(key);
-
-            for (var i = 0; i < locales.length; i++) {
-                var localeCode = locales[i];
-                dataToAdd.push('<input type="text" class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" data-is_attribute_input data-attribute_key="' + key + '" value="" data-id_attribute="' + idAttribute + '" data-locale_code="' + localeCode + '">');
-            }
-            dataToAdd.push('<a data-id="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
-            return dataToAdd;
-        }
-
-        var dataToAdd = generateDataToAdd();
-
-        dataTable.DataTable().
-            row.
-            add(dataToAdd)
-            .draw();
+        attributeManager.addKey(key, idAttribute);
 
         $('.remove-item')
             .off('click')

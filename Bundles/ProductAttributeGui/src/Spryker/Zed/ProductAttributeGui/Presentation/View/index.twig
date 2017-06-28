@@ -18,6 +18,18 @@
         {{ localesJson | raw }}
     </div>
 
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
+        {% block widget_content %}
+            <div>
+                {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+                {{ form_errors(attributeKeyForm) }}
+                {{ form_widget(attributeKeyForm) }}
+                <input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" />
+                {{ form_end(attributeKeyForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
         {% block widget_content %}
         <table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
@@ -28,7 +40,7 @@
                 <th>key</th>
                 {% for localeCode,localeData in locales %}
                     {% if localeCode == '_' %}
-                        <th>{{ 'value' }}</th>
+                        <th>{{ 'value[default]' }}</th>
                     {% else %}
                         <th>{{ 'value [' ~ localeCode }}]</th>
                     {% endif %}
@@ -60,13 +72,13 @@
                                                 id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"
-                                                class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete"
+                                                class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value="{{ localeData[key] }}"
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
                                                 data-id_attribute="{{ metaAttributes[key] }}"
                                                 data-locale_code="{{ valueLocaleCode }}"
-                                        /><span style="font-size: 1px; opacity: 0.0;">{{ localeData[key] }}</span>
+                                        /><span id="{{ inputId ~ '_value_cell' }}" style="display: none">{{ localeData[key] }}</span>
                                     </td>
                                 {% else %}
                                     <td>
@@ -74,13 +86,14 @@
                                                 id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"
-                                                class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete"
+                                                class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value=""
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
                                                 data-id_attribute="{{ metaAttributes[key] }}"
                                                 data-locale_code="{{ valueLocaleCode }}"
                                         />
+                                        <span id="{{ inputId ~ '_value_cell' }}" style="display: none"></span>
                                     </td>
                                 {% endif %}
                             {% endfor %}
@@ -92,18 +105,6 @@
             </tbody>
         </form>
         </table>
-        {% endblock %}
-    {% endembed %}
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
-        {% block widget_content %}
-            <div>
-                {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
-                {{ form_errors(attributeKeyForm) }}
-                {{ form_widget(attributeKeyForm) }}
-                <input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" />
-                {{ form_end(attributeKeyForm) }}
-            </div>
         {% endblock %}
     {% endembed %}
 

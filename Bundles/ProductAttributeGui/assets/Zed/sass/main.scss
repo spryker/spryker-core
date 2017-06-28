@@ -3,6 +3,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
  */
 
+
 .invalid-tab {
   background-color: #f2dede !important;
   border-color: #ebccd1 !important;
@@ -11,22 +12,6 @@
 .invalid-tab a {
   color: #a94442 !important;
 }
-
-ul.locale  {
-  width: 100px !important;
-  padding: 0px !important;
-  margin: 0px !important;
-}
-
-ul.locale > li {
-  width: 100px !important;
-  padding: 0px !important;
-  margin: 0px !important;
-}
-
-/*div.tabs-container.locale div.tabs-left div.panel-body {
-  margin-left: 100px !important;
-}*/
 
 .panel-body.second {
   background-color: #f8f8f8;

@@ -38,21 +38,24 @@ class SaveController extends AbstractController
         $data = json_decode($json, true);
 
         try {
+            $statusCode = 200;
             $this->getFacade()->updateProductAbstractAttributes($idProductAbstract, $data);
             $result = true;
-            $errorMessage = '';
+            $message = 'Product attributes saved';
         } catch (Exception $exception) {
+            $statusCode = 500;
             $result = false;
-            $errorMessage = $exception->getMessage();
+            $message = $exception->getMessage();
         } catch (Throwable $exception) {
+            $statusCode = 500;
             $result = false;
-            $errorMessage = $exception->getMessage();
+            $message = $exception->getMessage();
         }
 
         return new JsonResponse([
             'success' => $result,
-            'errorMessage' => $errorMessage,
-        ]);
+            'message' => $message,
+        ], $statusCode);
     }
 
 }

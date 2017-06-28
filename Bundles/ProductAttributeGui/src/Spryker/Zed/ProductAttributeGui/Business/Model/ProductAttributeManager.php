@@ -189,12 +189,6 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
                 $localizedAttributeEntity->save();
             }
         }
-
-        print_r($attributes);
-        print_r($attributesToSave);
-        echo "\n\n";
-
-        die;
     }
 
     /**
