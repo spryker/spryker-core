@@ -64,11 +64,6 @@ class ErrorHandlerFactory
 
         $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
-        $legacyConfigKey = $this->getLegacyConfigKey();
-        if (Config::hasKey($legacyConfigKey) && Config::get($legacyConfigKey)) {
-            $errorRendererClassName = WebExceptionErrorRenderer::class;
-        }
-
         return $this->createWebErrorRenderer($errorRendererClassName);
     }
 
@@ -78,20 +73,6 @@ class ErrorHandlerFactory
     protected function isCliCall()
     {
         return (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG);
-    }
-
-    /**
-     * @deprecated This method and the using code of this method can be removed when Library gets next major.
-     *
-     * @return string
-     */
-    protected function getLegacyConfigKey()
-    {
-        if ($this->application === static::APPLICATION_ZED) {
-            return ErrorHandlerConstants::ERROR_RENDERER;
-        }
-
-        return ErrorHandlerConstants::ERROR_RENDERER;
     }
 
     /**
