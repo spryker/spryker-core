@@ -63,7 +63,7 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
         foreach ($productAbstracts as $spyProductAbstract) {
             $productAbstractList[$spyProductAbstract->getFkProductAbstract()] =
                 $spyProductAbstract->getVirtualColumn(CmsBlockProductConnectorQueryContainerInterface::COL_PRODUCT_ABSTRACT_NAME) .
-                ' (' . $spyProductAbstract->getVirtualColumn(CmsBlockProductConnectorQueryContainerInterface::COL_PRODUCT_ABSTRACT_SKU) . ')';
+                ' (SKU: ' . $spyProductAbstract->getVirtualColumn(CmsBlockProductConnectorQueryContainerInterface::COL_PRODUCT_ABSTRACT_SKU) . ')';
         }
 
         return $productAbstractList;
