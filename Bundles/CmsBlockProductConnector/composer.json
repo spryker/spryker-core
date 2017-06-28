@@ -20,7 +20,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cms-block-gui": "^1.0.0"
+    "spryker/cms-block-gui": "^1.0.0",
+    "spryker/product-management": "*"
   },
   "autoload": {
     "psr-0": {
