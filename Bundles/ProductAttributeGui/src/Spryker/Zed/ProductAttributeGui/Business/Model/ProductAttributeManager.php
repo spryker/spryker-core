@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
 use PDO;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
@@ -70,11 +72,21 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
         $query = $this->attributeReader->queryMetaAttributes($values);
 
+        $query
+            ->clearSelectColumns()
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, 'is_super')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'attribute_id')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, 'allow_input')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, 'input_type')
+            ->setFormatter(new ArrayFormatter());
+
         $data = $query->find();
 
         $results = [];
         foreach ($data as $entity) {
-            $results[$entity->getKey()] = $entity->getIdProductAttributeKey();
+            unset($entity['id_product_attribute_key']);
+            $results[$entity['key']] = $entity;
         }
 
         return $results;
@@ -109,6 +121,16 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
         $results = [];
         $query = $this->productQueryContainer
             ->queryProductAttributeKey()
+            ->filterByIsSuper(false)
+            ->useSpyProductManagementAttributeQuery()
+            ->endUse()
+            ->clearSelectColumns()
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'key')
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, 'is_super')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'attribute_id')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, 'allow_input')
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, 'input_type')
+            ->setFormatter(new ArrayFormatter())
             ->limit($limit);
 
         $searchText = trim($searchText);
@@ -119,10 +141,8 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
         }
 
         foreach ($query->find() as $entity) {
-            $results[$entity->getIdProductAttributeKey()] = [
-                'id' => $entity->getIdProductAttributeKey(),
-                'value' => $entity->getKey(),
-            ];
+            unset($entity['id_product_attribute_key']);
+            $results[$entity['attribute_id']] = $entity;
         }
 
         return $results;
@@ -151,7 +171,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
             }
         }
 
-        $attributesToSave= [];
+        $attributesToSave = [];
         $productAbstractAttributes = $this->getProductAbstractAttributeValues($idProductAbstract);
 
         foreach ($attributes as $localeCode => $attributeData) {
@@ -163,7 +183,7 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
             $attributesToSave[$localeCode] = array_merge($currentAttributes, $attributeData);
 
             if (array_key_exists($localeCode, $keysToRemove)) {
-                $attributesToSave[$localeCode] = array_filter($attributeData, function($key) use ($keysToRemove, $localeCode) {
+                $attributesToSave[$localeCode] = array_filter($attributeData, function ($key) use ($keysToRemove, $localeCode) {
                     return in_array($key, $keysToRemove[$localeCode]) === false;
                 }, ARRAY_FILTER_USE_KEY);
             }

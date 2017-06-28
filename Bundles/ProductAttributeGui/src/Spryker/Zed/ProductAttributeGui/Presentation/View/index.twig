@@ -55,6 +55,8 @@
                         <tr>
                             <td>{{ key }}</td>
                             {% for valueLocaleCode,localeData in productAttributeValues %}
+                                {% set idAttribute = metaAttributes[key]['attribute_id'] %}
+                                {% set allowInput = metaAttributes[key]['allow_input'] %}
                                 {% set name = '[' ~ key ~ ']' %}
                                 {% set id = key %}
 
@@ -74,11 +76,12 @@
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value="{{ localeData[key] }}"
+                                                data-allow-input="{{ allowInput }}"
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
-                                                data-id_attribute="{{ metaAttributes[key] }}"
+                                                data-id_attribute="{{ idAttribute }}"
                                                 data-locale_code="{{ valueLocaleCode }}"
-                                        /><span id="{{ inputId ~ '_value_cell' }}" style="display: none">{{ localeData[key] }}</span>
+                                        /><span style="display: none">{{ localeData[key] }}</span>
                                     </td>
                                 {% else %}
                                     <td>
@@ -88,12 +91,13 @@
                                                 type="text"
                                                 class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
                                                 value=""
+                                                data-allow-input="{{ allowInput }}"
                                                 data-attribute_key="{{ key }}"
                                                 data-is_attribute_input
-                                                data-id_attribute="{{ metaAttributes[key] }}"
+                                                data-id_attribute="{{ idAttribute }}"
                                                 data-locale_code="{{ valueLocaleCode }}"
                                         />
-                                        <span id="{{ inputId ~ '_value_cell' }}" style="display: none"></span>
+                                        <span style="display: none"></span>
                                     </td>
                                 {% endif %}
                             {% endfor %}

@@ -52,16 +52,19 @@ function AttributeManager() {
         return true;
     };
 
-    _attributeManager.generateDataToAdd = function(key, idAttribute) {
+    _attributeManager.generateDataToAdd = function(key, idAttribute, attributeMetadata) {
         var dataToAdd = [];
         var locales = _attributeManager.getLocaleCollection();
+
 
         dataToAdd.push(key);
 
         for (var i = 0; i < locales.length; i++) {
             var localeCode = locales[i];
+
             var item = '<input type="text"' +
                 ' class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" ' +
+                ' data-allow-input="' + attributeMetadata.allow_input + '"' +
                 ' data-is_attribute_input ' +
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
@@ -89,7 +92,18 @@ function AttributeManager() {
             return false;
         }
 
-        var dataToAdd = _attributeManager.generateDataToAdd(key, idAttribute);
+        var keyInput = $('#attribute_form_key');
+        var attributeMetadata = {
+            'key': keyInput.attr('data-key'),
+            'id': keyInput.attr('data-value'),
+            'allow_input': keyInput.attr('data-allow_input'),
+            'is_super': keyInput.attr('data-is_super'),
+            'input_type': keyInput.attr('data-input_type')
+        };
+
+        console.log('attributeMetadata',attributeMetadata);
+
+        var dataToAdd = _attributeManager.generateDataToAdd(key, idAttribute, attributeMetadata);
 
         dataTable.DataTable().
             row.
@@ -238,64 +252,6 @@ $(document).ready(function() {
 
     var attributeManager = new AttributeManager();
 
-    $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
-
-    });
-
-    $('.spryker-form-select2combobox.tags:not([class=".ajax"])').select2({
-        tags: true
-    });
-
-    $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
-        tags: false,
-        preLoaded: false,
-        ajax: {
-            url: '/product-management/attribute/suggest/',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            data: function (params) {
-                var p = {
-                    q: params.term,
-                    page: params.page,
-                    id: this.attr('data-id_attribute'),
-                    locale_code: this.attr('data-locale_code')
-                };
-
-                return p;
-            },
-            processResults: processAjaxResult
-        },
-        minimumInputLength: 1
-    });
-
-    $('.spryker-form-select2combobox.ajax.tags').select2({
-        tags: true,
-        ajax: {
-            url: '/product-management/attribute/suggest/',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            preLoaded: false,
-            data: function (params) {
-                var p = {
-                    q: params.term,
-                    page: params.page,
-                    id: this.attr('data-id_attribute'),
-                    locale_code: this.attr('data-locale_code')
-                };
-
-                return p;
-            },
-            processResults: processAjaxResult
-        },
-        minimumInputLength: 1
-    });
-
-    $('.spryker-form-select2combobox').select2({
-        tags: true
-    });
-
     $('#addButton').on('click', function() {
         var input = $('#attribute_form_key');
         var dataTable = $('#productAttributesTable');
@@ -331,24 +287,41 @@ $(document).ready(function() {
                 success: function(data) {
                     response($.map(data, function (item) {
                         return {
-                            label: item.value,
-                            value: item.id
+                            label: item.key,
+                            value: item.attribute_id,
+                            allow_input: item.allow_input,
+                            is_super: item.is_super,
+                            input_type: item.input_type,
                         };
                     }));
                 }
             });
         },
         select: function(event, ui) {
+            console.log('ui.item',ui.item);
+
             var input = $(this);
             input.val(ui.item.label);
+
+            input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
+            input.attr('data-allow_input', ui.item.allow_input);
+            input.attr('data-is_super', ui.item.is_super);
+            input.attr('data-input_type', ui.item.input_type);
 
             return false;
         },
         focus: function(event, ui) {
+            console.log('ui.item',ui.item);
+
             var input = $(this);
             input.val(ui.item.label);
+
+            input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
+            input.attr('data-allow_input', ui.item.allow_input);
+            input.attr('data-is_super', ui.item.is_super);
+            input.attr('data-input_type', ui.item.input_type);
 
             return false;
         }

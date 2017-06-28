@@ -41,7 +41,6 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeWriterInterface
      */
