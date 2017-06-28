@@ -57,7 +57,7 @@ class TwigContentValidator extends ConstraintValidator
     protected function validateTwigContent($value, TwigContent $constraint)
     {
         $twigEnvironment = $constraint->getTwigEnvironment();
-        $twigEnvironment->tokenize($value);
+        $twigEnvironment->tokenize(str_replace(['</p>', '<br>'], PHP_EOL, $value));
     }
 
     /**
