@@ -1,4 +1,4 @@
-{% extends '@Cms/Layout/layout.twig' %}
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
 
 {% set widget_title = 'Edit CMS Block: ' | trans ~ cmsBlock.idCmsBlock %}
 
@@ -20,10 +20,5 @@
         <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
     {{ form_end(cmsBlockForm) }}
 
-{% endblock %}
-
-{% block footer_js %}
-    {{ parent() }}
-    <script src="/assets/js/spryker-zed-cms-block-gui-main.js"></script>
 {% endblock %}
 
