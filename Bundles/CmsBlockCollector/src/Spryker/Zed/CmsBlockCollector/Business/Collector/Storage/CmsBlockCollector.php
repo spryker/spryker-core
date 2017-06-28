@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
-use Spryker\Shared\CmsBlock\CmsBlockConstants;
+use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -62,7 +62,7 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
      */
     protected function collectResourceType()
     {
-        return CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK;
+        return CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK;
     }
 
     /**

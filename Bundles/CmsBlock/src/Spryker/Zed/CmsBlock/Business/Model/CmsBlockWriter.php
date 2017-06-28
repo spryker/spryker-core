@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsBlock\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
-use Spryker\Shared\CmsBlock\CmsBlockConstants;
+use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
@@ -83,7 +83,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, true);
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
+            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
         });
     }
 
@@ -96,7 +96,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, false);
-            $this->touchFacade->touchDeleted(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
+            $this->touchFacade->touchDeleted(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
         });
     }
 
@@ -201,7 +201,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock->save();
 
         if ($spyCmsBlock->getIsActive()) {
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
     }
 
@@ -229,7 +229,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock->save();
 
         if ($spyCmsBlock->getIsActive()) {
-            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
+            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdCmsBlock($spyCmsBlock->getIdCmsBlock());

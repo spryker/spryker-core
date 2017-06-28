@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\CmsBlockCategoryConnector;
 
-use Spryker\Shared\CmsBlock\CmsBlockConstants;
+use Spryker\Shared\CmsBlock\CmsBlockConfig;
 
 interface CmsBlockCategoryConnectorConstants
 {
@@ -27,6 +27,6 @@ interface CmsBlockCategoryConnectorConstants
      *
      * @api
      */
-    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
+    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
 
 }

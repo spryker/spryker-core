@@ -14,14 +14,6 @@ interface CmsBlockConstants
 
     /**
      * Specification
-     * - Defines the collector resource name
-     *
-     * @api
-     */
-    const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
-
-    /**
-     * Specification
      * - Defines project name for absolute path to template folder
      *
      * @api
