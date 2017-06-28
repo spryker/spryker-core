@@ -45,11 +45,11 @@ class ViewBlockController extends AbstractController
             );
         }
 
-        return [
+        return $this->viewResponse([
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
             'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock),
-        ];
+        ]);
     }
 
     /**

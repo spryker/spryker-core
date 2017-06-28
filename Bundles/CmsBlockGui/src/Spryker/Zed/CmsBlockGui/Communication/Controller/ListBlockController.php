@@ -23,9 +23,9 @@ class ListBlockController extends AbstractController
         $cmsBlockTable = $this->getFactory()
             ->createCmsBlockTable();
 
-        return [
-            'blocks' => $cmsBlockTable->render(),
-        ];
+        return $this->viewResponse([
+            'blocks' => $cmsBlockTable->render()
+        ]);
     }
 
     /**

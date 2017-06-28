@@ -12,6 +12,30 @@
                 <controller>list-block</controller>
                 <action>index</action>
             </block>
+            <view-block>
+                <label>View Block</label>
+                <title>View Block</title>
+                <bundle>cms-block-gui</bundle>
+                <controller>view-block</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </view-block>
+            <edit-block>
+                <label>Edit Block</label>
+                <title>Edit Block</title>
+                <bundle>cms-block-gui</bundle>
+                <controller>edit-block</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </edit-block>
+            <edit-block-glossary>
+                <label>Edit Block Glossary</label>
+                <title>Edit Block Glossary</title>
+                <bundle>cms-block-gui</bundle>
+                <controller>edit-glossary</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </edit-block-glossary>
         </pages>
     </cms-gui>
     <cms>

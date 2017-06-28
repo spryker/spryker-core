@@ -78,13 +78,13 @@ class EditGlossaryController extends AbstractController
             ->getCmsBlockFacade()
             ->findCmsBlockById($idCmsBlock);
 
-        return [
+        return $this->viewResponse([
             'placeholderTabs' => $placeholderTabs->createView(),
             'glossaryForm' => $glossaryForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,
             'idCmsBlock' => $idCmsBlock,
-        ];
+        ]);
     }
 
 }

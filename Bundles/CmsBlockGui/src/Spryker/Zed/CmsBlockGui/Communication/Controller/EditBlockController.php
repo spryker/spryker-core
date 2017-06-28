@@ -64,12 +64,12 @@ class EditBlockController extends AbstractController
             ->getCmsBlockFacade()
             ->findCmsBlockById($idCmsBlock);
 
-        return [
+        return $this->viewResponse([
             'idCmsBlock' => $idCmsBlock,
             'cmsBlockForm' => $cmsBlockForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,
-        ];
+        ]);
     }
 
     /**
