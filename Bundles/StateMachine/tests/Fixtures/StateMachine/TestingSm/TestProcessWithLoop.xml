@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:state-machine-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd">
+
+    <process name="TestProcessWithLoop" main="true">
+        <states>
+            <state name="new"/>
+            <state name="process loop state"/>
+            <state name="process loop state 2"/>
+            <state name="done" />
+        </states>
+
+        <transitions>
+            <transition>
+                <source>new</source>
+                <target>process loop state</target>
+                <event>start</event>
+            </transition>
+
+            <transition>
+                <source>process loop state</source>
+                <target>process loop state 2</target>
+                <event>enter loop action</event>
+            </transition>
+
+            <transition>
+                <source>process loop state 2</source>
+                <target>process loop state</target>
+                <event>loopback action</event>
+            </transition>
+
+            <transition>
+                <source>process loop state</source>
+                <target>done</target>
+                <event>loop exit action</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="start" onEnter="true" />
+            <event name="enter loop action" manual="true"/>
+            <event name="loopback action" onEnter="true"/>
+            <event name="loop exit action" manual="true"/>
+        </events>
+
+    </process>
+
+</statemachine>

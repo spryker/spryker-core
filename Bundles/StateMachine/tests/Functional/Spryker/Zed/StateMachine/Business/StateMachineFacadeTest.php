@@ -39,6 +39,7 @@ class StateMachineFacadeTest extends Test
 
     const TESTING_SM = 'TestingSm';
     const TEST_PROCESS_NAME = 'TestProcess';
+    const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
 
     /**
      * @return void
@@ -568,6 +569,36 @@ class StateMachineFacadeTest extends Test
         $numberOfItems = SpyStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
         $this->assertEquals(0, $numberOfItems);
+    }
+
+    /**
+     * @return void
+     */
+    public function testLoopDoesNotCauseExceptions()
+    {
+        $processName = static::TEST_PROCESS_WITH_LOOP_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
+
+        $stateMachineFacade->triggerEvent('enter loop action', $stateMachineItemTransfer);
+        $triggerResult = $stateMachineFacade->triggerEvent('loop exit action', $stateMachineItemTransfer);
+
+        $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
+
+        $this->assertEquals(1, $triggerResult);
+        $this->assertEquals('done', $stateMachineItemTransfer->getStateName());
+        $this->assertEquals($processName, $stateMachineItemTransfer->getProcessName());
+        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
     }
 
     /**

@@ -22,6 +22,8 @@
         <property name="refundableAmount" type="int"/>
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
     </transfer>
 
     <transfer name="CartChange">
