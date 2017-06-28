@@ -21,6 +21,14 @@
                         <action>index</action>
                         <visible>0</visible>
                     </view-block>
+                    <create-block>
+                        <label>Create Block</label>
+                        <title>Create Block</title>
+                        <bundle>cms-block-gui</bundle>
+                        <controller>create-block</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-block>
                     <edit-block>
                         <label>Edit Block</label>
                         <title>Edit Block</title>
