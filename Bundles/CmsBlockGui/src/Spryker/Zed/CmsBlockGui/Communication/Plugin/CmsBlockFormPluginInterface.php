@@ -13,7 +13,7 @@ interface CmsBlockFormPluginInterface
 {
 
     /**
-     * Specification
+     * Specification:
      * - Add form parts to the main form builder
      *
      * @api

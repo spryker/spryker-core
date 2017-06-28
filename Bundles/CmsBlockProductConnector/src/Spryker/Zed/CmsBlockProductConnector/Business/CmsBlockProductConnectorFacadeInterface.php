@@ -20,9 +20,9 @@ interface CmsBlockProductConnectorFacadeInterface
 {
 
     /**
-     * Specification
-     * - delete all relations of cms block to product abstracts
-     * - create relations by transfer object
+     * Specification:
+     * - Delete all relations of cms block to product abstracts
+     * - Create relations by transfer object
      *
      * @api
      *
@@ -33,8 +33,8 @@ interface CmsBlockProductConnectorFacadeInterface
     public function updateCmsBlockProductAbstractRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * Specification
-     * - hydrate Cms Block with an array of related product abstract IDs
+     * Specification:
+     * - Hydrate Cms Block with an array of related product abstract IDs
      *
      * @api
      *
@@ -45,8 +45,8 @@ interface CmsBlockProductConnectorFacadeInterface
     public function hydrateCmsBlockProductRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * Specification
-     * - get a list of product names for injection in another module views
+     * Specification:
+     * - Get a list of product names for injection in another module views
      *
      * @api
      *
@@ -58,8 +58,8 @@ interface CmsBlockProductConnectorFacadeInterface
     public function getProductAbstractRenderedList($idCmsBlock, $idLocale);
 
     /**
-     * Specification
-     * - get a rendered list of CMS blocks assigned to the product abstract
+     * Specification:
+     * - Get a rendered list of CMS blocks assigned to the product abstract
      *
      * @api
      *
@@ -70,9 +70,9 @@ interface CmsBlockProductConnectorFacadeInterface
     public function getCmsBlockRenderedList($idProductAbstract);
 
     /**
-     * Specification
-     * - hydrate CMS Block to Product relation with block names
-     * - collect relation to Storage
+     * Specification:
+     * - Hydrate CMS Block to Product relation with block names
+     * - Collect relation to Storage
      *
      * @api
      *

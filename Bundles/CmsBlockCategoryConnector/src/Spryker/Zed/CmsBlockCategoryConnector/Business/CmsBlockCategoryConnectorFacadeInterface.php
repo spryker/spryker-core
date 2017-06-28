@@ -20,9 +20,9 @@ interface CmsBlockCategoryConnectorFacadeInterface
 {
 
     /**
-     * Specification
-     * - delete all relations categories to cms blocks
-     * - add new relations defined in the transfer object
+     * Specification:
+     * - Delete all relations categories to cms blocks
+     * - Add new relations defined in the transfer object
      *
      * @api
      *
@@ -33,8 +33,8 @@ interface CmsBlockCategoryConnectorFacadeInterface
     public function updateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * Specification
-     * - hydrate Cms Block with an array of related category IDs
+     * Specification:
+     * - Hydrate Cms Block with an array of related category IDs
      *
      * @api
      *
@@ -45,6 +45,9 @@ interface CmsBlockCategoryConnectorFacadeInterface
     public function hydrateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * Specification:
+     * - Generate rendered list of assigned categories
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -55,9 +58,9 @@ interface CmsBlockCategoryConnectorFacadeInterface
     public function getRenderedCategoryList($idCmsBlock, $idLocale);
 
     /**
-     * Specification
-     * - hydrate CMS Block to Category relation with block names
-     * - collect relation to Storage
+     * Specification:
+     * - Hydrate CMS Block to Category relation with block names
+     * - Collect relation to Storage
      *
      * @api
      *

@@ -13,6 +13,11 @@ interface CmsBlockUpdatePluginInterface
 {
 
     /**
+     * Specification:
+     * - Handles persistence of CMS block for plugins
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void

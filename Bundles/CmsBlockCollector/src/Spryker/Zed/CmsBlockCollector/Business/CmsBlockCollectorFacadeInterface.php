@@ -19,6 +19,9 @@ interface CmsBlockCollectorFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Collects CMS blocks to storage
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

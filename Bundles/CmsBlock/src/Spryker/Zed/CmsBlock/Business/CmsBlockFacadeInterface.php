@@ -50,7 +50,7 @@ interface CmsBlockFacadeInterface
     public function deactivateById($idCmsBlock);
 
     /**
-     * Specification
+     * Specification:
      * - Updates CMS Block
      * - Asserts that chosen template still exists
      *
@@ -66,7 +66,7 @@ interface CmsBlockFacadeInterface
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Creates a CMS Block record
      * - Asserts that chosen template still exists
      * - Sets CMS Block ID to transfer
@@ -80,7 +80,7 @@ interface CmsBlockFacadeInterface
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Loops by all template files in passed path
      * - Creates records with templates in DB
      *
@@ -93,7 +93,7 @@ interface CmsBlockFacadeInterface
     public function syncTemplate($templatePath);
 
     /**
-     * Specification
+     * Specification:
      * - Find CMS Block glossary
      * - Hydrate glossary placeholders
      * - Hydrate placeholder translations
@@ -107,7 +107,7 @@ interface CmsBlockFacadeInterface
     public function findGlossary($idCmsBlock);
 
     /**
-     * Specification
+     * Specification:
      * - Creates new or updates nested placeholders
      *
      * @api
@@ -122,7 +122,7 @@ interface CmsBlockFacadeInterface
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Validate path on existing template file
      * - Create a new template record
      *
@@ -138,7 +138,7 @@ interface CmsBlockFacadeInterface
     public function createTemplate($name, $path);
 
     /**
-     * Specification
+     * Specification:
      * - Returns template transfer if it exists
      * - Return NULL if no record in DB for template with this path
      *

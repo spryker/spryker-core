@@ -11,8 +11,8 @@ interface ProductAbstractViewPluginInterface
 {
 
     /**
-     * Specification
-     * - get a subject name of the plugin
+     * Specification:
+     * - Gives a subject name of the plugin
      *
      * @api
      *
@@ -21,8 +21,8 @@ interface ProductAbstractViewPluginInterface
     public function getName();
 
     /**
-     * Specification
-     * - get a list of rendered subject statements
+     * Specification:
+     * - Gives a list of rendered subject statements
      *
      * @api
      *

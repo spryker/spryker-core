@@ -11,8 +11,8 @@ interface CmsBlockViewPluginInterface
 {
 
     /**
-     * Specification
-     * - get a list of rendered subject statements
+     * Specification:
+     * - Get a list of rendered subject statements
      *
      * @api
      *
@@ -24,8 +24,8 @@ interface CmsBlockViewPluginInterface
     public function getRenderedList($idCmsBlock, $idLocale);
 
     /**
-     * Specification
-     * - get plugin subject name
+     * Specification:
+     * - Get plugin subject name
      *
      * @api
      *

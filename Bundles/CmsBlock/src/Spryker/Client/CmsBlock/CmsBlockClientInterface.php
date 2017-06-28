@@ -11,7 +11,7 @@ interface CmsBlockClientInterface
 {
 
     /**
-     * Specification
+     * Specification:
      * - Find blocks by provided array of names with a single multi request to a storage
      *
      * @api
@@ -24,7 +24,7 @@ interface CmsBlockClientInterface
     public function findBlocksByNames($blockNames, $localeName);
 
     /**
-     * Specification
+     * Specification:
      * - Find blocs by required options
      * - Return only block names which fit to all provided options
      *
@@ -38,7 +38,7 @@ interface CmsBlockClientInterface
     public function findBlockNamesByOptions(array $options, $localName);
 
     /**
-     * Specification
+     * Specification:
      * - Prepare a valid block key by provided name
      *
      * @api
