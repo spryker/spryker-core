@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\CmsBlock;
 
-use Spryker\Shared\Kernel\KernelConstants;
-
 interface CmsBlockConstants
 {
 
@@ -18,7 +16,7 @@ interface CmsBlockConstants
      *
      * @api
      */
-    const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
+    const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
 
     /**
      * Specification
