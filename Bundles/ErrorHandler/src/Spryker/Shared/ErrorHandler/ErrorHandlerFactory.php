@@ -9,7 +9,6 @@ namespace Spryker\Shared\ErrorHandler;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
