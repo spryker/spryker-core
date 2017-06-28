@@ -83,6 +83,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, true);
+            $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
         });
     }
 
@@ -95,6 +96,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, false);
+            $this->touchFacade->touchDeleted(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
         });
     }
 
@@ -244,8 +246,6 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
         $spyCmsBlock->setIsActive($isActive);
         $spyCmsBlock->save();
-
-        $this->touchFacade->touchActive(CmsBlockConstants::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
     }
 
 }

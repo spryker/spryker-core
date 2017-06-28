@@ -79,7 +79,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         foreach ($query->find() as $relation) {
             $relation->delete();
 
-            $this->touchFacade->touchActive(
+            $this->touchFacade->touchDeleted(
                 CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $relation->getFkCategory()
             );

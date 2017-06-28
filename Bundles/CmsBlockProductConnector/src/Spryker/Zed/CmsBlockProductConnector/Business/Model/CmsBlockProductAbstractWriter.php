@@ -78,7 +78,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
         foreach ($relations as $relation) {
             $relation->delete();
 
-            $this->touchFacade->touchActive(
+            $this->touchFacade->touchDeleted(
                 CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR,
                 $relation->getFkProductAbstract()
             );
