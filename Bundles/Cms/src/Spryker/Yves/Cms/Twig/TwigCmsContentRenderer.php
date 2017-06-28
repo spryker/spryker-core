@@ -9,9 +9,12 @@ namespace Spryker\Yves\Cms\Twig;
 
 use Exception;
 use Twig_Environment;
+use Spryker\Shared\Log\LoggerTrait;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
 {
+
+    use LoggerTrait;
 
     /**
      * @var \Twig_Environment
@@ -57,6 +60,7 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
         try {
             return $this->twigEnvironment->createTemplate($content)->render($context);
         } catch (Exception $exception) {
+            $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
             return $content;
         }
     }
