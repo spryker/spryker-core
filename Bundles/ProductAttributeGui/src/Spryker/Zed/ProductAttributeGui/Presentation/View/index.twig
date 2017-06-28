@@ -52,11 +52,24 @@
             {% for localeCode,localeData in locales %}
                 {% if productAttributeValues[localeCode] is defined %}
                     {% for key,value in productAttributeValues[localeCode] %}
+                        {% set idAttribute = metaAttributes[key]['attribute_id'] %}
+                        {% set allowInput = metaAttributes[key]['allow_input'] %}
+                        {% set isSuper = metaAttributes[key]['is_super'] %}
+
+                        {% set readOnly = '' %}
+                        {% if isSuper %}
+                            {% set readOnly = 'readonly="readonly"' %}
+                        {% endif %}
+
                         <tr>
-                            <td>{{ key }}</td>
+                            <td>
+                                {% if isSuper %}
+                                    <i>{{ key }}</i>
+                                {% else %}
+                                    {{ key }}
+                                {% endif %}
+                            </td>
                             {% for valueLocaleCode,localeData in productAttributeValues %}
-                                {% set idAttribute = metaAttributes[key]['attribute_id'] %}
-                                {% set allowInput = metaAttributes[key]['allow_input'] %}
                                 {% set name = '[' ~ key ~ ']' %}
                                 {% set id = key %}
 
@@ -71,6 +84,7 @@
                                 {% if localeData[key] is defined %}
                                     <td>
                                         <input
+                                                {{ readOnly }}
                                                 id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"
@@ -86,6 +100,7 @@
                                 {% else %}
                                     <td>
                                         <input
+                                                {{ readOnly }}
                                                 id="{{ inputId }}"
                                                 name="{{ inputName }}"
                                                 type="text"

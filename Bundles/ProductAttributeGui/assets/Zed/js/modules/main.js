@@ -61,6 +61,11 @@ function AttributeManager() {
 
         for (var i = 0; i < locales.length; i++) {
             var localeCode = locales[i];
+            var readOnly = 'readonly="true"';
+
+            if (attributeMetadata.is_super === true) {
+                readOnly = '';
+            }
 
             var item = '<input type="text"' +
                 ' class="spryker-form-autocomplete form-control ui-autocomplete-input attribute_metadata_value kv_attribute_autocomplete" ' +
@@ -70,6 +75,7 @@ function AttributeManager() {
                 ' value="" ' +
                 ' data-id_attribute="' + idAttribute + '" ' +
                 ' data-locale_code="' + localeCode + '"' +
+                readOnly +
                 '>' +
                 '<span style="display: none"></span>';
             dataToAdd.push(item);
