@@ -502,6 +502,10 @@ class Reader implements ReaderInterface
     {
         $priceTransfers = [];
         foreach ($priceProductEntities as $priceEntity) {
+            if ($priceEntity->getPrice() === null) {
+                continue;
+            }
+
             $priceTypeName = $priceEntity->getPriceType()->getName();
 
             $priceProductTransfer = new PriceProductTransfer();

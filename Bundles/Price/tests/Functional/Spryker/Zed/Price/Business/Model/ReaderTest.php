@@ -318,10 +318,17 @@ class ReaderTest extends Test
             ->save();
 
         $this->deletePriceEntitiesAbstract($productAbstractEntity);
+
         (new SpyPriceProduct())
             ->setSpyProductAbstract($productAbstractEntity)
             ->setPriceType($priceTypeEntity1)
             ->setPrice(100)
+            ->save();
+
+        (new SpyPriceProduct())
+            ->setProduct($productConcreteEntity)
+            ->setPriceType($priceTypeEntity1)
+            ->setPrice(NULL)
             ->save();
 
         (new SpyPriceProduct())
