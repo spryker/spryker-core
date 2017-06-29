@@ -501,17 +501,13 @@ class Reader implements ReaderInterface
     protected function mapPriceProductTransferCollectionForProductConcrete($priceProductEntities)
     {
         $priceTransfers = [];
-        foreach ($priceProductEntities as $priceEntity) {
-            if ($priceEntity->getPrice() === null) {
-                continue;
-            }
-
-            $priceTypeName = $priceEntity->getPriceType()->getName();
+        foreach ($priceProductEntities as $priceProductEntity) {
+            $priceTypeName = $priceProductEntity->getPriceType()->getName();
 
             $priceProductTransfer = new PriceProductTransfer();
             $priceProductTransfer
-                ->fromArray($priceEntity->toArray(), true)
-                ->setIdProduct($priceEntity->getFkProduct())
+                ->fromArray($priceProductEntity->toArray(), true)
+                ->setIdProduct($priceProductEntity->getFkProduct())
                 ->setPriceTypeName($priceTypeName);
 
             $priceTransfers[$priceTypeName] = $priceProductTransfer;

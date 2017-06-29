@@ -9,6 +9,7 @@ namespace Spryker\Zed\Price\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -69,6 +70,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     {
         return $this->getFactory()
             ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->useSpyProductAbstractQuery()
                 ->filterBySku($sku)
@@ -86,6 +88,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     {
         return $this->getFactory()
             ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
             ->filterByFkProductAbstract($idProductAbstract)
             ->joinWithPriceType();
     }
@@ -128,6 +131,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     {
         return $this->getFactory()
             ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->useProductQuery()
                 ->filterBySku($sku)
@@ -145,6 +149,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     {
         return $this->getFactory()
             ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
             ->filterByFkProduct($idProductConcrete)
             ->joinWithPriceType();
     }

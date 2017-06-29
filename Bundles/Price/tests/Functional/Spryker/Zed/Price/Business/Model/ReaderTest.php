@@ -328,7 +328,13 @@ class ReaderTest extends Test
         (new SpyPriceProduct())
             ->setProduct($productConcreteEntity)
             ->setPriceType($priceTypeEntity1)
-            ->setPrice(NULL)
+            ->setPrice(null)
+            ->save();
+
+        (new SpyPriceProduct())
+            ->setSpyProductAbstract($productAbstractEntity)
+            ->setPriceType($priceTypeEntity2)
+            ->setPrice(null)
             ->save();
 
         (new SpyPriceProduct())
