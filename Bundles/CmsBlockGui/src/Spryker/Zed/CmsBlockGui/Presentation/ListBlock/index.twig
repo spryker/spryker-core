@@ -1,0 +1,21 @@
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Overview of CMS Blocks' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ createActionButton('/cms-block-gui/create-block', 'Create block' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of CMS blocks' | trans}}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ blocks | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

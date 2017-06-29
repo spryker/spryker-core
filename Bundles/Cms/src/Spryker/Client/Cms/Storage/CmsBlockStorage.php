@@ -9,6 +9,11 @@ namespace Spryker\Client\Cms\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
+/**
+ * @deprecated Use CMS Block module instead
+ *
+ * @package Spryker\Client\Cms\Storage
+ */
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
 

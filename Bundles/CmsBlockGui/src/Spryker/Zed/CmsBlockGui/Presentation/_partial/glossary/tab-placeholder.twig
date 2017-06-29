@@ -1,0 +1,37 @@
+
+{% set placeholderForm = '' %}
+
+{% for glossaryPlaceholder in glossaryForm.glossaryPlaceholders %}
+    {% if tab.name == glossaryPlaceholder.vars.data.placeholder %}
+        {% set placeholderForm = glossaryPlaceholder %}
+    {% endif %}
+{% endfor %}
+
+<div class="placeholder-translation-container">
+
+    {{ form_row(placeholderForm.idCmsBlockGlossaryKeyMapping) }}
+    {{ form_row(placeholderForm.templateName) }}
+    {{ form_row(placeholderForm.fkCmsBlock) }}
+
+    {% for locale in availableLocales %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true) , 'hasError': false} %}
+            {% block content %}
+
+                {% for translationForm in placeholderForm.translations %}
+                    {% if translationForm.vars.data.localeName == locale.localeName   %}
+                        <div class="row">
+                            <div class="col-sm-12" class="translation {% if translationForm.translation.vars.errors|length > 0 %}has-error{% endif %}">
+                                {{ form_label(translationForm.translation) }}
+                                {{ form_widget(translationForm.translation, {'attr': {'rows': 5}}) }}
+                                {{ form_errors(translationForm.translation) }}
+                            </div>
+                            {{ form_row(translationForm.fkLocale) }}
+                            {{ form_row(translationForm.localeName) }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+</div>
