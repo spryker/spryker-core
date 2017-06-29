@@ -10,7 +10,7 @@ require('../../sass/main.scss');
 
 
 function castToBoolean($value) {
-    return $value.toLowerCase() === 'true' || $value === '1' || $value == true;
+    return $value === 'true' || $value === '1' || $value === 1 || $value == true;
 }
 
 function AttributeManager() {
@@ -71,16 +71,16 @@ function AttributeManager() {
         dataToAdd.push(key);
 
         for (var localeCode in locales) {
-            var readOnly = 'readonly="true"';
+            var readOnly = '';
 
-            if (attributeMetadata.is_super) {
-                readOnly = '';
+            if (castToBoolean(attributeMetadata.is_super)) {
+                readOnly = ' readonly="true" ';
             }
 
             var item = '<input type="text"' +
                 ' class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" ' +
-                ' data-allow_input="' + castToBoolean(attributeMetadata.allow_input) + '"' +
-                ' data-is_super="' + castToBoolean(attributeMetadata.is_super) + '"' +
+                ' data-allow_input="' + attributeMetadata.allow_input + '"' +
+                ' data-is_super="' + attributeMetadata.is_super + '"' +
                 ' data-is_attribute_input ' +
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
@@ -372,8 +372,8 @@ $(document).ready(function() {
 
             input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
-            input.attr('data-allow_input', castToBoolean(ui.item.allow_input));
-            input.attr('data-is_super', castToBoolean(ui.item.is_super));
+            input.attr('data-allow_input', ui.item.allow_input);
+            input.attr('data-is_super', ui.item.is_super);
             input.attr('data-input_type', ui.item.input_type);
 
             return false;
@@ -384,8 +384,8 @@ $(document).ready(function() {
 
             input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
-            input.attr('data-allow_input', castToBoolean(ui.item.allow_input));
-            input.attr('data-is_super', castToBoolean(ui.item.is_super));
+            input.attr('data-allow_input', ui.item.allow_input);
+            input.attr('data-is_super', ui.item.is_super);
             input.attr('data-input_type', ui.item.input_type);
 
             return false;
