@@ -77,7 +77,7 @@ function AttributeManager() {
                 readOnly = ' readonly="true" ';
             }
 
-            var item = '<input type="text"' +
+            var item = '<input type="' + attributeMetadata.input_type + '"' +
                 ' class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" ' +
                 ' data-allow_input="' + attributeMetadata.allow_input + '"' +
                 ' data-is_super="' + attributeMetadata.is_super + '"' +
@@ -261,6 +261,14 @@ function removeActionHandler() {
 }
 
 function updateAttributeInputsWithAutoComplete() {
+    $('[data-allow_input=""]').each(function(key, value) {
+        var input = $(value);
+
+        input.on('focus click', function(event, ui) {
+            $(this).autocomplete('search', '');
+        });
+    });
+
     $('[data-is_attribute_input]').each(function(key, value) {
         var input = $(value);
         var id = input.attr('data-id_attribute') || null;

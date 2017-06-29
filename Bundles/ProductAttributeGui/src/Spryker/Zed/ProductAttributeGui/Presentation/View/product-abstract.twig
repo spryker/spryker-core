@@ -65,6 +65,8 @@
                         <tr>
                             <td>
                                 {% if isSuper %}
+                                    <strong>{{ key }}</strong>
+                                {% elseif allowInput %}
                                     <i>{{ key }}</i>
                                 {% else %}
                                     {{ key }}
