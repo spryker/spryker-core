@@ -8,6 +8,11 @@
 require('ZedGui');
 require('../../sass/main.scss');
 
+
+function castToBoolean($value) {
+    return $value.toLowerCase() === 'true' || $value === '1' || $value == true;
+}
+
 function AttributeManager() {
     var _attributeManager = {
         attributesValues: {},
@@ -74,8 +79,8 @@ function AttributeManager() {
 
             var item = '<input type="text"' +
                 ' class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete" ' +
-                ' data-allow_input="' + attributeMetadata.allow_input + '"' +
-                ' data-is_super="' + attributeMetadata.is_super + '"' +
+                ' data-allow_input="' + castToBoolean(attributeMetadata.allow_input) + '"' +
+                ' data-is_super="' + castToBoolean(attributeMetadata.is_super) + '"' +
                 ' data-is_attribute_input ' +
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
@@ -109,8 +114,8 @@ function AttributeManager() {
         var attributeMetadata = {
             'key': keyInput.attr('data-key'),
             'id': keyInput.attr('data-value'),
-            'allow_input': keyInput.attr('data-allow_input'),
-            'is_super': keyInput.attr('data-is_super'),
+            'allow_input': castToBoolean(keyInput.attr('data-allow_input')),
+            'is_super': castToBoolean(keyInput.attr('data-is_super')),
             'input_type': keyInput.attr('data-input_type')
         };
 
@@ -280,18 +285,23 @@ function updateAttributeInputsWithAutoComplete() {
                     }
                 });
             },
+            change: function(event,ui) {
+                var input = $(this);
+                var allowInput = castToBoolean(input.attr('data-allow_input'));
+                if (!allowInput) {
+                    input.val((ui.item ? ui.item.label : ''));
+                }
+            },
             select: function(event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
                 input.attr('data-value', ui.item.value);
-
                 return false;
             },
             focus: function(event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
                 input.attr('data-value', ui.item.value);
-
                 return false;
             }
         });
@@ -350,36 +360,32 @@ $(document).ready(function() {
                             value: item.attribute_id,
                             allow_input: item.allow_input,
                             is_super: item.is_super,
-                            input_type: item.input_type,
+                            input_type: item.input_type
                         };
                     }));
                 }
             });
         },
         select: function(event, ui) {
-            console.log('ui.item',ui.item);
-
             var input = $(this);
             input.val(ui.item.label);
 
             input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
-            input.attr('data-allow_input', ui.item.allow_input);
-            input.attr('data-is_super', ui.item.is_super);
+            input.attr('data-allow_input', castToBoolean(ui.item.allow_input));
+            input.attr('data-is_super', castToBoolean(ui.item.is_super));
             input.attr('data-input_type', ui.item.input_type);
 
             return false;
         },
         focus: function(event, ui) {
-            console.log('ui.item',ui.item);
-
             var input = $(this);
             input.val(ui.item.label);
 
             input.attr('data-key', ui.item.label);
             input.attr('data-value', ui.item.value);
-            input.attr('data-allow_input', ui.item.allow_input);
-            input.attr('data-is_super', ui.item.is_super);
+            input.attr('data-allow_input', castToBoolean(ui.item.allow_input));
+            input.attr('data-is_super', castToBoolean(ui.item.is_super));
             input.attr('data-input_type', ui.item.input_type);
 
             return false;
