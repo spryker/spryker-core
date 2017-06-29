@@ -123,7 +123,7 @@ class AttributeReader implements AttributeReaderInterface
 
         foreach ($query->find() as $entity) {
             unset($entity[ProductAttributeGuiConfig::ID_PRODUCT_ATTRIBUTE_KEY]);
-            $results[$entity[ProductAttributeGuiConfig::ATTRIBUTE_ID]] = $entity;
+            $results[] = $entity;
         }
 
         return $results;
@@ -379,6 +379,7 @@ class AttributeReader implements AttributeReaderInterface
             ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeGuiConfig::ATTRIBUTE_ID)
             ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeGuiConfig::ALLOW_INPUT)
             ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeGuiConfig::INPUT_TYPE)
+            ->orderByKey()
             ->setFormatter(new ArrayFormatter())
             ->limit($limit);
 

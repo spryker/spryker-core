@@ -19,15 +19,20 @@
         {{ localesJson | raw }}
     </div>
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute Key' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
         {% block widget_content %}
-            <div>
-                {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form', 'id': 'attribute_form'} }) }}
-                {{ form_errors(attributeKeyForm) }}
-                {{ form_widget(attributeKeyForm) }}
-                <input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" />
-                {{ form_end(attributeKeyForm) }}
-            </div>
+            {{ form_start(attributeKeyForm, { 'attr': {'class': 'kv_autocomplete_form', 'id': 'attribute_form'} }) }}
+            <table width="100%">
+            <tr>
+                <td width="100%">
+                    {{ form_errors(attributeKeyForm) }}
+                    {{ form_widget(attributeKeyForm) }}
+                </td>
+                <td>&nbsp;</td>
+                <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
+            </tr>
+            </table>
+            {{ form_end(attributeKeyForm) }}
         {% endblock %}
     {% endembed %}
 

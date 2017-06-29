@@ -261,9 +261,15 @@ function removeActionHandler() {
 }
 
 function updateAttributeInputsWithAutoComplete() {
+    $('[data-is_attribute_input]').each(function(key, value) {
+        var input = $(value);
+        input.on('dblclick', function(event, ui) {
+            $(this).autocomplete('search', '');
+        });
+    });
+
     $('[data-allow_input=""]').each(function(key, value) {
         var input = $(value);
-
         input.on('focus click', function(event, ui) {
             $(this).autocomplete('search', '');
         });

@@ -64,7 +64,7 @@ class AttributeKeyForm extends AbstractType
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_KEY, 'text', [
-            'label' => 'Attribute key *',
+            'label' => 'Attribute key',
             'constraints' => [
                 new NotBlank(),
                 new Regex([
