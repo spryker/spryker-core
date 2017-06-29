@@ -39,4 +39,9 @@ interface ProductManagementToPriceInterface
      */
     public function getPriceTypeValues();
 
+    /**
+     * @return string
+     */
+    public function getDefaultPriceTypeName();
+
 }

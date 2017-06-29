@@ -64,4 +64,12 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
         return $this->priceFacade->getPriceTypeValues();
     }
 
+    /**
+     * @return string
+     */
+    public function getDefaultPriceTypeName()
+    {
+        return $this->priceFacade->getDefaultPriceTypeName();
+    }
+
 }
