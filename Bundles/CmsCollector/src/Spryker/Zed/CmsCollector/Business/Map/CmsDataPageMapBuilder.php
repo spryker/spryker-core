@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsCollector\Business\Map;
 
+use DateTime;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -64,6 +65,8 @@ class CmsDataPageMapBuilder implements PageMapInterface
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);
 
+        $this->setActiveInDateRange($cmsPageData, $pageMapTransfer);
+
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())
             ->addSearchResultData($pageMapTransfer, static::NAME, $cmsPageAttributeTransfer->getName())
@@ -78,6 +81,27 @@ class CmsDataPageMapBuilder implements PageMapInterface
             ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName());
 
         return $pageMapTransfer;
+    }
+
+    /**
+     * @param array $cmsPageData
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     *
+     * @return void
+     */
+    protected function setActiveInDateRange(array $cmsPageData, PageMapTransfer $pageMapTransfer)
+    {
+        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]) {
+            $pageMapTransfer->setActiveFrom(
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d')
+            );
+        }
+
+        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]) {
+            $pageMapTransfer->setActiveTo(
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d')
+            );
+        }
     }
 
     /**

@@ -79,6 +79,14 @@
           "type": "boolean",
           "include_in_all": false
         },
+        "active_from": {
+          "type": "date",
+          "include_in_all": false
+        },
+        "active_to": {
+          "type": "date",
+          "include_in_all": false
+        },
         "locale": {
           "type": "string",
           "include_in_all": false,
