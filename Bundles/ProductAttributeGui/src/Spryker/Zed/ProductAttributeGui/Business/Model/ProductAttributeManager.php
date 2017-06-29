@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
 class ProductAttributeManager implements ProductAttributeManagerInterface
@@ -93,19 +93,82 @@ class ProductAttributeManager implements ProductAttributeManagerInterface
             $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
         }
 
-        return $this->generateProductAbstractAttributes($productAbstractEntity, $localizedAttributes);
+        return $this->generateAttributes($productAbstractEntity->getAttributes(), $localizedAttributes);
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAttributeEntity
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct)
+    {
+        $entity = $this->attributeReader->getProductEntity($idProduct);
+        $productTransfer = new ProductConcreteTransfer();
+
+        if (!$entity) {
+            return $productTransfer;
+        }
+
+        $productTransfer->setIdProductConcrete($entity->getIdProduct());
+        $productTransfer->setFkProductAbstract($entity->getFkProductAbstract());
+        $productTransfer->setSku($entity->getSku());
+
+        return $productTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributes($idProduct)
+    {
+        $values = $this->getProductAttributeValues($idProduct);
+        return $this->attributeReader->getAttributesByValues($values);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct)
+    {
+        $values = $this->getProductAttributeValues($idProduct);
+        return $this->attributeReader->getMetaAttributesByValues($values);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct)
+    {
+        $productEntity = $this->attributeReader->getProductEntity($idProduct);
+
+        $localizedAttributes = [];
+        foreach ($productEntity->getSpyProductLocalizedAttributess() as $localizedAttributeEntity) {
+            $attributesDecoded = $this->attributeReader->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
+            $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
+        }
+
+        return $this->generateAttributes($productEntity->getAttributes(), $localizedAttributes);
+    }
+
+    /**
+     * @param string $productAttributesJson
      * @param array $localizedAttributes
      *
      * @return array
      */
-    protected function generateProductAbstractAttributes(SpyProductAbstract $productAttributeEntity, array $localizedAttributes)
+    protected function generateAttributes($productAttributesJson, array $localizedAttributes)
     {
-        $attributes = $this->attributeReader->decodeJsonAttributes($productAttributeEntity->getAttributes());
+        $attributes = $this->attributeReader->decodeJsonAttributes($productAttributesJson);
         $attributes = [ProductAttributeGuiConfig::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
+
+        ksort($attributes);
 
         return $attributes;
     }

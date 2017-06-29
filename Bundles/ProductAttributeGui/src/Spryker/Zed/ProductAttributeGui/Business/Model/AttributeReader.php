@@ -111,6 +111,19 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function getProductEntity($idProduct)
+    {
+        return $this->productQueryContainer->queryProduct()
+            ->filterByIdProduct($idProduct)
+            ->joinSpyProductLocalizedAttributes()
+            ->findOne();
+    }
+
+    /**
      * @param string $searchText
      * @param int $limit
      *

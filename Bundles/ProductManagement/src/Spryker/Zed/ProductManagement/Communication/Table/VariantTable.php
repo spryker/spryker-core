@@ -16,6 +16,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 class VariantTable extends AbstractProductTable
 {
@@ -201,6 +202,13 @@ class VariantTable extends AbstractProductTable
                 $this->type
             ),
             'Edit'
+        );
+
+        $urls[] = $this->generateEditButton(
+            Url::generate('/product-attribute-gui/view/product', [
+                EditController::PARAM_ID_PRODUCT => $productEntity->getIdProduct(),
+            ]),
+            'Manage Attributes'
         );
 
         return $urls;

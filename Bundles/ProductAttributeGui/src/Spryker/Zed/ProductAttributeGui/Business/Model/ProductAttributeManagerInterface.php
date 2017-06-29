@@ -38,4 +38,32 @@ interface ProductAttributeManagerInterface
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
 
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributes($idProduct);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct);
+
 }

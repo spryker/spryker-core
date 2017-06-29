@@ -1,0 +1,52 @@
+<pre>{{ dump(productAttributeValues) }}</pre>
+<pre>{{ dump(locales) }}</pre>
+
+<table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
+    <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
+        <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
+        <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
+        <thead>
+        <tr>
+            <th>key</th>
+            {% for localeCode,localeData in locales %}
+                {% if localeCode == '_' %}
+                    <th>{{ 'default' }}</th>
+                {% else %}
+                    <th>{{ localeData.locale_name }}</th>
+                {% endif %}
+            {% endfor %}
+            <th>action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for localeCode,attributeValues in productAttributeValues %}
+                {% set break = false %}
+                {% for key,value in attributeValues if not break %}
+                    {% set allowInput = metaAttributes[key]['allow_input'] %}
+                    {% set isSuper = metaAttributes[key]['is_super'] %}
+
+                    {% set readOnly = '' %}
+                    {% if isSuper %}
+                        {% set readOnly = 'readonly="readonly"' %}
+                    {% endif %}
+
+                    <tr>
+                        <td>
+                            {% if isSuper %}
+                                <strong>{{ key }}</strong>
+                            {% elseif allowInput == false %}
+                                <i>{{ key }}</i>
+                            {% else %}
+                                {{ key }}
+                            {% endif %}
+                        </td>
+                    <tr>
+
+
+            {% for localeCode,localeData in locales %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </form>
+</table>

@@ -19,6 +19,7 @@ class ViewController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -50,29 +51,12 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getMetaAttributesForProductAbstract($idProductAbstract);
 
-        $locales = $this->getFactory()
-            ->getLocaleFacade()
-            ->getLocaleCollection();
-
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setIdLocale(null);
-        $localeTransfer->setLocaleName('_');
-
-        $locales['_'] = $localeTransfer;
-
-        $localesData = [];
-        foreach ($locales as $localeCode => $localeTransfer) {
-            $localesData[$localeCode] = $localeTransfer->toArray();
-        }
-
-        ksort($locales);
-        ksort($localesData);
-        ksort($values);
+        $localesData = $this->getLocaleData();
 
         return $this->viewResponse([
             'idProductAbstract' => $idProductAbstract,
             'attributeKeyForm' => $form->createView(),
-            'locales' => $locales,
+            'locales' => $this->getLocaleData(),
             'metaAttributes' => $metaAttributes,
             'productAttributeValues' => $values,
             'localesJson' => json_encode($localesData),
@@ -80,6 +64,77 @@ class ViewController extends AbstractController
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function productAction(Request $request)
+    {
+        $idProduct = $this->castId($request->get(
+            static::PARAM_ID_PRODUCT
+        ));
+
+        $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createAttributeKeyForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
+        $values = $this
+            ->getFacade()
+            ->getProductAttributeValues($idProduct);
+
+        $productTransfer = $this->getFacade()->getProduct($idProduct);
+        $productAbstractTransfer = $this->getFacade()->getProductAbstract($productTransfer->getFkProductAbstract());
+
+        $metaAttributes = $this
+            ->getFacade()
+            ->getMetaAttributesForProduct($idProduct);
+
+        $localesData = $this->getLocaleData();
+
+        return $this->viewResponse([
+            'attributeKeyForm' => $form->createView(),
+            'locales' => $localesData,
+            'metaAttributes' => $metaAttributes,
+            'productAttributeValues' => $values,
+            'localesJson' => json_encode($localesData),
+            'productAttributeValuesJson' => json_encode($values),
+            'metaAttributesJson' => json_encode($metaAttributes),
+            'productAbstract' => $productAbstractTransfer,
+            'product' => $productTransfer,
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLocaleData()
+    {
+        $locales = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
+
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setIdLocale('_');
+        $localeTransfer->setLocaleName('_');
+
+        $locales['_'] = $localeTransfer;
+
+        $localesData = [];
+        foreach ($locales as $localeCode => $localeTransfer) {
+            $localesData[$localeTransfer->getIdLocale()] = $localeTransfer->toArray();
+        }
+
+        ksort($localesData);
+
+        return $localesData;
     }
 
 }

@@ -33,6 +33,20 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     /**
      * @api
      *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProductAttributeValues($idProduct);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array
@@ -47,6 +61,20 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     /**
      * @api
      *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getMetaAttributesForProduct($idProduct);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -56,6 +84,20 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
         return $this->getFactory()
             ->createProductAttributeManager()
             ->getProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProduct($idProduct);
     }
 
     /**

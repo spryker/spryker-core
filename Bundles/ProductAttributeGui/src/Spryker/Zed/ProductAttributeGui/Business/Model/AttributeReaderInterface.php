@@ -39,6 +39,13 @@ interface AttributeReaderInterface
     public function getProductAbstractEntity($idProductAbstract);
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function getProductEntity($idProduct);
+
+    /**
      * @param string $searchText
      * @param int $limit
      *
