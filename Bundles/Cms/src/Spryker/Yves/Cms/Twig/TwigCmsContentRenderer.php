@@ -8,8 +8,8 @@
 namespace Spryker\Yves\Cms\Twig;
 
 use Exception;
-use Twig_Environment;
 use Spryker\Shared\Log\LoggerTrait;
+use Twig_Environment;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
 {
