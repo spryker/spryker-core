@@ -1,14 +1,14 @@
 {
   "name": "spryker/cms-block",
-  "description": "CMS Block module",
+  "description": "CmsBlock module",
   "license": "proprietary",
   "require": {
     "spryker/glossary": "^3.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
-    "spryker/storage": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0"
   },

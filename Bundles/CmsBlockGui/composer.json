@@ -1,13 +1,13 @@
 {
   "name": "spryker/cms-block-gui",
-  "description": "CMS Block GUI Module",
+  "description": "CmsBlockGui module",
   "license": "proprietary",
   "require": {
-    "spryker/propel-orm": "^1.0.0",
     "spryker/cms-block": "^1.0.0",
     "spryker/gui": "^3.3.3",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"
   },

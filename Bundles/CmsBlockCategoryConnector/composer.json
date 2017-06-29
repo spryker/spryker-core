@@ -1,15 +1,15 @@
 {
   "name": "spryker/cms-block-category-connector",
-  "description": "CMS Block Category Connector module",
+  "description": "CmsBlockCategoryConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/cms-block": "^1.0.0",
     "spryker/category": "^3.0.0",
+    "spryker/cms-block": "^1.0.0",
     "spryker/collector": "^5.0.0",
     "spryker/gui": "^5.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0",
     "spryker/util-data-reader": "^1.0.0"
