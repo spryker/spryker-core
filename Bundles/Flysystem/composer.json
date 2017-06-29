@@ -1,6 +1,6 @@
 {
   "name": "spryker/flysystem",
-  "description": "Flysystem bundle",
+  "description": "Flysystem module",
   "license": "proprietary",
   "require": {
     "league/flysystem": "^1.0"
@@ -13,7 +13,10 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/file-system": "FileSystem bundle"
+    "spryker/file-system": "For generic filesystem handling",
+    "spryker/flysystem-local-filesystem": "For handling local files",
+    "spryker/flysystem-aws3v3-filesystem": "For handling AWS3v3 filesystem",
+    "spryker/flysystem-ftp-filesystem": "For handling FTP filesystem"
   },
   "autoload": {
     "psr-0": {

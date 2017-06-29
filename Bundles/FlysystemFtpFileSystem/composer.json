@@ -1,13 +1,16 @@
 {
-  "name": "spryker/flysystem-ftp-filesystem",
-  "description": "FlysystemFtpFileSystem bundle",
+  "name": "spryker/flysystem-ftp-file-system",
+  "description": "FlysystemFtpFileSystem module",
   "license": "proprietary",
+  "require": {
+    "league/flysystem": "^1.0"
+  },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/flysystem": "Flysystem bundle"
+    "spryker/flysystem": "Flysystem module"
   },
   "autoload": {
     "psr-0": {

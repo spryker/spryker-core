@@ -1,6 +1,6 @@
 {
-  "name": "spryker/flysystem-aws3v3-filesystem",
-  "description": "FlysystemAws3v3FileSystem bundle",
+  "name": "spryker/flysystem-aws3v3-file-system",
+  "description": "FlysystemAws3v3FileSystem module",
   "license": "proprietary",
   "require": {
     "league/flysystem-aws-s3-v3": "^1.0"
@@ -10,7 +10,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/flysystem": "Flysystem bundle"
+    "spryker/flysystem": "Flysystem module"
   },
   "autoload": {
     "psr-0": {

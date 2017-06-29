@@ -1,6 +1,6 @@
 {
   "name": "spryker/file-system",
-  "description": "FileSystem bundle",
+  "description": "FileSystem module",
   "license": "proprietary",
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -8,6 +8,9 @@
     "spryker/flysystem-local-filesystem": "*",
     "spryker/kernel": "^3.5.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/fly-system": "For filesystem handling via Flysystem library"
   },
   "autoload": {
     "psr-0": {
