@@ -26,6 +26,7 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
 
     /**
      * @param \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface $productFacade
      */
     public function __construct(ProductLabelToTouchInterface $touchFacade, ProductLabelToProductInterface $productFacade)
     {
