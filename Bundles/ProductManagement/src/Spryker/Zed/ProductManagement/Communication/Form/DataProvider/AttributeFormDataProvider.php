@@ -44,7 +44,7 @@ class AttributeFormDataProvider
     {
         if ($idProductManagementAttribute === null) {
             return [
-                AttributeForm::FIELD_ALLOW_INPUT => true,
+                AttributeForm::FIELD_ALLOW_INPUT => false,
             ];
         }
 
