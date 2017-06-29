@@ -6,7 +6,7 @@
     "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
     "spryker/flysystem-local-filesystem": "*",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.5.0",
     "spryker/testify": "*"
   },
   "autoload": {
