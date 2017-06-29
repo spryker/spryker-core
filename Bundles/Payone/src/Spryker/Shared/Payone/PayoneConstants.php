@@ -29,6 +29,14 @@ interface PayoneConstants
     const PAYONE_MODE_TEST = 'test';
     const PAYONE_MODE_LIVE = 'live';
 
+    /** @deprecated Please use PayoneConstants::BASE_URL_YVES instead */
     const HOST_YVES = 'HOST_YVES';
+
+    /**
+     * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     *
+     * @api
+     */
+    const BASE_URL_YVES = 'PAYONE:BASE_URL_YVES';
 
 }

@@ -84,6 +84,7 @@ class ViewController extends AddController
             'imageSetCollection' => $imageSets,
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
+            'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
         ]);
     }
 
@@ -251,6 +252,25 @@ class ViewController extends AddController
         }
 
         return $url;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    protected function getRenderedProductAbstractViewPlugins($idProductAbstract)
+    {
+        $productAbstractViewPlugins = $this->getFactory()
+            ->getProductAbstractViewPlugins();
+
+        $productAbstractRenderedPlugins = [];
+        foreach ($productAbstractViewPlugins as $productAbstractViewPlugin) {
+            $productAbstractRenderedPlugins[$productAbstractViewPlugin->getName()] =
+                $productAbstractViewPlugin->getRenderedList($idProductAbstract);
+        }
+
+        return $productAbstractRenderedPlugins;
     }
 
 }

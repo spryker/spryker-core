@@ -68,25 +68,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idCmsBlock
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryPageWithTemplatesAndBlocksById($idCmsBlock);
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlocks();
 
     /**
      * @api
@@ -131,44 +115,6 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage);
-
-    /**
-     * @api
-     *
-     * @param int $idCmsPage
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByIdPage($idCmsPage);
-
-    /**
-     * @api
-     *
-     * @param string $blockName
-     * @param string $blockType
-     * @param string $blockValue
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockByIdCategoryNode($idCategoryNode);
-
-    /**
-     * @api
-     *
-     * @param int $idCmsBlock
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockById($idCmsBlock);
 
     /**
      * @api

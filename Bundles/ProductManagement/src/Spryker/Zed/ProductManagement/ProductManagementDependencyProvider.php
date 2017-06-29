@@ -53,6 +53,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
+    const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -203,6 +205,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addStore($container);
+        $container = $this->addProductAbstractViewPlugins($container);
 
         return $container;
     }
@@ -219,6 +222,28 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractViewPlugins(Container $container)
+    {
+        $container[static::PLUGINS_PRODUCT_ABSTRACT_VIEW] = function () {
+            return $this->getProductAbstractViewPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface[]
+     */
+    protected function getProductAbstractViewPlugins()
+    {
+        return [];
     }
 
 }

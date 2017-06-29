@@ -9,16 +9,13 @@ namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
-use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
-use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
@@ -40,19 +37,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
             ->queryPageWithTemplatesAndUrls();
 
         return new CmsPageTable($pageQuery);
-    }
-
-    /**
-     * @param int $idLocale
-     *
-     * @return \Spryker\Zed\Cms\Communication\Table\CmsBlockTable
-     */
-    public function createCmsBlockTable($idLocale)
-    {
-        $blockQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocks($idLocale);
-
-        return new CmsBlockTable($blockQuery);
     }
 
     /**
@@ -114,27 +98,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsPageLocalizedAttributesFormDataProvider()
     {
         return new CmsPageLocalizedAttributesFormDataProvider($this->getQueryContainer());
-    }
-
-    /**
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createCmsBlockForm(array $formData = [], array $formOptions = [])
-    {
-        $formType = new CmsBlockForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider
-     */
-    public function createCmsBlockFormDataProvider()
-    {
-        return new CmsBlockFormDataProvider($this->getQueryContainer());
     }
 
     /**
