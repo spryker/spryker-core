@@ -78,7 +78,7 @@ class ViewController extends AbstractController
             'localesJson' => json_encode($localesData),
             'productAttributeValuesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),
-            'productAbstract' => $productAbstractTransfer
+            'productAbstract' => $productAbstractTransfer,
         ]);
     }
 
