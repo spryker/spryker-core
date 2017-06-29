@@ -1,6 +1,6 @@
 {
   "name": "spryker/util-data-reader",
-  "description": "UtilDataReader bundle",
+  "description": "UtilDataReader module",
   "license": "proprietary",
   "autoload": {
     "psr-0": {

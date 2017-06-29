@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-abstract-data-feed",
-  "description": "ProductAbstractDataFeed bundle",
+  "description": "ProductAbstractDataFeed module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

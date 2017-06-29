@@ -1,6 +1,6 @@
 {
   "name": "spryker/cart",
-  "description": "Cart bundle",
+  "description": "Cart module",
   "license": "proprietary",
   "require": {
     "spryker/calculation": "^4.0.0",

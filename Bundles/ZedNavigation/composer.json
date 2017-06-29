@@ -1,6 +1,6 @@
 {
   "name": "spryker/zed-navigation",
-  "description": "ZedNavigation bundle",
+  "description": "ZedNavigation module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

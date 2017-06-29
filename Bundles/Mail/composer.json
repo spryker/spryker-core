@@ -1,6 +1,6 @@
 {
   "name": "spryker/mail",
-  "description": "Mail bundle",
+  "description": "Mail module",
   "license": "proprietary",
   "require": {
     "spryker/glossary": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-management",
-  "description": "ProductManagement bundle",
+  "description": "ProductManagement module",
   "license": "proprietary",
   "require": {
     "everon/collection": "^1.0.0",

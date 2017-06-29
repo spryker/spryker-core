@@ -1,6 +1,6 @@
 {
   "name": "spryker/key-builder",
-  "description": "KeyBuilder bundle",
+  "description": "KeyBuilder module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"

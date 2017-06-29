@@ -1,6 +1,6 @@
 {
   "name": "spryker/customer-group",
-  "description": "CustomerGroup bundle",
+  "description": "CustomerGroup module",
   "license": "proprietary",
   "require": {
     "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0",

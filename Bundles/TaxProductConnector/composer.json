@@ -1,6 +1,6 @@
 {
   "name": "spryker/tax-product-connector",
-  "description": "TaxProductConnector bundle",
+  "description": "TaxProductConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,11 +1,11 @@
 {
   "name": "spryker/cms-block-product-connector",
-  "description": "CmsBlockProductConnector bundle",
+  "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {
     "spryker/cms-block": "^1.0.0",
     "spryker/collector": "^5.0.0",
-    "spryker/gui": "^5.0.0",
+    "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/product": "^5.0.0",

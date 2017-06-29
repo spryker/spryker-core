@@ -1,6 +1,6 @@
 {
   "name": "spryker/category",
-  "description": "Category bundle",
+  "description": "Category module",
   "license": "proprietary",
   "require": {
     "spryker/event": "^1.0.0",

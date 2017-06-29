@@ -1,6 +1,6 @@
 {
   "name": "spryker/event-journal",
-  "description": "EventJournal bundle",
+  "description": "EventJournal module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/sql-criteria-builder",
-  "description": "SqlCriteriaBuilder bundle",
+  "description": "SqlCriteriaBuilder module",
   "license": "proprietary",
   "require": {
     "everon/collection": "~1.0.3",

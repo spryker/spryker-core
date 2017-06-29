@@ -1,6 +1,6 @@
 {
   "name": "spryker/setup",
-  "description": "Setup bundle",
+  "description": "Setup module",
   "license": "proprietary",
   "require": {
     "spryker/cache": "^3.1.0",

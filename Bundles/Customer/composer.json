@@ -1,6 +1,6 @@
 {
   "name": "spryker/customer",
-  "description": "Customer bundle",
+  "description": "Customer module",
   "license": "proprietary",
   "require": {
     "spryker/country": "^3.0.0",

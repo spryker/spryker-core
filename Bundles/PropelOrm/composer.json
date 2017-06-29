@@ -1,6 +1,6 @@
 {
   "name": "spryker/propel-orm",
-  "description": "PropelOrm bundle",
+  "description": "PropelOrm module",
   "license": "proprietary",
   "require": {
     "propel/propel": "2.0.0-alpha7"

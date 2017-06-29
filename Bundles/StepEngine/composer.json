@@ -1,6 +1,6 @@
 {
   "name": "spryker/step-engine",
-  "description": "StepEngine bundle",
+  "description": "StepEngine module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

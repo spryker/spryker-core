@@ -1,6 +1,6 @@
 {
   "name": "spryker/assertion",
-  "description": "Assertion bundle",
+  "description": "Assertion module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"

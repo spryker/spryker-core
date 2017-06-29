@@ -1,6 +1,6 @@
 {
   "name": "spryker/search",
-  "description": "Search bundle",
+  "description": "Search module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

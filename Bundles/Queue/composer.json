@@ -1,6 +1,6 @@
 {
   "name": "spryker/queue",
-  "description": "Queue bundle",
+  "description": "Queue module",
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",

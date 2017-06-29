@@ -1,6 +1,6 @@
 {
   "name": "spryker/nopayment",
-  "description": "Nopayment bundle",
+  "description": "Nopayment module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

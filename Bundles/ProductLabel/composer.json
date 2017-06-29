@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-label",
-  "description": "ProductLabel bundle",
+  "description": "ProductLabel module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-set-collector",
-  "description": "ProductSetCollector bundle",
+  "description": "ProductSetCollector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",

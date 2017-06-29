@@ -1,6 +1,6 @@
 {
   "name": "spryker/application",
-  "description": "Application bundle",
+  "description": "Application module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

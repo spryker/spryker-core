@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-label-collector",
-  "description": "ProductLabelCollector bundle",
+  "description": "ProductLabelCollector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",

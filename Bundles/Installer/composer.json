@@ -1,6 +1,6 @@
 {
   "name": "spryker/installer",
-  "description": "Installer bundle",
+  "description": "Installer module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

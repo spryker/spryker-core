@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-image",
-  "description": "ProductImage bundle",
+  "description": "ProductImage module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/twig",
-  "description": "Twig bundle",
+  "description": "Twig module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

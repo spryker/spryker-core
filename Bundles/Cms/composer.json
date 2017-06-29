@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms",
-  "description": "Cms bundle",
+  "description": "Cms module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",

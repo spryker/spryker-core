@@ -1,6 +1,6 @@
 {
   "name": "spryker/availability-data-feed",
-  "description": "AvailabilityDataFeed bundle",
+  "description": "AvailabilityDataFeed module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

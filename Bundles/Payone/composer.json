@@ -1,6 +1,6 @@
 {
   "name": "spryker/payone",
-  "description": "Payone bundle",
+  "description": "Payone module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

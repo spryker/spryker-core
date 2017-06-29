@@ -1,6 +1,6 @@
 {
   "name": "spryker/sales",
-  "description": "Sales bundle",
+  "description": "Sales module",
   "license": "proprietary",
   "require": {
     "spryker/calculation": "^4.0.0",

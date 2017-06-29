@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-set",
-  "description": "ProductSet bundle",
+  "description": "ProductSet module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.4.0",

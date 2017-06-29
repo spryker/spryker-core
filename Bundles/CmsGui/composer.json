@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms-gui",
-  "description": "CmsGui bundle",
+  "description": "CmsGui module",
   "license": "proprietary",
   "require": {
     "spryker/application": "^3.2.0",
