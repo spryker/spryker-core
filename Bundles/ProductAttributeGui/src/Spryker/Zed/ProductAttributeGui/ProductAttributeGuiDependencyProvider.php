@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttributeGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleBridge;
+use Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingBridge;
 
 class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -17,6 +18,7 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_MANAGEMENT = 'QUERY_CONTAINER_PRODUCT_MANAGEMENT';
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +31,7 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addProductQueryContainer($container);
         $container = $this->addProductManagementQueryContainer($container);
+        $container = $this->addServiceUtilEncoding($container);
 
         return $container;
     }
@@ -86,6 +89,20 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductAttributeGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addServiceUtilEncoding($container)
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductAttributeGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+
         return $container;
     }
 

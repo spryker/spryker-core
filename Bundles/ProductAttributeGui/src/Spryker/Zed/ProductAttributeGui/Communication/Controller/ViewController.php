@@ -48,7 +48,7 @@ class ViewController extends AbstractController
 
         $metaAttributes = $this
             ->getFacade()
-            ->getMetaAttributes($idProductAbstract);
+            ->getMetaAttributesForProductAbstract($idProductAbstract);
 
         $locales = $this->getFactory()
             ->getLocaleFacade()

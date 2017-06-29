@@ -17,7 +17,7 @@ interface ProductAttributeGuiFacadeInterface
      *
      * @return array
      */
-    public function getAttributes($idProductAbstract);
+    public function getProductAbstractAttributes($idProductAbstract);
 
     /**
      * @api
@@ -26,7 +26,7 @@ interface ProductAttributeGuiFacadeInterface
      *
      * @return array
      */
-    public function getMetaAttributes($idProductAbstract);
+    public function getMetaAttributesForProductAbstract($idProductAbstract);
 
     /**
      * @api
@@ -54,16 +54,16 @@ interface ProductAttributeGuiFacadeInterface
      *
      * @return array
      */
-    public function suggestProductAttributeKeys($searchText = '', $limit = 10);
+    public function suggestKeys($searchText = '', $limit = 10);
 
     /**
      * @api
      *
      * @param int $idProductAbstract
-     * @param array $data
+     * @param array $attributes
      *
      * @return void
      */
-    public function updateProductAbstractAttributes($idProductAbstract, array $data);
+    public function saveAbstractAttributes($idProductAbstract, array $attributes);
 
 }

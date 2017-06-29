@@ -25,7 +25,6 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     public function createProductAttributeManager()
     {
         return new ProductAttributeManager(
-            $this->getProductQueryContainer(),
             $this->createAttributeReader(),
             $this->createAttributeWriter()
         );
@@ -37,7 +36,9 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     public function createAttributeReader()
     {
         return new AttributeReader(
-            $this->getProductManagementQueryContainer()
+            $this->getProductQueryContainer(),
+            $this->getProductManagementQueryContainer(),
+            $this->getServiceEncoding()
         );
     }
 
@@ -47,6 +48,7 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     public function createAttributeWriter()
     {
         return new AttributeWriter(
+            $this->createAttributeReader()
         );
     }
 
@@ -64,6 +66,14 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     protected function getProductManagementQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_MANAGEMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingInterface
+     */
+    protected function getServiceEncoding()
+    {
+        return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

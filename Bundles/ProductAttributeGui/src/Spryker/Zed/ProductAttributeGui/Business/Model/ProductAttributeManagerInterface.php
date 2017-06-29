@@ -15,14 +15,14 @@ interface ProductAttributeManagerInterface
      *
      * @return array
      */
-    public function getAttributes($idProductAbstract);
+    public function getProductAbstractAttributes($idProductAbstract);
 
     /**
      * @param int $idProductAbstract
      *
      * @return array
      */
-    public function getMetaAttributes($idProductAbstract);
+    public function getMetaAttributesForProductAbstract($idProductAbstract);
 
     /**
      * @param int $idProductAbstract
@@ -37,21 +37,5 @@ interface ProductAttributeManagerInterface
      * @return array
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
-
-    /**
-     * @param string $searchText
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function suggestKeys($searchText, $limit);
-
-    /**
-     * @param int $idProductAbstract
-     * @param array $data
-     *
-     * @return void
-     */
-    public function updateProductAbstractAttributes($idProductAbstract, array $data);
 
 }

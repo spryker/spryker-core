@@ -14,10 +14,19 @@ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValue
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
+use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingInterface;
+use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
 class AttributeReader implements AttributeReaderInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected $productQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
@@ -25,12 +34,98 @@ class AttributeReader implements AttributeReaderInterface
     protected $productManagementQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingInterface
+     */
+    protected $serviceEncoding;
+
+    /**
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingInterface $serviceEncoding
      */
     public function __construct(
-        ProductManagementQueryContainerInterface $productManagementQueryContainer
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        ProductAttributeGuiToUtilEncodingInterface $serviceEncoding
     ) {
+        $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->serviceEncoding = $serviceEncoding;
+    }
+
+    /**
+     * @param string $localizedAttributesJson
+     *
+     * @return array
+     */
+    public function decodeJsonAttributes($localizedAttributesJson)
+    {
+        $attributesDecoded = (array)$this->serviceEncoding->decodeJson($localizedAttributesJson, true);
+
+        return $attributesDecoded;
+    }
+
+    /**
+     * @param array $values
+     *
+     * @return array
+     */
+    public function getMetaAttributesByValues(array $values)
+    {
+        $query = $this->queryMetaAttributes($values);
+        $query->setFormatter(new ArrayFormatter());
+        $data = $query->find();
+
+        $results = [];
+        foreach ($data as $entity) {
+            unset($entity[ProductAttributeGuiConfig::ID_PRODUCT_ATTRIBUTE_KEY]);
+            $results[$entity[ProductAttributeGuiConfig::KEY]] = $entity;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param array $values
+     *
+     * @return array
+     */
+    public function getAttributesByValues(array $values)
+    {
+        $query = $this->queryAttributeValues($values);
+        return $this->loadPdoStatement($query);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    public function getProductAbstractEntity($idProductAbstract)
+    {
+        return $this->productQueryContainer->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->joinSpyProductAbstractLocalizedAttributes()
+            ->findOne();
+    }
+
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestKeys($searchText = '', $limit = 10)
+    {
+        $results = [];
+        $query = $this->querySuggestKeys($searchText, $limit);
+
+        foreach ($query->find() as $entity) {
+            unset($entity[ProductAttributeGuiConfig::ID_PRODUCT_ATTRIBUTE_KEY]);
+            $results[$entity[ProductAttributeGuiConfig::ATTRIBUTE_ID]] = $entity;
+        }
+
+        return $results;
     }
 
     /**
@@ -38,7 +133,7 @@ class AttributeReader implements AttributeReaderInterface
      *
      * @return array
      */
-    public function load(Criteria $query)
+    protected function loadPdoStatement(Criteria $query)
     {
         $pdoStatement = $query->doSelect();
 
@@ -53,28 +148,11 @@ class AttributeReader implements AttributeReaderInterface
 
     /**
      * @param array $productAttributes
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
-    public function queryMetaAttributes(array $productAttributes)
-    {
-        $keys = $this->extractKeys($productAttributes);
-        $query = $this->productManagementQueryContainer
-            ->queryProductAttributeKey()
-            ->leftJoinSpyProductManagementAttribute()
-            ->filterByKey_In($keys)
-            ->setIgnoreCase(true);
-
-        return $query;
-    }
-
-    /**
-     * @param array $productAttributes
      * @param bool|null $isSuper
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryProductAttributeValues(array $productAttributes = [], $isSuper = null)
+    protected function queryAttributeValues(array $productAttributes = [], $isSuper = null)
     {
         $query = $this->productManagementQueryContainer
             ->queryProductAttributeKey()
@@ -97,7 +175,7 @@ class AttributeReader implements AttributeReaderInterface
             ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE)
             ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION);
 
-        $query = $this->updateQueryWithAttributeCriteria($query, $productAttributes);
+        $query = $this->appendAttributeCriteria($query, $productAttributes);
 
         if ($isSuper !== null) {
             $query->filterByIsSuper($isSuper);
@@ -119,7 +197,7 @@ class AttributeReader implements AttributeReaderInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    protected function updateQueryWithAttributeCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
+    protected function appendAttributeCriteria(SpyProductAttributeKeyQuery $query, array $productAttributes)
     {
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion */
         /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultLocalizedCriterion */
@@ -248,7 +326,7 @@ class AttributeReader implements AttributeReaderInterface
      *
      * @return array
      */
-    protected function extractValues($productAttributes)
+    protected function extractValues(array $productAttributes)
     {
         $values = [];
         foreach ($productAttributes as $idLocale => $localizedAttributes) {
@@ -256,6 +334,61 @@ class AttributeReader implements AttributeReaderInterface
         }
 
         return array_unique($values);
+    }
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    protected function queryMetaAttributes(array $productAttributes)
+    {
+        $keys = $this->extractKeys($productAttributes);
+
+        $query = $this->productManagementQueryContainer
+            ->queryProductAttributeKey()
+            ->leftJoinSpyProductManagementAttribute()
+            ->filterByKey_In($keys)
+            ->setIgnoreCase(true)
+            ->clearSelectColumns()
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeGuiConfig::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeGuiConfig::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeGuiConfig::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeGuiConfig::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeGuiConfig::INPUT_TYPE);
+
+        return $query;
+    }
+
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function querySuggestKeys($searchText, $limit = 10)
+    {
+        $query = $this->productQueryContainer->queryProductAttributeKey()
+            ->filterByIsSuper(false)
+            ->useSpyProductManagementAttributeQuery()
+            ->endUse()
+            ->clearSelectColumns()
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeGuiConfig::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeGuiConfig::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeGuiConfig::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeGuiConfig::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeGuiConfig::INPUT_TYPE)
+            ->setFormatter(new ArrayFormatter())
+            ->limit($limit);
+
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
+        }
+
+        return $query;
     }
 
 }

@@ -207,7 +207,9 @@ function AttributeManager() {
                         type: jqXHR.status === 200 ? 'success' : 'error'
                     });
 
-                    location.reload();
+                    if (jqXHR.status === 200) {
+                        location.reload();
+                    }
                 }
             },
             beforeSend: function() {

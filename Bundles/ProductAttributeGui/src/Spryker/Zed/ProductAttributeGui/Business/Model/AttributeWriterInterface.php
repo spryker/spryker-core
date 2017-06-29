@@ -10,8 +10,12 @@ namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 interface AttributeWriterInterface
 {
 
-    public function saveProductAbstractAttributes(array $attributes);
-
-    public function saveProductAbstractLocalizedAttributes(array $attributes);
+    /**
+     * @param int $idProductAbstract
+     * @param array $attributes
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    public function saveAbstractAttributes($idProductAbstract, array $attributes);
 
 }

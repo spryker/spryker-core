@@ -23,11 +23,11 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
      *
      * @return array
      */
-    public function getAttributes($idProductAbstract)
+    public function getProductAbstractAttributes($idProductAbstract)
     {
         return $this->getFactory()
             ->createProductAttributeManager()
-            ->getAttributes($idProductAbstract);
+            ->getProductAbstractAttributes($idProductAbstract);
     }
 
     /**
@@ -37,11 +37,11 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
      *
      * @return array
      */
-    public function getMetaAttributes($idProductAbstract)
+    public function getMetaAttributesForProductAbstract($idProductAbstract)
     {
         return $this->getFactory()
             ->createProductAttributeManager()
-            ->getMetaAttributes($idProductAbstract);
+            ->getMetaAttributesForProductAbstract($idProductAbstract);
     }
 
     /**
@@ -80,10 +80,10 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
      *
      * @return array
      */
-    public function suggestProductAttributeKeys($searchText = '', $limit = 10)
+    public function suggestKeys($searchText = '', $limit = 10)
     {
         return $this->getFactory()
-            ->createProductAttributeManager()
+            ->createAttributeReader()
             ->suggestKeys($searchText, $limit);
     }
 
@@ -91,15 +91,15 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
      * @api
      *
      * @param int $idProductAbstract
-     * @param array $data
+     * @param array $attributes
      *
      * @return void
      */
-    public function updateProductAbstractAttributes($idProductAbstract, array $data)
+    public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
         $this->getFactory()
-            ->createProductAttributeManager()
-            ->updateProductAbstractAttributes($idProductAbstract, $data);
+            ->createAttributeWriter()
+            ->saveAbstractAttributes($idProductAbstract, $attributes);
     }
 
 }

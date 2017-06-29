@@ -39,7 +39,7 @@ class SaveController extends AbstractController
 
         try {
             $statusCode = 200;
-            $this->getFacade()->updateProductAbstractAttributes($idProductAbstract, $data);
+            $this->getFacade()->saveAbstractAttributes($idProductAbstract, $data);
             $result = true;
             $message = 'Product attributes saved';
         } catch (Exception $exception) {

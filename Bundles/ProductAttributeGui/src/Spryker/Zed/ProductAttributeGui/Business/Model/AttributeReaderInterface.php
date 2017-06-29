@@ -7,31 +7,43 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-
 interface AttributeReaderInterface
 {
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\Criteria $query
+     * @param string $localizedAttributesJson
      *
      * @return array
      */
-    public function load(Criteria $query);
+    public function decodeJsonAttributes($localizedAttributesJson);
 
     /**
-     * @param array $productAttributes
+     * @param array $values
      *
-     * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     * @return array
      */
-    public function queryMetaAttributes(array $productAttributes);
+    public function getMetaAttributesByValues(array $values);
 
     /**
-     * @param array $productAttributes
-     * @param bool $isSuper
+     * @param array $values
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return array
      */
-    public function queryProductAttributeValues(array $productAttributes = [], $isSuper = false);
+    public function getAttributesByValues(array $values);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    public function getProductAbstractEntity($idProductAbstract);
+
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestKeys($searchText = '', $limit = 10);
 
 }
