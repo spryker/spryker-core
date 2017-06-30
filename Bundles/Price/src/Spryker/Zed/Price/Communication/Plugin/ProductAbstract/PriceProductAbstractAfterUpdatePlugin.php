@@ -24,7 +24,7 @@ class PriceProductAbstractAfterUpdatePlugin extends AbstractPlugin implements Pr
      */
     public function update(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->getFacade()->persistProductAbstractPrice($productAbstractTransfer);
+        return $this->getFacade()->persistProductAbstractPriceCollection($productAbstractTransfer);
     }
 
 }
