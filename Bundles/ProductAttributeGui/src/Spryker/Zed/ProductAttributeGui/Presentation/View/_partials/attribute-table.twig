@@ -10,7 +10,7 @@
             <th>key</th>
             {% for localeCode,localeData in locales %}
                 {% if localeCode == '_' %}
-                    <th>{{ 'default' }}</th>
+                    <th>{{ 'default' }}</th>`
                 {% else %}
                     <th>{{ localeData.locale_name }}</th>
                 {% endif %}
@@ -19,31 +19,28 @@
         </tr>
         </thead>
         <tbody>
-            {% for localeCode,attributeValues in productAttributeValues %}
-                {% set break = false %}
-                {% for key,value in attributeValues if not break %}
-                    {% set allowInput = metaAttributes[key]['allow_input'] %}
-                    {% set isSuper = metaAttributes[key]['is_super'] %}
-
-                    {% set readOnly = '' %}
-                    {% if isSuper %}
-                        {% set readOnly = 'readonly="readonly"' %}
-                    {% endif %}
-
-                    <tr>
-                        <td>
-                            {% if isSuper %}
-                                <strong>{{ key }}</strong>
-                            {% elseif allowInput == false %}
-                                <i>{{ key }}</i>
-                            {% else %}
-                                {{ key }}
-                            {% endif %}
-                        </td>
-                    <tr>
-
-
             {% for localeCode,localeData in locales %}
+                {% for attributeLocaleCode,attributeValues in productAttributeValues[localeCode] %}
+                    {% for key,value in attributeValues %}
+                        {% set allowInput = metaAttributes[key]['allow_input'] %}
+                        {% set isSuper = metaAttributes[key]['is_super'] %}
+
+                        {% set readOnly = '' %}
+                        {% if isSuper %}
+                            {% set readOnly = 'readonly="readonly"' %}
+                        {% endif %}
+
+                            <tr>
+                                <td>
+                                    {% if isSuper %}
+                                        <strong>{{ key }}</strong>
+                                    {% elseif allowInput == false %}
+                                        <i>{{ key }}</i>
+                                    {% else %}
+                                        {{ key }}
+                                    {% endif %}
+                                </td>
+                            <tr>
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
