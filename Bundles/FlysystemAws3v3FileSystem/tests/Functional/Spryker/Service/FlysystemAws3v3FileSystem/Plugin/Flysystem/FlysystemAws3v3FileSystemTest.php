@@ -48,7 +48,10 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
      */
     public function testLocalFilesystemBuilderPlugin()
     {
-        $this->markTestSkipped('Requires Aws\S3\S3Client to be installed');
+        if (!class_exists('Aws\S3\S3Client') || !class_exists('League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter')) {
+            $this->markTestSkipped('Requires Aws\S3\S3Client and League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter to be installed');
+        }
+
         $localFilesystemBuilderPlugin = new Aws3v3FilesystemBuilderPlugin();
 
         $adapterConfigTransfer = new FlysystemConfigAws3v3Transfer();
