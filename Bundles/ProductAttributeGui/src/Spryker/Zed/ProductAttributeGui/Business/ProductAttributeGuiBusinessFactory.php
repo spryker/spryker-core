@@ -48,7 +48,9 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     public function createAttributeWriter()
     {
         return new AttributeWriter(
-            $this->createAttributeReader()
+            $this->createAttributeReader(),
+            $this->getLocaleFacade(),
+            $this->getProductQueryContainer()
         );
     }
 
@@ -66,6 +68,14 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     protected function getProductManagementQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_MANAGEMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

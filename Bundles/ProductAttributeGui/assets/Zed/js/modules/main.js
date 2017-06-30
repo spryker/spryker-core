@@ -41,7 +41,7 @@ function AttributeManager() {
     _attributeManager.extractKeysFromTable = function() {
         var keys = [];
         $('#productAttributesTable tr').each(function(){
-            keys.push($(this).find("td:first").text()); //put elements into array
+            keys.push($(this).find('td:first').text());
         });
 
         return keys;
@@ -171,9 +171,6 @@ function AttributeManager() {
             for (var i in locales) {
                 var locale = locales[i];
                 var idLocale = locale['id_locale'];
-                if (!idLocale) {
-                    idLocale = '_';
-                }
 
                 formData.push({
                     'key': removedKey,
@@ -266,24 +263,29 @@ function removeActionHandler() {
 }
 
 function updateAttributeInputsWithAutoComplete() {
-    $('[data-is_attribute_input]').each(function(key, value) {
-        var input = $(value);
-        input.on('dblclick', function(event, ui) {
-            $(this).autocomplete('search', '');
-        });
-    });
-
     $('[data-allow_input=""],[data-allow_input="false"],[data-allow_input="0"]').each(function(key, value) {
         var input = $(value);
-        input.on('focus click', function(event, ui) {
-            $(this).autocomplete('search', '');
-        });
+        var is_super = castToBoolean(input.attr('data-is_super'));
+
+        if (!is_super) {
+            input
+                .on('focus click', function(event, ui) {
+                    $(this).autocomplete('search', '');
+                });
+        }
     });
 
     $('[data-is_attribute_input]').each(function(key, value) {
         var input = $(value);
         var id = input.attr('data-id_attribute') || null;
         var locale_code = input.attr('data-locale_code') || null;
+        var is_super = castToBoolean(input.attr('data-is_super'));
+
+        if (!is_super) {
+            input.on('dblclick', function(event, ui) {
+                $(this).autocomplete('search', '');
+            });
+        }
 
         input.autocomplete({
             minLength: 0,
@@ -308,10 +310,20 @@ function updateAttributeInputsWithAutoComplete() {
             },
             change: function(event,ui) {
                 var input = $(this);
+                var value = input.val().trim();
+                var selectedValue = ui.item ? ui.item.label : '';
                 var allowInput = castToBoolean(input.attr('data-allow_input'));
-                if (!allowInput) {
-                    input.val((ui.item ? ui.item.label : ''));
+
+                if (value === '') {
+                    input.attr('data-value', '');
+                    value = '';
+                } else if (!allowInput) {
+                    value = selectedValue;
+                    input.attr('data-value', ui.item.value);
                 }
+
+                input.val(value);
+                input.attr('value', value);
             },
             select: function(event, ui) {
                 var input = $(this);

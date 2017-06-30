@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
+use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
 class AttributeWriter implements AttributeWriterInterface
@@ -18,11 +21,28 @@ class AttributeWriter implements AttributeWriterInterface
     protected $reader;
 
     /**
-     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReaderInterface $reader
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
      */
-    public function __construct(AttributeReaderInterface $reader)
-    {
+    protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected $productQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductAttributeGui\Business\Model\AttributeReaderInterface $reader
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     */
+    public function __construct(
+        AttributeReaderInterface $reader,
+        ProductAttributeGuiToLocaleInterface $localeFacade,
+        ProductQueryContainerInterface $productQueryContainer
+    ) {
         $this->reader = $reader;
+        $this->localeFacade = $localeFacade;
+        $this->productQueryContainer = $productQueryContainer;
     }
 
     /**
@@ -33,15 +53,17 @@ class AttributeWriter implements AttributeWriterInterface
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
-        $attributeData = $this->getAttributesDataToSave($attributes);
-        $attributesJson = $this->getNonLocalizedAttributesAsJson($attributeData);
-        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
+        $formattedAttributeData = $this->getAttributesDataToSave($attributes);
+
+        $attributesJson = $this->getNonLocalizedAttributesAsJson($formattedAttributeData);
+        unset($formattedAttributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
 
         $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
         $productAbstractEntity->setAttributes($attributesJson);
         $productAbstractEntity->save();
 
-        $this->saveLocalizedAttributes($productAbstractEntity->getSpyProductAbstractLocalizedAttributess(), $attributeData);
+        $query = $this->productQueryContainer->queryProductAbstractLocalizedAttributes($idProductAbstract);
+        $this->saveLocalizedAttributes($query, $formattedAttributeData);
     }
 
     /**
@@ -52,35 +74,62 @@ class AttributeWriter implements AttributeWriterInterface
      */
     public function saveConcreteAttributes($idProduct, array $attributes)
     {
-        $attributeData = $this->getAttributesDataToSave($attributes);
-        $attributesJson = $this->getNonLocalizedAttributesAsJson($attributeData);
-        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
+        $formattedAttributeData = $this->getAttributesDataToSave($attributes);
+
+        $attributesJson = $this->getNonLocalizedAttributesAsJson($formattedAttributeData);
+        unset($formattedAttributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
 
         $productEntity = $this->reader->getProductEntity($idProduct);
         $productEntity->setAttributes($attributesJson);
         $productEntity->save();
 
-        $this->saveLocalizedAttributes($productEntity->getSpyProductLocalizedAttributess(), $attributeData);
+        $query = $this->productQueryContainer->queryProductLocalizedAttributes($idProduct);
+        $this->saveLocalizedAttributes($query, $formattedAttributeData);
+
+        //TODO remove
+/*        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $localizedDataToSave = [];
+            $idLocale = $localeTransfer->getIdLocale();
+
+            $localizedAttributeEntity = $this->productQueryContainer
+                ->queryProductLocalizedAttributes($idProduct)
+                ->filterByFkLocale($idLocale)
+                ->findOneOrCreate();
+
+            if (array_key_exists($idLocale, $formattedAttributeData)) {
+                $localizedDataToSave = $formattedAttributeData[$idLocale];
+            }
+
+            $attributesJson = $this->reader->encodeJsonAttributes($localizedDataToSave);
+            $localizedAttributeEntity->setAttributes($attributesJson);
+            $localizedAttributeEntity->save();
+        }*/
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $localizedAttributeEntityCollection $localizedAttributeEntityCollection
-     * @param array $attributes
+     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery|\Propel\Runtime\ActiveQuery\Criteria $query
+     * @param array $localizedAttributes
      *
      * @return void
      */
-    protected function saveLocalizedAttributes($localizedAttributeEntityCollection, array $attributes)
+    protected function saveLocalizedAttributes(Criteria $query, array $localizedAttributes)
     {
-        foreach ($localizedAttributeEntityCollection as $localizedAttributeEntity) {
-            foreach ($attributes as $localeCode => $attributeData) {
-                if ($localizedAttributeEntity->getFkLocale() !== (int)$localeCode) {
-                    continue;
-                }
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $localizedDataToSave = [];
+            $idLocale = $localeTransfer->getIdLocale();
 
-                $attributesJson = $this->reader->encodeJsonAttributes($attributeData);
-                $localizedAttributeEntity->setAttributes($attributesJson);
-                $localizedAttributeEntity->save();
+            $queryToQuery = clone $query;
+            $localizedAttributeEntity = $queryToQuery
+                ->filterByFkLocale($idLocale)
+                ->findOneOrCreate();
+
+            if (array_key_exists($idLocale, $localizedAttributes)) {
+                $localizedDataToSave = $localizedAttributes[$idLocale];
             }
+
+            $attributesJson = $this->reader->encodeJsonAttributes($localizedDataToSave);
+            $localizedAttributeEntity->setAttributes($attributesJson);
+            $localizedAttributeEntity->save();
         }
     }
 
@@ -103,7 +152,7 @@ class AttributeWriter implements AttributeWriterInterface
             if ($value !== '') {
                 $attributeData[$localeCode][$key] = $value;
             } else {
-                $keysToRemove[$localeCode][] = $key;
+                $keysToRemove[$localeCode][$key] = $key;
             }
         }
 
@@ -121,12 +170,12 @@ class AttributeWriter implements AttributeWriterInterface
      */
     protected function getNonLocalizedAttributesAsJson(array $attributeData)
     {
-        $productAbstractAttributes = $attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE];
-        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
+        $productAbstractAttributes = [];
+        if (array_key_exists(ProductAttributeGuiConfig::DEFAULT_LOCALE, $attributeData)) {
+            $productAbstractAttributes = $attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE];
+        }
 
-        $attributesJson = json_encode($productAbstractAttributes);
-
-        return $attributesJson;
+        return $this->reader->encodeJsonAttributes($productAbstractAttributes);
     }
 
 }
