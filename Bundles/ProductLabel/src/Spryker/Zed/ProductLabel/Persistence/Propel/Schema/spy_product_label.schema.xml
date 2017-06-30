@@ -29,9 +29,5 @@
         <index name="idx-spy_product_label-position">
             <index-column name="position"/>
         </index>
-
-        <index name="idx-spy_product_label-is_dynamic">
-            <index-column name="is_dynamic"/>
-        </index>
     </table>
 </database>

@@ -113,12 +113,8 @@ class LabelReader implements LabelReaderInterface
      */
     public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
     {
-        $productLabelIds = [];
-
         $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
-        foreach ($productLabelEntities as $productLabelEntity) {
-            $productLabelIds[] = $productLabelEntity->getIdProductLabel();
-        }
+        $productLabelIds = $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
 
         return $productLabelIds;
     }
@@ -126,7 +122,7 @@ class LabelReader implements LabelReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findEntitiesByIdProductAbstract($idProductAbstract)
     {
