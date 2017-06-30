@@ -8,6 +8,8 @@
         <column name="id_cms_block_category_connector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_block" type="INTEGER" required="true" />
         <column name="fk_category" type="INTEGER" required="true" />
+        <column name="fk_category_template" type="INTEGER" required="true" default="1" />
+        <column name="fk_cms_block_category_position" type="INTEGER" required="true" default="1" />
 
         <foreign-key name="spy_cms_block_category_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
             <reference foreign="id_cms_block" local="fk_cms_block"/>
@@ -15,6 +17,14 @@
 
         <foreign-key name="spy_cms_block_category_connector-fk_category" foreignTable="spy_category" phpName="Category" onDelete="CASCADE">
             <reference foreign="id_category" local="fk_category"/>
+        </foreign-key>
+
+        <foreign-key name="spy_cms_block_category_connector-fk_category_template" foreignTable="spy_category_template" phpName="CategoryTemplate" onDelete="CASCADE">
+            <reference foreign="id_category_template" local="fk_category_template"/>
+        </foreign-key>
+
+        <foreign-key name="spy_cms_block_category_connector-fk_cms_block_category_position" foreignTable="spy_cms_block_category_position" phpName="CmsBlockCategoryPosition" onDelete="CASCADE">
+            <reference foreign="id_cms_block_category_position" local="fk_cms_block_category_position"/>
         </foreign-key>
 
         <index name="spy_cms_block_category-connector-fk_cms_block">

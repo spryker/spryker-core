@@ -79,6 +79,7 @@ class CategoryEditDataProvider
         return [
             static::DATA_CLASS => CategoryTransfer::class,
             CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
+            CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->getCategoryTemplateChoices()
         ];
     }
 
@@ -149,6 +150,17 @@ class CategoryEditDataProvider
     protected function getIdCategory()
     {
         return Request::createFromGlobals()->query->getInt('id-category');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoryTemplateChoices()
+    {
+        return $this->queryContainer
+            ->queryCategoryTemplate()
+            ->find()
+            ->toKeyValue('idCategoryTemplate', 'name');
     }
 
 }

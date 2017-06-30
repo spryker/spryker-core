@@ -464,4 +464,11 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplate();
+
 }

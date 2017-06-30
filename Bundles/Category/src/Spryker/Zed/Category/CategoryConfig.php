@@ -22,4 +22,9 @@ class CategoryConfig extends AbstractBundleConfig
      */
     const RESOURCE_TYPE_NAVIGATION = 'navigation';
 
+    /**
+     * Default available template for category
+     */
+    const CATEGORY_TEMPLATE_DEFAULT = 'Category';
+
 }

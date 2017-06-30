@@ -19,6 +19,7 @@ class CategoryType extends AbstractType
 {
 
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+    const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
 
     const FIELD_CATEGORY_KEY = 'category_key';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -26,9 +27,9 @@ class CategoryType extends AbstractType
     const FIELD_IS_CLICKABLE = 'is_clickable';
     const FIELD_IS_SEARCHABLE = 'is_searchable';
     const FIELD_IS_MAIN = 'is_main';
-
     const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
     const FIELD_EXTRA_PARENTS = 'extra_parents';
+    const FIELD_TEMPLATE = 'fk_category_template';
 
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
@@ -50,6 +51,7 @@ class CategoryType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES);
+        $resolver->setRequired(static::OPTION_CATEGORY_TEMPLATE_CHOICES);
     }
 
     /**
@@ -68,6 +70,7 @@ class CategoryType extends AbstractType
             ->addIsSearchableField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addTemplateField($builder, $options[static::OPTION_CATEGORY_TEMPLATE_CHOICES])
             ->addLocalizedAttributesForm($builder);
     }
 
@@ -196,6 +199,23 @@ class CategoryType extends AbstractType
                 return new ArrayObject($extraParents);
             }
         ));
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addTemplateField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(static::FIELD_TEMPLATE, new Select2ComboBoxType(), [
+            'label' => 'Template',
+            'choices' => $choices,
+            'required' => false,
+        ]);
 
         return $this;
     }
