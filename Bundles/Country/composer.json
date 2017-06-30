@@ -1,6 +1,6 @@
 {
   "name": "spryker/country",
-  "description": "Country bundle",
+  "description": "Country module",
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",

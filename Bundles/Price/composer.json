@@ -1,6 +1,6 @@
 {
   "name": "spryker/price",
-  "description": "Price bundle",
+  "description": "Price module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/availability-cart-connector",
-  "description": "AvailabilityCartConnector bundle",
+  "description": "AvailabilityCartConnector module",
   "license": "proprietary",
   "require": {
     "spryker/availability": "^5.0.0",

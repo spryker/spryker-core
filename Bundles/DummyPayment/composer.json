@@ -1,6 +1,6 @@
 {
   "name": "spryker/dummy-payment",
-  "description": "DummyPayment bundle",
+  "description": "DummyPayment module",
   "license": "proprietary",
   "require": {
     "spryker/checkout": "^3.0.0",

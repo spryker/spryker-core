@@ -1,6 +1,6 @@
 {
   "name": "spryker/api-query-builder",
-  "description": "ApiQueryBuilder bundle",
+  "description": "ApiQueryBuilder module",
   "license": "proprietary",
   "require": {
     "spryker/api": "^0.1.0",

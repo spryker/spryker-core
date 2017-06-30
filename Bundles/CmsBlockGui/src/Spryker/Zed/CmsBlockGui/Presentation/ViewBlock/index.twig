@@ -1,0 +1,78 @@
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
+
+{% set widget_title = 'View CMS Block: ' | trans ~ cmsBlock.idCmsBlock %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+
+    {% set redirectUrl = url('/cms-block-gui/view-block', {'id-cms-block' : cmsBlock.idCmsBlock }) %}
+    {{ editActionButton(url('/cms-block-gui/edit-block', { 'id-cms-block': cmsBlock.idCmsBlock }), 'Edit block' | trans) }}
+    {{ editActionButton(url('/cms-block-gui/edit-glossary', {'id-cms-block': cmsBlock.idCmsBlock}), 'Edit placeholders' | trans) }}
+    {{ include ('@CmsBlockGui/_partial/activate-button.twig', { 'isActive': cmsBlock.isActive, 'idCmsBlock': cmsBlock.idCmsBlock }) }}
+    {{ backActionButton('/cms-block-gui/list-block', 'Back to list' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
+        {% block widget_content %}
+            <p>
+                <strong>{{ 'Is active:' | trans }}</strong> {{ cmsBlock.isActive ? 'yes'|trans : 'no'|trans}}
+            </p>
+
+            <p>
+                <strong>{{ 'Template:' | trans }}</strong> {{ cmsBlock.templateName }}
+            </p>
+
+            <p>
+                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsBlock.validFrom ? cmsBlock.validFrom|date : 'n/a'|trans }}
+            </p>
+
+            <p>
+                <strong>{{ 'Valid to:' | trans }}</strong> {{ cmsBlock.validTo ? cmsBlock.validTo|date : 'n/a'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+        {% block widget_content %}
+
+            {% for glossaryPlaceholder in cmsBlockGlossary.glossaryPlaceholders %}
+
+                <h3>{{ glossaryPlaceholder.placeholder }}</h3>
+
+                <p>
+                    <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryPlaceholder.translationKey }}
+                </p>
+
+                {% for translation in glossaryPlaceholder.translations %}
+                   {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
+                       {% block content %}
+                           {{ translation.translation | raw }}
+                       {% endblock %}
+                   {% endembed %}
+                {% endfor %}
+
+                <br>
+            {% endfor %}
+
+        {% endblock %}
+    {% endembed %}
+
+    {% for pluginName, renderedPlugin in renderedPlugins %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: pluginName } %}
+            {% block widget_content %}
+                {% if renderedPlugin %}
+                    {% for item in renderedPlugin %}
+                        <p>{{ item }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No records</p>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+{% endblock %}

@@ -1,6 +1,6 @@
 {
   "name": "spryker/zed-request",
-  "description": "ZedRequest bundle",
+  "description": "ZedRequest module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

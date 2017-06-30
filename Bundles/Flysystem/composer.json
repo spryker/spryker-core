@@ -1,0 +1,42 @@
+{
+  "name": "spryker/flysystem",
+  "description": "Flysystem module",
+  "license": "proprietary",
+  "require": {
+    "league/flysystem": "^1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/file-system": "*",
+    "spryker/flysystem-local-filesystem": "*",
+    "spryker/kernel": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/file-system": "For generic filesystem handling",
+    "spryker/flysystem-local-filesystem": "For handling local files",
+    "spryker/flysystem-aws3v3-filesystem": "For handling AWS3v3 filesystem",
+    "spryker/flysystem-ftp-filesystem": "For handling FTP filesystem"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

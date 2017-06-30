@@ -1,6 +1,6 @@
 {
   "name": "spryker/new-relic-api",
-  "description": "NewRelicApi bundle",
+  "description": "NewRelicApi module",
   "license": "proprietary",
   "require-dev": {
     "spryker/code-sniffer": "*",

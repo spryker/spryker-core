@@ -51,7 +51,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new PageManager(
             $this->getQueryContainer(),
             $this->createTemplateManager(),
-            $this->createBlockManager(),
+            null,
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
             $this->getUrlFacade()
@@ -67,18 +67,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig(),
             $this->createFinder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Business\Block\BlockManagerInterface
-     */
-    public function createBlockManager()
-    {
-        return new BlockManager(
-            $this->getQueryContainer(),
-            $this->getTouchFacade(),
-            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 
@@ -142,17 +130,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createPageRemover()
     {
         return new PageRemover(
-            $this->getQueryContainer(),
-            $this->getTouchFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Business\Block\BlockRemoverInterface
-     */
-    public function createBlockRemover()
-    {
-        return new BlockRemover(
             $this->getQueryContainer(),
             $this->getTouchFacade()
         );

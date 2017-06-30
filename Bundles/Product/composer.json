@@ -1,6 +1,6 @@
 {
   "name": "spryker/product",
-  "description": "Product bundle",
+  "description": "Product module",
   "license": "proprietary",
   "require": {
     "spryker/event": "^1.0.0",

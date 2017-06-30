@@ -1,6 +1,6 @@
 {
   "name": "spryker/event",
-  "description": "Event bundle",
+  "description": "Event module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

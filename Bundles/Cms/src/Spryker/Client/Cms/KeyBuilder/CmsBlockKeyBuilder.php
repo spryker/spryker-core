@@ -10,6 +10,9 @@ namespace Spryker\Client\Cms\KeyBuilder;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
+/**
+ * @deprecated Use CMS Block module instead
+ */
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
 {
 

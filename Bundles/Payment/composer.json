@@ -1,6 +1,6 @@
 {
   "name": "spryker/payment",
-  "description": "Payment bundle",
+  "description": "Payment module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/collector",
-  "description": "Collector bundle",
+  "description": "Collector module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

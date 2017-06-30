@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms",
-  "description": "Cms bundle",
+  "description": "Cms module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",
@@ -26,7 +26,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "Used in cms content widget plugin"
+    "spryker/silex": "Used in cms content widget plugin",
+    "spryker/cms-block": "If you want to have separate content blocks on your pages"
   },
   "autoload": {
     "psr-0": {

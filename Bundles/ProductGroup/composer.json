@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-group",
-  "description": "ProductGroup bundle",
+  "description": "ProductGroup module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

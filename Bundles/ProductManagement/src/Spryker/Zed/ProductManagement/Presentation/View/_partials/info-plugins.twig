@@ -1,0 +1,13 @@
+{% for pluginName, renderedPlugin in renderedPlugins %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: pluginName } %}
+        {% block widget_content %}
+            {% if renderedPlugin %}
+                {% for renderedContent in renderedPlugin %}
+                    <p>{{ renderedContent }}</p>
+                {% endfor %}
+            {% else %}
+                <p>No records</p>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}

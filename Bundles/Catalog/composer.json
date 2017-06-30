@@ -1,6 +1,6 @@
 {
   "name": "spryker/catalog",
-  "description": "Catalog bundle",
+  "description": "Catalog module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
@@ -86,13 +85,5 @@ interface PageManagerInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
-     *
-     * @return \Generated\Shared\Transfer\PageTransfer
-     */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer);
 
 }

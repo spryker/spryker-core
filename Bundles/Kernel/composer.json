@@ -1,6 +1,6 @@
 {
   "name": "spryker/kernel",
-  "description": "Kernel bundle",
+  "description": "Kernel module",
   "license": "proprietary",
   "require": {
     "everon/collection": "^1.0.0",

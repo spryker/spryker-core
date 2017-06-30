@@ -1,6 +1,6 @@
 {
   "name": "spryker/stock",
-  "description": "Stock bundle",
+  "description": "Stock module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

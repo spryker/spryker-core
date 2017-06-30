@@ -1,0 +1,31 @@
+{
+  "name": "spryker/file-system",
+  "description": "FileSystem module",
+  "license": "proprietary",
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
+    "spryker/flysystem-local-filesystem": "*",
+    "spryker/kernel": "^3.5.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/fly-system": "For filesystem handling via Flysystem library"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true
+  }
+}

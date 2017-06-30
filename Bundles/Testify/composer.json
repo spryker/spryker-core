@@ -1,6 +1,6 @@
 {
   "name": "spryker/testify",
-  "description": "Testify bundle",
+  "description": "Testify module",
   "license": "proprietary",
   "require": {
     "codeception/codeception": "^2.2.10",

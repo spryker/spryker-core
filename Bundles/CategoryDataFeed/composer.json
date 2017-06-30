@@ -1,6 +1,6 @@
 {
   "name": "spryker/category-data-feed",
-  "description": "CategoryDataFeed bundle",
+  "description": "CategoryDataFeed module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",

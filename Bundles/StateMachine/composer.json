@@ -1,6 +1,6 @@
 {
   "name": "spryker/state-machine",
-  "description": "StateMachine bundle",
+  "description": "StateMachine module",
   "license": "proprietary",
   "require": {
     "spryker/graph": "^3.0.0",

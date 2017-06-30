@@ -1,6 +1,6 @@
 {
   "name": "spryker/shipment",
-  "description": "Shipment bundle",
+  "description": "Shipment module",
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",

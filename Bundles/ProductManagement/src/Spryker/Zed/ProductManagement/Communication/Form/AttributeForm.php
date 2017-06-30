@@ -78,7 +78,9 @@ class AttributeForm extends AbstractType
                 $originalData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (!isset($submittedData[self::FIELD_ALLOW_INPUT]) || !$submittedData[self::FIELD_ALLOW_INPUT]) {
+                if (!isset($submittedData[self::FIELD_ALLOW_INPUT]) || !$submittedData[self::FIELD_ALLOW_INPUT] ||
+                    (isset($submittedData[self::FIELD_IS_SUPER]) && $submittedData[self::FIELD_IS_SUPER])
+                ) {
                     $groups[] = self::GROUP_VALUES;
                 }
 

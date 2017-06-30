@@ -1,6 +1,6 @@
 {
   "name": "spryker/silex",
-  "description": "Silex bundle",
+  "description": "Silex module",
   "license": "proprietary",
   "require": {
     "silex/silex": "^1.3.5"

@@ -1,6 +1,6 @@
 {
   "name": "spryker/navigation",
-  "description": "Navigation bundle",
+  "description": "Navigation module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

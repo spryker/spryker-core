@@ -1,6 +1,6 @@
 {
   "name": "spryker/cache",
-  "description": "Cache bundle",
+  "description": "Cache module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

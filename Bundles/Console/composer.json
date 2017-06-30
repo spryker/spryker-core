@@ -1,6 +1,6 @@
 {
   "name": "spryker/console",
-  "description": "Console bundle",
+  "description": "Console module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/customer-group-discount-connector",
-  "description": "CustomerGroupDiscountConnector bundle",
+  "description": "CustomerGroupDiscountConnector module",
   "license": "proprietary",
   "require": {
     "spryker/customer-group": "^2.0.0",

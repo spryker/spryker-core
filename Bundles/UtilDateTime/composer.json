@@ -1,6 +1,6 @@
 {
   "name": "spryker/util-date-time",
-  "description": "UtilDateTime bundle",
+  "description": "UtilDateTime module",
   "license": "proprietary",
   "autoload": {
     "psr-0": {

@@ -1,6 +1,6 @@
 {
   "name": "spryker/user",
-  "description": "User bundle",
+  "description": "User module",
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",

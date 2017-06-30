@@ -1,6 +1,6 @@
 {
   "name": "spryker/api",
-  "description": "Api bundle",
+  "description": "Api module",
   "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/acl",
-  "description": "Acl bundle",
+  "description": "Acl module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

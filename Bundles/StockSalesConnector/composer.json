@@ -1,6 +1,6 @@
 {
   "name": "spryker/stock-sales-connector",
-  "description": "StockSalesConnector bundle",
+  "description": "StockSalesConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

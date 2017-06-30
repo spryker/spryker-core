@@ -1,6 +1,6 @@
 {
   "name": "spryker/symfony",
-  "description": "Symfony bundle",
+  "description": "Symfony module",
   "license": "proprietary",
   "require": {
     "symfony-cmf/routing": "^1.3.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/refund",
-  "description": "Refund bundle",
+  "description": "Refund module",
   "license": "proprietary",
   "require": {
     "spryker/calculation": "^4.0.0",
