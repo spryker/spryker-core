@@ -11,6 +11,7 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToEventBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -30,6 +31,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
     const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const PLUGIN_CATEGORY_FORM_PLUGINS = 'PLUGIN_CATEGORY_FORM_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -108,6 +110,22 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getRelationReadPluginStack();
         });
 
+        $container = $this->addCategoryFormPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCategoryFormPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CATEGORY_FORM_PLUGINS] = function (Container $container) {
+            return $this->getCategoryFormPlugins();
+        };
+
         return $container;
     }
 
@@ -115,6 +133,14 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
     protected function getRelationReadPluginStack()
+    {
+        return [];
+    }
+
+    /**
+     * @return CategoryFormPluginInterface[]
+     */
+    protected function getCategoryFormPlugins()
     {
         return [];
     }

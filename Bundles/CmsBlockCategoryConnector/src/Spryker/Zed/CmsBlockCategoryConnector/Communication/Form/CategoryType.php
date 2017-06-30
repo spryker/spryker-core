@@ -12,20 +12,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CmsBlockCategoryType extends AbstractType
+class CategoryType extends AbstractType
 {
 
-    const FIELD_ID_CMS_BLOCK = 'id_cms_block';
-    const FIELD_CATEGORIES = 'id_categories';
+    const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
-    const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'categories';
+        return 'cms-blocks';
     }
 
     /**
@@ -36,7 +35,7 @@ class CmsBlockCategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCategoriesField($builder, $options[static::OPTION_CATEGORY_ARRAY]);
+        $this->addCmsBlocksField($builder, $options[static::OPTION_CMS_BLOCK_LIST]);
     }
 
     /**
@@ -46,7 +45,7 @@ class CmsBlockCategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_CATEGORY_ARRAY);
+        $resolver->setRequired(static::OPTION_CMS_BLOCK_LIST);
     }
 
     /**
@@ -55,10 +54,10 @@ class CmsBlockCategoryType extends AbstractType
      *
      * @return $this
      */
-    protected function addCategoriesField(FormBuilderInterface $builder, array $choices)
+    protected function addCmsBlocksField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_CATEGORIES, new Select2ComboBoxType(), [
-            'label' => 'Categories',
+        $builder->add(static::FIELD_CMS_BLOCKS, new Select2ComboBoxType(), [
+            'label' => 'CMS Blocks',
             'choices' => $choices,
             'multiple' => true,
             'required' => false,

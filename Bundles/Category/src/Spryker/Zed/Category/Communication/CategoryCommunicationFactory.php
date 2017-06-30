@@ -15,6 +15,7 @@ use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -97,6 +98,10 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryEditForm()
     {
         $categoryCreateForm = new CategoryType();
+        $categoryCreateForm->setFormPlugins(
+            $this->getCategoryFormPlugins()
+        );
+
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
         $formFactory = $this->getFormFactory();
 
@@ -194,6 +199,14 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getRelationReadPluginStack()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_READ);
+    }
+
+    /**
+     * @return CategoryFormPluginInterface[]
+     */
+    protected function getCategoryFormPlugins()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
     }
 
 }

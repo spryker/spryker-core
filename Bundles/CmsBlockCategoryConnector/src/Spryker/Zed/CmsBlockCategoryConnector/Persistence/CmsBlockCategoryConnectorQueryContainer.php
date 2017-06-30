@@ -42,6 +42,19 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory)
+    {
+        return $this->queryCmsBlockCategoryConnector()
+            ->filterByFkCategory($idCategory);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *
@@ -55,6 +68,19 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+    {
+        return $this->queryCmsBlockCategoryConnectorByIdCategory($idCategory)
+            ->joinCmsBlock();
     }
 
 }

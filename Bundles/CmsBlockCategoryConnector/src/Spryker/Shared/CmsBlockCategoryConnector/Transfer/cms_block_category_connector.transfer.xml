@@ -8,4 +8,9 @@
         <property name="idCategories" type="int[]" />
     </transfer>
 
+    <transfer name="Category">
+        <property name="idCategory" type="int" />
+        <property name="idCmsBlocks" type="int[]" />
+    </transfer>
+
 </transfers>

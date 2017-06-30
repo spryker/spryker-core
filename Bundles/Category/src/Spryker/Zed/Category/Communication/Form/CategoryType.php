@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use ArrayObject;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -32,6 +33,11 @@ class CategoryType extends AbstractType
     const FIELD_TEMPLATE = 'fk_category_template';
 
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
+
+    /**
+     * @var CategoryFormPluginInterface[]
+     */
+    protected $formPlugins;
 
     /**
      * @return string
@@ -71,8 +77,18 @@ class CategoryType extends AbstractType
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addTemplateField($builder, $options[static::OPTION_CATEGORY_TEMPLATE_CHOICES])
+            ->addPluginForms($builder)
             ->addLocalizedAttributesForm($builder);
     }
+
+    /**
+     * @param array $formPlugins
+     */
+    public function setFormPlugins(array $formPlugins)
+    {
+        $this->formPlugins = $formPlugins;
+    }
+
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -230,6 +246,20 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, 'collection', [
             'type' => new CategoryLocalizedAttributeType(),
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPluginForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->formPlugins as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
 
         return $this;
     }

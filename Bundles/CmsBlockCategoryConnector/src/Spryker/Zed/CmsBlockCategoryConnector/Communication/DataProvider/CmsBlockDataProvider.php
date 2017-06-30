@@ -8,12 +8,12 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryType;
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
-class CmsBlockCategoryDataProvider
+class CmsBlockDataProvider
 {
 
     /**
@@ -53,7 +53,7 @@ class CmsBlockCategoryDataProvider
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockCategoryType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
+            CmsBlockType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
         ];
     }
 

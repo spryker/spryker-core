@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -37,6 +38,22 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
         $this->getFactory()
             ->createCmsBlockCategoryWrite()
             ->updateCmsBlock($cmsBlockTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    {
+        $this->getFactory()
+            ->createCmsBlockCategoryWrite()
+            ->updateCategory($categoryTransfer);
     }
 
     /**

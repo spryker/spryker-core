@@ -29,11 +29,29 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory);
+
+    /**
+     * @api
+     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory);
 
 }

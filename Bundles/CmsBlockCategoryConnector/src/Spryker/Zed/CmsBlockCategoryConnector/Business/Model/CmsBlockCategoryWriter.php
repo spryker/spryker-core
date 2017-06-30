@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
@@ -54,6 +56,56 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategory(CategoryTransfer $categoryTransfer)
+    {
+        $this->handleDatabaseTransaction(function () use ($categoryTransfer) {
+            $this->updateCategoryCmsBlockRelationsTransaction($categoryTransfer);
+        });
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function updateCategoryCmsBlockRelationsTransaction(CategoryTransfer $categoryTransfer)
+    {
+        $this->deleteCategoryCmsBlockRelations($categoryTransfer);
+        $this->createCategoryCmsBlockRelations($categoryTransfer);
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function deleteCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    {
+        $categoryTransfer->requireIdCategory();
+
+        $query = $this->queryContainer
+            ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory());
+
+        $this->deleteRelations($query);
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function createCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    {
+        $categoryTransfer->requireIdCategory();
+
+        $this->createRelations($categoryTransfer->getIdCmsBlocks(), [$categoryTransfer->getIdCategory()]);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
@@ -76,12 +128,45 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock());
 
+        $this->deleteRelations($query);
+    }
+
+    /**
+     * @param SpyCmsBlockCategoryConnectorQuery $query
+     *
+     * @return void
+     */
+    protected function deleteRelations(SpyCmsBlockCategoryConnectorQuery $query)
+    {
         foreach ($query->find() as $relation) {
             $relation->delete();
 
             $this->touchFacade->touchDeleted(
                 CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $relation->getFkCategory()
+            );
+        }
+    }
+
+    /**
+     * @param array $idCmsBlocks
+     * @param array $idCategories
+     *
+     * @return void
+     */
+    protected function createRelations(array $idCmsBlocks, array $idCategories)
+    {
+        foreach ($idCategories as $idCategory) {
+            foreach ($idCmsBlocks as $idCmsBlock) {
+                $spyCmsBlockConnector = $this->createaBlockCategoryConnectorEntity();
+                $spyCmsBlockConnector->setFkCmsBlock($idCmsBlock);
+                $spyCmsBlockConnector->setFkCategory($idCategory);
+                $spyCmsBlockConnector->save();
+            }
+
+            $this->touchFacade->touchActive(
+                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                $idCategory
             );
         }
     }
@@ -95,17 +180,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
-        foreach ($cmsBlockTransfer->getIdCategories() as $idCategory) {
-            $spyCmsBlockConnector = $this->createaBlockCategoryConnectorEntity();
-            $spyCmsBlockConnector->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
-            $spyCmsBlockConnector->setFkCategory($idCategory);
-            $spyCmsBlockConnector->save();
-
-            $this->touchFacade->touchActive(
-                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $idCategory
-            );
-        }
+        $this->createRelations([$cmsBlockTransfer->getIdCmsBlock()], $cmsBlockTransfer->getIdCategories());
     }
 
     /**

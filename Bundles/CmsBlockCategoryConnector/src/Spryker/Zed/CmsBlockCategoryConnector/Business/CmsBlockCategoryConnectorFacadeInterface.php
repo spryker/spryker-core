@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -21,6 +22,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Perform actions based on CMS Block transfer
      * - Delete all relations categories to cms blocks
      * - Add new relations defined in the transfer object
      *
@@ -31,6 +33,20 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @return void
      */
     public function updateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification:
+     * - Perform actions based on Category transfer
+     * - Delete all relations categories to cms blocks
+     * - Add new relations defined in the transfer object
+     *
+     * @api
+     *
+     * @param CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer);
 
     /**
      * Specification:
