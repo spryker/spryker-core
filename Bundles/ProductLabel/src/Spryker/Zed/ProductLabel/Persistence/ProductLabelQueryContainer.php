@@ -191,6 +191,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     {
         return $this->queryProductsLabelByIdProductAbstract($idProductAbstract)
             ->filterByIsActive(true)
+            ->filterByIsPublished(true)
             ->filterByValidFrom('now', Criteria::GREATER_EQUAL)
             ->_or()
             ->filterByValidFrom(null, Criteria::ISNULL)
