@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-option",
-  "description": "ProductOption bundle",
+  "description": "ProductOption module",
   "license": "proprietary",
   "require": {
     "spryker/country": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/heartbeat",
-  "description": "Heartbeat bundle",
+  "description": "Heartbeat module",
   "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",

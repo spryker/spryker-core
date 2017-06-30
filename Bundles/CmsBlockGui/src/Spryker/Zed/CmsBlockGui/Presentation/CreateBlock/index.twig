@@ -1,0 +1,20 @@
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Create CMS Block' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/cms-block-gui/list-block', 'Back to CMS' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(cmsBlockForm) }}
+        {{ form_widget(cmsBlockForm) }}
+
+        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+    {{ form_end(cmsBlockForm) }}
+
+{% endblock %}

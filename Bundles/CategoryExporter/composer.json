@@ -1,6 +1,6 @@
 {
   "name": "spryker/category-exporter",
-  "description": "CategoryExporter bundle",
+  "description": "CategoryExporter module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",

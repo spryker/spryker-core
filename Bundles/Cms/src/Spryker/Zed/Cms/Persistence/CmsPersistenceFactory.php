@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
-use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
@@ -37,14 +36,6 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     public function createCmsPageQuery()
     {
         return SpyCmsPageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
-     */
-    public function createCmsBlockQuery()
-    {
-        return SpyCmsBlockQuery::create();
     }
 
     /**

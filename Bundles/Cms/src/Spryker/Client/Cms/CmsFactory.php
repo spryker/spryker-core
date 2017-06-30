@@ -15,6 +15,8 @@ class CmsFactory extends AbstractFactory
 {
 
     /**
+     * @deprecated Use CMS Block module instead
+     *
      * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
     public function createCmsBlockFinder()
@@ -34,6 +36,8 @@ class CmsFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use CMS Block module instead
+     *
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()

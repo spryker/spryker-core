@@ -1,6 +1,6 @@
 {
   "name": "spryker/url",
-  "description": "Url bundle",
+  "description": "Url module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/glossary",
-  "description": "Glossary bundle",
+  "description": "Glossary module",
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",

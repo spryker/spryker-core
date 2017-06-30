@@ -1,6 +1,6 @@
 {
   "name": "spryker/util-text",
-  "description": "UtilText bundle",
+  "description": "UtilText module",
   "license": "proprietary",
   "autoload": {
     "psr-0": {

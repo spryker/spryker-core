@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-relation",
-  "description": "ProductRelation bundle",
+  "description": "ProductRelation module",
   "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",

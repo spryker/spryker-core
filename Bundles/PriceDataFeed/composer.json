@@ -1,6 +1,6 @@
 {
   "name": "spryker/price-data-feed",
-  "description": "PriceDataFeed bundle",
+  "description": "PriceDataFeed module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

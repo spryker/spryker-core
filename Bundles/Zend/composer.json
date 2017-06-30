@@ -1,6 +1,6 @@
 {
   "name": "spryker/zend",
-  "description": "Zend bundle",
+  "description": "Zend module",
   "license": "proprietary",
   "require": {
     "zendframework/zend-code": "^2.6.2",

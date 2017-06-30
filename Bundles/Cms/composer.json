@@ -1,6 +1,6 @@
 {
   "name": "spryker/cms",
-  "description": "Cms bundle",
+  "description": "Cms module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.0.0",
@@ -22,6 +22,9 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cms-block": "If you want to have separate content blocks on your pages"
   },
   "autoload": {
     "psr-0": {

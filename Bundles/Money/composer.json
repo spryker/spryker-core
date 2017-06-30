@@ -1,6 +1,6 @@
 {
   "name": "spryker/money",
-  "description": "Money bundle",
+  "description": "Money module",
   "license": "proprietary",
   "require": {
     "moneyphp/money": "~3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/discount-calculation-connector",
-  "description": "DiscountCalculationConnector bundle",
+  "description": "DiscountCalculationConnector module",
   "license": "proprietary",
   "require": {
     "spryker/discount": "^4.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/auth",
-  "description": "Auth bundle",
+  "description": "Auth module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

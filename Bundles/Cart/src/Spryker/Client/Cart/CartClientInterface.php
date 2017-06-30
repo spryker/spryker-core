@@ -66,7 +66,7 @@ interface CartClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return int
      */
     public function getItemCount();
 

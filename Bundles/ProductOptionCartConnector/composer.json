@@ -1,11 +1,11 @@
 {
   "name": "spryker/product-option-cart-connector",
-  "description": "ProductOptionCartConnector bundle",
+  "description": "ProductOptionCartConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/product-option": "^4.0.0 || ^5.0.0",
-    "spryker/price": "^4.0.0"
+    "spryker/price": "^4.0.0",
+    "spryker/product-option": "^4.0.0 || ^5.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

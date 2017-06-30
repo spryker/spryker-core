@@ -1,6 +1,6 @@
 {
   "name": "spryker/monolog",
-  "description": "Monolog bundle",
+  "description": "Monolog module",
   "license": "proprietary",
   "require": {
     "monolog/monolog": "~1.21.0"

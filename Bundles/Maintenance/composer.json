@@ -1,6 +1,6 @@
 {
   "name": "spryker/maintenance",
-  "description": "Maintenance bundle",
+  "description": "Maintenance module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

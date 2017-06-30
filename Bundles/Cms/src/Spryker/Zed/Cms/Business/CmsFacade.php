@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -83,20 +82,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-
-        return $blockManager->saveBlock($cmsBlockTransfer);
-    }
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -136,20 +121,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->hasPagePlaceholderMapping($idPage, $placeholder);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return bool
-     */
-    public function hasBlockCategoryNodeMapping($idCategory)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-
-        return $blockManager->hasBlockCategoryNodeMapping($idCategory);
     }
 
     /**
@@ -247,32 +218,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
-    public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-        $blockManager->touchBlockActive($cmsBlockTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
-    public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-        $blockManager->touchBlockDelete($cmsBlockTransfer);
-    }
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -282,21 +227,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         $pageManager = $this->getFactory()->createPageManager();
 
         return $pageManager->savePageUrlAndTouch($pageTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
-     *
-     * @return \Generated\Shared\Transfer\PageTransfer
-     */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
-    {
-        $pageManager = $this->getFactory()->createPageManager();
-
-        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockTransfer);
     }
 
     /**
@@ -343,34 +273,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
-    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-
-        $blockManager->updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
-     */
-    public function getCmsBlocksByIdCategoryNode($idCategoryNode)
-    {
-        $blockManager = $this->getFactory()->createBlockManager();
-
-        return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
-    }
-
-    /**
      * Specification:
      * - Deletes Cms Page and its relations (urls, glossary key mappings) from database
      * - Touches deleted Cms Page to notify collector about the change
@@ -386,24 +288,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         $this->getFactory()
             ->createPageRemover()
             ->delete($idCmsPage);
-    }
-
-    /**
-     * Specification:
-     * - Deletes Cms Block and its relations (cms page, glossary key mappings) from database
-     * - Touches deleted Cms Block to notify collector about the change
-     *
-     * @api
-     *
-     * @param int $idCmsBlock
-     *
-     * @return void
-     */
-    public function deleteBlockById($idCmsBlock)
-    {
-        $this->getFactory()
-            ->createBlockRemover()
-            ->delete($idCmsBlock);
     }
 
     /**

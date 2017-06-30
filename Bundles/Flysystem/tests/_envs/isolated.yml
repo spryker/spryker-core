@@ -1,0 +1,4 @@
+modules:
+  config:
+    \SprykerTest\Shared\Testify\Helper\Environment:
+      mode: 'isolated'

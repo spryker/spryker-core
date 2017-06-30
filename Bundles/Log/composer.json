@@ -1,6 +1,6 @@
 {
   "name": "spryker/log",
-  "description": "Log bundle",
+  "description": "Log module",
   "license": "proprietary",
   "require": {
     "psr/log": "~1.0.0",

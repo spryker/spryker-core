@@ -1,0 +1,35 @@
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Edit Block Glossary: ' | trans ~ idCmsBlock %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {% set redirectUrl = url('/cms-block-gui/edit-glossary', {'id-cms-block' : idCmsBlock}) %}
+    {{ editActionButton(url('/cms-block-gui/edit-block', {'id-cms-block': idCmsBlock}), 'Edit block' | trans) }}
+    {{ include ('@CmsBlockGui/_partial/activate-button.twig', { 'id-cms-block': idCmsBlock, 'isActive': cmsBlock.isActive}) }}
+    {{ backActionButton('/cms-block-gui/list-block', 'Back to list' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% if placeholderTabs.tabs | length > 0 %}
+
+        {{ form_start(glossaryForm) }}
+
+        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
+        {% do glossaryForm.glossaryPlaceholders.setRendered %}
+
+        {{ form_end(glossaryForm) }}
+
+    {% else %}
+        <div class="alert alert-danger">
+            {{ "Missing placeholders for selected template." | trans }}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+

@@ -1,6 +1,6 @@
 {
   "name": "spryker/oms",
-  "description": "Oms bundle",
+  "description": "Oms module",
   "license": "proprietary",
   "require": {
     "spryker/graph": "^3.0.0",

@@ -242,7 +242,6 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
                ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
             ->endUse()
             ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
-            ->filterByFkStateMachineItemState($transitionToIdState)
             ->orderByCreatedAt(Criteria::DESC)
             ->orderByIdStateMachineItemStateHistory(Criteria::DESC)
             ->limit(1);

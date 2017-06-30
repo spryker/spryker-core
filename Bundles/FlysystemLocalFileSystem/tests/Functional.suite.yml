@@ -1,0 +1,5 @@
+class_name: FunctionalTester
+modules:
+    enabled:
+        - \SprykerTest\Shared\Testify\Helper\Environment
+        - \FlysystemLocalFileSystem\Helper\Functional

@@ -1,6 +1,6 @@
 {
   "name": "spryker/config",
-  "description": "Config bundle",
+  "description": "Config module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"

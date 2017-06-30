@@ -1,6 +1,6 @@
 {
   "name": "spryker/sequence-number",
-  "description": "SequenceNumber bundle",
+  "description": "SequenceNumber module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

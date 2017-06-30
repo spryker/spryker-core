@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-relation-collector",
-  "description": "ProductRelationCollector bundle",
+  "description": "ProductRelationCollector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",

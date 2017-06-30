@@ -1,6 +1,6 @@
 {
   "name": "spryker/collector-search-connector",
-  "description": "CollectorSearchConnector bundle",
+  "description": "CollectorSearchConnector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.0.0",

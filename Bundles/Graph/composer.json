@@ -1,6 +1,6 @@
 {
   "name": "spryker/graph",
-  "description": "Graph bundle",
+  "description": "Graph module",
   "license": "proprietary",
   "require": {
     "spryker/graphviz": "^2.0.0",
