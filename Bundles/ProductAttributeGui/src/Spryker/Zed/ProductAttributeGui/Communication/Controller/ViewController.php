@@ -45,6 +45,10 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getProductAbstractAttributeValues($idProductAbstract);
 
+        $valueKeys = $this
+            ->getFacade()
+            ->extractKeysFromAttributes($values);
+
         $productAbstractTransfer = $this->getFacade()->getProductAbstract($idProductAbstract);
 
         $metaAttributes = $this
@@ -59,6 +63,7 @@ class ViewController extends AbstractController
             'locales' => $this->getLocaleData(),
             'metaAttributes' => $metaAttributes,
             'productAttributeValues' => $values,
+            'productAttributeKeys' => $valueKeys,
             'localesJson' => json_encode($localesData),
             'productAttributeValuesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),
@@ -90,6 +95,10 @@ class ViewController extends AbstractController
             ->getFacade()
             ->getProductAttributeValues($idProduct);
 
+        $valueKeys = $this
+            ->getFacade()
+            ->extractKeysFromAttributes($values);
+
         $productTransfer = $this->getFacade()->getProduct($idProduct);
         $productAbstractTransfer = $this->getFacade()->getProductAbstract($productTransfer->getFkProductAbstract());
 
@@ -99,11 +108,13 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
+
         return $this->viewResponse([
             'attributeKeyForm' => $form->createView(),
             'locales' => $localesData,
             'metaAttributes' => $metaAttributes,
             'productAttributeValues' => $values,
+            'productAttributeKeys' => $valueKeys,
             'localesJson' => json_encode($localesData),
             'productAttributeValuesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),

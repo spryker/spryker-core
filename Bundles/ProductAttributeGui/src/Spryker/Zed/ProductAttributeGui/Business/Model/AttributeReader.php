@@ -143,6 +143,36 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractKeysFromAttributes(array $productAttributes)
+    {
+        $keys = [];
+        foreach ($productAttributes as $idLocale => $localizedAttributes) {
+            $keys = array_merge($keys, array_keys($localizedAttributes));
+        }
+
+        return array_unique($keys);
+    }
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractValuesFromAttributes(array $productAttributes)
+    {
+        $values = [];
+        foreach ($productAttributes as $idLocale => $localizedAttributes) {
+            $values = array_merge($values, array_values($localizedAttributes));
+        }
+
+        return array_unique($values);
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $query
      *
      * @return array
@@ -263,7 +293,7 @@ class AttributeReader implements AttributeReaderInterface
      */
     protected function createAttributeKeysInCriterion(array $productAttributes, Criteria $criteria, AbstractCriterion $defaultCriterion)
     {
-        $keys = $this->extractKeys($productAttributes);
+        $keys = $this->extractKeysFromAttributes($productAttributes);
 
         $productAttributeKeyCriterion = $criteria->getNewCriterion(
             SpyProductAttributeKeyTableMap::COL_KEY,
@@ -323,41 +353,11 @@ class AttributeReader implements AttributeReaderInterface
     /**
      * @param array $productAttributes
      *
-     * @return array
-     */
-    protected function extractKeys(array $productAttributes)
-    {
-        $keys = [];
-        foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $keys = array_merge($keys, array_keys($localizedAttributes));
-        }
-
-        return array_unique($keys);
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function extractValues(array $productAttributes)
-    {
-        $values = [];
-        foreach ($productAttributes as $idLocale => $localizedAttributes) {
-            $values = array_merge($values, array_values($localizedAttributes));
-        }
-
-        return array_unique($values);
-    }
-
-    /**
-     * @param array $productAttributes
-     *
      * @return \Propel\Runtime\ActiveQuery\Criteria|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     protected function queryMetaAttributes(array $productAttributes)
     {
-        $keys = $this->extractKeys($productAttributes);
+        $keys = $this->extractKeysFromAttributes($productAttributes);
 
         $query = $this->productManagementQueryContainer
             ->queryProductAttributeKey()

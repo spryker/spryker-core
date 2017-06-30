@@ -19,30 +19,20 @@
         </tr>
         </thead>
         <tbody>
-            {% for localeCode,localeData in locales %}
-                {% for attributeLocaleCode,attributeValues in productAttributeValues[localeCode] %}
-                    {% for key,value in attributeValues %}
-                        {% set allowInput = metaAttributes[key]['allow_input'] %}
-                        {% set isSuper = metaAttributes[key]['is_super'] %}
-
-                        {% set readOnly = '' %}
-                        {% if isSuper %}
-                            {% set readOnly = 'readonly="readonly"' %}
+            {% for key in productAttributeKeys %}
+                <tr>
+                    <td>
+                        {{ key }}
+                    </td>
+                    {% for localeCode,localeData in locales %}
+                        {% if productAttributeValues[localeCode][key] is defined %}
+                            <td>{{ productAttributeValues[localeCode][key] }}</td>
+                        {% else %}
+                            <td>-</td>
                         {% endif %}
-
-                            <tr>
-                                <td>
-                                    {% if isSuper %}
-                                        <strong>{{ key }}</strong>
-                                    {% elseif allowInput == false %}
-                                        <i>{{ key }}</i>
-                                    {% else %}
-                                        {{ key }}
-                                    {% endif %}
-                                </td>
-                            <tr>
                     {% endfor %}
-                {% endfor %}
+                    <td>action</td>
+                </tr>
             {% endfor %}
         </tbody>
     </form>

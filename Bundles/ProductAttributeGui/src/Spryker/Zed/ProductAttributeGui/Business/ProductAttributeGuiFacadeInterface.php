@@ -66,4 +66,22 @@ interface ProductAttributeGuiFacadeInterface
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes);
 
+    /**
+     * @api
+     *
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractKeysFromAttributes(array $productAttributes);
+
+    /**
+     * @api
+     *
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractValuesFromAttributes(array $productAttributes);
+
 }

@@ -53,4 +53,18 @@ interface AttributeReaderInterface
      */
     public function suggestKeys($searchText = '', $limit = 10);
 
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractKeysFromAttributes(array $productAttributes);
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractValuesFromAttributes(array $productAttributes);
+
 }

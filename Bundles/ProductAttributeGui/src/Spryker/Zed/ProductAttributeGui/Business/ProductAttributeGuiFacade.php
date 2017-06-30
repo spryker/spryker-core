@@ -144,4 +144,32 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
             ->saveAbstractAttributes($idProductAbstract, $attributes);
     }
 
+    /**
+     * @api
+     *
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractKeysFromAttributes(array $productAttributes)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->extractKeysFromAttributes($productAttributes);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    public function extractValuesFromAttributes(array $productAttributes)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->extractValuesFromAttributes($productAttributes);
+    }
+
 }
