@@ -11,7 +11,8 @@ interface DiscountRuleWithValueOptionsPluginInterface
 {
 
     /**
-     * List of key-value pairs of available select options.
+     * Specification:
+     * - Returns a list of key-value pairs of the available select options.
      *
      * @api
      *

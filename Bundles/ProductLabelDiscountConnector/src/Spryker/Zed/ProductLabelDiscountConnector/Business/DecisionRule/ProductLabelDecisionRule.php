@@ -47,9 +47,8 @@ class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer)
     {
-        $idProductAbstract = $currentItemTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
+        $currentItemTransfer->requireIdProductAbstract();
+        $idProductAbstract = $currentItemTransfer->getIdProductAbstract();
 
         $productLabelEntities = $this->findValidProductLabelEntities($idProductAbstract);
         foreach ($productLabelEntities as $productLabelEntity) {

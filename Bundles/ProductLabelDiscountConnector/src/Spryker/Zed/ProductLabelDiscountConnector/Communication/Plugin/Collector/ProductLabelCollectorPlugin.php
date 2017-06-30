@@ -32,8 +32,6 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
     }
 
     /**
-     * Name of field as used in query string
-     *
      * @return string
      */
     public function getFieldName()
