@@ -92,16 +92,12 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getPostSavePlugins($container);
         };
 
-        $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getTransferExpanderPlugins($container);
-        };
-
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
-        $container[static::PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS] = function (Container $container) {
-            return $this->getCmsContentWidgetParameterMapperPlugins($container);
+        $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getTransferExpanderPlugins($container);
         };
 
         return $container;
@@ -147,22 +143,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected function getTransferExpanderPlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * Cms content widget parameter plugins is used when collecting data to yves data store,
-     * this mapping is needed because parameters provider to functions is not the same as we use to read from yves data store.
-     * For example 'sku1' => 'primary key in redis', this will map sku to primary key and store together with cms content.
-     *
-     * Should be configured as key value pair where key is function name and value is concrete parameter mapper plugin.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array|\Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
-     */
-    protected function getCmsContentWidgetParameterMapperPlugins(Container $container)
     {
         return [];
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\CmsProductGroupConnector\ContentWidgetConfigurationProvider;
 
-use Spryker\Shared\Cms\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface;
+use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
 class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {

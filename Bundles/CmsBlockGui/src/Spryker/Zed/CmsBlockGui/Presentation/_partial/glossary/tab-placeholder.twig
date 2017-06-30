@@ -27,6 +27,8 @@
                             </div>
                             {{ form_row(translationForm.fkLocale) }}
                             {{ form_row(translationForm.localeName) }}
+
+                            {{ render(controller('/cms-content-widget/usage-information/index'), {'ignore_errors':true}) }}
                         </div>
                     {% endif %}
                 {% endfor %}

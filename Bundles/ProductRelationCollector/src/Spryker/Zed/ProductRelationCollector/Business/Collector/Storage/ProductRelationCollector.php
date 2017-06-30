@@ -44,17 +44,17 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface $productImageQueryContainer
-     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface $priceContentWidgetFacade
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         ProductRelationCollectorToProductImageInterface $productImageQueryContainer,
-        ProductRelationCollectorToPriceInterface $priceFacade,
+        ProductRelationCollectorToPriceInterface $priceContentWidgetFacade,
         ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
     ) {
         $this->productImageQueryContainer = $productImageQueryContainer;
-        $this->priceFacade = $priceFacade;
+        $this->priceFacade = $priceContentWidgetFacade;
         $this->productRelationQueryContainer = $productRelationQueryContainer;
 
         parent::__construct($utilDataReaderService);

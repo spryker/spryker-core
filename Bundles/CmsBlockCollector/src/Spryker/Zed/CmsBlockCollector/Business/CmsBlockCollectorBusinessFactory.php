@@ -24,7 +24,8 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageCmsBlockCollector()
     {
         $cmsBlockCollector = new CmsBlockCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
+            $this->getCmsContentWidgetFacade()
         );
 
         $cmsBlockCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -55,6 +56,14 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getTouchQueryContainer()
     {
         return $this->getProvidedDependency(CmsBlockCollectorDependencyProvider::QUERY_CONTAINER_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface
+     */
+    protected function getCmsContentWidgetFacade()
+    {
+        return $this->getProvidedDependency(CmsBlockCollectorDependencyProvider::FACADE_CMS_CONTENT_WIDGET);
     }
 
     /**

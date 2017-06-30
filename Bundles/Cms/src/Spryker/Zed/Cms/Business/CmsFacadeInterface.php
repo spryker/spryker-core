@@ -410,26 +410,4 @@ interface CmsFacadeInterface
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
-    /**
-     * Specification:
-     *  - Extracts twig functions arguments and maps to values which can be used when reading from yves store.
-     *
-     * @api
-     *
-     * @param string $content
-     *
-     * @return array
-     */
-    public function mapContentWidgetParameters($content);
-
-    /**
-     * Specification:
-     *  - Reads all registered content widget plugin CmsConfig::getCmsContentWidgetConfigurationProviders
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
-     */
-    public function getContentWidgetConfigurationList();
-
 }

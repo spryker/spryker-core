@@ -31,17 +31,17 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $cmsDataPageMapBuilder
-     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface $searchContentWidgetFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         PageMapInterface $cmsDataPageMapBuilder,
-        CmsCollectorToSearchInterface $searchFacade
+        CmsCollectorToSearchInterface $searchContentWidgetFacade
     ) {
         parent::__construct($utilDataReaderService);
 
         $this->cmsDataPageMapBuilder = $cmsDataPageMapBuilder;
-        $this->searchFacade = $searchFacade;
+        $this->searchFacade = $searchContentWidgetFacade;
     }
 
     /**

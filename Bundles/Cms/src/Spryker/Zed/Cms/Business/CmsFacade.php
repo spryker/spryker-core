@@ -537,34 +537,4 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $content
-     *
-     * @return array
-     */
-    public function mapContentWidgetParameters($content)
-    {
-        return $this->getFactory()
-            ->createCmsContentWidgetParameterMapper()
-            ->map($content);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
-     */
-    public function getContentWidgetConfigurationList()
-    {
-        return $this->getFactory()
-            ->createCmsContentWidgetTemplateListProvider()
-            ->getContentWidgetConfigurationList();
-    }
-
 }

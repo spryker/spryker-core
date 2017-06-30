@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsProductConnector\Communication\Plugin\Cms;
 
-use Spryker\Zed\Cms\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface;
+use Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

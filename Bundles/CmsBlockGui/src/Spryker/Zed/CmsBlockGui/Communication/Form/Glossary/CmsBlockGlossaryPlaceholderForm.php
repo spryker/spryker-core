@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
@@ -38,11 +39,20 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected $cmsBlockFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @var \Symfony\Component\Form\FormTypeInterface
      */
-    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade)
-    {
+    protected $cmsBlockGlossaryPlaceholderTranslationForm;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @param \Symfony\Component\Form\FormTypeInterface $cmsBlockGlossaryPlaceholderTranslationForm
+     */
+    public function __construct(
+        CmsBlockGuiToCmsBlockInterface $cmsBlockFacade,
+        FormTypeInterface $cmsBlockGlossaryPlaceholderTranslationForm
+    ) {
         $this->cmsBlockFacade = $cmsBlockFacade;
+        $this->cmsBlockGlossaryPlaceholderTranslationForm = $cmsBlockGlossaryPlaceholderTranslationForm;
     }
 
     /**
@@ -148,7 +158,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => new CmsBlockGlossaryPlaceholderTranslationForm(),
+            'type' => $this->cmsBlockGlossaryPlaceholderTranslationForm,
             'allow_add' => true,
         ]);
 

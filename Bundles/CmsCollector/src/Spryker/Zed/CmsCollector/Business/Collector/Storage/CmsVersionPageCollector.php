@@ -9,9 +9,8 @@ namespace Spryker\Zed\CmsCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Shared\CmsCollector\CmsCollectorConstants;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -24,24 +23,24 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     protected $dataExtractor;
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface|null
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface|null
      */
-    protected $cmsFacade;
+    protected $cmsContentWidgetFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
-     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface|null $cmsFacade
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface|null $cmsContentWidgetFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         DataExtractorInterface $dataExtractorDataPage,
-        CmsCollectorToCmsInterface $cmsFacade = null
+        CmsCollectorToCmsContentWidgetInterface $cmsContentWidgetFacade = null
     ) {
         parent::__construct($utilDataReaderService);
 
         $this->dataExtractor = $dataExtractorDataPage;
-        $this->cmsFacade = $cmsFacade;
+        $this->cmsContentWidgetFacade = $cmsContentWidgetFacade;
     }
 
     /**
@@ -73,7 +72,7 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
             'meta_title' => $cmsMetaAttributeTransfer->getMetaTitle(),
             'meta_keywords' => $cmsMetaAttributeTransfer->getMetaKeywords(),
             'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
-            CmsCollectorConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP => $contentWidgetParameterMap,
+            'content_widget_parameter_map' => $contentWidgetParameterMap,
         ];
     }
 
@@ -84,7 +83,7 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
      */
     protected function extractContentWidgetFunctionParameterMap(array $contentPlaceholders)
     {
-        if (!$this->cmsFacade) {
+        if (!$this->cmsContentWidgetFacade) {
             return [];
         }
 
@@ -92,7 +91,7 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
         foreach ($contentPlaceholders as $content) {
             $contentWidgetParameterMap = array_merge_recursive(
                 $contentWidgetParameterMap,
-                $this->cmsFacade->mapContentWidgetParameters($content)
+                $this->cmsContentWidgetFacade->mapContentWidgetParameters($content)
             );
         }
 

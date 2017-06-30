@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsCollector;
 
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsBridge;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
@@ -19,7 +19,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
-    const FACADE_CMS = 'FACADE_CMS';
+    const FACADE_CMS_CONTENT_WIDGET = 'FACADE_CMS_CONTENT_WIDGET';
 
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
@@ -33,27 +33,27 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
+        $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
         };
 
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new CmsCollectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
 
-        $container[self::FACADE_SEARCH] = function (Container $container) {
+        $container[static::FACADE_SEARCH] = function (Container $container) {
             return new CmsCollectorToSearchBridge($container->getLocator()->search()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[static::FACADE_CMS] = function (Container $container) {
-            return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
+        $container[static::FACADE_CMS_CONTENT_WIDGET] = function (Container $container) {
+            return new CmsCollectorToCmsContentWidgetBridge($container->getLocator()->cmsContentWidget()->facade());
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 

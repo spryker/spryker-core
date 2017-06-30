@@ -10,10 +10,12 @@ namespace Spryker\Zed\CmsBlockGui\Communication;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
+use Spryker\Zed\CmsBlockGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
+use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -148,6 +150,34 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm|\Symfony\Component\Form\FormTypeInterface
+     */
+    protected function createCmsBlockGlossaryPlaceholderTranslationFormType()
+    {
+        return new CmsBlockGlossaryPlaceholderTranslationForm(
+            $this->createTwigContentConstraint()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent|\Symfony\Component\Validator\Constraint
+     */
+    protected function createTwigContentConstraint()
+    {
+        return new TwigContent([
+            TwigContent::OPTION_TWIG_ENVIRONMENT => $this->getTwigEnvironment(),
+        ]);
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::TWIG_ENVIRONMENT);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormTypeInterface
      */
     protected function createCmsBlockGlossaryFormType()
@@ -163,8 +193,17 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createCmsBlockGlossaryPlaceholderFormType()
     {
         return new CmsBlockGlossaryPlaceholderForm(
-            $this->getCmsBlockFacade()
+            $this->getCmsBlockFacade(),
+            $this->createCmsBlockGlossaryPlaceholderTranslationFormType()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsInterface
+     */
+    public function getCmsFacade()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_CMS);
     }
 
 }

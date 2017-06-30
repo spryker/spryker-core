@@ -31,7 +31,7 @@
                             {{ form_row(translationForm.fkLocale) }}
                             {{ form_row(translationForm.localeName) }}
 
-                            {{ include ('@CmsGui/_partial/glossary/content-widget-usage-information.twig') }}
+                            {{ render(controller('/cms-content-widget/usage-information/index'), {'ignore_errors':true}) }}
                         </div>
                     {% endif %}
                 {% endfor %}

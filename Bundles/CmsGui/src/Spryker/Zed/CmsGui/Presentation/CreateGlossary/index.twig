@@ -31,7 +31,7 @@
 
         {{ form_start(glossaryForm) }}
 
-        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm, 'cmsContentWidgetTemplateList' : cmsContentWidgetTemplateList}) }}
+        {{ tabs(placeholderTabs, {'availableLocales' : availableLocales, 'glossaryForm' : glossaryForm}) }}
         {% do glossaryForm.glossaryAttributes.setRendered %}
 
         {{ form_end(glossaryForm) }}

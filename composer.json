@@ -51,6 +51,7 @@
     "spryker/cms-block-category-connector": "*",
     "spryker/cms-block-product-connector": "*",
     "spryker/cms-collector": "*",
+    "spryker/cms-content-widget": "*",
     "spryker/cms-gui": "*",
     "spryker/cms-product-connector": "*",
     "spryker/cms-product-group-connector": "*",

@@ -137,9 +137,4 @@ interface CmsGuiToCmsInterface
      */
     public function syncTemplate($cmsTemplateFolderPath);
 
-    /**
-     * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
-     */
-    public function getContentWidgetConfigurationList();
-
 }

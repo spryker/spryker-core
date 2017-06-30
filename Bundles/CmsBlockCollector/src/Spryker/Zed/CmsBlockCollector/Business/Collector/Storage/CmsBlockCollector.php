@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
+use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -16,11 +17,20 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface|null
      */
-    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService)
-    {
+    protected $cmsContentWidgetFacade;
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface|null $cmsContentWidgetFacade
+     */
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        CmsBlockToCmsContentWidgetInterface $cmsContentWidgetFacade = null
+    ) {
         parent::__construct($utilDataReaderService);
+        $this->cmsContentWidgetFacade = $cmsContentWidgetFacade;
     }
 
     /**
@@ -31,18 +41,43 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
+        $contentPlaceholders = $this->extractPlaceholders(
+            $collectItemData[CmsBlockCollectorQuery::COL_PLACEHOLDERS],
+            $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
+        );
+
         return [
             'id' => $collectItemData[CmsBlockCollectorQuery::COL_ID_CMS_BLOCK],
             'valid_from' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_FROM],
             'valid_to' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_TO],
             'is_active' => $collectItemData[CmsBlockCollectorQuery::COL_IS_ACTIVE],
             'template' => $collectItemData[CmsBlockCollectorQuery::COL_TEMPLATE_PATH],
-            'placeholders' => $this->extractPlaceholders(
-                $collectItemData[CmsBlockCollectorQuery::COL_PLACEHOLDERS],
-                $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
-            ),
+            'placeholders' => $contentPlaceholders,
             'name' => $collectItemData[CmsBlockCollectorQuery::COL_NAME],
+            'content_widget_parameter_map' => $this->extractContentWidgetFunctionParameterMap($contentPlaceholders),
         ];
+    }
+
+    /**
+     * @param array $contentPlaceholders
+     *
+     * @return array
+     */
+    protected function extractContentWidgetFunctionParameterMap(array $contentPlaceholders)
+    {
+        if (!$this->cmsContentWidgetFacade) {
+            return [];
+        }
+
+        $contentWidgetParameterMap = [];
+        foreach ($contentPlaceholders as $translationKey) {
+            $contentWidgetParameterMap = array_merge_recursive(
+                $contentWidgetParameterMap,
+                $this->cmsContentWidgetFacade->mapContentWidgetParametersByTranslationKey($translationKey, $this->locale)
+            );
+        }
+
+        return $contentWidgetParameterMap;
     }
 
     /**

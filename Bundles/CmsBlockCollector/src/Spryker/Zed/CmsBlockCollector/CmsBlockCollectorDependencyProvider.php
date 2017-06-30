@@ -8,17 +8,19 @@
 namespace Spryker\Zed\CmsBlockCollector;
 
 use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorBridge;
+use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_COLLECTOR = 'CMS_BLOCL_COLLECTOR:FACADE_COLLECTOR';
+    const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
+    const FACADE_CMS_CONTENT_WIDGET = 'CMS_BLOCK_COLLECTOR::FACADE_CMS_CONTENT_WIDGET';
 
-    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCL_COLLECTOR:QUERY_CONTAINER_TOUCH';
+    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
-    const SERVICE_DATA_READER = 'CMS_BLOCL_COLLECTOR:SERVICE_DATA_READER';
+    const SERVICE_DATA_READER = 'CMS_BLOCK_COLLECTOR:SERVICE_DATA_READER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,7 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
         $container = $this->addTouchQueryContainer($container);
+        $container = $this->addCmsContentWidgetFacade($container);
 
         return $container;
     }
@@ -72,6 +75,20 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsContentWidgetFacade(Container $container)
+    {
+        $container[static::FACADE_CMS_CONTENT_WIDGET] = function (Container $container) {
+            return new CmsBlockToCmsContentWidgetBridge($container->getLocator()->cmsContentWidget()->facade());
         };
 
         return $container;

@@ -23,6 +23,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_CMS = 'locale cms';
     const FACADE_URL = 'url facade';
     const FACADE_GLOSSARY = 'glossary facade';
+    const FACADE_CMS_CONTENT_WIDGET = 'content widget facade';
 
     const QUERY_CONTAINER_CMS = 'cms query container';
 
