@@ -18,7 +18,6 @@ interface AttributeWriterInterface
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes);
 
-
     /**
      * @param int $idProduct
      * @param array $attributes

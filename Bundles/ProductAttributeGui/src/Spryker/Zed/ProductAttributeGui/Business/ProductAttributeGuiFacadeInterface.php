@@ -22,6 +22,15 @@ interface ProductAttributeGuiFacadeInterface
     /**
      * @api
      *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct);
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array
@@ -31,11 +40,29 @@ interface ProductAttributeGuiFacadeInterface
     /**
      * @api
      *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct);
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function getProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct);
 
     /**
      * @api

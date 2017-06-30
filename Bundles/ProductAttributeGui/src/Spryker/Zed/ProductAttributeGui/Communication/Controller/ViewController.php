@@ -108,7 +108,6 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
-
         return $this->viewResponse([
             'attributeKeyForm' => $form->createView(),
             'locales' => $localesData,

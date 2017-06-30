@@ -102,8 +102,7 @@ class AttributeWriter implements AttributeWriterInterface
 
             if ($value !== '') {
                 $attributeData[$localeCode][$key] = $value;
-            }
-            else {
+            } else {
                 $keysToRemove[$localeCode][] = $key;
             }
         }

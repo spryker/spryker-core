@@ -11,13 +11,13 @@
 {% block content %}
 
     {% include '@ProductAttributeGui/View/_partials/json-data.twig' with {
-    productAttributeValuesJson: productAttributeValuesJson,
-    metaAttributesJson: metaAttributesJson,
-    localesJson: localesJson
+        productAttributeValuesJson: productAttributeValuesJson,
+        metaAttributesJson: metaAttributesJson,
+        localesJson: localesJson
     } %}
 
     {% include '@ProductAttributeGui/View/_partials/add-attribute-form.twig' with {
-    form: attributeKeyForm
+        form: attributeKeyForm
     } %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
