@@ -69,6 +69,16 @@ interface ProductAttributeGuiFacadeInterface
     /**
      * @api
      *
+     * @param int $idProduct
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function saveConcreteAttributes($idProduct, array $attributes);
+
+    /**
+     * @api
+     *
      * @param array $productAttributes
      *
      * @return array

@@ -14,8 +14,17 @@ interface AttributeWriterInterface
      * @param int $idProductAbstract
      * @param array $attributes
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return void
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes);
+
+
+    /**
+     * @param int $idProduct
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function saveConcreteAttributes($idProduct, array $attributes);
 
 }

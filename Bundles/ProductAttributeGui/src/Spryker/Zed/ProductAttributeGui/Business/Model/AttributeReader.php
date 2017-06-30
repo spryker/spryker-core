@@ -55,15 +55,23 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
+     * @param array $localizedAttributes
+     *
+     * @return string
+     */
+    public function encodeJsonAttributes(array $localizedAttributes)
+    {
+        return (string)$this->serviceEncoding->encodeJson($localizedAttributes);
+    }
+
+    /**
      * @param string $localizedAttributesJson
      *
      * @return array
      */
     public function decodeJsonAttributes($localizedAttributesJson)
     {
-        $attributesDecoded = (array)$this->serviceEncoding->decodeJson($localizedAttributesJson, true);
-
-        return $attributesDecoded;
+        return (array)$this->serviceEncoding->decodeJson($localizedAttributesJson, true);
     }
 
     /**

@@ -1,34 +1,34 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Manage Attributes for Product Abstract [' ~ productAbstract.sku  ~ ']' %}
+{% set widget_title = 'Manage Attributes for Product [' ~ product.sku  ~ ']' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ viewActionButton(url('/product-management/view?id-product-abstract=' ~ productAbstract.idProductAbstract), 'View Product Abstract' | trans) }}
-    {{ backActionButton(url('/product-management'), 'Back to List' | trans) }}
+    {{ viewActionButton(url('/product-management/view/variant?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '&id-product=' ~ product.idProductConcrete), 'View Product' | trans) }}
+    {{ backActionButton(url('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '#tab-content-variants'), 'Back to List' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     {% include '@ProductAttributeGui/View/_partials/json-data.twig' with {
-        productAttributeValuesJson: productAttributeValuesJson,
-        metaAttributesJson: metaAttributesJson,
-        localesJson: localesJson
+    productAttributeValuesJson: productAttributeValuesJson,
+    metaAttributesJson: metaAttributesJson,
+    localesJson: localesJson
     } %}
 
     {% include '@ProductAttributeGui/View/_partials/add-attribute-form.twig' with {
-        form: attributeKeyForm
+    form: attributeKeyForm
     } %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
         {% block widget_content %}
             {% include '@ProductAttributeGui/View/_partials/attribute-table.twig' with {
-                formActionUrl: '/product-attribute-gui/save/productAbstract',
+                formActionUrl: '/product-attribute-gui/save/product',
                 locales: locales,
                 productAttributeValues: productAttributeValues,
                 metaAttributes: metaAttributes,
-                idProductAbstract: idProductAbstract,
-                idProductConcrete: ''
+                idProductAbstract: product.fkProductAbstract,
+                idProductConcrete: product.idProductConcrete
             } %}
         {% endblock %}
     {% endembed %}

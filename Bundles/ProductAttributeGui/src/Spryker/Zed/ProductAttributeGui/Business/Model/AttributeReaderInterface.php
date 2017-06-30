@@ -11,6 +11,13 @@ interface AttributeReaderInterface
 {
 
     /**
+     * @param array $localizedAttributes
+     *
+     * @return string
+     */
+    public function encodeJsonAttributes(array $localizedAttributes);
+
+    /**
      * @param string $localizedAttributesJson
      *
      * @return array

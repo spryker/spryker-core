@@ -21,6 +21,7 @@ class SaveController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    const PARAM_ID_PRODUCT = 'id-product';
     const PARAM_JSON = 'json';
 
     /**
@@ -28,7 +29,7 @@ class SaveController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexAction(Request $request)
+    public function productAbstractAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
             static::PARAM_ID_PRODUCT_ABSTRACT
@@ -40,6 +41,42 @@ class SaveController extends AbstractController
         try {
             $statusCode = 200;
             $this->getFacade()->saveAbstractAttributes($idProductAbstract, $data);
+            $result = true;
+            $message = 'Product abstract attributes saved';
+        } catch (Exception $exception) {
+            $statusCode = 500;
+            $result = false;
+            $message = $exception->getMessage();
+        } catch (Throwable $exception) {
+            $statusCode = 500;
+            $result = false;
+            $message = $exception->getMessage();
+        }
+
+        return new JsonResponse([
+            'success' => $result,
+            'message' => $message,
+        ], $statusCode);
+    }
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productAction(Request $request)
+    {
+        $idProduct = $this->castId($request->get(
+            static::PARAM_ID_PRODUCT
+        ));
+
+        $json = $request->request->get(static::PARAM_JSON);
+        $data = json_decode($json, true);
+
+        try {
+            $statusCode = 200;
+            $this->getFacade()->saveConcreteAttributes($idProduct, $data);
             $result = true;
             $message = 'Product attributes saved';
         } catch (Exception $exception) {

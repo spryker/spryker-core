@@ -147,6 +147,21 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     /**
      * @api
      *
+     * @param int $idProduct
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function saveConcreteAttributes($idProduct, array $attributes)
+    {
+        $this->getFactory()
+            ->createAttributeWriter()
+            ->saveConcreteAttributes($idProduct, $attributes);
+    }
+
+    /**
+     * @api
+     *
      * @param array $productAttributes
      *
      * @return array

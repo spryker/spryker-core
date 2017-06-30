@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business\Model;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig;
 
 class AttributeWriter implements AttributeWriterInterface
@@ -28,61 +27,57 @@ class AttributeWriter implements AttributeWriterInterface
 
     /**
      * @param int $idProductAbstract
-     * @param array $data
+     * @param array $attributes
      *
      * @return void
      */
-    public function updateProductAbstractAttributes($idProductAbstract, array $data)
+    public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
-        $attributes = [];
-        $keysToRemove = [];
+        $attributeData = $this->getAttributesDataToSave($attributes);
+        $attributesJson = $this->getNonLocalizedAttributesAsJson($attributeData);
+        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
 
-        foreach ($data as $attribute) {
-            $localeCode = $attribute[ProductAttributeGuiConfig::LOCALE_CODE];
-            $key = $attribute[static::KEY];
-            $value = trim($attribute['value']);
-
-            if ($value !== '') {
-                $attributes[$localeCode][$key] = $value;
-            } else {
-                $keysToRemove[$localeCode][] = $key;
-            }
-        }
-
-        $attributesToSave = [];
-        $productAbstractAttributes = $this->getProductAbstractAttributeValues($idProductAbstract);
-
-        foreach ($attributes as $localeCode => $attributeData) {
-            $currentAttributes = [];
-            if (array_key_exists($localeCode, $productAbstractAttributes)) {
-                $currentAttributes = $productAbstractAttributes[$localeCode];
-            }
-
-            $attributesToSave[$localeCode] = array_merge($currentAttributes, $attributeData);
-
-            if (array_key_exists($localeCode, $keysToRemove)) {
-                $attributesToSave[$localeCode] = array_filter($attributeData, function ($key) use ($keysToRemove, $localeCode) {
-                    return in_array($key, $keysToRemove[$localeCode]) === false;
-                }, ARRAY_FILTER_USE_KEY);
-            }
-        }
-
-        $attributes = $attributesToSave[ProductAttributeGuiConfig::DEFAULT_LOCALE];
-        unset($attributesToSave[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
-
-        $attributesJson = json_encode($attributes);
-
-        $productAbstractEntity = $this->getProductAbstractEntity($idProductAbstract);
+        $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
         $productAbstractEntity->setAttributes($attributesJson);
         $productAbstractEntity->save();
 
-        foreach ($productAbstractEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
-            foreach ($attributesToSave as $localeCode => $attributeData) {
+        $this->saveLocalizedAttributes($productAbstractEntity->getSpyProductAbstractLocalizedAttributess(), $attributeData);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function saveConcreteAttributes($idProduct, array $attributes)
+    {
+        $attributeData = $this->getAttributesDataToSave($attributes);
+        $attributesJson = $this->getNonLocalizedAttributesAsJson($attributeData);
+        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
+
+        $productEntity = $this->reader->getProductEntity($idProduct);
+        $productEntity->setAttributes($attributesJson);
+        $productEntity->save();
+
+        $this->saveLocalizedAttributes($productEntity->getSpyProductLocalizedAttributess(), $attributeData);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $localizedAttributeEntityCollection $localizedAttributeEntityCollection
+     * @param array $attributes
+     *
+     * @return void
+     */
+    protected function saveLocalizedAttributes($localizedAttributeEntityCollection, array $attributes)
+    {
+        foreach ($localizedAttributeEntityCollection as $localizedAttributeEntity) {
+            foreach ($attributes as $localeCode => $attributeData) {
                 if ($localizedAttributeEntity->getFkLocale() !== (int)$localeCode) {
                     continue;
                 }
 
-                $attributesJson = json_encode($attributeData);
+                $attributesJson = $this->reader->encodeJsonAttributes($attributeData);
                 $localizedAttributeEntity->setAttributes($attributesJson);
                 $localizedAttributeEntity->save();
             }
@@ -90,12 +85,12 @@ class AttributeWriter implements AttributeWriterInterface
     }
 
     /**
-     * @param int $idProductAbstract
      * @param array $attributes
+     * @param bool $returnKeysToRemove
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return array
      */
-    public function saveAbstractAttributes($idProductAbstract, array $attributes)
+    protected function getAttributesDataToSave(array $attributes, $returnKeysToRemove = false)
     {
         $attributeData = [];
         $keysToRemove = [];
@@ -107,43 +102,32 @@ class AttributeWriter implements AttributeWriterInterface
 
             if ($value !== '') {
                 $attributeData[$localeCode][$key] = $value;
-            } else {
+            }
+            else {
                 $keysToRemove[$localeCode][] = $key;
             }
         }
 
-        $productAbstractAttributes = $attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE];
-        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
-        $attributesJson = json_encode($productAbstractAttributes);
+        if ($returnKeysToRemove) {
+            return $keysToRemove;
+        }
 
-        $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
-        $productAbstractEntity->setAttributes($attributesJson);
-        $productAbstractEntity->save();
-
-        $this->saveAbstractLocalizedAttributes($productAbstractEntity, $attributeData);
-
-        return $productAbstractEntity;
+        return $attributeData;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param array $attributes
+     * @param array $attributeData
      *
-     * @return void
+     * @return string
      */
-    protected function saveAbstractLocalizedAttributes(SpyProductAbstract $productAbstractEntity, array $attributes)
+    protected function getNonLocalizedAttributesAsJson(array $attributeData)
     {
-        foreach ($productAbstractEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
-            foreach ($attributes as $localeCode => $attributeData) {
-                if ($localizedAttributeEntity->getFkLocale() !== (int)$localeCode) {
-                    continue;
-                }
+        $productAbstractAttributes = $attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE];
+        unset($attributeData[ProductAttributeGuiConfig::DEFAULT_LOCALE]);
 
-                $attributesJson = json_encode($attributeData);
-                $localizedAttributeEntity->setAttributes($attributesJson);
-                $localizedAttributeEntity->save();
-            }
-        }
+        $attributesJson = json_encode($productAbstractAttributes);
+
+        return $attributesJson;
     }
 
 }

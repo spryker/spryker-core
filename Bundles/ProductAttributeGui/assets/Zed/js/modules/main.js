@@ -10,7 +10,7 @@ require('../../sass/main.scss');
 
 
 function castToBoolean($value) {
-    return $value === 'true' || $value === '1' || $value === 1 || $value == true;
+    return $value === 'true' || $value === '1' || $value === 1 || $value == 'true' || $value == true;
 }
 
 function AttributeManager() {
@@ -70,7 +70,8 @@ function AttributeManager() {
 
         dataToAdd.push(key);
 
-        for (var localeCode in locales) {
+        for (var i in locales) {
+            var localeData = locales[i];
             var readOnly = '';
 
             if (castToBoolean(attributeMetadata.is_super)) {
@@ -85,7 +86,7 @@ function AttributeManager() {
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
                 ' data-id_attribute="' + idAttribute + '" ' +
-                ' data-locale_code="' + localeCode + '"' +
+                ' data-locale_code="' + localeData['id_locale'] + '"' +
                 readOnly +
                 '>' +
                 '<span style="display: none"></span>';
@@ -127,6 +128,8 @@ function AttributeManager() {
             row.
             add(dataToAdd)
             .draw();
+
+        updateAttributeInputsWithAutoComplete();
     };
 
     _attributeManager.addRemovedKey = function(key) {
@@ -145,6 +148,7 @@ function AttributeManager() {
         var locales = _attributeManager.getLocaleCollection();
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
+        var idProduct = $('#attribute_values_form_hidden_product_id').val();
         var formData = [];
 
         $('[data-is_attribute_input]').each(function(index, value) {
@@ -164,8 +168,8 @@ function AttributeManager() {
 
 
         $(_attributeManager.removedKeys).each(function(index, removedKey) {
-            for (var localeCode in locales) {
-                var locale = locales[localeCode];
+            for (var i in locales) {
+                var locale = locales[i];
                 var idLocale = locale['id_locale'];
                 if (!idLocale) {
                     idLocale = '_';
@@ -181,12 +185,13 @@ function AttributeManager() {
         });
 
         var formDataJson = JSON.stringify(formData);
+        var actionUrl = form.attr('action');
 
         $.ajax({
-            url: '/product-attribute-gui/save',
+            url: actionUrl,
             type: 'POST',
             dataType: 'application/json',
-            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract,
+            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract + '&id-product=' + idProduct,
             complete: function(jqXHR) {
                 if(jqXHR.readyState === 4) {
                     _attributeManager.resetRemovedKeysCache();
@@ -268,7 +273,7 @@ function updateAttributeInputsWithAutoComplete() {
         });
     });
 
-    $('[data-allow_input=""]').each(function(key, value) {
+    $('[data-allow_input=""],[data-allow_input="false"],[data-allow_input="0"]').each(function(key, value) {
         var input = $(value);
         input.on('focus click', function(event, ui) {
             $(this).autocomplete('search', '');
@@ -344,8 +349,6 @@ $(document).ready(function() {
                 attributeManager.addRemovedKey(key);
                 removeActionHandler.call($(this))
             });
-
-        updateAttributeInputsWithAutoComplete();
 
         return false;
     });
