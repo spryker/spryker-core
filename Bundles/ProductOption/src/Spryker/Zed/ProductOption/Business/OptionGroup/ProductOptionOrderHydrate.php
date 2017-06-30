@@ -64,7 +64,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idSalesOrderItem
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected function findItemTransferOptionsBelongTo(OrderTransfer $orderTransfer, $idSalesOrderItem)
     {
