@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Cms\Module;
+namespace CmsContentWidget\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;

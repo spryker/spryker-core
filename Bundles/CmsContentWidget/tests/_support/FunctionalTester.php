@@ -1,5 +1,5 @@
 <?php
-namespace Cms;
+namespace CmsContentWidget;
 
 use Codeception\Actor;
 

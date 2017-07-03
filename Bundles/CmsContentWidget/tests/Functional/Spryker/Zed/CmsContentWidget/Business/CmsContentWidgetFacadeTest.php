@@ -8,11 +8,12 @@
 namespace Functional\Spryker\Zed\CmsContentWidget\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface;
+use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetBusinessFactory;
 use Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade;
 use Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig;
 use Spryker\Zed\CmsContentWidget\CmsContentWidgetDependencyProvider;
+use Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface;
 use Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface;
 use Spryker\Zed\Kernel\Container;
 
@@ -146,7 +147,7 @@ class CmsContentWidgetFacadeTest extends Test
     }
 
     /**
-     * @param \Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface $cmsContentWidgetConfigurationProviderMock
+     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface $cmsContentWidgetConfigurationProviderMock
      *
      * @return \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade
      */
@@ -184,6 +185,10 @@ class CmsContentWidgetFacadeTest extends Test
             return [
               'function' => $cmsContentWidgetParameterMapperPluginMock,
             ];
+        };
+
+        $container[CmsContentWidgetDependencyProvider::FACADE_GLOSSARY] = function (Container $container) {
+            return $this->createGlossaryFacadeMock();
         };
 
         $cmsBusinessFactory->setContainer($container);
@@ -235,11 +240,19 @@ class CmsContentWidgetFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
     protected function createCmsContentWidgetConfigurationProviderMock()
     {
         return $this->getMockBuilder(CmsContentWidgetConfigurationProviderInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface
+     */
+    protected function createGlossaryFacadeMock()
+    {
+        return $this->getMockBuilder(CmsContentWidgetToGlossaryInterface::class)->getMock();
     }
 
 }
