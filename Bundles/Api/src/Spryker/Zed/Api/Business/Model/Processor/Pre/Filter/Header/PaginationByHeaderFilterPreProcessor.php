@@ -9,6 +9,7 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiConfig;
+use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
@@ -48,6 +49,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 
         $offset = $this->validateOffset($matches[1]);
         $limit = $this->validateLimitRange($matches[2] - $offset + 1);
+        $this->validateOffsetAndLimitFitsToPage($limit, $offset);
 
         $apiRequestTransfer->getFilter()->setOffset($offset);
         $apiRequestTransfer->getFilter()->setLimit($limit);
@@ -81,6 +83,25 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
         }
 
         return (int)$limit;
+    }
+
+    /**
+     * Offset must be 0 based, thus an invalid offset must throw an exception as it cannot translate into pages.
+     *
+     * @param int $limit
+     * @param int $offset
+     *
+     * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
+     *
+     * @return void
+     */
+    protected function validateOffsetAndLimitFitsToPage($limit, $offset)
+    {
+        if ($offset % $limit === 0) {
+            return;
+        }
+
+        throw new ApiDispatchingException('Invalid offset pagination - must be 0 based to translate into pages');
     }
 
 }

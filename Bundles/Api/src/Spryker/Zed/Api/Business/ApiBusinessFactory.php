@@ -12,7 +12,9 @@ use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Processor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Action\OptionsActionPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\CorsFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\AddActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Action\FindActionPreProcessor;
@@ -28,6 +30,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPrePro
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceIdPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
@@ -59,7 +62,8 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createResourceHandler()
     {
         return new ResourceHandler(
-            $this->getApiPlugins()
+            $this->getApiPlugins(),
+            $this->getConfig()
         );
     }
 
@@ -110,6 +114,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->createFormatTypeByHeaderPreProcessor(),
             $this->createFormatTypeByPathPreProcessor(),
             $this->createResourcePreProcessor(),
+            $this->createResourceIdPreProcessor(),
             $this->createResourceActionPreProcessor(),
             $this->createResourceParametersPreProcessor(),
 
@@ -132,6 +137,8 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getPostProcessorStack()
     {
         return [
+            $this->createCorsFilterPostProcessor(),
+            $this->createOptionsActionPostProcessor(),
             $this->createAddActionPostProcessor(),
             $this->createRemoveActionPostProcessor(),
             $this->createFindActionPostProcessor(),
@@ -169,6 +176,14 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createResourcePreProcessor()
     {
         return new ResourcePreProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
+     */
+    protected function createResourceIdPreProcessor()
+    {
+        return new ResourceIdPreProcessor();
     }
 
     /**
@@ -292,9 +307,27 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
+    protected function createOptionsActionPostProcessor()
+    {
+        return new OptionsActionPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
+     */
     protected function createPaginationByHeaderFilterPostProcessor()
     {
         return new PaginationByHeaderFilterPostProcessor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
+     */
+    protected function createCorsFilterPostProcessor()
+    {
+        return new CorsFilterPostProcessor(
+            $this->getConfig()
+        );
     }
 
     /**

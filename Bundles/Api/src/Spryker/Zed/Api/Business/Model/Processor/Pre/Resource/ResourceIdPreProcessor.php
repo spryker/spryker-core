@@ -10,15 +10,11 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
-/**
- * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
- */
-class ResourceParametersPreProcessor implements PreProcessorInterface
+class ResourceIdPreProcessor implements PreProcessorInterface
 {
 
     /**
-     * Maps all remaining path segments as resource params.
+     * Extracts the path segment responsible for building the resource action
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -27,17 +23,20 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $path = $apiRequestTransfer->getPath();
-
-        $elements = [];
-        if ($path !== '') {
-            $elements[] = $path;
-        }
-
+        $identifier = $path;
         if (strpos($path, '/') !== false) {
-            $elements = explode('/', $path);
+            $identifier = substr($path, 0, strpos($path, '/'));
+            $path = substr($path, strpos($path, '/') + 1);
         }
 
-        $apiRequestTransfer->setResourceParameters($elements);
+        $resourceId = null;
+        $identifier = trim($identifier);
+        if ($identifier !== '') {
+            $resourceId = $identifier;
+        }
+
+        $apiRequestTransfer->setResourceId($resourceId);
+        $apiRequestTransfer->setPath($path);
 
         return $apiRequestTransfer;
     }
