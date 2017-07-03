@@ -43,7 +43,9 @@ class OptionsActionPostProcessor implements PostProcessorInterface
             $options[$key] = strtoupper($value);
         }
 
-        $apiResponseTransfer->setHeaders([static::HEADER_ALLOW => implode(', ', $options)]);
+        $headers = $apiResponseTransfer->getHeaders();
+        $headers[static::HEADER_ALLOW] = implode(', ', $options);
+        $apiResponseTransfer->setHeaders($headers);
 
         return $apiResponseTransfer;
     }
