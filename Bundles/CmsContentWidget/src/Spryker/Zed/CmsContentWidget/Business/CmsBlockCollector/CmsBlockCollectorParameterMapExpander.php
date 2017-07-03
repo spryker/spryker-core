@@ -53,7 +53,7 @@ class CmsBlockCollectorParameterMapExpander implements CmsBlockCollectorParamete
     {
         $contentWidgetParameterMap = [];
         foreach ($contentPlaceholders as $translationKey) {
-            $contentWidgetParameterMap = array_merge_recursive(
+            $contentWidgetParameterMap = array_replace_recursive(
                 $contentWidgetParameterMap,
                 $this->contentWidgetParameterMapper->mapByTranslationKey($translationKey, $localeTransfer)
             );
