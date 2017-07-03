@@ -37,7 +37,7 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
      *
      * @api
      *
-     * @param $translationKey
+     * @param string $translationKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

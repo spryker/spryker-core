@@ -34,7 +34,7 @@ interface CmsContentWidgetFacadeInterface
      *
      * @api
      *
-     * @param $translationKey
+     * @param string $translationKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

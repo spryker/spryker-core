@@ -21,7 +21,7 @@ interface ContentWidgetParameterMapperInterface
 
     /**
      * @param string $translationKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
