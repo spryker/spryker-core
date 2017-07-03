@@ -508,7 +508,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Given type look for meta data provider.
+     * - Look for meta data provider by the given type.
      * - Collect all available value options from all registered plugins.
      *
      * @api
