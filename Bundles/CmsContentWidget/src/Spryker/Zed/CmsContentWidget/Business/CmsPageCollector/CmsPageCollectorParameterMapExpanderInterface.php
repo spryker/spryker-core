@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCollector\Dependency\Facade;
+namespace Spryker\Zed\CmsContentWidget\Business\CmsPageCollector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface CmsBlockToCmsContentWidgetInterface
+interface CmsPageCollectorParameterMapExpanderInterface
 {
 
     /**
-     * @param $translationKey
+     * @param array $collectedData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function mapContentWidgetParametersByTranslationKey($translationKey, LocaleTransfer $localeTransfer);
+    public function map(array $collectedData, LocaleTransfer $localeTransfer);
 
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsCollector;
 
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
@@ -25,6 +24,8 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+
+    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,15 +50,39 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[static::FACADE_CMS_CONTENT_WIDGET] = function (Container $container) {
-            return new CmsCollectorToCmsContentWidgetBridge($container->getLocator()->cmsContentWidget()->facade());
-        };
-
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorDataExpanderPlugins(Container $container)
+    {
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * Stack of plugins which run during data collection for each item.
+     *
+     * @return array|\Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return [];
     }
 
 }

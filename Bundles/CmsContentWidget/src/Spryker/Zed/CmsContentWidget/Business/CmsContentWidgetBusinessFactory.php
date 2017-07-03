@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsContentWidget\Business;
 
+use Spryker\Zed\CmsContentWidget\Business\CmsBlockCollector\CmsBlockCollectorParameterMapExpander;
+use Spryker\Zed\CmsContentWidget\Business\CmsPageCollector\CmsPageCollectorParameterMapExpander;
 use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetConfigurationListProvider;
 use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcher;
 use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetParameterMapper;
@@ -29,6 +31,22 @@ class CmsContentWidgetBusinessFactory extends AbstractBusinessFactory
             $this->createCmsContentWidgetFunctionMatcher(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsContentWidget\Business\CmsBlockCollector\CmsBlockCollectorParameterMapExpander
+     */
+    public function createCmsBlockCollectorParameterMapExpander()
+    {
+        return new CmsBlockCollectorParameterMapExpander($this->createCmsContentWidgetParameterMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsContentWidget\Business\CmsPageCollector\CmsPageCollectorParameterMapExpander
+     */
+    public function createCmsPageCollectorParameterMapExpander()
+    {
+        return new CmsPageCollectorParameterMapExpander($this->createCmsContentWidgetParameterMapper());
     }
 
     /**

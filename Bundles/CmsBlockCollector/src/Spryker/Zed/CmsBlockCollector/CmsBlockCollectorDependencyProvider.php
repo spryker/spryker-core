@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockCollector;
 
 use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorBridge;
-use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,11 +15,12 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
 {
 
     const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
-    const FACADE_CMS_CONTENT_WIDGET = 'CMS_BLOCK_COLLECTOR::FACADE_CMS_CONTENT_WIDGET';
 
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'CMS_BLOCK_COLLECTOR:SERVICE_DATA_READER';
+
+    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'CMS_BLOCK_COLLECTOR:DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +33,7 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
         $container = $this->addTouchQueryContainer($container);
-        $container = $this->addCmsContentWidgetFacade($container);
+        $container = $this->addCollectorDataExpanderPlugins($container);
 
         return $container;
     }
@@ -85,13 +85,23 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCmsContentWidgetFacade(Container $container)
+    protected function addCollectorDataExpanderPlugins(Container $container)
     {
-        $container[static::FACADE_CMS_CONTENT_WIDGET] = function (Container $container) {
-            return new CmsBlockToCmsContentWidgetBridge($container->getLocator()->cmsContentWidget()->facade());
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * Stack of plugins which run during data collection for each item.
+     *
+     * @return array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return [];
     }
 
 }

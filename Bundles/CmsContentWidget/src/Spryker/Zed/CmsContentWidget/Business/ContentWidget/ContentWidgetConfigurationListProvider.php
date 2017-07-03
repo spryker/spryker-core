@@ -14,12 +14,12 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
 {
 
     /**
-     * @var array|\Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface[]
+     * @var array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
      */
     protected $contentWidgetConfigurationProviders = [];
 
     /**
-     * @param array|\Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface[] $contentWidgetConfigurationProviders
+     * @param array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[] $contentWidgetConfigurationProviders
      */
     public function __construct($contentWidgetConfigurationProviders)
     {
@@ -46,7 +46,7 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
 
     /**
      * @param string $functionName
-     * @param \Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface $contentWidgetConfigurationProvider
+     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface $contentWidgetConfigurationProvider
      *
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationTransfer
      */

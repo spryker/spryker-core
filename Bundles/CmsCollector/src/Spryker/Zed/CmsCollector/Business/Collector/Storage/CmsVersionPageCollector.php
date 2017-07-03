@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsCollector\Business\Collector\Storage;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
-use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -23,24 +22,24 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     protected $dataExtractor;
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface|null
+     * @var array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
-    protected $cmsContentWidgetFacade;
+    protected $collectorDataExpanderPlugins = [];
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
-     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface|null $cmsContentWidgetFacade
+     * @param array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         DataExtractorInterface $dataExtractorDataPage,
-        CmsCollectorToCmsContentWidgetInterface $cmsContentWidgetFacade = null
+        array $collectorDataExpanderPlugins = []
     ) {
         parent::__construct($utilDataReaderService);
 
         $this->dataExtractor = $dataExtractorDataPage;
-        $this->cmsContentWidgetFacade = $cmsContentWidgetFacade;
+        $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
     }
 
     /**
@@ -58,9 +57,8 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
         $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
         $placeHolders = $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName);
-        $contentWidgetParameterMap = $this->extractContentWidgetFunctionParameterMap($placeHolders);
 
-        return [
+        $baseCollectedCmsPageData = [
             'url' => $collectItemData[CmsVersionPageCollectorQuery::COL_URL],
             'valid_from' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_FROM],
             'valid_to' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_TO],
@@ -72,30 +70,23 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
             'meta_title' => $cmsMetaAttributeTransfer->getMetaTitle(),
             'meta_keywords' => $cmsMetaAttributeTransfer->getMetaKeywords(),
             'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
-            'content_widget_parameter_map' => $contentWidgetParameterMap,
         ];
+
+        return $this->runDataExpanderPlugins($baseCollectedCmsPageData);
     }
 
     /**
-     * @param array $contentPlaceholders
+     * @param array $collectedItemData
      *
      * @return array
      */
-    protected function extractContentWidgetFunctionParameterMap(array $contentPlaceholders)
+    protected function runDataExpanderPlugins(array $collectedItemData)
     {
-        if (!$this->cmsContentWidgetFacade) {
-            return [];
+        foreach ($this->collectorDataExpanderPlugins as $dataExpanderPlugin) {
+            $collectedItemData = $dataExpanderPlugin->expand($collectedItemData, $this->locale);
         }
 
-        $contentWidgetParameterMap = [];
-        foreach ($contentPlaceholders as $content) {
-            $contentWidgetParameterMap = array_merge_recursive(
-                $contentWidgetParameterMap,
-                $this->cmsContentWidgetFacade->mapContentWidgetParameters($content)
-            );
-        }
-
-        return $contentWidgetParameterMap;
+        return $collectedItemData;
     }
 
     /**

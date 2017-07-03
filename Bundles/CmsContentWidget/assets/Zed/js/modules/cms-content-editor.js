@@ -15,7 +15,9 @@ var CmsContentEditor = function CmsContentEditor(options)
     this.contentWidgetConfigurationProviderUrl = '/cms-content-widget/usage-information/json';
     this.editorClass = '.html-editor';
 
-    $(this.editorClass).summernote('destroy');
+    $(this.editorClass).each(function(index, element) {
+        $(element).summernote('destroy');
+    });
 
     $.extend(this, options);
 

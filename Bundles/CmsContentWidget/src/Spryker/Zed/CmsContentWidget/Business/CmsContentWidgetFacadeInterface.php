@@ -51,4 +51,30 @@ interface CmsContentWidgetFacadeInterface
      */
     public function getContentWidgetConfigurationList();
 
+    /**
+     * Specification:
+     *  - Expands collector data with cms content widget parameter map
+     *
+     * @api
+     *
+     * @param array $collectedData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsBlockCollectorData(array $collectedData, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     *  - Expands collector data with cms content widget parameter map
+     *
+     * @api
+     *
+     * @param array $collectedData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsPageCollectorData(array $collectedData, LocaleTransfer $localeTransfer);
+
 }

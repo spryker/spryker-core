@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageCollector;
+
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+
+/**
+ * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade getFacade()
+ * @method \Spryker\Zed\CmsContentWidget\Communication\CmsContentWidgetCommunicationFactory getFactory()
+ */
+class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageCollectorDataExpanderPluginInterface
+{
+
+    /**
+     * @api
+     *
+     * @param array $collectedData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return mixed
+     */
+    public function expand(array $collectedData, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFacade()
+            ->expandCmsPageCollectorData($collectedData, $localeTransfer);
+    }
+
+}

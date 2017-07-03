@@ -63,4 +63,38 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
             ->getContentWidgetConfigurationList();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $collectedData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsBlockCollectorData(array $collectedData, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCollectorParameterMapExpander()
+            ->map($collectedData, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $collectedData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsPageCollectorData(array $collectedData, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageCollectorParameterMapExpander()
+            ->map($collectedData, $localeTransfer);
+    }
+
 }

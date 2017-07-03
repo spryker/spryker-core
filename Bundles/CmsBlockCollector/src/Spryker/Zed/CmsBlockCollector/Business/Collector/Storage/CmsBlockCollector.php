@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
-use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -17,20 +16,20 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface|null
+     * @var array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
-    protected $cmsContentWidgetFacade;
+    protected $collectorDataExpanderPlugins = [];
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockToCmsContentWidgetInterface|null $cmsContentWidgetFacade
+     * @param array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        CmsBlockToCmsContentWidgetInterface $cmsContentWidgetFacade = null
+        array $collectorDataExpanderPlugins = []
     ) {
         parent::__construct($utilDataReaderService);
-        $this->cmsContentWidgetFacade = $cmsContentWidgetFacade;
+        $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
     }
 
     /**
@@ -46,7 +45,7 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
             $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
         );
 
-        return [
+        $baseCollectedCmsBlockData = [
             'id' => $collectItemData[CmsBlockCollectorQuery::COL_ID_CMS_BLOCK],
             'valid_from' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_FROM],
             'valid_to' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_TO],
@@ -54,30 +53,23 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
             'template' => $collectItemData[CmsBlockCollectorQuery::COL_TEMPLATE_PATH],
             'placeholders' => $contentPlaceholders,
             'name' => $collectItemData[CmsBlockCollectorQuery::COL_NAME],
-            'content_widget_parameter_map' => $this->extractContentWidgetFunctionParameterMap($contentPlaceholders),
         ];
+
+        return $this->runDataExpanderPlugins($baseCollectedCmsBlockData);
     }
 
     /**
-     * @param array $contentPlaceholders
+     * @param array $collectedItemData
      *
      * @return array
      */
-    protected function extractContentWidgetFunctionParameterMap(array $contentPlaceholders)
+    protected function runDataExpanderPlugins(array $collectedItemData)
     {
-        if (!$this->cmsContentWidgetFacade) {
-            return [];
+        foreach ($this->collectorDataExpanderPlugins as $dataExpanderPlugin) {
+            $collectedItemData = $dataExpanderPlugin->expand($collectedItemData, $this->locale);
         }
 
-        $contentWidgetParameterMap = [];
-        foreach ($contentPlaceholders as $translationKey) {
-            $contentWidgetParameterMap = array_merge_recursive(
-                $contentWidgetParameterMap,
-                $this->cmsContentWidgetFacade->mapContentWidgetParametersByTranslationKey($translationKey, $this->locale)
-            );
-        }
-
-        return $contentWidgetParameterMap;
+        return $collectedItemData;
     }
 
     /**
