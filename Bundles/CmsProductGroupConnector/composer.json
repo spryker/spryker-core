@@ -1,9 +1,9 @@
 {
   "name": "spryker/cms-product-group-connector",
-  "description": "CmsProductGroupConnector bundle",
+  "description": "CmsProductGroupConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/cms": "^5.0.0",
+    "spryker/cms-content-widget": "^1.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
