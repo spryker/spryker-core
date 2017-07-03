@@ -15,7 +15,8 @@ use Twig_SimpleFunction;
 class ProductLabelTwigExtension extends TwigExtension
 {
 
-    const FUNCTION_NAME = 'spyProductLabels';
+    const FUNCTION_PRODUCT_ABSTRACT_LABELS = 'spyProductAbstractLabels';
+    const FUNCTION_PRODUCT_LABELS = 'spyProductLabels';
 
     /**
      * @var \Spryker\Client\ProductLabel\ProductLabelClientInterface
@@ -43,15 +44,39 @@ class ProductLabelTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(
-                static::FUNCTION_NAME,
-                [$this, 'renderProductLabels'],
-                [
-                    'is_safe' => ['html'],
-                    'needs_environment' => true,
-                ]
-            ),
+            $this->createProductAbstractLabelsFunction(),
+            $this->createProductLabelsFunction(),
         ];
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    protected function createProductAbstractLabelsFunction()
+    {
+        return new Twig_SimpleFunction(
+            static::FUNCTION_PRODUCT_ABSTRACT_LABELS,
+            [$this, 'renderProductAbstractLabels'],
+            [
+                'is_safe' => ['html'],
+                'needs_environment' => true,
+            ]
+        );
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    protected function createProductLabelsFunction()
+    {
+        return new Twig_SimpleFunction(
+            static::FUNCTION_PRODUCT_LABELS,
+            [$this, 'renderProductLabels'],
+            [
+                'is_safe' => ['html'],
+                'needs_environment' => true,
+            ]
+        );
     }
 
     /**
@@ -61,22 +86,41 @@ class ProductLabelTwigExtension extends TwigExtension
      *
      * @return string
      */
-    public function renderProductLabels(Twig_Environment $twig, $idProductAbstract, $templateName)
+    public function renderProductAbstractLabels(Twig_Environment $twig, $idProductAbstract, $templateName)
     {
         $productLabelTransferCollection = $this
             ->productLabelClient
             ->findLabelsByIdProductAbstract($idProductAbstract, $this->localeName);
 
-        if (!count($productLabelTransferCollection)) {
+        if (!$productLabelTransferCollection) {
             return '';
         }
 
-        return $twig->render(
-            $templateName,
-            [
-                'productLabelTransferCollection' => $productLabelTransferCollection,
-            ]
-        );
+        return $twig->render($templateName, [
+            'productLabelTransferCollection' => $productLabelTransferCollection,
+        ]);
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param array $idProductLabels
+     * @param string $templateName
+     *
+     * @return string
+     */
+    public function renderProductLabels(Twig_Environment $twig, array $idProductLabels, $templateName)
+    {
+        $productLabelTransferCollection = $this
+            ->productLabelClient
+            ->findLabels($idProductLabels, $this->localeName);
+
+        if (!$productLabelTransferCollection) {
+            return '';
+        }
+
+        return $twig->render($templateName, [
+            'productLabelTransferCollection' => $productLabelTransferCollection,
+        ]);
     }
 
 }

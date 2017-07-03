@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
+use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 /**
@@ -212,6 +213,24 @@ class ProductLabelFacadeTest extends Test
     /**
      * @return void
      */
+    public function testFindProductLabelIdsByIdProductAbstractShouldReturnListOfIds()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        $productLabelFacade = $this->createProductLabelFacade();
+        $productLabelIds = $productLabelFacade->findLabelIdsByIdProductAbstract($idProductAbstract);
+
+        $this->assertSame([$idProductLabel], $productLabelIds);
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveProductAbstractRelationsShouldRemoveExistingRelations()
     {
         $productTransfer = $this->tester->haveProduct();
@@ -243,6 +262,11 @@ class ProductLabelFacadeTest extends Test
 
         $this->tester->assertTouchActive(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            $idProductAbstract
+        );
+
+        $this->tester->assertTouchActive(
+            ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,
             $idProductAbstract
         );
     }

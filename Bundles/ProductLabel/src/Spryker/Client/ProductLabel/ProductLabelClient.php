@@ -33,4 +33,22 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
             ->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $idProductLabels
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     */
+    public function findLabels(array $idProductLabels, $localeName)
+    {
+        return $this
+            ->getFactory()
+            ->createLabelDictionaryReader()
+            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName);
+    }
+
 }
