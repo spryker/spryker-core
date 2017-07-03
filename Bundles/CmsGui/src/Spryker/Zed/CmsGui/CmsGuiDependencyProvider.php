@@ -58,11 +58,11 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsGuiToUrlBridge($container->getLocator()->url()->facade());
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
-        $container[self::TWIG_ENVIRONMENT] = function (Container $container) {
+        $container[static::TWIG_ENVIRONMENT] = function (Container $container) {
             return $this->getTwigEnvironment();
         };
 

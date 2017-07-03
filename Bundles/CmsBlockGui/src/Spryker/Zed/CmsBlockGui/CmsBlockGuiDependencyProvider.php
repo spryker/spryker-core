@@ -19,14 +19,13 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
     const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
-    const FACADE_CMS = 'CMS_BLOCK_GUI:FACADE_CMS';
 
     const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
     const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
     const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
 
-    const TWIG_ENVIRONMENT = 'twig environment';
+    const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

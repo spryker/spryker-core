@@ -31,7 +31,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
-    const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'cms_content_widget_parameter_mappers';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -52,10 +51,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;
@@ -92,12 +87,12 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getPostSavePlugins($container);
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
         $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getTransferExpanderPlugins($container);
+        };
+
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

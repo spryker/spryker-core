@@ -28,6 +28,10 @@
                             {{ form_row(translationForm.fkLocale) }}
                             {{ form_row(translationForm.localeName) }}
 
+                            <div class="{% if translationForm.translation.vars.errors|length > 0 %}has-error{% endif %}">
+                                {{ form_errors(translationForm.translation) }}
+                            </div>
+
                             {{ render(controller('/cms-content-widget/usage-information/index'), {'ignore_errors':true}) }}
                         </div>
                     {% endif %}

@@ -117,14 +117,6 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsContentWidgetInterface|null
-     */
-    protected function getCmsContentWidgetFacade()
-    {
-        return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_CMS_CONTENT_WIDGET);
-    }
-
-    /**
      * @return array|\Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
      */
     protected function getCollectorDataExpanderPlugins()

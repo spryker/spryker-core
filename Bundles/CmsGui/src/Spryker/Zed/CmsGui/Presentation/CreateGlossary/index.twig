@@ -35,6 +35,7 @@
         {% do glossaryForm.glossaryAttributes.setRendered %}
 
         {{ form_end(glossaryForm) }}
+
     {% else %}
         <div class="alert alert-danger">
             {{ "Missing placeholders for selected template." | trans }}
