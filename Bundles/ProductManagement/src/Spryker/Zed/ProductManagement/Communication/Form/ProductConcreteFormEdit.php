@@ -49,7 +49,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)

@@ -181,7 +181,6 @@ class ProductFormAdd extends AbstractType
             ->addSkuField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
             ->addPriceForm($builder, $options)
             ->addSeoLocalizedForms($builder)
