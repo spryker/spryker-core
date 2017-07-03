@@ -67,7 +67,7 @@ class TwigContentValidator extends ConstraintValidator
      */
     protected function isTwigContent($value)
     {
-        return strpos($value, '{{') !== false && strpos($value, '}}') !== false;
+        return strpos($value, '{{') !== false || strpos($value, '}}') !== false;
     }
 
 }
