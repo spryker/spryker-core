@@ -55,6 +55,10 @@ class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
             if ($this->discountFacade->queryStringCompare($clauseTransfer, $productLabelEntity->getName())) {
                 return true;
             }
+
+            if ($productLabelEntity->isExclusive()) {
+                break;
+            }
         }
 
         return false;
