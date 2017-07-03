@@ -10,7 +10,7 @@
     "spryker/money": "^2.0.0",
     "spryker/price": "^4.0.0",
     "spryker/product": "^5.1.0",
-    "spryker/product-label": "^1.0.0",
+    "spryker/product-label": "^1.0.0 || ^2.0.0",
     "spryker/product-management": "^0.6.0 || ^0.7.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/symfony": "^3.0.0",
