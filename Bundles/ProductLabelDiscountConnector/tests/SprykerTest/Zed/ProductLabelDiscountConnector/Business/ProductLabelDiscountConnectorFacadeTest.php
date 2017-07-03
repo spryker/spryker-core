@@ -151,4 +151,52 @@ class ProductLabelDiscountConnectorFacadeTest extends Test
         $this->assertCount(2, $collected, 'Number of collected items should match expected number.');
     }
 
+    /**
+     * @return void
+     */
+    public function testCollectByExclusiveProductLabelShouldCollectItemsMatchingOnlyExclusiveLabel()
+    {
+        // Arrange
+        $productLabelTransfer1 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::VALID_FROM => null,
+            ProductLabelTransfer::VALID_TO => null,
+            ProductLabelTransfer::POSITION => 1,
+        ]);
+        $productLabelTransfer2 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::VALID_FROM => null,
+            ProductLabelTransfer::VALID_TO => null,
+            ProductLabelTransfer::IS_EXCLUSIVE,
+            ProductLabelTransfer::POSITION => 2,
+        ]);
+        $productLabelTransfer3 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::VALID_FROM => null,
+            ProductLabelTransfer::VALID_TO => null,
+            ProductLabelTransfer::POSITION => 3,
+        ]);
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer3->getIdProductLabel(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
+        $clauseTransfer = $this->tester->createClauseTransfer($productLabelTransfer1->getName());
+
+        // Act
+        $collected = $this->tester->getFacade()->collectByProductLabel($quoteTransfer, $clauseTransfer);
+
+        // Assert
+        $this->assertCount(1, $collected, 'Number of collected items should match expected number.');
+    }
+
 }

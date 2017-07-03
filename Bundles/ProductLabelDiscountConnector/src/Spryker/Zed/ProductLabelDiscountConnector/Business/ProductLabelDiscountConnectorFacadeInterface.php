@@ -46,7 +46,7 @@ interface ProductLabelDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Returns array list of attributes.
+     * - Returns an array with all label names.
      *
      * @api
      *

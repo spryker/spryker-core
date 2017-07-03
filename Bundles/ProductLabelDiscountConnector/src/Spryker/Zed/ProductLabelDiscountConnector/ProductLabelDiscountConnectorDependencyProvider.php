@@ -27,10 +27,10 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->provideProductLabelFacade($container);
-        $this->provideDiscountFacade($container);
+        $this->addProductLabelFacade($container);
+        $this->addDiscountFacade($container);
 
-        $this->provideProductLabelQueryContainer($container);
+        $this->addProductLabelQueryContainer($container);
 
         return $container;
     }
@@ -40,7 +40,7 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
      *
      * @return void
      */
-    protected function provideProductLabelFacade(Container $container)
+    protected function addProductLabelFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
             return new ProductLabelDiscountConnectorToProductLabelBridge($container->getLocator()->productLabel()->facade());
@@ -52,7 +52,7 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
      *
      * @return void
      */
-    protected function provideDiscountFacade(Container $container)
+    protected function addDiscountFacade(Container $container)
     {
         $container[static::FACADE_DISCOUNT] = function (Container $container) {
             return new ProductLabelDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
@@ -64,7 +64,7 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
      *
      * @return void
      */
-    protected function provideProductLabelQueryContainer(Container $container)
+    protected function addProductLabelQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT_LABEL] = function (Container $container) {
             return new ProductLabelDiscountConnectorToProductLabelQueryContainerBridge($container->getLocator()->productLabel()->queryContainer());
