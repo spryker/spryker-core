@@ -9,6 +9,7 @@ namespace Spryker\Zed\Price\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -60,6 +61,40 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
 
     /**
      * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductAbstractBySku($sku)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
+            ->joinWithPriceType()
+            ->useSpyProductAbstractQuery()
+                ->filterBySku($sku)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductAbstractById($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->joinWithPriceType();
+    }
+
+    /**
+     * @api
 
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
@@ -83,6 +118,40 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
             ->useProductQuery()
             ->filterBySku($sku)
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductConcreteBySku($sku)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
+            ->joinWithPriceType()
+            ->useProductQuery()
+                ->filterBySku($sku)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPricesForProductConcreteById($idProductConcrete)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByPrice(null, Criteria::ISNOTNULL)
+            ->filterByFkProduct($idProductConcrete)
+            ->joinWithPriceType();
     }
 
     /**

@@ -25,7 +25,7 @@ class PriceProductConcreteAfterCreatePlugin extends AbstractPlugin implements Pr
      */
     public function create(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->persistProductConcretePrice($productConcreteTransfer);
+        return $this->getFacade()->persistProductConcretePriceCollection($productConcreteTransfer);
     }
 
 }

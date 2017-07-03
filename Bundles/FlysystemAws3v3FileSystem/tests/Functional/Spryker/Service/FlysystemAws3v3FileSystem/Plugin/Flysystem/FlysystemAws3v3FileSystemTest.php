@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem;
 
 use Codeception\Configuration;
+use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\FilesystemInterface;
@@ -47,11 +48,20 @@ class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
      */
     public function testLocalFilesystemBuilderPlugin()
     {
+        if (!class_exists('Aws\S3\S3Client') || !class_exists('League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter')) {
+            $this->markTestSkipped('Requires Aws\S3\S3Client and League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter to be installed');
+        }
+
         $localFilesystemBuilderPlugin = new Aws3v3FilesystemBuilderPlugin();
 
-        $adapterConfigTransfer = new FlysystemConfigLocalTransfer();
+        $adapterConfigTransfer = new FlysystemConfigAws3v3Transfer();
         $adapterConfigTransfer->setRoot($this->testDataFlysystemRootDirectory);
         $adapterConfigTransfer->setPath(static::PATH_DOCUMENT);
+        $adapterConfigTransfer->setKey('key');
+        $adapterConfigTransfer->setSecret('secret');
+        $adapterConfigTransfer->setBucket('bucket');
+        $adapterConfigTransfer->setVersion('version');
+        $adapterConfigTransfer->setRegion('region');
 
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName('aws3v3');

@@ -5,7 +5,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
-    "spryker/flysystem-local-filesystem": "*",
+    "spryker/flysystem-local-file-system": "*",
     "spryker/kernel": "^3.5.0",
     "spryker/testify": "*"
   },

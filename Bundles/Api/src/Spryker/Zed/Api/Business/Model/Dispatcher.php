@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiMetaTransfer;
+use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
@@ -79,6 +80,7 @@ class Dispatcher implements DispatcherInterface
     {
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
+        $id = $apiRequestTransfer->getResourceId();
         $params = $apiRequestTransfer->getResourceParameters();
 
         $apiResponseTransfer = new ApiResponseTransfer();
@@ -90,8 +92,16 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_VALIDATION_ERRORS);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
+
             } else {
-                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $params);
+                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
+                $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
+                $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
+
+                if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
+                    return $apiResponseTransfer;
+                }
+
                 $data = (array)$apiPluginCallResponseTransfer->getData();
                 $apiResponseTransfer->setData($data);
 
@@ -100,6 +110,7 @@ class Dispatcher implements DispatcherInterface
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
+
                 } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
@@ -138,13 +149,14 @@ class Dispatcher implements DispatcherInterface
     /**
      * @param string $resource
      * @param string $method
+     * @param string|null $id
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer
      */
-    protected function callApiPlugin($resource, $method, $params)
+    protected function callApiPlugin($resource, $method, $id, array $params)
     {
-        return $this->resourceHandler->execute($resource, $method, $params);
+        return $this->resourceHandler->execute($resource, $method, $id, $params);
     }
 
     /**

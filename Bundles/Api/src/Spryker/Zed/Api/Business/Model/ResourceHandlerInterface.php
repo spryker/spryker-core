@@ -13,12 +13,11 @@ interface ResourceHandlerInterface
     /**
      * @param string $resource
      * @param string $method
-     * @param mixed $params
+     * @param string|null $id
+     * @param array $params
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
-     *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ApiOptionsTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer
      */
-    public function execute($resource, $method, $params);
+    public function execute($resource, $method, $id, array $params);
 
 }
