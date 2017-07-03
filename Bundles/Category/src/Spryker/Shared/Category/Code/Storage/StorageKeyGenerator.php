@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Category\Code\Storage;
 
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Kernel\Store;
 
 /**

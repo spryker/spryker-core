@@ -4,7 +4,7 @@
     <table name="spy_category_template" idMethod="native" phpName="SpyCategoryTemplate">
         <column name="id_category_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="path" required="true" type="VARCHAR" size="255"/>
+        <column name="template_path" required="true" type="VARCHAR" size="255"/>
 
         <unique name="spy_category_template-path">
             <unique-column name="path"/>

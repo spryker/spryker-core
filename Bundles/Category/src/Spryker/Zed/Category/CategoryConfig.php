@@ -8,19 +8,10 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
 
-class CategoryConfig extends AbstractBundleConfig
+class CategoryConfig extends SharedCategoryConfig
 {
-
-    /**
-     * Used as `item_type` for touch mechanism.
-     */
-    const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';
-
-    /**
-     * Used as `item_type` for touch mechanism.
-     */
-    const RESOURCE_TYPE_NAVIGATION = 'navigation';
 
     /**
      * Default available template for category
