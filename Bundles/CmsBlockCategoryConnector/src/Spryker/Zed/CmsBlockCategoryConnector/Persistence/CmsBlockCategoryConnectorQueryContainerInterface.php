@@ -30,10 +30,11 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      * @api
      *
      * @param int $idCategory
+     * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory);
+    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate);
 
     /**
      * @api
@@ -49,10 +50,11 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      * @api
      *
      * @param int $idCategory
+     * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory);
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate);
 
     /**
      * @api
@@ -60,14 +62,5 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
      */
     public function queryCmsBlockCategoryPosition();
-
-    /**
-     * @api
-     *
-     * @param string $key
-     *
-     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
-     */
-    public function queryCmsBlockCategoryPositionByKey($key);
 
 }

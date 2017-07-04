@@ -84,6 +84,14 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      */
     protected function updateCategoryCmsBlockRelationsTransaction(CategoryTransfer $categoryTransfer)
     {
+        $spyCategory = $this->categoryQueryContainer
+            ->queryCategoryById($categoryTransfer->getIdCategory())
+            ->findOne();
+
+        if ($spyCategory->getFkCategoryTemplate() !== $categoryTransfer->getFkCategoryTemplate()) {
+            return;
+        }
+
         $this->deleteCategoryCmsBlockRelations($categoryTransfer);
         $this->createCategoryCmsBlockRelations($categoryTransfer);
     }
@@ -98,7 +106,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $categoryTransfer->requireIdCategory();
 
         $query = $this->queryContainer
-            ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory());
+            ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory(), $categoryTransfer->getFkCategoryTemplate());
 
         $this->deleteRelations($query);
     }
@@ -112,8 +120,8 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         $categoryTransfer->requireIdCategory();
 
-        foreach ($categoryTransfer->getIdCmsBlocks() as $positionKey => $idCmsBlocks) {
-            $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $positionKey);
+        foreach ($categoryTransfer->getIdCmsBlocks() as $idCmsBlockCategoryPosition => $idCmsBlocks) {
+            $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
         }
     }
 
@@ -163,14 +171,12 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     /**
      * @param array $idCmsBlocks
      * @param array $idCategories
-     * @param string $positionKey
+     * @param int $idCmsBlockCategoryPosition
      *
      * @return void
      */
-    protected function createRelations(array $idCmsBlocks, array $idCategories, $positionKey)
+    protected function createRelations(array $idCmsBlocks, array $idCategories, $idCmsBlockCategoryPosition)
     {
-        $spyCmsBlockCategoryPosition = $this->getPositionByKey($positionKey);
-
         foreach ($idCategories as $idCategory) {
             $spyCategory = $this->getCategoryById($idCategory);
 
@@ -178,7 +184,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                 $this->createRelation(
                     $idCmsBlock,
                     $idCategory,
-                    $spyCmsBlockCategoryPosition->getIdCmsBlockCategoryPosition(),
+                    $idCmsBlockCategoryPosition,
                     $spyCategory->getFkCategoryTemplate()
                 );
             }
@@ -210,26 +216,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param string $positionKey
-     *
-     * @throws CmsBlockCategoryPositionNotFound
-     *
-     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition
-     */
-    protected function getPositionByKey($positionKey)
-    {
-        $spyCmsBlockCategoryPosition = $this->queryContainer
-            ->queryCmsBlockCategoryPositionByKey($positionKey)
-            ->findOne();
-
-        if (empty($spyCmsBlockCategoryPosition)) {
-            throw new CmsBlockCategoryPositionNotFound();
-        }
-
-        return $spyCmsBlockCategoryPosition;
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
@@ -251,8 +237,8 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
-        foreach ($cmsBlockTransfer->getIdCategories() as $positionKey => $idCategories) {
-            $this->createRelations([$cmsBlockTransfer->getIdCmsBlock()], $idCategories, $positionKey);
+        foreach ($cmsBlockTransfer->getIdCategories() as $idCmsBlockCategoryPosition => $idCategories) {
+            $this->createRelations([$cmsBlockTransfer->getIdCmsBlock()], $idCategories, $idCmsBlockCategoryPosition);
         }
     }
 

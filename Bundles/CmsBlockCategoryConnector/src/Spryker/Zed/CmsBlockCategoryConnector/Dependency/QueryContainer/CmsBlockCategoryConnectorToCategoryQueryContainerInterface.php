@@ -24,4 +24,11 @@ interface CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     public function queryCategoryById($idCategory);
 
+    /**
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateById($idCategoryTemplate);
+
 }

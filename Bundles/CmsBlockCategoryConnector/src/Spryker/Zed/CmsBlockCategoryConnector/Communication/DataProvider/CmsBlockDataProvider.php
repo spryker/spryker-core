@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
+use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
@@ -32,6 +34,11 @@ class CmsBlockDataProvider
     protected $localeFacade;
 
     /**
+     * @var array
+     */
+    protected $idCategoriesWithWrongTemplate = [];
+
+    /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface $localeFacade
@@ -54,7 +61,8 @@ class CmsBlockDataProvider
         return [
             'data_class' => CmsBlockTransfer::class,
             CmsBlockType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
-            CmsBlockType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList()
+            CmsBlockType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
+            CmsBlockType::OPTION_WRONG_TEMPLATE_CATEGORY_LIST => $this->getWrongTemplateCategoryList(),
         ];
     }
 
@@ -87,13 +95,37 @@ class CmsBlockDataProvider
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
             ->find();
 
-        $assignedCategories = [];
+        $assignedIdCategories = [];
 
         foreach ($query as $item) {
-            $assignedCategories[$item->getCmsBlockCategoryPosition()->getKey()][] = $item->getFkCategory();
+            $assignedIdCategories[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCategory();
+            $this->assertCmsBlockTemplate($item);
         }
 
-        return $assignedCategories;
+        return $assignedIdCategories;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getWrongTemplateCategoryList()
+    {
+        return $this->idCategoriesWithWrongTemplate;
+    }
+
+    /**
+     * @param SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector
+     */
+    protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector)
+    {
+        $categoryTemplateName = $spyCmsBlockCategoryConnector->getCategory()
+            ->getCategoryTemplate()
+            ->getName();
+
+        if (!in_array($categoryTemplateName, CmsBlockType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
+            $this->idCategoriesWithWrongTemplate[$spyCmsBlockCategoryConnector->getFkCmsBlockCategoryPosition()][] =
+                $spyCmsBlockCategoryConnector->getFkCategory();
+        }
     }
 
     /**
@@ -128,7 +160,7 @@ class CmsBlockDataProvider
             ->queryCmsBlockCategoryPosition()
             ->orderByIdCmsBlockCategoryPosition()
             ->find()
-            ->toKeyValue('key', 'name');
+            ->toKeyValue('idCmsBlockCategoryPosition', 'name');
     }
 
 }

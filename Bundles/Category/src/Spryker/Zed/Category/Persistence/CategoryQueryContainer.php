@@ -1073,12 +1073,27 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplate()
     {
         return $this->getFactory()
             ->createCategoryTemplateQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateById($idCategoryTemplate)
+    {
+        return $this->queryCategoryTemplate()
+            ->filterByIdCategoryTemplate($idCategoryTemplate);
     }
 
 }

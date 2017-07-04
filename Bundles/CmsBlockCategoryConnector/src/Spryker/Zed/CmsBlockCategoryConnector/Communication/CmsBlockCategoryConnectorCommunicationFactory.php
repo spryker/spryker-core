@@ -46,7 +46,8 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     {
         return new CategoryDataProvider(
             $this->getQueryContainer(),
-            $this->getCmsBlockQueryContainer()
+            $this->getCmsBlockQueryContainer(),
+            $this->getCategoryQueryContainer()
         );
     }
 

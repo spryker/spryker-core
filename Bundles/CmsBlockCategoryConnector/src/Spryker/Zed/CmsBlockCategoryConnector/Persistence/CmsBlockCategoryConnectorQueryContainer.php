@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
+use Orm\Zed\Category\Persistence\Base\SpyCategory;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -43,12 +48,14 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
      * @api
      *
      * @param int $idCategory
+     * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory)
+    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate)
     {
         return $this->queryCmsBlockCategoryConnector()
+            ->filterByFkCategoryTemplate($idCategoryTemplate)
             ->filterByFkCategory($idCategory);
     }
 
@@ -74,35 +81,25 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
      * @api
      *
      * @param int $idCategory
+     * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate)
     {
-        return $this->queryCmsBlockCategoryConnectorByIdCategory($idCategory)
+        return $this->queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate)
             ->joinCmsBlock();
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
      */
     public function queryCmsBlockCategoryPosition()
     {
         return $this->getFactory()
             ->createCmsBlockCategoryPosition();
-    }
-
-    /**
-     * @api
-     *
-     * @param string $key
-     *
-     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
-     */
-    public function queryCmsBlockCategoryPositionByKey($key)
-    {
-        return $this->queryCmsBlockCategoryPosition()
-            ->filterByKey($key);
     }
 
 }

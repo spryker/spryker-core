@@ -3,7 +3,6 @@
 
     <table name="spy_cms_block_category_position" phpName="SpyCmsBlockCategoryPosition">
         <column name="id_cms_block_category_position" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <id-method-parameter value="spy_cms_block_category_position_pk_seq"/>
