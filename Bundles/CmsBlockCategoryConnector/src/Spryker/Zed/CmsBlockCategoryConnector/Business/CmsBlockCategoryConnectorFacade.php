@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -31,6 +32,8 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
+     * @throws CmsBlockCategoryPositionNotFound
+     *
      * @return void
      */
     public function updateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer)
@@ -46,6 +49,8 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      * @api
      *
      * @param CategoryTransfer $categoryTransfer
+     *
+     * @throws CmsBlockCategoryPositionNotFound
      *
      * @return void
      */

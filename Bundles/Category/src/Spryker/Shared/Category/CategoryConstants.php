@@ -32,15 +32,4 @@ interface CategoryConstants
      */
     const TEMPLATE_LIST = 'TEMPLATE_LIST';
 
-    /**
-     * Specification:
-     * - Status of category template dispatcher (boolean)
-     *
-     * Template dispatcher requires addition client calls, which could affect category page performance
-     * We recommend to turn off this option if you don't use category templating in your project.
-     *
-     * @api
-     */
-    const TEMPLATE_DISPATCHER_ENABLED = 'TEMPLATE_DISPATCHER_ENABLED';
-
 }

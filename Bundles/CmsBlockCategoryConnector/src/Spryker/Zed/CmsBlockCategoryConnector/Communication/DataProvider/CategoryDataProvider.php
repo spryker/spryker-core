@@ -39,6 +39,7 @@ class CategoryDataProvider
         return [
             'data_class' => CategoryTransfer::class,
             CategoryType::OPTION_CMS_BLOCK_LIST => $this->getCmsBlockList(),
+            CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList()
         ];
     }
 
@@ -67,10 +68,29 @@ class CategoryDataProvider
      */
     protected function getAssignedIdCmsBlocks($idCategory)
     {
-        return $this->queryContainer
+        $query = $this->queryContainer
             ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+            ->find();
+
+        $assignedBlocks = [];
+
+        foreach ($query as $item) {
+            $assignedBlocks[$item->getCmsBlockCategoryPosition()->getKey()][] = $item->getFkCmsBlock();
+        }
+
+        return $assignedBlocks;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPositionList()
+    {
+        return $this->queryContainer
+            ->queryCmsBlockCategoryPosition()
+            ->orderByIdCmsBlockCategoryPosition()
             ->find()
-            ->getColumnValues('fkCmsBlock');
+            ->toKeyValue('key', 'name');
     }
 
     /**

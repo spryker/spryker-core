@@ -50,8 +50,24 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      *
      * @param int $idCategory
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPosition();
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPositionByKey($key);
 
 }

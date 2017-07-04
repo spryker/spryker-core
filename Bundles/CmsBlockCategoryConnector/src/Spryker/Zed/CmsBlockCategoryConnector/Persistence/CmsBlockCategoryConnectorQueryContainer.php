@@ -83,4 +83,26 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
             ->joinCmsBlock();
     }
 
+    /**
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPosition()
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryPosition();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPositionByKey($key)
+    {
+        return $this->queryCmsBlockCategoryPosition()
+            ->filterByKey($key);
+    }
+
 }

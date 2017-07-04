@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +19,7 @@ class CategoryType extends AbstractType
     const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
     const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
+    const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
 
     /**
      * @return string
@@ -35,7 +37,7 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCmsBlocksField($builder, $options[static::OPTION_CMS_BLOCK_LIST]);
+        $this->addCmsBlockFields($builder, $options[static::OPTION_CMS_BLOCK_POSITION_LIST], $options[static::OPTION_CMS_BLOCK_LIST]);
     }
 
     /**
@@ -45,23 +47,30 @@ class CategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_CMS_BLOCK_LIST);
+        $resolver
+            ->setRequired(static::OPTION_CMS_BLOCK_LIST)
+            ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $positions
      * @param array $choices
      *
      * @return $this
      */
-    protected function addCmsBlocksField(FormBuilderInterface $builder, array $choices)
+    protected function addCmsBlockFields(FormBuilderInterface $builder, array $positions, array $choices)
     {
-        $builder->add(static::FIELD_CMS_BLOCKS, new Select2ComboBoxType(), [
-            'label' => 'CMS Blocks',
-            'choices' => $choices,
-            'multiple' => true,
-            'required' => false,
-        ]);
+        foreach ($positions as $positionKey => $positionName) {
+            $builder->add(static::FIELD_CMS_BLOCKS . '_' . $positionKey, new Select2ComboBoxType(), [
+                'property_path' => static::FIELD_CMS_BLOCKS . '[' . $positionKey. ']',
+                'label' => 'CMS Blocks: ' . $positionName,
+                'choices' => $choices,
+                'multiple' => true,
+                'required' => false,
+            ]);
+        }
+
 
         return $this;
     }

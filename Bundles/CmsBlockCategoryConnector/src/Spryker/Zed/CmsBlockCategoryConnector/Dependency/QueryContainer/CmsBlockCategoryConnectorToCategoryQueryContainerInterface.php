@@ -17,4 +17,11 @@ interface CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     public function queryCategory($idLocale);
 
+    /**
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryById($idCategory);
+
 }

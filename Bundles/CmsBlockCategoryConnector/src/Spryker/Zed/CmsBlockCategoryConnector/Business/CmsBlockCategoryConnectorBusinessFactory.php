@@ -11,6 +11,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCol
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -28,7 +29,8 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCategoryWriter(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getCategoryQueryContainer()
         );
     }
 
@@ -87,6 +89,14 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getTouchQueryContainer()
     {
         return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_TOUCH);
+    }
+
+    /**
+     * @return CmsBlockCategoryConnectorToCategoryQueryContainerInterface
+     */
+    protected function getCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**

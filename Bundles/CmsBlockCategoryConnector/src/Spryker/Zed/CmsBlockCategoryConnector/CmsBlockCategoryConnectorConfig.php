@@ -11,15 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
-    /**
-     * CMS Block on a category page only
-     */
-    const CATEGORY_TEMPLATE_CMS_BLOCK = 'CMS Block';
-
-    /**
-     * Category with CMS Block together
-     */
-    const CATEGORY_TEMPLATE_CATEGORY_CMS_BLOCK = 'Category + CMS Block';
 
     /**
      * Position at the top of a category page

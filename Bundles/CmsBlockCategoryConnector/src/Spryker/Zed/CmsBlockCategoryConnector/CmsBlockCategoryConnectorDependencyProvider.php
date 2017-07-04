@@ -55,6 +55,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
         $container = $this->addDataReaderService($container);
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addTouchFacade($container);
+        $container = $this->addCategoryQueryContainer($container);
 
         return $container;
     }

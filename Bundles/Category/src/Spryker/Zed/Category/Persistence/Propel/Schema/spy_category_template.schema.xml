@@ -6,8 +6,8 @@
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="template_path" required="true" type="VARCHAR" size="255"/>
 
-        <unique name="spy_category_template-path">
-            <unique-column name="path"/>
+        <unique name="spy_category_template-template_path">
+            <unique-column name="template_path"/>
         </unique>
 
         <id-method-parameter value="spy_category_template_pk_seq"/>
