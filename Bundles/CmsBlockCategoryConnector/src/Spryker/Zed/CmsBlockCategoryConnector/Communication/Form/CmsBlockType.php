@@ -18,6 +18,7 @@ class CmsBlockType extends AbstractType
     const FIELD_CATEGORIES = 'id_categories';
 
     const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
 
     /**
      * @return string
@@ -35,7 +36,11 @@ class CmsBlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCategoriesField($builder, $options[static::OPTION_CATEGORY_ARRAY]);
+        $this->addCategoryFields(
+            $builder,
+            $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
+            $options[static::OPTION_CATEGORY_ARRAY]
+        );
     }
 
     /**
@@ -45,23 +50,29 @@ class CmsBlockType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_CATEGORY_ARRAY);
+        $resolver
+            ->setRequired(static::OPTION_CATEGORY_ARRAY)
+            ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $positions
      * @param array $choices
      *
      * @return $this
      */
-    protected function addCategoriesField(FormBuilderInterface $builder, array $choices)
+    protected function addCategoryFields(FormBuilderInterface $builder, array $positions, array $choices)
     {
-        $builder->add(static::FIELD_CATEGORIES, new Select2ComboBoxType(), [
-            'label' => 'Categories',
-            'choices' => $choices,
-            'multiple' => true,
-            'required' => false,
-        ]);
+        foreach ($positions as $positionKey => $positionName) {
+            $builder->add(static::FIELD_CATEGORIES . '_' . $positionKey, new Select2ComboBoxType(), [
+                'property_path' => static::FIELD_CATEGORIES . '[' . $positionKey . ']',
+                'label' => 'Categories: ' . $positionName,
+                'choices' => $choices,
+                'multiple' => true,
+                'required' => false,
+            ]);
+        }
 
         return $this;
     }

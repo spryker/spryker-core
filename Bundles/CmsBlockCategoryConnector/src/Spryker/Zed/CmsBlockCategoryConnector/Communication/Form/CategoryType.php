@@ -71,7 +71,6 @@ class CategoryType extends AbstractType
             ]);
         }
 
-
         return $this;
     }
 
